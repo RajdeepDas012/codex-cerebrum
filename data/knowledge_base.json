@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4,
-    "last_updated": "2026-09-05T18:40:46.346452+00:00",
-    "total_topics_learned": 4
+    "total_runs": 5,
+    "last_updated": "2026-09-05T19:03:34.967360+00:00",
+    "total_topics_learned": 5
   },
   "entries": [
     {
@@ -215,6 +215,59 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-05T18:40:46.346433+00:00",
       "run_number": 4
+    },
+    {
+      "topic": "Docker multi-stage builds — reducing image size",
+      "category": "devops",
+      "language": "language-agnostic",
+      "difficulty": "intermediate",
+      "summary": "Docker multi-stage builds allow developers to use multiple FROM instructions in a single Dockerfile, where each FROM starts a new stage with a fresh base. This enables you to copy only the necessary artifacts and compiled binaries from heavy build environments into a lean, secure production image, drastically reducing final image size.",
+      "key_points": [
+        "Uses multiple FROM statements to divide the Dockerfile into distinct logical stages.",
+        "Enables copying specific files and directories across stages using the --from=<stage_name> flag.",
+        "Leaves compilers, build caches, and heavy development SDKs behind in intermediate stages.",
+        "Eliminates the need for complex multi-container build scripts or manual host-side build processes."
+      ],
+      "code_example": {
+        "language": "dockerfile",
+        "description": "Building a lightweight Go application image by separating the build environment from the runtime environment.",
+        "correct": "# Stage 1: Build the binary\nFROM golang:1.21 AS builder\nWORKDIR /app\nCOPY . .\nRUN CGO_ENABLED=0 go build -o myapp\n\n# Stage 2: Minimal production image\nFROM alpine:3.18\nWORKDIR /root/\nCOPY --from=builder /app/myapp .\nEXPOSE 8080\nCMD [\"./myapp\"]",
+        "wrong": "# BAD: Building and running in the same heavy image containing all SDK tools\nFROM golang:1.21\nWORKDIR /app\nCOPY . .\nRUN go build -o myapp\nEXPOSE 8080\nCMD [\"./myapp\"]"
+      },
+      "common_mistakes": [
+        "Copying the entire build directory instead of just the compiled output artifacts into the final stage.",
+        "Forgetting to name build stages using 'AS stage_name', making them harder to reference cleanly.",
+        "Using heavy base images like full Ubuntu or Debian for the final runtime stage instead of Alpine, distroless, or scratch."
+      ],
+      "best_practices": [
+        "Give every build stage an explicit alias using the AS keyword for better readability.",
+        "Order your Dockerfile layers from least frequently changed to most frequently changed to maximize build cache utilization.",
+        "Use distroless or alpine base images for the final production stage to reduce the security attack surface."
+      ],
+      "when_to_use": "Use multi-stage builds whenever your application requires compilation, bundling, or heavy build dependencies (like Go, Rust, Node.js, or Java) that are not needed to execute the final binary or script.",
+      "when_not_to_use": "Avoid multi-stage builds for interpreted languages like Python or Ruby when you are not compiling native extensions and when the development and runtime dependencies are nearly identical, though virtual environments can still benefit.",
+      "interview_questions": [
+        {
+          "question": "How do multi-stage builds help reduce Docker image size?",
+          "answer": "They let you compile code in a heavy environment containing SDKs, and then copy only the final compiled artifact into a clean, minimal runtime image, discarding all intermediate build tools and caches."
+        },
+        {
+          "question": "How do you reference artifacts from a previous stage in a Dockerfile?",
+          "answer": "You use the COPY command with the --from flag, specifying either the stage index number or its assigned alias name (e.g., COPY --from=builder /app/bin /bin)."
+        }
+      ],
+      "related_topics": [
+        "Docker layer caching optimization",
+        "Distroless container images",
+        "Container security scanning"
+      ],
+      "resources": [
+        "Docker official documentation on multi-stage builds",
+        "Best practices for writing Dockerfiles"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-05T19:03:34.967339+00:00",
+      "run_number": 5
     }
   ]
 }

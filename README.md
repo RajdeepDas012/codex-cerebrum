@@ -9,20 +9,21 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4** |
-| Last Updated | `2026-09-05T18:40:46.346452+00:00` |
-| Dataset Size | `4 entries` |
+| Total Topics Learned | **5** |
+| Last Updated | `2026-09-05T19:03:34.967360+00:00` |
+| Dataset Size | `5 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | language-specific | 2 |
+| devops | 2 |
 | databases | 1 |
-| devops | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Docker multi-stage builds — reducing image size`
 - `Git rebase vs merge — which to use and when`
 - `SQL JOIN types — INNER, LEFT, RIGHT, FULL with real examples`
 - `JavaScript async/await vs Promise.all — when to use each`
