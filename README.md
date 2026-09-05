@@ -9,18 +9,20 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2** |
-| Last Updated | `2026-09-05T17:53:45.105048+00:00` |
-| Dataset Size | `2 entries` |
+| Total Topics Learned | **3** |
+| Last Updated | `2026-09-05T18:34:13.742101+00:00` |
+| Dataset Size | `3 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | language-specific | 2 |
+| databases | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `SQL JOIN types — INNER, LEFT, RIGHT, FULL with real examples`
 - `JavaScript async/await vs Promise.all — when to use each`
 - `Python list comprehensions vs loops — performance and readability`
 
