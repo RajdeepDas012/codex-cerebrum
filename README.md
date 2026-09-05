@@ -9,26 +9,26 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **6** |
-| Last Updated | `2026-09-05T20:42:48.917840+00:00` |
-| Dataset Size | `6 entries` |
+| Total Topics Learned | **7** |
+| Last Updated | `2026-09-05T20:49:54.229715+00:00` |
+| Dataset Size | `7 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| language-specific | 2 |
+| language-specific | 3 |
 | devops | 2 |
 | databases | 1 |
 | web-dev | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `TypeScript generics — practical patterns`
 - `React useEffect cleanup — preventing memory leaks`
 - `Docker multi-stage builds — reducing image size`
 - `Git rebase vs merge — which to use and when`
 - `SQL JOIN types — INNER, LEFT, RIGHT, FULL with real examples`
-- `JavaScript async/await vs Promise.all — when to use each`
 
 <!-- STATS_END -->
 
