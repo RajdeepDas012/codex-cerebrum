@@ -80,25 +80,6 @@ Go to [aistudio.google.com](https://aistudio.google.com) → Get API key → Cop
 
 **It's free** — Gemini 1.5 Flash has a generous free tier.
 
-### 3. Add Secret to GitHub
-
-```
-Your repo → Settings → Secrets and variables → Actions → New repository secret
-
-Name:   GEMINI_API_KEY
-Value:  your-key-here
-```
-
-### 4. Enable GitHub Actions
-
-```
-Your repo → Actions tab → Enable workflows
-```
-
-That's it. The agent starts running automatically every hour.
-
----
-
 ## 🧪 Run Locally (Optional)
 
 ```bash
@@ -145,23 +126,6 @@ Each entry in `knowledge_base.json` looks like:
   "learned_at": "2025-06-15T10:30:00+00:00",
   "run_number": 42
 }
-```
-
----
-
-## 🔮 Phase 2 — Fine-Tune Your Own Model
-
-Once `export/finetune_ready.jsonl` has 500+ lines:
-
-```bash
-# Fine-tune a local model on YOUR dataset
-pip install transformers datasets peft trl
-
-# Your curated data trains a real offline coding AI
-python train_local_model.py   # (coming in Phase 2)
-```
-
----
 
 ## 📜 License
 
