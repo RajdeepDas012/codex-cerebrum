@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3** |
-| Last Updated | `2026-09-05T18:34:13.742101+00:00` |
-| Dataset Size | `3 entries` |
+| Total Topics Learned | **4** |
+| Last Updated | `2026-09-05T18:40:46.346452+00:00` |
+| Dataset Size | `4 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,9 +19,11 @@
 |---|---|
 | language-specific | 2 |
 | databases | 1 |
+| devops | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Git rebase vs merge — which to use and when`
 - `SQL JOIN types — INNER, LEFT, RIGHT, FULL with real examples`
 - `JavaScript async/await vs Promise.all — when to use each`
 - `Python list comprehensions vs loops — performance and readability`
