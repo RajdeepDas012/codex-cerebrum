@@ -9,18 +9,19 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1** |
-| Last Updated | `2026-09-05T16:37:23.875940+00:00` |
-| Dataset Size | `1 entries` |
-[![🧠 Gemini Coding Brain — Auto Learn](https://github.com/RajdeepDas012/codex-cerebrum/actions/workflows/daily_train.yml/badge.svg)](https://github.com/RajdeepDas012/codex-cerebrum/actions/workflows/daily_train.yml)
+| Total Topics Learned | **2** |
+| Last Updated | `2026-09-05T17:53:45.105048+00:00` |
+| Dataset Size | `2 entries` |
+
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| language-specific | 1 |
+| language-specific | 2 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `JavaScript async/await vs Promise.all — when to use each`
 - `Python list comprehensions vs loops — performance and readability`
 
 <!-- STATS_END -->
