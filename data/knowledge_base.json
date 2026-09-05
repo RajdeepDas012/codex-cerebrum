@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 10,
-    "last_updated": "2026-09-05T22:58:06.363176+00:00",
-    "total_topics_learned": 10
+    "total_runs": 11,
+    "last_updated": "2026-09-05T23:16:29.295744+00:00",
+    "total_topics_learned": 11
   },
   "entries": [
     {
@@ -530,6 +530,58 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-05T22:58:06.363158+00:00",
       "run_number": 10
+    },
+    {
+      "topic": "Python decorators — how they work under the hood",
+      "category": "language-specific",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Python decorators are syntactic sugar built on top of first-class functions and closures, allowing developers to modify or enhance function behavior without changing its source code. Under the hood, the '@decorator' syntax translates to assigning the function variable to the result of calling the decorator function with the original function as an argument.",
+      "key_points": [
+        "Functions in Python are first-class objects, meaning they can be passed as arguments, returned from other functions, and assigned to variables.",
+        "A decorator is a callable that takes another function as input, extends its behavior, and returns a new callable function.",
+        "The syntactic sugar '@my_decorator' above a function definition is precisely equivalent to 'func = my_decorator(func)'.",
+        "Preserving original function metadata (like name and docstring) requires using 'functools.wraps' inside the wrapper."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates writing a custom timing decorator that preserves metadata using functools.wraps versus a broken implementation.",
+        "correct": "from functools import wraps\nimport time\n\ndef measure_time(func):\n    @wraps(func)\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        result = func(*args, **kwargs)\n        print(f\"{func.__name__} took {time.perf_counter() - start:.4f}s\")\n        return result\n    return wrapper\n\n@measure_time\ndef compute(n):\n    return sum(i for i in range(n))",
+        "wrong": "def measure_time(func):\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        return func(*args, **kwargs)\n    return wrapper\n\n@measure_time\ndef compute(n):\n    \"\"\"Calculates sum.\"\"\"\n    return sum(range(n))\n\nprint(compute.__name__) # Output: 'wrapper' instead of 'compute'"
+      },
+      "common_mistakes": [
+        "Forgetting to use 'functools.wraps', which results in decorated functions losing their original '__name__', '__doc__', and breaking introspection tools.",
+        "Not forwarding '*args' and '**kwargs' in the inner wrapper function, causing decorated functions that accept parameters to raise TypeError."
+      ],
+      "best_practices": [
+        "Always apply '@functools.wraps(func)' to the inner wrapper function to preserve original function signatures and documentation.",
+        "Design decorators to accept arbitrary arguments (*args, **kwargs) so they remain reusable across functions with varying signatures.",
+        "When creating parameterized decorators (decorators that take arguments themselves), use a three-layer function closure or a class-based approach."
+      ],
+      "when_to_use": "Use decorators for cross-cutting concerns like logging, access control, caching (memoization), rate limiting, and transaction management.",
+      "when_not_to_use": "Avoid decorators for core domain logic or complex state management where explicit function calls or class inheritance provide better readability.",
+      "interview_questions": [
+        {
+          "question": "What does the '@' syntax sugar actually do under the hood in Python?",
+          "answer": "It takes the function defined immediately below it, passes it as an argument to the decorator function, and rebinds the original function name to the return value of the decorator."
+        },
+        {
+          "question": "Why is 'functools.wraps' necessary when writing decorators?",
+          "answer": "Without it, the decorated function takes on the identity of the inner wrapper function, overwriting its original '__name__', '__doc__', and module attributes, which breaks debugging and documentation generation."
+        }
+      ],
+      "related_topics": [
+        "Python closures and lexical scoping",
+        "First-class functions in Python",
+        "functools module utilities"
+      ],
+      "resources": [
+        "Python Official Documentation on Function and Class Decorators",
+        "PEP 318 -- Decorators for Functions and Methods"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-05T23:16:29.295726+00:00",
+      "run_number": 11
     }
   ]
 }

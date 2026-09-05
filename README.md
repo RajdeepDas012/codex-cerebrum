@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **10** |
-| Last Updated | `2026-09-05T22:58:06.363176+00:00` |
-| Dataset Size | `10 entries` |
+| Total Topics Learned | **11** |
+| Last Updated | `2026-09-05T23:16:29.295744+00:00` |
+| Dataset Size | `11 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| language-specific | 3 |
+| language-specific | 4 |
 | devops | 2 |
 | web-dev | 2 |
 | databases | 1 |
@@ -26,11 +26,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Python decorators — how they work under the hood`
 - `CSS Grid vs Flexbox — choosing the right one`
 - `Binary search — implementation and edge cases`
 - `REST API error handling best practices`
 - `TypeScript generics — practical patterns`
-- `React useEffect cleanup — preventing memory leaks`
 
 <!-- STATS_END -->
 
