@@ -12,7 +12,7 @@
 | Total Topics Learned | **1** |
 | Last Updated | `2026-09-05T16:37:23.875940+00:00` |
 | Dataset Size | `1 entries` |
-
+[![🧠 Gemini Coding Brain — Auto Learn](https://github.com/RajdeepDas012/codex-cerebrum/actions/workflows/daily_train.yml/badge.svg)](https://github.com/RajdeepDas012/codex-cerebrum/actions/workflows/daily_train.yml)
 ## 📂 Categories Learned
 
 | Category | Topics |
