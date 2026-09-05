@@ -137,6 +137,9 @@ Each entry in `knowledge_base.json` looks like:
   "run_number": 42
 }
 
-## 📜 License
+
+---
+
+##📂 Knowledge Base Format
 
 MIT — use it, fork it, build on it.
