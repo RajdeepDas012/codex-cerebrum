@@ -9,9 +9,19 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **0** |
-| Last Updated | `not started yet` |
-| Dataset Size | `0 entries` |
+| Total Topics Learned | **1** |
+| Last Updated | `2026-09-05T16:37:23.875940+00:00` |
+| Dataset Size | `1 entries` |
+
+## 📂 Categories Learned
+
+| Category | Topics |
+|---|---|
+| language-specific | 1 |
+
+## 🕐 Last 5 Topics Learned
+
+- `Python list comprehensions vs loops — performance and readability`
 
 <!-- STATS_END -->
 
