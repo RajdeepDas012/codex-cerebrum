@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **7** |
-| Last Updated | `2026-09-05T20:49:54.229715+00:00` |
-| Dataset Size | `7 entries` |
+| Total Topics Learned | **8** |
+| Last Updated | `2026-09-05T21:17:35.966410+00:00` |
+| Dataset Size | `8 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,14 +21,15 @@
 | devops | 2 |
 | databases | 1 |
 | web-dev | 1 |
+| best-practices | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `REST API error handling best practices`
 - `TypeScript generics — practical patterns`
 - `React useEffect cleanup — preventing memory leaks`
 - `Docker multi-stage builds — reducing image size`
 - `Git rebase vs merge — which to use and when`
-- `SQL JOIN types — INNER, LEFT, RIGHT, FULL with real examples`
 
 <!-- STATS_END -->
 
