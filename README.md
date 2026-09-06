@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **111** |
-| Last Updated | `2026-09-06T19:26:26.911702+00:00` |
-| Dataset Size | `111 entries` |
+| Total Topics Learned | **112** |
+| Last Updated | `2026-09-06T19:29:32.402300+00:00` |
+| Dataset Size | `112 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,21 +25,21 @@
 | probability-math | 4 |
 | devops | 3 |
 | market-analysis | 3 |
+| technical-analysis | 3 |
 | databases | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
-| technical-analysis | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Parabolic SAR — trailing stop and trend direction indicator`
 - `Average True Range (ATR) — measuring volatility for stop losses`
 - `On-balance volume indicator — how volume predicts price direction`
 - `Google Trends for crypto — how search volume predicts price moves`
 - `Sentiment analysis for trading — how to use news and social data`
-- `Insider trading and market manipulation — pump and dump patterns`
 
 <!-- STATS_END -->
 
