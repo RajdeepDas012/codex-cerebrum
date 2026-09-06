@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **110** |
-| Last Updated | `2026-09-06T19:23:21.610469+00:00` |
-| Dataset Size | `110 entries` |
+| Total Topics Learned | **111** |
+| Last Updated | `2026-09-06T19:26:26.911702+00:00` |
+| Dataset Size | `111 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,17 +29,17 @@
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
+| technical-analysis | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| technical-analysis | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Average True Range (ATR) — measuring volatility for stop losses`
 - `On-balance volume indicator — how volume predicts price direction`
 - `Google Trends for crypto — how search volume predicts price moves`
 - `Sentiment analysis for trading — how to use news and social data`
 - `Insider trading and market manipulation — pump and dump patterns`
-- `Short squeeze mechanics — GameStop case study and probability`
 
 <!-- STATS_END -->
 
