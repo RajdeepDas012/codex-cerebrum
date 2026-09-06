@@ -26,6 +26,7 @@ from datetime import datetime, timezone, date
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import google.generativeai as genai
+from google.api_core import exceptions as google_exceptions
 
 from agent.topic_manager import pick_topic
 from agent.learner       import learn_topic
@@ -69,38 +70,38 @@ def already_learned(topic: str, entries: list) -> bool:
 
 # ── Main ────────────────────────────────────────────────
 def main():
-    print("\n" + "═" * 50)
-    print("🤖  GEMINI CODING BRAIN — Starting")
-    print("═" * 50)
+    print("\n" + "=" * 50)
+    print("GEMINI CODING BRAIN - Starting")
+    print("=" * 50)
 
     # ── 1. Setup Gemini ──────────────────────────────
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print("❌  GEMINI_API_KEY not set. Exiting.")
+        print("ERROR: GEMINI_API_KEY not set. Exiting.")
         sys.exit(1)
 
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel("gemini-3.5-flash-lite")
-    print("✅  Gemini connected")
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    print("Gemini connected")
 
     # ── 2. Load existing knowledge ───────────────────
     knowledge = load_knowledge()
     entries   = knowledge["entries"]
     meta      = knowledge["meta"]
 
-    print(f"📚  Knowledge base: {len(entries)} entries so far")
+    print(f"Knowledge base: {len(entries)} entries so far")
 
     # ── 3. Pick topic ────────────────────────────────
     topic = pick_topic(model, entries)
 
     # Skip if already learned
     if already_learned(topic, entries):
-        print(f"⏭️   Already learned '{topic}' — skipping")
-        topic = pick_topic(model, entries)   # try once more
+        print(f"Already learned '{topic}' - skipping")
+        topic = pick_topic(model, entries)
 
     # ── 4. Learn it ──────────────────────────────────
-    print(f"\n📖  Learning: {topic}")
-    print("    Asking Gemini...")
+    print(f"\nLearning: {topic}")
+    print("Asking Gemini...")
 
     entry = learn_topic(model, topic, entries[-10:])
 
@@ -118,7 +119,7 @@ def main():
     knowledge["entries"].append(entry)
     knowledge["meta"] = meta
     save_knowledge(knowledge)
-    print(f"💾  Saved to {KNOWLEDGE_FILE}")
+    print(f"Saved to {KNOWLEDGE_FILE}")
 
     # ── 6. Write daily log ───────────────────────────
     write_daily_log(entry, meta["total_runs"])
@@ -126,18 +127,49 @@ def main():
     # ── 7. Export training pair ──────────────────────
     export_entry(entry)
     stats = get_export_stats()
-    print(f"📦  Export: {stats['total_pairs']} training pairs ({stats['file_size_kb']} KB)")
+    print(f"Export: {stats['total_pairs']} training pairs ({stats['file_size_kb']} KB)")
 
     # ── 8. Update README ─────────────────────────────
     update_readme(knowledge)
 
     # ── Done ─────────────────────────────────────────
-    print("\n" + "═" * 50)
-    print(f"✅  Run #{meta['total_runs']} complete!")
-    print(f"🧠  Learned: {topic}")
-    print(f"📊  Category: {entry.get('category', 'N/A')} | Difficulty: {entry.get('difficulty', 'N/A')}")
-    print("═" * 50 + "\n")
+    print("\n" + "=" * 50)
+    print(f"Run #{meta['total_runs']} complete!")
+    print(f"Learned: {topic}")
+    print(f"Category: {entry.get('category', 'N/A')} | Difficulty: {entry.get('difficulty', 'N/A')}")
+    print("=" * 50 + "\n")
 
 
+# ── Entry point with full error handling ────────────────
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+
+    except google_exceptions.ResourceExhausted:
+        # 429 - daily API quota hit
+        print("")
+        print("WARNING: Gemini API daily limit of 500 reached")
+        print("Loop will stop. Quota resets at midnight Pacific time.")
+        print("")
+        sys.exit(2)   # exit code 2 = quota hit (loop breaks)
+
+    except google_exceptions.PermissionDenied:
+        # 403 - bad API key
+        print("")
+        print("ERROR: Gemini API key is invalid or expired")
+        print("Check your GEMINI_API_KEY secret in GitHub Settings")
+        print("")
+        sys.exit(1)   # exit code 1 = skip this iteration
+
+    except google_exceptions.GoogleAPIError as e:
+        # any other Gemini API error
+        print(f"")
+        print(f"ERROR: Gemini API error - {e}")
+        print("")
+        sys.exit(1)   # exit code 1 = skip this iteration
+
+    except Exception as e:
+        print(f"")
+        print(f"ERROR: Unexpected error - {e}")
+        print("")
+        sys.exit(1)
