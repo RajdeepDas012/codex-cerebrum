@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **15** |
-| Last Updated | `2026-09-06T05:19:53.896000+00:00` |
-| Dataset Size | `15 entries` |
+| Total Topics Learned | **16** |
+| Last Updated | `2026-09-06T05:59:42.172695+00:00` |
+| Dataset Size | `16 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| language-specific | 5 |
+| language-specific | 6 |
 | databases | 2 |
 | devops | 2 |
 | web-dev | 2 |
@@ -28,11 +28,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Python context managers — writing your own with statement`
 - `WebSockets vs HTTP polling — real-time data strategies`
 - `OAuth 2.0 flow — step by step explanation`
 - `Database indexing — when and how to add indexes`
 - `Node.js event loop — understanding non-blocking I/O`
-- `Python decorators — how they work under the hood`
 
 <!-- STATS_END -->
 
