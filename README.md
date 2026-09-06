@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **25** |
-| Last Updated | `2026-09-06T11:05:31.249973+00:00` |
-| Dataset Size | `25 entries` |
+| Total Topics Learned | **26** |
+| Last Updated | `2026-09-06T11:09:16.570996+00:00` |
+| Dataset Size | `26 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
+| system-design | 7 |
 | language-specific | 6 |
-| system-design | 6 |
 | devops | 3 |
 | databases | 2 |
 | web-dev | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Moving averages — SMA vs EMA vs WMA and trading signals`
 - `Support and resistance levels — how to identify and trade them`
 - `Candlestick chart patterns — doji, hammer, engulfing, shooting star`
 - `Blockchain consensus mechanisms — PoW vs PoS vs DPoS explained`
 - `Ethereum smart contracts — how they work and real use cases`
-- `Bitcoin fundamentals — how it works, mining, halving cycles and price impact`
 
 <!-- STATS_END -->
 
