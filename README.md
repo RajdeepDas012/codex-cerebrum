@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **83** |
-| Last Updated | `2026-09-06T15:46:24.191483+00:00` |
-| Dataset Size | `83 entries` |
+| Total Topics Learned | **84** |
+| Last Updated | `2026-09-06T16:40:29.482663+00:00` |
+| Dataset Size | `84 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,14 +29,15 @@
 | probability-math | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| market-analysis | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Correlation between assets — how to calculate and use it`
 - `Value at Risk (VaR) — calculating potential portfolio loss`
 - `Monte Carlo simulation for portfolio risk — probability modelling`
 - `Alpha in trading — generating returns above the benchmark`
 - `Beta of a stock — market sensitivity and portfolio risk`
-- `Maximum drawdown — calculating and managing portfolio drawdowns`
 
 <!-- STATS_END -->
 
