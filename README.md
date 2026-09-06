@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **70** |
-| Last Updated | `2026-09-06T15:06:10.775500+00:00` |
-| Dataset Size | `70 entries` |
+| Total Topics Learned | **71** |
+| Last Updated | `2026-09-06T15:09:16.072521+00:00` |
+| Dataset Size | `71 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,21 +20,21 @@
 | system-design | 49 |
 | language-specific | 6 |
 | devops | 3 |
+| trading-strategies | 3 |
 | databases | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
-| trading-strategies | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Breakout trading strategy — entry, stop loss, target calculation`
 - `Mean reversion strategy — when price returns to average`
 - `Momentum trading strategy — how to identify and ride momentum`
 - `Statistical arbitrage — pairs trading, mean reversion strategy`
 - `Arbitrage trading — crypto exchange arbitrage, triangular arbitrage`
-- `High frequency trading — how algorithms affect retail traders`
 
 <!-- STATS_END -->
 
