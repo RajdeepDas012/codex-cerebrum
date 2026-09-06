@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 128,
-    "last_updated": "2026-09-06T21:47:32.813062+00:00",
-    "total_topics_learned": 128
+    "total_runs": 129,
+    "last_updated": "2026-09-06T23:25:25.952236+00:00",
+    "total_topics_learned": 129
   },
   "entries": [
     {
@@ -6431,6 +6431,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-06T21:47:32.813040+00:00",
       "run_number": 128
+    },
+    {
+      "topic": "Implementing idempotency keys in Express.js with Redis and middleware for duplicate payment prevention",
+      "category": "web-dev",
+      "language": "javascript",
+      "difficulty": "intermediate",
+      "summary": "Idempotency keys ensure that a repeated HTTP request produces the same result as a single execution without side effects. In payment processing systems, this pattern is critical to prevent charging a customer multiple times due to network timeouts or client retries.",
+      "key_points": [
+        "Clients generate a unique UUID (idempotency key) for each distinct financial transaction intent.",
+        "Middleware intercepts incoming requests, checking Redis to see if the key has already been processed.",
+        "If the key exists, the middleware short-circuits the request pipeline and returns the cached response from the original execution.",
+        "If the key is new, a lock is acquired and the response is stored in Redis alongside the completion status."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Express middleware that checks Redis for an existing idempotency key before processing a payment",
+        "correct": "app.post('/pay', async (req, res) => {\n  const key = req.headers['idempotency-key'];\n  const cached = await redis.get(`idempotency:${key}`);\n  if (cached) return res.status(200).json(JSON.parse(cached));\n  \n  const result = await processPayment(req.body);\n  await redis.setex(`idempotency:${key}`, 86400, JSON.stringify(result));\n  res.json(result);\n});",
+        "wrong": "app.post('/pay', async (req, res) => {\n  const result = await processPayment(req.body);\n  res.json(result);\n});"
+      },
+      "common_mistakes": [
+        "Forgetting to set an expiration (TTL) on Redis idempotency keys, leading to memory bloat over time.",
+        "Failing to handle concurrent requests with the same key using atomic operations or distributed locks, resulting in race conditions."
+      ],
+      "best_practices": [
+        "Set an appropriate TTL (e.g., 24 hours) on stored idempotency keys since clients rarely retry after a day.",
+        "Store both the HTTP status code and the response body in the cache so clients receive the exact original response.",
+        "Use Redis atomic commands like SET with NX and EX options to prevent duplicate concurrent processing."
+      ],
+      "when_to_use": "Use this when designing mutating API endpoints (like payments, fund transfers, or order placements) that are vulnerable to network retries.",
+      "when_not_to_use": "Avoid this for safe, read-only GET requests or simple operations where duplicate execution is inherently harmless.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a scenario where a client retries a payment request while the first request is still currently processing?",
+          "answer": "Use a distributed lock or Redis SET with NX option using the idempotency key as the identifier so concurrent duplicate requests fail fast or wait for the initial request to complete."
+        },
+        {
+          "question": "What data should be cached alongside the idempotency key?",
+          "answer": "You should cache the HTTP status code, response headers, and the response body to faithfully replay the exact outcome of the original request."
+        }
+      ],
+      "related_topics": [
+        "Distributed locks",
+        "API rate limiting",
+        "Distributed transactions"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T23:25:25.952217+00:00",
+      "run_number": 129
     }
   ]
 }

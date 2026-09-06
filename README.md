@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **128** |
-| Last Updated | `2026-09-06T21:47:32.813062+00:00` |
-| Dataset Size | `128 entries` |
+| Total Topics Learned | **129** |
+| Last Updated | `2026-09-06T23:25:25.952236+00:00` |
+| Dataset Size | `129 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,9 +23,9 @@
 | stocks-markets | 9 |
 | language-specific | 7 |
 | technical-analysis | 7 |
+| web-dev | 5 |
 | probability-math | 5 |
 | devops | 4 |
-| web-dev | 4 |
 | databases | 3 |
 | market-analysis | 3 |
 | algorithms | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing idempotency keys in Express.js with Redis and middleware for duplicate payment prevention`
 - `Implementing distributed tracing in Spring Boot using OpenTelemetry and Jaeger`
 - `Implementing circuit breaker pattern in Go using Sony/gobreaker and context cancellation`
 - `Implementing optimistic locking in Django ORM with F expressions and atomic transactions`
 - `Implementing database connection pooling in Go with database/sql and context timeout management`
-- `Implementing distributed locks in Node.js using Redis and Redlock algorithm`
 
 <!-- STATS_END -->
 
