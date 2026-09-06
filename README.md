@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **51** |
-| Last Updated | `2026-09-06T12:47:07.637260+00:00` |
-| Dataset Size | `51 entries` |
+| Total Topics Learned | **52** |
+| Last Updated | `2026-09-06T12:50:12.734805+00:00` |
+| Dataset Size | `52 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 32 |
+| system-design | 33 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Leverage and margin trading — risks, liquidation price calculation`
 - `Liquidation cascades in crypto — how they happen and how to avoid them`
 - `Fear and Greed Index — how it is calculated and how to use it`
 - `Stock market cycles — bull market, bear market, correction phases`
 - `Crypto market cycles — accumulation, markup, distribution, markdown`
-- `Whale wallet tracking — how to find and interpret large transactions`
 
 <!-- STATS_END -->
 
