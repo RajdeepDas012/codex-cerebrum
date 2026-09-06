@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **90** |
-| Last Updated | `2026-09-06T16:59:02.291672+00:00` |
-| Dataset Size | `90 entries` |
+| Total Topics Learned | **91** |
+| Last Updated | `2026-09-06T17:02:08.131653+00:00` |
+| Dataset Size | `91 entries` |
 
 ## 📂 Categories Learned
 
@@ -30,14 +30,15 @@
 | market-analysis | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| crypto-blockchain | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Stablecoin mechanics — USDT, USDC, DAI how they maintain peg`
 - `Quantitative easing — how money printing affects crypto and stocks`
 - `Interest rates and stock market — Fed rate decisions and market reaction`
 - `Inflation impact on investments — real vs nominal returns`
 - `Compound interest in investing — calculating long term growth`
-- `Kelly Criterion — optimal position sizing formula`
 
 <!-- STATS_END -->
 
