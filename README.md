@@ -9,17 +9,17 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **17** |
-| Last Updated | `2026-09-06T06:29:45.086054+00:00` |
-| Dataset Size | `17 entries` |
+| Total Topics Learned | **18** |
+| Last Updated | `2026-09-06T09:54:31.873706+00:00` |
+| Dataset Size | `18 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | language-specific | 6 |
+| devops | 3 |
 | databases | 2 |
-| devops | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
 | best-practices | 1 |
@@ -28,11 +28,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Linux cron jobs — scheduling tasks correctly`
 - `Memoization and caching — reducing redundant computation`
 - `Python context managers — writing your own with statement`
 - `WebSockets vs HTTP polling — real-time data strategies`
 - `OAuth 2.0 flow — step by step explanation`
-- `Database indexing — when and how to add indexes`
 
 <!-- STATS_END -->
 
