@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **108** |
-| Last Updated | `2026-09-06T19:17:10.803901+00:00` |
-| Dataset Size | `108 entries` |
+| Total Topics Learned | **109** |
+| Last Updated | `2026-09-06T19:20:16.266270+00:00` |
+| Dataset Size | `109 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
-| crypto-blockchain | 14 |
+| crypto-blockchain | 15 |
 | trading-strategies | 11 |
 | stocks-markets | 8 |
 | language-specific | 6 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Google Trends for crypto — how search volume predicts price moves`
 - `Sentiment analysis for trading — how to use news and social data`
 - `Insider trading and market manipulation — pump and dump patterns`
 - `Short squeeze mechanics — GameStop case study and probability`
 - `Stock IPO process — how companies go public, lock-up periods`
-- `Crypto tax basics — capital gains, income tax on staking, reporting`
 
 <!-- STATS_END -->
 
