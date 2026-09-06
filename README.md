@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **106** |
-| Last Updated | `2026-09-06T19:10:59.566676+00:00` |
-| Dataset Size | `106 entries` |
+| Total Topics Learned | **107** |
+| Last Updated | `2026-09-06T19:14:05.286876+00:00` |
+| Dataset Size | `107 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | system-design | 49 |
 | crypto-blockchain | 14 |
 | trading-strategies | 11 |
-| stocks-markets | 7 |
+| stocks-markets | 8 |
 | language-specific | 6 |
 | probability-math | 4 |
 | devops | 3 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Insider trading and market manipulation — pump and dump patterns`
 - `Short squeeze mechanics — GameStop case study and probability`
 - `Stock IPO process — how companies go public, lock-up periods`
 - `Crypto tax basics — capital gains, income tax on staking, reporting`
 - `DEX vs CEX — decentralised vs centralised exchange tradeoffs`
-- `Automated market makers — how Uniswap pricing formula works`
 
 <!-- STATS_END -->
 
