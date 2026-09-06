@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **44** |
-| Last Updated | `2026-09-06T12:25:31.031072+00:00` |
-| Dataset Size | `44 entries` |
+| Total Topics Learned | **45** |
+| Last Updated | `2026-09-06T12:28:35.614105+00:00` |
+| Dataset Size | `45 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 25 |
+| system-design | 26 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fundamental analysis for stocks — P/E, EPS, revenue growth, margins`
 - `Stop loss strategies — fixed, trailing, ATR-based stop losses`
 - `Risk-reward ratio — calculating position size and setting targets`
 - `Portfolio diversification — correlation, asset allocation, rebalancing`
 - `Dollar cost averaging (DCA) — strategy, maths, backtest results`
-- `Greeks in options — delta, gamma, theta, vega explained simply`
 
 <!-- STATS_END -->
 
