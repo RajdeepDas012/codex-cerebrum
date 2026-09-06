@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 135,
-    "last_updated": "2026-09-06T23:44:57.808337+00:00",
-    "total_topics_learned": 135
+    "total_runs": 136,
+    "last_updated": "2026-09-06T23:48:33.103703+00:00",
+    "total_topics_learned": 136
   },
   "entries": [
     {
@@ -6767,6 +6767,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-06T23:44:57.808317+00:00",
       "run_number": 135
+    },
+    {
+      "topic": "Implementing saga pattern in Go with Temporal workflow engine for distributed transactions",
+      "category": "system-design",
+      "language": "go",
+      "difficulty": "advanced",
+      "summary": "The saga pattern manages distributed transactions by executing a sequence of local transactions across multiple microservices, backed by compensating actions if a step fails. Using Go with the Temporal workflow engine simplifies this by providing durable execution, automated state management, and built-in retry policies without manual state machine boilerplate.",
+      "key_points": [
+        "Temporal workflows act as the orchestrator for the saga, maintaining deterministic state across service boundaries and network partitions.",
+        "Compensating activities must be explicitly defined and registered alongside forward-moving transactional steps to ensure rollback capabilities.",
+        "Go's strong typing and struct definitions map cleanly to Temporal workflow and activity parameters for type-safe distributed processes.",
+        "Temporal handles timeouts, retries, and panic recovery automatically, shifting the burden of failure handling out of business logic code."
+      ],
+      "code_example": {
+        "language": "go",
+        "description": "Demonstrates a Go-based Temporal workflow executing a multi-step saga with a compensating rollback action on failure.",
+        "correct": "func OrderWorkflow(ctx workflow.Context, order Order) error {\n    ao := workflow.ActivityOptions{StartToCloseTimeout: time.Minute}\n    ctx = workflow.WithActivityOptions(ctx, ao)\n\n    var paymentID string\n    err := workflow.ExecuteActivity(ctx, ChargePayment, order).Get(ctx, &paymentID)\n    if err != nil {\n        return err\n    }\n\n    err = workflow.ExecuteActivity(ctx, ReserveInventory, order).Get(ctx, nil)\n    if err != nil {\n        // Compensate: refund payment\n        compCtx := workflow.WithActivityOptions(ctx, workflow.ActivityOptions{StartToCloseTimeout: time.Minute})\n        _ = workflow.ExecuteActivity(compCtx, RefundPayment, paymentID).Get(compCtx, nil)\n        return err\n    }\n    return nil\n}",
+        "wrong": "func OrderWorkflow(ctx workflow.Context, order Order) error {\n    // Mistake: Making direct network calls or using time.Sleep instead of workflow APIs\n    http.Post(\"http://payment-service/charge\", ...)\n    time.Sleep(5 * time.Second)\n    return nil\n}"
+      },
+      "common_mistakes": [
+        "Performing non-deterministic operations like calling external APIs or generating random UUIDs directly inside the workflow definition instead of inside activities.",
+        "Forgetting to design compensating actions to be idempotent, which can cause issues during automatic retries of failure recovery steps."
+      ],
+      "best_practices": [
+        "Keep workflow code strictly deterministic by restricting side effects, random generation, and direct I/O entirely to activities.",
+        "Design all compensating transactions to be safely repeatable (idempotent) to handle scenarios where network retries duplicate rollback execution.",
+        "Use distinct timeout configurations for activities and workflows to prevent hung distributed transactions from blocking system resources indefinitely."
+      ],
+      "when_to_use": "Use when orchestrating complex business processes across multiple microservices where distributed ACID transactions (two-phase commit) are impractical or unavailable.",
+      "when_not_to_use": "Avoid for simple monolithic applications or single-database operations where standard ACID transactions are natively supported and performant.",
+      "interview_questions": [
+        {
+          "question": "How does Temporal ensure workflow durability and crash recovery during a long-running saga?",
+          "answer": "Temporal records every workflow event and decision into an append-only event history. If a worker crashes, a new worker can replay the history to reconstruct the exact workflow state up to the failure point."
+        },
+        {
+          "question": "Why must compensating transactions in a saga pattern be idempotent?",
+          "answer": "Because network failures or timeouts can cause Temporal or the orchestrator to retry executing a compensating activity, meaning the rollback logic might be invoked multiple times for the same failure event."
+        }
+      ],
+      "related_topics": [
+        "Distributed consensus algorithms",
+        "CQRS and event sourcing patterns",
+        "Idempotency keys in distributed architectures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T23:48:33.103685+00:00",
+      "run_number": 136
     }
   ]
 }
