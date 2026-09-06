@@ -1,4 +1,4 @@
-name: 🧠 Gemini Coding Brain — Auto Learn
+name: Gemini Coding Brain - Auto Learn
 
 on:
   schedule:
@@ -10,53 +10,51 @@ permissions:
 
 jobs:
   learn:
-    name: Learn & Commit Loop
+    name: Learn and Commit Loop
     runs-on: ubuntu-latest
     timeout-minutes: 58
 
     steps:
-      - name: ⬇️ Checkout repo
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: 🐍 Set up Python 3.11
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: "pip"
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: 📝 Create helper scripts in /tmp
+      - name: Write helper scripts to tmp
         run: |
-          cat > /tmp/get_topic.py << 'PYEOF'
-          import json
-          try:
-              with open('data/knowledge_base.json') as f:
-                  d = json.load(f)
-              e = d['entries'][-1]
-              topic = e.get('topic', 'unknown')
-              cat = e.get('category', '?')
-              print(topic + ' [' + cat + ']')
-          except Exception:
-              print('update')
+          python3 << 'PYEOF'
+          topic_script = (
+              'import json\n'
+              'try:\n'
+              '    d = json.load(open("data/knowledge_base.json"))\n'
+              '    e = d["entries"][-1]\n'
+              '    print(e.get("topic","unknown") + " [" + e.get("category","?") + "]")\n'
+              'except Exception:\n'
+              '    print("update")\n'
+          )
+          run_script = (
+              'import json\n'
+              'try:\n'
+              '    d = json.load(open("data/knowledge_base.json"))\n'
+              '    print(str(d.get("meta",{}).get("total_runs","?")))\n'
+              'except Exception:\n'
+              '    print("?")\n'
+          )
+          open('/tmp/get_topic.py', 'w').write(topic_script)
+          open('/tmp/get_run.py', 'w').write(run_script)
+          print('Helper scripts ready in /tmp')
           PYEOF
 
-          cat > /tmp/get_run.py << 'PYEOF'
-          import json
-          try:
-              with open('data/knowledge_base.json') as f:
-                  d = json.load(f)
-              print(d.get('meta', {}).get('total_runs', '?'))
-          except Exception:
-              print('?')
-          PYEOF
-
-          echo "✅ Helper scripts created in /tmp"
-
-      - name: 🔁 Run every 3 minutes — 20 times per hour
+      - name: Run and commit every 3 minutes - 20 times per hour
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -65,30 +63,38 @@ jobs:
 
           for i in $(seq 1 20); do
             echo ""
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-            echo "🔁 Iteration $i of 20"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "==============================="
+            echo "Iteration $i of 20"
+            echo "==============================="
 
             git pull --rebase origin main || true
 
-            python agent/agent.py
+            echo "Running Gemini agent..."
+            python3 agent/agent.py
+            echo "Agent finished with exit code: $?"
 
-            git add -A
+            echo "Files changed:"
+            git status --short
 
-            if git diff --staged --quiet; then
-              echo "⏭️  No changes"
+            git add data/ export/ README.md || true
+
+            STAGED=$(git diff --cached --name-only)
+
+            if [ -z "$STAGED" ]; then
+              echo "No changes staged - agent may have failed"
             else
-              TOPIC=$(python /tmp/get_topic.py)
-              RUN=$(python /tmp/get_run.py)
-              git commit -m "🧠 Run #${RUN}: ${TOPIC}"
-              git push
-              echo "✅ Committed Run #${RUN}: ${TOPIC}"
+              TOPIC=$(python3 /tmp/get_topic.py)
+              RUN=$(python3 /tmp/get_run.py)
+              git commit -m "Run ${RUN}: ${TOPIC}"
+              git push origin main
+              echo "Committed: Run ${RUN} - ${TOPIC}"
             fi
 
             if [ $i -lt 20 ]; then
-              echo "⏳ Waiting 3 minutes..."
+              echo "Waiting 3 minutes before next run..."
               sleep 180
             fi
+
           done
 
-          echo "🎉 Hour done — 20 commits!"
+          echo "Done - 20 iterations complete!"
