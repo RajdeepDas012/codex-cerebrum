@@ -26,7 +26,7 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| trading-strategies | 1 |
+| trading-strategies | 14 |
 
 ## 🕐 Last 5 Topics Learned
 
