@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **14** |
-| Last Updated | `2026-09-06T01:19:39.546747+00:00` |
-| Dataset Size | `14 entries` |
+| Total Topics Learned | **15** |
+| Last Updated | `2026-09-06T05:19:53.896000+00:00` |
+| Dataset Size | `15 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,14 +24,15 @@
 | best-practices | 1 |
 | algorithms | 1 |
 | security | 1 |
+| system-design | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `WebSockets vs HTTP polling — real-time data strategies`
 - `OAuth 2.0 flow — step by step explanation`
 - `Database indexing — when and how to add indexes`
 - `Node.js event loop — understanding non-blocking I/O`
 - `Python decorators — how they work under the hood`
-- `CSS Grid vs Flexbox — choosing the right one`
 
 <!-- STATS_END -->
 
