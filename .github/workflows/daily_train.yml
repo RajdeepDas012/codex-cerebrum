@@ -29,9 +29,9 @@ jobs:
       - name: 📦 Install dependencies
         run: pip install -r requirements.txt
 
-      - name: 📝 Create helper scripts
+      - name: 📝 Create helper scripts in /tmp
         run: |
-          cat > get_topic.py << 'PYEOF'
+          cat > /tmp/get_topic.py << 'PYEOF'
           import json
           try:
               with open('data/knowledge_base.json') as f:
@@ -44,7 +44,7 @@ jobs:
               print('update')
           PYEOF
 
-          cat > get_run.py << 'PYEOF'
+          cat > /tmp/get_run.py << 'PYEOF'
           import json
           try:
               with open('data/knowledge_base.json') as f:
@@ -53,6 +53,8 @@ jobs:
           except Exception:
               print('?')
           PYEOF
+
+          echo "✅ Helper scripts created in /tmp"
 
       - name: 🔁 Run every 3 minutes — 20 times per hour
         env:
@@ -76,8 +78,8 @@ jobs:
             if git diff --staged --quiet; then
               echo "⏭️  No changes"
             else
-              TOPIC=$(python get_topic.py)
-              RUN=$(python get_run.py)
+              TOPIC=$(python /tmp/get_topic.py)
+              RUN=$(python /tmp/get_run.py)
               git commit -m "🧠 Run #${RUN}: ${TOPIC}"
               git push
               echo "✅ Committed Run #${RUN}: ${TOPIC}"
