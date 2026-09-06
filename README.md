@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **88** |
-| Last Updated | `2026-09-06T16:52:51.090828+00:00` |
-| Dataset Size | `88 entries` |
+| Total Topics Learned | **89** |
+| Last Updated | `2026-09-06T16:55:56.705060+00:00` |
+| Dataset Size | `89 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,9 +20,9 @@
 | system-design | 49 |
 | trading-strategies | 11 |
 | language-specific | 6 |
+| stocks-markets | 4 |
 | probability-math | 4 |
 | devops | 3 |
-| stocks-markets | 3 |
 | databases | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
@@ -33,11 +33,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Interest rates and stock market — Fed rate decisions and market reaction`
 - `Inflation impact on investments — real vs nominal returns`
 - `Compound interest in investing — calculating long term growth`
 - `Kelly Criterion — optimal position sizing formula`
 - `Probability in trading — expected value, win rate, risk of ruin`
-- `Correlation between assets — how to calculate and use it`
 
 <!-- STATS_END -->
 
