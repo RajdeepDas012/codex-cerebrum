@@ -101,7 +101,7 @@ cd gemini-coding-brain
 
 Go to [aistudio.google.com](https://aistudio.google.com) → Get API key → Copy it
 
-**It's free** — Gemini 1.5 Flash has a generous free tier.
+**It's free** — Gemini 3.5 Flash lite has a generous free tier.
 
 ## 🧪 Run Locally (Optional)
 
