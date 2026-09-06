@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 122,
-    "last_updated": "2026-09-06T21:26:39.141058+00:00",
-    "total_topics_learned": 122
+    "total_runs": 123,
+    "last_updated": "2026-09-06T21:30:02.758231+00:00",
+    "total_topics_learned": 123
   },
   "entries": [
     {
@@ -6142,6 +6142,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T21:26:39.141033+00:00",
       "run_number": 122
+    },
+    {
+      "topic": "Implementing rate limiting in FastAPI using Redis and sliding window algorithm",
+      "category": "web-dev",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Rate limiting protects web applications from abuse and denial-of-service attacks by capping user requests over a rolling time frame. Using Redis sorted sets with a sliding window algorithm provides high-performance, accurate throttling across distributed FastAPI instances.",
+      "key_points": [
+        "The sliding window algorithm eliminates boundary burst issues common in fixed-window limiters by factoring in the weight of the previous window's requests.",
+        "Redis sorted sets (ZSET) store request timestamps as scores, allowing efficient range queries and cleanups using atomic pipeline transactions.",
+        "FastAPI Dependency Injection system provides a clean, reusable mechanism to intercept requests, evaluate rate limits, and inject custom headers.",
+        "Proper rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset) should be returned to clients for transparent API consumption."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "A FastAPI dependency implementing a sliding window rate limiter using Redis ZSET.",
+        "correct": "import time\nfrom fastapi import FastAPI, HTTPException, Request\nimport redis.asyncio as redis\n\napp = FastAPI()\nredis_client = redis.Redis(host='localhost', port=6379, decode_responses=True)\n\nasync def sliding_window_rate_limiter(request: Request, limit: int = 5, window: int = 60):\n    client_ip = request.client.host\n    key = f\"rate_limit:{client_ip}\"\n    now = time.time()\n    clear_before = now - window\n    \n    async with redis_client.pipeline() as pipe:\n        await pipe.zremrangebyscore(key, 0, clear_before)\n        await pipe.zadd(key, {str(now): now})\n        await pipe.zcard(key)\n        await pipe.expire(key, window)\n        _, _, request_count, _ = await pipe.execute()\n        \n    if request_count > limit:\n        raise HTTPException(status_code=429, detail=\"Rate limit exceeded\")\n    return True\n\n@app.get(\"/data\")\nasync def get_data(allowed: bool = FastAPI(dependency=sliding_window_rate_limiter)):\n    return {\"status\": \"success\"}",
+        "wrong": "async def bad_limiter(request: Request):\n    # Using standard keys with INCR without sliding window or expiry management\n    count = await redis_client.get(request.client.host)\n    if count and int(count) > 5:\n        raise HTTPException(status_code=429)\n    await redis_client.incr(request.client.host)"
+      },
+      "common_mistakes": [
+        "Failing to use Redis transactions (pipelines) or Lua scripts, leading to race conditions under concurrent requests.",
+        "Neglecting to set expiration times on Redis keys, resulting in unbounded memory growth over time."
+      ],
+      "best_practices": [
+        "Use Redis pipelining to execute multiple commands (remove old scores, add current timestamp, count remaining) in a single network round trip.",
+        "Identify clients using a combination of API keys, authenticated user IDs, and IP addresses rather than IP alone behind proxies.",
+        "Fail open gracefully if Redis goes down, ensuring database outages do not block all valid user traffic."
+      ],
+      "when_to_use": "Use this when building high-traffic production FastAPI services that require precise traffic shaping, fair resource allocation, and protection against scraping or brute-force attacks.",
+      "when_not_to_use": "Avoid this for lightweight internal microservices behind a trusted service mesh or API gateway that already handles global rate limiting.",
+      "interview_questions": [
+        {
+          "question": "How does the sliding window log algorithm differ from a fixed window counter, and what are its trade-offs?",
+          "answer": "Sliding window logs track every request timestamp in a sorted set, preventing edge-case traffic bursts at window boundaries. The trade-off is higher memory consumption in Redis compared to simple fixed-window integer counters."
+        },
+        {
+          "question": "How do you handle race conditions in Redis when multiple concurrent requests arrive for the same user?",
+          "answer": "Race conditions are prevented by wrapping multi-step Redis commands inside a pipeline or atomic Lua script, ensuring read-modify-write operations execute sequentially on the Redis server."
+        }
+      ],
+      "related_topics": [
+        "Distributed caching with Redis and Python",
+        "FastAPI dependency injection advanced patterns",
+        "API security and mitigating DDoS attacks"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T21:30:02.758210+00:00",
+      "run_number": 123
     }
   ]
 }
