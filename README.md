@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **63** |
-| Last Updated | `2026-09-06T13:49:31.996644+00:00` |
-| Dataset Size | `63 entries` |
+| Total Topics Learned | **64** |
+| Last Updated | `2026-09-06T13:52:36.997919+00:00` |
+| Dataset Size | `64 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 44 |
+| system-design | 45 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `VWAP (Volume Weighted Average Price) — intraday trading strategy`
 - `Gap trading — breakaway gap, runaway gap, exhaustion gap`
 - `Flag and pennant patterns — trend continuation trading`
 - `Triangle patterns — ascending, descending, symmetrical breakouts`
 - `Double top and double bottom — trading the pattern correctly`
-- `Cup and handle pattern — formation, volume, breakout confirmation`
 
 <!-- STATS_END -->
 
