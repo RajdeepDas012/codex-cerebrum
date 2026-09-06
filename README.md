@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **109** |
-| Last Updated | `2026-09-06T19:20:16.266270+00:00` |
-| Dataset Size | `109 entries` |
+| Total Topics Learned | **110** |
+| Last Updated | `2026-09-06T19:23:21.610469+00:00` |
+| Dataset Size | `110 entries` |
 
 ## 📂 Categories Learned
 
@@ -31,14 +31,15 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| technical-analysis | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `On-balance volume indicator — how volume predicts price direction`
 - `Google Trends for crypto — how search volume predicts price moves`
 - `Sentiment analysis for trading — how to use news and social data`
 - `Insider trading and market manipulation — pump and dump patterns`
 - `Short squeeze mechanics — GameStop case study and probability`
-- `Stock IPO process — how companies go public, lock-up periods`
 
 <!-- STATS_END -->
 
