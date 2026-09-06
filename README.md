@@ -9,17 +9,17 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **74** |
-| Last Updated | `2026-09-06T15:18:32.967461+00:00` |
-| Dataset Size | `74 entries` |
+| Total Topics Learned | **75** |
+| Last Updated | `2026-09-06T15:21:38.017886+00:00` |
+| Dataset Size | `75 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
+| trading-strategies | 7 |
 | language-specific | 6 |
-| trading-strategies | 6 |
 | devops | 3 |
 | databases | 2 |
 | web-dev | 2 |
@@ -30,11 +30,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Algorithmic trading — building a simple trading bot logic`
 - `Position trading strategy — long term trend following`
 - `Swing trading strategy — holding for days to weeks`
 - `Scalping strategy — timeframes, tools, risk management`
 - `Breakout trading strategy — entry, stop loss, target calculation`
-- `Mean reversion strategy — when price returns to average`
 
 <!-- STATS_END -->
 
