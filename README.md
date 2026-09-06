@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **61** |
-| Last Updated | `2026-09-06T13:43:21.356265+00:00` |
-| Dataset Size | `61 entries` |
+| Total Topics Learned | **62** |
+| Last Updated | `2026-09-06T13:46:26.453188+00:00` |
+| Dataset Size | `62 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 42 |
+| system-design | 43 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Flag and pennant patterns — trend continuation trading`
 - `Triangle patterns — ascending, descending, symmetrical breakouts`
 - `Double top and double bottom — trading the pattern correctly`
 - `Cup and handle pattern — formation, volume, breakout confirmation`
 - `Head and shoulders pattern — identification, neckline, price target`
-- `Wyckoff Method — accumulation and distribution schematic`
 
 <!-- STATS_END -->
 
