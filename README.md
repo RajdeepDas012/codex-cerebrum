@@ -17,15 +17,15 @@
 
 | Category | Topics |
 |---|---|
-| system-design | 49 |
-| language-specific | 6 |
+| system-design | 9 |
+| language-specific | 12 |
 | devops | 3 |
 | databases | 2 |
 | web-dev | 2 |
-| algorithms | 2 |
-| security | 2 |
-| best-practices | 1 |
-| testing | 1 |
+| algorithms | 6 |
+| security | 4 |
+| best-practices | 7 |
+| testing | 6 |
 | trading-strategies | 14 |
 
 ## 🕐 Last 5 Topics Learned
