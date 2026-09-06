@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **100** |
-| Last Updated | `2026-09-06T18:52:26.040992+00:00` |
-| Dataset Size | `100 entries` |
+| Total Topics Learned | **101** |
+| Last Updated | `2026-09-06T18:55:31.563563+00:00` |
+| Dataset Size | `101 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | system-design | 49 |
 | trading-strategies | 11 |
-| crypto-blockchain | 10 |
+| crypto-blockchain | 11 |
 | language-specific | 6 |
 | stocks-markets | 5 |
 | probability-math | 4 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Impermanent loss explained — calculation and when it hurts you`
 - `Liquidity mining and yield farming — APY vs APR, impermanent loss`
 - `Staking and validator nodes — how to earn yield on PoS chains`
 - `Proof of Work mining — hash rate, difficulty adjustment, profitability`
 - `Gas fees on Ethereum — how they work, EIP-1559 base fee burn`
-- `Exchange hacks and security — famous hacks and how to protect funds`
 
 <!-- STATS_END -->
 
