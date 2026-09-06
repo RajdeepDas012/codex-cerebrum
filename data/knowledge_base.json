@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 130,
-    "last_updated": "2026-09-06T23:28:37.866488+00:00",
-    "total_topics_learned": 130
+    "total_runs": 131,
+    "last_updated": "2026-09-06T23:31:52.536378+00:00",
+    "total_topics_learned": 131
   },
   "entries": [
     {
@@ -6527,6 +6527,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T23:28:37.866470+00:00",
       "run_number": 130
+    },
+    {
+      "topic": "Implementing database row-level security in PostgreSQL with session variables and Django ORM middleware",
+      "category": "databases",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "PostgreSQL Row-Level Security (RLS) restricts data access per user directly at the database layer using policies. By integrating custom Django middleware, you can dynamically pass the current authenticated user's ID into a PostgreSQL session variable to enforce tenant or user isolation automatically.",
+      "key_points": [
+        "PostgreSQL RLS policies evaluate conditions on every SELECT, INSERT, UPDATE, and DELETE query for a given table.",
+        "Custom Django middleware executes within a transaction to set a database session variable using `SET LOCAL`.",
+        "PostgreSQL policies retrieve the session variable via `current_setting('app.current_user_id')` to filter rows dynamically.",
+        "Bypassing RLS requires defining tables with `FORCE ROW LEVEL SECURITY` and granting superuser or bypassrls privileges carefully."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Django middleware setting a PostgreSQL session variable for RLS enforcement",
+        "correct": "class RLSMiddleware:\n    def __init__(self, get_response):\n        self.get_response = get_response\n\n    def __call__(self, request):\n        user_id = request.user.id if request.user.is_authenticated else 'NULL'\n        with connection.cursor() as cursor:\n            cursor.execute(f\"SET LOCAL app.current_user_id = '{user_id}';\")\n        return self.get_response(request)",
+        "wrong": "class RLSMiddleware:\n    def __call__(self, request):\n        # Incorrectly uses global SET instead of SET LOCAL inside a transaction\n        with connection.cursor() as cursor:\n            cursor.execute(f\"SET app.current_user_id = '{request.user.id}';\")\n        return self.get_response(request)"
+      },
+      "common_mistakes": [
+        "Using global `SET` instead of `SET LOCAL`, which leaks session variables across pooled database connections.",
+        "Forgetting to apply `ALTER TABLE my_model ENABLE ROW LEVEL SECURITY;` and `FORCE ROW LEVEL SECURITY;` in migration files."
+      ],
+      "best_practices": [
+        "Always use `SET LOCAL` so transaction pooling systems do not bleed tenant state into subsequent requests.",
+        "Combine PostgreSQL RLS with Django's ORM application-level filtering as a robust defense-in-depth architecture.",
+        "Write comprehensive integration tests that explicitly assert cross-tenant data access is blocked at the database layer."
+      ],
+      "when_to_use": "Multi-tenant applications requiring strict data isolation enforced at the storage layer, protecting against application-level logic flaws.",
+      "when_not_to_use": "Simple single-tenant applications or projects with complex, highly dynamic analytical cross-tenant queries that degrade performance under RLS.",
+      "interview_questions": [
+        {
+          "question": "Why must you use SET LOCAL rather than SET when configuring session variables for connection pooling?",
+          "answer": "SET LOCAL scopes the configuration parameter to the current transaction only, preventing state leakage across requests when using connection pools like PgBouncer."
+        },
+        {
+          "question": "How do you ensure that database table owners are also restricted by Row-Level Security policies in PostgreSQL?",
+          "answer": "You must explicitly execute ALTER TABLE table_name FORCE ROW LEVEL SECURITY, because table owners bypass RLS by default unless forced."
+        }
+      ],
+      "related_topics": [
+        "PostgreSQL Row-Level Security policies",
+        "Django database connection hooks",
+        "Multi-tenant data isolation patterns"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-06T23:31:52.536359+00:00",
+      "run_number": 131
     }
   ]
 }

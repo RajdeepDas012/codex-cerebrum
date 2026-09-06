@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **130** |
-| Last Updated | `2026-09-06T23:28:37.866488+00:00` |
-| Dataset Size | `130 entries` |
+| Total Topics Learned | **131** |
+| Last Updated | `2026-09-06T23:31:52.536378+00:00` |
+| Dataset Size | `131 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,8 +25,8 @@
 | technical-analysis | 7 |
 | web-dev | 5 |
 | probability-math | 5 |
+| databases | 4 |
 | devops | 4 |
-| databases | 3 |
 | market-analysis | 3 |
 | algorithms | 2 |
 | security | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing database row-level security in PostgreSQL with session variables and Django ORM middleware`
 - `Implementing outbox pattern in C# .NET with MassTransit and Entity Framework Core for reliable event publishing`
 - `Implementing idempotency keys in Express.js with Redis and middleware for duplicate payment prevention`
 - `Implementing distributed tracing in Spring Boot using OpenTelemetry and Jaeger`
 - `Implementing circuit breaker pattern in Go using Sony/gobreaker and context cancellation`
-- `Implementing optimistic locking in Django ORM with F expressions and atomic transactions`
 
 <!-- STATS_END -->
 
