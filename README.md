@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **32** |
-| Last Updated | `2026-09-06T11:29:33.934886+00:00` |
-| Dataset Size | `32 entries` |
+| Total Topics Learned | **33** |
+| Last Updated | `2026-09-06T11:32:38.849678+00:00` |
+| Dataset Size | `33 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 13 |
+| system-design | 14 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `DeFi (Decentralised Finance) — protocols, yield farming, liquidity pools`
 - `Market cap vs fully diluted valuation in crypto — what they mean`
 - `Trading volume analysis — how volume confirms price movements`
 - `Fibonacci retracement levels — how to draw and trade them`
 - `Bollinger Bands — squeeze, breakout, and mean reversion strategies`
-- `MACD indicator — how to read crossovers and divergence`
 
 <!-- STATS_END -->
 
