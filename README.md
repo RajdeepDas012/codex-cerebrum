@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **77** |
-| Last Updated | `2026-09-06T15:27:49.299310+00:00` |
-| Dataset Size | `77 entries` |
+| Total Topics Learned | **78** |
+| Last Updated | `2026-09-06T15:30:55.380964+00:00` |
+| Dataset Size | `78 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,17 +25,17 @@
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
+| stocks-markets | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| stocks-markets | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Sortino ratio — downside risk measurement for portfolios`
 - `Sharpe ratio — measuring risk-adjusted return of a portfolio`
 - `Backtesting a trading strategy — how to do it correctly without bias`
 - `Algorithmic trading — building a simple trading bot logic`
 - `Position trading strategy — long term trend following`
-- `Swing trading strategy — holding for days to weeks`
 
 <!-- STATS_END -->
 
