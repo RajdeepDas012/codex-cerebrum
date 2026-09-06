@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **68** |
-| Last Updated | `2026-09-06T14:04:59.822842+00:00` |
-| Dataset Size | `68 entries` |
+| Total Topics Learned | **69** |
+| Last Updated | `2026-09-06T15:03:04.462491+00:00` |
+| Dataset Size | `69 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,14 +26,15 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| trading-strategies | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Momentum trading strategy — how to identify and ride momentum`
 - `Statistical arbitrage — pairs trading, mean reversion strategy`
 - `Arbitrage trading — crypto exchange arbitrage, triangular arbitrage`
 - `High frequency trading — how algorithms affect retail traders`
 - `Market microstructure — how exchanges match orders, slippage`
-- `VWAP (Volume Weighted Average Price) — intraday trading strategy`
 
 <!-- STATS_END -->
 
