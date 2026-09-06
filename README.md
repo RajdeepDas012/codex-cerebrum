@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **94** |
-| Last Updated | `2026-09-06T17:11:25.245259+00:00` |
-| Dataset Size | `94 entries` |
+| Total Topics Learned | **95** |
+| Last Updated | `2026-09-06T17:14:30.899687+00:00` |
+| Dataset Size | `95 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,8 +21,8 @@
 | trading-strategies | 11 |
 | language-specific | 6 |
 | stocks-markets | 5 |
+| crypto-blockchain | 5 |
 | probability-math | 4 |
-| crypto-blockchain | 4 |
 | devops | 3 |
 | databases | 2 |
 | web-dev | 2 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto wallet types — hot vs cold wallet, seed phrase security`
 - `Cross-chain bridges — how they work and bridge hack risks`
 - `Layer 2 scaling solutions — Lightning Network, Polygon, Arbitrum`
 - `Crypto derivatives — futures, options, perpetuals explained`
 - `Stablecoin mechanics — USDT, USDC, DAI how they maintain peg`
-- `Quantitative easing — how money printing affects crypto and stocks`
 
 <!-- STATS_END -->
 
