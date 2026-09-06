@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **20** |
-| Last Updated | `2026-09-06T10:00:42.122642+00:00` |
-| Dataset Size | `20 entries` |
+| Total Topics Learned | **21** |
+| Last Updated | `2026-09-06T10:53:08.683276+00:00` |
+| Dataset Size | `21 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,17 +23,17 @@
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
+| system-design | 2 |
 | best-practices | 1 |
-| system-design | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin fundamentals — how it works, mining, halving cycles and price impact`
 - `Unit testing patterns — mocking, fixtures, assertions`
 - `Environment variables best practices — secrets management`
 - `Linux cron jobs — scheduling tasks correctly`
 - `Memoization and caching — reducing redundant computation`
-- `Python context managers — writing your own with statement`
 
 <!-- STATS_END -->
 
