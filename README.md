@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **120** |
-| Last Updated | `2026-09-06T21:20:28.093041+00:00` |
-| Dataset Size | `120 entries` |
+| Total Topics Learned | **121** |
+| Last Updated | `2026-09-06T21:23:33.258765+00:00` |
+| Dataset Size | `121 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | stocks-markets | 9 |
 | technical-analysis | 7 |
 | language-specific | 6 |
-| probability-math | 4 |
+| probability-math | 5 |
 | devops | 3 |
 | market-analysis | 3 |
 | databases | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Calculating compound annual growth rate (CAGR) with code`
 - `Building a stock screener — filtering stocks by technical criteria`
 - `Candlestick charting with Python — matplotlib and mplfinance library`
 - `Heatmaps for portfolio visualisation — how to read and build them`
 - `Crypto dominance charts — Bitcoin dominance and altcoin season`
-- `Sector rotation strategy — moving capital between market sectors`
 
 <!-- STATS_END -->
 
