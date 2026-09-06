@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **89** |
-| Last Updated | `2026-09-06T16:55:56.705060+00:00` |
-| Dataset Size | `89 entries` |
+| Total Topics Learned | **90** |
+| Last Updated | `2026-09-06T16:59:02.291672+00:00` |
+| Dataset Size | `90 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | system-design | 49 |
 | trading-strategies | 11 |
 | language-specific | 6 |
-| stocks-markets | 4 |
+| stocks-markets | 5 |
 | probability-math | 4 |
 | devops | 3 |
 | databases | 2 |
@@ -33,11 +33,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Quantitative easing — how money printing affects crypto and stocks`
 - `Interest rates and stock market — Fed rate decisions and market reaction`
 - `Inflation impact on investments — real vs nominal returns`
 - `Compound interest in investing — calculating long term growth`
 - `Kelly Criterion — optimal position sizing formula`
-- `Probability in trading — expected value, win rate, risk of ruin`
 
 <!-- STATS_END -->
 
