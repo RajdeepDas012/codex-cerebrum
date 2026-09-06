@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 127,
-    "last_updated": "2026-09-06T21:44:26.645914+00:00",
-    "total_topics_learned": 127
+    "total_runs": 128,
+    "last_updated": "2026-09-06T21:47:32.813062+00:00",
+    "total_topics_learned": 128
   },
   "entries": [
     {
@@ -6383,6 +6383,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-06T21:44:26.645893+00:00",
       "run_number": 127
+    },
+    {
+      "topic": "Implementing distributed tracing in Spring Boot using OpenTelemetry and Jaeger",
+      "category": "devops",
+      "language": "Java",
+      "difficulty": "advanced",
+      "summary": "Distributed tracing tracks requests as they flow across microservices by propagating trace context headers and exporting telemetry data to an aggregator. Using OpenTelemetry with Spring Boot allows vendor-agnostic instrumentation, while Jaeger provides the UI and storage backend to visualize the resulting execution spans and bottlenecks.",
+      "key_points": [
+        "OpenTelemetry (OTel) provides standardized APIs and SDKs for generating traces, metrics, and logs.",
+        "Spring Boot Actuator and Micrometer Tracing automatically inject W3C trace context headers (traceparent) into outgoing HTTP and messaging requests.",
+        "The OpenTelemetry Java Agent can be attached at runtime via bytecode manipulation to auto-instrument standard libraries like Spring MVC, JDBC, and RestClient.",
+        "Jaeger collector receives spans via OTLP (OpenTelemetry Protocol) and indexes them for fast querying in the Jaeger UI."
+      ],
+      "code_example": {
+        "language": "java",
+        "description": "Custom manual span creation using OpenTelemetry API within a Spring Boot service method",
+        "correct": "import io.opentelemetry.api.trace.Tracer;\nimport io.opentelemetry.api.trace.Span;\nimport org.springframework.stereotype.Service;\n\n@Service\npublic class OrderService {\n    private final Tracer tracer;\n    \n    public OrderService(Tracer tracer) {\n        this.tracer = tracer;\n    }\n    \n    public void processOrder(String orderId) {\n        Span span = tracer.spanBuilder(\"processOrderCustomSpan\").startSpan();\n        try (var scope = span.makeCurrent()) {\n            span.setAttribute(\"order.id\", orderId);\n            // Business logic here\n        } catch (Throwable t) {\n            span.recordException(t);\n            throw t;\n        } finally {\n            span.end();\n        }\n    }\n}",
+        "wrong": "public void processOrder(String orderId) {\n    Span span = Span.current();\n    span.setAttribute(\"order.id\", orderId);\n    // Modifying the current span without activating a new scope or managing exceptions properly leads to missing trace hierarchies and orphan spans\n}"
+      },
+      "common_mistakes": [
+        "Failing to propagate trace context across asynchronous threads or thread pools, causing broken traces.",
+        "Over-sampling high-traffic endpoints in production, which floods the Jaeger backend with excessive storage costs and network bandwidth."
+      ],
+      "best_practices": [
+        "Configure probabilistic or tail-based sampling rates in high-throughput production environments to limit tracing overhead.",
+        "Always record and attach business-critical identifiers as span attributes (e.g., customer ID, order ID) to simplify filtering in Jaeger.",
+        "Use the OpenTelemetry Java Agent for zero-code auto-instrumentation before writing custom manual span code."
+      ],
+      "when_to_use": "In complex microservice architectures where requests traverse multiple network boundaries, service meshes, and asynchronous message queues, making debugging and latency analysis difficult.",
+      "when_not_to_use": "For monolithic applications running on a single database where standard application logging and APM profilers are sufficient to locate performance bottlenecks.",
+      "interview_questions": [
+        {
+          "question": "How does W3C Trace Context propagation work across HTTP calls in Spring Boot microservices?",
+          "answer": "Micrometer Tracing automatically injects standard headers like 'traceparent' and 'tracestate' into outgoing HTTP client requests, which downstream services extract to continue the existing trace ID."
+        },
+        {
+          "question": "What is the difference between head-based and tail-based sampling in distributed tracing?",
+          "answer": "Head-based sampling decides whether to keep or drop a trace at its initiation point, whereas tail-based sampling makes the decision at the end of the trace, allowing systems to sample rare events like errors or slow requests regardless of traffic volume."
+        }
+      ],
+      "related_topics": [
+        "Micrometer Tracing and Observation API",
+        "OpenTelemetry Collector configuration and deployment",
+        "Centralized log aggregation using ELK or Loki with trace ID correlation"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-06T21:47:32.813040+00:00",
+      "run_number": 128
     }
   ]
 }
