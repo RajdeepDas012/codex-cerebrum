@@ -153,6 +153,6 @@ Each entry in `knowledge_base.json` looks like:
 
 ---
 
-##📂 Knowledge Base Format
+### 📂 Licence
 
 MIT — use it, fork it, build on it.
