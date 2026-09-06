@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **38** |
-| Last Updated | `2026-09-06T11:48:09.532660+00:00` |
-| Dataset Size | `38 entries` |
+| Total Topics Learned | **39** |
+| Last Updated | `2026-09-06T12:10:05.781943+00:00` |
+| Dataset Size | `39 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 19 |
+| system-design | 20 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Options trading basics — calls, puts, strike price, expiry`
 - `Short selling stocks — mechanics, margin, short squeeze explained`
 - `Market orders vs limit orders vs stop orders — when to use each`
 - `Order book analysis — bid-ask spread, market depth, wall detection`
 - `Tokenomics — supply, distribution, vesting schedules and price impact`
-- `NFT mechanics — minting, royalties, marketplace fees, floor price`
 
 <!-- STATS_END -->
 
