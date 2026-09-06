@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **16** |
-| Last Updated | `2026-09-06T05:59:42.172695+00:00` |
-| Dataset Size | `16 entries` |
+| Total Topics Learned | **17** |
+| Last Updated | `2026-09-06T06:29:45.086054+00:00` |
+| Dataset Size | `17 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,18 +21,18 @@
 | databases | 2 |
 | devops | 2 |
 | web-dev | 2 |
+| algorithms | 2 |
 | best-practices | 1 |
-| algorithms | 1 |
 | security | 1 |
 | system-design | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Memoization and caching — reducing redundant computation`
 - `Python context managers — writing your own with statement`
 - `WebSockets vs HTTP polling — real-time data strategies`
 - `OAuth 2.0 flow — step by step explanation`
 - `Database indexing — when and how to add indexes`
-- `Node.js event loop — understanding non-blocking I/O`
 
 <!-- STATS_END -->
 
