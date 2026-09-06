@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **131** |
-| Last Updated | `2026-09-06T23:31:52.536378+00:00` |
-| Dataset Size | `131 entries` |
+| Total Topics Learned | **132** |
+| Last Updated | `2026-09-06T23:35:04.237931+00:00` |
+| Dataset Size | `132 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 51 |
+| system-design | 52 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing token bucket rate limiting in Python using Redis and Lua scripts for atomic operations`
 - `Implementing database row-level security in PostgreSQL with session variables and Django ORM middleware`
 - `Implementing outbox pattern in C# .NET with MassTransit and Entity Framework Core for reliable event publishing`
 - `Implementing idempotency keys in Express.js with Redis and middleware for duplicate payment prevention`
 - `Implementing distributed tracing in Spring Boot using OpenTelemetry and Jaeger`
-- `Implementing circuit breaker pattern in Go using Sony/gobreaker and context cancellation`
 
 <!-- STATS_END -->
 
