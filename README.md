@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **24** |
-| Last Updated | `2026-09-06T11:02:26.243756+00:00` |
-| Dataset Size | `24 entries` |
+| Total Topics Learned | **25** |
+| Last Updated | `2026-09-06T11:05:31.249973+00:00` |
+| Dataset Size | `25 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | language-specific | 6 |
-| system-design | 5 |
+| system-design | 6 |
 | devops | 3 |
 | databases | 2 |
 | web-dev | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Support and resistance levels — how to identify and trade them`
 - `Candlestick chart patterns — doji, hammer, engulfing, shooting star`
 - `Blockchain consensus mechanisms — PoW vs PoS vs DPoS explained`
 - `Ethereum smart contracts — how they work and real use cases`
 - `Bitcoin fundamentals — how it works, mining, halving cycles and price impact`
-- `Unit testing patterns — mocking, fixtures, assertions`
 
 <!-- STATS_END -->
 
