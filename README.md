@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **81** |
-| Last Updated | `2026-09-06T15:40:12.442858+00:00` |
-| Dataset Size | `81 entries` |
+| Total Topics Learned | **82** |
+| Last Updated | `2026-09-06T15:43:17.992635+00:00` |
+| Dataset Size | `82 entries` |
 
 ## 📂 Categories Learned
 
@@ -28,14 +28,15 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| probability-math | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Monte Carlo simulation for portfolio risk — probability modelling`
 - `Alpha in trading — generating returns above the benchmark`
 - `Beta of a stock — market sensitivity and portfolio risk`
 - `Maximum drawdown — calculating and managing portfolio drawdowns`
 - `Sortino ratio — downside risk measurement for portfolios`
-- `Sharpe ratio — measuring risk-adjusted return of a portfolio`
 
 <!-- STATS_END -->
 
