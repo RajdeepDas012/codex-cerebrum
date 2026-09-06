@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **57** |
-| Last Updated | `2026-09-06T13:30:59.693987+00:00` |
-| Dataset Size | `57 entries` |
+| Total Topics Learned | **58** |
+| Last Updated | `2026-09-06T13:34:05.048782+00:00` |
+| Dataset Size | `58 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 38 |
+| system-design | 39 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Head and shoulders pattern — identification, neckline, price target`
 - `Wyckoff Method — accumulation and distribution schematic`
 - `Elliott Wave Theory — impulse waves, corrective waves, counting rules`
 - `Ichimoku Cloud — tenkan, kijun, senkou, chikou explained`
 - `Open interest in futures — how to interpret rising and falling OI`
-- `Funding rates in perpetual futures — how they work and what they signal`
 
 <!-- STATS_END -->
 
