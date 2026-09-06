@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **49** |
-| Last Updated | `2026-09-06T12:40:57.159907+00:00` |
-| Dataset Size | `49 entries` |
+| Total Topics Learned | **50** |
+| Last Updated | `2026-09-06T12:44:02.149806+00:00` |
+| Dataset Size | `50 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 30 |
+| system-design | 31 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fear and Greed Index — how it is calculated and how to use it`
 - `Stock market cycles — bull market, bear market, correction phases`
 - `Crypto market cycles — accumulation, markup, distribution, markdown`
 - `Whale wallet tracking — how to find and interpret large transactions`
 - `On-chain metrics for crypto — UTXO, active addresses, exchange flows`
-- `Fundamental analysis for stocks — P/E, EPS, revenue growth, margins`
 
 <!-- STATS_END -->
 
