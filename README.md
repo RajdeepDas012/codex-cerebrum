@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **30** |
-| Last Updated | `2026-09-06T11:22:30.852434+00:00` |
-| Dataset Size | `30 entries` |
+| Total Topics Learned | **31** |
+| Last Updated | `2026-09-06T11:25:35.842808+00:00` |
+| Dataset Size | `31 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 11 |
+| system-design | 12 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Trading volume analysis — how volume confirms price movements`
 - `Fibonacci retracement levels — how to draw and trade them`
 - `Bollinger Bands — squeeze, breakout, and mean reversion strategies`
 - `MACD indicator — how to read crossovers and divergence`
 - `RSI (Relative Strength Index) — calculation, overbought, oversold signals`
-- `Moving averages — SMA vs EMA vs WMA and trading signals`
 
 <!-- STATS_END -->
 
