@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **19** |
-| Last Updated | `2026-09-06T09:57:36.866381+00:00` |
-| Dataset Size | `19 entries` |
+| Total Topics Learned | **20** |
+| Last Updated | `2026-09-06T10:00:42.122642+00:00` |
+| Dataset Size | `20 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,14 +25,15 @@
 | security | 2 |
 | best-practices | 1 |
 | system-design | 1 |
+| testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Unit testing patterns — mocking, fixtures, assertions`
 - `Environment variables best practices — secrets management`
 - `Linux cron jobs — scheduling tasks correctly`
 - `Memoization and caching — reducing redundant computation`
 - `Python context managers — writing your own with statement`
-- `WebSockets vs HTTP polling — real-time data strategies`
 
 <!-- STATS_END -->
 
