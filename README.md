@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **80** |
-| Last Updated | `2026-09-06T15:37:06.725572+00:00` |
-| Dataset Size | `80 entries` |
+| Total Topics Learned | **81** |
+| Last Updated | `2026-09-06T15:40:12.442858+00:00` |
+| Dataset Size | `81 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
-| trading-strategies | 9 |
+| trading-strategies | 10 |
 | language-specific | 6 |
 | devops | 3 |
 | stocks-markets | 3 |
@@ -31,11 +31,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Alpha in trading — generating returns above the benchmark`
 - `Beta of a stock — market sensitivity and portfolio risk`
 - `Maximum drawdown — calculating and managing portfolio drawdowns`
 - `Sortino ratio — downside risk measurement for portfolios`
 - `Sharpe ratio — measuring risk-adjusted return of a portfolio`
-- `Backtesting a trading strategy — how to do it correctly without bias`
 
 <!-- STATS_END -->
 
