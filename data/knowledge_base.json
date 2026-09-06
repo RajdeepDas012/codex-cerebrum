@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 132,
-    "last_updated": "2026-09-06T23:35:04.237931+00:00",
-    "total_topics_learned": 132
+    "total_runs": 133,
+    "last_updated": "2026-09-06T23:38:13.308007+00:00",
+    "total_topics_learned": 133
   },
   "entries": [
     {
@@ -6623,6 +6623,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T23:35:04.237913+00:00",
       "run_number": 132
+    },
+    {
+      "topic": "Implementing zero-downtime database schema migrations in Rails using strong_migrations gem and multi-step deployment patterns",
+      "category": "databases",
+      "language": "ruby",
+      "difficulty": "advanced",
+      "summary": "Zero-downtime database migrations prevent application outages during schema changes by breaking dangerous operations into safe, backwards-compatible steps. Using tools like the strong_migrations gem combined with multi-phase deployments ensures continuous uptime for high-traffic Ruby on Rails applications.",
+      "key_points": [
+        "Adding non-nullable columns with defaults or renaming columns causes table locks and downtime without multi-step deployment phases.",
+        "The strong_migrations gem acts as a safety guardrail in CI/CD pipelines, blocking unsafe DDL statements before they reach production.",
+        "Split operations into distinct releases: first introduce new nullable columns, backfill data asynchronously, deploy application code supporting both states, and finally drop old columns.",
+        "PostgreSQL requires careful handling of timeouts, statement timeouts, and exclusive locks when running migrations on massive tables."
+      ],
+      "code_example": {
+        "language": "ruby",
+        "description": "Demonstrates safely adding a new index concurrently in Rails to prevent table locking.",
+        "correct": "class AddIndexConcurrentlyToUsers < ActiveRecord::Migration[7.0]\n  disable_ddl_transaction!\n\n  def change\n    add_index :users, :email, algorithm: :concurrently\n  end\nend",
+        "wrong": "class AddIndexUnsafelyToUsers < ActiveRecord::Migration[7.0]\n  def change\n    add_index :users, :email\n  end\nend"
+      },
+      "common_mistakes": [
+        "Running operations like adding a non-nullable column without a default value inside a single transaction on a large table.",
+        "Renaming a database column or table in a single deployment, which immediately breaks running application instances that still reference the old name."
+      ],
+      "best_practices": [
+        "Always disable DDL transactions when running operations that support concurrent execution like index creation.",
+        "Use the 'safely' gem or custom batch scripts to backfill data for new columns in small, throttled batches rather than a single massive update query.",
+        "Configure strong_migrations in development and staging to catch breaking schema changes early in the development lifecycle."
+      ],
+      "when_to_use": "Use this approach whenever updating production databases in high-availability Rails systems where downtime or table locks impact user experience or SLAs.",
+      "when_not_to_use": "Avoid multi-step deployment complexity for early-stage prototypes, internal tools, or databases with negligible table sizes where brief maintenance windows are acceptable.",
+      "interview_questions": [
+        {
+          "question": "Why does adding a column with a default value cause a table lock in older versions of PostgreSQL and how do you avoid it?",
+          "answer": "In older PostgreSQL versions, adding a column with a default rewrites the entire table, taking an ACCESS EXCLUSIVE lock. You avoid it by adding the column as nullable first, adding the default constraint separately, and backfilling data."
+        },
+        {
+          "question": "How do you safely rename a database column in a Rails application without causing downtime?",
+          "answer": "Use a multi-step pattern: 1) Add the new column, 2) Deploy code that writes to both columns and reads from the old one, 3) Backfill historical data, 4) Deploy code that reads from the new column, and 5) Remove the old column in a later release."
+        }
+      ],
+      "related_topics": [
+        "Database indexing strategies and concurrent index creation",
+        "Blue-green and canary deployment architectures",
+        "PostgreSQL locking mechanisms and transaction isolation levels"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T23:38:13.307988+00:00",
+      "run_number": 133
     }
   ]
 }
