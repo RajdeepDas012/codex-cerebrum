@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **98** |
-| Last Updated | `2026-09-06T17:23:47.285012+00:00` |
-| Dataset Size | `98 entries` |
+| Total Topics Learned | **99** |
+| Last Updated | `2026-09-06T18:49:20.109834+00:00` |
+| Dataset Size | `99 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | system-design | 49 |
 | trading-strategies | 11 |
-| crypto-blockchain | 8 |
+| crypto-blockchain | 9 |
 | language-specific | 6 |
 | stocks-markets | 5 |
 | probability-math | 4 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Staking and validator nodes — how to earn yield on PoS chains`
 - `Proof of Work mining — hash rate, difficulty adjustment, profitability`
 - `Gas fees on Ethereum — how they work, EIP-1559 base fee burn`
 - `Exchange hacks and security — famous hacks and how to protect funds`
 - `Crypto wallet types — hot vs cold wallet, seed phrase security`
-- `Cross-chain bridges — how they work and bridge hack risks`
 
 <!-- STATS_END -->
 
