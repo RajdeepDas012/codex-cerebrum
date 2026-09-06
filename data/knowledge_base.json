@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 64,
-    "last_updated": "2026-09-06T13:52:36.997919+00:00",
-    "total_topics_learned": 64
+    "total_runs": 65,
+    "last_updated": "2026-09-06T13:55:42.637575+00:00",
+    "total_topics_learned": 65
   },
   "entries": [
     {
@@ -3342,6 +3342,58 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T13:52:36.997907+00:00",
       "run_number": 64
+    },
+    {
+      "topic": "Market microstructure — how exchanges match orders, slippage",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "Market microstructure studies the mechanics of how orders are executed, matched, and cleared within financial exchanges. Understanding limit order books, priority rules, and liquidity dynamics is crucial for minimizing execution costs like slippage in high-throughput trading systems.",
+      "key_points": [
+        "The Limit Order Book (LOB) maintains open buy (bids) and sell (asks) orders ordered by price-time priority.",
+        "Order matching engines use FIFO (First In, First Out) or pro-rata algorithms to allocate fills among competing orders at the same price level.",
+        "Slippage occurs when the expected execution price differs from the actual fill price due to insufficient liquidity or latency delay.",
+        "Market orders consume existing liquidity (crossing the spread), whereas limit orders add liquidity and earn rebates."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Simulates a matching engine processing limit orders and calculating potential slippage.",
+        "correct": "class MatchingEngine:\n    def __init__(self):\n        self.bids = []  # max-heap simulation\n        self.asks = []  # min-heap simulation\n\n    def execute_market_order(self, side, quantity):\n        filled_qty = 0\n        total_cost = 0.0\n        book = self.asks if side == 'BUY' else self.bids\n        \n        while quantity > 0 and book:\n            best_price, available_qty = book[0]\n            match_qty = min(quantity, available_qty)\n            total_cost += match_qty * best_price\n            filled_qty += match_qty\n            quantity -= match_qty\n            if match_qty == available_qty:\n                book.pop(0)\n            else:\n                book[0] = (best_price, available_qty - match_qty)\n                \n        return total_cost / filled_qty if filled_qty > 0 else None",
+        "wrong": "# BAD: Assuming infinite liquidity at the top of the book\ndef execute_large_order(price, quantity):\n    return price * quantity  # Ignores depth of book and causes massive slippage estimates"
+      },
+      "common_mistakes": [
+        "Assuming instantaneous execution at the quoted best bid or ask price for large volume orders.",
+        "Neglecting the impact of latency arbitrage where fast traders front-run order flow updates."
+      ],
+      "best_practices": [
+        "Use iceberg orders or TWAP/VWAP execution algorithms to break large orders into smaller chunks and reduce market impact.",
+        "Monitor order book depth and historical volatility to dynamically adjust maximum acceptable slippage tolerances.",
+        "Design asynchronous ingestion pipelines to minimize internal processing latency before hitting the exchange gateway."
+      ],
+      "when_to_use": "Building low-latency trading bots, execution algorithms, or risk management systems that interact with electronic exchanges.",
+      "when_not_to_use": "Executing very small retail orders in highly liquid large-cap equities where standard market orders have negligible impact.",
+      "interview_questions": [
+        {
+          "question": "What is price-time priority in an exchange matching engine?",
+          "answer": "Price-time priority dictates that orders with the best price are matched first. If multiple orders share the same price, the order submitted earliest in time is matched first (FIFO)."
+        },
+        {
+          "question": "How can an algorithmic trader minimize slippage when executing a large block order?",
+          "answer": "By breaking the block order into smaller child orders using execution algorithms like VWAP, TWAP, or Implementation Shortfall, distributing execution over time to match natural market volume."
+        }
+      ],
+      "related_topics": [
+        "Order types (Market, Limit, Stop, Iceberg)",
+        "Bid-ask spread and market impact models",
+        "High-Frequency Trading (HFT) infrastructure"
+      ],
+      "resources": [
+        "Algorithmic Trading and DMA: An Introduction to Direct Access Trading Strategies by Barry Johnson",
+        "Search for 'Continuous Double Auction matching engine design'"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T13:55:42.637562+00:00",
+      "run_number": 65
     }
   ]
 }
