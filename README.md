@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **116** |
-| Last Updated | `2026-09-06T21:07:39.223657+00:00` |
-| Dataset Size | `116 entries` |
+| Total Topics Learned | **117** |
+| Last Updated | `2026-09-06T21:10:44.312732+00:00` |
+| Dataset Size | `117 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
-| crypto-blockchain | 15 |
+| crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 8 |
 | language-specific | 6 |
@@ -35,11 +35,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto dominance charts — Bitcoin dominance and altcoin season`
 - `Sector rotation strategy — moving capital between market sectors`
 - `Market breadth indicators — advance decline line, new highs lows`
 - `Pivot points — daily, weekly, monthly levels for trading`
 - `Stochastic oscillator — how to identify reversals with it`
-- `Parabolic SAR — trailing stop and trend direction indicator`
 
 <!-- STATS_END -->
 
