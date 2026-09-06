@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 124,
-    "last_updated": "2026-09-06T21:33:44.753515+00:00",
-    "total_topics_learned": 124
+    "total_runs": 125,
+    "last_updated": "2026-09-06T21:36:50.729946+00:00",
+    "total_topics_learned": 125
   },
   "entries": [
     {
@@ -6238,6 +6238,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-06T21:33:44.753491+00:00",
       "run_number": 124
+    },
+    {
+      "topic": "Implementing database connection pooling in Go with database/sql and context timeout management",
+      "category": "databases",
+      "language": "go",
+      "difficulty": "intermediate",
+      "summary": "Database connection pooling in Go manages a reusable cache of open database connections to reduce overhead, while context timeouts prevent goroutines from hanging indefinitely during queries. Properly configuring pool parameters ensures application resilience and optimal resource utilization under heavy loads.",
+      "key_points": [
+        "Configuring SetMaxOpenConns and SetMaxIdleConns to control resource consumption and prevent connection exhaustion.",
+        "Using SetConnMaxLifetime and SetConnMaxIdleTime to handle stale connections and prevent firewall timeouts.",
+        "Passing context.Context with timeout values to QueryContext and ExecContext to gracefully abort slow operations.",
+        "Treating *sql.DB as a long-lived, concurrency-safe object that should never be closed after every individual query."
+      ],
+      "code_example": {
+        "language": "go",
+        "description": "Configuring a database pool and executing a query with a 2-second timeout using context",
+        "correct": "db, err := sql.Open(\"postgres\", connStr)\nif err != nil {\n    log.Fatal(err)\n}\ndb.SetMaxOpenConns(25)\ndb.SetMaxIdleConns(5)\ndb.SetConnMaxLifetime(5 * time.Minute)\n\nctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)\ndefer cancel()\n\nvar name string\nerr = db.QueryRowContext(ctx, \"SELECT name FROM users WHERE id = $1\", 1).Scan(&name)\nif err != nil {\n    log.Println(err)\n}",
+        "wrong": "db, _ := sql.Open(\"postgres\", connStr)\ndefer db.Close()\n\nvar name string\ndb.QueryRow(\"SELECT name FROM users WHERE id = 1\").Scan(&name)"
+      },
+      "common_mistakes": [
+        "Calling db.Close() after every function execution instead of initializing it once globally.",
+        "Failing to set MaxOpenConns, which can lead to exhausting the database server's maximum connection limit under peak load.",
+        "Ignoring context cancellation, causing background database queries to continue running even after the HTTP client has disconnected."
+      ],
+      "best_practices": [
+        "Always set explicit upper bounds for MaxOpenConns based on your database server's hardware limits.",
+        "Always pass the request-scoped context down to database operations rather than using context.Background().",
+        "Set ConnMaxLifetime shorter than your load balancer or database timeout thresholds to avoid broken pipe errors."
+      ],
+      "when_to_use": "Use this pattern in production Go backend services that communicate with relational databases to ensure high throughput and prevent resource leaks.",
+      "when_not_to_use": "Avoid managing manual connection pools when using lightweight CLI scripts or serverless functions that invoke single, short-lived queries where pooling overhead provides no benefit.",
+      "interview_questions": [
+        {
+          "question": "Why should you avoid calling db.Close() frequently in Go?",
+          "answer": "*sql.DB manages its own connection pool internally and is designed to be created once and shared globally across your application. Closing it prematurely destroys the pool and forces new connections to be established repeatedly, degrading performance."
+        },
+        {
+          "question": "What is the difference between SetMaxOpenConns and SetMaxIdleConns?",
+          "answer": "SetMaxOpenConns limits the total number of open connections (in-use plus idle) to the database at any given time. SetMaxIdleConns restricts how many inactive connections are kept alive in the pool waiting for future queries."
+        }
+      ],
+      "related_topics": [
+        "database indexing strategies",
+        "handling database migrations in Go",
+        "graceful shutdown patterns in HTTP servers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T21:36:50.729920+00:00",
+      "run_number": 125
     }
   ]
 }
