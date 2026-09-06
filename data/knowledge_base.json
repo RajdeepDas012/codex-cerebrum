@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 125,
-    "last_updated": "2026-09-06T21:36:50.729946+00:00",
-    "total_topics_learned": 125
+    "total_runs": 126,
+    "last_updated": "2026-09-06T21:40:52.149876+00:00",
+    "total_topics_learned": 126
   },
   "entries": [
     {
@@ -6287,6 +6287,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T21:36:50.729920+00:00",
       "run_number": 125
+    },
+    {
+      "topic": "Implementing optimistic locking in Django ORM with F expressions and atomic transactions",
+      "category": "web-dev",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Optimistic locking is a concurrency control pattern that assumes conflicts are rare, using a version field to detect concurrent modifications before committing changes. In Django, this can be efficiently achieved using transaction atomicity combined with F expressions to safely update records and verify state consistency.",
+      "key_points": [
+        "A version or integer counter field is added to the model to track state changes across reads and writes.",
+        "Database transactions (atomic blocks) ensure that the read-and-modify sequence is executed safely.",
+        "F expressions allow atomic in-database increments of the version counter (e.g., F('version') + 1).",
+        "Checking the number of updated rows returned by the queryset update method reveals if a concurrent modification occurred."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates how to safely update a model instance using optimistic locking to prevent race conditions.",
+        "correct": "from django.db import transaction\nfrom django.db.models import F\n\n@transaction.atomic\ndef update_inventory(product_id, quantity_change):\n    product = Product.objects.select_for_update().get(id=product_id)\n    current_version = product.version\n    \n    rows_updated = Product.objects.filter(\n        id=product_id, \n        version=current_version\n    ).update(\n        stock=F('stock') + quantity_change,\n        version=F('version') + 1\n    )\n    \n    if rows_updated == 0:\n        raise OptimisticLockError(\"Concurrent modification detected. Please retry.\")",
+        "wrong": "def update_inventory_unsafe(product_id, quantity_change):\n    product = Product.objects.get(id=product_id)\n    product.stock += quantity_change\n    product.version += 1\n    product.save()"
+      },
+      "common_mistakes": [
+        "Performing updates via python object assignment and save() instead of utilizing queryset update() with F expressions, which risks race conditions.",
+        "Forgetting to check the affected row count after performing the conditional update, leading to silent overwrites of concurrent data."
+      ],
+      "best_practices": [
+        "Wrap the optimistic locking check and update logic inside a retry loop to handle transient conflict failures gracefully.",
+        "Use distinct version fields (like a UUID or auto-incrementing integer) explicitly designed for tracking state freshness.",
+        "Combine optimistic locking with appropriate logging to monitor the frequency of concurrency conflicts in production."
+      ],
+      "when_to_use": "Use optimistic locking when read operations heavily outnumber write operations and data contention is expected to be low.",
+      "when_not_to_use": "Avoid optimistic locking in high-contention environments where constant update retries would degrade application throughput.",
+      "interview_questions": [
+        {
+          "question": "What is the difference between pessimistic and optimistic locking?",
+          "answer": "Pessimistic locking locks the database row immediately upon reading to prevent other transactions from modifying it, whereas optimistic locking allows concurrent reads without locking and validates version consistency only at the time of the write."
+        },
+        {
+          "question": "How do you detect a conflict during an optimistic lock update in Django ORM?",
+          "answer": "You filter the update query by both the primary key and the expected version number, then check the integer count of updated rows returned; a return value of zero indicates that another transaction modified the row in the interim."
+        }
+      ],
+      "related_topics": [
+        "Database isolation levels and transaction anomalies",
+        "Implementing database connection pooling in Go with database/sql and context timeout management",
+        "Pessimistic locking with select_for_update in Django ORM"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T21:40:52.149854+00:00",
+      "run_number": 126
     }
   ]
 }

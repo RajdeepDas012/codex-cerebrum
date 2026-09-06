@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **125** |
-| Last Updated | `2026-09-06T21:36:50.729946+00:00` |
-| Dataset Size | `125 entries` |
+| Total Topics Learned | **126** |
+| Last Updated | `2026-09-06T21:40:52.149876+00:00` |
+| Dataset Size | `126 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,9 +24,9 @@
 | technical-analysis | 7 |
 | language-specific | 6 |
 | probability-math | 5 |
+| web-dev | 4 |
 | databases | 3 |
 | devops | 3 |
-| web-dev | 3 |
 | market-analysis | 3 |
 | algorithms | 2 |
 | security | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing optimistic locking in Django ORM with F expressions and atomic transactions`
 - `Implementing database connection pooling in Go with database/sql and context timeout management`
 - `Implementing distributed locks in Node.js using Redis and Redlock algorithm`
 - `Implementing rate limiting in FastAPI using Redis and sliding window algorithm`
 - `Visualising portfolio performance — equity curve, drawdown chart`
-- `Calculating compound annual growth rate (CAGR) with code`
 
 <!-- STATS_END -->
 
