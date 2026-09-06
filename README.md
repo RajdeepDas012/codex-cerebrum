@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **13** |
-| Last Updated | `2026-09-06T01:01:31.138283+00:00` |
-| Dataset Size | `13 entries` |
+| Total Topics Learned | **14** |
+| Last Updated | `2026-09-06T01:19:39.546747+00:00` |
+| Dataset Size | `14 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,14 +23,15 @@
 | web-dev | 2 |
 | best-practices | 1 |
 | algorithms | 1 |
+| security | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `OAuth 2.0 flow — step by step explanation`
 - `Database indexing — when and how to add indexes`
 - `Node.js event loop — understanding non-blocking I/O`
 - `Python decorators — how they work under the hood`
 - `CSS Grid vs Flexbox — choosing the right one`
-- `Binary search — implementation and edge cases`
 
 <!-- STATS_END -->
 
