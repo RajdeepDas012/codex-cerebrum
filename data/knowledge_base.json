@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 11,
-    "last_updated": "2026-09-05T23:16:29.295744+00:00",
-    "total_topics_learned": 11
+    "total_runs": 12,
+    "last_updated": "2026-09-06T00:24:06.737204+00:00",
+    "total_topics_learned": 12
   },
   "entries": [
     {
@@ -582,6 +582,59 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-05T23:16:29.295726+00:00",
       "run_number": 11
+    },
+    {
+      "topic": "Node.js event loop — understanding non-blocking I/O",
+      "category": "language-specific",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "The Node.js event loop is a mechanism that allows Node.js to perform non-blocking I/O operations despite JavaScript being single-threaded, by offloading operations to the system kernel whenever possible. Understanding its phases (Timers, Pending Callbacks, Poll, Check, Close) is critical for diagnosing performance bottlenecks and managing asynchronous flow.",
+      "key_points": [
+        "Node.js runs JavaScript on a single main thread, using libuv under the hood to handle asynchronous system operations via a thread pool and kernel polling.",
+        "The event loop operates in distinct phases: Timers (setTimeout/setInterval), Poll (retrieving I/O events), Check (setImmediate), and Close callbacks.",
+        "Microtasks (process.nextTick and Promise.then callbacks) execute immediately after the current operation completes, before the event loop advances to the next phase.",
+        "Heavy CPU-bound synchronous tasks block the main thread, freezing the event loop and delaying all pending asynchronous callbacks and timers."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Demonstrates execution order between process.nextTick, promises, timers, and setImmediate",
+        "correct": "console.log('1: Start');\n\nsetTimeout(() => console.log('4: Timer'), 0);\nsetImmediate(() => console.log('5: Immediate'));\n\nPromise.resolve().then(() => console.log('3: Promise'));\nprocess.nextTick(() => console.log('2: NextTick'));\n\nconsole.log('6: End');",
+        "wrong": "// BAD: Assuming setTimeout(..., 0) always executes before setImmediate regardless of context\nsetTimeout(() => console.log('Timer'), 0);\nsetImmediate(() => console.log('Immediate'));\n// Inside an I/O cycle callback, setImmediate is guaranteed to run before setTimeout(..., 0)."
+      },
+      "common_mistakes": [
+        "Assuming asynchronous callbacks execute in strict chronological order without understanding phase priority.",
+        "Blocking the main thread with heavy synchronous loops or cryptographic operations, halting the event loop entirely.",
+        "Overusing process.nextTick recursively, which can starve the event loop and prevent I/O operations from ever executing."
+      ],
+      "best_practices": [
+        "Offload heavy CPU-bound computations to worker threads (Worker Threads API) or external microservices.",
+        "Prefer asynchronous APIs (fs.promises, streams) over synchronous alternatives (fs.readFileSync) to keep the event loop responsive.",
+        "Use setImmediate instead of setTimeout(fn, 0) when you need code to run immediately after the current poll phase I/O cycle."
+      ],
+      "when_to_use": "When building high-throughput, I/O-bound network applications like real-time chat servers, API gateways, or streaming services.",
+      "when_not_to_use": "When building heavy CPU-intensive applications such as video encoding, massive data crunching, or complex machine learning inference on the main thread.",
+      "interview_questions": [
+        {
+          "question": "What is the difference in execution order between process.nextTick() and Promise.resolve().then()?",
+          "answer": "Both are microtasks, but process.nextTick() has its own queue that is always processed completely before the standard Promise microtask queue during the transition between operations."
+        },
+        {
+          "question": "Why does setImmediate sometimes run before setTimeout(..., 0) and sometimes after?",
+          "answer": "If called from the main module, the order is non-deterministic depending on performance. However, if called inside an I/O cycle callback, setImmediate is reliably guaranteed to execute before setTimeout."
+        }
+      ],
+      "related_topics": [
+        "Node.js Worker Threads",
+        "libuv thread pool",
+        "Asynchronous JavaScript and microtasks"
+      ],
+      "resources": [
+        "Node.js Official Guide: The Node.js Event Loop, Timers, and process.nextTick()",
+        "libuv design documentation on event loop phases"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-06T00:24:06.737184+00:00",
+      "run_number": 12
     }
   ]
 }
