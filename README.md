@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **39** |
-| Last Updated | `2026-09-06T12:10:05.781943+00:00` |
-| Dataset Size | `39 entries` |
+| Total Topics Learned | **40** |
+| Last Updated | `2026-09-06T12:13:10.530782+00:00` |
+| Dataset Size | `40 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 20 |
+| system-design | 21 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Greeks in options — delta, gamma, theta, vega explained simply`
 - `Options trading basics — calls, puts, strike price, expiry`
 - `Short selling stocks — mechanics, margin, short squeeze explained`
 - `Market orders vs limit orders vs stop orders — when to use each`
 - `Order book analysis — bid-ask spread, market depth, wall detection`
-- `Tokenomics — supply, distribution, vesting schedules and price impact`
 
 <!-- STATS_END -->
 
