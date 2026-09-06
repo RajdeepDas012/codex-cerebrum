@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **47** |
-| Last Updated | `2026-09-06T12:34:46.351766+00:00` |
-| Dataset Size | `47 entries` |
+| Total Topics Learned | **48** |
+| Last Updated | `2026-09-06T12:37:52.021459+00:00` |
+| Dataset Size | `48 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 28 |
+| system-design | 29 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto market cycles — accumulation, markup, distribution, markdown`
 - `Whale wallet tracking — how to find and interpret large transactions`
 - `On-chain metrics for crypto — UTXO, active addresses, exchange flows`
 - `Fundamental analysis for stocks — P/E, EPS, revenue growth, margins`
 - `Stop loss strategies — fixed, trailing, ATR-based stop losses`
-- `Risk-reward ratio — calculating position size and setting targets`
 
 <!-- STATS_END -->
 
