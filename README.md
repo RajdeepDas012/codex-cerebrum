@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **67** |
-| Last Updated | `2026-09-06T14:01:54.376384+00:00` |
-| Dataset Size | `67 entries` |
+| Total Topics Learned | **68** |
+| Last Updated | `2026-09-06T14:04:59.822842+00:00` |
+| Dataset Size | `68 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 48 |
+| system-design | 49 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Statistical arbitrage — pairs trading, mean reversion strategy`
 - `Arbitrage trading — crypto exchange arbitrage, triangular arbitrage`
 - `High frequency trading — how algorithms affect retail traders`
 - `Market microstructure — how exchanges match orders, slippage`
 - `VWAP (Volume Weighted Average Price) — intraday trading strategy`
-- `Gap trading — breakaway gap, runaway gap, exhaustion gap`
 
 <!-- STATS_END -->
 
