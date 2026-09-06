@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **87** |
-| Last Updated | `2026-09-06T16:49:45.936232+00:00` |
-| Dataset Size | `87 entries` |
+| Total Topics Learned | **88** |
+| Last Updated | `2026-09-06T16:52:51.090828+00:00` |
+| Dataset Size | `88 entries` |
 
 ## 📂 Categories Learned
 
@@ -27,17 +27,17 @@
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
+| market-analysis | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| market-analysis | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Inflation impact on investments — real vs nominal returns`
 - `Compound interest in investing — calculating long term growth`
 - `Kelly Criterion — optimal position sizing formula`
 - `Probability in trading — expected value, win rate, risk of ruin`
 - `Correlation between assets — how to calculate and use it`
-- `Value at Risk (VaR) — calculating potential portfolio loss`
 
 <!-- STATS_END -->
 
