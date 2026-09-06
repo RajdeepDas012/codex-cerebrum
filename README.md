@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **118** |
-| Last Updated | `2026-09-06T21:14:17.578425+00:00` |
-| Dataset Size | `118 entries` |
+| Total Topics Learned | **119** |
+| Last Updated | `2026-09-06T21:17:22.781089+00:00` |
+| Dataset Size | `119 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,8 +21,8 @@
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 8 |
+| technical-analysis | 7 |
 | language-specific | 6 |
-| technical-analysis | 6 |
 | probability-math | 4 |
 | devops | 3 |
 | market-analysis | 3 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Candlestick charting with Python — matplotlib and mplfinance library`
 - `Heatmaps for portfolio visualisation — how to read and build them`
 - `Crypto dominance charts — Bitcoin dominance and altcoin season`
 - `Sector rotation strategy — moving capital between market sectors`
 - `Market breadth indicators — advance decline line, new highs lows`
-- `Pivot points — daily, weekly, monthly levels for trading`
 
 <!-- STATS_END -->
 
