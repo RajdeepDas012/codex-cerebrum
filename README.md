@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **84** |
-| Last Updated | `2026-09-06T16:40:29.482663+00:00` |
-| Dataset Size | `84 entries` |
+| Total Topics Learned | **85** |
+| Last Updated | `2026-09-06T16:43:34.984201+00:00` |
+| Dataset Size | `85 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
-| trading-strategies | 10 |
+| trading-strategies | 11 |
 | language-specific | 6 |
 | devops | 3 |
 | stocks-markets | 3 |
@@ -33,11 +33,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Probability in trading — expected value, win rate, risk of ruin`
 - `Correlation between assets — how to calculate and use it`
 - `Value at Risk (VaR) — calculating potential portfolio loss`
 - `Monte Carlo simulation for portfolio risk — probability modelling`
 - `Alpha in trading — generating returns above the benchmark`
-- `Beta of a stock — market sensitivity and portfolio risk`
 
 <!-- STATS_END -->
 
