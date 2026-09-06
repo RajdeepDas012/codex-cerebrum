@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **65** |
-| Last Updated | `2026-09-06T13:55:42.637575+00:00` |
-| Dataset Size | `65 entries` |
+| Total Topics Learned | **66** |
+| Last Updated | `2026-09-06T13:58:48.534968+00:00` |
+| Dataset Size | `66 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 46 |
+| system-design | 47 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `High frequency trading — how algorithms affect retail traders`
 - `Market microstructure — how exchanges match orders, slippage`
 - `VWAP (Volume Weighted Average Price) — intraday trading strategy`
 - `Gap trading — breakaway gap, runaway gap, exhaustion gap`
 - `Flag and pennant patterns — trend continuation trading`
-- `Triangle patterns — ascending, descending, symmetrical breakouts`
 
 <!-- STATS_END -->
 
