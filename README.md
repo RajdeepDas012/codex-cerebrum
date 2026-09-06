@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **102** |
-| Last Updated | `2026-09-06T18:58:37.732483+00:00` |
-| Dataset Size | `102 entries` |
+| Total Topics Learned | **103** |
+| Last Updated | `2026-09-06T19:01:43.668426+00:00` |
+| Dataset Size | `103 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 49 |
-| crypto-blockchain | 12 |
+| crypto-blockchain | 13 |
 | trading-strategies | 11 |
 | language-specific | 6 |
 | stocks-markets | 5 |
@@ -34,11 +34,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `DEX vs CEX — decentralised vs centralised exchange tradeoffs`
 - `Automated market makers — how Uniswap pricing formula works`
 - `Impermanent loss explained — calculation and when it hurts you`
 - `Liquidity mining and yield farming — APY vs APR, impermanent loss`
 - `Staking and validator nodes — how to earn yield on PoS chains`
-- `Proof of Work mining — hash rate, difficulty adjustment, profitability`
 
 <!-- STATS_END -->
 
