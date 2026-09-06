@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **133** |
-| Last Updated | `2026-09-06T23:38:13.308007+00:00` |
-| Dataset Size | `133 entries` |
+| Total Topics Learned | **134** |
+| Last Updated | `2026-09-06T23:41:24.025611+00:00` |
+| Dataset Size | `134 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 52 |
+| system-design | 53 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing event sourcing in TypeScript with EventStoreDB and CQRS pattern`
 - `Implementing zero-downtime database schema migrations in Rails using strong_migrations gem and multi-step deployment patterns`
 - `Implementing token bucket rate limiting in Python using Redis and Lua scripts for atomic operations`
 - `Implementing database row-level security in PostgreSQL with session variables and Django ORM middleware`
 - `Implementing outbox pattern in C# .NET with MassTransit and Entity Framework Core for reliable event publishing`
-- `Implementing idempotency keys in Express.js with Redis and middleware for duplicate payment prevention`
 
 <!-- STATS_END -->
 

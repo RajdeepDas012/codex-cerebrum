@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 133,
-    "last_updated": "2026-09-06T23:38:13.308007+00:00",
-    "total_topics_learned": 133
+    "total_runs": 134,
+    "last_updated": "2026-09-06T23:41:24.025611+00:00",
+    "total_topics_learned": 134
   },
   "entries": [
     {
@@ -6671,6 +6671,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T23:38:13.307988+00:00",
       "run_number": 133
+    },
+    {
+      "topic": "Implementing event sourcing in TypeScript with EventStoreDB and CQRS pattern",
+      "category": "system-design",
+      "language": "typescript",
+      "difficulty": "advanced",
+      "summary": "Event sourcing stores the state of an application as a sequence of immutable events rather than current state snapshots, pairing naturally with CQRS to separate read and write models. This pattern provides a complete audit trail and time-travel debugging capabilities, crucial for complex domain-driven architectures.",
+      "key_points": [
+        "Persisting domain events to an append-only event store like EventStoreDB instead of mutating row states",
+        "Reconstructing aggregate current state by replaying its historical stream of events",
+        "Separating write commands (aggregates/handlers) from read queries (projections)",
+        "Handling concurrency control via expected version numbers when appending events"
+      ],
+      "code_example": {
+        "language": "typescript",
+        "description": "Appending an event to an EventStoreDB stream with optimistic concurrency control",
+        "correct": "import { jsonEvent, EventStoreDBClient } from '@eventstore/db-client';\n\nconst client = EventStoreDBClient.connection('esdb://localhost:2113?tls=false');\n\nasync function handleDeposit(accountId: string, amount: number, expectedVersion: bigint) {\n  const event = jsonEvent({\n    type: 'MoneyDeposited',\n    data: { accountId, amount, timestamp: new Date().toISOString() }\n  });\n\n  await client.appendToStream(`account-${accountId}`, event, {\n    expectedRevision: expectedVersion\n  });\n}",
+        "wrong": "import { EventStoreDBClient } from '@eventstore/db-client';\n\nasync function handleDeposit(accountId: string, amount: number) {\n  // Anti-pattern: Fetching state, modifying it in memory, and overwriting without concurrency checks\n  const stream = client.readStream(`account-${accountId}`);\n  // Missing expected revision causes race conditions under concurrent updates\n  await client.appendToStream(`account-${accountId}`, { type: 'MoneyDeposited', data: { amount } });\n}"
+      },
+      "common_mistakes": [
+        "Mutating existing events in the event store, violating the immutability principle",
+        "Failing to handle expected version conflicts during concurrent command executions"
+      ],
+      "best_practices": [
+        "Design explicit, past-tense domain event names that capture business intent (e.g., OrderShipped)",
+        "Implement upcasters or snapshotting strategies to optimize aggregate hydration performance over long event streams",
+        "Keep events small, self-contained, and decoupled from external database schemas"
+      ],
+      "when_to_use": "Use when you need a strict audit log, complex temporal querying, or high-throughput write scalability in a domain-driven microservices architecture.",
+      "when_not_to_use": "Avoid for simple CRUD applications where the overhead of event versioning, projections, and eventual consistency outweighs the business value.",
+      "interview_questions": [
+        {
+          "question": "How do you handle schema evolution of events over time in an event-sourced system?",
+          "answer": "Implement upcasters that transform older event payload versions into the current schema version when reading streams, or write new migration events."
+        },
+        {
+          "question": "Why is CQRS often implemented alongside event sourcing?",
+          "answer": "Because replaying events to calculate current state for every read query is inefficient; CQRS allows dedicated, optimized read projections to be updated asynchronously."
+        }
+      ],
+      "related_topics": [
+        "Outbox pattern",
+        "Command Query Responsibility Segregation (CQRS)",
+        "Domain-Driven Design (DDD) Aggregates"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-06T23:41:24.025592+00:00",
+      "run_number": 134
     }
   ]
 }
