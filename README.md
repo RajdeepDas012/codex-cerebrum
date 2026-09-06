@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **121** |
-| Last Updated | `2026-09-06T21:23:33.258765+00:00` |
-| Dataset Size | `121 entries` |
+| Total Topics Learned | **122** |
+| Last Updated | `2026-09-06T21:26:39.141058+00:00` |
+| Dataset Size | `122 entries` |
 
 ## 📂 Categories Learned
 
@@ -30,17 +30,17 @@
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
+| data-visualization | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| data-visualization | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Visualising portfolio performance — equity curve, drawdown chart`
 - `Calculating compound annual growth rate (CAGR) with code`
 - `Building a stock screener — filtering stocks by technical criteria`
 - `Candlestick charting with Python — matplotlib and mplfinance library`
 - `Heatmaps for portfolio visualisation — how to read and build them`
-- `Crypto dominance charts — Bitcoin dominance and altcoin season`
 
 <!-- STATS_END -->
 
