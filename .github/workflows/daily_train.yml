@@ -54,24 +54,39 @@ jobs:
           print('Helper scripts ready in /tmp')
           PYEOF
 
-      - name: Run and commit every 3 minutes - 20 times per hour
+      - name: Run and commit every 3 minutes - 15 times per hour
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          git config user.name  "Rajdeep Das"
-          git config user.email "rajdeepdas007007@gmail.com"
+          git config user.name  "YOUR NAME HERE"
+          git config user.email "YOUR_GITHUB_EMAIL@gmail.com"
 
-          for i in $(seq 1 20); do
+          for i in $(seq 1 15); do
             echo ""
             echo "==============================="
-            echo "Iteration $i of 20"
+            echo "Iteration $i of 15"
             echo "==============================="
 
             git pull --rebase origin main || true
 
             echo "Running Gemini agent..."
             python3 agent/agent.py
-            echo "Agent finished with exit code: $?"
+            EXIT_CODE=$?
+            echo "Agent exit code: $EXIT_CODE"
+
+            if [ $EXIT_CODE -eq 2 ]; then
+              echo "API daily limit hit - stopping loop"
+              echo "Will resume next hour when quota resets"
+              break
+            fi
+
+            if [ $EXIT_CODE -ne 0 ]; then
+              echo "Agent error - skipping this commit"
+              if [ $i -lt 15 ]; then
+                sleep 180
+              fi
+              continue
+            fi
 
             echo "Files changed:"
             git status --short
@@ -81,7 +96,7 @@ jobs:
             STAGED=$(git diff --cached --name-only)
 
             if [ -z "$STAGED" ]; then
-              echo "No changes staged - agent may have failed"
+              echo "Nothing staged - skipping commit"
             else
               TOPIC=$(python3 /tmp/get_topic.py)
               RUN=$(python3 /tmp/get_run.py)
@@ -90,11 +105,11 @@ jobs:
               echo "Committed: Run ${RUN} - ${TOPIC}"
             fi
 
-            if [ $i -lt 20 ]; then
+            if [ $i -lt 15 ]; then
               echo "Waiting 3 minutes before next run..."
               sleep 180
             fi
 
           done
 
-          echo "Done - 20 iterations complete!"
+          echo "Done - all 15 iterations complete!"
