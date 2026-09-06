@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **55** |
-| Last Updated | `2026-09-06T13:24:47.505840+00:00` |
-| Dataset Size | `55 entries` |
+| Total Topics Learned | **56** |
+| Last Updated | `2026-09-06T13:27:52.986214+00:00` |
+| Dataset Size | `56 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 36 |
+| system-design | 37 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Elliott Wave Theory — impulse waves, corrective waves, counting rules`
 - `Ichimoku Cloud — tenkan, kijun, senkou, chikou explained`
 - `Open interest in futures — how to interpret rising and falling OI`
 - `Funding rates in perpetual futures — how they work and what they signal`
 - `Leverage and margin trading — risks, liquidation price calculation`
-- `Liquidation cascades in crypto — how they happen and how to avoid them`
 
 <!-- STATS_END -->
 
