@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **123** |
-| Last Updated | `2026-09-06T21:30:02.758231+00:00` |
-| Dataset Size | `123 entries` |
+| Total Topics Learned | **124** |
+| Last Updated | `2026-09-06T21:33:44.753515+00:00` |
+| Dataset Size | `124 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 49 |
+| system-design | 50 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing distributed locks in Node.js using Redis and Redlock algorithm`
 - `Implementing rate limiting in FastAPI using Redis and sliding window algorithm`
 - `Visualising portfolio performance — equity curve, drawdown chart`
 - `Calculating compound annual growth rate (CAGR) with code`
 - `Building a stock screener — filtering stocks by technical criteria`
-- `Candlestick charting with Python — matplotlib and mplfinance library`
 
 <!-- STATS_END -->
 

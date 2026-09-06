@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 123,
-    "last_updated": "2026-09-06T21:30:02.758231+00:00",
-    "total_topics_learned": 123
+    "total_runs": 124,
+    "last_updated": "2026-09-06T21:33:44.753515+00:00",
+    "total_topics_learned": 124
   },
   "entries": [
     {
@@ -6190,6 +6190,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-06T21:30:02.758210+00:00",
       "run_number": 123
+    },
+    {
+      "topic": "Implementing distributed locks in Node.js using Redis and Redlock algorithm",
+      "category": "system-design",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "Distributed locks ensure that only one process can access a shared resource across multiple cluster nodes. The Redlock algorithm extends single-instance Redis locking to provide fault tolerance and safety guarantees across multiple independent Redis masters.",
+      "key_points": [
+        "Uses multiple independent Redis instances to prevent single points of failure",
+        "Generates a secure random unlock token to ensure a client only deletes its own lock",
+        "Implements a drift factor to account for clock drift between servers",
+        "Requires acquiring locks on a quorum (N/2 + 1) of Redis instances to succeed"
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Acquiring and releasing a distributed lock using the Redlock library in Node.js",
+        "correct": "const Redlock = require('redlock');\nconst Redis = require('ioredis');\n\nconst clients = [\n  new Redis({ host: 'redis1.local', port: 6379 }),\n  new Redis({ host: 'redis2.local', port: 6379 }),\n  new Redis({ host: 'redis3.local', port: 6379 })\n];\n\nconst redlock = new Redlock(clients, {\n  driftFactor: 0.01,\n  retryCount: 3,\n  retryDelay: 200,\n});\n\nasync function processOrder(orderId) {\n  let lock;\n  try {\n    lock = await redlock.acquire([`locks:order:${orderId}`], 5000);\n    // Critical section\n    console.log(`Processing order ${orderId}`);\n  } catch (error) {\n    console.error('Failed to acquire lock', error);\n  } finally {\n    if (lock) {\n      await lock.release();\n    }\n  }\n}",
+        "wrong": "const Redis = require('ioredis');\nconst redis = new Redis();\nasync function badLock(resource) {\n  const acquired = await redis.set(resource, 'token', 'EX', 10, 'NX');\n  if (acquired) {\n    // Critical section without handling clock drift, crashes, or safe release\n    await doWork();\n    await redis.del(resource); // Dangerous: might delete someone else's lock if TTL expired\n  }\n}"
+      },
+      "common_mistakes": [
+        "Releasing a lock using standard DEL without verifying the token, which can accidentally delete another client's acquired lock",
+        "Setting a lock TTL that is shorter than the time required to complete the critical section of execution"
+      ],
+      "best_practices": [
+        "Always use established client libraries like 'redlock' rather than implementing the multi-node algorithm from scratch",
+        "Handle lock extension (auto-renewal) carefully to avoid extending locks for crashed or stalled processes indefinitely",
+        "Ensure your Redis master nodes are deployed on separate physical hardware or availability zones to maximize fault tolerance"
+      ],
+      "when_to_use": "When you have a horizontally scaled Node.js microservices architecture that must prevent race conditions on shared resources like database writes or payment processing.",
+      "when_not_to_use": "When your application runs on a single server instance, or when your business logic can tolerate eventual consistency and idempotent data writes without strict mutual exclusion.",
+      "interview_questions": [
+        {
+          "question": "Why is a simple SETNX command on a single Redis instance insufficient for robust distributed locking?",
+          "answer": "A single Redis instance is a single point of failure. If the master crashes and fails over to a replica before the lock syncs, a second client can acquire the same lock, violating mutual exclusion."
+        },
+        {
+          "question": "What is the purpose of the 'drift factor' in the Redlock algorithm?",
+          "answer": "The drift factor accounts for the lack of synchronized clocks across servers. Because local system clocks can tick at slightly different rates, the validity time of the lock is reduced by a small calculated drift to prevent overlapping locks."
+        }
+      ],
+      "related_topics": [
+        "Idempotency in microservices",
+        "Consensus algorithms and Paxos/Raft",
+        "Redis replication and failover"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-06T21:33:44.753491+00:00",
+      "run_number": 124
     }
   ]
 }
