@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **28** |
-| Last Updated | `2026-09-06T11:16:08.831660+00:00` |
-| Dataset Size | `28 entries` |
+| Total Topics Learned | **29** |
+| Last Updated | `2026-09-06T11:19:25.927630+00:00` |
+| Dataset Size | `29 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 9 |
+| system-design | 10 |
 | language-specific | 6 |
 | devops | 3 |
 | databases | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bollinger Bands — squeeze, breakout, and mean reversion strategies`
 - `MACD indicator — how to read crossovers and divergence`
 - `RSI (Relative Strength Index) — calculation, overbought, oversold signals`
 - `Moving averages — SMA vs EMA vs WMA and trading signals`
 - `Support and resistance levels — how to identify and trade them`
-- `Candlestick chart patterns — doji, hammer, engulfing, shooting star`
 
 <!-- STATS_END -->
 
