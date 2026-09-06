@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **85** |
-| Last Updated | `2026-09-06T16:43:34.984201+00:00` |
-| Dataset Size | `85 entries` |
+| Total Topics Learned | **86** |
+| Last Updated | `2026-09-06T16:46:40.790945+00:00` |
+| Dataset Size | `86 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,22 +22,22 @@
 | language-specific | 6 |
 | devops | 3 |
 | stocks-markets | 3 |
+| probability-math | 3 |
 | databases | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
 | security | 2 |
-| probability-math | 2 |
 | best-practices | 1 |
 | testing | 1 |
 | market-analysis | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Kelly Criterion — optimal position sizing formula`
 - `Probability in trading — expected value, win rate, risk of ruin`
 - `Correlation between assets — how to calculate and use it`
 - `Value at Risk (VaR) — calculating potential portfolio loss`
 - `Monte Carlo simulation for portfolio risk — probability modelling`
-- `Alpha in trading — generating returns above the benchmark`
 
 <!-- STATS_END -->
 
