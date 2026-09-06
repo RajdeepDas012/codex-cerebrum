@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **117** |
-| Last Updated | `2026-09-06T21:10:44.312732+00:00` |
-| Dataset Size | `117 entries` |
+| Total Topics Learned | **118** |
+| Last Updated | `2026-09-06T21:14:17.578425+00:00` |
+| Dataset Size | `118 entries` |
 
 ## 📂 Categories Learned
 
@@ -32,14 +32,15 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| data-visualization | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Heatmaps for portfolio visualisation — how to read and build them`
 - `Crypto dominance charts — Bitcoin dominance and altcoin season`
 - `Sector rotation strategy — moving capital between market sectors`
 - `Market breadth indicators — advance decline line, new highs lows`
 - `Pivot points — daily, weekly, monthly levels for trading`
-- `Stochastic oscillator — how to identify reversals with it`
 
 <!-- STATS_END -->
 
