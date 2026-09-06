@@ -9,17 +9,17 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **22** |
-| Last Updated | `2026-09-06T10:56:14.874072+00:00` |
-| Dataset Size | `22 entries` |
+| Total Topics Learned | **23** |
+| Last Updated | `2026-09-06T10:59:21.230571+00:00` |
+| Dataset Size | `23 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | language-specific | 6 |
+| system-design | 4 |
 | devops | 3 |
-| system-design | 3 |
 | databases | 2 |
 | web-dev | 2 |
 | algorithms | 2 |
@@ -29,11 +29,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Blockchain consensus mechanisms — PoW vs PoS vs DPoS explained`
 - `Ethereum smart contracts — how they work and real use cases`
 - `Bitcoin fundamentals — how it works, mining, halving cycles and price impact`
 - `Unit testing patterns — mocking, fixtures, assertions`
 - `Environment variables best practices — secrets management`
-- `Linux cron jobs — scheduling tasks correctly`
 
 <!-- STATS_END -->
 
