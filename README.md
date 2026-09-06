@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **76** |
-| Last Updated | `2026-09-06T15:24:43.827022+00:00` |
-| Dataset Size | `76 entries` |
+| Total Topics Learned | **77** |
+| Last Updated | `2026-09-06T15:27:49.299310+00:00` |
+| Dataset Size | `77 entries` |
 
 ## 📂 Categories Learned
 
@@ -27,14 +27,15 @@
 | security | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| stocks-markets | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Sharpe ratio — measuring risk-adjusted return of a portfolio`
 - `Backtesting a trading strategy — how to do it correctly without bias`
 - `Algorithmic trading — building a simple trading bot logic`
 - `Position trading strategy — long term trend following`
 - `Swing trading strategy — holding for days to weeks`
-- `Scalping strategy — timeframes, tools, risk management`
 
 <!-- STATS_END -->
 
