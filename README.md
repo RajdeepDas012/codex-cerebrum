@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **178** |
-| Last Updated | `2026-09-07T08:10:59.183225+00:00` |
-| Dataset Size | `178 entries` |
+| Total Topics Learned | **179** |
+| Last Updated | `2026-09-07T08:14:07.475436+00:00` |
+| Dataset Size | `179 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | system-design | 58 |
 | crypto-blockchain | 31 |
 | trading-strategies | 14 |
-| technical-analysis | 12 |
+| technical-analysis | 13 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin logarithmic growth curve — long term price corridor prediction`
 - `Bitcoin rainbow price chart — logarithmic regression bands for cycle phases`
 - `Bitcoin fear and greed index — extreme fear as accumulation signal`
 - `Bitcoin dominance cycle — BTC dominance rise predicts altcoin bear market`
 - `Bitcoin CME gap — gaps in CME futures chart that price tends to fill`
-- `Bitcoin options max pain — where options market wants price to expire`
 
 <!-- STATS_END -->
 
