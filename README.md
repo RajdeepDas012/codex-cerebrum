@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **150** |
-| Last Updated | `2026-09-07T03:18:51.459333+00:00` |
-| Dataset Size | `150 entries` |
+| Total Topics Learned | **151** |
+| Last Updated | `2026-09-07T03:21:58.276274+00:00` |
+| Dataset Size | `151 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,7 +26,7 @@
 | databases | 7 |
 | devops | 7 |
 | technical-analysis | 7 |
-| security | 5 |
+| security | 6 |
 | probability-math | 5 |
 | market-analysis | 3 |
 | algorithms | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing secure JWT authentication refresh token rotation in Node.js with Express and Redis for session revocation`
 - `Implementing rolling deployment strategies in Kubernetes using Istio traffic shifting and readiness probes`
 - `Implementing real-time data synchronization in Flutter using local SQLite and Firestore offline persistence with conflict resolution`
 - `Implementing change data capture (CDC) in PostgreSQL using Debezium and Kafka Connect for real-time data synchronization`
 - `Implementing distributed leader election in Go using etcd and concurrency primitives`
-- `Implementing distributed task scheduling with Quartz.NET and PostgreSQL persistent job store in C#`
 
 <!-- STATS_END -->
 

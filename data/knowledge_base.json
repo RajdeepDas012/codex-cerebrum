@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 150,
-    "last_updated": "2026-09-07T03:18:51.459333+00:00",
-    "total_topics_learned": 150
+    "total_runs": 151,
+    "last_updated": "2026-09-07T03:21:58.276274+00:00",
+    "total_topics_learned": 151
   },
   "entries": [
     {
@@ -7491,6 +7491,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T03:18:51.459314+00:00",
       "run_number": 150
+    },
+    {
+      "topic": "Implementing secure JWT authentication refresh token rotation in Node.js with Express and Redis for session revocation",
+      "category": "security",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "This technique combines short-lived JSON Web Tokens (JWT) for stateless API authorization with long-lived, rotating refresh tokens tracked in Redis. It ensures that if a refresh token is compromised, immediate session revocation and reuse detection protect the user account.",
+      "key_points": [
+        "Utilizing short-lived access tokens (e.g., 15 minutes) to minimize the blast radius of token theft.",
+        "Implementing token rotation where presenting a valid refresh token issues a brand-new pair and invalidates the old one.",
+        "Leveraging Redis hash structures and TTL (Time-To-Live) to store active refresh tokens and enable instant session revocation.",
+        "Detecting token reuse attacks by tracking family trees of tokens, automatically revoking all tokens in a family if an old token is re-submitted."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Demonstrates secure refresh token rotation and family revocation using Redis in Express",
+        "correct": "app.post('/refresh', async (req, res) => {\n  const { refreshToken } = req.cookies;\n  if (!refreshToken) return res.sendStatus(401);\n  const payload = verifyToken(refreshToken);\n  const storedToken = await redis.get(`refresh:${payload.userId}`);\n  if (storedToken !== refreshToken) {\n    await redis.del(`refresh:${payload.userId}`);\n    return res.status(403).json({ error: 'Token reuse detected. Session revoked.' });\n  }\n  const newAccess = generateAccessToken(payload.userId);\n  const newRefresh = generateRefreshToken(payload.userId);\n  await redis.set(`refresh:${payload.userId}`, newRefresh, 'EX', 604800);\n  res.cookie('refreshToken', newRefresh, { httpOnly: true, secure: true });\n  res.json({ accessToken: newAccess });\n});",
+        "wrong": "app.post('/refresh', async (req, res) => {\n  const { refreshToken } = req.body;\n  const payload = verifyToken(refreshToken);\n  const newAccess = generateAccessToken(payload.userId);\n  res.json({ accessToken: newAccess }); // Fails to rotate the refresh token or check Redis for revocation\n});"
+      },
+      "common_mistakes": [
+        "Storing refresh tokens in localStorage instead of httpOnly, secure, SameSite cookies, making them vulnerable to XSS attacks.",
+        "Failing to implement token reuse detection, which allows an attacker who stole a single refresh token to silently maintain persistent access."
+      ],
+      "best_practices": [
+        "Store refresh tokens in httpOnly, secure, SameSite=Strict cookies to protect against cross-site scripting and request forgery.",
+        "Set appropriate TTLs on Redis keys matching the expiration time of the refresh token to prevent memory bloat.",
+        "Implement family-based token tracking to instantly wipe out all active sessions for a user if a replay attack is flagged."
+      ],
+      "when_to_use": "Use this architecture for modern single-page applications (SPAs) or mobile backends requiring stateless API requests paired with secure, revocable session handling.",
+      "when_not_to_use": "Avoid for simple internal microservices communicating service-to-service where mutual TLS or simple client-credentials tokens are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a scenario where a stolen refresh token is used after the legitimate user has already used it?",
+          "answer": "By implementing token rotation and family tracking in Redis. When the stolen token is presented, the system detects that it has already been rotated or invalidated, triggers an alert, and revokes all active tokens belonging to that user family."
+        },
+        {
+          "question": "Why store refresh tokens in Redis instead of directly inside a stateless JWT signature?",
+          "answer": "Stateless JWTs cannot be instantly revoked before their expiration time without maintaining a blacklist. Storing refresh tokens in Redis allows for immediate server-side session revocation and precise state management."
+        }
+      ],
+      "related_topics": [
+        "OAuth2 and OIDC protocol implementation",
+        "Redis distributed caching and TTL management",
+        "Web application security against CSRF and XSS"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T03:21:58.276254+00:00",
+      "run_number": 151
     }
   ]
 }
