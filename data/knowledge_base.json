@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 152,
-    "last_updated": "2026-09-07T05:06:35.537992+00:00",
-    "total_topics_learned": 152
+    "total_runs": 153,
+    "last_updated": "2026-09-07T05:09:41.621697+00:00",
+    "total_topics_learned": 153
   },
   "entries": [
     {
@@ -7587,6 +7587,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T05:06:35.537973+00:00",
       "run_number": 152
+    },
+    {
+      "topic": "Implementing fuzzy search and typo tolerance in PostgreSQL using pg_trgm extension and GIN indexes",
+      "category": "databases",
+      "language": "postgresql",
+      "difficulty": "intermediate",
+      "summary": "Fuzzy search allows databases to match strings even when users make spelling mistakes or typos. By leveraging PostgreSQL's built-in pg_trgm extension along with GIN indexes, developers can achieve high-performance similarity matching and regex searches without needing external search engines like Elasticsearch.",
+      "key_points": [
+        "The pg_trgm extension breaks text down into three-character substrings (trigrams) to measure similarity.",
+        "Generalized Inverted Index (GIN) indexes are optimized for indexing composite values like arrays and trigrams, speeding up similarity queries significantly.",
+        "The similarity() function returns a score between 0.0 and 1.0 indicating how closely two strings match based on shared trigrams.",
+        "The similarity threshold can be adjusted dynamically using set_strict_word_similarity() or pg_trgm.similarity_threshold."
+      ],
+      "code_example": {
+        "language": "sql",
+        "description": "Demonstrates enabling pg_trgm, creating a GIN index, and querying with typo tolerance",
+        "correct": "CREATE EXTENSION IF NOT EXISTS pg_trgm;\nCREATE INDEX idx_users_name_trgm ON users USING gin (name gin_trgm_ops);\nSELECT name, similarity(name, 'Jonh Doe') AS sim FROM users WHERE name % 'Jonh Doe' ORDER BY sim DESC;",
+        "wrong": "SELECT * FROM users WHERE name LIKE '%Jonh Doe%';"
+      },
+      "common_mistakes": [
+        "Using standard B-tree indexes for similarity operators (%) which results in sequential full table scans.",
+        "Forgetting to specify the 'gin_trgm_ops' operator class when creating the GIN index, causing default operators to be used instead of trigram operators."
+      ],
+      "best_practices": [
+        "Always pair the pg_trgm extension setup with a GIN index rather than a GiST index for read-heavy fuzzy search workloads due to faster lookup times.",
+        "Tune the pg_trgm.similarity_threshold globally or per session to control the strictness of matches and avoid irrelevant results.",
+        "Combine trigram similarity with full-text search (tsvector) for enterprise applications requiring both linguistic stemming and typo tolerance."
+      ],
+      "when_to_use": "When you need lightweight typo-tolerant search capabilities directly inside PostgreSQL without introducing the operational overhead of a dedicated search engine like Elasticsearch or Solr.",
+      "when_not_to_use": "When dealing with massive multi-terabyte datasets with complex multi-language linguistic stemming requirements, where dedicated search clusters are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How does the pg_trgm extension evaluate string similarity in PostgreSQL?",
+          "answer": "It breaks strings down into overlapping three-character sequences (trigrams) and calculates the Sørensen-Dice coefficient comparing the shared trigrams between the two strings."
+        },
+        {
+          "question": "Why is a GIN index preferred over a B-tree index when implementing fuzzy search with pg_trgm?",
+          "answer": "B-tree indexes are designed for exact matches or prefix sorting and cannot efficiently index internal substrings, whereas GIN (Generalized Inverted Index) is built to handle composite elements like trigram arrays for rapid membership checking."
+        }
+      ],
+      "related_topics": [
+        "PostgreSQL Full Text Search",
+        "Indexing strategies for high-performance SQL queries",
+        "Levenshtein distance algorithms in relational databases"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T05:09:41.621679+00:00",
+      "run_number": 153
     }
   ]
 }
