@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **233** |
-| Last Updated | `2026-09-07T20:59:12.459477+00:00` |
-| Dataset Size | `233 entries` |
+| Total Topics Learned | **234** |
+| Last Updated | `2026-09-07T21:02:32.744973+00:00` |
+| Dataset Size | `234 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 72 |
+| crypto-blockchain | 73 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 19 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto ETF approval impact — historical price action around ETF decisions`
 - `Crypto institutional accumulation signals — Grayscale and ETF flows`
 - `Crypto macro correlation — Bitcoin vs S&P 500 during risk-off events`
 - `Crypto regulatory event impact — SEC announcements and price reactions`
 - `Crypto black swan events — historical crashes and recovery patterns`
-- `Crypto flash crash mechanics — what causes sudden 10-20% drops`
 
 <!-- STATS_END -->
 
