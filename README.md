@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **185** |
-| Last Updated | `2026-09-07T08:32:39.470285+00:00` |
-| Dataset Size | `185 entries` |
+| Total Topics Learned | **186** |
+| Last Updated | `2026-09-07T09:07:22.382821+00:00` |
+| Dataset Size | `186 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 33 |
+| crypto-blockchain | 34 |
 | technical-analysis | 17 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin address growth rate — new wallet creation as adoption signal`
 - `Bitcoin delta price — lower bound support in bear markets`
 - `Bitcoin balanced price model — fair value estimation from coin days`
 - `Bitcoin terminal price model — upper bound price prediction`
 - `Bitcoin 200 week moving average heatmap — price relative to 200w MA`
-- `Bitcoin 2 year moving average multiplier — buy and sell zones`
 
 <!-- STATS_END -->
 
