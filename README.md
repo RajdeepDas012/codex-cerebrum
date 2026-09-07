@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **246** |
-| Last Updated | `2026-09-07T23:43:49.815081+00:00` |
-| Dataset Size | `246 entries` |
+| Total Topics Learned | **247** |
+| Last Updated | `2026-09-07T23:46:54.962553+00:00` |
+| Dataset Size | `247 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 31 |
+| technical-analysis | 32 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Elder ray index — bulls power and bears power measurement`
 - `Force index — combining price and volume for trend strength`
 - `Chaikin money flow — accumulation and distribution pressure indicator`
 - `Money flow index MFI — volume-weighted RSI for smart money tracking`
 - `Commodity channel index CCI — identifying cyclical trend changes`
-- `Williams percent range indicator — overbought oversold with %R`
 
 <!-- STATS_END -->
 
