@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **140** |
-| Last Updated | `2026-09-07T02:42:34.384257+00:00` |
-| Dataset Size | `140 entries` |
+| Total Topics Learned | **141** |
+| Last Updated | `2026-09-07T02:45:41.157893+00:00` |
+| Dataset Size | `141 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,8 +21,8 @@
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
+| web-dev | 8 |
 | language-specific | 7 |
-| web-dev | 7 |
 | technical-analysis | 7 |
 | databases | 6 |
 | probability-math | 5 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing sliding window rate limiting in Rust using Actix-web and Redis sorted sets`
 - `Implementing optimistic concurrency control in GraphQL mutations with version checking and custom error handling in Apollo Server`
 - `Implementing secure Webhook signature verification and retry mechanisms in Python with FastAPI and HMAC-SHA256`
 - `Implementing secure cookie-based authentication with HttpOnly, SameSite, and CSRF protection in Next.js API routes`
 - `Implementing shadow DOM encapsulation and CSS scoping in Web Components with native Custom Elements API`
-- `Implementing saga pattern in Go with Temporal workflow engine for distributed transactions`
 
 <!-- STATS_END -->
 

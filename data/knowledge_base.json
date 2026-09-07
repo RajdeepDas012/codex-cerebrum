@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 140,
-    "last_updated": "2026-09-07T02:42:34.384257+00:00",
-    "total_topics_learned": 140
+    "total_runs": 141,
+    "last_updated": "2026-09-07T02:45:41.157893+00:00",
+    "total_topics_learned": 141
   },
   "entries": [
     {
@@ -7011,6 +7011,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T02:42:34.384240+00:00",
       "run_number": 140
+    },
+    {
+      "topic": "Implementing sliding window rate limiting in Rust using Actix-web and Redis sorted sets",
+      "category": "web-dev",
+      "language": "rust",
+      "difficulty": "advanced",
+      "summary": "Implementing a sliding window rate limiter in Rust with Actix-web and Redis sorted sets allows for precise, memory-efficient request throttling across distributed instances. It leverages Redis ZSET score-timestamp mappings to accurately calculate request frequencies within a moving time window.",
+      "key_points": [
+        "Utilizes Redis sorted sets (ZSET) where members are unique request IDs/timestamps and scores are epoch timestamps.",
+        "Employs Redis MULTI/EXEC transactions (pipelines) to atomically remove expired entries, add the current request, and count remaining elements.",
+        "Integrates into Actix-web via custom middleware or extractors to intercept HTTP requests before they hit application handlers.",
+        "Prevents the 'burst at window boundary' flaw common in fixed-window rate limiting algorithms."
+      ],
+      "code_example": {
+        "language": "rust",
+        "description": "Actix-web middleware checking rate limits using a Redis sorted set pipeline",
+        "correct": "async fn check_rate_limit(con: &mut redis::aio::Connection, key: &str, now: f64, window: f64, limit: usize) -> Result<bool, redis::RedisError> {\n    let clear_before = now - window;\n    let _: () = redis::pipe()\n        .atomic()\n        .zrembyscore(key, 0.0, clear_before)\n        .zadd(key, now, now)\n        .zcard(key)\n        .query_async(con).await?;\n    let count: usize = redis::cmd(\"ZCARD\").arg(key).query_async(con).await?;\n    Ok(count <= limit)\n}",
+        "wrong": "async fn check_rate_limit(con: &mut redis::aio::Connection, key: &str, now: f64, window: f64, limit: usize) -> Result<bool, redis::RedisError> {\n    let count: usize = redis::cmd(\"ZCARD\").arg(key).query_async(con).await?;\n    if count >= limit { return Ok(false); }\n    let _: () = redis::cmd(\"ZADD\").arg(key).arg(now).arg(now).query_async(con).await?;\n    Ok(true)\n}"
+      },
+      "common_mistakes": [
+        "Failing to use Redis transactions (MULTI/EXEC) or Lua scripts, leading to race conditions between checking the count and adding the new request.",
+        "Forgetting to set an expiration (TTL) on the Redis key, causing unbounded memory growth over time for inactive users."
+      ],
+      "best_practices": [
+        "Always apply a sliding expiration TTL to the Redis key matching the window duration to automatically garbage-collect stale user keys.",
+        "Offload heavy Redis transaction execution to a Lua script to guarantee atomicity and reduce round-trip time (RTT) latency.",
+        "Return standard rate-limiting HTTP headers (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`) on every response."
+      ],
+      "when_to_use": "When you need high-throughput, horizontally scalable API rate limiting with smooth traffic distribution and exact sliding window accuracy.",
+      "when_not_to_use": "When dealing with low-traffic internal applications where an in-memory token bucket or fixed window counter library is sufficient.",
+      "interview_questions": [
+        {
+          "question": "Why use a Redis sorted set (ZSET) instead of a simple string counter for sliding window rate limiting?",
+          "answer": "A ZSET allows storing individual request timestamps as scores, enabling precise eviction of out-of-window requests using ZREMRANGEBYSCORE and accurate counting via ZCARD."
+        },
+        {
+          "question": "How do you prevent race conditions when multiple concurrent requests hit the Redis-backed rate limiter for the same user?",
+          "answer": "By wrapping the Redis commands (ZREMRANGEBYSCORE, ZADD, ZCARD, EXPIRE) inside a MULTI/EXEC transaction block or executing them via an atomic Redis Lua script."
+        }
+      ],
+      "related_topics": [
+        "Distributed locking with Redis and Redlock algorithm in Rust",
+        "Token bucket vs Leaky bucket rate limiting algorithms",
+        "Actix-web custom middleware development"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:45:41.157875+00:00",
+      "run_number": 141
     }
   ]
 }
