@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **155** |
-| Last Updated | `2026-09-07T05:15:54.435492+00:00` |
-| Dataset Size | `155 entries` |
+| Total Topics Learned | **156** |
+| Last Updated | `2026-09-07T05:21:01.009052+00:00` |
+| Dataset Size | `156 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 16 |
+| crypto-blockchain | 17 |
 | trading-strategies | 12 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin price halving cycles — historical price action before and after each halving`
 - `Implementing secure multi-tenant data isolation in MongoDB using logical database separation and Mongoose discriminator schemas`
 - `Implementing content delivery network (CDN) cache invalidation via cache tags and surrogate keys in Fastly with Node.js and Express`
 - `Implementing fuzzy search and typo tolerance in PostgreSQL using pg_trgm extension and GIN indexes`
 - `Implementing server-side request forgery (SSRF) prevention in Node.js using IP address validation and DNS rebinding protection`
-- `Implementing secure JWT authentication refresh token rotation in Node.js with Express and Redis for session revocation`
 
 <!-- STATS_END -->
 
