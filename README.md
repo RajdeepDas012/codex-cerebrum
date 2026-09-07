@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **153** |
-| Last Updated | `2026-09-07T05:09:41.621697+00:00` |
-| Dataset Size | `153 entries` |
+| Total Topics Learned | **154** |
+| Last Updated | `2026-09-07T05:12:47.816185+00:00` |
+| Dataset Size | `154 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,9 +20,9 @@
 | system-design | 58 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
+| web-dev | 9 |
 | stocks-markets | 9 |
 | databases | 8 |
-| web-dev | 8 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing content delivery network (CDN) cache invalidation via cache tags and surrogate keys in Fastly with Node.js and Express`
 - `Implementing fuzzy search and typo tolerance in PostgreSQL using pg_trgm extension and GIN indexes`
 - `Implementing server-side request forgery (SSRF) prevention in Node.js using IP address validation and DNS rebinding protection`
 - `Implementing secure JWT authentication refresh token rotation in Node.js with Express and Redis for session revocation`
 - `Implementing rolling deployment strategies in Kubernetes using Istio traffic shifting and readiness probes`
-- `Implementing real-time data synchronization in Flutter using local SQLite and Firestore offline persistence with conflict resolution`
 
 <!-- STATS_END -->
 
