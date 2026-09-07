@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 139,
-    "last_updated": "2026-09-07T02:37:43.475652+00:00",
-    "total_topics_learned": 139
+    "total_runs": 140,
+    "last_updated": "2026-09-07T02:42:34.384257+00:00",
+    "total_topics_learned": 140
   },
   "entries": [
     {
@@ -6963,6 +6963,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T02:37:43.475635+00:00",
       "run_number": 139
+    },
+    {
+      "topic": "Implementing optimistic concurrency control in GraphQL mutations with version checking and custom error handling in Apollo Server",
+      "category": "web-dev",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "Optimistic concurrency control (OCC) prevents race conditions in distributed applications by validating version numbers before committing updates. By integrating version checks into Apollo Server resolvers and handling custom errors, you can safely handle concurrent edits without locking database rows.",
+      "key_points": [
+        "Requires a version or timestamp column on the database record to track state changes.",
+        "Mutations must accept an expected version argument alongside entity updates.",
+        "Resolvers check if the database version matches the client-supplied version before applying updates.",
+        "Custom GraphQLError objects should be thrown to return structured conflict details to the client."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Resolving an update mutation with optimistic concurrency control and version incrementing in Apollo Server",
+        "correct": "const resolvers = {\n  Mutation: {\n    updatePost: async (_, { id, title, expectedVersion }, { dataSources }) => {\n      const post = await dataSources.db.posts.findById(id);\n      if (post.version !== expectedVersion) {\n        throw new GraphQLError('Conflict: The post has been modified by another user.', {\n          extensions: { code: 'CONCURRENCY_CONFLICT', currentVersion: post.version }\n        });\n      }\n      return dataSources.db.posts.update(id, { title, version: post.version + 1 });\n    }\n  }\n};",
+        "wrong": "const resolvers = {\n  Mutation: {\n    updatePost: async (_, { id, title }, { dataSources }) => {\n      return dataSources.db.posts.update(id, { title });\n    }\n  }\n};"
+      },
+      "common_mistakes": [
+        "Failing to increment the version number inside the atomic database transaction during update.",
+        "Relying on client-side timestamps instead of server-managed monotonically increasing version counters."
+      ],
+      "best_practices": [
+        "Return the newly incremented version number in the mutation response payload so the client can update its local cache.",
+        "Use distinct GraphQL error extension codes (e.g., CONCURRENCY_CONFLICT) to help client apps trigger a refetch flow automatically.",
+        "Combine OCC with database-level isolation levels for critical financial or inventory entities."
+      ],
+      "when_to_use": "Use when multiple users frequently edit the same resources concurrently and you want to avoid pessimistic database locks.",
+      "when_not_to_use": "Avoid in high-write contention systems where retry storms from frequent version conflicts would degrade user experience.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a concurrency conflict in a GraphQL mutation using Apollo Server?",
+          "answer": "By comparing the client's expected version with the database version in the resolver, throwing a custom GraphQLError with error extensions if they mismatch, and returning the conflict details to the client."
+        },
+        {
+          "question": "Why is optimistic concurrency control preferred over pessimistic locking in web applications?",
+          "answer": "OCC assumes conflicts are rare, allowing multiple readers to access data without locking database rows, which significantly increases scalability and throughput."
+        }
+      ],
+      "related_topics": [
+        "GraphQL Error Handling and Extensions",
+        "Distributed Database Transactions",
+        "Apollo Client Cache Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:42:34.384240+00:00",
+      "run_number": 140
     }
   ]
 }
