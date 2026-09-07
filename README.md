@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **243** |
-| Last Updated | `2026-09-07T23:34:32.677396+00:00` |
-| Dataset Size | `243 entries` |
+| Total Topics Learned | **244** |
+| Last Updated | `2026-09-07T23:37:38.326649+00:00` |
+| Dataset Size | `244 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 28 |
+| technical-analysis | 29 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Money flow index MFI — volume-weighted RSI for smart money tracking`
 - `Commodity channel index CCI — identifying cyclical trend changes`
 - `Williams percent range indicator — overbought oversold with %R`
 - `Stochastic RSI — combining stochastic and RSI for precise entries`
 - `MACD zero line rejection — trend strength confirmation technique`
-- `MACD histogram divergence — early signal before MACD line cross`
 
 <!-- STATS_END -->
 
