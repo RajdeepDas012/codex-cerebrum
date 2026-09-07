@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 142,
-    "last_updated": "2026-09-07T02:49:49.066918+00:00",
-    "total_topics_learned": 142
+    "total_runs": 143,
+    "last_updated": "2026-09-07T02:53:03.857668+00:00",
+    "total_topics_learned": 143
   },
   "entries": [
     {
@@ -7107,6 +7107,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-07T02:49:49.066900+00:00",
       "run_number": 142
+    },
+    {
+      "topic": "Implementing background job processing in Ruby with Sidekiq and Redis for reliable asynchronous task execution",
+      "category": "devops",
+      "language": "Ruby",
+      "difficulty": "intermediate",
+      "summary": "Sidekiq is an efficient background processing framework for Ruby that uses Redis as a data store for queuing and managing asynchronous tasks. It offloads heavy or time-consuming operations from the main web request-response cycle, ensuring high application responsiveness and reliability.",
+      "key_points": [
+        "Utilizes multithreading via the Celluloid-inspired actor model to process multiple jobs concurrently within a single Ruby process.",
+        "Stores job payloads, state, and retry queues persistently in Redis, making it fast and memory-efficient.",
+        "Provides built-in automatic retries with exponential backoff for failed jobs, along with a Dead Job Set for permanent failures.",
+        "Supports active job middleware for custom hooks such as logging, performance monitoring, and error reporting."
+      ],
+      "code_example": {
+        "language": "ruby",
+        "description": "Defines a Sidekiq worker class with error handling and enqueues a background job safely.",
+        "correct": "class InvoiceEmailWorker\n  include Sidekiq::Worker\n  sidekiq_options retry: 5, queue: 'mailers'\n\n  def perform(invoice_id)\n    invoice = Invoice.find_by(id: invoice_id)\n    return unless invoice\n    InvoiceMailer.send_receipt(invoice).deliver_now\n  end\nend\n\n# Enqueuing the job asynchronously\nInvoiceEmailWorker.perform_async(invoice.id)",
+        "wrong": "class InvoiceEmailWorker\n  include Sidekiq::Worker\n  def perform(invoice)\n    # Passing a full ActiveRecord object instead of an ID, which causes stale data or serialization issues\n    InvoiceMailer.send_receipt(invoice).deliver_now\n  end\nend\nInvoiceEmailWorker.perform_async(invoice)"
+      },
+      "common_mistakes": [
+        "Passing complex Ruby objects or Active Record instances into the job queue instead of primitive IDs, leading to serialization issues and stale database states.",
+        "Failing to make worker jobs idempotent, causing unintended duplicate side effects if a job fails and automatically retries."
+      ],
+      "best_practices": [
+        "Always pass lightweight identifiers (like primary keys) to job arguments and fetch fresh data inside the perform method.",
+        "Design all background jobs to be strictly idempotent so safe retries do not duplicate external API calls or database updates.",
+        "Monitor Redis memory usage and configure appropriate eviction policies to prevent out-of-memory crashes during high job volume."
+      ],
+      "when_to_use": "Use Sidekiq when your Ruby or Rails application needs to offload time-consuming tasks like sending emails, processing payments, or generating reports away from web requests.",
+      "when_not_to_use": "Avoid Sidekiq for lightweight sub-millisecond tasks where the network overhead of Redis serialization exceeds the execution time, or when your infrastructure cannot support running a persistent Redis instance.",
+      "interview_questions": [
+        {
+          "question": "Why is it discouraged to pass full ActiveRecord objects as arguments to a Sidekiq worker?",
+          "answer": "ActiveRecord objects cannot be efficiently serialized into JSON for Redis storage, and by the time the job executes, the database record may have changed or been deleted, resulting in stale or missing data."
+        },
+        {
+          "question": "How does Sidekiq handle concurrency compared to traditional background processors like Delayed Job?",
+          "answer": "Sidekiq uses a multithreaded architecture that processes multiple jobs concurrently within a single Ruby process using a shared Redis connection, whereas older processors typically rely on single-threaded multi-process models that consume significantly more memory."
+        }
+      ],
+      "related_topics": [
+        "Redis data structures and memory optimization",
+        "Idempotency patterns in distributed systems",
+        "Active Job framework abstraction in Ruby on Rails"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:53:03.857650+00:00",
+      "run_number": 143
     }
   ]
 }
