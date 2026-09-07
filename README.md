@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **206** |
-| Last Updated | `2026-09-07T15:52:11.105873+00:00` |
-| Dataset Size | `206 entries` |
+| Total Topics Learned | **207** |
+| Last Updated | `2026-09-07T15:55:23.698550+00:00` |
+| Dataset Size | `207 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | system-design | 58 |
 | crypto-blockchain | 52 |
-| technical-analysis | 19 |
+| technical-analysis | 20 |
 | trading-strategies | 14 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Total crypto market cap cycles — total2 and total3 for altcoin analysis`
 - `Altcoin season index — measuring when capital rotates from BTC to alts`
 - `Ethereum layer 2 growth metrics — L2 TVL growth predicting ETH demand`
 - `Ethereum liquid staking derivatives — stETH and rETH market dynamics`
 - `Ethereum merge impact on supply — post-merge issuance reduction analysis`
-- `Ethereum supply on exchanges — declining supply signals accumulation`
 
 <!-- STATS_END -->
 
