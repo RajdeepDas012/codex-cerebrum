@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **193** |
-| Last Updated | `2026-09-07T09:29:03.038644+00:00` |
-| Dataset Size | `193 entries` |
+| Total Topics Learned | **194** |
+| Last Updated | `2026-09-07T09:32:08.558026+00:00` |
+| Dataset Size | `194 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 39 |
+| crypto-blockchain | 40 |
 | technical-analysis | 19 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin reserve risk — confidence vs opportunity for long term investors`
 - `Bitcoin market cap to realized value MVRV Z-score for cycle extremes`
 - `Bitcoin aSORP indicator — adjusted spent output ratio for bear market bottom`
 - `Bitcoin stablecoin supply ratio — SSR for measuring buying power`
 - `Bitcoin OTC desk flows — large over-the-counter trades and price impact`
-- `Bitcoin whale accumulation addresses — tracking wallets above 1000 BTC`
 
 <!-- STATS_END -->
 
