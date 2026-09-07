@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **216** |
-| Last Updated | `2026-09-07T16:45:36.477189+00:00` |
-| Dataset Size | `216 entries` |
+| Total Topics Learned | **217** |
+| Last Updated | `2026-09-07T16:50:00.546993+00:00` |
+| Dataset Size | `217 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 61 |
+| crypto-blockchain | 62 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 14 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto volatility index — measuring fear using options implied volatility`
 - `Crypto market beta — how altcoins amplify Bitcoin price moves`
 - `Crypto correlation matrix — BTC ETH and altcoin correlation changes`
 - `Tether printing and Bitcoin price — USDT issuance as liquidity pump`
 - `Crypto exchange volume comparison — volume leadership across exchanges`
-- `Crypto venture capital funding cycles — VC investment predicting bull runs`
 
 <!-- STATS_END -->
 
