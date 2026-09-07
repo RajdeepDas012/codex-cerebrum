@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **197** |
-| Last Updated | `2026-09-07T15:14:52.386513+00:00` |
-| Dataset Size | `197 entries` |
+| Total Topics Learned | **198** |
+| Last Updated | `2026-09-07T15:21:07.297840+00:00` |
+| Dataset Size | `198 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 43 |
+| crypto-blockchain | 44 |
 | technical-analysis | 19 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Ethereum burn rate EIP-1559 — deflationary pressure from fee burning`
 - `Ethereum staking yield vs price — validator rewards impact on ETH supply dynamics`
 - `Ethereum gas fee trends — network congestion as demand indicator`
 - `Bitcoin liveliness metric — HODLer behavior intensity measurement`
 - `Bitcoin reserve risk — confidence vs opportunity for long term investors`
-- `Bitcoin market cap to realized value MVRV Z-score for cycle extremes`
 
 <!-- STATS_END -->
 
