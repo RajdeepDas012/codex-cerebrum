@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **160** |
-| Last Updated | `2026-09-07T05:33:26.963552+00:00` |
-| Dataset Size | `160 entries` |
+| Total Topics Learned | **161** |
+| Last Updated | `2026-09-07T05:36:40.559707+00:00` |
+| Dataset Size | `161 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,10 +23,10 @@
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
+| technical-analysis | 8 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| technical-analysis | 7 |
 | probability-math | 5 |
 | market-analysis | 3 |
 | algorithms | 2 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin SOPR indicator — spent output profit ratio for market sentiment`
 - `Bitcoin NVT ratio — network value to transactions signal for overvaluation`
 - `Bitcoin stock to flow model — S2F and S2FX price prediction accuracy`
 - `Bitcoin realized price vs market price — MVRV ratio for buy and sell signals`
 - `Bitcoin on-chain UTXO age bands — how coin age predicts market tops and bottoms`
-- `Bitcoin price halving cycles — historical price action before and after each halving`
 
 <!-- STATS_END -->
 
