@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **169** |
-| Last Updated | `2026-09-07T06:01:27.794748+00:00` |
-| Dataset Size | `169 entries` |
+| Total Topics Learned | **170** |
+| Last Updated | `2026-09-07T06:04:33.868709+00:00` |
+| Dataset Size | `170 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 28 |
+| crypto-blockchain | 29 |
 | trading-strategies | 13 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin long term holder vs short term holder supply — distribution shifts`
 - `Bitcoin coin days destroyed — sudden movement of old coins as sell signal`
 - `Bitcoin RHODL ratio — realized HODL ratio for peak cycle detection`
 - `Bitcoin thermocap multiple — total security spend vs market cap valuation`
 - `Bitcoin realized cap HODL waves — long term holder behavior analysis`
-- `Bitcoin puell multiple — mining revenue ratio for cycle top and bottom detection`
 
 <!-- STATS_END -->
 
