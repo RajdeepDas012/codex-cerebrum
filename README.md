@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **145** |
-| Last Updated | `2026-09-07T03:01:08.325834+00:00` |
-| Dataset Size | `145 entries` |
+| Total Topics Learned | **146** |
+| Last Updated | `2026-09-07T03:05:00.848799+00:00` |
+| Dataset Size | `146 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 55 |
+| system-design | 56 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing distributed task scheduling with Quartz.NET and PostgreSQL persistent job store in C#`
 - `Implementing end-to-end encryption in web applications using the Web Crypto API and AES-GCM`
 - `Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices`
 - `Implementing background job processing in Ruby with Sidekiq and Redis for reliable asynchronous task execution`
 - `Implementing distributed tracing in Go with OpenTelemetry and Jaeger exporter`
-- `Implementing sliding window rate limiting in Rust using Actix-web and Redis sorted sets`
 
 <!-- STATS_END -->
 
