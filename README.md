@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **148** |
-| Last Updated | `2026-09-07T03:12:38.475363+00:00` |
-| Dataset Size | `148 entries` |
+| Total Topics Learned | **149** |
+| Last Updated | `2026-09-07T03:15:44.679558+00:00` |
+| Dataset Size | `149 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 57 |
+| system-design | 58 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing real-time data synchronization in Flutter using local SQLite and Firestore offline persistence with conflict resolution`
 - `Implementing change data capture (CDC) in PostgreSQL using Debezium and Kafka Connect for real-time data synchronization`
 - `Implementing distributed leader election in Go using etcd and concurrency primitives`
 - `Implementing distributed task scheduling with Quartz.NET and PostgreSQL persistent job store in C#`
 - `Implementing end-to-end encryption in web applications using the Web Crypto API and AES-GCM`
-- `Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices`
 
 <!-- STATS_END -->
 
