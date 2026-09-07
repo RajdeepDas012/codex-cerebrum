@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **200** |
-| Last Updated | `2026-09-07T15:28:17.808603+00:00` |
-| Dataset Size | `200 entries` |
+| Total Topics Learned | **201** |
+| Last Updated | `2026-09-07T15:31:47.062287+00:00` |
+| Dataset Size | `201 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 46 |
+| crypto-blockchain | 47 |
 | technical-analysis | 19 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Ethereum exchange netflow — ETH leaving exchanges as bullish signal`
 - `Ethereum developer activity — GitHub commits as fundamental value signal`
 - `Ethereum total value locked TVL — DeFi growth as price correlation`
 - `Ethereum burn rate EIP-1559 — deflationary pressure from fee burning`
 - `Ethereum staking yield vs price — validator rewards impact on ETH supply dynamics`
-- `Ethereum gas fee trends — network congestion as demand indicator`
 
 <!-- STATS_END -->
 
