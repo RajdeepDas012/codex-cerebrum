@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **209** |
-| Last Updated | `2026-09-07T16:20:28.970579+00:00` |
-| Dataset Size | `209 entries` |
+| Total Topics Learned | **210** |
+| Last Updated | `2026-09-07T16:23:34.591670+00:00` |
+| Dataset Size | `210 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 54 |
+| crypto-blockchain | 55 |
 | technical-analysis | 20 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `NFT market volume trends — wash trading detection and real demand`
 - `DeFi total value locked trends — TVL growth predicting token prices`
 - `Altcoin dominance chart — sector rotation between crypto categories`
 - `Total crypto market cap cycles — total2 and total3 for altcoin analysis`
 - `Altcoin season index — measuring when capital rotates from BTC to alts`
-- `Ethereum layer 2 growth metrics — L2 TVL growth predicting ETH demand`
 
 <!-- STATS_END -->
 
