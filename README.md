@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **225** |
-| Last Updated | `2026-09-07T20:28:59.175933+00:00` |
-| Dataset Size | `225 entries` |
+| Total Topics Learned | **226** |
+| Last Updated | `2026-09-07T20:32:16.627300+00:00` |
+| Dataset Size | `226 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | crypto-blockchain | 66 |
 | system-design | 58 |
 | technical-analysis | 20 |
-| trading-strategies | 18 |
+| trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto market maker strategy — how they profit from bid-ask spread`
 - `Crypto spoofing and layering — order book manipulation tactics`
 - `Crypto pump and dump detection — early warning signs of manipulation`
 - `Crypto wash trading detection — identifying fake volume on exchanges`
 - `Crypto stop loss hunting — how market makers target retail stop losses`
-- `Liquidation cascade mechanics — how large liquidations trigger chain reactions`
 
 <!-- STATS_END -->
 
