@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **240** |
-| Last Updated | `2026-09-07T23:25:15.264864+00:00` |
-| Dataset Size | `240 entries` |
+| Total Topics Learned | **241** |
+| Last Updated | `2026-09-07T23:28:21.306223+00:00` |
+| Dataset Size | `241 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 25 |
+| technical-analysis | 26 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Stochastic RSI — combining stochastic and RSI for precise entries`
 - `MACD zero line rejection — trend strength confirmation technique`
 - `MACD histogram divergence — early signal before MACD line cross`
 - `RSI failure swings — RSI-only signals without price confirmation`
 - `RSI hidden divergence — trend continuation signals using RSI`
-- `RSI divergence trading — bullish and bearish divergence for reversals`
 
 <!-- STATS_END -->
 
