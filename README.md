@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **222** |
-| Last Updated | `2026-09-07T17:07:26.930958+00:00` |
-| Dataset Size | `222 entries` |
+| Total Topics Learned | **223** |
+| Last Updated | `2026-09-07T17:12:39.184036+00:00` |
+| Dataset Size | `223 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 63 |
+| crypto-blockchain | 64 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 18 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto wash trading detection — identifying fake volume on exchanges`
 - `Crypto stop loss hunting — how market makers target retail stop losses`
 - `Liquidation cascade mechanics — how large liquidations trigger chain reactions`
 - `Crypto cash and carry arbitrage — delta neutral yield farming strategy`
 - `Crypto basis trading — spot vs futures price difference strategy`
-- `Crypto funding rate arbitrage — capturing funding rate as income strategy`
 
 <!-- STATS_END -->
 
