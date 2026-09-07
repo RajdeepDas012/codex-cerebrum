@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **143** |
-| Last Updated | `2026-09-07T02:53:03.857668+00:00` |
-| Dataset Size | `143 entries` |
+| Total Topics Learned | **144** |
+| Last Updated | `2026-09-07T02:56:54.444638+00:00` |
+| Dataset Size | `144 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 54 |
+| system-design | 55 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices`
 - `Implementing background job processing in Ruby with Sidekiq and Redis for reliable asynchronous task execution`
 - `Implementing distributed tracing in Go with OpenTelemetry and Jaeger exporter`
 - `Implementing sliding window rate limiting in Rust using Actix-web and Redis sorted sets`
 - `Implementing optimistic concurrency control in GraphQL mutations with version checking and custom error handling in Apollo Server`
-- `Implementing secure Webhook signature verification and retry mechanisms in Python with FastAPI and HMAC-SHA256`
 
 <!-- STATS_END -->
 

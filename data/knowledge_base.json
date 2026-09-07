@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 143,
-    "last_updated": "2026-09-07T02:53:03.857668+00:00",
-    "total_topics_learned": 143
+    "total_runs": 144,
+    "last_updated": "2026-09-07T02:56:54.444638+00:00",
+    "total_topics_learned": 144
   },
   "entries": [
     {
@@ -7155,6 +7155,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T02:53:03.857650+00:00",
       "run_number": 143
+    },
+    {
+      "topic": "Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices",
+      "category": "system-design",
+      "language": "Go",
+      "difficulty": "advanced",
+      "summary": "Real-time data streaming in Go using the Sarama library enables high-throughput, fault-tolerant communication between event-driven microservices. It matters because it decouples services, ensuring asynchronous data pipelines scale horizontally with minimal latency.",
+      "key_points": [
+        "Configuring Sarama consumer groups for balanced partition assignment across multiple microservice instances",
+        "Implementing producer asynchronous message delivery with error handling and success reporting channels",
+        "Managing graceful shutdowns and context cancellation to prevent message loss during pod restarts",
+        "Handling offset commits manually or automatically based on processing guarantees (at-least-once vs at-most-once)"
+      ],
+      "code_example": {
+        "language": "go",
+        "description": "Demonstrates setting up a basic asynchronous Kafka producer in Go using Sarama",
+        "correct": "package main\n\nimport (\n\t\"log\"\n\t\"github.com/Shopify/sarama\"\n)\n\nfunc main() {\n\tconfig := sarama.NewConfig()\n\tconfig.Producer.Return.Successes = true\n\tproducer, err := sarama.NewAsyncProducer([]string{\"localhost:9092\"}, config)\n\tif err != nil {\n\t\tlog.Fatalf(\"Failed to start producer: %v\", err)\n\t}\n\tdefer producer.Close()\n\n\tproducer.Input() <- &sarama.ProducerMessage{\n\t\tTopic: \"events\",\n\t\tValue: sarama.StringEncoder(\"user_signup\"),\n\t}\n\tselect {\n\tcase msg := <-producer.Successes():\n\t\tlog.Printf(\"Delivered to partition %d at offset %d\", msg.Partition, msg.Offset)\n\tcase err := <-producer.Errors():\n\t\tlog.Printf(\"Failed to deliver: %v\", err.Err)\n\t}\n}",
+        "wrong": "package main\n\nimport (\n\t\"github.com/Shopify/sarama\"\n)\n\nfunc main() {\n\t// Missing Return.Successes configuration will panic when reading from producer.Successes()\n\tproducer, _ := sarama.NewAsyncProducer([]string{\"localhost:9092\"}, sarama.NewConfig())\n\tproducer.Input() <- &sarama.ProducerMessage{Topic: \"events\", Value: sarama.StringEncoder(\"test\")}\n\t<-producer.Successes()\n}"
+      },
+      "common_mistakes": [
+        "Failing to read from the Producer.Successes() channel when enabled, causing internal buffer blocks and deadlocks",
+        "Ignoring consumer rebalance notifications, which can lead to processing duplicate messages or panics during topology shifts"
+      ],
+      "best_practices": [
+        "Always set up a dedicated goroutine to drain the AsyncProducer.Errors() and Successes() channels concurrently",
+        "Use manual offset management combined with idempotent processing to achieve reliable at-least-once delivery semantics",
+        "Tune Sarama's Net.MaxOpenRequests and Producer.Flush settings to optimize throughput under high network load"
+      ],
+      "when_to_use": "Ideal for high-throughput, decoupled microservice architectures requiring real-time event streaming, event sourcing, or log aggregation.",
+      "when_not_to_use": "Avoid when dealing with simple request-response synchronous APIs or very low-volume systems where simpler message brokers like RabbitMQ or standard HTTP suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle consumer rebalancing gracefully when using Sarama consumer groups in Go?",
+          "answer": "You implement the sarama.ConsumerGroupHandler interface, specifically handling the Setup and Cleanup methods to initialize state and flush offsets, and reacting to the ConsumeClaim loop interruption."
+        },
+        {
+          "question": "What is the difference between Sarama's SyncProducer and AsyncProducer, and when should you use each?",
+          "answer": "SyncProducer blocks until a message is acknowledged by Kafka, offering simpler error handling at the cost of lower throughput. AsyncProducer uses internal channels for non-blocking sends, maximizing throughput but requiring concurrent channel draining to prevent deadlocks."
+        }
+      ],
+      "related_topics": [
+        "Event sourcing and CQRS patterns in Go",
+        "Kafka partition strategies and replication factors",
+        "Distributed consensus and offset management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:56:54.444620+00:00",
+      "run_number": 144
     }
   ]
 }
