@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **147** |
-| Last Updated | `2026-09-07T03:09:13.548827+00:00` |
-| Dataset Size | `147 entries` |
+| Total Topics Learned | **148** |
+| Last Updated | `2026-09-07T03:12:38.475363+00:00` |
+| Dataset Size | `148 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,8 +23,8 @@
 | stocks-markets | 9 |
 | web-dev | 8 |
 | language-specific | 7 |
+| databases | 7 |
 | technical-analysis | 7 |
-| databases | 6 |
 | devops | 6 |
 | security | 5 |
 | probability-math | 5 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing change data capture (CDC) in PostgreSQL using Debezium and Kafka Connect for real-time data synchronization`
 - `Implementing distributed leader election in Go using etcd and concurrency primitives`
 - `Implementing distributed task scheduling with Quartz.NET and PostgreSQL persistent job store in C#`
 - `Implementing end-to-end encryption in web applications using the Web Crypto API and AES-GCM`
 - `Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices`
-- `Implementing background job processing in Ruby with Sidekiq and Redis for reliable asynchronous task execution`
 
 <!-- STATS_END -->
 

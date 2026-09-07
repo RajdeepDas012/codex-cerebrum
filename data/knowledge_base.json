@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 147,
-    "last_updated": "2026-09-07T03:09:13.548827+00:00",
-    "total_topics_learned": 147
+    "total_runs": 148,
+    "last_updated": "2026-09-07T03:12:38.475363+00:00",
+    "total_topics_learned": 148
   },
   "entries": [
     {
@@ -7347,6 +7347,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T03:09:13.548809+00:00",
       "run_number": 147
+    },
+    {
+      "topic": "Implementing change data capture (CDC) in PostgreSQL using Debezium and Kafka Connect for real-time data synchronization",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "Change Data Capture (CDC) with Debezium and Kafka Connect streams row-level changes from PostgreSQL write-ahead logs (WAL) directly into Kafka topics. This enables low-latency, event-driven data pipelines for microservices and cache invalidation without querying operational tables directly.",
+      "key_points": [
+        "Leverages PostgreSQL logical decoding and output plugins like pgoutput or decoderbufs to read the Write-Ahead Log (WAL).",
+        "Debezium runs as a Kafka Connect source connector, capturing inserts, updates, and deletes as structured JSON or Avro events.",
+        "Maintains transactional ordering and delivers at-least-once processing guarantees across distributed systems.",
+        "Eliminates the overhead of traditional polling or triggers on application tables."
+      ],
+      "code_example": {
+        "language": "json",
+        "description": "Configuration payload for deploying the Debezium PostgreSQL connector in Kafka Connect",
+        "correct": "{\n  \"name\": \"inventory-connector\",\n  \"config\": {\n    \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\n    \"tasks.max\": \"1\",\n    \"plugin.name\": \"pgoutput\",\n    \"database.hostname\": \"postgres\",\n    \"database.port\": \"5432\",\n    \"database.user\": \"postgres\",\n    \"database.password\": \"secret\",\n    \"database.dbname\": \"inventory\",\n    \"topic.prefix\": \"fullfillment\"\n  }\n}",
+        "wrong": "{\n  \"name\": \"inventory-connector\",\n  \"config\": {\n    \"connector.class\": \"io.debezium.connector.postgresql.PostgresConnector\",\n    \"database.hostname\": \"postgres\",\n    \"database.user\": \"postgres\",\n    \"plugin.name\": \"wal2json\"\n  }\n}"
+      },
+      "common_mistakes": [
+        "Failing to configure PostgreSQL wal_level to 'logical', which prevents the logical decoding plugins from initializing.",
+        "Neglecting Kafka Connect offset storage topic cleanup policies, leading to stale state accumulation or connector restart failures."
+      ],
+      "best_practices": [
+        "Set adequate disk space and monitor WAL disk usage to prevent the primary database from running out of storage during network partitions.",
+        "Use Schema Registry with Avro serialization for CDC events to enforce backward and forward compatibility as table schemas evolve.",
+        "Grant only replication and read privileges required by the Debezium database user rather than superuser access."
+      ],
+      "when_to_use": "When you need to synchronize database state changes to search engines, data warehouses, or secondary microservices in real time without dual-writing from application code.",
+      "when_not_to_use": "For simple monolithic applications where asynchronous event streaming adds unnecessary operational complexity over standard database transactions.",
+      "interview_questions": [
+        {
+          "question": "How does Debezium read changes from PostgreSQL without impacting database performance?",
+          "answer": "Debezium taps into PostgreSQL's Write-Ahead Log (WAL) using logical decoding plugins (such as pgoutput), parsing the transaction log streams rather than querying the application tables or using heavy triggers."
+        },
+        {
+          "question": "What happens to a Debezium CDC pipeline if the downstream Kafka cluster becomes unavailable?",
+          "answer": "The PostgreSQL WAL continues to grow while the connector holds its offset commit. If downtime is prolonged, it can exhaust database disk space, making monitoring of replication lag and WAL disk usage critical."
+        }
+      ],
+      "related_topics": [
+        "PostgreSQL Logical Replication",
+        "Apache Kafka Connect SMTs (Single Message Transforms)",
+        "Event-Driven Architecture"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T03:12:38.475345+00:00",
+      "run_number": 148
     }
   ]
 }
