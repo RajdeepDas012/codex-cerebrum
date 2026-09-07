@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **203** |
-| Last Updated | `2026-09-07T15:40:43.543798+00:00` |
-| Dataset Size | `203 entries` |
+| Total Topics Learned | **204** |
+| Last Updated | `2026-09-07T15:45:07.861340+00:00` |
+| Dataset Size | `204 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 49 |
+| crypto-blockchain | 50 |
 | technical-analysis | 19 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Ethereum liquid staking derivatives — stETH and rETH market dynamics`
 - `Ethereum merge impact on supply — post-merge issuance reduction analysis`
 - `Ethereum supply on exchanges — declining supply signals accumulation`
 - `Ethereum exchange netflow — ETH leaving exchanges as bullish signal`
 - `Ethereum developer activity — GitHub commits as fundamental value signal`
-- `Ethereum total value locked TVL — DeFi growth as price correlation`
 
 <!-- STATS_END -->
 
