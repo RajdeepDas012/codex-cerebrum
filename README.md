@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **162** |
-| Last Updated | `2026-09-07T05:39:46.171177+00:00` |
-| Dataset Size | `162 entries` |
+| Total Topics Learned | **163** |
+| Last Updated | `2026-09-07T05:42:52.450491+00:00` |
+| Dataset Size | `163 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 22 |
+| crypto-blockchain | 23 |
 | trading-strategies | 12 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin miner outflows — when miners sell and what it means for price`
 - `Bitcoin exchange reserve — declining reserves signal bullish accumulation`
 - `Bitcoin SOPR indicator — spent output profit ratio for market sentiment`
 - `Bitcoin NVT ratio — network value to transactions signal for overvaluation`
 - `Bitcoin stock to flow model — S2F and S2FX price prediction accuracy`
-- `Bitcoin realized price vs market price — MVRV ratio for buy and sell signals`
 
 <!-- STATS_END -->
 
