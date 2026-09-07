@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **214** |
-| Last Updated | `2026-09-07T16:39:25.132880+00:00` |
-| Dataset Size | `214 entries` |
+| Total Topics Learned | **215** |
+| Last Updated | `2026-09-07T16:42:30.854674+00:00` |
+| Dataset Size | `215 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 59 |
+| crypto-blockchain | 60 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 14 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto correlation matrix — BTC ETH and altcoin correlation changes`
 - `Tether printing and Bitcoin price — USDT issuance as liquidity pump`
 - `Crypto exchange volume comparison — volume leadership across exchanges`
 - `Crypto venture capital funding cycles — VC investment predicting bull runs`
 - `Stablecoin market cap growth — USDT and USDC supply as liquidity signal`
-- `NFT market volume trends — wash trading detection and real demand`
 
 <!-- STATS_END -->
 
