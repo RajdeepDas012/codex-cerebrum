@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **194** |
-| Last Updated | `2026-09-07T09:32:08.558026+00:00` |
-| Dataset Size | `194 entries` |
+| Total Topics Learned | **195** |
+| Last Updated | `2026-09-07T15:07:16.376683+00:00` |
+| Dataset Size | `195 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 40 |
+| crypto-blockchain | 41 |
 | technical-analysis | 19 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin liveliness metric — HODLer behavior intensity measurement`
 - `Bitcoin reserve risk — confidence vs opportunity for long term investors`
 - `Bitcoin market cap to realized value MVRV Z-score for cycle extremes`
 - `Bitcoin aSORP indicator — adjusted spent output ratio for bear market bottom`
 - `Bitcoin stablecoin supply ratio — SSR for measuring buying power`
-- `Bitcoin OTC desk flows — large over-the-counter trades and price impact`
 
 <!-- STATS_END -->
 
