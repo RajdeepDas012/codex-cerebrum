@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **234** |
-| Last Updated | `2026-09-07T21:02:32.744973+00:00` |
-| Dataset Size | `234 entries` |
+| Total Topics Learned | **235** |
+| Last Updated | `2026-09-07T21:05:39.599475+00:00` |
+| Dataset Size | `235 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 73 |
+| crypto-blockchain | 74 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 19 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto options expiry impact — monthly and quarterly options expiry effect`
 - `Crypto ETF approval impact — historical price action around ETF decisions`
 - `Crypto institutional accumulation signals — Grayscale and ETF flows`
 - `Crypto macro correlation — Bitcoin vs S&P 500 during risk-off events`
 - `Crypto regulatory event impact — SEC announcements and price reactions`
-- `Crypto black swan events — historical crashes and recovery patterns`
 
 <!-- STATS_END -->
 
