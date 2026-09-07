@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **164** |
-| Last Updated | `2026-09-07T05:45:58.485515+00:00` |
-| Dataset Size | `164 entries` |
+| Total Topics Learned | **165** |
+| Last Updated | `2026-09-07T05:49:04.115008+00:00` |
+| Dataset Size | `165 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 23 |
+| crypto-blockchain | 24 |
 | trading-strategies | 13 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin puell multiple — mining revenue ratio for cycle top and bottom detection`
 - `Bitcoin hash ribbon indicator — miner capitulation and recovery buy signal`
 - `Bitcoin miner outflows — when miners sell and what it means for price`
 - `Bitcoin exchange reserve — declining reserves signal bullish accumulation`
 - `Bitcoin SOPR indicator — spent output profit ratio for market sentiment`
-- `Bitcoin NVT ratio — network value to transactions signal for overvaluation`
 
 <!-- STATS_END -->
 
