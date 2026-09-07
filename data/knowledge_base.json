@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 137,
-    "last_updated": "2026-09-07T02:30:40.408936+00:00",
-    "total_topics_learned": 137
+    "total_runs": 138,
+    "last_updated": "2026-09-07T02:34:36.828644+00:00",
+    "total_topics_learned": 138
   },
   "entries": [
     {
@@ -6863,6 +6863,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T02:30:40.408917+00:00",
       "run_number": 137
+    },
+    {
+      "topic": "Implementing secure cookie-based authentication with HttpOnly, SameSite, and CSRF protection in Next.js API routes",
+      "category": "security",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "Implement a robust session management system in Next.js using encrypted HTTP-only cookies to mitigate XSS risks, combined with SameSite attribute enforcement and Double Submit Cookie patterns for CSRF protection. This pattern ensures sensitive JWT or session tokens remain completely inaccessible to client-side JavaScript while preserving stateless API verifications.",
+      "key_points": [
+        "Setting HttpOnly, Secure, and SameSite=Strict/Lax flags on authentication cookies to prevent XSS session theft.",
+        "Handling secure token exchange and cookie serialization within Next.js App Router route handlers.",
+        "Implementing the Double Submit Cookie pattern or custom request headers for comprehensive Cross-Site Request Forgery (CSRF) defense.",
+        "Managing seamless token refresh cycles securely via backend-for-frontend (BFF) architectural patterns."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Setting a secure HTTP-only authentication cookie in a Next.js App Router API route",
+        "correct": "import { cookies } from 'next/headers';\n\nexport async function POST(request) {\n  const { token } = await request.json();\n  cookies().set('session', token, {\n    httpOnly: true,\n    secure: process.env.NODE_ENV === 'production',\n    sameSite: 'strict',\n    path: '/',\n    maxAge: 60 * 60 * 24 * 7,\n  });\n  return Response.json({ success: true });\n}",
+        "wrong": "import { NextResponse } from 'next/server';\n\nexport async function POST(request) {\n  const { token } = await request.json();\n  const response = NextResponse.json({ success: true });\n  response.cookies.set('session', token, { httpOnly: false });\n  return response;\n}"
+      },
+      "common_mistakes": [
+        "Leaving httpOnly set to false, allowing malicious XSS scripts to easily harvest tokens via document.cookie.",
+        "Forgetting to enable the 'secure' flag, which allows plaintext token transmission over unencrypted HTTP connections in non-local environments.",
+        "Failing to implement CSRF token validation on state-changing requests (POST, PUT, DELETE) when using cookie-based authentication."
+      ],
+      "best_practices": [
+        "Always set SameSite=Strict for high-security applications, or SameSite=Lax if cross-site top-level navigation GET requests require authenticated sessions.",
+        "Encrypt or sign cookie contents if they contain sensitive payloads that might need validation before hitting downstream microservices.",
+        "Enforce short-lived access tokens combined with securely stored refresh tokens to minimize the window of vulnerability if a session leaks."
+      ],
+      "when_to_use": "Building full-stack web applications with Next.js where securing session identifiers against cross-site scripting (XSS) and token theft is a top priority.",
+      "when_not_to_use": "Building pure public APIs meant for external third-party mobile or CLI consumers that natively require stateless Bearer token authorization headers.",
+      "interview_questions": [
+        {
+          "question": "Why is storing JWTs in localStorage considered a security risk compared to HttpOnly cookies?",
+          "answer": "localStorage is fully accessible via client-side JavaScript, meaning any injected Cross-Site Scripting (XSS) payload can easily read and exfiltrate the tokens. HttpOnly cookies cannot be read by JavaScript, protecting them from XSS theft."
+        },
+        {
+          "question": "Even with SameSite=Strict cookies, how can an application still be vulnerable to CSRF, and how do you prevent it?",
+          "answer": "Browser support edge cases, legacy proxies, or future protocol modifications can sometimes bypass SameSite constraints. Complete defense requires implementing a Anti-CSRF token (such as the Synchronizer Token Pattern or Double Submit Cookie technique) for all state-changing requests."
+        }
+      ],
+      "related_topics": [
+        "JSON Web Token (JWT) signature verification and rotation",
+        "Cross-Site Scripting (XSS) mitigation strategies in modern frontend frameworks",
+        "Backend-for-Frontend (BFF) security architecture patterns"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:34:36.828628+00:00",
+      "run_number": 138
     }
   ]
 }
