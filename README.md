@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **176** |
-| Last Updated | `2026-09-07T08:04:48.582942+00:00` |
-| Dataset Size | `176 entries` |
+| Total Topics Learned | **177** |
+| Last Updated | `2026-09-07T08:07:53.875303+00:00` |
+| Dataset Size | `177 entries` |
 
 ## 📂 Categories Learned
 
@@ -28,7 +28,7 @@
 | devops | 7 |
 | security | 7 |
 | probability-math | 5 |
-| market-analysis | 3 |
+| market-analysis | 4 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin fear and greed index — extreme fear as accumulation signal`
 - `Bitcoin dominance cycle — BTC dominance rise predicts altcoin bear market`
 - `Bitcoin CME gap — gaps in CME futures chart that price tends to fill`
 - `Bitcoin options max pain — where options market wants price to expire`
 - `Bitcoin liquidation heatmap — large liquidation clusters as price magnets`
-- `Bitcoin open interest spikes — OI surges predicting volatile price moves`
 
 <!-- STATS_END -->
 
