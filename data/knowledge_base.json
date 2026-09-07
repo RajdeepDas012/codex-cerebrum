@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 138,
-    "last_updated": "2026-09-07T02:34:36.828644+00:00",
-    "total_topics_learned": 138
+    "total_runs": 139,
+    "last_updated": "2026-09-07T02:37:43.475652+00:00",
+    "total_topics_learned": 139
   },
   "entries": [
     {
@@ -6912,6 +6912,57 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T02:34:36.828628+00:00",
       "run_number": 138
+    },
+    {
+      "topic": "Implementing secure Webhook signature verification and retry mechanisms in Python with FastAPI and HMAC-SHA256",
+      "category": "security",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "Webhook signature verification ensures that incoming HTTP requests genuinely originate from a trusted third-party service rather than an attacker. Combined with robust exponential backoff retry mechanisms, this architecture guarantees secure and reliable event-driven integrations.",
+      "key_points": [
+        "Use HMAC-SHA256 with a shared secret to cryptographically validate the payload signature.",
+        "Access the raw request body bytes instead of parsed JSON to avoid serialization discrepancies during signature calculation.",
+        "Employ constant-time comparison (hmac.compare_digest) to prevent timing side-channel attacks.",
+        "Implement exponential backoff with jitter for webhook delivery retries to prevent thundering herd problems."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "FastAPI endpoint verifying HMAC-SHA256 webhook signatures using raw body bytes and constant-time comparison.",
+        "correct": "import hmac\nimport hashlib\nfrom fastapi import FastAPI, Request, Header, HTTPException, status\n\napp = FastAPI()\nSECRET_KEY = b\"your_secret_webhook_key\"\n\n@app.post(\"/webhook\")\nasync def receive_webhook(request: Request, x_signature: str = Header(None)):\n    if not x_signature:\n        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=\"Missing signature\")\n    \n    body_bytes = await request.body()\n    computed_signature = hmac.new(SECRET_KEY, body_bytes, hashlib.sha256).hexdigest()\n    \n    if not hmac.compare_digest(f\"sha256={computed_signature}\", x_signature):\n        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=\"Invalid signature\")\n    \n    payload = await request.json()\n    return {\"status\": \"success\", \"event_id\": payload.get(\"id\")}",
+        "wrong": "import hmac\nimport hashlib\nfrom fastapi import FastAPI, Request\n\napp = FastAPI()\nSECRET_KEY = \"your_secret_webhook_key\"\n\n@app.post(\"/webhook\")\nasync def receive_webhook(request: Request):\n    payload = await request.json()\n    # WRONG: Parsing JSON first alters key order and spacing, breaking the signature\n    # WRONG: Using standard '==' string comparison exposes the app to timing attacks\n    return {\"status\": \"received\"}"
+      },
+      "common_mistakes": [
+        "Verifying signatures against parsed JSON dictionaries instead of the raw binary request body.",
+        "Using standard equality operators (==) to compare signatures, which leaks timing information.",
+        "Failing to account for clock drift or timestamp replay attacks by omitting timestamp validation headers.",
+        "Retrying failed webhook deliveries infinitely without backoff limits or dead-letter queues."
+      ],
+      "best_practices": [
+        "Always retrieve the raw request body stream as bytes before any JSON parsing takes place.",
+        "Utilize `hmac.compare_digest()` to perform timing-safe string comparisons.",
+        "Include timestamp headers alongside signatures to reject stale requests older than a specific threshold (e.g., 5 minutes).",
+        "Log delivery failures securely and implement a dead-letter queue for persistently failing webhook endpoints."
+      ],
+      "when_to_use": "When building public-facing API endpoints that receive event notifications from external payment gateways, CI/CD pipelines, or SaaS providers.",
+      "when_not_to_use": "When dealing with internal, trusted service-to-service communication protected by mTLS or private Virtual Private Cloud (VPC) network boundaries.",
+      "interview_questions": [
+        {
+          "question": "Why must you use the raw request body instead of parsed JSON when verifying a webhook signature?",
+          "answer": "JSON parsers do not guarantee key order, whitespace, or formatting consistency. Comparing a signature generated on the sender's raw payload against a re-serialized JSON dictionary on the receiver's end will result in mismatched hashes."
+        },
+        {
+          "question": "What is a timing attack in the context of signature verification, and how do you prevent it?",
+          "answer": "A timing attack measures the exact time it takes for an application to reject an invalid signature character-by-character. It is prevented by using constant-time comparison algorithms like `hmac.compare_digest()` that take the same amount of time regardless of where the mismatch occurs."
+        }
+      ],
+      "related_topics": [
+        "API rate limiting and DDoS mitigation",
+        "Asynchronous task queues with Celery and Redis",
+        "Zero-trust network architecture and mTLS"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T02:37:43.475635+00:00",
+      "run_number": 139
     }
   ]
 }
