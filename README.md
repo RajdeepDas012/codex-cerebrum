@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **181** |
-| Last Updated | `2026-09-07T08:20:18.555509+00:00` |
-| Dataset Size | `181 entries` |
+| Total Topics Learned | **182** |
+| Last Updated | `2026-09-07T08:23:24.089101+00:00` |
+| Dataset Size | `182 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | system-design | 58 |
 | crypto-blockchain | 31 |
-| technical-analysis | 15 |
+| technical-analysis | 16 |
 | trading-strategies | 14 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin 200 week moving average heatmap — price relative to 200w MA`
 - `Bitcoin 2 year moving average multiplier — buy and sell zones`
 - `Bitcoin Pi cycle top indicator — moving average cross for cycle tops`
 - `Bitcoin logarithmic growth curve — long term price corridor prediction`
 - `Bitcoin rainbow price chart — logarithmic regression bands for cycle phases`
-- `Bitcoin fear and greed index — extreme fear as accumulation signal`
 
 <!-- STATS_END -->
 
