@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **211** |
-| Last Updated | `2026-09-07T16:26:40.459755+00:00` |
-| Dataset Size | `211 entries` |
+| Total Topics Learned | **212** |
+| Last Updated | `2026-09-07T16:31:32.948200+00:00` |
+| Dataset Size | `212 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 56 |
+| crypto-blockchain | 57 |
 | technical-analysis | 20 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto venture capital funding cycles — VC investment predicting bull runs`
 - `Stablecoin market cap growth — USDT and USDC supply as liquidity signal`
 - `NFT market volume trends — wash trading detection and real demand`
 - `DeFi total value locked trends — TVL growth predicting token prices`
 - `Altcoin dominance chart — sector rotation between crypto categories`
-- `Total crypto market cap cycles — total2 and total3 for altcoin analysis`
 
 <!-- STATS_END -->
 
