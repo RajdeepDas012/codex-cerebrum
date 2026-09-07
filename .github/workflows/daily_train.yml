@@ -1,28 +1,9 @@
-       name: Fetch Remaining Free Minutes
-        env:
-          # Required to authenticating the billing API endpoint
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           - name: Check GitHub API Usage
         run: |
-          echo "=== Fetching GitHub Pro Actions Billing Data ==="
-          
-          # Call the user billing API endpoint using your automated token
-          RESPONSE=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            https://github.com)
-          
-          # Extract used minutes from the API JSON response
-          USED_MINUTES=$(echo "$RESPONSE" | grep -oP '"total_minutes_used":\s*\K[0-9]+' || echo "0")
-          
-          # GitHub Pro plan includes exactly 3,000 monthly minutes
-          TOTAL_ALLOWED=3000
-          REMAINING_MINUTES=$((TOTAL_ALLOWED - USED_MINUTES))
-          
-          # Clean output directly to your workflow logs
-          echo "Total Monthly Allowance: $TOTAL_ALLOWED minutes"
-          echo "Minutes Used This Month: $USED_MINUTES minutes"
-          echo "=========================================="
-          echo "MINUTES REMAINING FOR THE CYCLE: $REMAINING_MINUTES minutes"
-          echo "=========================================="
+          curl -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+               -H "Accept: application/vnd.github+json" \
+               https://github.com
+
 name: Gemini Coding Brain - Auto Learn
 
 on:
