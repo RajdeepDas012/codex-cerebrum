@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **230** |
-| Last Updated | `2026-09-07T20:46:40.640907+00:00` |
-| Dataset Size | `230 entries` |
+| Total Topics Learned | **231** |
+| Last Updated | `2026-09-07T20:51:03.186886+00:00` |
+| Dataset Size | `231 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| crypto-blockchain | 70 |
+| crypto-blockchain | 71 |
 | system-design | 58 |
 | technical-analysis | 20 |
 | trading-strategies | 19 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto regulatory event impact — SEC announcements and price reactions`
 - `Crypto black swan events — historical crashes and recovery patterns`
 - `Crypto flash crash mechanics — what causes sudden 10-20% drops`
 - `Crypto front running bots — MEV and sandwich attacks explained`
 - `Crypto dark pool trading — large OTC trades and price impact`
-- `Crypto market maker strategy — how they profit from bid-ask spread`
 
 <!-- STATS_END -->
 
