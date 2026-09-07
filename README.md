@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **188** |
-| Last Updated | `2026-09-07T09:13:33.220589+00:00` |
-| Dataset Size | `188 entries` |
+| Total Topics Learned | **189** |
+| Last Updated | `2026-09-07T09:16:39.414875+00:00` |
+| Dataset Size | `189 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 35 |
+| crypto-blockchain | 36 |
 | technical-analysis | 18 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin whale accumulation addresses — tracking wallets above 1000 BTC`
 - `Bitcoin transaction volume vs price — divergence signals trend weakness`
 - `Bitcoin active addresses — daily active addresses vs price correlation`
 - `Bitcoin address growth rate — new wallet creation as adoption signal`
 - `Bitcoin delta price — lower bound support in bear markets`
-- `Bitcoin balanced price model — fair value estimation from coin days`
 
 <!-- STATS_END -->
 
