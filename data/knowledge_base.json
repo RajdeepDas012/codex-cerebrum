@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 154,
-    "last_updated": "2026-09-07T05:12:47.816185+00:00",
-    "total_topics_learned": 154
+    "total_runs": 155,
+    "last_updated": "2026-09-07T05:15:54.435492+00:00",
+    "total_topics_learned": 155
   },
   "entries": [
     {
@@ -7683,6 +7683,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-07T05:12:47.816167+00:00",
       "run_number": 154
+    },
+    {
+      "topic": "Implementing secure multi-tenant data isolation in MongoDB using logical database separation and Mongoose discriminator schemas",
+      "category": "databases",
+      "language": "javascript",
+      "difficulty": "advanced",
+      "summary": "Multi-tenant data isolation in MongoDB ensures that distinct clients share the same database infrastructure without data leakage. Utilizing logical database separation combined with Mongoose discriminators provides a scalable hybrid approach for managing shared collection models across tenants.",
+      "key_points": [
+        "Logical database separation maps incoming requests dynamically to tenant-specific database URIs or connection pools.",
+        "Mongoose discriminators enable single-collection inheritance, allowing shared schemas to have tenant-specific fields while maintaining a unified interface.",
+        "Dynamic connection caching prevents performance degradation caused by continuously instantiating new Mongoose connections per request.",
+        "Tenant context must be rigorously derived from verified authentication tokens rather than untrusted client payloads."
+      ],
+      "code_example": {
+        "language": "javascript",
+        "description": "Demonstrates creating a dynamic Mongoose connection manager and applying discriminators for tenant-specific document shapes.",
+        "correct": "const mongoose = require('mongoose');\nconst connectionCache = {};\n\nfunction getTenantDb(tenantId) {\n  if (!connectionCache[tenantId]) {\n    connectionCache[tenantId] = mongoose.createConnection(`mongodb://localhost:27017/tenant_${tenantId}`);\n  }\n  return connectionCache[tenantId];\n}\n\nconst baseSchema = new mongoose.Schema({ name: String }, { discriminatorKey: 'kind' });\n\nfunction getTenantModel(tenantId, modelName, schema) {\n  const db = getTenantDb(tenantId);\n  return db.models[modelName] || db.model(modelName, schema);\n}\n\nconst TenantAUser = getTenantModel('acme', 'User', baseSchema).discriminator('EnterpriseUser', new mongoose.Schema({ slackId: String }));",
+        "wrong": "const mongoose = require('mongoose');\nconst BaseUser = mongoose.model('User', new mongoose.Schema({ name: String, tenantId: String }));\n// Mistake: Querying a shared collection without filtering by tenantId field on every query"
+      },
+      "common_mistakes": [
+        "Forgetting to filter queries by tenant ID when using shared collections, resulting in cross-tenant data exposure.",
+        "Leaking memory by instantiating a new Mongoose connection on every incoming HTTP request instead of caching connection instances."
+      ],
+      "best_practices": [
+        "Derive the tenant identifier strictly from validated JWT claims in the request middleware rather than route parameters.",
+        "Implement automated integration tests that attempt cross-tenant data access to verify strict isolation boundaries.",
+        "Use database-level separation for enterprise tenants requiring strict compliance and shared collections with discriminators for smaller, cost-sensitive tiers."
+      ],
+      "when_to_use": "When building a SaaS application that requires cost-effective data scaling while accommodating shared schema variations and strict security boundaries between customers.",
+      "when_not_to_use": "When tenants require completely isolated physical infrastructure or custom database encryption keys per tenant, where database-per-cluster or field-level encryption is mandatory.",
+      "interview_questions": [
+        {
+          "question": "What is the security risk of relying solely on a tenantId field inside a shared MongoDB collection?",
+          "answer": "Developers can easily forget to include the tenantId filter in complex aggregation pipelines or update queries, leading to accidental cross-tenant data modification or leaks."
+        },
+        {
+          "question": "How do Mongoose discriminators differ from standard subdocuments in multi-tenant architectures?",
+          "answer": "Discriminators allow multiple models with overlapping schemas to be stored in the same underlying MongoDB collection using an inheritance pattern, sharing indexes while enforcing distinct schema validations per discriminator type."
+        }
+      ],
+      "related_topics": [
+        "Row-level security in relational databases",
+        "Dynamic connection pooling in Node.js",
+        "MongoDB aggregation pipeline optimization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T05:15:54.435473+00:00",
+      "run_number": 155
     }
   ]
 }
