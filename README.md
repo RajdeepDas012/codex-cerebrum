@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **190** |
-| Last Updated | `2026-09-07T09:19:46.230259+00:00` |
-| Dataset Size | `190 entries` |
+| Total Topics Learned | **191** |
+| Last Updated | `2026-09-07T09:22:51.701000+00:00` |
+| Dataset Size | `191 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | system-design | 58 |
-| crypto-blockchain | 37 |
+| crypto-blockchain | 38 |
 | technical-analysis | 18 |
 | trading-strategies | 14 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bitcoin stablecoin supply ratio — SSR for measuring buying power`
 - `Bitcoin OTC desk flows — large over-the-counter trades and price impact`
 - `Bitcoin whale accumulation addresses — tracking wallets above 1000 BTC`
 - `Bitcoin transaction volume vs price — divergence signals trend weakness`
 - `Bitcoin active addresses — daily active addresses vs price correlation`
-- `Bitcoin address growth rate — new wallet creation as adoption signal`
 
 <!-- STATS_END -->
 
