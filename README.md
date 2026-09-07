@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **146** |
-| Last Updated | `2026-09-07T03:05:00.848799+00:00` |
-| Dataset Size | `146 entries` |
+| Total Topics Learned | **147** |
+| Last Updated | `2026-09-07T03:09:13.548827+00:00` |
+| Dataset Size | `147 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| system-design | 56 |
+| system-design | 57 |
 | crypto-blockchain | 16 |
 | trading-strategies | 12 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementing distributed leader election in Go using etcd and concurrency primitives`
 - `Implementing distributed task scheduling with Quartz.NET and PostgreSQL persistent job store in C#`
 - `Implementing end-to-end encryption in web applications using the Web Crypto API and AES-GCM`
 - `Implementing real-time data streaming in Go using Apache Kafka and Sarama library for event-driven microservices`
 - `Implementing background job processing in Ruby with Sidekiq and Redis for reliable asynchronous task execution`
-- `Implementing distributed tracing in Go with OpenTelemetry and Jaeger exporter`
 
 <!-- STATS_END -->
 

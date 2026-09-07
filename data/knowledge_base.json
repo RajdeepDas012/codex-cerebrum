@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 146,
-    "last_updated": "2026-09-07T03:05:00.848799+00:00",
-    "total_topics_learned": 146
+    "total_runs": 147,
+    "last_updated": "2026-09-07T03:09:13.548827+00:00",
+    "total_topics_learned": 147
   },
   "entries": [
     {
@@ -7299,6 +7299,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-07T03:05:00.848783+00:00",
       "run_number": 146
+    },
+    {
+      "topic": "Implementing distributed leader election in Go using etcd and concurrency primitives",
+      "category": "system-design",
+      "language": "Go",
+      "difficulty": "advanced",
+      "summary": "Distributed leader election ensures that only one node in a cluster acts as the coordinator at any given time, preventing split-brain scenarios. By leveraging etcd's consensus engine and concurrency primitives, developers can build resilient, highly available systems that automatically fail over when the primary node drops offline.",
+      "key_points": [
+        "Utilizes etcd's distributed lease mechanism to automatically revoke leadership if a node stops sending heartbeats.",
+        "Leverages the clientv3/concurrency package to simplify Session creation and Election primitives.",
+        "Handles network partitions and transient disconnects gracefully through configurable time-to-live (TTL) settings.",
+        "Allows follower nodes to block and wait efficiently using channels until the current leader resigns or expires."
+      ],
+      "code_example": {
+        "language": "go",
+        "description": "Demonstrates how to initialize an etcd session and campaign for leadership safely.",
+        "correct": "cli, _ := clientv3.New(clientv3.Config{Endpoints: []string{\"localhost:2379\"}})\nsession, _ := concurrency.NewSession(cli, concurrency.WithTTL(10))\ndefer session.Close()\ne := concurrency.NewElection(session, \"/my-lock\")\nctx := context.TODO()\ngo e.Campaign(ctx, \"node-1\")",
+        "wrong": "cli, _ := clientv3.New(clientv3.Config{Endpoints: []string{\"localhost:2379\"}})\ncli.Put(context.TODO(), \"leader\", \"node-1\")"
+      },
+      "common_mistakes": [
+        "Failing to renew the etcd lease on time, causing accidental leadership revocation during heavy garbage collection pauses.",
+        "Not handling context cancellation properly when a node is demoted, leading to split-brain data corruption."
+      ],
+      "best_practices": [
+        "Set appropriate lease TTLs that balance fast failover times with tolerance for brief network jitter.",
+        "Always defer session and client closure routines to prevent resource leaks across application lifecycles.",
+        "Implement robust health checks and metrics monitoring to track leadership changes in production environments."
+      ],
+      "when_to_use": "Use when building microservice architectures that require a single active scheduler, master node, or coordinator to manage state changes safely.",
+      "when_not_to_use": "Avoid when your workload is stateless or can easily rely on idempotent queue consumers without coordination.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a split-brain scenario when a network partition isolates the current leader?",
+          "answer": "By using a strongly consistent key-value store like etcd with leases, where the isolated leader's lease expires and gets revoked due to a lack of heartbeats to the quorum."
+        },
+        {
+          "question": "What happens to the election campaign if the background etcd session drops?",
+          "answer": "The concurrency session automatically cleans up the campaign key associated with the lease, allowing another waiting replica to immediately take over leadership."
+        }
+      ],
+      "related_topics": [
+        "Consensus algorithms like Raft and Paxos",
+        "Distributed locking patterns in Redis",
+        "Building high-availability microservices"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-07T03:09:13.548809+00:00",
+      "run_number": 147
     }
   ]
 }
