@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **236** |
-| Last Updated | `2026-09-07T21:08:45.242003+00:00` |
-| Dataset Size | `236 entries` |
+| Total Topics Learned | **237** |
+| Last Updated | `2026-09-07T21:12:18.476452+00:00` |
+| Dataset Size | `237 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 21 |
+| technical-analysis | 22 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `RSI hidden divergence — trend continuation signals using RSI`
 - `RSI divergence trading — bullish and bearish divergence for reversals`
 - `Crypto options expiry impact — monthly and quarterly options expiry effect`
 - `Crypto ETF approval impact — historical price action around ETF decisions`
 - `Crypto institutional accumulation signals — Grayscale and ETF flows`
-- `Crypto macro correlation — Bitcoin vs S&P 500 during risk-off events`
 
 <!-- STATS_END -->
 
