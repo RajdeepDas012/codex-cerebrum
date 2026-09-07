@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **231** |
-| Last Updated | `2026-09-07T20:51:03.186886+00:00` |
-| Dataset Size | `231 entries` |
+| Total Topics Learned | **232** |
+| Last Updated | `2026-09-07T20:55:31.307144+00:00` |
+| Dataset Size | `232 entries` |
 
 ## 📂 Categories Learned
 
@@ -28,7 +28,7 @@
 | devops | 7 |
 | security | 7 |
 | probability-math | 5 |
-| market-analysis | 4 |
+| market-analysis | 5 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto macro correlation — Bitcoin vs S&P 500 during risk-off events`
 - `Crypto regulatory event impact — SEC announcements and price reactions`
 - `Crypto black swan events — historical crashes and recovery patterns`
 - `Crypto flash crash mechanics — what causes sudden 10-20% drops`
 - `Crypto front running bots — MEV and sandwich attacks explained`
-- `Crypto dark pool trading — large OTC trades and price impact`
 
 <!-- STATS_END -->
 
