@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **257** |
-| Last Updated | `2026-09-08T04:10:07.572147+00:00` |
-| Dataset Size | `257 entries` |
+| Total Topics Learned | **258** |
+| Last Updated | `2026-09-08T04:13:13.095244+00:00` |
+| Dataset Size | `258 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 42 |
+| technical-analysis | 43 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Triple exponential moving average TEMA — ultra-low lag trend following`
 - `Double exponential moving average DEMA — reducing lag in signals`
 - `Schaff trend cycle — faster MACD using stochastic smoothing`
 - `Coppock curve — long term buy signal originally for stock markets`
 - `Know sure thing KST — smoothed rate of change for trend confirmation`
-- `Trix indicator — triple smoothed EMA for low-lag signals`
 
 <!-- STATS_END -->
 
