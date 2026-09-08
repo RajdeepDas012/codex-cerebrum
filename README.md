@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **275** |
-| Last Updated | `2026-09-08T09:46:40.129153+00:00` |
-| Dataset Size | `275 entries` |
+| Total Topics Learned | **276** |
+| Last Updated | `2026-09-08T09:49:45.695280+00:00` |
+| Dataset Size | `276 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 59 |
+| technical-analysis | 60 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Pivot point calculation methods — standard Woodie Camarilla DeMark`
 - `Price channel indicator — tracking highest and lowest prices over N periods`
 - `Envelope indicator — percentage based moving average channels`
 - `Keltner channel — ATR based channel for volatility breakouts`
 - `Donchian channel — highest high lowest low breakout system`
-- `Average directional index ADX — quantifying trend strength precisely`
 
 <!-- STATS_END -->
 
