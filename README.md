@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **261** |
-| Last Updated | `2026-09-08T04:22:30.715620+00:00` |
-| Dataset Size | `261 entries` |
+| Total Topics Learned | **262** |
+| Last Updated | `2026-09-08T04:25:36.318731+00:00` |
+| Dataset Size | `262 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 46 |
+| technical-analysis | 47 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `McGinley dynamic indicator — self-adjusting moving average line`
 - `Variable index dynamic average VIDYA — volatility-adjusted moving average`
 - `Kaufman adaptive moving average KAMA — adapts to market volatility`
 - `Hull moving average HMA — nearly zero lag moving average`
 - `Triple exponential moving average TEMA — ultra-low lag trend following`
-- `Double exponential moving average DEMA — reducing lag in signals`
 
 <!-- STATS_END -->
 
