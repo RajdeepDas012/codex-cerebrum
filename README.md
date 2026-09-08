@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **297** |
-| Last Updated | `2026-09-08T14:58:13.942657+00:00` |
-| Dataset Size | `297 entries` |
+| Total Topics Learned | **298** |
+| Last Updated | `2026-09-08T15:01:32.639884+00:00` |
+| Dataset Size | `298 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 81 |
+| technical-analysis | 82 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Harami pattern — inside bar reversal at support and resistance`
 - `Morning star and evening star — three candle reversal patterns`
 - `Three black crows and three white soldiers — trend reversal candlesticks`
 - `Island reversal pattern — gap isolation as strong reversal signal`
 - `Rising and falling wedge patterns — breakout direction and target`
-- `Broadening wedge pattern — megaphone pattern identification and trading`
 
 <!-- STATS_END -->
 
