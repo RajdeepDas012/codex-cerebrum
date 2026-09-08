@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **310** |
-| Last Updated | `2026-09-08T19:00:07.822766+00:00` |
-| Dataset Size | `310 entries` |
+| Total Topics Learned | **311** |
+| Last Updated | `2026-09-08T19:03:13.932723+00:00` |
+| Dataset Size | `311 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 93 |
+| technical-analysis | 94 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 21 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Measured move technique — projecting price targets from patterns`
 - `Exhaustion gap detection — distinguishing exhaustion from continuation gap`
 - `Breakaway gap trading — identifying and trading five candle breakaway`
 - `Falling three methods — five candle continuation in downtrend`
 - `Rising three methods — five candle continuation pattern in uptrend`
-- `Tasuki gap pattern — continuation gap with pullback`
 
 <!-- STATS_END -->
 
