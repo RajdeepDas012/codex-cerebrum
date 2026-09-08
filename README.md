@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **301** |
-| Last Updated | `2026-09-08T18:32:04.886623+00:00` |
-| Dataset Size | `301 entries` |
+| Total Topics Learned | **302** |
+| Last Updated | `2026-09-08T18:35:16.293597+00:00` |
+| Dataset Size | `302 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 85 |
+| technical-analysis | 86 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Marubozu candlestick — full body candle as strong momentum signal`
 - `Spinning top candlestick — indecision candle at key levels`
 - `Tweezer tops and bottoms — equal highs and lows reversal signal`
 - `Piercing line and dark cloud cover — two candle reversal signals`
 - `Harami pattern — inside bar reversal at support and resistance`
-- `Morning star and evening star — three candle reversal patterns`
 
 <!-- STATS_END -->
 
