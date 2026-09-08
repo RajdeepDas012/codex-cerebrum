@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **325** |
-| Last Updated | `2026-09-08T22:18:21.705165+00:00` |
-| Dataset Size | `325 entries` |
+| Total Topics Learned | **326** |
+| Last Updated | `2026-09-08T22:21:28.279676+00:00` |
+| Dataset Size | `326 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 108 |
+| technical-analysis | 109 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 21 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Trend based Fibonacci extension — multi-swing target projection`
 - `Standard deviation channel — Raff regression channel technique`
 - `Linear regression channel — statistical price channel trading`
 - `Speed resistance lines — one third two third retracement channels`
 - `Schiff pitchfork — modified Andrews pitchfork technique`
-- `Andrews pitchfork — median line analysis for trend channels`
 
 <!-- STATS_END -->
 
