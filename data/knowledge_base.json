@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 259,
-    "last_updated": "2026-09-08T04:16:18.627973+00:00",
-    "total_topics_learned": 259
+    "total_runs": 260,
+    "last_updated": "2026-09-08T04:19:24.200134+00:00",
+    "total_topics_learned": 260
   },
   "entries": [
     {
@@ -12710,6 +12710,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-08T04:16:18.627951+00:00",
       "run_number": 259
+    },
+    {
+      "topic": "Kaufman adaptive moving average KAMA — adapts to market volatility",
+      "category": "technical-analysis",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "The Kaufman Adaptive Moving Average (KAMA) is a trend-following indicator designed to account for market noise and volatility. It automatically adjusts its smoothing constant, moving slower during choppy, sideways markets and faster during strong, directional trends.",
+      "key_points": [
+        "Incorporates an Efficiency Ratio (ER) that measures the net price movement relative to the total volatility of price paths.",
+        "Uses a Scaling Factor derived from the Efficiency Ratio to dynamically adjust between fast and slow exponential moving average constants.",
+        "Reduces whipsaws and false breakout signals significantly during periods of high market consolidation or noise.",
+        "Reacts quickly to sharp price movements when a genuine trend establishes itself after a consolidation phase."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculates the Kaufman Adaptive Moving Average using pandas",
+        "correct": "import pandas as pd\nimport numpy as np\n\ndef calculate_kama(series, n=10, fast=2, slow=30):\n    change = series.diff(n).abs()\n    volatility = series.diff(1).abs().rolling(window=n).sum()\n    er = np.where(volatility == 0, 0, change / volatility)\n    \n    fast_sc = 2 / (fast + 1)\n    slow_sc = 2 / (slow + 1)\n    sc = (er * (fast_sc - slow_sc) + slow_sc) ** 2\n    \n    kama = np.zeros_like(series)\n    kama[n-1] = series[n-1]\n    for i in range(n, len(series)):\n        kama[i] = kama[i-1] + sc[i] * (series[i] - kama[i-1])\n    return pd.Series(kama, index=series.index)",
+        "wrong": "kama = series.ewm(span=10).mean()"
+      },
+      "common_mistakes": [
+        "Treating KAMA like a standard simple moving average without adjusting the efficiency period or fast/slow smoothing limits.",
+        "Using default parameter settings across vastly different asset classes or timeframes without optimization."
+      ],
+      "best_practices": [
+        "Backtest KAMA parameters against specific asset volatilities, as crypto markets require different tuning compared to forex or equities.",
+        "Combine KAMA with momentum oscillators to confirm trend breakouts rather than relying solely on price crossovers."
+      ],
+      "when_to_use": "Ideal for trend-following strategies on volatile assets where standard moving averages generate excessive false signals during range-bound phases.",
+      "when_not_to_use": "Avoid in extremely low-volatility or stagnant markets where frequent tiny fluctuations can distort the Efficiency Ratio and create erratic shifts.",
+      "interview_questions": [
+        {
+          "question": "How does KAMA differ from traditional moving averages like SMA or EMA?",
+          "answer": "Unlike SMA or EMA which use fixed time periods, KAMA incorporates an Efficiency Ratio to dynamically adjust its sensitivity based on market noise and volatility."
+        },
+        {
+          "question": "What is the purpose of the Efficiency Ratio (ER) in the calculation of KAMA?",
+          "answer": "The ER measures the directional efficiency of price movement by dividing the net price change over a period by the sum of individual absolute price changes, effectively gauging market noise."
+        }
+      ],
+      "related_topics": [
+        "Hull moving average HMA — nearly zero lag moving average",
+        "Double exponential moving average DEMA — reducing lag in signals",
+        "Average Directional Index ADX — measuring trend strength"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-08T04:19:24.200112+00:00",
+      "run_number": 260
     }
   ]
 }
