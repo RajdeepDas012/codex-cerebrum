@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **280** |
-| Last Updated | `2026-09-08T10:02:17.049593+00:00` |
-| Dataset Size | `280 entries` |
+| Total Topics Learned | **281** |
+| Last Updated | `2026-09-08T10:05:22.999103+00:00` |
+| Dataset Size | `281 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 64 |
+| technical-analysis | 65 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Heikin Ashi charts — smoothed candlesticks for trend clarity`
 - `Renko chart trading — brick size selection and signal generation`
 - `Point and figure charting — filtering noise for pure price analysis`
 - `Volume at price VAP — identifying high volume nodes as key levels`
 - `Market profile and volume profile — price acceptance and rejection zones`
-- `Pivot point calculation methods — standard Woodie Camarilla DeMark`
 
 <!-- STATS_END -->
 
