@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **305** |
-| Last Updated | `2026-09-08T18:44:35.948226+00:00` |
-| Dataset Size | `305 entries` |
+| Total Topics Learned | **306** |
+| Last Updated | `2026-09-08T18:47:42.374525+00:00` |
+| Dataset Size | `306 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 89 |
+| technical-analysis | 90 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Tasuki gap pattern — continuation gap with pullback`
 - `Abandoned baby pattern — rare three candle reversal signal`
 - `Long legged doji — extreme indecision at key turning points`
 - `Gravestone and dragonfly doji — shadow only candles as reversals`
 - `Marubozu candlestick — full body candle as strong momentum signal`
-- `Spinning top candlestick — indecision candle at key levels`
 
 <!-- STATS_END -->
 
