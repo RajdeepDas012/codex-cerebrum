@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 260,
-    "last_updated": "2026-09-08T04:19:24.200134+00:00",
-    "total_topics_learned": 260
+    "total_runs": 261,
+    "last_updated": "2026-09-08T04:22:30.715620+00:00",
+    "total_topics_learned": 261
   },
   "entries": [
     {
@@ -12757,6 +12757,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-08T04:19:24.200112+00:00",
       "run_number": 260
+    },
+    {
+      "topic": "Variable index dynamic average VIDYA — volatility-adjusted moving average",
+      "category": "technical-analysis",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "The Variable Index Dynamic Average (VIDYA) is an adaptive moving average developed by Tushar Chande that automatically adjusts its smoothing period based on market volatility using the Chande Momentum Oscillator (CMO). It accelerates in trending, volatile markets to reduce lag and slows down during consolidation ranges to filter out market noise.",
+      "key_points": [
+        "Incorporates the Chande Momentum Oscillator (CMO) to measure market volatility and direction dynamically.",
+        "Uses an adjustable smoothing constant that scales inversely with market chop and directly with trend strength.",
+        "Significantly reduces whipsaws during sideways ranging markets compared to fixed-period exponential moving averages.",
+        "Automatically tightens proximity to price action when volatility expands aggressively."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculating VIDYA using pandas and numpy based on the Chande Momentum Oscillator volatility index.",
+        "correct": "import numpy as np\nimport pandas as pd\n\ndef calculate_vidya(close_prices, period=9, alpha_fast=2/3, alpha_slow=2/30):\n    delta = close_prices.diff()\n    gain = delta.where(delta > 0, 0.0)\n    loss = -delta.where(delta < 0, 0.0)\n    \n    sum_gain = gain.rolling(window=period).sum()\n    sum_loss = loss.rolling(window=period).sum()\n    \n    # Chande Momentum Oscillator as volatility index\n    cmo = np.abs((sum_gain - sum_loss) / (sum_gain + sum_loss))\n    \n    # Dynamic smoothing constant\n    sc = (2.0 / (period + 1)) * cmo\n    \n    vidya = np.zeros_like(close_prices)\n    vidya[0] = close_prices.iloc[0]\n    \n    for i in range(1, len(close_prices)):\n        vidya[i] = sc.iloc[i] * close_prices.iloc[i] + (1 - sc.iloc[i]) * vidya[i-1]\n        \n    return pd.Series(vidya, index=close_prices.index)",
+        "wrong": "vidya = close.ewm(span=9).mean() * cmo"
+      },
+      "common_mistakes": [
+        "Treating the volatility index as a standalone oscillator rather than a dynamic multiplier for the EMA weight.",
+        "Failing to handle division-by-zero errors when upward and downward price sums equal zero during flat markets.",
+        "Using static parameter values optimized for other moving averages like KAMA or TEMA without recalibrating the CMO lookback period."
+      ],
+      "best_practices": [
+        "Pair VIDYA with volume profile indicators to confirm breakout strength during sudden expansions in the dynamic smoothing factor.",
+        "Optimize the base period window relative to the specific asset class time horizon (e.g., forex vs crypto vs equities).",
+        "Utilize a secondary momentum filter to prevent false trend-continuation signals during low-volatility pullbacks."
+      ],
+      "when_to_use": "Ideal for trend-following strategies on volatile instruments where rapid transitions between sideways chop and aggressive directional moves occur.",
+      "when_not_to_use": "Avoid in extremely low liquidity markets where erratic price gaps distort the Chande Momentum Oscillator readings.",
+      "interview_questions": [
+        {
+          "question": "How does VIDYA differ from a standard Exponential Moving Average (EMA)?",
+          "answer": "While an EMA uses a fixed smoothing factor, VIDYA dynamically alters its smoothing factor in real time using a volatility index (the Chande Momentum Oscillator), making it adapt faster during high volatility and slower during consolidation."
+        },
+        {
+          "question": "What component does VIDYA use to measure market volatility, and how does it affect the calculation?",
+          "answer": "VIDYA uses the absolute value of the Chande Momentum Oscillator (CMO) as an index of market volatility. Higher volatility increases the effective smoothing constant, causing the moving average to track price more closely."
+        }
+      ],
+      "related_topics": [
+        "Chande Momentum Oscillator CMO",
+        "Fractal Adaptive Moving Average FRAMA",
+        "Adaptive Moving Average systems"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-08T04:22:30.715599+00:00",
+      "run_number": 261
     }
   ]
 }
