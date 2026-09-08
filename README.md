@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **307** |
-| Last Updated | `2026-09-08T18:50:49.034646+00:00` |
-| Dataset Size | `307 entries` |
+| Total Topics Learned | **308** |
+| Last Updated | `2026-09-08T18:53:55.385828+00:00` |
+| Dataset Size | `308 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 91 |
+| technical-analysis | 92 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Falling three methods — five candle continuation in downtrend`
 - `Rising three methods — five candle continuation pattern in uptrend`
 - `Tasuki gap pattern — continuation gap with pullback`
 - `Abandoned baby pattern — rare three candle reversal signal`
 - `Long legged doji — extreme indecision at key turning points`
-- `Gravestone and dragonfly doji — shadow only candles as reversals`
 
 <!-- STATS_END -->
 
