@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **317** |
-| Last Updated | `2026-09-08T21:53:00.349932+00:00` |
-| Dataset Size | `317 entries` |
+| Total Topics Learned | **318** |
+| Last Updated | `2026-09-08T21:56:35.451856+00:00` |
+| Dataset Size | `318 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 100 |
+| technical-analysis | 101 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 21 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Gann fan lines — 1x1 1x2 2x1 angle trading technique`
 - `Gann square of nine — price and time calculation for turning points`
 - `Gann angles — mathematical price time relationships for prediction`
 - `Fibonacci arcs — curved support resistance from price swings`
 - `Fibonacci fan lines — dynamic support resistance from swing points`
-- `Fibonacci time zones — predicting when turning points will occur`
 
 <!-- STATS_END -->
 
