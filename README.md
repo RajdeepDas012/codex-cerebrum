@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **251** |
-| Last Updated | `2026-09-07T23:59:20.715196+00:00` |
-| Dataset Size | `251 entries` |
+| Total Topics Learned | **252** |
+| Last Updated | `2026-09-08T00:02:25.907758+00:00` |
+| Dataset Size | `252 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 36 |
+| technical-analysis | 37 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Vortex indicator — identifying trend reversals with two lines`
 - `Directional movement index DMI — ADX for trend strength measurement`
 - `Aroon indicator — measuring trend age and strength`
 - `Ultimate oscillator — combining three timeframes for reliable signals`
 - `Detrended price oscillator DPO — removing trend to identify cycles`
-- `Elder ray index — bulls power and bears power measurement`
 
 <!-- STATS_END -->
 
