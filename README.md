@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **279** |
-| Last Updated | `2026-09-08T09:59:11.209915+00:00` |
-| Dataset Size | `279 entries` |
+| Total Topics Learned | **280** |
+| Last Updated | `2026-09-08T10:02:17.049593+00:00` |
+| Dataset Size | `280 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 63 |
+| technical-analysis | 64 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Renko chart trading — brick size selection and signal generation`
 - `Point and figure charting — filtering noise for pure price analysis`
 - `Volume at price VAP — identifying high volume nodes as key levels`
 - `Market profile and volume profile — price acceptance and rejection zones`
 - `Pivot point calculation methods — standard Woodie Camarilla DeMark`
-- `Price channel indicator — tracking highest and lowest prices over N periods`
 
 <!-- STATS_END -->
 
