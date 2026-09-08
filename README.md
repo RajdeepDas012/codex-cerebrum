@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **255** |
-| Last Updated | `2026-09-08T04:03:56.564680+00:00` |
-| Dataset Size | `255 entries` |
+| Total Topics Learned | **256** |
+| Last Updated | `2026-09-08T04:07:01.924047+00:00` |
+| Dataset Size | `256 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 40 |
+| technical-analysis | 41 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Schaff trend cycle — faster MACD using stochastic smoothing`
 - `Coppock curve — long term buy signal originally for stock markets`
 - `Know sure thing KST — smoothed rate of change for trend confirmation`
 - `Trix indicator — triple smoothed EMA for low-lag signals`
 - `Vortex indicator — identifying trend reversals with two lines`
-- `Directional movement index DMI — ADX for trend strength measurement`
 
 <!-- STATS_END -->
 
