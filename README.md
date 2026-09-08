@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **292** |
-| Last Updated | `2026-09-08T14:42:42.932542+00:00` |
-| Dataset Size | `292 entries` |
+| Total Topics Learned | **293** |
+| Last Updated | `2026-09-08T14:45:48.940655+00:00` |
+| Dataset Size | `293 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 76 |
+| technical-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Broadening wedge pattern — megaphone pattern identification and trading`
 - `Diamond pattern — rare reversal pattern at market tops and bottoms`
 - `Wolfe wave pattern — natural market law reversal pattern`
 - `Elliott corrective wave patterns — ABC flat zigzag triangle correction`
 - `Five wave Elliott impulse — counting and trading impulse waves`
-- `Three drives pattern — three push reversal pattern at extremes`
 
 <!-- STATS_END -->
 
