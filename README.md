@@ -9,17 +9,17 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **274** |
-| Last Updated | `2026-09-08T09:43:34.998400+00:00` |
-| Dataset Size | `274 entries` |
+| Total Topics Learned | **275** |
+| Last Updated | `2026-09-08T09:46:40.129153+00:00` |
+| Dataset Size | `275 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
+| technical-analysis | 59 |
 | system-design | 58 |
-| technical-analysis | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Price channel indicator — tracking highest and lowest prices over N periods`
 - `Envelope indicator — percentage based moving average channels`
 - `Keltner channel — ATR based channel for volatility breakouts`
 - `Donchian channel — highest high lowest low breakout system`
 - `Average directional index ADX — quantifying trend strength precisely`
-- `Parabolic SAR advanced — adjusting acceleration factor for different assets`
 
 <!-- STATS_END -->
 
