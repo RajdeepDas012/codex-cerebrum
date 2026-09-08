@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **303** |
-| Last Updated | `2026-09-08T18:38:22.914245+00:00` |
-| Dataset Size | `303 entries` |
+| Total Topics Learned | **304** |
+| Last Updated | `2026-09-08T18:41:29.296961+00:00` |
+| Dataset Size | `304 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 87 |
+| technical-analysis | 88 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Long legged doji — extreme indecision at key turning points`
 - `Gravestone and dragonfly doji — shadow only candles as reversals`
 - `Marubozu candlestick — full body candle as strong momentum signal`
 - `Spinning top candlestick — indecision candle at key levels`
 - `Tweezer tops and bottoms — equal highs and lows reversal signal`
-- `Piercing line and dark cloud cover — two candle reversal signals`
 
 <!-- STATS_END -->
 
