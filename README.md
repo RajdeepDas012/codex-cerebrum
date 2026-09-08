@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **277** |
-| Last Updated | `2026-09-08T09:52:51.286973+00:00` |
-| Dataset Size | `277 entries` |
+| Total Topics Learned | **278** |
+| Last Updated | `2026-09-08T09:56:04.040411+00:00` |
+| Dataset Size | `278 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 61 |
+| technical-analysis | 62 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volume at price VAP — identifying high volume nodes as key levels`
 - `Market profile and volume profile — price acceptance and rejection zones`
 - `Pivot point calculation methods — standard Woodie Camarilla DeMark`
 - `Price channel indicator — tracking highest and lowest prices over N periods`
 - `Envelope indicator — percentage based moving average channels`
-- `Keltner channel — ATR based channel for volatility breakouts`
 
 <!-- STATS_END -->
 
