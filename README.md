@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **321** |
-| Last Updated | `2026-09-08T22:05:53.470693+00:00` |
-| Dataset Size | `321 entries` |
+| Total Topics Learned | **322** |
+| Last Updated | `2026-09-08T22:08:59.694208+00:00` |
+| Dataset Size | `322 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 104 |
+| technical-analysis | 105 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 21 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Schiff pitchfork — modified Andrews pitchfork technique`
 - `Andrews pitchfork — median line analysis for trend channels`
 - `Market geometry — natural square root relationships in price`
 - `W.D. Gann seasonal cycles — annual price patterns in markets`
 - `Gann fan lines — 1x1 1x2 2x1 angle trading technique`
-- `Gann square of nine — price and time calculation for turning points`
 
 <!-- STATS_END -->
 
