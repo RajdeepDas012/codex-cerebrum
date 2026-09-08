@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **300** |
-| Last Updated | `2026-09-08T18:28:58.047466+00:00` |
-| Dataset Size | `300 entries` |
+| Total Topics Learned | **301** |
+| Last Updated | `2026-09-08T18:32:04.886623+00:00` |
+| Dataset Size | `301 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 84 |
+| technical-analysis | 85 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Spinning top candlestick — indecision candle at key levels`
 - `Tweezer tops and bottoms — equal highs and lows reversal signal`
 - `Piercing line and dark cloud cover — two candle reversal signals`
 - `Harami pattern — inside bar reversal at support and resistance`
 - `Morning star and evening star — three candle reversal patterns`
-- `Three black crows and three white soldiers — trend reversal candlesticks`
 
 <!-- STATS_END -->
 
