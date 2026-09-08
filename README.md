@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **312** |
-| Last Updated | `2026-09-08T19:06:20.505734+00:00` |
-| Dataset Size | `312 entries` |
+| Total Topics Learned | **313** |
+| Last Updated | `2026-09-08T19:09:26.835054+00:00` |
+| Dataset Size | `313 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 95 |
+| technical-analysis | 96 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 21 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fibonacci time zones — predicting when turning points will occur`
 - `Fibonacci extension levels — projecting targets beyond 100 percent`
 - `Measured move technique — projecting price targets from patterns`
 - `Exhaustion gap detection — distinguishing exhaustion from continuation gap`
 - `Breakaway gap trading — identifying and trading five candle breakaway`
-- `Falling three methods — five candle continuation in downtrend`
 
 <!-- STATS_END -->
 
