@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **266** |
-| Last Updated | `2026-09-08T04:37:59.550742+00:00` |
-| Dataset Size | `266 entries` |
+| Total Topics Learned | **267** |
+| Last Updated | `2026-09-08T04:41:05.132089+00:00` |
+| Dataset Size | `267 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 51 |
+| technical-analysis | 52 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Least squares moving average LSMA — linear regression based MA`
 - `Smoothed moving average SMMA — slower smoother trend identification`
 - `Volume weighted MACD — adding volume weighting to MACD calculation`
 - `Zero lag MACD — eliminating lag in MACD for faster signals`
 - `Jurik moving average JMA — professional grade low noise moving average`
-- `McGinley dynamic indicator — self-adjusting moving average line`
 
 <!-- STATS_END -->
 
