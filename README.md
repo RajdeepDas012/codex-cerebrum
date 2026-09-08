@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **270** |
-| Last Updated | `2026-09-08T09:31:12.575326+00:00` |
-| Dataset Size | `270 entries` |
+| Total Topics Learned | **271** |
+| Last Updated | `2026-09-08T09:34:17.912781+00:00` |
+| Dataset Size | `271 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| technical-analysis | 55 |
+| technical-analysis | 56 |
 | trading-strategies | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Average directional index ADX — quantifying trend strength precisely`
 - `Parabolic SAR advanced — adjusting acceleration factor for different assets`
 - `SuperTrend indicator — dynamic support resistance with buy sell signals`
 - `Arnaud Legoux moving average ALMA — gaussian distribution based MA`
 - `Least squares moving average LSMA — linear regression based MA`
-- `Smoothed moving average SMMA — slower smoother trend identification`
 
 <!-- STATS_END -->
 
