@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **286** |
-| Last Updated | `2026-09-08T14:24:03.820126+00:00` |
-| Dataset Size | `286 entries` |
+| Total Topics Learned | **287** |
+| Last Updated | `2026-09-08T14:27:10.555066+00:00` |
+| Dataset Size | `287 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 70 |
+| technical-analysis | 71 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `ABCD pattern trading — four point harmonic pattern identification`
 - `Harmonic patterns — Gartley Butterfly Bat Crab Cypher pattern trading`
 - `Kagi charts — supply and demand charting technique`
 - `Three line break charts — price reversal charting method`
 - `Range bar charts — volatility based charting removing time`
-- `Tick charts vs time charts — activity based charting for intraday`
 
 <!-- STATS_END -->
 
