@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **289** |
-| Last Updated | `2026-09-08T14:33:24.422319+00:00` |
-| Dataset Size | `289 entries` |
+| Total Topics Learned | **290** |
+| Last Updated | `2026-09-08T14:36:30.428262+00:00` |
+| Dataset Size | `290 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 73 |
+| technical-analysis | 74 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Elliott corrective wave patterns — ABC flat zigzag triangle correction`
 - `Five wave Elliott impulse — counting and trading impulse waves`
 - `Three drives pattern — three push reversal pattern at extremes`
 - `ABCD pattern trading — four point harmonic pattern identification`
 - `Harmonic patterns — Gartley Butterfly Bat Crab Cypher pattern trading`
-- `Kagi charts — supply and demand charting technique`
 
 <!-- STATS_END -->
 
