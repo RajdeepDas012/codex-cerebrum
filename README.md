@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **282** |
-| Last Updated | `2026-09-08T10:08:28.981382+00:00` |
-| Dataset Size | `282 entries` |
+| Total Topics Learned | **283** |
+| Last Updated | `2026-09-08T10:11:34.838300+00:00` |
+| Dataset Size | `283 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | crypto-blockchain | 74 |
-| technical-analysis | 66 |
+| technical-analysis | 67 |
 | system-design | 58 |
 | trading-strategies | 20 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Range bar charts — volatility based charting removing time`
 - `Tick charts vs time charts — activity based charting for intraday`
 - `Heikin Ashi charts — smoothed candlesticks for trend clarity`
 - `Renko chart trading — brick size selection and signal generation`
 - `Point and figure charting — filtering noise for pure price analysis`
-- `Volume at price VAP — identifying high volume nodes as key levels`
 
 <!-- STATS_END -->
 
