@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **354** |
-| Last Updated | `2026-09-09T04:58:56.056110+00:00` |
-| Dataset Size | `354 entries` |
+| Total Topics Learned | **355** |
+| Last Updated | `2026-09-09T05:02:02.244973+00:00` |
+| Dataset Size | `355 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 43 |
+| trading-strategies | 44 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `52 week high breakout strategy — price at new highs momentum`
 - `Industry group analysis — drilling down from sector to industry`
 - `Sector relative strength rotation — moving capital to leading sectors`
 - `Relative strength ranking — finding best performing stocks`
 - `Stage analysis method — Weinstein four stage market cycle`
-- `Base on base pattern — multiple consolidations before big move`
 
 <!-- STATS_END -->
 
