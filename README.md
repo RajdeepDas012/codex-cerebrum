@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **396** |
-| Last Updated | `2026-09-09T18:50:18.023349+00:00` |
-| Dataset Size | `396 entries` |
+| Total Topics Learned | **397** |
+| Last Updated | `2026-09-09T18:55:20.544978+00:00` |
+| Dataset Size | `397 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 53 |
-| market-analysis | 27 |
+| market-analysis | 28 |
 | stocks-markets | 20 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Large trader positioning — CFTC commitment of traders report`
 - `Smart money vs dumb money — COT report analysis for positioning`
 - `SKEW index — measuring tail risk expectations in options market`
 - `Put call ratio signals — extreme put buying as contrarian indicator`
 - `VIX spike buying strategy — buying dips during fear spikes`
-- `VIX term structure — contango backwardation for volatility trading`
 
 <!-- STATS_END -->
 
