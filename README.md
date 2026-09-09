@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **356** |
-| Last Updated | `2026-09-09T05:05:07.560989+00:00` |
-| Dataset Size | `356 entries` |
+| Total Topics Learned | **357** |
+| Last Updated | `2026-09-09T05:08:13.005432+00:00` |
+| Dataset Size | `357 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 44 |
+| trading-strategies | 45 |
 | stocks-markets | 10 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Short interest ratio — days to cover as squeeze predictor`
 - `Low float stock mechanics — how small float causes volatility`
 - `52 week high breakout strategy — price at new highs momentum`
 - `Industry group analysis — drilling down from sector to industry`
 - `Sector relative strength rotation — moving capital to leading sectors`
-- `Relative strength ranking — finding best performing stocks`
 
 <!-- STATS_END -->
 
