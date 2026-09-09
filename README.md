@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **376** |
-| Last Updated | `2026-09-09T14:24:56.810980+00:00` |
-| Dataset Size | `376 entries` |
+| Total Topics Learned | **377** |
+| Last Updated | `2026-09-09T14:28:23.518042+00:00` |
+| Dataset Size | `377 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 46 |
-| stocks-markets | 17 |
+| stocks-markets | 18 |
 | market-analysis | 17 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Dividend sustainability analysis — payout ratio and coverage`
 - `Share buyback impact — repurchase programs and EPS accretion`
 - `Management quality assessment — founder CEO vs hired CEO performance`
 - `Moat analysis — durable competitive advantages for long term`
 - `Total addressable market analysis — TAM for growth potential`
-- `Net revenue retention — NRR as predictor of SaaS growth`
 
 <!-- STATS_END -->
 
