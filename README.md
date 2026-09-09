@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **350** |
-| Last Updated | `2026-09-09T04:46:32.237483+00:00` |
-| Dataset Size | `350 entries` |
+| Total Topics Learned | **351** |
+| Last Updated | `2026-09-09T04:49:38.244257+00:00` |
+| Dataset Size | `351 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 113 |
+| technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 41 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Stage analysis method — Weinstein four stage market cycle`
 - `Base on base pattern — multiple consolidations before big move`
 - `Episodic pivot trading — news catalyst institutional entry`
 - `Pocket pivot buy point — alternative entry to traditional base`
 - `High tight flag pattern — strongest momentum continuation setup`
-- `Volatility contraction pattern VCP — tight consolidation breakout`
 
 <!-- STATS_END -->
 
