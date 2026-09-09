@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **401** |
-| Last Updated | `2026-09-09T19:08:24.027457+00:00` |
-| Dataset Size | `401 entries` |
+| Total Topics Learned | **402** |
+| Last Updated | `2026-09-09T19:12:08.537420+00:00` |
+| Dataset Size | `402 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 31 |
+| market-analysis | 32 |
 | stocks-markets | 20 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `SPAC deal flow — blank check company activity as risk indicator`
 - `IPO market sentiment — hot IPO market as excess euphoria signal`
 - `Margin debt levels — NYSE margin debt as market risk indicator`
 - `Short interest changes — rising short interest as potential squeeze`
 - `Dark pool activity — institutional off-exchange trading detection`
-- `Large trader positioning — CFTC commitment of traders report`
 
 <!-- STATS_END -->
 
