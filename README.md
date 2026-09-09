@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **410** |
-| Last Updated | `2026-09-09T21:53:22.736013+00:00` |
-| Dataset Size | `410 entries` |
+| Total Topics Learned | **411** |
+| Last Updated | `2026-09-09T21:56:29.199529+00:00` |
+| Dataset Size | `411 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 39 |
+| market-analysis | 40 |
 | stocks-markets | 21 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Semiconductor cycle analysis — chip cycle and tech sector timing`
 - `Baltic dry index — shipping cost as global trade indicator`
 - `Agriculture commodity cycles — crop calendar and price patterns`
 - `Natural gas price seasonality — winter summer demand patterns`
 - `Oil price impact on stocks — crude oil and sector rotation`
-- `Copper price as economic indicator — Dr Copper leading signal`
 
 <!-- STATS_END -->
 
