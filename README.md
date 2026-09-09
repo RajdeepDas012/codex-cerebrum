@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **353** |
-| Last Updated | `2026-09-09T04:55:50.555786+00:00` |
-| Dataset Size | `353 entries` |
+| Total Topics Learned | **354** |
+| Last Updated | `2026-09-09T04:58:56.056110+00:00` |
+| Dataset Size | `354 entries` |
 
 ## 📂 Categories Learned
 
@@ -27,8 +27,8 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
+| market-analysis | 6 |
 | probability-math | 5 |
-| market-analysis | 5 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Industry group analysis — drilling down from sector to industry`
 - `Sector relative strength rotation — moving capital to leading sectors`
 - `Relative strength ranking — finding best performing stocks`
 - `Stage analysis method — Weinstein four stage market cycle`
 - `Base on base pattern — multiple consolidations before big move`
-- `Episodic pivot trading — news catalyst institutional entry`
 
 <!-- STATS_END -->
 
