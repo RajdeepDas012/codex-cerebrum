@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **366** |
-| Last Updated | `2026-09-09T09:52:16.806807+00:00` |
-| Dataset Size | `366 entries` |
+| Total Topics Learned | **367** |
+| Last Updated | `2026-09-09T09:55:23.093836+00:00` |
+| Dataset Size | `367 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 46 |
-| stocks-markets | 13 |
+| stocks-markets | 14 |
 | market-analysis | 11 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Return on equity ROE trends — quality factor for stock selection`
 - `PEG ratio analysis — P/E relative to earnings growth rate`
 - `Price to sales ratio — PS ratio for growth stock valuation`
 - `Enterprise value to EBITDA — EV/EBITDA for sector comparison`
 - `Free cash flow yield — FCF generation relative to market cap`
-- `Gross margin expansion — profitability improvement as signal`
 
 <!-- STATS_END -->
 
