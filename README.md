@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **406** |
-| Last Updated | `2026-09-09T21:40:56.653595+00:00` |
-| Dataset Size | `406 entries` |
+| Total Topics Learned | **407** |
+| Last Updated | `2026-09-09T21:44:03.198046+00:00` |
+| Dataset Size | `407 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 54 |
 | market-analysis | 36 |
-| stocks-markets | 20 |
+| stocks-markets | 21 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Oil price impact on stocks — crude oil and sector rotation`
 - `Copper price as economic indicator — Dr Copper leading signal`
 - `Investment grade spreads — IG credit spread trend analysis`
 - `TED spread — treasury eurodollar spread as liquidity indicator`
 - `High yield spread — junk bond spread as credit stress indicator`
-- `SPAC deal flow — blank check company activity as risk indicator`
 
 <!-- STATS_END -->
 
