@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **385** |
-| Last Updated | `2026-09-09T14:56:00.132419+00:00` |
-| Dataset Size | `385 entries` |
+| Total Topics Learned | **386** |
+| Last Updated | `2026-09-09T14:59:21.249711+00:00` |
+| Dataset Size | `386 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 48 |
+| trading-strategies | 49 |
 | market-analysis | 22 |
 | stocks-markets | 19 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `CPI inflation data trading — consumer price index release strategy`
 - `Jobs report trading — NFP release and market reaction pattern`
 - `Federal Reserve meeting impact — FOMC rate decision price reactions`
 - `Presidential cycle effect — four year political cycle on markets`
 - `Seasonal patterns in stocks — January effect sell in May patterns`
-- `Distressed investing signals — when bad news creates opportunity`
 
 <!-- STATS_END -->
 
