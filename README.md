@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **333** |
-| Last Updated | `2026-09-09T00:10:08.058504+00:00` |
-| Dataset Size | `333 entries` |
+| Total Topics Learned | **334** |
+| Last Updated | `2026-09-09T00:13:13.542111+00:00` |
+| Dataset Size | `334 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 109 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 28 |
+| trading-strategies | 29 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Opening range breakout strategy — first 30 min range trade`
 - `Mean reversion with Bollinger Bands — statistical edge in ranging markets`
 - `Trend following with ATR — position sizing using volatility`
 - `Dual momentum strategy — absolute and relative momentum combination`
 - `Turtle trading rules — complete mechanical breakout trading system`
-- `Triple screen trading system — Elder multiple timeframe approach`
 
 <!-- STATS_END -->
 
