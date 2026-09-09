@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **339** |
-| Last Updated | `2026-09-09T00:28:51.666935+00:00` |
-| Dataset Size | `339 entries` |
+| Total Topics Learned | **340** |
+| Last Updated | `2026-09-09T00:31:57.741362+00:00` |
+| Dataset Size | `340 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 110 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 33 |
+| trading-strategies | 34 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market on close MOC trading — end of day institutional flow`
 - `Iceberg order detection — identifying hidden large orders`
 - `Bid ask imbalance strategy — order book pressure for entries`
 - `Delta divergence trading — volume delta as leading indicator`
 - `Order flow trading — reading tape and footprint charts`
-- `VWAP deviation strategy — trading pullbacks to VWAP levels`
 
 <!-- STATS_END -->
 
