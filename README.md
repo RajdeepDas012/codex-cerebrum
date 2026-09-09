@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **348** |
-| Last Updated | `2026-09-09T04:40:20.063548+00:00` |
-| Dataset Size | `348 entries` |
+| Total Topics Learned | **349** |
+| Last Updated | `2026-09-09T04:43:25.722324+00:00` |
+| Dataset Size | `349 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 112 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 40 |
+| trading-strategies | 41 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Episodic pivot trading — news catalyst institutional entry`
 - `Pocket pivot buy point — alternative entry to traditional base`
 - `High tight flag pattern — strongest momentum continuation setup`
 - `Volatility contraction pattern VCP — tight consolidation breakout`
 - `NR7 and NR4 trading — narrowest range compression breakout`
-- `Outside day reversal strategy — engulfing day as trend change`
 
 <!-- STATS_END -->
 
