@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **404** |
-| Last Updated | `2026-09-09T21:34:44.442946+00:00` |
-| Dataset Size | `404 entries` |
+| Total Topics Learned | **405** |
+| Last Updated | `2026-09-09T21:37:50.334394+00:00` |
+| Dataset Size | `405 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 34 |
+| market-analysis | 35 |
 | stocks-markets | 20 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Investment grade spreads — IG credit spread trend analysis`
 - `TED spread — treasury eurodollar spread as liquidity indicator`
 - `High yield spread — junk bond spread as credit stress indicator`
 - `SPAC deal flow — blank check company activity as risk indicator`
 - `IPO market sentiment — hot IPO market as excess euphoria signal`
-- `Margin debt levels — NYSE margin debt as market risk indicator`
 
 <!-- STATS_END -->
 
