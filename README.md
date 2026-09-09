@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **393** |
-| Last Updated | `2026-09-09T18:40:43.483399+00:00` |
-| Dataset Size | `393 entries` |
+| Total Topics Learned | **394** |
+| Last Updated | `2026-09-09T18:43:50.518232+00:00` |
+| Dataset Size | `394 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 51 |
+| trading-strategies | 52 |
 | market-analysis | 27 |
 | stocks-markets | 19 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Put call ratio signals — extreme put buying as contrarian indicator`
 - `VIX spike buying strategy — buying dips during fear spikes`
 - `VIX term structure — contango backwardation for volatility trading`
 - `Gold to stock ratio — GLD SPX ratio for risk appetite measurement`
 - `Dollar index DXY impact — USD strength effect on risk assets`
-- `Treasury bond market signals — TLT as leading indicator for stocks`
 
 <!-- STATS_END -->
 
