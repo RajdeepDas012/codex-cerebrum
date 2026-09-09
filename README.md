@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **416** |
-| Last Updated | `2026-09-09T22:12:03.261747+00:00` |
-| Dataset Size | `416 entries` |
+| Total Topics Learned | **417** |
+| Last Updated | `2026-09-09T22:15:09.217224+00:00` |
+| Dataset Size | `417 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 45 |
+| market-analysis | 46 |
 | stocks-markets | 21 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `University of Michigan sentiment — consumer expectations indicator`
 - `Consumer confidence index — sentiment and spending prediction`
 - `ISM services PMI — service sector health and market direction`
 - `ISM manufacturing PMI — factory activity and market correlation`
 - `Retail sales data trading — consumer spending and market reaction`
-- `Housing starts as economic signal — real estate leading indicator`
 
 <!-- STATS_END -->
 
