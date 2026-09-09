@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **368** |
-| Last Updated | `2026-09-09T09:58:29.220118+00:00` |
-| Dataset Size | `368 entries` |
+| Total Topics Learned | **369** |
+| Last Updated | `2026-09-09T10:01:35.804086+00:00` |
+| Dataset Size | `369 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 46 |
-| stocks-markets | 14 |
+| stocks-markets | 15 |
 | market-analysis | 12 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Operating leverage analysis — fixed cost impact on earnings swing`
 - `Debt to equity changes — leverage trends affecting risk profile`
 - `Return on equity ROE trends — quality factor for stock selection`
 - `PEG ratio analysis — P/E relative to earnings growth rate`
 - `Price to sales ratio — PS ratio for growth stock valuation`
-- `Enterprise value to EBITDA — EV/EBITDA for sector comparison`
 
 <!-- STATS_END -->
 
