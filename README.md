@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **371** |
-| Last Updated | `2026-09-09T10:07:48.006115+00:00` |
-| Dataset Size | `371 entries` |
+| Total Topics Learned | **372** |
+| Last Updated | `2026-09-09T10:11:27.448485+00:00` |
+| Dataset Size | `372 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 46 |
 | stocks-markets | 15 |
-| market-analysis | 14 |
+| market-analysis | 15 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Net revenue retention — NRR as predictor of SaaS growth`
 - `Customer acquisition cost — CAC trends for SaaS valuation`
 - `Revenue per employee — efficiency metric for tech companies`
 - `Operating leverage analysis — fixed cost impact on earnings swing`
 - `Debt to equity changes — leverage trends affecting risk profile`
-- `Return on equity ROE trends — quality factor for stock selection`
 
 <!-- STATS_END -->
 
