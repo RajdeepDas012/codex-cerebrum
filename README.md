@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **364** |
-| Last Updated | `2026-09-09T09:46:04.812279+00:00` |
-| Dataset Size | `364 entries` |
+| Total Topics Learned | **365** |
+| Last Updated | `2026-09-09T09:49:11.046065+00:00` |
+| Dataset Size | `365 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 46 |
 | stocks-markets | 12 |
-| market-analysis | 10 |
+| market-analysis | 11 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Price to sales ratio — PS ratio for growth stock valuation`
 - `Enterprise value to EBITDA — EV/EBITDA for sector comparison`
 - `Free cash flow yield — FCF generation relative to market cap`
 - `Gross margin expansion — profitability improvement as signal`
 - `Revenue growth acceleration — top line acceleration as catalyst`
-- `Earnings surprise effect — post-earnings announcement drift PEAD`
 
 <!-- STATS_END -->
 
