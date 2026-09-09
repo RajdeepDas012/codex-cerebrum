@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **344** |
-| Last Updated | `2026-09-09T04:27:54.528249+00:00` |
-| Dataset Size | `344 entries` |
+| Total Topics Learned | **345** |
+| Last Updated | `2026-09-09T04:31:02.611768+00:00` |
+| Dataset Size | `345 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 110 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 38 |
+| trading-strategies | 39 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `NR7 and NR4 trading — narrowest range compression breakout`
 - `Outside day reversal strategy — engulfing day as trend change`
 - `Inside day breakout strategy — volatility compression breakout`
 - `Fade the gap strategy — fading overextended gap openings`
 - `Gap and go strategy — trading momentum after overnight gap`
-- `Market on close MOC trading — end of day institutional flow`
 
 <!-- STATS_END -->
 
