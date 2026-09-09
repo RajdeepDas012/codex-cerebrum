@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **379** |
-| Last Updated | `2026-09-09T14:35:06.426153+00:00` |
-| Dataset Size | `379 entries` |
+| Total Topics Learned | **380** |
+| Last Updated | `2026-09-09T14:38:13.508942+00:00` |
+| Dataset Size | `380 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 46 |
+| trading-strategies | 47 |
 | stocks-markets | 19 |
 | market-analysis | 18 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Merger arbitrage strategy — spread capture in announced deals`
 - `Spinoff performance analysis — spinoffs outperform parent companies`
 - `Special dividend signals — one-time dividends and stock reaction`
 - `Dividend sustainability analysis — payout ratio and coverage`
 - `Share buyback impact — repurchase programs and EPS accretion`
-- `Management quality assessment — founder CEO vs hired CEO performance`
 
 <!-- STATS_END -->
 
