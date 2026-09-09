@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **335** |
-| Last Updated | `2026-09-09T00:16:19.412955+00:00` |
-| Dataset Size | `335 entries` |
+| Total Topics Learned | **336** |
+| Last Updated | `2026-09-09T00:19:25.699303+00:00` |
+| Dataset Size | `336 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 109 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 30 |
+| trading-strategies | 31 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Order flow trading — reading tape and footprint charts`
 - `VWAP deviation strategy — trading pullbacks to VWAP levels`
 - `Opening range breakout strategy — first 30 min range trade`
 - `Mean reversion with Bollinger Bands — statistical edge in ranging markets`
 - `Trend following with ATR — position sizing using volatility`
-- `Dual momentum strategy — absolute and relative momentum combination`
 
 <!-- STATS_END -->
 
