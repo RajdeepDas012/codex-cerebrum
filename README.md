@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **415** |
-| Last Updated | `2026-09-09T22:08:57.018631+00:00` |
-| Dataset Size | `415 entries` |
+| Total Topics Learned | **416** |
+| Last Updated | `2026-09-09T22:12:03.261747+00:00` |
+| Dataset Size | `416 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 44 |
+| market-analysis | 45 |
 | stocks-markets | 21 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Consumer confidence index — sentiment and spending prediction`
 - `ISM services PMI — service sector health and market direction`
 - `ISM manufacturing PMI — factory activity and market correlation`
 - `Retail sales data trading — consumer spending and market reaction`
 - `Housing starts as economic signal — real estate leading indicator`
-- `Semiconductor cycle analysis — chip cycle and tech sector timing`
 
 <!-- STATS_END -->
 
