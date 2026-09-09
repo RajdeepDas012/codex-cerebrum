@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **387** |
-| Last Updated | `2026-09-09T15:03:36.904638+00:00` |
-| Dataset Size | `387 entries` |
+| Total Topics Learned | **388** |
+| Last Updated | `2026-09-09T15:08:41.211687+00:00` |
+| Dataset Size | `388 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 49 |
-| market-analysis | 23 |
+| market-analysis | 24 |
 | stocks-markets | 19 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Yield curve trading signals — 2s10s inversion and recession prediction`
 - `GDP report market impact — economic growth data and sector rotation`
 - `CPI inflation data trading — consumer price index release strategy`
 - `Jobs report trading — NFP release and market reaction pattern`
 - `Federal Reserve meeting impact — FOMC rate decision price reactions`
-- `Presidential cycle effect — four year political cycle on markets`
 
 <!-- STATS_END -->
 
