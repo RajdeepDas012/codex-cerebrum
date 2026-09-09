@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **407** |
-| Last Updated | `2026-09-09T21:44:03.198046+00:00` |
-| Dataset Size | `407 entries` |
+| Total Topics Learned | **408** |
+| Last Updated | `2026-09-09T21:47:09.175772+00:00` |
+| Dataset Size | `408 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 36 |
+| market-analysis | 37 |
 | stocks-markets | 21 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Natural gas price seasonality — winter summer demand patterns`
 - `Oil price impact on stocks — crude oil and sector rotation`
 - `Copper price as economic indicator — Dr Copper leading signal`
 - `Investment grade spreads — IG credit spread trend analysis`
 - `TED spread — treasury eurodollar spread as liquidity indicator`
-- `High yield spread — junk bond spread as credit stress indicator`
 
 <!-- STATS_END -->
 
