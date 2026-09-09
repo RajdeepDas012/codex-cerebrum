@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **341** |
-| Last Updated | `2026-09-09T00:35:03.331414+00:00` |
-| Dataset Size | `341 entries` |
+| Total Topics Learned | **342** |
+| Last Updated | `2026-09-09T00:38:08.880393+00:00` |
+| Dataset Size | `342 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 110 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 35 |
+| trading-strategies | 36 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fade the gap strategy — fading overextended gap openings`
 - `Gap and go strategy — trading momentum after overnight gap`
 - `Market on close MOC trading — end of day institutional flow`
 - `Iceberg order detection — identifying hidden large orders`
 - `Bid ask imbalance strategy — order book pressure for entries`
-- `Delta divergence trading — volume delta as leading indicator`
 
 <!-- STATS_END -->
 
