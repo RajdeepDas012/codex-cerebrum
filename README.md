@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **373** |
-| Last Updated | `2026-09-09T10:15:08.559623+00:00` |
-| Dataset Size | `373 entries` |
+| Total Topics Learned | **374** |
+| Last Updated | `2026-09-09T14:18:24.096356+00:00` |
+| Dataset Size | `374 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,8 +21,8 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 46 |
+| stocks-markets | 16 |
 | market-analysis | 16 |
-| stocks-markets | 15 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Moat analysis — durable competitive advantages for long term`
 - `Total addressable market analysis — TAM for growth potential`
 - `Net revenue retention — NRR as predictor of SaaS growth`
 - `Customer acquisition cost — CAC trends for SaaS valuation`
 - `Revenue per employee — efficiency metric for tech companies`
-- `Operating leverage analysis — fixed cost impact on earnings swing`
 
 <!-- STATS_END -->
 
