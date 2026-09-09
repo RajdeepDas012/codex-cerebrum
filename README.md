@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **359** |
-| Last Updated | `2026-09-09T09:30:19.455753+00:00` |
-| Dataset Size | `359 entries` |
+| Total Topics Learned | **360** |
+| Last Updated | `2026-09-09T09:33:25.849763+00:00` |
+| Dataset Size | `360 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 45 |
+| trading-strategies | 46 |
 | stocks-markets | 10 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Earnings surprise effect — post-earnings announcement drift PEAD`
 - `Insider buying patterns — executive purchases as confidence signal`
 - `Institutional ownership changes — 13F filing analysis for signals`
 - `Short interest ratio — days to cover as squeeze predictor`
 - `Low float stock mechanics — how small float causes volatility`
-- `52 week high breakout strategy — price at new highs momentum`
 
 <!-- STATS_END -->
 
