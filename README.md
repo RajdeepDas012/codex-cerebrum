@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **378** |
-| Last Updated | `2026-09-09T14:31:54.559301+00:00` |
-| Dataset Size | `378 entries` |
+| Total Topics Learned | **379** |
+| Last Updated | `2026-09-09T14:35:06.426153+00:00` |
+| Dataset Size | `379 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 46 |
 | stocks-markets | 19 |
-| market-analysis | 17 |
+| market-analysis | 18 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Spinoff performance analysis — spinoffs outperform parent companies`
 - `Special dividend signals — one-time dividends and stock reaction`
 - `Dividend sustainability analysis — payout ratio and coverage`
 - `Share buyback impact — repurchase programs and EPS accretion`
 - `Management quality assessment — founder CEO vs hired CEO performance`
-- `Moat analysis — durable competitive advantages for long term`
 
 <!-- STATS_END -->
 
