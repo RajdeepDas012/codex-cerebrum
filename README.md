@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **399** |
-| Last Updated | `2026-09-09T19:02:01.458694+00:00` |
-| Dataset Size | `399 entries` |
+| Total Topics Learned | **400** |
+| Last Updated | `2026-09-09T19:05:17.237481+00:00` |
+| Dataset Size | `400 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 54 |
-| market-analysis | 29 |
+| market-analysis | 30 |
 | stocks-markets | 20 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Margin debt levels — NYSE margin debt as market risk indicator`
 - `Short interest changes — rising short interest as potential squeeze`
 - `Dark pool activity — institutional off-exchange trading detection`
 - `Large trader positioning — CFTC commitment of traders report`
 - `Smart money vs dumb money — COT report analysis for positioning`
-- `SKEW index — measuring tail risk expectations in options market`
 
 <!-- STATS_END -->
 
