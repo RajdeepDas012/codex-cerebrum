@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 338,
-    "last_updated": "2026-09-09T00:25:46.193702+00:00",
-    "total_topics_learned": 338
+    "total_runs": 339,
+    "last_updated": "2026-09-09T00:28:51.666935+00:00",
+    "total_topics_learned": 339
   },
   "entries": [
     {
@@ -16497,6 +16497,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-09T00:25:46.193682+00:00",
       "run_number": 338
+    },
+    {
+      "topic": "Iceberg order detection — identifying hidden large orders",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Iceberg order detection involves identifying institutional orders that are split into smaller visible tranches to conceal total size. Spotting these hidden liquidity walls helps traders anticipate support/resistance levels and avoid getting trapped by spoofing or exhaustion.",
+      "key_points": [
+        "Monitors continuous passive volume refreshes at a static price level despite aggressive market order eating.",
+        "Utilizes time and sales data to track repeated execution sizes that reset instantly.",
+        "Distinguishes between genuine institutional accumulation and high-frequency trading spoofing.",
+        "Provides high-probability entry or exit points when the hidden wall finally absorbs all pressure or breaks."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Detects potential iceberg orders by tracking repeated executions at a fixed price level that exceed the displayed book depth.",
+        "correct": "def detect_iceberg(trade_stream, level2_snapshots, price_level, threshold_volume):\n    refreshes = 0\n    for trade, l2 in zip(trade_stream, level2_snapshots):\n        if trade['price'] == price_level and trade['size'] >= threshold_volume:\n            if l2.get(price_level, 0) < threshold_volume:\n                refreshes += 1\n    return refreshes >= 5",
+        "wrong": "def detect_iceberg(trade_stream):\n    # Mistake: assuming any large trade is an iceberg without checking order book depth replenishment\n    return sum(t['size'] for t in trade_stream) > 10000"
+      },
+      "common_mistakes": [
+        "Confusing regular retail sweep orders with true algorithmic icebergs.",
+        "Failing to account for latency in Level 2 market data feeds when measuring refresh speeds."
+      ],
+      "best_practices": [
+        "Combine iceberg detection with footprint charts to see if aggressive delta is stalling at the hidden price level.",
+        "Cross-reference execution frequency with average trade size to isolate institutional footprints.",
+        "Monitor for sudden cancellation of the iceberg which often signals a trap or fading momentum."
+      ],
+      "when_to_use": "Use when trading highly liquid assets (like ES futures or major FX pairs) where large institutions need to hide their footprint.",
+      "when_not_to_use": "Avoid in low-liquidity instruments where wide spreads and sparse order book updates create false positives.",
+      "interview_questions": [
+        {
+          "question": "How do you programmatically distinguish an iceberg order from regular high-frequency trading noise?",
+          "answer": "By tracking price-level depth replenishment in real-time where total executed volume at a single price vastly exceeds the maximum visible book size at any given snapshot."
+        },
+        {
+          "question": "What is the risk of trading directly against a detected iceberg order?",
+          "answer": "The hidden wall may represent an immovable institutional block that traps breakout traders, or it may be pulled instantly when tested, leading to immediate slippage."
+        }
+      ],
+      "related_topics": [
+        "Order flow trading — reading tape and footprint charts",
+        "Bid ask imbalance strategy — order book pressure for entries",
+        "Delta divergence trading — volume delta as leading indicator"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-09T00:28:51.666917+00:00",
+      "run_number": 339
     }
   ]
 }
