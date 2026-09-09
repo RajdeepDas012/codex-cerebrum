@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **362** |
-| Last Updated | `2026-09-09T09:39:38.951833+00:00` |
-| Dataset Size | `362 entries` |
+| Total Topics Learned | **363** |
+| Last Updated | `2026-09-09T09:42:45.286992+00:00` |
+| Dataset Size | `363 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 46 |
-| stocks-markets | 11 |
+| stocks-markets | 12 |
 | databases | 9 |
 | web-dev | 9 |
 | market-analysis | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Free cash flow yield — FCF generation relative to market cap`
 - `Gross margin expansion — profitability improvement as signal`
 - `Revenue growth acceleration — top line acceleration as catalyst`
 - `Earnings surprise effect — post-earnings announcement drift PEAD`
 - `Insider buying patterns — executive purchases as confidence signal`
-- `Institutional ownership changes — 13F filing analysis for signals`
 
 <!-- STATS_END -->
 
