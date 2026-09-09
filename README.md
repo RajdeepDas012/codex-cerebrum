@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **330** |
-| Last Updated | `2026-09-09T00:00:42.791727+00:00` |
-| Dataset Size | `330 entries` |
+| Total Topics Learned | **331** |
+| Last Updated | `2026-09-09T00:03:48.536431+00:00` |
+| Dataset Size | `331 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 109 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 25 |
+| trading-strategies | 26 |
 | databases | 9 |
 | web-dev | 9 |
 | stocks-markets | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Dual momentum strategy — absolute and relative momentum combination`
 - `Turtle trading rules — complete mechanical breakout trading system`
 - `Triple screen trading system — Elder multiple timeframe approach`
 - `Momentum divergence trading strategy — entry timing using divergence`
 - `Parallel channel trading — entries exits inside price channels`
-- `Trend based Fibonacci extension — multi-swing target projection`
 
 <!-- STATS_END -->
 
