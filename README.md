@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **360** |
-| Last Updated | `2026-09-09T09:33:25.849763+00:00` |
-| Dataset Size | `360 entries` |
+| Total Topics Learned | **361** |
+| Last Updated | `2026-09-09T09:36:32.432436+00:00` |
+| Dataset Size | `361 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | stocks-markets | 10 |
 | databases | 9 |
 | web-dev | 9 |
-| market-analysis | 8 |
+| market-analysis | 9 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Revenue growth acceleration — top line acceleration as catalyst`
 - `Earnings surprise effect — post-earnings announcement drift PEAD`
 - `Insider buying patterns — executive purchases as confidence signal`
 - `Institutional ownership changes — 13F filing analysis for signals`
 - `Short interest ratio — days to cover as squeeze predictor`
-- `Low float stock mechanics — how small float causes volatility`
 
 <!-- STATS_END -->
 
