@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **381** |
-| Last Updated | `2026-09-09T14:41:33.585164+00:00` |
-| Dataset Size | `381 entries` |
+| Total Topics Learned | **382** |
+| Last Updated | `2026-09-09T14:45:06.911035+00:00` |
+| Dataset Size | `382 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 48 |
 | stocks-markets | 19 |
-| market-analysis | 18 |
+| market-analysis | 19 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Seasonal patterns in stocks — January effect sell in May patterns`
 - `Distressed investing signals — when bad news creates opportunity`
 - `Merger arbitrage strategy — spread capture in announced deals`
 - `Spinoff performance analysis — spinoffs outperform parent companies`
 - `Special dividend signals — one-time dividends and stock reaction`
-- `Dividend sustainability analysis — payout ratio and coverage`
 
 <!-- STATS_END -->
 
