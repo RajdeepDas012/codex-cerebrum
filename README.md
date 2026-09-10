@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **455** |
-| Last Updated | `2026-09-10T09:48:09.422209+00:00` |
-| Dataset Size | `455 entries` |
+| Total Topics Learned | **456** |
+| Last Updated | `2026-09-10T09:51:16.235103+00:00` |
+| Dataset Size | `456 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 49 |
-| stocks-markets | 24 |
+| stocks-markets | 25 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `ETF arbitrage mechanism — authorized participant creation redemption`
 - `Pairs trading statistical arbitrage — correlation and mean reversion`
 - `Reverse iron condor — long volatility defined risk strategy`
 - `Jade lizard options — combining short put and call spread`
 - `Broken wing butterfly — risk-defined options strategy with edge`
-- `Ratio spread strategy — asymmetric risk reward options structure`
 
 <!-- STATS_END -->
 
