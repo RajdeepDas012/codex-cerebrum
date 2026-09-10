@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **440** |
-| Last Updated | `2026-09-10T04:45:13.926571+00:00` |
-| Dataset Size | `440 entries` |
+| Total Topics Learned | **441** |
+| Last Updated | `2026-09-10T04:48:20.892243+00:00` |
+| Dataset Size | `441 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | technical-analysis | 116 |
 | crypto-blockchain | 74 |
-| trading-strategies | 70 |
+| trading-strategies | 71 |
 | system-design | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Gamma risk near expiration — explosive moves in final days`
 - `Theta decay curves — time value erosion acceleration near expiry`
 - `Delta neutral portfolio — hedging direction to trade volatility`
 - `Options expected move — using options to predict price range`
 - `Straddle breakeven calculation — expected move from options pricing`
-- `Vertical spread risk reward — debit vs credit spread comparison`
 
 <!-- STATS_END -->
 
