@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **422** |
-| Last Updated | `2026-09-10T00:07:18.196985+00:00` |
-| Dataset Size | `422 entries` |
+| Total Topics Learned | **423** |
+| Last Updated | `2026-09-10T00:10:30.036909+00:00` |
+| Dataset Size | `423 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 55 |
+| trading-strategies | 56 |
 | market-analysis | 49 |
 | stocks-markets | 22 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Short squeeze identification — setup conditions for maximum squeeze`
 - `Price target changes — analyst PT revision and stock movement`
 - `Analyst upgrade downgrade impact — institutional recommendation effect`
 - `Guidance reduction signals — forward guidance cut as sell signal`
 - `Revenue beat vs earnings beat — which matters more for stock reaction`
-- `Earnings season patterns — pre-earnings run and post-earnings drop`
 
 <!-- STATS_END -->
 
