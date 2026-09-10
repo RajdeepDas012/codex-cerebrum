@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **480** |
-| Last Updated | `2026-09-10T18:17:36.920647+00:00` |
-| Dataset Size | `480 entries` |
+| Total Topics Learned | **481** |
+| Last Updated | `2026-09-10T18:21:02.487826+00:00` |
+| Dataset Size | `481 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,8 +20,8 @@
 | technical-analysis | 116 |
 | trading-strategies | 95 |
 | crypto-blockchain | 74 |
+| market-analysis | 59 |
 | system-design | 58 |
-| market-analysis | 58 |
 | stocks-markets | 29 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `De-SPAC price patterns — merger completion and stock trajectory`
 - `Chapter 11 bankruptcy trading — distressed asset opportunity`
 - `Proxy fight impact — board control battle and stock reaction`
 - `Activist investor campaigns — hedge fund involvement as catalyst`
 - `Share repurchase timing — buyback announcement and execution`
-- `Secondary offering impact — price reaction to share dilution`
 
 <!-- STATS_END -->
 
