@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **481** |
-| Last Updated | `2026-09-10T18:21:02.487826+00:00` |
-| Dataset Size | `481 entries` |
+| Total Topics Learned | **482** |
+| Last Updated | `2026-09-10T18:24:15.451854+00:00` |
+| Dataset Size | `482 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 95 |
+| trading-strategies | 96 |
 | crypto-blockchain | 74 |
 | market-analysis | 59 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `ADR premium arbitrage — American depositary receipt mispricing`
 - `De-SPAC price patterns — merger completion and stock trajectory`
 - `Chapter 11 bankruptcy trading — distressed asset opportunity`
 - `Proxy fight impact — board control battle and stock reaction`
 - `Activist investor campaigns — hedge fund involvement as catalyst`
-- `Share repurchase timing — buyback announcement and execution`
 
 <!-- STATS_END -->
 
