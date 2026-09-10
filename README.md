@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **424** |
-| Last Updated | `2026-09-10T00:13:37.782067+00:00` |
-| Dataset Size | `424 entries` |
+| Total Topics Learned | **425** |
+| Last Updated | `2026-09-10T00:17:04.657239+00:00` |
+| Dataset Size | `425 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| trading-strategies | 56 |
+| trading-strategies | 57 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Delta hedging cascade — how options market makers amplify moves`
 - `Gamma squeeze mechanics — options dealer hedging driving price`
 - `Short squeeze identification — setup conditions for maximum squeeze`
 - `Price target changes — analyst PT revision and stock movement`
 - `Analyst upgrade downgrade impact — institutional recommendation effect`
-- `Guidance reduction signals — forward guidance cut as sell signal`
 
 <!-- STATS_END -->
 
