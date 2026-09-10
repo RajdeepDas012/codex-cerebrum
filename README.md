@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **453** |
-| Last Updated | `2026-09-10T09:41:55.828852+00:00` |
-| Dataset Size | `453 entries` |
+| Total Topics Learned | **454** |
+| Last Updated | `2026-09-10T09:45:02.517287+00:00` |
+| Dataset Size | `454 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 82 |
+| trading-strategies | 83 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 49 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Reverse iron condor — long volatility defined risk strategy`
 - `Jade lizard options — combining short put and call spread`
 - `Broken wing butterfly — risk-defined options strategy with edge`
 - `Ratio spread strategy — asymmetric risk reward options structure`
 - `LEAPS investing strategy — using long dated options as stock replacement`
-- `Wheel strategy mechanics — selling puts then covered calls`
 
 <!-- STATS_END -->
 
