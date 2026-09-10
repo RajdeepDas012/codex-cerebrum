@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **487** |
-| Last Updated | `2026-09-10T18:39:51.529213+00:00` |
-| Dataset Size | `487 entries` |
+| Total Topics Learned | **488** |
+| Last Updated | `2026-09-10T18:43:09.853102+00:00` |
+| Dataset Size | `488 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 98 |
+| trading-strategies | 99 |
 | crypto-blockchain | 74 |
 | market-analysis | 60 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Quality factor investing — high ROE low leverage outperformance`
 - `Value factor cycles — when value outperforms growth`
 - `Momentum factor performance — why momentum works across markets`
 - `Russell rebalance strategy — small cap index reconstitution`
 - `Index inclusion effect — S&P500 addition buying pressure`
-- `Dual class share structures — voting rights and discount analysis`
 
 <!-- STATS_END -->
 
