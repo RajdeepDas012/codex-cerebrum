@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **495** |
-| Last Updated | `2026-09-10T21:33:14.680705+00:00` |
-| Dataset Size | `495 entries` |
+| Total Topics Learned | **496** |
+| Last Updated | `2026-09-10T21:36:21.488836+00:00` |
+| Dataset Size | `496 entries` |
 
 ## 📂 Categories Learned
 
@@ -33,14 +33,15 @@
 | data-visualization | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| machine-learning | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Machine learning for price prediction — LSTM neural networks for OHLCV`
 - `Factor momentum — momentum of factor returns themselves`
 - `Factor crowding risk — what happens when too many use same factor`
 - `Multi-factor model construction — combining factors for alpha`
 - `Investment factor — asset growth as return predictor`
-- `Profitability factor — gross profit to assets as predictor`
 
 <!-- STATS_END -->
 
