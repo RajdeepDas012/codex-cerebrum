@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **505** |
-| Last Updated | `2026-09-10T22:04:26.625871+00:00` |
-| Dataset Size | `505 entries` |
+| Total Topics Learned | **506** |
+| Last Updated | `2026-09-10T22:07:35.978061+00:00` |
+| Dataset Size | `506 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,7 +29,7 @@
 | devops | 7 |
 | security | 7 |
 | probability-math | 6 |
-| machine-learning | 3 |
+| machine-learning | 4 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `ARIMA model for price prediction — autoregressive integrated moving average`
 - `Time series stationarity — ADF test and making financial data stationary`
 - `Web scraping for financial data — extracting price and sentiment data`
 - `Google Trends trading strategy — search volume as leading indicator`
 - `Social media sentiment trading — Twitter Reddit for stock prediction`
-- `Alternative data sources — satellite imagery credit card data signals`
 
 <!-- STATS_END -->
 
