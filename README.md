@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **431** |
-| Last Updated | `2026-09-10T00:36:28.322713+00:00` |
-| Dataset Size | `431 entries` |
+| Total Topics Learned | **432** |
+| Last Updated | `2026-09-10T00:39:46.612191+00:00` |
+| Dataset Size | `432 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | technical-analysis | 116 |
 | crypto-blockchain | 74 |
-| trading-strategies | 61 |
+| trading-strategies | 62 |
 | system-design | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volatility smile and skew — put skew as crash insurance pricing`
 - `IV crush post-earnings — selling options before earnings strategy`
 - `Implied volatility percentile IVP — IV relative to past 52 weeks`
 - `Implied volatility rank IVR — comparing current IV to historical`
 - `Options flow analysis — unusual options activity as smart money`
-- `Options pinning — price pinning to strike at expiration`
 
 <!-- STATS_END -->
 
