@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **429** |
-| Last Updated | `2026-09-10T00:30:04.438126+00:00` |
-| Dataset Size | `429 entries` |
+| Total Topics Learned | **430** |
+| Last Updated | `2026-09-10T00:33:10.404267+00:00` |
+| Dataset Size | `430 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| technical-analysis | 115 |
+| technical-analysis | 116 |
 | crypto-blockchain | 74 |
 | trading-strategies | 60 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implied volatility percentile IVP — IV relative to past 52 weeks`
 - `Implied volatility rank IVR — comparing current IV to historical`
 - `Options flow analysis — unusual options activity as smart money`
 - `Options pinning — price pinning to strike at expiration`
 - `Vanna and charm effects — second order Greeks impact on price`
-- `Delta hedging cascade — how options market makers amplify moves`
 
 <!-- STATS_END -->
 
