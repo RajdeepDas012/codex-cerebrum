@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **498** |
-| Last Updated | `2026-09-10T21:42:35.127959+00:00` |
-| Dataset Size | `498 entries` |
+| Total Topics Learned | **499** |
+| Last Updated | `2026-09-10T21:45:41.692326+00:00` |
+| Dataset Size | `499 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | technical-analysis | 116 |
 | trading-strategies | 102 |
 | crypto-blockchain | 74 |
-| market-analysis | 61 |
+| market-analysis | 62 |
 | system-design | 58 |
 | stocks-markets | 34 |
 | databases | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Natural language processing for trading — news sentiment analysis`
 - `XGBoost for market classification — bull bear neutral regime detection`
 - `Random forest for trading signals — feature importance in price prediction`
 - `Machine learning for price prediction — LSTM neural networks for OHLCV`
 - `Factor momentum — momentum of factor returns themselves`
-- `Factor crowding risk — what happens when too many use same factor`
 
 <!-- STATS_END -->
 
