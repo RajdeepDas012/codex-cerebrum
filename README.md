@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **491** |
-| Last Updated | `2026-09-10T18:52:39.993252+00:00` |
-| Dataset Size | `491 entries` |
+| Total Topics Learned | **492** |
+| Last Updated | `2026-09-10T18:55:46.705058+00:00` |
+| Dataset Size | `492 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 61 |
 | system-design | 58 |
-| stocks-markets | 33 |
+| stocks-markets | 34 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Investment factor — asset growth as return predictor`
 - `Profitability factor — gross profit to assets as predictor`
 - `Size factor analysis — small cap premium and when it appears`
 - `Low volatility anomaly — why low vol stocks outperform long term`
 - `Quality factor investing — high ROE low leverage outperformance`
-- `Value factor cycles — when value outperforms growth`
 
 <!-- STATS_END -->
 
