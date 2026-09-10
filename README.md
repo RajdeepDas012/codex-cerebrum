@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **504** |
-| Last Updated | `2026-09-10T22:01:20.365560+00:00` |
-| Dataset Size | `504 entries` |
+| Total Topics Learned | **505** |
+| Last Updated | `2026-09-10T22:04:26.625871+00:00` |
+| Dataset Size | `505 entries` |
 
 ## 📂 Categories Learned
 
@@ -28,7 +28,7 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| probability-math | 5 |
+| probability-math | 6 |
 | machine-learning | 3 |
 | algorithms | 2 |
 | data-visualization | 2 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Time series stationarity — ADF test and making financial data stationary`
 - `Web scraping for financial data — extracting price and sentiment data`
 - `Google Trends trading strategy — search volume as leading indicator`
 - `Social media sentiment trading — Twitter Reddit for stock prediction`
 - `Alternative data sources — satellite imagery credit card data signals`
-- `BERT for financial news — transformer models for market sentiment`
 
 <!-- STATS_END -->
 
