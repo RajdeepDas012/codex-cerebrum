@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **460** |
-| Last Updated | `2026-09-10T10:03:45.962425+00:00` |
-| Dataset Size | `460 entries` |
+| Total Topics Learned | **461** |
+| Last Updated | `2026-09-10T10:06:52.411938+00:00` |
+| Dataset Size | `461 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 88 |
+| trading-strategies | 89 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 49 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Index rebalancing arbitrage — predicting index add delete impact`
 - `Volatility arbitrage — realized vs implied volatility difference`
 - `Capital structure arbitrage — debt equity mispricing exploitation`
 - `Merger arbitrage risk factors — deal break probability assessment`
 - `Convertible bond arbitrage — equity and bond mispricing capture`
-- `ETF arbitrage mechanism — authorized participant creation redemption`
 
 <!-- STATS_END -->
 
