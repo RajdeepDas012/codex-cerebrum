@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **446** |
-| Last Updated | `2026-09-10T05:03:52.297240+00:00` |
-| Dataset Size | `446 entries` |
+| Total Topics Learned | **447** |
+| Last Updated | `2026-09-10T05:06:58.946824+00:00` |
+| Dataset Size | `447 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 75 |
+| trading-strategies | 76 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 49 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Covered call optimization — strike and expiry selection for income`
 - `Protective put strategy — portfolio insurance cost-benefit analysis`
 - `Synthetic long and short — replicating stock exposure with options`
 - `Early assignment risk — when early exercise makes economic sense`
 - `Rolling options positions — extending duration to avoid loss`
-- `Options risk management — position sizing and loss limits`
 
 <!-- STATS_END -->
 
