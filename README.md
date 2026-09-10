@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **469** |
-| Last Updated | `2026-09-10T14:30:52.161578+00:00` |
-| Dataset Size | `469 entries` |
+| Total Topics Learned | **470** |
+| Last Updated | `2026-09-10T14:34:46.717726+00:00` |
+| Dataset Size | `470 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | trading-strategies | 93 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| market-analysis | 53 |
+| market-analysis | 54 |
 | stocks-markets | 25 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Lunch hour trading patterns — reduced volume midday consolidation`
 - `First and last hour trading — institutional activity concentration`
 - `Time of day patterns — intraday volume and volatility distribution`
 - `Day of week effect — Monday effect and Friday afternoon patterns`
 - `Seasonal volatility patterns — VIX seasonality by month`
-- `Triple witching day patterns — quadruple expiration volatility`
 
 <!-- STATS_END -->
 
