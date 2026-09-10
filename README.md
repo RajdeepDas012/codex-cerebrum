@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **426** |
-| Last Updated | `2026-09-10T00:20:16.334959+00:00` |
-| Dataset Size | `426 entries` |
+| Total Topics Learned | **427** |
+| Last Updated | `2026-09-10T00:23:24.647430+00:00` |
+| Dataset Size | `427 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,8 +19,8 @@
 |---|---|
 | technical-analysis | 114 |
 | crypto-blockchain | 74 |
+| trading-strategies | 59 |
 | system-design | 58 |
-| trading-strategies | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
 | databases | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Options pinning — price pinning to strike at expiration`
 - `Vanna and charm effects — second order Greeks impact on price`
 - `Delta hedging cascade — how options market makers amplify moves`
 - `Gamma squeeze mechanics — options dealer hedging driving price`
 - `Short squeeze identification — setup conditions for maximum squeeze`
-- `Price target changes — analyst PT revision and stock movement`
 
 <!-- STATS_END -->
 
