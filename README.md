@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **463** |
-| Last Updated | `2026-09-10T10:13:05.737353+00:00` |
-| Dataset Size | `463 entries` |
+| Total Topics Learned | **464** |
+| Last Updated | `2026-09-10T14:12:32.309004+00:00` |
+| Dataset Size | `464 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 91 |
+| trading-strategies | 92 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 49 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Window dressing effect — fund manager quarter-end buying patterns`
 - `Tax loss selling patterns — December selling and January recovery`
 - `Dividend arbitrage strategy — capturing dividends with synthetic position`
 - `Index rebalancing arbitrage — predicting index add delete impact`
 - `Volatility arbitrage — realized vs implied volatility difference`
-- `Capital structure arbitrage — debt equity mispricing exploitation`
 
 <!-- STATS_END -->
 
