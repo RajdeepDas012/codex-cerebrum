@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **485** |
-| Last Updated | `2026-09-10T18:33:38.633081+00:00` |
-| Dataset Size | `485 entries` |
+| Total Topics Learned | **486** |
+| Last Updated | `2026-09-10T18:36:44.961037+00:00` |
+| Dataset Size | `486 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 97 |
+| trading-strategies | 98 |
 | crypto-blockchain | 74 |
 | market-analysis | 59 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Momentum factor performance — why momentum works across markets`
 - `Russell rebalance strategy — small cap index reconstitution`
 - `Index inclusion effect — S&P500 addition buying pressure`
 - `Dual class share structures — voting rights and discount analysis`
 - `ADR premium arbitrage — American depositary receipt mispricing`
-- `De-SPAC price patterns — merger completion and stock trajectory`
 
 <!-- STATS_END -->
 
