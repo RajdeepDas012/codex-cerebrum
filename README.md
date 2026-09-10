@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **493** |
-| Last Updated | `2026-09-10T18:58:53.112851+00:00` |
-| Dataset Size | `493 entries` |
+| Total Topics Learned | **494** |
+| Last Updated | `2026-09-10T21:30:07.761139+00:00` |
+| Dataset Size | `494 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 100 |
+| trading-strategies | 101 |
 | crypto-blockchain | 74 |
 | market-analysis | 61 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Factor crowding risk — what happens when too many use same factor`
 - `Multi-factor model construction — combining factors for alpha`
 - `Investment factor — asset growth as return predictor`
 - `Profitability factor — gross profit to assets as predictor`
 - `Size factor analysis — small cap premium and when it appears`
-- `Low volatility anomaly — why low vol stocks outperform long term`
 
 <!-- STATS_END -->
 
