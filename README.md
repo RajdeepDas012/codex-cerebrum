@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **476** |
-| Last Updated | `2026-09-10T14:55:48.070363+00:00` |
-| Dataset Size | `476 entries` |
+| Total Topics Learned | **477** |
+| Last Updated | `2026-09-10T14:59:16.353315+00:00` |
+| Dataset Size | `477 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 56 |
-| stocks-markets | 28 |
+| stocks-markets | 29 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Share repurchase timing — buyback announcement and execution`
 - `Secondary offering impact — price reaction to share dilution`
 - `Lock-up expiration selling — insider selling after IPO lock-up`
 - `Rights offering dilution — shareholder dilution and price impact`
 - `Stock splits and reverse splits — price and volume impact analysis`
-- `After-hours earnings reactions — overnight gap prediction`
 
 <!-- STATS_END -->
 
