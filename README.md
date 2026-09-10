@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **467** |
-| Last Updated | `2026-09-10T14:23:33.193914+00:00` |
-| Dataset Size | `467 entries` |
+| Total Topics Learned | **468** |
+| Last Updated | `2026-09-10T14:26:54.144602+00:00` |
+| Dataset Size | `468 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | trading-strategies | 92 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| market-analysis | 52 |
+| market-analysis | 53 |
 | stocks-markets | 25 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Time of day patterns — intraday volume and volatility distribution`
 - `Day of week effect — Monday effect and Friday afternoon patterns`
 - `Seasonal volatility patterns — VIX seasonality by month`
 - `Triple witching day patterns — quadruple expiration volatility`
 - `Window dressing effect — fund manager quarter-end buying patterns`
-- `Tax loss selling patterns — December selling and January recovery`
 
 <!-- STATS_END -->
 
