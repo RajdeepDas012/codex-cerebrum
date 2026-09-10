@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **502** |
-| Last Updated | `2026-09-10T21:55:02.056226+00:00` |
-| Dataset Size | `502 entries` |
+| Total Topics Learned | **503** |
+| Last Updated | `2026-09-10T21:58:08.490076+00:00` |
+| Dataset Size | `503 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 103 |
+| trading-strategies | 104 |
 | crypto-blockchain | 74 |
 | market-analysis | 64 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Google Trends trading strategy — search volume as leading indicator`
 - `Social media sentiment trading — Twitter Reddit for stock prediction`
 - `Alternative data sources — satellite imagery credit card data signals`
 - `BERT for financial news — transformer models for market sentiment`
 - `Natural language processing for trading — news sentiment analysis`
-- `XGBoost for market classification — bull bear neutral regime detection`
 
 <!-- STATS_END -->
 
