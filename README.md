@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **483** |
-| Last Updated | `2026-09-10T18:27:22.318852+00:00` |
-| Dataset Size | `483 entries` |
+| Total Topics Learned | **484** |
+| Last Updated | `2026-09-10T18:30:29.082544+00:00` |
+| Dataset Size | `484 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 59 |
 | system-design | 58 |
-| stocks-markets | 30 |
+| stocks-markets | 31 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Index inclusion effect — S&P500 addition buying pressure`
 - `Dual class share structures — voting rights and discount analysis`
 - `ADR premium arbitrage — American depositary receipt mispricing`
 - `De-SPAC price patterns — merger completion and stock trajectory`
 - `Chapter 11 bankruptcy trading — distressed asset opportunity`
-- `Proxy fight impact — board control battle and stock reaction`
 
 <!-- STATS_END -->
 
