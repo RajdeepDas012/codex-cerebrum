@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **508** |
-| Last Updated | `2026-09-10T22:13:49.665354+00:00` |
-| Dataset Size | `508 entries` |
+| Total Topics Learned | **509** |
+| Last Updated | `2026-09-10T23:54:32.098961+00:00` |
+| Dataset Size | `509 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 104 |
+| trading-strategies | 105 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Kalman filter for trading — dynamic linear model for price estimation`
 - `Hidden Markov model for regime — market state detection algorithm`
 - `GARCH model for volatility — generalized autoregressive conditional heteroskedasticity`
 - `ARIMA model for price prediction — autoregressive integrated moving average`
 - `Time series stationarity — ADF test and making financial data stationary`
-- `Web scraping for financial data — extracting price and sentiment data`
 
 <!-- STATS_END -->
 

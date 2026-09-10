@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 508,
-    "last_updated": "2026-09-10T22:13:49.665354+00:00",
-    "total_topics_learned": 508
+    "total_runs": 509,
+    "last_updated": "2026-09-10T23:54:32.098961+00:00",
+    "total_topics_learned": 509
   },
   "entries": [
     {
@@ -24658,6 +24658,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-10T22:13:49.665335+00:00",
       "run_number": 508
+    },
+    {
+      "topic": "Kalman filter for trading — dynamic linear model for price estimation",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "A Kalman filter is an algorithm that estimates the true underlying value of a variable from a series of noisy measurements over time. In trading, it is heavily used for pairs trading and dynamic hedge ratio estimation by continuously updating state estimates as new market data arrives.",
+      "key_points": [
+        "Operates in two recursive steps: the predict step (projecting state forward) and the update step (incorporating new noisy observations).",
+        "Maintains a state vector and an error covariance matrix to quantify uncertainty in both the model and the measurements.",
+        "Widely applied in statistical arbitrage to dynamically track the spread between two cointegrated assets without a fixed lookback window.",
+        "Adapts more smoothly to structural breaks in market dynamics compared to traditional rolling-window moving averages or OLS regressions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates implementing a basic dynamic linear regression using PyKalman to estimate a time-varying hedge ratio.",
+        "correct": "import numpy as np\nfrom pykalman import KalmanFilter\n\n# Simulated price series for asset A and asset B\nnp.random.seed(42)\nasset_b = np.cumsum(np.random.randn(100)) + 100\nasset_a = 1.5 * asset_b + np.random.normal(0, 1, 100)\n\n# Initialize Kalman Filter for slope and intercept estimation\nkf = KalmanFilter(transition_matrices=np.eye(2),\n                 observation_matrices=np.unstack(np.column_stack([asset_b, np.ones(100)]))[:, np.newaxis, :])\nstate_means, state_covs = kf.filter(asset_a)",
+        "wrong": "kf = KalmanFilter(transition_matrices=1.0)\nkf.filter(asset_a)"
+      },
+      "common_mistakes": [
+        "Treating the process noise covariance (Q) and observation noise covariance (R) as static constants without tuning or adaptive estimation.",
+        "Failing to normalize or scale input price data, which can lead to numerical instability in the covariance matrix updates."
+      ],
+      "best_practices": [
+        "Perform grid search or maximum likelihood estimation (MLE) via the Expectation-Maximization (EM) algorithm to optimize Q and R parameters.",
+        "Monitor the innovation (residual) sequence to check for white noise properties, validating that the filter is tracking correctly.",
+        "Combine the Kalman filter output with a strict execution threshold (like Bollinger bands on the spread) to generate robust trading signals."
+      ],
+      "when_to_use": "Use when you need online, real-time state estimation for pairs trading, statistical arbitrage, or tracking dynamic beta/hedge ratios.",
+      "when_not_to_use": "Avoid when markets are extremely chaotic with sudden regime shifts where noise covariance parameters fail to capture the violent jump in volatility.",
+      "interview_questions": [
+        {
+          "question": "What are the two main phases of a Kalman filter update loop?",
+          "answer": "The predict phase (time update), which projects the current state and error covariance forward, and the update phase (measurement update), which adjusts the projection using the latest noisy observation."
+        },
+        {
+          "question": "How does a Kalman filter improve upon a standard rolling Ordinary Least Squares (OLS) regression for pairs trading?",
+          "answer": "Unlike rolling OLS which assigns equal weight to all observations within a fixed window and drops past data abruptly, a Kalman filter recursively updates parameters at every step, giving more weight to recent data while retaining historical information through the error covariance matrix."
+        }
+      ],
+      "related_topics": [
+        "Pairs trading strategy",
+        "State space models",
+        "Dynamic hedge ratio estimation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-10T23:54:32.098938+00:00",
+      "run_number": 509
     }
   ]
 }
