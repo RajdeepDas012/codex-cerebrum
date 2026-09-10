@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **442** |
-| Last Updated | `2026-09-10T04:51:26.838425+00:00` |
-| Dataset Size | `442 entries` |
+| Total Topics Learned | **443** |
+| Last Updated | `2026-09-10T04:54:32.750415+00:00` |
+| Dataset Size | `443 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | technical-analysis | 116 |
 | crypto-blockchain | 74 |
-| trading-strategies | 72 |
+| trading-strategies | 73 |
 | system-design | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Rolling options positions — extending duration to avoid loss`
 - `Options risk management — position sizing and loss limits`
 - `Gamma risk near expiration — explosive moves in final days`
 - `Theta decay curves — time value erosion acceleration near expiry`
 - `Delta neutral portfolio — hedging direction to trade volatility`
-- `Options expected move — using options to predict price range`
 
 <!-- STATS_END -->
 
