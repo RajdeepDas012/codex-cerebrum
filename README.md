@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **507** |
-| Last Updated | `2026-09-10T22:10:42.522716+00:00` |
-| Dataset Size | `507 entries` |
+| Total Topics Learned | **508** |
+| Last Updated | `2026-09-10T22:13:49.665354+00:00` |
+| Dataset Size | `508 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,7 +29,7 @@
 | devops | 7 |
 | security | 7 |
 | probability-math | 7 |
-| machine-learning | 4 |
+| machine-learning | 5 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Hidden Markov model for regime — market state detection algorithm`
 - `GARCH model for volatility — generalized autoregressive conditional heteroskedasticity`
 - `ARIMA model for price prediction — autoregressive integrated moving average`
 - `Time series stationarity — ADF test and making financial data stationary`
 - `Web scraping for financial data — extracting price and sentiment data`
-- `Google Trends trading strategy — search volume as leading indicator`
 
 <!-- STATS_END -->
 
