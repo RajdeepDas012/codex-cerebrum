@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **438** |
-| Last Updated | `2026-09-10T04:39:01.302341+00:00` |
-| Dataset Size | `438 entries` |
+| Total Topics Learned | **439** |
+| Last Updated | `2026-09-10T04:42:07.393443+00:00` |
+| Dataset Size | `439 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | technical-analysis | 116 |
 | crypto-blockchain | 74 |
-| trading-strategies | 68 |
+| trading-strategies | 69 |
 | system-design | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Delta neutral portfolio — hedging direction to trade volatility`
 - `Options expected move — using options to predict price range`
 - `Straddle breakeven calculation — expected move from options pricing`
 - `Vertical spread risk reward — debit vs credit spread comparison`
 - `Iron condor optimization — strike selection for high probability of profit`
-- `Calendar spread strategy — profiting from volatility term structure`
 
 <!-- STATS_END -->
 
