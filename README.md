@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **465** |
-| Last Updated | `2026-09-10T14:16:09.923374+00:00` |
-| Dataset Size | `465 entries` |
+| Total Topics Learned | **466** |
+| Last Updated | `2026-09-10T14:19:36.992037+00:00` |
+| Dataset Size | `466 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | trading-strategies | 92 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| market-analysis | 50 |
+| market-analysis | 51 |
 | stocks-markets | 25 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Seasonal volatility patterns — VIX seasonality by month`
 - `Triple witching day patterns — quadruple expiration volatility`
 - `Window dressing effect — fund manager quarter-end buying patterns`
 - `Tax loss selling patterns — December selling and January recovery`
 - `Dividend arbitrage strategy — capturing dividends with synthetic position`
-- `Index rebalancing arbitrage — predicting index add delete impact`
 
 <!-- STATS_END -->
 
