@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **471** |
-| Last Updated | `2026-09-10T14:38:04.546080+00:00` |
-| Dataset Size | `471 entries` |
+| Total Topics Learned | **472** |
+| Last Updated | `2026-09-10T14:41:19.263609+00:00` |
+| Dataset Size | `472 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 93 |
+| trading-strategies | 94 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | market-analysis | 55 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `After-hours earnings reactions — overnight gap prediction`
 - `Pre-market trading signals — after-hours price discovery`
 - `Lunch hour trading patterns — reduced volume midday consolidation`
 - `First and last hour trading — institutional activity concentration`
 - `Time of day patterns — intraday volume and volatility distribution`
-- `Day of week effect — Monday effect and Friday afternoon patterns`
 
 <!-- STATS_END -->
 
