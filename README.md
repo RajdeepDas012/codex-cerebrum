@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **420** |
-| Last Updated | `2026-09-10T00:01:02.796378+00:00` |
-| Dataset Size | `420 entries` |
+| Total Topics Learned | **421** |
+| Last Updated | `2026-09-10T00:04:09.042528+00:00` |
+| Dataset Size | `421 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | trading-strategies | 55 |
-| market-analysis | 47 |
+| market-analysis | 48 |
 | stocks-markets | 22 |
 | databases | 9 |
 | web-dev | 9 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Analyst upgrade downgrade impact — institutional recommendation effect`
 - `Guidance reduction signals — forward guidance cut as sell signal`
 - `Revenue beat vs earnings beat — which matters more for stock reaction`
 - `Earnings season patterns — pre-earnings run and post-earnings drop`
 - `University of Michigan sentiment — consumer expectations indicator`
-- `Consumer confidence index — sentiment and spending prediction`
 
 <!-- STATS_END -->
 
