@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **435** |
-| Last Updated | `2026-09-10T04:29:40.288446+00:00` |
-| Dataset Size | `435 entries` |
+| Total Topics Learned | **436** |
+| Last Updated | `2026-09-10T04:32:47.130863+00:00` |
+| Dataset Size | `436 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | technical-analysis | 116 |
 | crypto-blockchain | 74 |
-| trading-strategies | 65 |
+| trading-strategies | 66 |
 | system-design | 58 |
 | market-analysis | 49 |
 | stocks-markets | 23 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Vertical spread risk reward — debit vs credit spread comparison`
 - `Iron condor optimization — strike selection for high probability of profit`
 - `Calendar spread strategy — profiting from volatility term structure`
 - `Term structure of volatility — front month vs back month IV`
 - `Volatility smile and skew — put skew as crash insurance pricing`
-- `IV crush post-earnings — selling options before earnings strategy`
 
 <!-- STATS_END -->
 
