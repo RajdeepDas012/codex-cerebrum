@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **443** |
-| Last Updated | `2026-09-10T04:54:32.750415+00:00` |
-| Dataset Size | `443 entries` |
+| Total Topics Learned | **444** |
+| Last Updated | `2026-09-10T04:57:38.890084+00:00` |
+| Dataset Size | `444 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | trading-strategies | 73 |
 | system-design | 58 |
 | market-analysis | 49 |
-| stocks-markets | 23 |
+| stocks-markets | 24 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Early assignment risk — when early exercise makes economic sense`
 - `Rolling options positions — extending duration to avoid loss`
 - `Options risk management — position sizing and loss limits`
 - `Gamma risk near expiration — explosive moves in final days`
 - `Theta decay curves — time value erosion acceleration near expiry`
-- `Delta neutral portfolio — hedging direction to trade volatility`
 
 <!-- STATS_END -->
 
