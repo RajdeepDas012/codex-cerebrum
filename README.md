@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **423** |
-| Last Updated | `2026-09-10T00:10:30.036909+00:00` |
-| Dataset Size | `423 entries` |
+| Total Topics Learned | **424** |
+| Last Updated | `2026-09-10T00:13:37.782067+00:00` |
+| Dataset Size | `424 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | system-design | 58 |
 | trading-strategies | 56 |
 | market-analysis | 49 |
-| stocks-markets | 22 |
+| stocks-markets | 23 |
 | databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Gamma squeeze mechanics — options dealer hedging driving price`
 - `Short squeeze identification — setup conditions for maximum squeeze`
 - `Price target changes — analyst PT revision and stock movement`
 - `Analyst upgrade downgrade impact — institutional recommendation effect`
 - `Guidance reduction signals — forward guidance cut as sell signal`
-- `Revenue beat vs earnings beat — which matters more for stock reaction`
 
 <!-- STATS_END -->
 
