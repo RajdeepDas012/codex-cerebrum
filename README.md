@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **492** |
-| Last Updated | `2026-09-10T18:55:46.705058+00:00` |
-| Dataset Size | `492 entries` |
+| Total Topics Learned | **493** |
+| Last Updated | `2026-09-10T18:58:53.112851+00:00` |
+| Dataset Size | `493 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 116 |
-| trading-strategies | 99 |
+| trading-strategies | 100 |
 | crypto-blockchain | 74 |
 | market-analysis | 61 |
 | system-design | 58 |
@@ -36,11 +36,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Multi-factor model construction — combining factors for alpha`
 - `Investment factor — asset growth as return predictor`
 - `Profitability factor — gross profit to assets as predictor`
 - `Size factor analysis — small cap premium and when it appears`
 - `Low volatility anomaly — why low vol stocks outperform long term`
-- `Quality factor investing — high ROE low leverage outperformance`
 
 <!-- STATS_END -->
 
