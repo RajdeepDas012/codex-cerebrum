@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **571** |
-| Last Updated | `2026-09-11T18:24:44.839953+00:00` |
-| Dataset Size | `571 entries` |
+| Total Topics Learned | **572** |
+| Last Updated | `2026-09-11T18:27:51.333912+00:00` |
+| Dataset Size | `572 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 142 |
+| trading-strategies | 143 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Cross-exchange arbitrage detection — latency arbitrage mechanics`
 - `Quote stuffing identification — HFT manipulation detection`
 - `Momentum ignition detection — identifying artificial momentum`
 - `Spoofing detection algorithm — identifying layering in order book`
 - `Price impact and recovery — temporary vs permanent impact`
-- `Stochastic liquidity model — dynamic bid-ask spread modeling`
 
 <!-- STATS_END -->
 
