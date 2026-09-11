@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **547** |
-| Last Updated | `2026-09-11T09:52:12.756657+00:00` |
-| Dataset Size | `547 entries` |
+| Total Topics Learned | **548** |
+| Last Updated | `2026-09-11T09:55:19.152798+00:00` |
+| Dataset Size | `548 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
-| stocks-markets | 38 |
+| stocks-markets | 39 |
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Statistical factor models — Barra risk factor model analysis`
 - `Market neutral strategy — long short equity with zero beta`
 - `Jensen alpha — portfolio return vs CAPM expected return`
 - `Treynor ratio — return per unit of systematic risk`
 - `Information ratio — active return per unit of tracking error`
-- `Omega ratio — probability-weighted ratio of gains to losses`
 
 <!-- STATS_END -->
 
