@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **573** |
-| Last Updated | `2026-09-11T18:31:03.262236+00:00` |
-| Dataset Size | `573 entries` |
+| Total Topics Learned | **574** |
+| Last Updated | `2026-09-11T18:34:09.432691+00:00` |
+| Dataset Size | `574 entries` |
 
 ## 📂 Categories Learned
 
@@ -34,14 +34,15 @@
 | data-visualization | 2 |
 | best-practices | 1 |
 | testing | 1 |
+| networking | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Network latency measurement — microsecond differences in execution`
 - `Co-location advantage — proximity to exchange servers impact`
 - `Cross-exchange arbitrage detection — latency arbitrage mechanics`
 - `Quote stuffing identification — HFT manipulation detection`
 - `Momentum ignition detection — identifying artificial momentum`
-- `Spoofing detection algorithm — identifying layering in order book`
 
 <!-- STATS_END -->
 
