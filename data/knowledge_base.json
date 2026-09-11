@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 556,
-    "last_updated": "2026-09-11T14:18:28.377149+00:00",
-    "total_topics_learned": 556
+    "total_runs": 557,
+    "last_updated": "2026-09-11T14:21:35.141103+00:00",
+    "total_topics_learned": 557
   },
   "entries": [
     {
@@ -26962,6 +26962,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-11T14:18:28.377128+00:00",
       "run_number": 556
+    },
+    {
+      "topic": "Microstructure noise — separating signal from noise in HFT data",
+      "category": "stocks-markets",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Microstructure noise refers to the discrepancies between the observed high-frequency transaction prices and the underlying efficient price due to market frictions like bid-ask bounce and discrete pricing. Filtering this noise is crucial for accurate volatility estimation and alpha generation in high-frequency trading.",
+      "key_points": [
+        "Bid-ask bounce causes observed prices to oscillate randomly between the bid and ask prices, inflating high-frequency variance estimates.",
+        "Discrete price increments (tick size constraints) introduce rounding errors into price series.",
+        "Sub-sampling and realized volatility estimators like the Two-Scale Realized Volatility help mitigate the impact of noise.",
+        "State-space models and Kalman filters can be employed to dynamically extract the true latent efficient price from noisy observations."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates how to compute sub-sampled realized variance to reduce the effect of microstructure noise compared to naive tick-by-tick variance.",
+        "correct": "import numpy as np\n\ndef subsampled_realized_variance(prices, k):\n    returns = np.diff(np.log(prices))\n    sub_vars = []\n    for i in range(k):\n        sub_returns = np.sum(returns[i::k].reshape(-1, 1), axis=1) if len(returns[i::k]) > 0 else np.array([0])\n        sub_vars.append(np.sum(sub_returns**2))\n    return np.mean(sub_vars)",
+        "wrong": "naive_variance = np.sum(np.diff(np.log(prices))**2)"
+      },
+      "common_mistakes": [
+        "Assuming that sampling price data at the highest possible frequency yields the most accurate volatility or drift estimates.",
+        "Ignoring the autocorrelation induced by bid-ask bounce when calculating short-horizon returns."
+      ],
+      "best_practices": [
+        "Use signature plots to visualize how realized volatility changes across different sampling frequencies to identify the optimal noise-robust time scale.",
+        "Implement robust noise-reduction estimators such as realized kernels or multi-scale estimators for covariance matrices.",
+        "Account for institutional features like order book bunching and execution delays when modeling the noise process."
+      ],
+      "when_to_use": "When designing high-frequency execution algorithms, statistical arbitrage strategies, or volatility estimators that ingest tick-by-tick order book data.",
+      "when_not_to_use": "When working with low-frequency daily or monthly fundamental data where market microstructure frictions are negligible.",
+      "interview_questions": [
+        {
+          "question": "What causes microstructure noise in high-frequency financial data, and how does it affect realized volatility estimates?",
+          "answer": "Microstructure noise is caused by factors such as bid-ask bounce, discrete tick sizes, and asynchronous trading. It introduces a positive bias into naive realized volatility calculations because the variance of the noise dominates at high sampling frequencies."
+        },
+        {
+          "question": "How does the Two-Scale Realized Volatility estimator solve the problem of microstructure noise?",
+          "answer": "It averages the realized volatility calculated over multiple coarse sub-grids of the data to eliminate the first-order bias caused by noise, and then adjusts for the remaining bias using the full high-frequency dataset."
+        }
+      ],
+      "related_topics": [
+        "High frequency data analysis — tick data cleaning and processing",
+        "Optimal execution theory — Almgren Chriss model for trading",
+        "Realized volatility estimation and kernels"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-11T14:21:35.141078+00:00",
+      "run_number": 557
     }
   ]
 }
