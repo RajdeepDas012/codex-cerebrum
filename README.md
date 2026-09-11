@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **581** |
-| Last Updated | `2026-09-11T18:55:55.473645+00:00` |
-| Dataset Size | `581 entries` |
+| Total Topics Learned | **582** |
+| Last Updated | `2026-09-11T18:59:01.614507+00:00` |
+| Dataset Size | `582 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 146 |
+| trading-strategies | 147 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market making during volatility — adjusting quotes in fast markets`
 - `Inventory management market making — optimal inventory policy`
 - `Market making profitability — spread capture and inventory risk`
 - `Reg NMS best execution — national market system requirements`
 - `Internalization of orders — broker dealer internal crossing`
-- `Payment for order flow PFOF — retail order flow economics`
 
 <!-- STATS_END -->
 
