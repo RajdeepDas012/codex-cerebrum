@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 558,
-    "last_updated": "2026-09-11T14:24:41.688424+00:00",
-    "total_topics_learned": 558
+    "total_runs": 559,
+    "last_updated": "2026-09-11T14:28:22.109750+00:00",
+    "total_topics_learned": 559
   },
   "entries": [
     {
@@ -27058,6 +27058,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-11T14:24:41.688401+00:00",
       "run_number": 558
+    },
+    {
+      "topic": "Roll model for spread — implied bid-ask spread from prices",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "The Roll model is a classic econometric framework used to estimate the effective bid-ask spread directly from observed transaction price series. By analyzing the negative first-order autocovariance of price changes, it isolates the price oscillation caused by the alternating buyer and seller initiation of trades.",
+      "key_points": [
+        "Assumes transaction prices bounce between bid and ask prices due to trade direction initiation.",
+        "Formulates the observed price as the true unobserved efficient price plus half the spread multiplied by trade sign indicator.",
+        "Derives the effective spread formula as twice the square root of the negative autocovariance of first-differenced prices.",
+        "Provides a cost-effective way to estimate liquidity metrics when direct quote data is unavailable or unreliable."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Estimating the Roll spread from a series of transaction prices",
+        "correct": "import numpy as np\n\ndef roll_spread(prices):\n    delta_p = np.diff(prices)\n    cov = np.cov(delta_p[:-1], delta_p[1:])[0, 1]\n    if cov >= 0:\n        return 0.0\n    return 2 * np.sqrt(-cov)",
+        "wrong": "import numpy as np\n\ndef roll_spread_wrong(prices):\n    # Mistake: failing to check if covariance is positive and taking square root of negative number\n    delta_p = np.diff(prices)\n    cov = np.cov(delta_p[:-1], delta_p[1:])[0, 1]\n    return 2 * np.sqrt(cov)"
+      },
+      "common_mistakes": [
+        "Applying the model when the sample autocovariance is positive, which results in a mathematical domain error.",
+        "Ignoring the impact of intraday non-stationarity and trending efficient prices on return covariance estimates."
+      ],
+      "best_practices": [
+        "Ensure trade prices are properly time-ordered and cleaned before computing differences.",
+        "Use rolling windows of adequate sample size to stabilize the covariance estimator.",
+        "Cross-validate Roll spread estimates against actual quote data when available."
+      ],
+      "when_to_use": "Use when you only have historical transaction prices (trade data) and need to infer trading costs or liquidity parameters.",
+      "when_not_to_use": "Avoid when accurate timestamped limit order book quote data is accessible, or in highly illiquid markets with sparse trading.",
+      "interview_questions": [
+        {
+          "question": "Why does the Roll model rely on the negative first-order autocovariance of price changes?",
+          "answer": "Because alternating trades between the bid and ask create a mean-reverting bounce in observed prices, resulting in a negative serial correlation in price increments."
+        },
+        {
+          "question": "What happens to the Roll spread estimate if the computed autocovariance of price changes is positive?",
+          "answer": "A positive autocovariance violates the model's core assumption (usually caused by strong trending behavior or positive serial correlation in order flow), meaning the Roll spread estimator breaks down and is typically set to zero."
+        }
+      ],
+      "related_topics": [
+        "Bid ask bounce — removing microstructure bias from returns",
+        "Microstructure noise — separating signal from noise in HFT data",
+        "High frequency data analysis — tick data cleaning and processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T14:28:22.109721+00:00",
+      "run_number": 559
     }
   ]
 }

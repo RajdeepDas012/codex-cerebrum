@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **558** |
-| Last Updated | `2026-09-11T14:24:41.688424+00:00` |
-| Dataset Size | `558 entries` |
+| Total Topics Learned | **559** |
+| Last Updated | `2026-09-11T14:28:22.109750+00:00` |
+| Dataset Size | `559 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 139 |
+| trading-strategies | 140 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Roll model for spread — implied bid-ask spread from prices`
 - `Bid ask bounce — removing microstructure bias from returns`
 - `Microstructure noise — separating signal from noise in HFT data`
 - `High frequency data analysis — tick data cleaning and processing`
 - `Optimal execution theory — Almgren Chriss model for trading`
-- `Implementation shortfall — measuring total cost of trading`
 
 <!-- STATS_END -->
 
