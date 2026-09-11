@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **586** |
-| Last Updated | `2026-09-11T21:44:06.503182+00:00` |
-| Dataset Size | `586 entries` |
+| Total Topics Learned | **587** |
+| Last Updated | `2026-09-11T21:47:12.684590+00:00` |
+| Dataset Size | `587 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
 | system-design | 58 |
-| stocks-markets | 50 |
+| stocks-markets | 51 |
 | probability-math | 12 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Disposition effect — selling winners too early holding losers`
 - `Anchoring bias in trading — reference point and price anchoring`
 - `Overfitting detection in trading — in-sample vs out-of-sample`
 - `Multiple hypothesis testing — correcting for data mining bias`
 - `Statistical edge measurement — identifying true alpha vs luck`
-- `Market making during volatility — adjusting quotes in fast markets`
 
 <!-- STATS_END -->
 
