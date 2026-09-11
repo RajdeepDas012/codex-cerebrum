@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **537** |
-| Last Updated | `2026-09-11T04:43:28.858275+00:00` |
-| Dataset Size | `537 entries` |
+| Total Topics Learned | **538** |
+| Last Updated | `2026-09-11T04:46:35.066676+00:00` |
+| Dataset Size | `538 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 126 |
+| trading-strategies | 127 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Consecutive loss analysis — drawdown depth and recovery time`
 - `Win rate vs reward risk — the tradeoff between frequency and size`
 - `Payoff ratio optimization — improving win loss ratio tradeoff`
 - `Profit factor calculation — gross profit divided by gross loss`
 - `System quality number SQN — Van Tharp system quality measurement`
-- `Trade expectancy calculation — average win times win rate formula`
 
 <!-- STATS_END -->
 
