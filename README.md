@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **554** |
-| Last Updated | `2026-09-11T14:11:31.386653+00:00` |
-| Dataset Size | `554 entries` |
+| Total Topics Learned | **555** |
+| Last Updated | `2026-09-11T14:14:46.784513+00:00` |
+| Dataset Size | `555 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 137 |
+| trading-strategies | 138 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Optimal execution theory — Almgren Chriss model for trading`
 - `Implementation shortfall — measuring total cost of trading`
 - `VWAP execution algorithm — volume weighted average price execution`
 - `TWAP execution strategy — time weighted average price algorithm`
 - `Market impact model — price impact of large trade execution`
-- `Slippage estimation — impact cost modeling for large orders`
 
 <!-- STATS_END -->
 
