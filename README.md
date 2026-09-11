@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **578** |
-| Last Updated | `2026-09-11T18:46:35.807738+00:00` |
-| Dataset Size | `578 entries` |
+| Total Topics Learned | **579** |
+| Last Updated | `2026-09-11T18:49:42.460677+00:00` |
+| Dataset Size | `579 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
 | system-design | 58 |
-| stocks-markets | 49 |
+| stocks-markets | 50 |
 | probability-math | 11 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Reg NMS best execution — national market system requirements`
 - `Internalization of orders — broker dealer internal crossing`
 - `Payment for order flow PFOF — retail order flow economics`
 - `Dark pool vs lit exchange — when to use each for execution`
 - `Order routing optimization — smart order router best execution`
-- `Network latency measurement — microsecond differences in execution`
 
 <!-- STATS_END -->
 
