@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **565** |
-| Last Updated | `2026-09-11T14:49:32.797982+00:00` |
-| Dataset Size | `565 entries` |
+| Total Topics Learned | **566** |
+| Last Updated | `2026-09-11T14:54:07.591630+00:00` |
+| Dataset Size | `566 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,9 +23,9 @@
 | market-analysis | 69 |
 | system-design | 58 |
 | stocks-markets | 44 |
+| probability-math | 10 |
 | databases | 9 |
 | web-dev | 9 |
-| probability-math | 9 |
 | machine-learning | 8 |
 | language-specific | 7 |
 | devops | 7 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Order arrival rate Poisson — modeling order flow statistically`
 - `Queue position in limit order book — priority and fill probability`
 - `Market depth analysis — L2 order book data interpretation`
 - `Kyle lambda — price impact coefficient from regression`
 - `Amihud illiquidity ratio — price impact per unit of volume`
-- `Order toxicity VPIN — volume-synchronized probability of informed trading`
 
 <!-- STATS_END -->
 
