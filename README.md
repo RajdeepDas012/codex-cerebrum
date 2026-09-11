@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **563** |
-| Last Updated | `2026-09-11T14:42:53.961488+00:00` |
-| Dataset Size | `563 entries` |
+| Total Topics Learned | **564** |
+| Last Updated | `2026-09-11T14:46:25.999168+00:00` |
+| Dataset Size | `564 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 140 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
-| market-analysis | 68 |
+| market-analysis | 69 |
 | system-design | 58 |
 | stocks-markets | 43 |
 | databases | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market depth analysis — L2 order book data interpretation`
 - `Kyle lambda — price impact coefficient from regression`
 - `Amihud illiquidity ratio — price impact per unit of volume`
 - `Order toxicity VPIN — volume-synchronized probability of informed trading`
 - `Hasbrouck information share — measuring price discovery across venues`
-- `Roll model for spread — implied bid-ask spread from prices`
 
 <!-- STATS_END -->
 
