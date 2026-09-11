@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **515** |
-| Last Updated | `2026-09-11T00:13:20.264416+00:00` |
-| Dataset Size | `515 entries` |
+| Total Topics Learned | **516** |
+| Last Updated | `2026-09-11T00:16:26.096735+00:00` |
+| Dataset Size | `516 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,10 +25,10 @@
 | stocks-markets | 34 |
 | databases | 9 |
 | web-dev | 9 |
+| probability-math | 8 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| probability-math | 7 |
 | machine-learning | 7 |
 | algorithms | 2 |
 | data-visualization | 2 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Monte Carlo simulation for options — pricing complex derivatives`
 - `Genetic algorithm optimization — evolving trading rule parameters`
 - `Reinforcement learning trading — Q-learning for optimal execution`
 - `Clustering for market regimes — k-means for similar market periods`
 - `Principal component analysis PCA — dimensionality reduction for factors`
-- `Wavelet analysis for markets — multi-scale cycle decomposition`
 
 <!-- STATS_END -->
 
