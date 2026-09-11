@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **576** |
-| Last Updated | `2026-09-11T18:40:22.494612+00:00` |
-| Dataset Size | `576 entries` |
+| Total Topics Learned | **577** |
+| Last Updated | `2026-09-11T18:43:29.320628+00:00` |
+| Dataset Size | `577 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
 | system-design | 58 |
-| stocks-markets | 47 |
+| stocks-markets | 48 |
 | probability-math | 11 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Payment for order flow PFOF — retail order flow economics`
 - `Dark pool vs lit exchange — when to use each for execution`
 - `Order routing optimization — smart order router best execution`
 - `Network latency measurement — microsecond differences in execution`
 - `Co-location advantage — proximity to exchange servers impact`
-- `Cross-exchange arbitrage detection — latency arbitrage mechanics`
 
 <!-- STATS_END -->
 
