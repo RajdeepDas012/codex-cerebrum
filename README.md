@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **535** |
-| Last Updated | `2026-09-11T04:37:17.441455+00:00` |
-| Dataset Size | `535 entries` |
+| Total Topics Learned | **536** |
+| Last Updated | `2026-09-11T04:40:22.997751+00:00` |
+| Dataset Size | `536 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 124 |
+| trading-strategies | 125 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Payoff ratio optimization — improving win loss ratio tradeoff`
 - `Profit factor calculation — gross profit divided by gross loss`
 - `System quality number SQN — Van Tharp system quality measurement`
 - `Trade expectancy calculation — average win times win rate formula`
 - `Maximum favorable excursion — optimal profit target using MFE`
-- `Maximum adverse excursion — optimal stop placement using MAE`
 
 <!-- STATS_END -->
 
