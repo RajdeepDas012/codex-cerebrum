@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **512** |
-| Last Updated | `2026-09-11T00:03:58.096139+00:00` |
-| Dataset Size | `512 entries` |
+| Total Topics Learned | **513** |
+| Last Updated | `2026-09-11T00:07:04.559939+00:00` |
+| Dataset Size | `513 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,7 +29,7 @@
 | devops | 7 |
 | security | 7 |
 | probability-math | 7 |
-| machine-learning | 6 |
+| machine-learning | 7 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Clustering for market regimes — k-means for similar market periods`
 - `Principal component analysis PCA — dimensionality reduction for factors`
 - `Wavelet analysis for markets — multi-scale cycle decomposition`
 - `Fourier transform for cycles — identifying dominant cycles in price`
 - `Kalman filter for trading — dynamic linear model for price estimation`
-- `Hidden Markov model for regime — market state detection algorithm`
 
 <!-- STATS_END -->
 
