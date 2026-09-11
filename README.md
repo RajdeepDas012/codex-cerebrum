@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **584** |
-| Last Updated | `2026-09-11T21:37:39.240241+00:00` |
-| Dataset Size | `584 entries` |
+| Total Topics Learned | **585** |
+| Last Updated | `2026-09-11T21:40:45.548172+00:00` |
+| Dataset Size | `585 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 148 |
+| trading-strategies | 149 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Overfitting detection in trading — in-sample vs out-of-sample`
 - `Multiple hypothesis testing — correcting for data mining bias`
 - `Statistical edge measurement — identifying true alpha vs luck`
 - `Market making during volatility — adjusting quotes in fast markets`
 - `Inventory management market making — optimal inventory policy`
-- `Market making profitability — spread capture and inventory risk`
 
 <!-- STATS_END -->
 
