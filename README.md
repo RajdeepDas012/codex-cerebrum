@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **555** |
-| Last Updated | `2026-09-11T14:14:46.784513+00:00` |
-| Dataset Size | `555 entries` |
+| Total Topics Learned | **556** |
+| Last Updated | `2026-09-11T14:18:28.377149+00:00` |
+| Dataset Size | `556 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
-| stocks-markets | 40 |
+| stocks-markets | 41 |
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `High frequency data analysis — tick data cleaning and processing`
 - `Optimal execution theory — Almgren Chriss model for trading`
 - `Implementation shortfall — measuring total cost of trading`
 - `VWAP execution algorithm — volume weighted average price execution`
 - `TWAP execution strategy — time weighted average price algorithm`
-- `Market impact model — price impact of large trade execution`
 
 <!-- STATS_END -->
 
