@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **529** |
-| Last Updated | `2026-09-11T04:18:43.083542+00:00` |
-| Dataset Size | `529 entries` |
+| Total Topics Learned | **530** |
+| Last Updated | `2026-09-11T04:21:48.946469+00:00` |
+| Dataset Size | `530 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 118 |
+| trading-strategies | 119 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Correlation-adjusted sizing — reducing size when assets correlate`
 - `Portfolio heat — managing total portfolio risk exposure`
 - `Risk-adjusted position sizing — ATR-based position size calculation`
 - `Volatility targeting strategy — scaling positions to constant volatility`
 - `Fractional Kelly — reducing bet size for practical implementation`
-- `Kelly criterion for portfolio sizing — optimal fraction calculation`
 
 <!-- STATS_END -->
 
