@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **588** |
-| Last Updated | `2026-09-11T21:50:18.927956+00:00` |
-| Dataset Size | `588 entries` |
+| Total Topics Learned | **589** |
+| Last Updated | `2026-09-11T21:53:31.798817+00:00` |
+| Dataset Size | `589 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 150 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
-| market-analysis | 70 |
+| market-analysis | 71 |
 | system-design | 58 |
 | stocks-markets | 51 |
 | probability-math | 13 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Recency bias in forecasting — overweighting recent market events`
 - `Loss aversion quantification — 2.5x stronger than equivalent gain`
 - `Disposition effect — selling winners too early holding losers`
 - `Anchoring bias in trading — reference point and price anchoring`
 - `Overfitting detection in trading — in-sample vs out-of-sample`
-- `Multiple hypothesis testing — correcting for data mining bias`
 
 <!-- STATS_END -->
 
