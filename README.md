@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **549** |
-| Last Updated | `2026-09-11T09:58:24.977221+00:00` |
-| Dataset Size | `549 entries` |
+| Total Topics Learned | **550** |
+| Last Updated | `2026-09-11T10:01:54.940286+00:00` |
+| Dataset Size | `550 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 132 |
+| trading-strategies | 133 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Slippage estimation — impact cost modeling for large orders`
 - `Transaction cost analysis TCA — measuring execution quality`
 - `Statistical factor models — Barra risk factor model analysis`
 - `Market neutral strategy — long short equity with zero beta`
 - `Jensen alpha — portfolio return vs CAPM expected return`
-- `Treynor ratio — return per unit of systematic risk`
 
 <!-- STATS_END -->
 
