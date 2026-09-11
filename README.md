@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **519** |
-| Last Updated | `2026-09-11T00:25:44.055978+00:00` |
-| Dataset Size | `519 entries` |
+| Total Topics Learned | **520** |
+| Last Updated | `2026-09-11T00:28:50.196619+00:00` |
+| Dataset Size | `520 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 118 |
-| trading-strategies | 109 |
+| trading-strategies | 110 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Sharpe ratio maximization — portfolio optimization for risk-adjusted return`
 - `Cross validation for financial models — time series cross validation`
 - `Walk forward optimization — preventing overfitting in strategy testing`
 - `Bootstrap simulation backtesting — robust strategy validation method`
 - `Monte Carlo simulation for options — pricing complex derivatives`
-- `Genetic algorithm optimization — evolving trading rule parameters`
 
 <!-- STATS_END -->
 
