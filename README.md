@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **583** |
-| Last Updated | `2026-09-11T19:02:30.120093+00:00` |
-| Dataset Size | `583 entries` |
+| Total Topics Learned | **584** |
+| Last Updated | `2026-09-11T21:37:39.240241+00:00` |
+| Dataset Size | `584 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | market-analysis | 70 |
 | system-design | 58 |
 | stocks-markets | 50 |
-| probability-math | 11 |
+| probability-math | 12 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Multiple hypothesis testing — correcting for data mining bias`
 - `Statistical edge measurement — identifying true alpha vs luck`
 - `Market making during volatility — adjusting quotes in fast markets`
 - `Inventory management market making — optimal inventory policy`
 - `Market making profitability — spread capture and inventory risk`
-- `Reg NMS best execution — national market system requirements`
 
 <!-- STATS_END -->
 
