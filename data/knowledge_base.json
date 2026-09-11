@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 560,
-    "last_updated": "2026-09-11T14:31:28.824366+00:00",
-    "total_topics_learned": 560
+    "total_runs": 561,
+    "last_updated": "2026-09-11T14:34:36.316514+00:00",
+    "total_topics_learned": 561
   },
   "entries": [
     {
@@ -27154,6 +27154,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-11T14:31:28.824344+00:00",
       "run_number": 560
+    },
+    {
+      "topic": "Order toxicity VPIN — volume-synchronized probability of informed trading",
+      "category": "market-analysis",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Volume-synchronized Probability of Informed Trading (VPIN) measures order flow toxicity by assessing the imbalance between buyer-initiated and seller-initiated volume within fixed volume buckets. It serves as an early-warning metric for adverse selection and flash crashes by detecting when market makers are at high risk of trading against better-informed counterparties.",
+      "key_points": [
+        "Divides trading activity into equal volume buckets (V) rather than time intervals to normalize information flow.",
+        "Estimates the volume of buy and sell orders within each bucket using trade classification algorithms like the Lee-Ready or bulk volume classification method.",
+        "Calculates the absolute order imbalance per bucket, scaling it over a rolling window of $N$ buckets to compute the final VPIN metric.",
+        "High VPIN values indicate high toxicity, implying that market makers face severe adverse selection and often respond by widening spreads or withdrawing liquidity."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculating basic volume bucket imbalances and VPIN over a pandas DataFrame of trades.",
+        "correct": "import pandas as pd\nimport numpy as np\n\ndef calculate_vpin(trades_df, bucket_volume, n_buckets):\n    trades_df['signed_vol'] = trades_df['volume'] * np.where(trades_df['price'] >= trades_df['price'].shift(1), 1, -1)\n    trades_df['cum_vol'] = trades_df['volume'].cumsum()\n    trades_df['bucket_id'] = trades_df['cum_vol'] // bucket_volume\n    \n    grouped = trades_df.groupby('bucket_id')\n    buy_vol = grouped.apply(lambda x: x.loc[x['signed_vol'] > 0, 'volume'].sum())\n    sell_vol = grouped.apply(lambda x: x.loc[x['signed_vol'] < 0, 'volume'].sum())\n    \n    imbalance = (buy_vol - sell_vol).abs()\n    vpin = imbalance.rolling(window=n_buckets).sum() / (n_buckets * bucket_volume)\n    return vpin.dropna()",
+        "wrong": "vpin = trades_df['volume'].rolling(window=1000).sum() / trades_df['price'].std()"
+      },
+      "common_mistakes": [
+        "Using fixed time intervals (e.g., 5-minute bars) instead of fixed volume buckets, which distorts the information density representation.",
+        "Failing to handle unclassified trades or flat price ticks accurately when applying trade sign classification heuristics."
+      ],
+      "best_practices": [
+        "Calibrate the bucket size ($V$) such that each bucket corresponds to roughly 1/50th or 1/100th of the average daily volume.",
+        "Use Bulk Volume Classification (BVC) instead of naive tick-by-tick rules when handling high-frequency data where tick direction is ambiguous.",
+        "Combine VPIN indicators with real-time inventory limits to dynamically adjust market-making quoting aggression."
+      ],
+      "when_to_use": "Use VPIN when designing automated market-making algorithms that need to dynamically adjust spreads or pull quotes prior to sudden liquidity crashes.",
+      "when_not_to_use": "Avoid relying solely on VPIN in highly fragmented markets without consolidating multi-venue order flow, or in extremely low-volume instruments where volume buckets take too long to fill.",
+      "interview_questions": [
+        {
+          "question": "How does VPIN differ from traditional time-based volume imbalance indicators?",
+          "answer": "VPIN uses volume-synchronized time (equal volume buckets) rather than clock time, ensuring that each observation contains an equivalent amount of market information and preventing distortion during periods of varying volatility."
+        },
+        {
+          "question": "Why is high VPIN considered dangerous for market makers?",
+          "answer": "High VPIN indicates persistent one-sided order flow, meaning market makers are likely trading against informed traders who possess superior short-term information, leading to severe adverse selection losses."
+        }
+      ],
+      "related_topics": [
+        "Microstructure noise — separating signal from noise in HFT data",
+        "Hasbrouck information share — measuring price discovery across venues",
+        "Roll model for spread — implied bid-ask spread from prices"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-11T14:34:36.316491+00:00",
+      "run_number": 561
     }
   ]
 }

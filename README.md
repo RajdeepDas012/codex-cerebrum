@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **560** |
-| Last Updated | `2026-09-11T14:31:28.824366+00:00` |
-| Dataset Size | `560 entries` |
+| Total Topics Learned | **561** |
+| Last Updated | `2026-09-11T14:34:36.316514+00:00` |
+| Dataset Size | `561 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 140 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
-| market-analysis | 65 |
+| market-analysis | 66 |
 | system-design | 58 |
 | stocks-markets | 43 |
 | databases | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Order toxicity VPIN — volume-synchronized probability of informed trading`
 - `Hasbrouck information share — measuring price discovery across venues`
 - `Roll model for spread — implied bid-ask spread from prices`
 - `Bid ask bounce — removing microstructure bias from returns`
 - `Microstructure noise — separating signal from noise in HFT data`
-- `High frequency data analysis — tick data cleaning and processing`
 
 <!-- STATS_END -->
 
