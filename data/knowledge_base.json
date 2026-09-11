@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 521,
-    "last_updated": "2026-09-11T00:32:00.834788+00:00",
-    "total_topics_learned": 521
+    "total_runs": 522,
+    "last_updated": "2026-09-11T00:35:07.613240+00:00",
+    "total_topics_learned": 522
   },
   "entries": [
     {
@@ -25283,6 +25283,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-11T00:32:00.834765+00:00",
       "run_number": 521
+    },
+    {
+      "topic": "Risk parity portfolio — equal risk contribution across assets",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "A risk parity portfolio allocates capital such that each asset or asset class contributes an equal amount to the overall portfolio risk, rather than equal capital allocation. This approach prevents highly volatile assets from dominating the risk profile, resulting in a more balanced and robust multi-asset allocation.",
+      "key_points": [
+        "Focuses on equalizing marginal risk contributions rather than equal dollar weights.",
+        "Often requires leverage on lower-volatility assets (like bonds) to achieve higher target returns.",
+        "Relies heavily on accurate estimation of the asset covariance matrix.",
+        "Typically outperforms traditional 60/40 portfolios during macroeconomic regime shifts."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculates risk parity weights using scipy optimization to equalize risk contributions",
+        "correct": "import numpy as np\nfrom scipy.optimize import minimize\n\ndef risk_parity_weights(cov_matrix):\n    n = cov_matrix.shape[0]\n    initial_weights = np.ones(n) / n\n    bounds = [(0.0, 1.0) for _ in range(n)]\n    constraints = ({'type': 'eq', 'fun': lambda w: np.sum(w) - 1.0})\n    \n    def risk_budget_objective(weights):\n        portfolio_variance = weights.T @ cov_matrix @ weights\n        portfolio_vol = np.sqrt(portfolio_variance)\n        marginal_risk = cov_matrix @ weights\n        risk_contributions = weights * marginal_risk / portfolio_vol\n        target_risk = portfolio_vol / n\n        return np.sum((risk_contributions - target_risk)**2)\n        \n    result = minimize(risk_budget_objective, initial_weights, method='SLSQP', bounds=bounds, constraints=constraints)\n    return result.x",
+        "wrong": "weights = 1.0 / np.diag(cov_matrix)\nweights = weights / np.sum(weights)"
+      },
+      "common_mistakes": [
+        "Assuming inverse volatility weighting is equivalent to true risk parity when assets are correlated.",
+        "Failing to account for leverage costs when scaling up lower-risk asset classes."
+      ],
+      "best_practices": [
+        "Use robust shrinkage estimators for the covariance matrix to avoid out-of-sample instability.",
+        "Incorporate transaction costs and liquidity constraints into the optimization routine.",
+        "Stress test the portfolio under different historical crisis correlation breakdowns."
+      ],
+      "when_to_use": "When managing multi-asset portfolios where traditional mean-variance optimization produces unstable weights due to estimation errors in expected returns.",
+      "when_not_to_use": "When investing in a single asset class (like equities only) or when leverage is strictly prohibited and the un-levered risk parity return is too low.",
+      "interview_questions": [
+        {
+          "question": "How does a risk parity portfolio differ from a traditional mean-variance optimized portfolio?",
+          "answer": "Mean-variance optimization is highly sensitive to expected return estimates and often concentrates capital in a few assets. Risk parity ignores expected returns and focuses purely on balancing the risk contributions of each asset, making it much more stable."
+        },
+        {
+          "question": "Why is leverage often required when implementing a risk parity strategy?",
+          "answer": "Because asset classes like fixed income have lower volatility than equities, weighting them to contribute equal risk means holding a large allocation of bonds. To achieve equity-like returns, leverage must be applied to the overall portfolio."
+        }
+      ],
+      "related_topics": [
+        "Sharpe ratio maximization — portfolio optimization for risk-adjusted return",
+        "Black-Litterman model — combining market equilibrium with views",
+        "Covariance matrix shrinkage estimation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-11T00:35:07.613218+00:00",
+      "run_number": 522
     }
   ]
 }
