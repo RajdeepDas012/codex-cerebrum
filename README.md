@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **546** |
-| Last Updated | `2026-09-11T09:48:53.979567+00:00` |
-| Dataset Size | `546 entries` |
+| Total Topics Learned | **547** |
+| Last Updated | `2026-09-11T09:52:12.756657+00:00` |
+| Dataset Size | `547 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 131 |
+| trading-strategies | 132 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market neutral strategy — long short equity with zero beta`
 - `Jensen alpha — portfolio return vs CAPM expected return`
 - `Treynor ratio — return per unit of systematic risk`
 - `Information ratio — active return per unit of tracking error`
 - `Omega ratio — probability-weighted ratio of gains to losses`
-- `Sterling ratio — excess return over average drawdown`
 
 <!-- STATS_END -->
 
