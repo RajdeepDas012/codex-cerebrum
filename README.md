@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **518** |
-| Last Updated | `2026-09-11T00:22:37.959700+00:00` |
-| Dataset Size | `518 entries` |
+| Total Topics Learned | **519** |
+| Last Updated | `2026-09-11T00:25:44.055978+00:00` |
+| Dataset Size | `519 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,10 +26,10 @@
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 8 |
+| machine-learning | 8 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| machine-learning | 7 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Cross validation for financial models — time series cross validation`
 - `Walk forward optimization — preventing overfitting in strategy testing`
 - `Bootstrap simulation backtesting — robust strategy validation method`
 - `Monte Carlo simulation for options — pricing complex derivatives`
 - `Genetic algorithm optimization — evolving trading rule parameters`
-- `Reinforcement learning trading — Q-learning for optimal execution`
 
 <!-- STATS_END -->
 
