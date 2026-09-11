@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 564,
-    "last_updated": "2026-09-11T14:46:25.999168+00:00",
-    "total_topics_learned": 564
+    "total_runs": 565,
+    "last_updated": "2026-09-11T14:49:32.797982+00:00",
+    "total_topics_learned": 565
   },
   "entries": [
     {
@@ -27345,6 +27345,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-11T14:46:25.999148+00:00",
       "run_number": 564
+    },
+    {
+      "topic": "Queue position in limit order book — priority and fill probability",
+      "category": "stocks-markets",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "Queue position tracks an active limit order's exact placement within a specific price level's FIFO (first-in, first-out) matching queue. Understanding this position is crucial for estimating fill probabilities and optimizing execution algorithms in continuous double auctions.",
+      "key_points": [
+        "Limit orders at the same price level are generally executed on a strict price-time priority (FIFO) basis.",
+        "Queue position is dynamic, advancing as orders ahead of you in the book are cancelled or matched against incoming marketable orders.",
+        "Fill probability decays exponentially the further back an order sits in the queue, influenced heavily by recent volume and market volatility.",
+        "Hidden orders, iceberg sizes, and exchange-specific matching rules (such as pro-rata allocation) can alter standard queue dynamics."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Simulates queue position progression and estimates fill probability based on incoming trade volume.",
+        "correct": "def estimate_fill_probability(queue_ahead_shares, recent_trade_volume, volatility):\n    import math\n    effective_queue = max(0, queue_ahead_shares - (recent_trade_volume * 0.5))\n    probability = math.exp(-effective_queue / (1000 * max(volatility, 0.01)))\n    return max(0.0, min(1.0, probability))",
+        "wrong": "def estimate_fill_probability(queue_ahead_shares, recent_trade_volume, volatility):\n    return 1.0 - (queue_ahead_shares / recent_trade_volume)"
+      },
+      "common_mistakes": [
+        "Assuming static queue priority without accounting for hidden liquidity or sudden cancellations ahead in the book.",
+        "Failing to account for exchange matching algorithms that blend pro-rata allocation with time priority."
+      ],
+      "best_practices": [
+        "Continuously monitor message-by-message L3 (or reconstructed L2) data feeds to track real-time queue depletion.",
+        "Implement dynamic order management that cancels and re-routes orders if queue advancement falls below expected benchmarks."
+      ],
+      "when_to_use": "When building algorithmic execution engines that need to minimize slippage and adverse selection by timing limit order placements.",
+      "when_not_to_use": "When trading highly illiquid assets where queue dynamics are erratic and predictable order flow is virtually nonexistent.",
+      "interview_questions": [
+        {
+          "question": "How does an incoming sell market order affect your buy limit order's priority if you are second in line at the best bid?",
+          "answer": "The market order matches against the first limit order in the queue, exhausting it. Your order then moves up to become first in line at that price level."
+        },
+        {
+          "question": "Why might your limit order experience a lower fill probability than expected even though total traded volume at your price level exceeded your order size?",
+          "answer": "Other orders ahead of you in the queue may have been cancelled rather than executed, or the exchange uses a pro-rata matching algorithm instead of strict FIFO."
+        }
+      ],
+      "related_topics": [
+        "Market depth analysis — L2 order book data interpretation",
+        "Kyle lambda — price impact coefficient from regression",
+        "Amihud illiquidity ratio — price impact per unit of volume"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T14:49:32.797959+00:00",
+      "run_number": 565
     }
   ]
 }
