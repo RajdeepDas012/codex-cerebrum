@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **568** |
-| Last Updated | `2026-09-11T15:02:35.026025+00:00` |
-| Dataset Size | `568 entries` |
+| Total Topics Learned | **569** |
+| Last Updated | `2026-09-11T18:18:31.960259+00:00` |
+| Dataset Size | `569 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 140 |
+| trading-strategies | 141 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Spoofing detection algorithm — identifying layering in order book`
 - `Price impact and recovery — temporary vs permanent impact`
 - `Stochastic liquidity model — dynamic bid-ask spread modeling`
 - `Order arrival rate Poisson — modeling order flow statistically`
 - `Queue position in limit order book — priority and fill probability`
-- `Market depth analysis — L2 order book data interpretation`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 568,
-    "last_updated": "2026-09-11T15:02:35.026025+00:00",
-    "total_topics_learned": 568
+    "total_runs": 569,
+    "last_updated": "2026-09-11T18:18:31.960259+00:00",
+    "total_topics_learned": 569
   },
   "entries": [
     {
@@ -27535,6 +27535,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-11T15:02:35.026003+00:00",
       "run_number": 568
+    },
+    {
+      "topic": "Spoofing detection algorithm — identifying layering in order book",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "A spoofing detection algorithm scans high-frequency limit order book data to flag manipulative layering tactics, where large non-bona fide orders are placed and canceled rapidly to create false impressions of supply or demand. This is critical for regulatory compliance, risk management, and preventing algorithmic strategy degradation.",
+      "key_points": [
+        "Tracks order-to-trade ratios and abnormally high cancellation rates clustered at specific price tiers.",
+        "Analyzes the temporal lifecycle of orders to identify lightning-fast cancellations before execution matching.",
+        "Correlates aggressive fills on one side of the book with simultaneous large passive quote insertions on the opposite side.",
+        "Utilizes sliding time windows and state machines to reconstruct historical order book states for pattern recognition."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Detects potential layering by flagging rapid cancellations of large orders away from the touch.",
+        "correct": "def detect_layering(orders, cancel_window_ms=500, size_threshold=100):\n    flagged = []\n    for order in orders:\n        if order['size'] >= size_threshold and order['action'] == 'CANCEL':\n            lifespan = order['cancel_timestamp'] - order['timestamp']\n            if lifespan <= cancel_window_ms and order['distance_from_bbo'] > 2:\n                flagged.append(order['order_id'])\n    return flagged",
+        "wrong": "def detect_layering(orders):\n    # Mistake: Treating all cancellations as spoofing without checking size, timing, or book context\n    return [o['id'] for o in orders if o['action'] == 'CANCEL']"
+      },
+      "common_mistakes": [
+        "Setting static cancellation thresholds that fail to adapt to changing market volatility regimes.",
+        "Failing to account for legitimate hedging or market-making inventory adjustments that mimic cancellation bursts."
+      ],
+      "best_practices": [
+        "Combine individual order tracking with aggregate volume profile shifts across multiple price levels.",
+        "Incorporate cross-exchange data feeds to catch cross-market manipulation schemes.",
+        "Maintain low-latency sliding windows in memory to process microsecond-level updates efficiently."
+      ],
+      "when_to_use": "When building proprietary surveillance systems, exchange compliance filters, or risk controls for direct market access (DMA) gateways.",
+      "when_not_to_use": "When analyzing low-frequency daily trading data or broad macroeconomic trends where order book microstructures are irrelevant.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between legitimate high-frequency market-making quote updates and malicious layering?",
+          "answer": "Legitimate market makers constantly adjust quotes in response to inventory risk and broader price discovery across venues, whereas spoofers intentionally place large unhedged orders far from the touch with near-zero intent to fill, immediately pulling them when price approaches."
+        },
+        {
+          "question": "What are the primary computational bottlenecks when implementing a real-time order book spoofing detector?",
+          "answer": "Maintaining an in-memory limit order book reconstruction state at microsecond resolution and handling high throughputs of cancel/modify events without introducing latency into execution pipelines."
+        }
+      ],
+      "related_topics": [
+        "High-frequency trading surveillance",
+        "Order book reconstruction and tick data parsing",
+        "Market manipulation typology detection"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T18:18:31.960238+00:00",
+      "run_number": 569
     }
   ]
 }
