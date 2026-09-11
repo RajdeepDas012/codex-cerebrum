@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **593** |
-| Last Updated | `2026-09-11T22:05:56.755239+00:00` |
-| Dataset Size | `593 entries` |
+| Total Topics Learned | **594** |
+| Last Updated | `2026-09-11T22:09:21.423615+00:00` |
+| Dataset Size | `594 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 72 |
 | system-design | 58 |
-| stocks-markets | 51 |
+| stocks-markets | 52 |
 | probability-math | 15 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Contrarian investing psychology — going against market consensus`
 - `Herding behavior detection — crowded trades and consensus views`
 - `Overconfidence measurement — calibration of trader confidence`
 - `Hot hand fallacy — incorrectly expecting streaks to continue`
 - `Gambler's fallacy in trading — independence of sequential outcomes`
-- `Recency bias in forecasting — overweighting recent market events`
 
 <!-- STATS_END -->
 
