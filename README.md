@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **589** |
-| Last Updated | `2026-09-11T21:53:31.798817+00:00` |
-| Dataset Size | `589 entries` |
+| Total Topics Learned | **590** |
+| Last Updated | `2026-09-11T21:56:38.020578+00:00` |
+| Dataset Size | `590 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | market-analysis | 71 |
 | system-design | 58 |
 | stocks-markets | 51 |
-| probability-math | 13 |
+| probability-math | 14 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Gambler's fallacy in trading — independence of sequential outcomes`
 - `Recency bias in forecasting — overweighting recent market events`
 - `Loss aversion quantification — 2.5x stronger than equivalent gain`
 - `Disposition effect — selling winners too early holding losers`
 - `Anchoring bias in trading — reference point and price anchoring`
-- `Overfitting detection in trading — in-sample vs out-of-sample`
 
 <!-- STATS_END -->
 
