@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **591** |
-| Last Updated | `2026-09-11T21:59:44.100968+00:00` |
-| Dataset Size | `591 entries` |
+| Total Topics Learned | **592** |
+| Last Updated | `2026-09-11T22:02:50.670728+00:00` |
+| Dataset Size | `592 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 150 |
+| trading-strategies | 151 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 71 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Overconfidence measurement — calibration of trader confidence`
 - `Hot hand fallacy — incorrectly expecting streaks to continue`
 - `Gambler's fallacy in trading — independence of sequential outcomes`
 - `Recency bias in forecasting — overweighting recent market events`
 - `Loss aversion quantification — 2.5x stronger than equivalent gain`
-- `Disposition effect — selling winners too early holding losers`
 
 <!-- STATS_END -->
 
