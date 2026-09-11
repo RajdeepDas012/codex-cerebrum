@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **542** |
-| Last Updated | `2026-09-11T09:36:30.703544+00:00` |
-| Dataset Size | `542 entries` |
+| Total Topics Learned | **543** |
+| Last Updated | `2026-09-11T09:39:36.589833+00:00` |
+| Dataset Size | `543 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | stocks-markets | 36 |
 | databases | 9 |
 | web-dev | 9 |
-| probability-math | 8 |
+| probability-math | 9 |
 | machine-learning | 8 |
 | language-specific | 7 |
 | devops | 7 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Omega ratio — probability-weighted ratio of gains to losses`
 - `Sterling ratio — excess return over average drawdown`
 - `MAR ratio — compound annual growth rate to maximum drawdown`
 - `Calmar ratio — annual return divided by maximum drawdown`
 - `Recovery factor calculation — net profit divided by max drawdown`
-- `Consecutive loss analysis — drawdown depth and recovery time`
 
 <!-- STATS_END -->
 
