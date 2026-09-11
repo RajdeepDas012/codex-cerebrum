@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **545** |
-| Last Updated | `2026-09-11T09:45:47.689821+00:00` |
-| Dataset Size | `545 entries` |
+| Total Topics Learned | **546** |
+| Last Updated | `2026-09-11T09:48:53.979567+00:00` |
+| Dataset Size | `546 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
-| stocks-markets | 37 |
+| stocks-markets | 38 |
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 9 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Jensen alpha — portfolio return vs CAPM expected return`
 - `Treynor ratio — return per unit of systematic risk`
 - `Information ratio — active return per unit of tracking error`
 - `Omega ratio — probability-weighted ratio of gains to losses`
 - `Sterling ratio — excess return over average drawdown`
-- `MAR ratio — compound annual growth rate to maximum drawdown`
 
 <!-- STATS_END -->
 
