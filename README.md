@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **531** |
-| Last Updated | `2026-09-11T04:24:54.782507+00:00` |
-| Dataset Size | `531 entries` |
+| Total Topics Learned | **532** |
+| Last Updated | `2026-09-11T04:28:00.974988+00:00` |
+| Dataset Size | `532 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 120 |
+| trading-strategies | 121 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Maximum favorable excursion — optimal profit target using MFE`
 - `Maximum adverse excursion — optimal stop placement using MAE`
 - `Correlation-adjusted sizing — reducing size when assets correlate`
 - `Portfolio heat — managing total portfolio risk exposure`
 - `Risk-adjusted position sizing — ATR-based position size calculation`
-- `Volatility targeting strategy — scaling positions to constant volatility`
 
 <!-- STATS_END -->
 
