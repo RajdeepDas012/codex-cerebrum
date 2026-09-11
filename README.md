@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **575** |
-| Last Updated | `2026-09-11T18:37:15.817412+00:00` |
-| Dataset Size | `575 entries` |
+| Total Topics Learned | **576** |
+| Last Updated | `2026-09-11T18:40:22.494612+00:00` |
+| Dataset Size | `576 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 143 |
+| trading-strategies | 144 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Dark pool vs lit exchange — when to use each for execution`
 - `Order routing optimization — smart order router best execution`
 - `Network latency measurement — microsecond differences in execution`
 - `Co-location advantage — proximity to exchange servers impact`
 - `Cross-exchange arbitrage detection — latency arbitrage mechanics`
-- `Quote stuffing identification — HFT manipulation detection`
 
 <!-- STATS_END -->
 
