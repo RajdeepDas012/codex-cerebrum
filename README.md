@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **523** |
-| Last Updated | `2026-09-11T00:38:14.810009+00:00` |
-| Dataset Size | `523 entries` |
+| Total Topics Learned | **524** |
+| Last Updated | `2026-09-11T04:03:13.533675+00:00` |
+| Dataset Size | `524 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
-| stocks-markets | 34 |
+| stocks-markets | 35 |
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 8 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Mean variance optimization — Markowitz efficient frontier construction`
 - `Minimum variance portfolio — constructing lowest volatility portfolio`
 - `Risk parity portfolio — equal risk contribution across assets`
 - `Black-Litterman model — combining market equilibrium with views`
 - `Sharpe ratio maximization — portfolio optimization for risk-adjusted return`
-- `Cross validation for financial models — time series cross validation`
 
 <!-- STATS_END -->
 
