@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **574** |
-| Last Updated | `2026-09-11T18:34:09.432691+00:00` |
-| Dataset Size | `574 entries` |
+| Total Topics Learned | **575** |
+| Last Updated | `2026-09-11T18:37:15.817412+00:00` |
+| Dataset Size | `575 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 70 |
 | system-design | 58 |
-| stocks-markets | 46 |
+| stocks-markets | 47 |
 | probability-math | 11 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Order routing optimization — smart order router best execution`
 - `Network latency measurement — microsecond differences in execution`
 - `Co-location advantage — proximity to exchange servers impact`
 - `Cross-exchange arbitrage detection — latency arbitrage mechanics`
 - `Quote stuffing identification — HFT manipulation detection`
-- `Momentum ignition detection — identifying artificial momentum`
 
 <!-- STATS_END -->
 
