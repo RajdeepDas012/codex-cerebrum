@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **541** |
-| Last Updated | `2026-09-11T09:33:24.254481+00:00` |
-| Dataset Size | `541 entries` |
+| Total Topics Learned | **542** |
+| Last Updated | `2026-09-11T09:36:30.703544+00:00` |
+| Dataset Size | `542 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
-| stocks-markets | 35 |
+| stocks-markets | 36 |
 | databases | 9 |
 | web-dev | 9 |
 | probability-math | 8 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Sterling ratio — excess return over average drawdown`
 - `MAR ratio — compound annual growth rate to maximum drawdown`
 - `Calmar ratio — annual return divided by maximum drawdown`
 - `Recovery factor calculation — net profit divided by max drawdown`
 - `Consecutive loss analysis — drawdown depth and recovery time`
-- `Win rate vs reward risk — the tradeoff between frequency and size`
 
 <!-- STATS_END -->
 
