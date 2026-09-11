@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **540** |
-| Last Updated | `2026-09-11T09:30:12.038198+00:00` |
-| Dataset Size | `540 entries` |
+| Total Topics Learned | **541** |
+| Last Updated | `2026-09-11T09:33:24.254481+00:00` |
+| Dataset Size | `541 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 129 |
+| trading-strategies | 130 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `MAR ratio — compound annual growth rate to maximum drawdown`
 - `Calmar ratio — annual return divided by maximum drawdown`
 - `Recovery factor calculation — net profit divided by max drawdown`
 - `Consecutive loss analysis — drawdown depth and recovery time`
 - `Win rate vs reward risk — the tradeoff between frequency and size`
-- `Payoff ratio optimization — improving win loss ratio tradeoff`
 
 <!-- STATS_END -->
 
