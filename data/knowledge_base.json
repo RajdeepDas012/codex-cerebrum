@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 559,
-    "last_updated": "2026-09-11T14:28:22.109750+00:00",
-    "total_topics_learned": 559
+    "total_runs": 560,
+    "last_updated": "2026-09-11T14:31:28.824366+00:00",
+    "total_topics_learned": 560
   },
   "entries": [
     {
@@ -27106,6 +27106,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-11T14:28:22.109721+00:00",
       "run_number": 559
+    },
+    {
+      "topic": "Hasbrouck information share — measuring price discovery across venues",
+      "category": "stocks-markets",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "The Hasbrouck information share framework uses Vector Error Correction Models (VECM) to determine how much each trading venue contributes to the price discovery process of a common asset. It matters because fragmented markets require quantitative measures to identify which exchange or dark pool leads price formation versus merely following.",
+      "key_points": [
+        "Applies Vector Error Correction Models (VECM) to cointegrated price series across multiple trading venues.",
+        "Deconstructs the variance of the common efficient price innovation into components attributable to each specific venue.",
+        "Handles contemporaneous correlation in error terms through Cholesky factorization, resulting in upper and lower bounds for the information shares.",
+        "Provides a quantitative basis for assessing market quality and venue leadership in fragmented equity markets."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculating Hasbrouck information shares from a cointegrated price vector using statsmodels and numpy",
+        "correct": "import numpy as np\nimport statsmodels.tsa.vector_ar.vecm as vecm\n\n# prices is a T x N matrix of simultaneous price series across N venues\nmodel = vecm.select_coint(prices, det_order=0, k_ar_diff=1)\nresults = vecm.VECM(prices, coint_rank=1, k_ar_diff_order=1).fit()\n\n# Extract residual covariance matrix and transform via Cholesky for bounds\nomega = results.sigma_u\ncho_lower = np.linalg.cholesky(omega)\n# compute variance decomposition to get information shares\ninf_shares = (cho_lower.sum(axis=1)**2) / np.diag(omega).sum()",
+        "wrong": "inf_shares = np.var(prices, axis=0) / np.sum(np.var(prices, axis=0))"
+      },
+      "common_mistakes": [
+        "Ignoring the ordering sensitivity in Cholesky factorization, which yields a range of possible information share values rather than a single point estimate.",
+        "Failing to account for asynchronous trading timestamps when sampling high-frequency multi-venue price series."
+      ],
+      "best_practices": [
+        "Synchronize trades and quotes to uniform time grids using prevailing-quote or last-observation-carried-forward methods before estimating the VECM.",
+        "Report both the upper and lower bounds derived from different Cholesky permutations to present a complete picture.",
+        "Cross-validate information share results with alternative metrics like the Gonzalo-Granger permanent component measure."
+      ],
+      "when_to_use": "Use when analyzing multi-venue market structure, regulatory questions regarding fragmentations, or evaluating execution quality across different exchanges.",
+      "when_not_to_use": "Avoid using when assets are not cointegrated or when trading volume on secondary venues is too sparse to construct reliable simultaneous time series.",
+      "interview_questions": [
+        {
+          "question": "Why does the Hasbrouck information share yield a range of values rather than a unique point estimate?",
+          "answer": "Because the innovations in the VECM residuals are contemporaneously correlated, requiring a Cholesky factorization that depends on the arbitrary ordering of the variables in the model."
+        },
+        {
+          "question": "What is the difference between Hasbrouck's information share and the Gonzalo-Granger measure of price discovery?",
+          "answer": "Hasbrouck's measure focuses on the variance contribution of each market to the efficient price innovation, while Gonzalo-Granger measures the weight of each market in the permanent component error correction vector."
+        }
+      ],
+      "related_topics": [
+        "Gonzalo-Granger price discovery measure",
+        "Vector Error Correction Models (VECM)",
+        "Cross-venue arbitrage and latency"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T14:31:28.824344+00:00",
+      "run_number": 560
     }
   ]
 }
