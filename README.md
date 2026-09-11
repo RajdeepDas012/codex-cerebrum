@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **534** |
-| Last Updated | `2026-09-11T04:34:12.251395+00:00` |
-| Dataset Size | `534 entries` |
+| Total Topics Learned | **535** |
+| Last Updated | `2026-09-11T04:37:17.441455+00:00` |
+| Dataset Size | `535 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 123 |
+| trading-strategies | 124 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Profit factor calculation — gross profit divided by gross loss`
 - `System quality number SQN — Van Tharp system quality measurement`
 - `Trade expectancy calculation — average win times win rate formula`
 - `Maximum favorable excursion — optimal profit target using MFE`
 - `Maximum adverse excursion — optimal stop placement using MAE`
-- `Correlation-adjusted sizing — reducing size when assets correlate`
 
 <!-- STATS_END -->
 
