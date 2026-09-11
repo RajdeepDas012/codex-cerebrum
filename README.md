@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **513** |
-| Last Updated | `2026-09-11T00:07:04.559939+00:00` |
-| Dataset Size | `513 entries` |
+| Total Topics Learned | **514** |
+| Last Updated | `2026-09-11T00:10:14.280019+00:00` |
+| Dataset Size | `514 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 118 |
-| trading-strategies | 105 |
+| trading-strategies | 106 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Reinforcement learning trading — Q-learning for optimal execution`
 - `Clustering for market regimes — k-means for similar market periods`
 - `Principal component analysis PCA — dimensionality reduction for factors`
 - `Wavelet analysis for markets — multi-scale cycle decomposition`
 - `Fourier transform for cycles — identifying dominant cycles in price`
-- `Kalman filter for trading — dynamic linear model for price estimation`
 
 <!-- STATS_END -->
 
