@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **543** |
-| Last Updated | `2026-09-11T09:39:36.589833+00:00` |
-| Dataset Size | `543 entries` |
+| Total Topics Learned | **544** |
+| Last Updated | `2026-09-11T09:42:42.207124+00:00` |
+| Dataset Size | `544 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 130 |
+| trading-strategies | 131 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Information ratio — active return per unit of tracking error`
 - `Omega ratio — probability-weighted ratio of gains to losses`
 - `Sterling ratio — excess return over average drawdown`
 - `MAR ratio — compound annual growth rate to maximum drawdown`
 - `Calmar ratio — annual return divided by maximum drawdown`
-- `Recovery factor calculation — net profit divided by max drawdown`
 
 <!-- STATS_END -->
 
