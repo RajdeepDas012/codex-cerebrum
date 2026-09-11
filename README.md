@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **526** |
-| Last Updated | `2026-09-11T04:09:25.446771+00:00` |
-| Dataset Size | `526 entries` |
+| Total Topics Learned | **527** |
+| Last Updated | `2026-09-11T04:12:31.317637+00:00` |
+| Dataset Size | `527 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 118 |
-| trading-strategies | 115 |
+| trading-strategies | 116 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volatility targeting strategy — scaling positions to constant volatility`
 - `Fractional Kelly — reducing bet size for practical implementation`
 - `Kelly criterion for portfolio sizing — optimal fraction calculation`
 - `Mean variance optimization — Markowitz efficient frontier construction`
 - `Minimum variance portfolio — constructing lowest volatility portfolio`
-- `Risk parity portfolio — equal risk contribution across assets`
 
 <!-- STATS_END -->
 
