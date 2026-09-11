@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 582,
-    "last_updated": "2026-09-11T18:59:01.614507+00:00",
-    "total_topics_learned": 582
+    "total_runs": 583,
+    "last_updated": "2026-09-11T19:02:30.120093+00:00",
+    "total_topics_learned": 583
   },
   "entries": [
     {
@@ -28203,6 +28203,57 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-11T18:59:01.614486+00:00",
       "run_number": 582
+    },
+    {
+      "topic": "Statistical edge measurement — identifying true alpha vs luck",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Statistical edge measurement is the quantitative process of validating whether a trading strategy's returns stem from persistent predictive power (true alpha) rather than random chance. This evaluation is critical for capital allocation, as it prevents traders from scaling flawed strategies that merely benefited from favorable market regimes.",
+      "key_points": [
+        "The Information Ratio (IR) and Sharpe Ratio measure risk-adjusted excess returns, helping isolate true performance consistency.",
+        "Monte Carlo permutation tests randomize trade timestamps to generate a distribution of random outcomes, establishing a robust empirical baseline.",
+        "Multiple testing corrections (such as Bonferroni or False Discovery Rate adjustments) prevent data mining artifacts from being mistaken for alpha.",
+        "Decomposing returns against benchmark factor models (like Fama-French) ensures that apparent alpha is not simply hidden beta exposure."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculate a p-value for strategy Sharpe ratio using a block bootstrap permutation test",
+        "correct": "import numpy as np\n\ndef bootstrap_p_value(returns, num_simulations=10000):\n    actual_sharpe = np.mean(returns) / np.std(returns) * np.sqrt(252)\n    simulated_sharpes = np.empty(num_simulations)\n    for i in range(num_simulations):\n        permuted = np.random.permutation(returns)\n        simulated_sharpes[i] = np.mean(permuted) / np.std(permuted) * np.sqrt(252)\n    p_value = np.sum(simulated_sharpes >= actual_sharpe) / num_simulations\n    return p_value",
+        "wrong": "p_value = np.sum(returns > 0) / len(returns)  # Naively assuming each trade outcome is an independent binomial trial without accounting for variance or serial correlation"
+      },
+      "common_mistakes": [
+        "Failing to account for look-ahead bias and data snooping during feature engineering and hyperparameter optimization.",
+        "Evaluating strategy performance over too few independent trials or relying on short backtest horizons.",
+        "Ignoring transaction costs, market impact, and latency constraints when calculating historical net edge.",
+        "Assuming historical volatility and return distributions are stationary over changing market regimes."
+      ],
+      "best_practices": [
+        "Apply walk-forward optimization and out-of-sample testing to validate that parameters generalize to unseen data.",
+        "Calculate Deflated Sharpe Ratios (DSR) to adjust for the number of tested trial configurations.",
+        "Use robust cross-validation techniques, such as combinatorial purged cross-validation, to avoid data leakage in financial time series.",
+        "Monitor real-time realized edge against expected backtest distributions to detect performance decay early."
+      ],
+      "when_to_use": "Use when validating quantitative trading signals, allocating capital across multiple strategies, or auditing historical backtests before live deployment.",
+      "when_not_to_use": "Do not rely solely on statistical significance when evaluating low-frequency strategies with extremely sparse trade counts where asymptotic assumptions fail.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between luck and skill when a backtest yields a Sharpe ratio of 2.0 over 50 trades?",
+          "answer": "With only 50 trades, the standard error of the Sharpe ratio is very high. I would use bootstrapping and Monte Carlo permutation tests to evaluate the probability of achieving that Sharpe by random chance, and calculate the Deflated Sharpe Ratio to control for selection bias if multiple strategies were tested."
+        },
+        {
+          "question": "What is the problem with data snooping bias in quantitative finance, and how do you correct for it?",
+          "answer": "Data snooping occurs when testing many parameter variations until finding a profitable historical pattern by chance. It is corrected by out-of-sample testing, applying penalty functions like the False Discovery Rate (FDR), or using Deflated Sharpe Ratios that scale expectations based on the number of trials attempted."
+        }
+      ],
+      "related_topics": [
+        "Deflated Sharpe Ratio and multiple testing",
+        "Walk-forward optimization and overfitting",
+        "Factor model regression and alpha decomposition"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T19:02:30.120074+00:00",
+      "run_number": 583
     }
   ]
 }
