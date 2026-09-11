@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **522** |
-| Last Updated | `2026-09-11T00:35:07.613240+00:00` |
-| Dataset Size | `522 entries` |
+| Total Topics Learned | **523** |
+| Last Updated | `2026-09-11T00:38:14.810009+00:00` |
+| Dataset Size | `523 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | technical-analysis | 118 |
-| trading-strategies | 112 |
+| trading-strategies | 113 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
 | system-design | 58 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Minimum variance portfolio — constructing lowest volatility portfolio`
 - `Risk parity portfolio — equal risk contribution across assets`
 - `Black-Litterman model — combining market equilibrium with views`
 - `Sharpe ratio maximization — portfolio optimization for risk-adjusted return`
 - `Cross validation for financial models — time series cross validation`
-- `Walk forward optimization — preventing overfitting in strategy testing`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 522,
-    "last_updated": "2026-09-11T00:35:07.613240+00:00",
-    "total_topics_learned": 522
+    "total_runs": 523,
+    "last_updated": "2026-09-11T00:38:14.810009+00:00",
+    "total_topics_learned": 523
   },
   "entries": [
     {
@@ -25331,6 +25331,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-11T00:35:07.613218+00:00",
       "run_number": 522
+    },
+    {
+      "topic": "Minimum variance portfolio — constructing lowest volatility portfolio",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "The minimum variance portfolio is a mathematical framework that allocates weights to a set of assets to achieve the lowest possible total portfolio volatility, regardless of expected returns. It matters because it protects capital during turbulent market regimes by exploiting asset correlation structures without requiring accurate return forecasts.",
+      "key_points": [
+        "Focuses entirely on minimizing portfolio variance without incorporating expected return estimates.",
+        "Relies heavily on the covariance matrix of asset returns, making estimation error a critical factor.",
+        "Often leads to concentration in low-volatility or defensive asset classes during market stress.",
+        "Serves as the left-most tip of the Efficient Frontier in Modern Portfolio Theory."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Constructing a minimum variance portfolio using scipy optimization",
+        "correct": "import numpy as np\nfrom scipy.optimize import minimize\n\ndef get_min_var_weights(cov_matrix):\n    num_assets = cov_matrix.shape[0]\n    args = (cov_matrix,)\n    def portfolio_variance(weights, cov_matrix):\n        return np.dot(weights.T, np.dot(cov_matrix, weights))\n    \n    constraints = ({'type': 'eq', 'fun': lambda x: np.sum(x) - 1})\n    bounds = tuple((0, 1) for _ in range(num_assets))\n    init_guess = num_assets * [1. / num_assets]\n    \n    result = minimize(portfolio_variance, init_guess, args=args, method='SLSQP', bounds=bounds, constraints=constraints)\n    return result.x",
+        "wrong": "weights = np.linalg.inv(cov_matrix).dot(np.ones(num_assets)) # Fails to enforce sum-to-one and non-negativity constraints properly without manual normalization"
+      },
+      "common_mistakes": [
+        "Using sample covariance matrices directly without shrinkage or smoothing, leading to extreme and unstable weights.",
+        "Ignoring transaction costs and turnover constraints when rebalancing frequently."
+      ],
+      "best_practices": [
+        "Apply Ledoit-Wolf shrinkage or Exponentially Weighted Moving Average (EWMA) on the covariance matrix.",
+        "Impose maximum weight constraints on individual assets to prevent over-concentration.",
+        "Regularly backtest the strategy with transaction cost penalties included."
+      ],
+      "when_to_use": "When capital preservation is the primary mandate and expected return forecasts are unreliable or unavailable.",
+      "when_not_to_use": "When the investment objective requires maximizing growth or taking high calculated risks for outperformance.",
+      "interview_questions": [
+        {
+          "question": "Why does the minimum variance portfolio often outperform mean-variance optimized portfolios out-of-sample?",
+          "answer": "Expected returns are notoriously difficult to estimate accurately and introduce massive estimation error, whereas covariance matrices are relatively more stable, allowing minimum variance models to avoid noise amplification."
+        },
+        {
+          "question": "How do you mathematically formulate the minimum variance optimization problem?",
+          "answer": "Minimize w^T * Sigma * w subject to the constraint that the sum of weights equals 1 (and optionally that weights are greater than or equal to 0 for long-only portfolios), where w is the weight vector and Sigma is the covariance matrix."
+        }
+      ],
+      "related_topics": [
+        "Risk parity portfolio — equal risk contribution across assets",
+        "Sharpe ratio maximization — portfolio optimization for risk-adjusted return",
+        "Black-Litterman model — combining market equilibrium with views"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-11T00:38:14.809985+00:00",
+      "run_number": 523
     }
   ]
 }
