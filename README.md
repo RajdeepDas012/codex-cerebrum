@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **595** |
-| Last Updated | `2026-09-11T22:12:31.128705+00:00` |
-| Dataset Size | `595 entries` |
+| Total Topics Learned | **596** |
+| Last Updated | `2026-09-11T22:15:36.713429+00:00` |
+| Dataset Size | `596 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,8 +19,8 @@
 |---|---|
 | trading-strategies | 151 |
 | technical-analysis | 118 |
+| market-analysis | 74 |
 | crypto-blockchain | 74 |
-| market-analysis | 73 |
 | system-design | 58 |
 | stocks-markets | 52 |
 | probability-math | 15 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Capitulation signals — identifying true market bottom behavior`
 - `Fear of missing out FOMO — how FOMO drives late cycle buying`
 - `Contrarian investing psychology — going against market consensus`
 - `Herding behavior detection — crowded trades and consensus views`
 - `Overconfidence measurement — calibration of trader confidence`
-- `Hot hand fallacy — incorrectly expecting streaks to continue`
 
 <!-- STATS_END -->
 
