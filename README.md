@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **552** |
-| Last Updated | `2026-09-11T10:08:24.621661+00:00` |
-| Dataset Size | `552 entries` |
+| Total Topics Learned | **553** |
+| Last Updated | `2026-09-11T10:11:31.232680+00:00` |
+| Dataset Size | `553 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 135 |
+| trading-strategies | 136 |
 | technical-analysis | 118 |
 | crypto-blockchain | 74 |
 | market-analysis | 65 |
@@ -37,11 +37,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `VWAP execution algorithm — volume weighted average price execution`
 - `TWAP execution strategy — time weighted average price algorithm`
 - `Market impact model — price impact of large trade execution`
 - `Slippage estimation — impact cost modeling for large orders`
 - `Transaction cost analysis TCA — measuring execution quality`
-- `Statistical factor models — Barra risk factor model analysis`
 
 <!-- STATS_END -->
 
