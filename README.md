@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **683** |
-| Last Updated | `2026-09-12T19:36:04.988894+00:00` |
-| Dataset Size | `683 entries` |
+| Total Topics Learned | **684** |
+| Last Updated | `2026-09-12T19:39:11.309161+00:00` |
+| Dataset Size | `684 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 175 |
-| technical-analysis | 142 |
+| technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Ulcer index — measuring pain of drawdown for investors`
 - `Drawdown analysis — measuring depth duration and recovery`
 - `Conditional value at risk CVaR — expected shortfall measurement`
 - `Value at risk calculation — parametric historical Monte Carlo VaR`
 - `Stress testing portfolio — simulating historical crisis scenarios`
-- `Market reconstruction after crash — recovery patterns and timing`
 
 <!-- STATS_END -->
 
