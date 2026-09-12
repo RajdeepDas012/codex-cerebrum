@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 696,
-    "last_updated": "2026-09-12T22:27:15.922581+00:00",
-    "total_topics_learned": 696
+    "total_runs": 697,
+    "last_updated": "2026-09-12T22:30:22.753096+00:00",
+    "total_topics_learned": 697
   },
   "entries": [
     {
@@ -33642,6 +33642,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-12T22:27:15.922557+00:00",
       "run_number": 696
+    },
+    {
+      "topic": "Jump diffusion models — Merton model for crash risk pricing",
+      "category": "stocks-markets",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "The Merton jump-diffusion model extends standard geometric Brownian motion by adding a Poisson-driven jump component to capture sudden, discontinuous price movements such as market crashes. This addresses the volatility smile anomaly by introducing fat tails into the underlying asset distribution.",
+      "key_points": [
+        "Combines continuous diffusion (Brownian motion) with discrete random jumps governed by a Poisson process.",
+        "The jump size distribution is typically assumed to be log-normal, characterized by a mean jump size and jump variance.",
+        "Derives a semi-analytical European option pricing formula as an infinite sum of Black-Scholes prices weighted by Poisson probabilities.",
+        "Captures the short-dated out-of-the-money put skew much better than pure diffusion or standard local volatility models."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Pricing a European call option using the Merton jump-diffusion series expansion formula",
+        "correct": "import numpy as np\nfrom scipy.stats import norm\n\ndef merton_call_price(S, K, T, r, sigma, lam, m, v):\n    eps = 1.1e-16\n    sum_val = 0.0\n    gamma = np.exp(m + 0.5 * v**2) - 1\n    \n    for n in range(50):\n        r_n = r - lam * gamma + (n * np.log(1 + gamma)) / T\n        sigma_n = np.sqrt(sigma**2 + (n * v**2) / T)\n        \n        # Black-Scholes term\n        d1 = (np.log(S / K) + (r_n + 0.5 * sigma_n**2) * T) / (sigma_n * np.sqrt(T))\n        d2 = d1 - sigma_n * np.sqrt(T)\n        bs_price = S * norm.cdf(d1) - K * np.exp(-r_n * T) * norm.cdf(d2)\n        \n        poisson_prob = np.exp(-lam * T) * (lam * T)**n / np.math.factorial(n)\n        term = poisson_prob * bs_price\n        sum_val += term\n        \n        if poisson_prob < eps:\n            break\n            \n    return sum_val",
+        "wrong": "price = bs_price(S, K, T, r, sigma) + lam * T * bs_price(S, K, T, r, jump_vol)"
+      },
+      "common_mistakes": [
+        "Treating the jump intensity parameter (lambda) as static over time rather than calibrating it dynamically to changing market stress.",
+        "Failing to adjust the drift term for the expected value of the jumps, which leads to a model that does not correctly price risk-neutral drift."
+      ],
+      "best_practices": [
+        "Calibrate jump parameters (intensity, mean, and variance) jointly using deep out-of-the-money puts and short-expiry options.",
+        "Truncate the Poisson sum series efficiently using a threshold tolerance to avoid unnecessary computational overhead without losing precision."
+      ],
+      "when_to_use": "Use when pricing options on equities or indices that exhibit severe downside skew and sudden tail risk events that continuous models fail to price accurately.",
+      "when_not_to_use": "Avoid when dealing with assets that experience continuous high-frequency price fluctuations without discrete gap jumps, or where pure stochastic volatility models provide sufficient fit.",
+      "interview_questions": [
+        {
+          "question": "How does the Merton jump-diffusion model modify the standard Black-Scholes partial differential equation?",
+          "answer": "It adds an integral term to the Black-Scholes PDE that accounts for the expected change in option value resulting from a sudden jump in the underlying asset price."
+        },
+        {
+          "question": "Why do jump-diffusion models help explain the implied volatility smile for short-term options?",
+          "answer": "Jumps introduce high kurtosis and fat tails into the return distribution, which assigns higher probability to extreme negative returns and drives up the implied volatility of OTM puts."
+        }
+      ],
+      "related_topics": [
+        "Stochastic volatility models — Heston SABR for realistic vol",
+        "Volatility surface modeling — fitting IV surface across strikes expiries",
+        "Variance swap mechanics — trading realized vs implied variance"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-12T22:30:22.753073+00:00",
+      "run_number": 697
     }
   ]
 }
