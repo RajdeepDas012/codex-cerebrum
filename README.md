@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **611** |
-| Last Updated | `2026-09-12T00:38:11.625921+00:00` |
-| Dataset Size | `611 entries` |
+| Total Topics Learned | **612** |
+| Last Updated | `2026-09-12T00:41:17.951616+00:00` |
+| Dataset Size | `612 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 154 |
-| technical-analysis | 126 |
+| technical-analysis | 127 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volume spread analysis VSA — reading professional activity in bars`
 - `Point and figure count — horizontal count for price target`
 - `Cause and effect in Wyckoff — measuring potential move from trading range`
 - `Composite operator concept — tracking smart money movement`
 - `Wyckoff spring and upthrust — shakeout and test identification`
-- `Wyckoff reaccumulation — continuation pattern after markup`
 
 <!-- STATS_END -->
 
