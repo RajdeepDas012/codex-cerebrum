@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **670** |
-| Last Updated | `2026-09-12T17:30:12.437141+00:00` |
-| Dataset Size | `670 entries` |
+| Total Topics Learned | **671** |
+| Last Updated | `2026-09-12T17:33:19.120801+00:00` |
+| Dataset Size | `671 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 101 |
+| market-analysis | 102 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 54 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Emerging market indicators — EM stress signals and contagion`
 - `Global PMI composite — worldwide factory and services activity`
 - `Business cycle dating — NBER methodology for cycle identification`
 - `Recession probability models — probit model for recession prediction`
 - `Leading economic indicator index — Conference Board LEI analysis`
-- `Bank lending standards — quarterly survey and credit cycle`
 
 <!-- STATS_END -->
 
