@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **691** |
-| Last Updated | `2026-09-12T22:11:44.247739+00:00` |
-| Dataset Size | `691 entries` |
+| Total Topics Learned | **692** |
+| Last Updated | `2026-09-12T22:14:50.104325+00:00` |
+| Dataset Size | `692 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 180 |
+| trading-strategies | 181 |
 | technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Long volatility strategy — profiting from volatility increase`
 - `Black swan protection — cheap options for catastrophic insurance`
 - `Tail risk hedging — protecting against extreme negative events`
 - `Diversification benefit measurement — correlation and portfolio variance`
 - `Ruin prevention strategies — position sizing to avoid blowup`
-- `Risk of ruin formula — probability of losing all capital`
 
 <!-- STATS_END -->
 
