@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **668** |
-| Last Updated | `2026-09-12T17:23:59.339150+00:00` |
-| Dataset Size | `668 entries` |
+| Total Topics Learned | **669** |
+| Last Updated | `2026-09-12T17:27:05.858470+00:00` |
+| Dataset Size | `669 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 99 |
+| market-analysis | 100 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 54 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Business cycle dating — NBER methodology for cycle identification`
 - `Recession probability models — probit model for recession prediction`
 - `Leading economic indicator index — Conference Board LEI analysis`
 - `Bank lending standards — quarterly survey and credit cycle`
 - `Interbank lending rate — LIBOR successor rates and credit conditions`
-- `Repo market stress — overnight funding market as early warning`
 
 <!-- STATS_END -->
 
