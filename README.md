@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **646** |
-| Last Updated | `2026-09-12T14:02:40.839981+00:00` |
-| Dataset Size | `646 entries` |
+| Total Topics Learned | **647** |
+| Last Updated | `2026-09-12T14:05:49.916505+00:00` |
+| Dataset Size | `647 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 171 |
 | technical-analysis | 142 |
-| market-analysis | 79 |
+| market-analysis | 80 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 53 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Risk on risk off analysis — classifying assets by risk appetite`
 - `Intermarket analysis — relationships between bonds stocks commodities`
 - `Volume gap analysis — gaps on high volume vs low volume`
 - `Gap measurement techniques — measuring and trading price gaps`
 - `Judas swing concept — false move before true direction`
-- `Silver bullet strategy — 10-11am and 2-3pm setup times`
 
 <!-- STATS_END -->
 
