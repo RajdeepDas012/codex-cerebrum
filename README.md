@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **692** |
-| Last Updated | `2026-09-12T22:14:50.104325+00:00` |
-| Dataset Size | `692 entries` |
+| Total Topics Learned | **693** |
+| Last Updated | `2026-09-12T22:17:56.431013+00:00` |
+| Dataset Size | `693 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 181 |
+| trading-strategies | 182 |
 | technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Variance swap mechanics — trading realized vs implied variance`
 - `Long volatility strategy — profiting from volatility increase`
 - `Black swan protection — cheap options for catastrophic insurance`
 - `Tail risk hedging — protecting against extreme negative events`
 - `Diversification benefit measurement — correlation and portfolio variance`
-- `Ruin prevention strategies — position sizing to avoid blowup`
 
 <!-- STATS_END -->
 
