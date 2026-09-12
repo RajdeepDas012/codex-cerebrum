@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **686** |
-| Last Updated | `2026-09-12T19:45:24.149799+00:00` |
-| Dataset Size | `686 entries` |
+| Total Topics Learned | **687** |
+| Last Updated | `2026-09-12T19:48:30.453477+00:00` |
+| Dataset Size | `687 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 57 |
-| probability-math | 17 |
+| probability-math | 18 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Risk of ruin formula — probability of losing all capital`
 - `Gain to pain ratio — total return divided by total losses`
 - `Pain ratio — measuring the suffering of holding through losses`
 - `Ulcer index — measuring pain of drawdown for investors`
 - `Drawdown analysis — measuring depth duration and recovery`
-- `Conditional value at risk CVaR — expected shortfall measurement`
 
 <!-- STATS_END -->
 
