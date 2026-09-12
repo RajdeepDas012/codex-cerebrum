@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **610** |
-| Last Updated | `2026-09-12T00:35:05.669042+00:00` |
-| Dataset Size | `610 entries` |
+| Total Topics Learned | **611** |
+| Last Updated | `2026-09-12T00:38:11.625921+00:00` |
+| Dataset Size | `611 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 154 |
-| technical-analysis | 125 |
+| technical-analysis | 126 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Point and figure count — horizontal count for price target`
 - `Cause and effect in Wyckoff — measuring potential move from trading range`
 - `Composite operator concept — tracking smart money movement`
 - `Wyckoff spring and upthrust — shakeout and test identification`
 - `Wyckoff reaccumulation — continuation pattern after markup`
-- `Wyckoff distribution schematic — topping process phase analysis`
 
 <!-- STATS_END -->
 
