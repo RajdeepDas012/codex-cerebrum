@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **627** |
-| Last Updated | `2026-09-12T06:11:58.339883+00:00` |
-| Dataset Size | `627 entries` |
+| Total Topics Learned | **628** |
+| Last Updated | `2026-09-12T06:15:04.108511+00:00` |
+| Dataset Size | `628 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 159 |
-| technical-analysis | 136 |
+| technical-analysis | 137 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fair value gap FVG — imbalance zones that price revisits`
 - `Order block trading — institutional entry zones identification`
 - `Change of character CHoCH — early trend reversal signal`
 - `Break of structure BOS — trend change identification method`
 - `Lower high lower low — downtrend structure and entry technique`
-- `Higher high higher low structure — trend identification and trading`
 
 <!-- STATS_END -->
 
