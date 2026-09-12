@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **651** |
-| Last Updated | `2026-09-12T14:18:16.818005+00:00` |
-| Dataset Size | `651 entries` |
+| Total Topics Learned | **652** |
+| Last Updated | `2026-09-12T14:21:22.785353+00:00` |
+| Dataset Size | `652 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 83 |
+| market-analysis | 84 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 53 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Cross rate analysis — identifying strength weakness across currencies`
 - `Carry trade dynamics — interest rate differential and currency`
 - `Commodity equity correlation — raw material prices and producers`
 - `Bond equity correlation — changing correlation in different regimes`
 - `Currency correlation with equities — FX rates and stock impact`
-- `Risk on risk off analysis — classifying assets by risk appetite`
 
 <!-- STATS_END -->
 
