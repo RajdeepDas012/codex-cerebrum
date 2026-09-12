@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **687** |
-| Last Updated | `2026-09-12T19:48:30.453477+00:00` |
-| Dataset Size | `687 entries` |
+| Total Topics Learned | **688** |
+| Last Updated | `2026-09-12T19:51:37.028306+00:00` |
+| Dataset Size | `688 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 177 |
+| trading-strategies | 178 |
 | technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Ruin prevention strategies — position sizing to avoid blowup`
 - `Risk of ruin formula — probability of losing all capital`
 - `Gain to pain ratio — total return divided by total losses`
 - `Pain ratio — measuring the suffering of holding through losses`
 - `Ulcer index — measuring pain of drawdown for investors`
-- `Drawdown analysis — measuring depth duration and recovery`
 
 <!-- STATS_END -->
 
