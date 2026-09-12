@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **605** |
-| Last Updated | `2026-09-12T00:19:34.056465+00:00` |
-| Dataset Size | `605 entries` |
+| Total Topics Learned | **606** |
+| Last Updated | `2026-09-12T00:22:40.632238+00:00` |
+| Dataset Size | `606 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 152 |
-| technical-analysis | 122 |
+| technical-analysis | 123 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Wyckoff distribution schematic — topping process phase analysis`
 - `Wyckoff accumulation schematic — phase A B C D E identification`
 - `Volume accumulation distribution — smart money tracking technique`
 - `Selling climax detection — exhaustion of selling at bottoms`
 - `Buying climax detection — exhaustion of buying at market tops`
-- `Forced selling identification — recognizing indiscriminate selling`
 
 <!-- STATS_END -->
 
