@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **599** |
-| Last Updated | `2026-09-12T00:00:57.264983+00:00` |
-| Dataset Size | `599 entries` |
+| Total Topics Learned | **600** |
+| Last Updated | `2026-09-12T00:04:03.274946+00:00` |
+| Dataset Size | `600 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 76 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| stocks-markets | 52 |
+| stocks-markets | 53 |
 | probability-math | 15 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Margin call cascade — forced selling creating liquidity crisis`
 - `Fund flow analysis — money flowing into and out of sectors`
 - `Market sentiment surveys — AAII bulls bears as contrarian signal`
 - `Euphoria identification — measuring excess optimism at tops`
 - `Capitulation signals — identifying true market bottom behavior`
-- `Fear of missing out FOMO — how FOMO drives late cycle buying`
 
 <!-- STATS_END -->
 
