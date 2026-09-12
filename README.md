@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **662** |
-| Last Updated | `2026-09-12T17:05:21.132599+00:00` |
-| Dataset Size | `662 entries` |
+| Total Topics Learned | **663** |
+| Last Updated | `2026-09-12T17:08:27.478070+00:00` |
+| Dataset Size | `663 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 94 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| stocks-markets | 53 |
+| stocks-markets | 54 |
 | probability-math | 15 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Collateralized debt obligation — CDO structure and systemic risk`
 - `Credit default swap pricing — CDS spreads as credit stress signal`
 - `SOFR rate analysis — secured overnight financing rate dynamics`
 - `Eurodollar futures — predicting Fed rate path from futures`
 - `Liquidity cycle analysis — global dollar liquidity and asset prices`
-- `Money supply M1 M2 — monetary aggregates and inflation prediction`
 
 <!-- STATS_END -->
 
