@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **688** |
-| Last Updated | `2026-09-12T19:51:37.028306+00:00` |
-| Dataset Size | `688 entries` |
+| Total Topics Learned | **689** |
+| Last Updated | `2026-09-12T22:05:31.604099+00:00` |
+| Dataset Size | `689 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
-| stocks-markets | 57 |
+| stocks-markets | 58 |
 | probability-math | 18 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Diversification benefit measurement — correlation and portfolio variance`
 - `Ruin prevention strategies — position sizing to avoid blowup`
 - `Risk of ruin formula — probability of losing all capital`
 - `Gain to pain ratio — total return divided by total losses`
 - `Pain ratio — measuring the suffering of holding through losses`
-- `Ulcer index — measuring pain of drawdown for investors`
 
 <!-- STATS_END -->
 
