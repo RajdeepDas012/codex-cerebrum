@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **620** |
-| Last Updated | `2026-09-12T05:50:17.274643+00:00` |
-| Dataset Size | `620 entries` |
+| Total Topics Learned | **621** |
+| Last Updated | `2026-09-12T05:53:23.228009+00:00` |
+| Dataset Size | `621 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 155 |
+| trading-strategies | 156 |
 | technical-analysis | 133 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `False breakout patterns — identifying and trading failed breakouts`
 - `Price action at key levels — candlestick behavior at support resistance`
 - `Relative volume analysis — comparing current volume to average`
 - `Professional interest identification — recognizing institutional footprint`
 - `Effort vs result — volume price relationship for strength weakness`
-- `Test after buying climax — low volume test as confirm signal`
 
 <!-- STATS_END -->
 
