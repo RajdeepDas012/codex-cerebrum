@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **615** |
-| Last Updated | `2026-09-12T05:34:43.704831+00:00` |
-| Dataset Size | `615 entries` |
+| Total Topics Learned | **616** |
+| Last Updated | `2026-09-12T05:37:49.421404+00:00` |
+| Dataset Size | `616 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 154 |
+| trading-strategies | 155 |
 | technical-analysis | 130 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Test after buying climax — low volume test as confirm signal`
 - `Stopping volume — high volume bar stopping a decline`
 - `No supply signal — down bar with low volume as strength`
 - `No demand signal — up bar with low volume as weakness`
 - `Volume spread analysis VSA — reading professional activity in bars`
-- `Point and figure count — horizontal count for price target`
 
 <!-- STATS_END -->
 
