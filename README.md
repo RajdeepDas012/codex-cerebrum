@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **642** |
-| Last Updated | `2026-09-12T11:07:40.850630+00:00` |
-| Dataset Size | `642 entries` |
+| Total Topics Learned | **643** |
+| Last Updated | `2026-09-12T11:10:47.163937+00:00` |
+| Dataset Size | `643 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 169 |
+| trading-strategies | 170 |
 | technical-analysis | 141 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Judas swing concept — false move before true direction`
 - `Silver bullet strategy — 10-11am and 2-3pm setup times`
 - `New York open reversal — retracing London move at NYSE open`
 - `London open strategy — breakout of Asian range at open`
 - `Asian range trading — consolidation before directional move`
-- `Killzone time analysis — London New York session overlap trading`
 
 <!-- STATS_END -->
 
