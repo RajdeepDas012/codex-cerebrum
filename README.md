@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **633** |
-| Last Updated | `2026-09-12T10:39:19.549192+00:00` |
-| Dataset Size | `633 entries` |
+| Total Topics Learned | **634** |
+| Last Updated | `2026-09-12T10:42:25.964867+00:00` |
+| Dataset Size | `634 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 161 |
+| trading-strategies | 162 |
 | technical-analysis | 140 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Smart money concepts overview — institutional trading methodology`
 - `Market structure shift — confirmation of trend reversal`
 - `Inducement identification — false signals before real move`
 - `Equal highs and lows — liquidity pools as price magnets`
 - `Liquidity sweep trading — hunting stops before reversal`
-- `Premium and discount zones — optimal trade entry locations`
 
 <!-- STATS_END -->
 
