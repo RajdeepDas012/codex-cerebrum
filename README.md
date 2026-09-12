@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **675** |
-| Last Updated | `2026-09-12T19:10:47.893657+00:00` |
-| Dataset Size | `675 entries` |
+| Total Topics Learned | **676** |
+| Last Updated | `2026-09-12T19:13:55.396138+00:00` |
+| Dataset Size | `676 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 173 |
 | technical-analysis | 142 |
-| market-analysis | 104 |
+| market-analysis | 105 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 55 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Central bank intervention — when and how CBs intervene`
 - `Liquidity crisis identification — when markets stop functioning`
 - `Contagion mechanics — how crisis spreads across markets`
 - `Carry trade unwind risk — when carry trades reverse violently`
 - `China economic indicators — PMI property sales as global signal`
-- `Emerging market indicators — EM stress signals and contagion`
 
 <!-- STATS_END -->
 
