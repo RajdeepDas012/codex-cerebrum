@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **638** |
-| Last Updated | `2026-09-12T10:55:15.316299+00:00` |
-| Dataset Size | `638 entries` |
+| Total Topics Learned | **639** |
+| Last Updated | `2026-09-12T10:58:21.459257+00:00` |
+| Dataset Size | `639 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 165 |
+| trading-strategies | 166 |
 | technical-analysis | 141 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Asian range trading — consolidation before directional move`
 - `Killzone time analysis — London New York session overlap trading`
 - `Power of three AMD — accumulation manipulation distribution`
 - `Optimal trade entry OTE — Fibonacci 70.5 percent entry`
 - `Inner circle trader ICT concepts — time and price theory`
-- `Smart money concepts overview — institutional trading methodology`
 
 <!-- STATS_END -->
 
