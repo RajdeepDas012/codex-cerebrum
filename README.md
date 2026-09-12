@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **616** |
-| Last Updated | `2026-09-12T05:37:49.421404+00:00` |
-| Dataset Size | `616 entries` |
+| Total Topics Learned | **617** |
+| Last Updated | `2026-09-12T05:40:55.353206+00:00` |
+| Dataset Size | `617 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 155 |
-| technical-analysis | 130 |
+| technical-analysis | 131 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Effort vs result — volume price relationship for strength weakness`
 - `Test after buying climax — low volume test as confirm signal`
 - `Stopping volume — high volume bar stopping a decline`
 - `No supply signal — down bar with low volume as strength`
 - `No demand signal — up bar with low volume as weakness`
-- `Volume spread analysis VSA — reading professional activity in bars`
 
 <!-- STATS_END -->
 
