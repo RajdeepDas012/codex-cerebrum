@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **625** |
-| Last Updated | `2026-09-12T06:05:46.315630+00:00` |
-| Dataset Size | `625 entries` |
+| Total Topics Learned | **626** |
+| Last Updated | `2026-09-12T06:08:52.152077+00:00` |
+| Dataset Size | `626 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 158 |
-| technical-analysis | 135 |
+| technical-analysis | 136 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Change of character CHoCH — early trend reversal signal`
 - `Break of structure BOS — trend change identification method`
 - `Lower high lower low — downtrend structure and entry technique`
 - `Higher high higher low structure — trend identification and trading`
 - `Breakout retest entry — entering on pullback after confirmed break`
-- `False breakout patterns — identifying and trading failed breakouts`
 
 <!-- STATS_END -->
 
