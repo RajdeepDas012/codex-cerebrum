@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **695** |
-| Last Updated | `2026-09-12T22:24:09.117915+00:00` |
-| Dataset Size | `695 entries` |
+| Total Topics Learned | **696** |
+| Last Updated | `2026-09-12T22:27:15.922581+00:00` |
+| Dataset Size | `696 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | stocks-markets | 59 |
 | system-design | 58 |
-| probability-math | 19 |
+| probability-math | 20 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Stochastic volatility models — Heston SABR for realistic vol`
 - `Local volatility model — Dupire equation for option pricing`
 - `Volatility surface modeling — fitting IV surface across strikes expiries`
 - `Variance swap mechanics — trading realized vs implied variance`
 - `Long volatility strategy — profiting from volatility increase`
-- `Black swan protection — cheap options for catastrophic insurance`
 
 <!-- STATS_END -->
 

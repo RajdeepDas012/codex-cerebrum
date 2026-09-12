@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 695,
-    "last_updated": "2026-09-12T22:24:09.117915+00:00",
-    "total_topics_learned": 695
+    "total_runs": 696,
+    "last_updated": "2026-09-12T22:27:15.922581+00:00",
+    "total_topics_learned": 696
   },
   "entries": [
     {
@@ -33594,6 +33594,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-12T22:24:09.117894+00:00",
       "run_number": 695
+    },
+    {
+      "topic": "Stochastic volatility models — Heston SABR for realistic vol",
+      "category": "probability-math",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Stochastic volatility models treat volatility itself as a random process driven by its own Brownian motion, unlike Black-Scholes where vol is constant. Frameworks like the Heston model and SABR accurately capture the observed market volatility smile and skew by modeling the correlation between asset returns and volatility changes.",
+      "key_points": [
+        "The Heston model introduces a mean-reverting square-root process for variance, capturing the term structure of volatility and the leverage effect.",
+        "The SABR (Stochastic Alpha, Beta, Rho) model is an industry standard for interest rate and FX derivatives, focusing on forward rates and asset prices with a beta parameter for the backbone.",
+        "Unlike local volatility models, stochastic volatility models produce a dynamic forward smile that matches the hedging behavior observed in trading desks.",
+        "Parameter calibration requires optimization techniques (like least squares or differential evolution) to fit European option prices to market implied volatilities."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Simulating paths for asset price and variance using the Heston stochastic volatility model with Euler-Maruyama discretization.",
+        "correct": "import numpy as np\n\ndef simulate_heston(S0, v0, r, T, N, M, kappa, theta, sigma, rho):\n    dt = T / N\n    S = np.zeros((M, N + 1))\n    v = np.zeros((M, N + 1))\n    S[:, 0] = S0\n    v[:, 0] = v0\n    \n    for t in range(1, N + 1):\n        Z1 = np.random.normal(0, 1, M)\n        Z2 = rho * Z1 + np.sqrt(1 - rho**2) * np.random.normal(0, 1, M)\n        \n        v[:, t] = np.maximum(v[:, t-1] + kappa * (theta - v[:, t-1]) * dt + sigma * np.sqrt(np.maximum(v[:, t-1], 0) * dt) * Z2, 0)\n        S[:, t] = S[:, t-1] * np.exp((r - 0.5 * v[:, t-1]) * dt + np.sqrt(np.maximum(v[:, t-1], 0) * dt) * Z1)\n    return S, v",
+        "wrong": "import numpy as np\n# Wrong: allowing variance to drop below zero without reflection or clipping, causing NaNs\nv[t] = v[t-1] + kappa * (theta - v[t-1]) * dt + sigma * np.sqrt(v[t-1]) * Z2"
+      },
+      "common_mistakes": [
+        "Failing to enforce the Feller condition ($2\\kappa\\theta \\ge \\sigma^2$) in Heston, which leads to variance hitting zero and causing numerical instability or distribution skew distortion.",
+        "Using standard European option pricing formulas meant for Black-Scholes when evaluating barrier or American options under stochastic volatility."
+      ],
+      "best_practices": [
+        "Apply truncation or reflection schemes (such as quadratic-exponential schemes) for variance simulation to preserve the distribution properties near zero.",
+        "Use characteristic function pricing via Fast Fourier Transform (FFT) for fast European option pricing under Heston rather than relying purely on slow Monte Carlo paths.",
+        "Regularly re-calibrate model parameters to capture shifts in market sentiment and implied skew dynamics."
+      ],
+      "when_to_use": "Use when pricing exotic derivatives (like barrier, touch, or Bermudan options) where the dynamics of the volatility smile and path-dependent hedging are critical.",
+      "when_not_to_use": "Avoid when extreme computational speed is required for plain-vanilla real-time quoting, where simpler Black-Scholes or implied volatility interpolations suffice.",
+      "interview_questions": [
+        {
+          "question": "What is the primary advantage of stochastic volatility models over local volatility models?",
+          "answer": "Local volatility models make volatility a deterministic function of time and asset price, leading to unrealistic forward smiles and poor hedging performance for path-dependent exotics. Stochastic volatility models treat volatility as a random process, generating a dynamic forward smile and capturing the true leverage effect."
+        },
+        {
+          "question": "What does the Feller condition ensure in the Heston model?",
+          "answer": "The Feller condition ($2\\kappa\\theta \\ge \\sigma^2$) ensures that the variance process strictly remains strictly positive, preventing it from ever hitting or crossing zero."
+        }
+      ],
+      "related_topics": [
+        "Local volatility model — Dupire equation for option pricing",
+        "Volatility surface modeling — fitting IV surface across strikes expiries",
+        "Long volatility strategy — profiting from volatility increase"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-12T22:27:15.922557+00:00",
+      "run_number": 696
     }
   ]
 }
