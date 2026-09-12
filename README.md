@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **699** |
-| Last Updated | `2026-09-12T22:36:36.360500+00:00` |
-| Dataset Size | `699 entries` |
+| Total Topics Learned | **700** |
+| Last Updated | `2026-09-12T22:39:42.651158+00:00` |
+| Dataset Size | `700 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | stocks-markets | 60 |
 | system-design | 58 |
-| probability-math | 22 |
+| probability-math | 23 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Simulation based pricing — Monte Carlo for exotic options`
 - `Finite difference methods — numerical PDE solution for options`
 - `Binomial tree option pricing — CRR model for American options`
 - `Jump diffusion models — Merton model for crash risk pricing`
 - `Stochastic volatility models — Heston SABR for realistic vol`
-- `Local volatility model — Dupire equation for option pricing`
 
 <!-- STATS_END -->
 

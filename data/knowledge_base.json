@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 699,
-    "last_updated": "2026-09-12T22:36:36.360500+00:00",
-    "total_topics_learned": 699
+    "total_runs": 700,
+    "last_updated": "2026-09-12T22:39:42.651158+00:00",
+    "total_topics_learned": 700
   },
   "entries": [
     {
@@ -33783,6 +33783,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-12T22:36:36.360476+00:00",
       "run_number": 699
+    },
+    {
+      "topic": "Simulation based pricing — Monte Carlo for exotic options",
+      "category": "probability-math",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "Monte Carlo simulation prices derivatives by generating thousands of random price paths under risk-neutral dynamics and averaging their discounted payoffs. It is vital for path-dependent and high-dimensional exotic options where analytical formulas or standard lattices fail.",
+      "key_points": [
+        "Simulates asset price trajectories using discrete approximations of stochastic differential equations like Geometric Brownian Motion.",
+        "Computes the option payoff along each simulated path and discounts the average payoff back to present value.",
+        "Essential for path-dependent options (such as Asian, barrier, and lookback options) whose payoffs depend on the entire price history.",
+        "Allows seamless incorporation of complex features, multi-asset dependencies, and multi-factor stochastic volatility models."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Monte Carlo pricing of an Asian option with geometric averaging.",
+        "correct": "import numpy as np\n\ndef price_asian_option(S0, K, T, r, sigma, num_simulations, num_steps):\n    dt = T / num_steps\n    z = np.random.standard_normal((num_simulations, num_steps))\n    paths = S0 * np.cumprod(np.exp((r - 0.5 * sigma**2) * dt + sigma * np.sqrt(dt) * z), axis=1)\n    path_averages = np.mean(paths, axis=1)\n    payoffs = np.maximum(path_averages - K, 0)\n    return np.exp(-r * T) * np.mean(payoffs)",
+        "wrong": "import numpy as np\n\ndef price_asian_option(S0, K, T, r, sigma, num_simulations):\n    # Mistake: ignoring time discretization and path dependency correctly\n    st = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * np.random.standard_normal(num_simulations))\n    return np.exp(-r * T) * np.mean(np.maximum(st - K, 0))"
+      },
+      "common_mistakes": [
+        "Failing to use enough time steps for continuously monitored path-dependent features, leading to discretization bias.",
+        "Neglecting variance reduction techniques (like antithetic variates or control variates), resulting in slow convergence rates."
+      ],
+      "best_practices": [
+        "Implement antithetic variates by pairing random normal draws with their negatives (-Z) to drastically reduce simulation variance.",
+        "Use Sobol sequences or other Quasi-Monte Carlo methods instead of pseudo-random numbers to achieve faster convergence rates in high dimensions."
+      ],
+      "when_to_use": "When pricing complex path-dependent exotic options or multi-asset derivatives where analytical solutions do not exist.",
+      "when_not_to_use": "When pricing American-style options that require early exercise optimization (unless combined with Least-Squares Monte Carlo), or when ultra-low latency European option pricing is required.",
+      "interview_questions": [
+        {
+          "question": "What is the convergence rate of standard Monte Carlo simulation, and how can you improve it?",
+          "answer": "The standard error of Monte Carlo converges at a rate of O(1 / sqrt(N)), where N is the number of simulations. This can be improved using variance reduction techniques such as antithetic variates, control variates, and stratified sampling, or by using Quasi-Monte Carlo sequences which achieve close to O(1 / N)."
+        },
+        {
+          "question": "How do you price an American option using Monte Carlo simulation?",
+          "answer": "Standard Monte Carlo struggles with early exercise because simulation moves forward in time while exercise decisions require looking backward. This is solved using the Longstaff-Schwartz (Least-Squares Monte Carlo) method, which regresses future continuation values against current asset states using basis functions."
+        }
+      ],
+      "related_topics": [
+        "Variance reduction techniques",
+        "Least-Squares Monte Carlo for American options",
+        "Quasi-Monte Carlo methods"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-12T22:39:42.651134+00:00",
+      "run_number": 700
     }
   ]
 }
