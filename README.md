@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **603** |
-| Last Updated | `2026-09-12T00:13:21.263450+00:00` |
-| Dataset Size | `603 entries` |
+| Total Topics Learned | **604** |
+| Last Updated | `2026-09-12T00:16:27.100557+00:00` |
+| Dataset Size | `604 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 152 |
-| technical-analysis | 120 |
+| technical-analysis | 121 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volume accumulation distribution — smart money tracking technique`
 - `Selling climax detection — exhaustion of selling at bottoms`
 - `Buying climax detection — exhaustion of buying at market tops`
 - `Forced selling identification — recognizing indiscriminate selling`
 - `Margin call cascade — forced selling creating liquidity crisis`
-- `Fund flow analysis — money flowing into and out of sectors`
 
 <!-- STATS_END -->
 
