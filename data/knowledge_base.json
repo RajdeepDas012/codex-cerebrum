@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 700,
-    "last_updated": "2026-09-12T22:39:42.651158+00:00",
-    "total_topics_learned": 700
+    "total_runs": 701,
+    "last_updated": "2026-09-12T22:42:49.706451+00:00",
+    "total_topics_learned": 701
   },
   "entries": [
     {
@@ -33830,6 +33830,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-12T22:39:42.651134+00:00",
       "run_number": 700
+    },
+    {
+      "topic": "Barrier option pricing — knock-in knock-out exotic options",
+      "category": "stocks-markets",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Barrier options are path-dependent derivatives that become active or expire worthless depending on whether the underlying asset price touches a predefined threshold during its life. They are crucial for corporate risk management and structured products because they offer cheaper alternatives to standard options by removing payouts in certain market states.",
+      "key_points": [
+        "Knock-in options become active only if the underlying asset breaches a specific barrier level before expiration.",
+        "Knock-out options instantly cease to exist and become worthless if the underlying asset touches the barrier.",
+        "Barriers can be classified as up-and-in, down-and-in, up-and-out, or down-and-out based on directional movement.",
+        "Discrete monitoring corrections must be applied when barrier checks occur only at specific intervals rather than continuously."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Monte Carlo pricing of a down-and-out European call option under continuous monitoring",
+        "correct": "import numpy as np\n\ndef price_down_and_out_call(S0, K, T, r, sigma, B, num_sims, num_steps):\n    dt = T / num_steps\n    discount = np.exp(-r * T)\n    paths = np.zeros((num_sims, num_steps + 1))\n    paths[:, 0] = S0\n    \n    for t in range(1, num_steps + 1):\n        z = np.random.standard_normal(num_sims)\n        paths[:, t] = paths[:, t-1] * np.exp((r - 0.5 * sigma**2) * dt + sigma * np.sqrt(dt) * z)\n        \n    # Check if path breached barrier B from above\n    min_prices = np.min(paths, axis=1)\n    survived = min_prices > B\n    \n    payoffs = np.maximum(paths[:, -1] - K, 0) * survived\n    return discount * np.mean(payoffs)",
+        "wrong": "import numpy as np\n\ndef price_down_and_out_call_wrong(S0, K, T, r, sigma, B, num_sims):\n    # Mistake: checking only final price instead of continuous path\n    z = np.random.standard_normal(num_sims)\n    ST = S0 * np.exp((r - 0.5 * sigma**2) * T + sigma * np.sqrt(T) * z)\n    survived = ST > B\n    return np.exp(-r * T) * np.mean(np.maximum(ST - K, 0) * survived)"
+      },
+      "common_mistakes": [
+        "Assuming continuous monitoring analytics apply directly to discretely monitored barriers without applying a correction adjustment like the Broadie-Glasserman formula.",
+        "Failing to account for high gamma near the barrier level, which causes severe hedging instabilities known as barrier risk."
+      ],
+      "best_practices": [
+        "Use analytical pricing formulas via reflection principles for simple European barrier setups when exact continuous monitoring is assumed.",
+        "Employ Brownian bridge correction techniques in Monte Carlo simulations to accurately capture barrier breaches occurring between discrete time steps.",
+        "Implement dynamic hedging strategies cautiously near the barrier due to discontinuous jumps in option delta."
+      ],
+      "when_to_use": "When investors or corporate treasurers want to hedge currency or equity exposures at a lower premium cost by accepting payout elimination under adverse or extreme market scenarios.",
+      "when_not_to_use": "When the underlying asset exhibits extreme gap risk or high volatility close to the barrier level, making dynamic hedging unfeasible or excessively expensive.",
+      "interview_questions": [
+        {
+          "question": "What is the key difference between a knock-in option and a knock-out option?",
+          "answer": "A knock-in option activates only when the underlying asset hits the barrier, whereas a knock-out option terminates and becomes worthless if the asset hits the barrier."
+        },
+        {
+          "question": "Why is hedging a barrier option particularly difficult near the barrier level?",
+          "answer": "The option's delta experiences a discontinuous jump or massive spike near the barrier, leading to extreme gamma and high rebalancing costs (barrier risk)."
+        }
+      ],
+      "related_topics": [
+        "Exotic options pricing",
+        "Brownian bridge algorithms",
+        "Volatility smile and skew"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-12T22:42:49.706428+00:00",
+      "run_number": 701
     }
   ]
 }
