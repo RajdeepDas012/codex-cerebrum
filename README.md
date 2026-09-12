@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **665** |
-| Last Updated | `2026-09-12T17:14:40.704216+00:00` |
-| Dataset Size | `665 entries` |
+| Total Topics Learned | **666** |
+| Last Updated | `2026-09-12T17:17:46.823922+00:00` |
+| Dataset Size | `666 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 96 |
+| market-analysis | 97 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 54 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bank lending standards — quarterly survey and credit cycle`
 - `Interbank lending rate — LIBOR successor rates and credit conditions`
 - `Repo market stress — overnight funding market as early warning`
 - `Collateralized debt obligation — CDO structure and systemic risk`
 - `Credit default swap pricing — CDS spreads as credit stress signal`
-- `SOFR rate analysis — secured overnight financing rate dynamics`
 
 <!-- STATS_END -->
 
