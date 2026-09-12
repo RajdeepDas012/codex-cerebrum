@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 702,
-    "last_updated": "2026-09-12T22:45:55.422201+00:00",
-    "total_topics_learned": 702
+    "total_runs": 703,
+    "last_updated": "2026-09-12T22:49:02.621200+00:00",
+    "total_topics_learned": 703
   },
   "entries": [
     {
@@ -33925,6 +33925,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-12T22:45:55.422179+00:00",
       "run_number": 702
+    },
+    {
+      "topic": "Lookback option pricing — maximum minimum price options",
+      "category": "probability-math",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Lookback options are path-dependent exotic derivatives that allow the holder to buy the underlying asset at its lowest price or sell it at its highest price achieved over the life of the option. They are significantly more expensive than standard European or American options because they eliminate market timing risk entirely, requiring specialized pricing techniques like analytical formulas or modified Monte Carlo simulations.",
+      "key_points": [
+        "A floating strike lookback call uses the minimum asset price observed over the option's life as the strike price.",
+        "A fixed strike lookback call uses a predetermined strike but allows the payoff to be determined by the maximum asset price reached.",
+        "Because the extreme values (max/min) depend on the entire continuous path, standard pricing grids must account for running extrema as a state variable.",
+        "Analytical valuation formulas exist under the Black-Scholes framework, derived by Goldman, Sosin, and Gatto (1979)."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Monte Carlo simulation pricing a floating strike lookback call option using a generated path minimum.",
+        "correct": "import numpy as np\n\ndef price_lookback_floating_call(S0, r, q, T, sigma, num_paths, num_steps):\n    dt = T / num_steps\n    nudt = (r - q - 0.5 * sigma ** 2) * dt\n    sigsdt = sigma * np.sqrt(dt)\n    \n    # Generate paths\n    Z = np.random.normal(size=(num_paths, num_steps))\n    paths = np.zeros((num_paths, num_steps + 1))\n    paths[:, 0] = S0\n    paths[:, 1:] = S0 * np.exp(np.cumsum(nudt + sigsdt * Z, axis=1))\n    \n    # Find minimum along each path\n    min_prices = np.min(paths, axis=1)\n    \n    # Payoff is terminal price minus minimum price\n    payoffs = np.maximum(0, paths[:, -1] - min_prices)\n    return np.exp(-r * T) * np.mean(payoffs)",
+        "wrong": "import numpy as np\n\ndef price_lookback_floating_call(S0, r, q, T, sigma, num_paths, num_steps):\n    dt = T / num_steps\n    paths = S0 * np.exp((r - q - 0.5 * sigma**2)*T + sigma*np.sqrt(T)*np.random.normal(size=num_paths))\n    min_prices = S0 # Mistake: ignoring intermediate path minima\n    return np.mean(np.maximum(0, paths - min_prices))"
+      },
+      "common_mistakes": [
+        "Treating lookback options like standard European options by only checking the initial and final asset prices.",
+        "Failing to account for discretization bias in Monte Carlo simulations, where the discrete sampling of minima/maxima underestimates the true continuous extrema.",
+        "Ignoring the cost of carry (dividend yield) modifications required in the analytical pricing formulas."
+      ],
+      "best_practices": [
+        "Use Brownian bridge corrections or higher time-step granularity in Monte Carlo simulations to adjust for discrete monitoring bias of extreme values.",
+        "Leverage closed-form analytical solutions as a benchmark before deploying numerical PDE or simulation models.",
+        "Incorporate running extrema as explicit additional dimensions when implementing finite difference grids."
+      ],
+      "when_to_use": "Use lookback options when an investor wants maximum protection against market timing risk and is willing to pay a substantially higher premium.",
+      "when_not_to_use": "Avoid lookback options when trading on tight budgets or in highly liquid markets where vanilla options or standard exotic structures (like barrier options) provide sufficient protection at a lower cost.",
+      "interview_questions": [
+        {
+          "question": "Why is a lookback option significantly more expensive than a vanilla option with the same strike?",
+          "answer": "Because the payoff is tied to the absolute minimum or maximum price achieved over the entire life of the option, completely removing timing risk for the holder."
+        },
+        {
+          "question": "How does discrete monitoring affect the pricing of lookback options in Monte Carlo simulations?",
+          "answer": "Discrete monitoring misses intermediate peaks and troughs, leading to an overestimation of minimums (for calls) or underestimation of maximums, requiring bias-correction techniques like Brownian bridges."
+        }
+      ],
+      "related_topics": [
+        "Asian option pricing — average price option mechanics",
+        "Barrier option pricing — knock-in knock-out exotic options",
+        "Simulation based pricing — Monte Carlo for exotic options"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-12T22:49:02.621180+00:00",
+      "run_number": 703
     }
   ]
 }
