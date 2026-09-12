@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 698,
-    "last_updated": "2026-09-12T22:33:29.808706+00:00",
-    "total_topics_learned": 698
+    "total_runs": 699,
+    "last_updated": "2026-09-12T22:36:36.360500+00:00",
+    "total_topics_learned": 699
   },
   "entries": [
     {
@@ -33736,6 +33736,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-12T22:33:29.808684+00:00",
       "run_number": 698
+    },
+    {
+      "topic": "Finite difference methods — numerical PDE solution for options",
+      "category": "probability-math",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Finite difference methods approximate continuous partial differential equations, such as the Black-Scholes PDE, by discretizing space and time onto a grid. They are essential for pricing path-dependent, early-exercise, and multi-asset derivatives where analytical formulas fail.",
+      "key_points": [
+        "Discretizes the underlying asset price and time domains into a grid of nodes.",
+        "Replaces partial derivatives with finite difference approximations like forward, backward, or central differences.",
+        "Implements schemes such as Explicit, Implicit, and Crank-Nicolson, trading off stability and computational cost.",
+        "Handles early-exercise boundaries natively through iterative constraint checks at each time step."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Pricing a European put option using the explicit finite difference method.",
+        "correct": "import numpy as np\n\ndef explicit_fd_put(K, T, r, sigma, S_max, M, N):\n    dt = T / N\n    ds = S_max / M\n    S = np.linspace(0, S_max, M + 1)\n    V = np.maximum(K - S, 0)\n    for j in range(N):\n        V_new = np.copy(V)\n        for i in range(1, M):\n            delta = (V[i+1] - V[i-1]) / (2 * ds)\n            gamma = (V[i+1] - 2*V[i] + V[i-1]) / (ds**2)\n            theta = -0.5 * sigma**2 * S[i]**2 * gamma - r * S[i] * delta + r * V[i]\n            V_new[i] = V[i] - dt * theta\n        V_new[0] = K\n        V_new[M] = 0\n        V = V_new\n    return S, V",
+        "wrong": "import numpy as np\n\ndef explicit_fd_put(K, T, r, sigma, S_max, M, N):\n    dt = T / N\n    ds = S_max / M\n    # Wrong: Violates the CFL stability condition for explicit finite difference schemes\n    dt = 2.0 * dt \n    ... "
+      },
+      "common_mistakes": [
+        "Ignoring the Courant-Friedrichs-Lewy (CFL) stability condition in explicit schemes, leading to explosive numerical oscillations.",
+        "Setting the spatial grid boundary S_max too low, which truncates the domain and introduces severe boundary errors."
+      ],
+      "best_practices": [
+        "Use the Crank-Nicolson method for second-order convergence in both time and space while maintaining unconditional stability.",
+        "Implement non-uniform grid spacing that concentrates resolution near the strike price where the option payoff has a kink."
+      ],
+      "when_to_use": "Use when pricing American options, Bermudan swaptions, or options under complex local/stochastic volatility models with no closed-form solution.",
+      "when_not_to_use": "Avoid for simple European options with closed-form solutions (like standard Black-Scholes) or ultra-high-dimensional problems where Monte Carlo simulation is superior.",
+      "interview_questions": [
+        {
+          "question": "What is the primary difference between explicit and implicit finite difference schemes regarding stability?",
+          "answer": "Explicit schemes are conditionally stable and require strict constraints on the time-step size relative to the space-step size (CFL condition). Implicit schemes are unconditionally stable for any step size, though accuracy still requires small steps."
+        },
+        {
+          "question": "How do you handle the early-exercise feature of an American option within an implicit finite difference solver?",
+          "answer": "At each backward time step, after solving the linear system, you compare the computed continuation value at each grid node with the immediate exercise payoff, setting the value to the maximum of the two."
+        }
+      ],
+      "related_topics": [
+        "Local volatility model — Dupire equation for option pricing",
+        "Binomial tree option pricing — CRR model for American options",
+        "Stochastic volatility models — Heston SABR for realistic vol"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-12T22:36:36.360476+00:00",
+      "run_number": 699
     }
   ]
 }
