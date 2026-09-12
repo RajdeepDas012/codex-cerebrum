@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **601** |
-| Last Updated | `2026-09-12T00:07:09.339177+00:00` |
-| Dataset Size | `601 entries` |
+| Total Topics Learned | **602** |
+| Last Updated | `2026-09-12T00:10:15.281967+00:00` |
+| Dataset Size | `602 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 152 |
-| technical-analysis | 118 |
+| technical-analysis | 119 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Buying climax detection — exhaustion of buying at market tops`
 - `Forced selling identification — recognizing indiscriminate selling`
 - `Margin call cascade — forced selling creating liquidity crisis`
 - `Fund flow analysis — money flowing into and out of sectors`
 - `Market sentiment surveys — AAII bulls bears as contrarian signal`
-- `Euphoria identification — measuring excess optimism at tops`
 
 <!-- STATS_END -->
 
