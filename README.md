@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **678** |
-| Last Updated | `2026-09-12T19:20:08.756108+00:00` |
-| Dataset Size | `678 entries` |
+| Total Topics Learned | **679** |
+| Last Updated | `2026-09-12T19:23:16.027663+00:00` |
+| Dataset Size | `679 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 173 |
 | technical-analysis | 142 |
-| market-analysis | 105 |
+| market-analysis | 106 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 57 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market reconstruction after crash — recovery patterns and timing`
 - `Flash crash analysis — microsecond market failure mechanics`
 - `Circuit breaker mechanics — market halts and reopening dynamics`
 - `Central bank intervention — when and how CBs intervene`
 - `Liquidity crisis identification — when markets stop functioning`
-- `Contagion mechanics — how crisis spreads across markets`
 
 <!-- STATS_END -->
 
