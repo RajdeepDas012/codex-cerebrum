@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **680** |
-| Last Updated | `2026-09-12T19:26:22.455520+00:00` |
-| Dataset Size | `680 entries` |
+| Total Topics Learned | **681** |
+| Last Updated | `2026-09-12T19:29:28.902178+00:00` |
+| Dataset Size | `681 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 57 |
-| probability-math | 15 |
+| probability-math | 16 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Value at risk calculation — parametric historical Monte Carlo VaR`
 - `Stress testing portfolio — simulating historical crisis scenarios`
 - `Market reconstruction after crash — recovery patterns and timing`
 - `Flash crash analysis — microsecond market failure mechanics`
 - `Circuit breaker mechanics — market halts and reopening dynamics`
-- `Central bank intervention — when and how CBs intervene`
 
 <!-- STATS_END -->
 
