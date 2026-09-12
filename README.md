@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **598** |
-| Last Updated | `2026-09-11T22:21:58.654472+00:00` |
-| Dataset Size | `598 entries` |
+| Total Topics Learned | **599** |
+| Last Updated | `2026-09-12T00:00:57.264983+00:00` |
+| Dataset Size | `599 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 152 |
 | technical-analysis | 118 |
-| market-analysis | 75 |
+| market-analysis | 76 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 52 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fund flow analysis — money flowing into and out of sectors`
 - `Market sentiment surveys — AAII bulls bears as contrarian signal`
 - `Euphoria identification — measuring excess optimism at tops`
 - `Capitulation signals — identifying true market bottom behavior`
 - `Fear of missing out FOMO — how FOMO drives late cycle buying`
-- `Contrarian investing psychology — going against market consensus`
 
 <!-- STATS_END -->
 
