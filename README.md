@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **672** |
-| Last Updated | `2026-09-12T17:36:25.484794+00:00` |
-| Dataset Size | `672 entries` |
+| Total Topics Learned | **673** |
+| Last Updated | `2026-09-12T17:39:31.909195+00:00` |
+| Dataset Size | `673 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 172 |
+| trading-strategies | 173 |
 | technical-analysis | 142 |
 | market-analysis | 103 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Carry trade unwind risk — when carry trades reverse violently`
 - `China economic indicators — PMI property sales as global signal`
 - `Emerging market indicators — EM stress signals and contagion`
 - `Global PMI composite — worldwide factory and services activity`
 - `Business cycle dating — NBER methodology for cycle identification`
-- `Recession probability models — probit model for recession prediction`
 
 <!-- STATS_END -->
 
