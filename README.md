@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **655** |
-| Last Updated | `2026-09-12T14:30:55.034255+00:00` |
-| Dataset Size | `655 entries` |
+| Total Topics Learned | **656** |
+| Last Updated | `2026-09-12T14:34:22.824063+00:00` |
+| Dataset Size | `656 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 87 |
+| market-analysis | 88 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 53 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Balance of payments analysis — current account and capital flows`
 - `Interest rate parity — covered and uncovered interest parity`
 - `Purchasing power parity — long term exchange rate equilibrium`
 - `Currency intervention detection — central bank FX intervention`
 - `Cross rate analysis — identifying strength weakness across currencies`
-- `Carry trade dynamics — interest rate differential and currency`
 
 <!-- STATS_END -->
 
