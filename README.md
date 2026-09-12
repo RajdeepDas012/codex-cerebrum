@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **613** |
-| Last Updated | `2026-09-12T00:44:24.589156+00:00` |
-| Dataset Size | `613 entries` |
+| Total Topics Learned | **614** |
+| Last Updated | `2026-09-12T05:31:37.083888+00:00` |
+| Dataset Size | `614 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 154 |
-| technical-analysis | 128 |
+| technical-analysis | 129 |
 | market-analysis | 77 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `No supply signal — down bar with low volume as strength`
 - `No demand signal — up bar with low volume as weakness`
 - `Volume spread analysis VSA — reading professional activity in bars`
 - `Point and figure count — horizontal count for price target`
 - `Cause and effect in Wyckoff — measuring potential move from trading range`
-- `Composite operator concept — tracking smart money movement`
 
 <!-- STATS_END -->
 
