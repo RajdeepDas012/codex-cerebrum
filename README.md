@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **629** |
-| Last Updated | `2026-09-12T10:26:53.740473+00:00` |
-| Dataset Size | `629 entries` |
+| Total Topics Learned | **630** |
+| Last Updated | `2026-09-12T10:30:00.345790+00:00` |
+| Dataset Size | `630 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 160 |
+| trading-strategies | 161 |
 | technical-analysis | 137 |
 | market-analysis | 78 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Liquidity sweep trading — hunting stops before reversal`
 - `Premium and discount zones — optimal trade entry locations`
 - `Fair value gap FVG — imbalance zones that price revisits`
 - `Order block trading — institutional entry zones identification`
 - `Change of character CHoCH — early trend reversal signal`
-- `Break of structure BOS — trend change identification method`
 
 <!-- STATS_END -->
 
