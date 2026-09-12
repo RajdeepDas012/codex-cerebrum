@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **648** |
-| Last Updated | `2026-09-12T14:08:56.842177+00:00` |
-| Dataset Size | `648 entries` |
+| Total Topics Learned | **649** |
+| Last Updated | `2026-09-12T14:12:03.204367+00:00` |
+| Dataset Size | `649 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 171 |
 | technical-analysis | 142 |
-| market-analysis | 81 |
+| market-analysis | 82 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 53 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Bond equity correlation — changing correlation in different regimes`
 - `Currency correlation with equities — FX rates and stock impact`
 - `Risk on risk off analysis — classifying assets by risk appetite`
 - `Intermarket analysis — relationships between bonds stocks commodities`
 - `Volume gap analysis — gaps on high volume vs low volume`
-- `Gap measurement techniques — measuring and trading price gaps`
 
 <!-- STATS_END -->
 
