@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **689** |
-| Last Updated | `2026-09-12T22:05:31.604099+00:00` |
-| Dataset Size | `689 entries` |
+| Total Topics Learned | **690** |
+| Last Updated | `2026-09-12T22:08:37.970060+00:00` |
+| Dataset Size | `690 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 178 |
+| trading-strategies | 179 |
 | technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Tail risk hedging — protecting against extreme negative events`
 - `Diversification benefit measurement — correlation and portfolio variance`
 - `Ruin prevention strategies — position sizing to avoid blowup`
 - `Risk of ruin formula — probability of losing all capital`
 - `Gain to pain ratio — total return divided by total losses`
-- `Pain ratio — measuring the suffering of holding through losses`
 
 <!-- STATS_END -->
 
