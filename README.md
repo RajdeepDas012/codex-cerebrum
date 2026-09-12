@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **658** |
-| Last Updated | `2026-09-12T14:40:48.846677+00:00` |
-| Dataset Size | `658 entries` |
+| Total Topics Learned | **659** |
+| Last Updated | `2026-09-12T16:56:01.698469+00:00` |
+| Dataset Size | `659 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 172 |
 | technical-analysis | 142 |
-| market-analysis | 90 |
+| market-analysis | 91 |
 | crypto-blockchain | 74 |
 | system-design | 58 |
 | stocks-markets | 53 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Liquidity cycle analysis — global dollar liquidity and asset prices`
 - `Money supply M1 M2 — monetary aggregates and inflation prediction`
 - `Central bank balance sheet — QE QT and market impact`
 - `Balance of payments analysis — current account and capital flows`
 - `Interest rate parity — covered and uncovered interest parity`
-- `Purchasing power parity — long term exchange rate equilibrium`
 
 <!-- STATS_END -->
 
