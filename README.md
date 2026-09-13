@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **704** |
-| Last Updated | `2026-09-13T00:44:24.814477+00:00` |
-| Dataset Size | `704 entries` |
+| Total Topics Learned | **705** |
+| Last Updated | `2026-09-13T00:47:31.213261+00:00` |
+| Dataset Size | `705 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 182 |
+| trading-strategies | 183 |
 | technical-analysis | 143 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Correlation trading — trading correlation between assets`
 - `Spread option pricing — options on price difference of two assets`
 - `Lookback option pricing — maximum minimum price options`
 - `Asian option pricing — average price option mechanics`
 - `Barrier option pricing — knock-in knock-out exotic options`
-- `Simulation based pricing — Monte Carlo for exotic options`
 
 <!-- STATS_END -->
 

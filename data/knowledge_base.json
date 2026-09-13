@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 704,
-    "last_updated": "2026-09-13T00:44:24.814477+00:00",
-    "total_topics_learned": 704
+    "total_runs": 705,
+    "last_updated": "2026-09-13T00:47:31.213261+00:00",
+    "total_topics_learned": 705
   },
   "entries": [
     {
@@ -34022,6 +34022,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T00:44:24.814457+00:00",
       "run_number": 704
+    },
+    {
+      "topic": "Correlation trading — trading correlation between assets",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Correlation trading is a quantitative strategy that profits from discrepancies between the implied correlation of multi-asset derivatives (like index options or basket swaps) and the realized correlation of their underlying components. It matters because it allows traders to express a pure view on the co-movement of assets independent of their individual directional price trends.",
+      "key_points": [
+        "Implied correlation is extracted from the prices of index options versus single-stock options, reflecting market expectations of future co-movement.",
+        "Realized correlation is calculated retrospectively using historical return time series of the component assets over a specific window.",
+        "Dispersion trading is a primary implementation of correlation trading, selling index volatility and buying single-stock volatility to profit from high constituent divergence.",
+        "Correlation risk is highly non-linear, making position sizing and tail-risk hedging crucial due to sudden correlation spikes during market crashes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculates the rolling realized correlation matrix and extracts the average pairwise correlation for a basket of assets.",
+        "correct": "import numpy as np\nimport pandas as pd\n\ndef calculate_average_realized_correlation(returns: pd.DataFrame, window: int = 30) -> pd.Series:\n    rolling_corr = returns.rolling(window=window).corr()\n    n = returns.shape[1]\n    # Extract upper triangle excluding diagonal to get pairwise correlations\n    idx = np.triu_indices(n, k=1)\n    avg_corr = rolling_corr.groupby(level=0).apply(lambda df: df.values[idx].mean())\n    return avg_corr",
+        "wrong": "import numpy as np\nimport pandas as pd\n\ndef calculate_average_realized_correlation(returns: pd.DataFrame):\n    # WRONG: Averaging correlation coefficients directly without handling matrix structure or using simple mean of covariance\n    return returns.corr().mean().mean()"
+      },
+      "common_mistakes": [
+        "Treating correlation as a constant parameter rather than a dynamic, mean-reverting, and regime-dependent variable.",
+        "Ignoring the non-linear pay-offs of options when hedging a correlation trade, leading to severe delta and gamma mismatches."
+      ],
+      "best_practices": [
+        "Use exponential weighting or GARCH-based models to capture the time-varying nature of asset co-movements.",
+        "Implement robust tail-risk protection, as market crashes routinely drive asset correlations toward 1.0 simultaneously.",
+        "Monitor liquidity constraints of individual basket constituents when executing multi-leg dispersion structures."
+      ],
+      "when_to_use": "When you have a strong quantitative thesis that the market is overpricing or underpricing the co-movement of a group of assets relative to historical norms.",
+      "when_not_to_use": "During periods of extreme macroeconomic stress or systemic liquidity crunches when asset correlations break down and converge rapidly to unity.",
+      "interview_questions": [
+        {
+          "question": "What is the core structural trade in a dispersion strategy?",
+          "answer": "Selling index options (implied high correlation expectation) and buying single-stock options (implied low correlation expectation) across the index components."
+        },
+        {
+          "question": "Why do equity correlations tend to spike toward 1.0 during market downturns?",
+          "answer": "Systemic panic, forced liquidations, and macro-driven risk-off sentiment override idiosyncratic company fundamentals, causing all stocks to sell off together."
+        }
+      ],
+      "related_topics": [
+        "Dispersion trading",
+        "Volatility swaps",
+        "Statistical arbitrage"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-13T00:47:31.213217+00:00",
+      "run_number": 705
     }
   ]
 }
