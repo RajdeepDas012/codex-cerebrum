@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 726,
-    "last_updated": "2026-09-13T06:13:16.992995+00:00",
-    "total_topics_learned": 726
+    "total_runs": 727,
+    "last_updated": "2026-09-13T06:16:23.110401+00:00",
+    "total_topics_learned": 727
   },
   "entries": [
     {
@@ -35076,6 +35076,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T06:13:16.992975+00:00",
       "run_number": 726
+    },
+    {
+      "topic": "Point-in-time data — using only data available at decision time",
+      "category": "machine-learning",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Point-in-time data ensures that machine learning models are trained and evaluated using only the information that was physically known and published at the exact timestamp of the decision. This practice prevents subtle data leakage that inflates backtest performance but fails catastrophically in live deployment.",
+      "key_points": [
+        "Distinguishes between the event timestamp (when data happened) and the publication timestamp (when data became publicly available).",
+        "Accounts for corporate actions, restatements, and delayed reporting schedules inherent in fundamental and alternative datasets.",
+        "Requires bi-temporal database structures to query the exact state of a dataset as it existed at any given historical moment.",
+        "Essential for generating reliable out-of-sample metrics during cross-validation of financial and time-series models."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Merging features with target variables strictly based on availability timestamps rather than event dates.",
+        "correct": "import pandas as pd\n\n# features and targets have 'event_date' and 'published_at'\nmerged = pd.merge_asof(\n    features.sort_values('published_at'),\n    targets.sort_values('event_date'),\n    left_on='published_at',\n    right_on='event_date',\n    direction='backward'\n)",
+        "wrong": "import pandas as pd\n\n# naive merge using event date exposes future revisions\nmerged = pd.merge(features, targets, on='date')"
+      },
+      "common_mistakes": [
+        "Using annualized financial statements mapped to the fiscal year-end date instead of the actual SEC filing date.",
+        "Applying rolling window normalizations (like mean and standard deviation) computed over the entire dataset before splitting."
+      ],
+      "best_practices": [
+        "Maintain a dedicated data warehouse or feature store that natively supports point-in-time querying.",
+        "Timestamp every incoming row of data with its exact ingestion or publication time.",
+        "Audit feature generation pipelines by intentionally running backtests with deliberately shifted release schedules."
+      ],
+      "when_to_use": "Whenever building predictive models on historical time-series data where reporting delays or data revisions occur.",
+      "when_not_to_use": "When working with real-time streaming data where arrival time is virtually identical to event time and no historical database is queried.",
+      "interview_questions": [
+        {
+          "question": "What is the difference between event time and publication time, and why does it matter for machine learning?",
+          "answer": "Event time is when an economic activity occurred, while publication time is when that data was actually accessible to the market. Using event time without accounting for publication delay introduces look-ahead bias because the model uses information that was actually hidden at decision time."
+        },
+        {
+          "question": "How would you handle a company restating its earnings from the previous quarter in your feature store?",
+          "answer": "You must use a bi-temporal data model that stores both the effective time of the data and the assertion time (when the data was known), allowing your queries to retrieve exactly what was known on a specific historical date without incorporating future restatements."
+        }
+      ],
+      "related_topics": [
+        "Look-ahead bias detection — ensuring no future data leakage",
+        "Survivorship bias elimination — including delisted stocks in backtest",
+        "Live trading vs backtest gap — causes and how to minimize"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T06:16:23.110383+00:00",
+      "run_number": 727
     }
   ]
 }
