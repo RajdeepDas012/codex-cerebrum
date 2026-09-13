@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **711** |
-| Last Updated | `2026-09-13T01:06:09.694165+00:00` |
-| Dataset Size | `711 entries` |
+| Total Topics Learned | **712** |
+| Last Updated | `2026-09-13T01:09:16.017934+00:00` |
+| Dataset Size | `712 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
 | system-design | 58 |
-| probability-math | 26 |
+| probability-math | 27 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Yang-Zhang volatility — best unbiased volatility estimator`
 - `Garman-Klass volatility — incorporating open close high low`
 - `Parkinson volatility estimator — using high low for vol estimate`
 - `EWMA volatility estimation — exponentially weighted moving average`
 - `Realized volatility forecasting — HAR model for vol prediction`
-- `Volatility cone analysis — historical vol at different timeframes`
 
 <!-- STATS_END -->
 
