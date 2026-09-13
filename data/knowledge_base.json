@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 791,
-    "last_updated": "2026-09-13T21:57:33.783087+00:00",
-    "total_topics_learned": 791
+    "total_runs": 792,
+    "last_updated": "2026-09-13T22:00:41.240407+00:00",
+    "total_topics_learned": 792
   },
   "entries": [
     {
@@ -38198,6 +38198,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:57:33.783066+00:00",
       "run_number": 791
+    },
+    {
+      "topic": "Implementation of a distributed lock using Redis and Lua scripts for idempotent payment processing in microservices",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "A distributed locking mechanism utilizing Redis atomic operations and Lua scripts to prevent concurrent execution of critical sections, ensuring duplicate payment requests are safely rejected. It matters because distributed architectures are prone to network retries that can trigger double-charging if operations are not strictly idempotent and serialized.",
+      "key_points": [
+        "Uses cryptographically random UUID tokens stored in Redis to ensure that only the instance that acquired the lock can release it.",
+        "Executes lock acquisition and release checks inside Lua scripts to guarantee atomicity across network boundaries.",
+        "Implements a time-to-live (TTL) expiration on keys to automatically recover from crashed microservice instances holding the lock.",
+        "Combines distributed locking with persistent idempotency keys in a transactional database to guarantee safety even if locks expire prematurely."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic lock release using a Redis Lua script to verify ownership via a unique token before deletion.",
+        "correct": "import redis\nimport uuid\n\nclass DistributedLock:\n    def __init__(self, client: redis.Redis, resource_key: str, ttl_ms: int):\n        self.client = client\n        self.key = f\"lock:{resource_key}\"\n        self.ttl = ttl_ms\n        self.token = str(uuid.uuid4())\n        self.release_script = self.client.register_script(\n            \"if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end\"\n        )\n\n    def acquire(self) -> bool:\n        return self.client.set(self.key, self.token, px=self.ttl, nx=True) is not None\n\n    def release(self):\n        self.release_script(keys=[self.key], args=[self.token])",
+        "wrong": "def release_wrong(client, key, token):\n    if client.get(key) == token:\n        client.delete(key)"
+      },
+      "common_mistakes": [
+        "Checking lock ownership with a separate GET followed by a DEL command, which introduces a race condition where the lock expires and gets acquired by another client in between.",
+        "Failing to account for clock drift or long-running critical sections that exceed the Redis key TTL, causing the lock to expire while still in use."
+      ],
+      "best_practices": [
+        "Always use a cryptographically secure random token as the lock value to prevent a slow client from releasing a lock acquired by another client after expiration.",
+        "Wrap Redis operations in try-finally blocks to ensure lock release methods are always executed even if application exceptions occur inside the critical section.",
+        "Use Redlock algorithm or robust consensus-backed storage like etcd/ZooKeeper if multi-node Redis master-replica failover consistency is required."
+      ],
+      "when_to_use": "When handling high-frequency financial transactions across distributed microservices where duplicate requests must be strictly serialized and idempotency must be guaranteed.",
+      "when_not_to_use": "When your architecture requires strict linearizability under network partitions without any risk of split-brain, where consensus systems like Raft or Paxos are mandatory.",
+      "interview_questions": [
+        {
+          "question": "Why is a two-step GET then DELETE operation unsafe for releasing a distributed lock in Redis?",
+          "answer": "Because a race condition occurs if the lock expires between the GET and DELETE commands, causing the client to unintentionally delete a new lock acquired by another process."
+        },
+        {
+          "question": "How do you handle a scenario where a payment processing job takes longer than the Redis distributed lock TTL?",
+          "answer": "You can implement a watchdog thread that periodically sends a Lua script to extend the lock's TTL while the task is still actively running, or design the system with shorter atomic transaction chunks and persistent state tracking."
+        }
+      ],
+      "related_topics": [
+        "Idempotency Key Patterns in Distributed Systems",
+        "Redlock Algorithm and Redis Cluster Replication",
+        "Split-Brain Scenarios and Consensus Protocols"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T22:00:41.240388+00:00",
+      "run_number": 792
     }
   ]
 }
