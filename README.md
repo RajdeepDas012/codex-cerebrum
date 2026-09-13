@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **733** |
-| Last Updated | `2026-09-13T06:35:03.989025+00:00` |
-| Dataset Size | `733 entries` |
+| Total Topics Learned | **734** |
+| Last Updated | `2026-09-13T11:29:28.406132+00:00` |
+| Dataset Size | `734 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 198 |
 | technical-analysis | 147 |
-| market-analysis | 108 |
+| market-analysis | 109 |
 | crypto-blockchain | 74 |
 | stocks-markets | 64 |
 | system-design | 59 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market efficiency paradox — Grossman Stiglitz on information cost`
 - `Alpha decay in factors — why factors lose edge over time`
 - `Strategy scaling problems — why small account strategies fail large`
 - `Capacity analysis — maximum capital a strategy can deploy`
 - `Signal decay analysis — how long a trading edge lasts`
-- `Alternative data evaluation — signal strength and decay analysis`
 
 <!-- STATS_END -->
 
