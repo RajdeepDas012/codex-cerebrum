@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 777,
-    "last_updated": "2026-09-13T19:25:58.096616+00:00",
-    "total_topics_learned": 777
+    "total_runs": 778,
+    "last_updated": "2026-09-13T19:29:05.751909+00:00",
+    "total_topics_learned": 778
   },
   "entries": [
     {
@@ -37527,6 +37527,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T19:25:58.096596+00:00",
       "run_number": 777
+    },
+    {
+      "topic": "Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A low-latency ring buffer (or circular queue) utilizes pre-allocated contiguous memory and atomic operations to enable lock-free, zero-allocation message passing between a single producer thread and a single consumer thread. In high-frequency trading, this eliminates OS-level thread synchronization bottlenecks, ensuring deterministic microsecond-level execution times for internal order routing and market data dispatch.",
+      "key_points": [
+        "Single-Producer Single-Consumer (SPSC) design removes the need for heavy mutexes, relying strictly on atomic memory orderings (acquire-release semantics).",
+        "Power-of-two buffer sizing allows replacing expensive modulo operators with fast bitwise masking (`index & (capacity - 1)`).",
+        "Cache-line padding (using `alignas(64)`) prevents false sharing where producer and consumer updates invalidate each other's CPU L1/L2 cache lines.",
+        "Memory barriers and volatile/atomic indicators ensure proper visibility of ring buffer slots across distinct CPU cores without full bus lock overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free SPSC ring buffer utilizing atomic head/tail pointers and cache-line alignment.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <new>\n\ntemplate <typename T, size_t Capacity>\nclass SPSCRingBuffer {\n    static_assert((Capacity & (Capacity - 1)) == 0, \"Capacity must be a power of two\");\nprivate:\n    alignas(64) std::atomic<size_t> head_{0};\n    alignas(64) std::atomic<size_t> tail_{0};\n    alignas(64) T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        const size_t current_head = head_.load(std::memory_order_relaxed);\n        const size_t current_tail = tail_.load(std::memory_order_acquire);\n        if (current_head - current_tail >= Capacity) return false;\n        buffer_[current_head & (Capacity - 1)] = item;\n        head_.store(current_head + 1, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "alignas(64) size_t head_ = 0;\nalignas(64) size_t tail_ = 0;\n// Missing std::atomic results in compiler reordering, stale reads, and race conditions across threads."
+      },
+      "common_mistakes": [
+        "Using sequential consistency (`std::memory_order_seq_cst`) everywhere, which introduces unnecessary hardware memory fence instructions and slows down throughput.",
+        "Failing to pad or separate the head and tail atomic variables onto distinct CPU cache lines, leading to performance-degrading false sharing."
+      ],
+      "best_practices": [
+        "Use `std::memory_order_acquire` for reading indices and `std::memory_order_release` for writing indices to establish proper happens-before relationships.",
+        "Pre-allocate all buffer elements upon system startup to guarantee zero dynamic memory allocations on the critical trading path."
+      ],
+      "when_to_use": "When passing messages, ticks, or execution instructions between dedicated threads on the same machine where microsecond-level determinism is mandatory.",
+      "when_not_to_use": "When dealing with multiple producer threads or multiple consumer threads, which requires more complex MPMC memory reclamation and CAS retry logic.",
+      "interview_questions": [
+        {
+          "question": "Why must the ring buffer capacity be a power of two in high-performance implementations?",
+          "answer": "It allows replacing the slow CPU modulo operation (`index % capacity`) with a fast bitwise AND operation (`index & (capacity - 1)`), saving valuable CPU cycles on the critical path."
+        },
+        {
+          "question": "What is false sharing, and how do you prevent it in a lock-free ring buffer?",
+          "answer": "False sharing occurs when two independent variables modified by different threads reside on the same 64-byte CPU cache line. It is prevented by using `alignas(64)` to force the head and tail pointers onto separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Multi-Producer Multi-Consumer (MPMC) queues",
+        "CPU cache coherence and false sharing mitigation",
+        "Memory order semantics (Acquire-Release vs Seq-Cst)"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T19:29:05.751890+00:00",
+      "run_number": 778
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **777** |
-| Last Updated | `2026-09-13T19:25:58.096616+00:00` |
-| Dataset Size | `777 entries` |
+| Total Topics Learned | **778** |
+| Last Updated | `2026-09-13T19:29:05.751909+00:00` |
+| Dataset Size | `778 entries` |
 
 ## 📂 Categories Learned
 
@@ -33,17 +33,17 @@
 | algorithms | 2 |
 | data-visualization | 2 |
 | networking | 2 |
+| data-structures | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| data-structures | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems`
 - `Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)`
 - `WebSocket heartbeat and reconnection management for real-time market data feeds`
 - `Cross-currency basis swap pricing implementation`
 - `Order book imbalance calculation`
-- `Currency hedging strategy — managing FX risk in global portfolio`
 
 <!-- STATS_END -->
 
