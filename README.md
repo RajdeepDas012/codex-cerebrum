@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **743** |
-| Last Updated | `2026-09-13T11:58:39.802342+00:00` |
-| Dataset Size | `743 entries` |
+| Total Topics Learned | **744** |
+| Last Updated | `2026-09-13T12:01:46.907376+00:00` |
+| Dataset Size | `744 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 199 |
+| trading-strategies | 200 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Reserve order strategy — hiding order size with reserve`
 - `Pegged order mechanics — mid-point and primary peg orders`
 - `Order type optimization — selecting order types for execution`
 - `Colocation and latency — physical distance to exchange impact`
 - `FPGA trading systems — field programmable gate array for speed`
-- `Microwave trading infrastructure — speed of light trading advantage`
 
 <!-- STATS_END -->
 
