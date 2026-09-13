@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **753** |
-| Last Updated | `2026-09-13T16:10:59.886585+00:00` |
-| Dataset Size | `753 entries` |
+| Total Topics Learned | **754** |
+| Last Updated | `2026-09-13T16:14:06.219615+00:00` |
+| Dataset Size | `754 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
-| stocks-markets | 67 |
+| stocks-markets | 68 |
 | system-design | 60 |
 | probability-math | 27 |
 | machine-learning | 10 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `TCA reporting — regulatory and internal execution reporting`
 - `Post-trade analysis — measuring actual vs expected execution`
 - `Pre-trade analysis — estimating cost before execution`
 - `Implementation shortfall minimization — optimal trade scheduling`
 - `Adaptive arrival price — dynamic VWAP algorithm execution`
-- `Participation rate algorithm — tracking market volume percentage`
 
 <!-- STATS_END -->
 
