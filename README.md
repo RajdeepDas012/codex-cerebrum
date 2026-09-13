@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **724** |
-| Last Updated | `2026-09-13T06:06:50.363205+00:00` |
-| Dataset Size | `724 entries` |
+| Total Topics Learned | **725** |
+| Last Updated | `2026-09-13T06:10:10.299388+00:00` |
+| Dataset Size | `725 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
-| stocks-markets | 62 |
+| stocks-markets | 63 |
 | system-design | 59 |
 | probability-math | 27 |
 | databases | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Survivorship bias elimination — including delisted stocks in backtest`
 - `Transaction cost modeling — realistic cost estimation in backtest`
 - `Execution optimization — minimizing slippage and market impact`
 - `Live trading vs backtest gap — causes and how to minimize`
 - `Portfolio of strategies — combining uncorrelated trading systems`
-- `Strategy correlation analysis — measuring alpha overlap`
 
 <!-- STATS_END -->
 
