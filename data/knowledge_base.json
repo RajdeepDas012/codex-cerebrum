@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 786,
-    "last_updated": "2026-09-13T21:41:57.220184+00:00",
-    "total_topics_learned": 786
+    "total_runs": 787,
+    "last_updated": "2026-09-13T21:45:04.175537+00:00",
+    "total_topics_learned": 787
   },
   "entries": [
     {
@@ -37958,6 +37958,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T21:41:57.220166+00:00",
       "run_number": 786
+    },
+    {
+      "topic": "Implementation of a thread-safe sliding window rate limiter for API client requests using a token bucket algorithm",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "A thread-safe rate limiter manages API traffic by continuously replenishing tokens in a bucket at a fixed rate, allowing smooth bursts up to a defined capacity. It matters because it protects downstream services from overload while fairly allocating bandwidth to concurrent API consumers.",
+      "key_points": [
+        "Token bucket algorithms support burst traffic up to the maximum capacity of the bucket unlike strict fixed windows.",
+        "Thread safety must be enforced using mutual exclusion locks (e.g., threading.Lock) to prevent race conditions during concurrent token updates.",
+        "Lazy evaluation updates the token count based on elapsed time since the last request rather than relying on a background polling thread.",
+        "Atomic checks and deductions ensure that multiple threads cannot consume the same token simultaneously."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Thread-safe token bucket rate limiter implementation using a threading lock and lazy token replenishment.",
+        "correct": "import time\nimport threading\n\nclass TokenBucket:\n    def __init__(self, capacity: float, refill_rate: float):\n        self.capacity = capacity\n        self.tokens = capacity\n        self.refill_rate = refill_rate\n        self.last_refill = time.monotonic()\n        self.lock = threading.Lock()\n\n    def consume(self, tokens: int = 1) -> bool:\n        with self.lock:\n            now = time.monotonic()\n            elapsed = now - self.last_refill\n            self.last_refill = now\n            self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)\n            \n            if self.tokens >= tokens:\n                self.tokens -= tokens\n                return True\n            return False",
+        "wrong": "class UnsafeBucket:\n    def __init__(self, capacity, rate):\n        self.tokens = capacity\n        self.rate = rate\n    def consume(self):\n        if self.tokens > 0:\n            self.tokens -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Failing to acquire a synchronization lock, leading to race conditions and negative token counts under high concurrency.",
+        "Using system wall-clock time (`time.time()`) instead of monotonic time (`time.monotonic()`), which breaks rate calculations if the system clock synchronizes or updates backward."
+      ],
+      "best_practices": [
+        "Use monotonic clocks for measuring elapsed time intervals to remain resilient against NTP adjustments.",
+        "Keep critical sections inside locks as small as possible to minimize contention and latency overhead in multi-threaded environments.",
+        "Design rate limiters to return standard HTTP status codes like 429 (Too Many Requests) along with a 'Retry-After' header."
+      ],
+      "when_to_use": "Use this when building API gateways or backend services that need to control traffic spikes and protect finite resources from abuse.",
+      "when_not_to_use": "Avoid this in distributed multi-node clusters without a centralized store (like Redis), as in-memory limits will fragment per server node.",
+      "interview_questions": [
+        {
+          "question": "How do you handle rate limiting in a distributed microservices architecture where requests hit multiple different API gateway instances?",
+          "answer": "Use a centralized data store like Redis to maintain token bucket state atomically using Lua scripts, or use a distributed sliding window counter."
+        },
+        {
+          "question": "Why is `time.monotonic()` preferred over `time.time()` when calculating token replenishment rates?",
+          "answer": "Monotonic clocks are guaranteed to move forward monotonically and are unaffected by system clock adjustments or daylight saving changes."
+        }
+      ],
+      "related_topics": [
+        "Distributed rate limiting with Redis and Lua scripts",
+        "Leaky bucket algorithm vs token bucket algorithm",
+        "HTTP 429 response handling and backoff strategies"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:45:04.175517+00:00",
+      "run_number": 787
     }
   ]
 }
