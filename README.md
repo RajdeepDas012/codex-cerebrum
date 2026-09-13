@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **742** |
-| Last Updated | `2026-09-13T11:55:33.113008+00:00` |
-| Dataset Size | `742 entries` |
+| Total Topics Learned | **743** |
+| Last Updated | `2026-09-13T11:58:39.802342+00:00` |
+| Dataset Size | `743 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
-| stocks-markets | 66 |
+| stocks-markets | 67 |
 | system-design | 60 |
 | probability-math | 27 |
 | machine-learning | 10 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Pegged order mechanics — mid-point and primary peg orders`
 - `Order type optimization — selecting order types for execution`
 - `Colocation and latency — physical distance to exchange impact`
 - `FPGA trading systems — field programmable gate array for speed`
 - `Microwave trading infrastructure — speed of light trading advantage`
-- `Network effects in markets — how information spreads and prices`
 
 <!-- STATS_END -->
 
