@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **749** |
-| Last Updated | `2026-09-13T15:58:34.855983+00:00` |
-| Dataset Size | `749 entries` |
+| Total Topics Learned | **750** |
+| Last Updated | `2026-09-13T16:01:41.040584+00:00` |
+| Dataset Size | `750 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 205 |
+| trading-strategies | 206 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Adaptive arrival price — dynamic VWAP algorithm execution`
 - `Participation rate algorithm — tracking market volume percentage`
 - `Algorithmic order slicing — breaking large orders into pieces`
 - `Order-sends-order OSO — automated order sequences`
 - `One cancels other OCO — bracket order for trade management`
-- `Conditional order strategy — using contingent orders effectively`
 
 <!-- STATS_END -->
 
