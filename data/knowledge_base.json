@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 784,
-    "last_updated": "2026-09-13T21:35:43.900469+00:00",
-    "total_topics_learned": 784
+    "total_runs": 785,
+    "last_updated": "2026-09-13T21:38:50.760371+00:00",
+    "total_topics_learned": 785
   },
   "entries": [
     {
@@ -37863,6 +37863,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:35:43.900448+00:00",
       "run_number": 784
+    },
+    {
+      "topic": "Time-weighted average price (TWAP) execution algorithm implementation with randomized slice sizing",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "A TWAP execution algorithm distributes a large parent order into smaller child orders across evenly spaced time intervals to minimize market impact. Introducing randomized slice sizing prevents predatory algorithmic traders from detecting and front-running the predictable volume pattern.",
+      "key_points": [
+        "Divides a target execution quantity into a fixed number of discrete temporal intervals.",
+        "Applies a stochastic variance (e.g., uniform or normal distribution) to slice sizes to conceal order footprints.",
+        "Tracks cumulative executed volume against a linear target benchmark to manage execution drift.",
+        "Incorporates dynamic safety bounds and order cancellation logic if market volatility spikes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates generating randomized TWAP slice sizes that sum up to the total parent order quantity.",
+        "correct": "import numpy as np\n\ndef generate_twap_slices(total_qty: float, num_slices: int, variance_pct: float = 0.2) -> list[float]:\n    base_size = total_qty / num_slices\n    weights = np.random.uniform(1.0 - variance_pct, 1.0 + variance_pct, num_slices)\n    slices = base_size * weights\n    # Normalize to ensure exact total quantity matching\n    return (slices * (total_qty / np.sum(slices))).tolist()",
+        "wrong": "def generate_twap_slices(total_qty, num_slices):\n    # Bug: Random rounding leads to total quantity mismatch and fails exchange validation\n    return [round(total_qty / num_slices * np.random.uniform(0.8, 1.2), 2) for _ in range(num_slices)]"
+      },
+      "common_mistakes": [
+        "Failing to re-normalize randomized slice allocations, leading to cumulative execution size discrepancies against the parent order.",
+        "Using static time intervals without accounting for liquidity drop-offs during market lunch breaks or session opens/closes."
+      ],
+      "best_practices": [
+        "Ensure the sum of all randomized slices strictly equals the target parent order quantity using precise float adjustments.",
+        "Implement adaptive participation caps so that individual slice sizes never exceed a maximum percentage of the prevailing volume interval.",
+        "Maintain state persistence to recover gracefully from gateway disconnections without duplicating executions."
+      ],
+      "when_to_use": "When executing large institutional orders where minimizing structural price impact and hiding intent from signal sniffers is paramount.",
+      "when_not_to_use": "In highly illiquid markets where time-based slicing forces aggressive crossing of wide spreads, or when volume-weighted execution (VWAP) is more appropriate.",
+      "interview_questions": [
+        {
+          "question": "Why is introducing randomization to a TWAP slice sizing schedule important?",
+          "answer": "It breaks the deterministic footprint of standard execution algorithms, preventing high-frequency predatory traders from anticipating and front-running upcoming child orders."
+        },
+        {
+          "question": "How do you handle the mathematical discrepancy when randomized slice sizes do not sum up to the target parent order?",
+          "answer": "You calculate the scaling factor between the target total and the sum of the generated weights, multiply each slice by that factor, or adjust the final slice dynamically to absorb the rounding delta."
+        }
+      ],
+      "related_topics": [
+        "Volume-weighted average price (VWAP) execution algorithm",
+        "Percentage of volume (POV) execution strategy",
+        "Market impact models and permanent vs temporary price change"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:38:50.760351+00:00",
+      "run_number": 785
     }
   ]
 }
