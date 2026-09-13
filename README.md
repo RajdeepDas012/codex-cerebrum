@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **778** |
-| Last Updated | `2026-09-13T19:29:05.751909+00:00` |
-| Dataset Size | `778 entries` |
+| Total Topics Learned | **779** |
+| Last Updated | `2026-09-13T21:20:05.765587+00:00` |
+| Dataset Size | `779 entries` |
 
 ## 📂 Categories Learned
 
@@ -30,20 +30,20 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
+| data-structures | 3 |
 | algorithms | 2 |
 | data-visualization | 2 |
 | networking | 2 |
-| data-structures | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems`
 - `Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems`
 - `Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)`
 - `WebSocket heartbeat and reconnection management for real-time market data feeds`
 - `Cross-currency basis swap pricing implementation`
-- `Order book imbalance calculation`
 
 <!-- STATS_END -->
 

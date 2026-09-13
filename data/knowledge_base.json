@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 778,
-    "last_updated": "2026-09-13T19:29:05.751909+00:00",
-    "total_topics_learned": 778
+    "total_runs": 779,
+    "last_updated": "2026-09-13T21:20:05.765587+00:00",
+    "total_topics_learned": 779
   },
   "entries": [
     {
@@ -37574,6 +37574,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T19:29:05.751890+00:00",
       "run_number": 778
+    },
+    {
+      "topic": "Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free multi-producer single-consumer (MPSC) queue allows multiple execution threads to safely submit log entries simultaneously without blocking, while a single background thread drains the queue. This pattern prevents latency spikes on critical execution paths by decoupling synchronous trading logic from asynchronous disk I/O.",
+      "key_points": [
+        "Utilizes atomic operations (e.g., atomic exchange or fetch-add) to manage head and tail pointers safely across threads without traditional mutexes.",
+        "Eliminates kernel context switches and priority inversion risks associated with OS-level locking primitives during log writes.",
+        "Ensures thread safety for multiple producers by linearizing node insertions using atomic CAS (Compare-And-Swap) loops.",
+        "Maintains a dedicated consumer thread that processes the queue sequentially, avoiding contention on the consumption side."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a node-based MPSC queue structure using atomic pointers for safe multi-threaded writes.",
+        "correct": "template <typename T>\nclass MPSCQueue {\n    struct Node {\n        T data;\n        std::atomic<Node*> next;\n        Node(const T& val) : data(val), next(nullptr) {}\n    };\n    std::atomic<Node*> head;\n    std::atomic<Node*> tail;\n    Node* stub;\npublic:\n    MPSCQueue() {\n        stub = new Node(T());\n        head.store(stub);\n        tail.store(stub);\n    }\n    void enqueue(const T& value) {\n        Node* newNode = new Node(value);\n        Node* prev = head.exchange(newNode, std::memory_order_acq_rel);\n        prev->next.store(newNode, std::memory_order_release);\n    }\n    bool dequeue(T& result) {\n        Node* tailNode = tail.load(std::memory_order_relaxed);\n        Node* nextNode = tailNode->next.load(std::memory_order_acquire);\n        if (tailNode == stub) {\n            if (nextNode == nullptr) return false;\n            tail.store(nextNode, std::memory_order_relaxed);\n            tailNode = nextNode;\n            nextNode = tailNode->next.load(std::memory_order_acquire);\n        }\n        if (nextNode == nullptr) return false;\n        result = nextNode->data;\n        tail.store(nextNode, std::memory_order_relaxed);\n        delete tailNode;\n        return true;\n    }\n};",
+        "wrong": "void enqueue(const T& value) {\n    Node* newNode = new Node(value);\n    // Missing memory ordering and atomic synchronization leads to race conditions\n    head->next = newNode;\n    head = newNode;\n}"
+      },
+      "common_mistakes": [
+        "Using incorrect memory ordering constraints (e.g., memory_order_relaxed everywhere), which can cause instruction reordering and missing visibility updates across cores.",
+        "Forgetting to handle memory reclamation properly, leading to memory leaks or use-after-free bugs when nodes are popped by the consumer."
+      ],
+      "best_practices": [
+        "Pad atomic pointers and frequently accessed control variables to prevent false sharing across CPU cache lines.",
+        "Preallocate memory or use a custom node allocator to avoid heavy heap allocation overhead during high-frequency order routing bursts.",
+        "Pair the queue with a condition variable or a futex-based notification mechanism only if the consumer needs to sleep and wake up efficiently without burning CPU cycles."
+      ],
+      "when_to_use": "Use when multiple trading strategy threads need to output high-frequency telemetry or audit logs concurrently without introducing latency jitter to the main execution path.",
+      "when_not_to_use": "Avoid when there are multiple consumers, as standard MPSC structures will break, requiring a full multi-producer multi-consumer (MPMC) architecture instead.",
+      "interview_questions": [
+        {
+          "question": "Why is an MPSC queue preferred over a traditional mutex-locked queue for trading system loggers?",
+          "answer": "Mutexes can cause threads to sleep or block, introducing unpredictable latency spikes that violate low-latency SLAs. An MPSC queue allows non-blocking pushes from producers."
+        },
+        {
+          "question": "How do you prevent false sharing between the producer thread updating the head pointer and the consumer thread updating the tail pointer?",
+          "answer": "You can align the atomic pointers to cache line boundaries (e.g., using alignas(64)) so that they reside on separate CPU cache lines, preventing cache ping-pong effects."
+        }
+      ],
+      "related_topics": [
+        "Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems",
+        "Memory ordering and atomic primitives in concurrent programming",
+        "Lock-free memory reclamation and hazard pointers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:20:05.765567+00:00",
+      "run_number": 779
     }
   ]
 }
