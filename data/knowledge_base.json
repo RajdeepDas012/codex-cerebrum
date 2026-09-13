@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 774,
-    "last_updated": "2026-09-13T19:15:50.424193+00:00",
-    "total_topics_learned": 774
+    "total_runs": 775,
+    "last_updated": "2026-09-13T19:18:57.308176+00:00",
+    "total_topics_learned": 775
   },
   "entries": [
     {
@@ -37379,6 +37379,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T19:15:50.424174+00:00",
       "run_number": 774
+    },
+    {
+      "topic": "Cross-currency basis swap pricing implementation",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Cross-currency basis swap pricing involves valuing the exchange of floating interest rate cash flows in two different currencies along with initial and final principal exchanges. Implementing this requires constructing multi-curve frameworks to discount cash flows in the foreign currency and project future rates using separate collateral discounting curves.",
+      "key_points": [
+        "Utilizes separate discounting and forecasting curves (OIS discounting per currency)",
+        "Accounts for the basis spread added to the floating leg of the non-dominant currency",
+        "Involves initial, intermediate, and final principal exchanges settled at prevailing spot FX rates",
+        "Requires robust FX spot and forward rate interpolation to project future principal and coupon cash flows"
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculates the present value of a cross-currency basis swap by discounting foreign cash flows and converting them to the domestic currency.",
+        "correct": "def price_xccy_swap(notional_dom, notional_for, fx_spot, dom_discount_curve, for_discount_curve, for_cash_flows):\n    pv_for = sum(cf * for_discount_curve(t) for t, cf in for_cash_flows)\n    pv_for_dom = pv_for * fx_spot\n    pv_dom = sum(cf * dom_discount_curve(t) for t, cf in dom_cash_flows)\n    return pv_dom - (notional_dom - notional_for * fx_spot)",
+        "wrong": "def price_xccy_swap(notional_dom, notional_for, fx_spot, single_curve, cash_flows):\n    return sum(cf * single_curve(t) for t, cf in cash_flows) * fx_spot"
+      },
+      "common_mistakes": [
+        "Using a single yield curve for both discounting and forecasting, ignoring the multi-curve framework post-2008",
+        "Failing to account for the basis spread adjustment on the floating leg"
+      ],
+      "best_practices": [
+        "Implement distinct collateralized discounting curves (e.g., SOFR vs. ESTR) for each currency",
+        "Ensure proper handling and marking-to-market of principal exchanges throughout the swap lifecycle",
+        "Validate forward FX rates implied by interest rate parity against market quotes"
+      ],
+      "when_to_use": "When executing long-term foreign funding operations or capturing arbitrage opportunities in global money markets via synthetic borrowing.",
+      "when_not_to_use": "When dealing with short-term, uncollateralized cash management where standard FX forwards or simple cross-currency loans are more cost-effective.",
+      "interview_questions": [
+        {
+          "question": "Why do we need separate discounting and forecasting curves when pricing cross-currency basis swaps?",
+          "answer": "Post-crisis, collateralized cash receives OIS rates rather than interbank rates (LIBOR/Euribor), meaning the discounting curve must reflect the currency of the collateral posted rather than the currency of the cash flow."
+        },
+        {
+          "question": "How does a change in the cross-currency basis spread affect the mark-to-market value of an existing swap?",
+          "answer": "If the basis spread widens for the currency where you receive the spread, the present value of your floating leg increases, boosting the overall MTM of the swap."
+        }
+      ],
+      "related_topics": [
+        "Multi-curve bootstrapping framework",
+        "Collateral discounting and CSA valuation adjustments",
+        "Interest rate parity and FX forward pricing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T19:18:57.308157+00:00",
+      "run_number": 775
     }
   ]
 }

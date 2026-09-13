@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **774** |
-| Last Updated | `2026-09-13T19:15:50.424193+00:00` |
-| Dataset Size | `774 entries` |
+| Total Topics Learned | **775** |
+| Last Updated | `2026-09-13T19:18:57.308176+00:00` |
+| Dataset Size | `775 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 225 |
+| trading-strategies | 226 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Cross-currency basis swap pricing implementation`
 - `Order book imbalance calculation`
 - `Currency hedging strategy — managing FX risk in global portfolio`
 - `Country neutral global portfolio — removing country allocation risk`
 - `Sector neutral long short — eliminating sector timing bets`
-- `Statistical factor neutralization — removing unwanted factor exposure`
 
 <!-- STATS_END -->
 
