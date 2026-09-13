@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **783** |
-| Last Updated | `2026-09-13T21:32:36.578816+00:00` |
-| Dataset Size | `783 entries` |
+| Total Topics Learned | **784** |
+| Last Updated | `2026-09-13T21:35:43.900469+00:00` |
+| Dataset Size | `784 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
 | stocks-markets | 71 |
-| system-design | 62 |
+| system-design | 63 |
 | probability-math | 27 |
 | machine-learning | 10 |
 | databases | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Precision-timed CPU ticker implementation using `rdtsc` and `clock_gettime` for latency profiling in high-frequency trading applications`
 - `FIX protocol message parser implementation with zero-copy buffer slicing`
 - `NUMA-aware memory allocation thread pinning implementation for multi-socket low-latency trading servers`
 - `Kernel-bypass network interface card (NIC) polling loop implementation using Solarflare EF_VI or similar low-latency APIs for financial market data ingestion`
 - `Memory-mapped file ring buffer for persistent high-throughput market data recording`
-- `Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems`
 
 <!-- STATS_END -->
 

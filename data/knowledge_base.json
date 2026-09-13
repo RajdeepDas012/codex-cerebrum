@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 783,
-    "last_updated": "2026-09-13T21:32:36.578816+00:00",
-    "total_topics_learned": 783
+    "total_runs": 784,
+    "last_updated": "2026-09-13T21:35:43.900469+00:00",
+    "total_topics_learned": 784
   },
   "entries": [
     {
@@ -37815,6 +37815,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:32:36.578799+00:00",
       "run_number": 783
+    },
+    {
+      "topic": "Precision-timed CPU ticker implementation using `rdtsc` and `clock_gettime` for latency profiling in high-frequency trading applications",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A precision-timed CPU ticker leverages the Read Time-Stamp Counter (`rdtsc`) instruction paired with `clock_gettime` calibration to measure sub-nanosecond code execution intervals with minimal overhead. In high-frequency trading, this mechanism is crucial for micro-benchmarking order gateways and matching engines without introducing the heavy system call overhead of standard timers.",
+      "key_points": [
+        "Utilizes the x86 `rdtsc` instruction to read the CPU's internal clock cycles with single-digit nanosecond overhead.",
+        "Combines `rdtsc` with `clock_gettime(CLOCK_MONOTONIC)` to calibrate the dynamic CPU frequency into actual elapsed time units.",
+        "Applies CPU serialization instructions (`lfence` or `cpuid`) to prevent out-of-order execution from corrupting timing boundaries.",
+        "Stores raw cycle counts in hot execution paths to defer expensive time-base conversions until post-processing or logging."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a safe, serialized low-overhead cycle timer class using rdtsc and lfence.",
+        "correct": "class LatencyTimer {\npublic:\n    inline static uint64_t rdtsc_start() {\n        unsigned int aux;\n        // lfence prevents out-of-order execution from leaking into the measured region\n        _mm_lfence();\n        return __rdtscp(&aux);\n    }\n    inline static uint64_t rdtsc_end() {\n        unsigned int aux;\n        uint64_t t = __rdtscp(&aux);\n        _mm_lfence();\n        return t;\n    }\n};",
+        "wrong": "uint64_t rdtsc_wrong() {\n    // Missing serialization barriers allow the CPU to reorder instructions across the timer boundary\n    return __builtin_ia32_rdtsc();\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for variable CPU frequencies (e.g., Intel SpeedStep or AMD Cool'n'Quiet) which makes raw cycle-to-time conversion inaccurate.",
+        "Neglecting CPU core migration, where a thread jumps to a different core with a potentially unsynchronized TSC value or different frequency profile."
+      ],
+      "best_practices": [
+        "Pin profiling threads to dedicated CPU cores using `pthread_setaffinity_np` to maintain a constant TSC frequency.",
+        "Periodically recalibrate the TSC against `clock_gettime(CLOCK_MONOTONIC)` to handle thermal frequency scaling drifts.",
+        "Use `_mm_lfence()` before and after `rdtsc` to ensure proper instruction retirement ordering."
+      ],
+      "when_to_use": "When micro-benchmarking critical path code paths in latency-sensitive applications where standard system call timers add unacceptable jitter.",
+      "when_not_to_use": "When measuring cross-core or distributed system latencies where CPU cycle counters do not share a synchronized global time base.",
+      "interview_questions": [
+        {
+          "question": "Why is `rdtsc` alone insufficient for accurate time measurement on modern CPUs?",
+          "answer": "Modern CPUs use dynamic frequency scaling (turboboost/thermal throttling) and out-of-order execution, meaning raw cycles do not map linearly to wall-clock time without serialization barriers and frequency calibration."
+        },
+        {
+          "question": "How do you prevent the CPU from reordering instructions across your `rdtsc` measurement window?",
+          "answer": "By inserting execution serialization instructions like `_mm_lfence()` immediately before and after the `rdtsc` call to force the CPU to retire all preceding instructions."
+        }
+      ],
+      "related_topics": [
+        "NUMA-aware memory allocation thread pinning implementation for multi-socket low-latency trading servers",
+        "Kernel-bypass network interface card (NIC) polling loop implementation using Solarflare EF_VI",
+        "Lock-free multi-producer single-consumer queue implementation for concurrent logging"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:35:43.900448+00:00",
+      "run_number": 784
     }
   ]
 }
