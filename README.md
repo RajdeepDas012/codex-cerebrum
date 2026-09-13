@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **741** |
-| Last Updated | `2026-09-13T11:52:26.698721+00:00` |
-| Dataset Size | `741 entries` |
+| Total Topics Learned | **742** |
+| Last Updated | `2026-09-13T11:55:33.113008+00:00` |
+| Dataset Size | `742 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 198 |
+| trading-strategies | 199 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Order type optimization — selecting order types for execution`
 - `Colocation and latency — physical distance to exchange impact`
 - `FPGA trading systems — field programmable gate array for speed`
 - `Microwave trading infrastructure — speed of light trading advantage`
 - `Network effects in markets — how information spreads and prices`
-- `Narrative economics — how stories drive market movements`
 
 <!-- STATS_END -->
 
