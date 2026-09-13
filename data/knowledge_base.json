@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 781,
-    "last_updated": "2026-09-13T21:26:21.519787+00:00",
-    "total_topics_learned": 781
+    "total_runs": 782,
+    "last_updated": "2026-09-13T21:29:28.844389+00:00",
+    "total_topics_learned": 782
   },
   "entries": [
     {
@@ -37718,6 +37718,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:26:21.519765+00:00",
       "run_number": 781
+    },
+    {
+      "topic": "NUMA-aware memory allocation thread pinning implementation for multi-socket low-latency trading servers",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "NUMA-aware memory allocation and thread pinning ensure that execution threads remain bound to specific CPU cores while exclusively allocating memory from the local socket's memory controller. This technique eliminates cross-socket QuickPath Interconnect (QPI) or Ultra Path Interconnect (UPI) latency penalties, guaranteeing deterministic sub-microsecond memory access times critical for high-frequency trading.",
+      "key_points": [
+        "Non-Uniform Memory Access (NUMA) architecture assigns different memory latencies depending on which CPU socket accesses which memory controller.",
+        "Thread pinning (affinity setting via sched_setaffinity) prevents the operating system scheduler from migrating threads across sockets, preserving L1/L2/L3 cache warmth.",
+        "Local memory allocation guarantees that memory pages are physically allocated on the node where the thread executing the code resides.",
+        "Inter-socket communication introduces non-deterministic memory access penalties of 40ns to over 100ns, which destroys ultra-low latency guarantees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates setting thread affinity to a specific CPU core and allocating memory local to that NUMA node.",
+        "correct": "#numa.h>\n#sched.h>\n#pthread.h>\n\nvoid configure_thread_for_numa(int core_id, int numa_node) {\n    cpu_set_t cpuset;\n    CPU_ZERO(&cpuset);\n    CPU_SET(core_id, &cpuset);\n    pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);\n    \n    // Allocate memory local to the specified NUMA node\n    void* ptr = numa_alloc_onnode(1024 * 1024, numa_node);\n    // Use ptr...\n    numa_free(ptr, 1024 * 1024);\n}",
+        "wrong": "void* ptr = malloc(1024 * 1024); // May allocate memory on a remote NUMA node, causing high latency penalties during access."
+      },
+      "common_mistakes": [
+        "Relying on the default operating system allocator without specifying NUMA policies, leading to accidental remote memory allocation.",
+        "Pinning threads to cores on socket A while allocating memory buffers via libraries that default to socket B.",
+        "Ignoring hyper-threading topology when selecting core IDs for pinning, placing competing threads on the same physical core."
+      ],
+      "best_practices": [
+        "Initialize and bind memory using libnuma explicitly during the application startup phase before creating hot-path execution loops.",
+        "Use numactl for command-line profiling and verification of process-level memory and CPU placement.",
+        "Isolate CPU cores from the OS scheduler using kernel boot parameters (isolcpus) to prevent context switching on trading threads."
+      ],
+      "when_to_use": "Use when building ultra-low latency trading gateways, order routers, or matching engines deployed on multi-socket enterprise servers where memory access latency must be tightly bounded.",
+      "when_not_to_use": "Avoid on single-socket systems or cloud VMs where NUMA topology is abstracted, virtualized, or dynamically altered by the hypervisor.",
+      "interview_questions": [
+        {
+          "question": "What is the primary latency penalty of cross-socket memory access in a multi-socket NUMA system?",
+          "answer": "Cross-socket memory access requires traversing the interconnect bus (QPI/UPI), which adds roughly 40-100ns of latency compared to accessing local memory."
+        },
+        {
+          "question": "How do you ensure a thread's heap allocations reside strictly on its local NUMA node?",
+          "answer": "By setting thread affinity using sched_setaffinity, using NUMA-specific allocation APIs like numa_alloc_onnode(), or binding the memory allocation policy with set_mempolicy."
+        }
+      ],
+      "related_topics": [
+        "CPU cache coherence and false sharing optimization",
+        "Kernel-bypass network interface card polling loop",
+        "Lock-free data structures for high-frequency trading"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:29:28.844368+00:00",
+      "run_number": 782
     }
   ]
 }
