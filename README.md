@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **761** |
-| Last Updated | `2026-09-13T16:35:50.502961+00:00` |
-| Dataset Size | `761 entries` |
+| Total Topics Learned | **762** |
+| Last Updated | `2026-09-13T16:38:56.349617+00:00` |
+| Dataset Size | `762 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
-| stocks-markets | 68 |
+| stocks-markets | 69 |
 | system-design | 60 |
 | probability-math | 27 |
 | machine-learning | 10 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Active return decomposition — allocation vs selection vs interaction`
 - `Benchmark selection — choosing appropriate comparison index`
 - `Performance attribution — decomposing returns to identify skill`
 - `Trading journal analysis — extracting insights from trade records`
 - `Risk management framework — rules for position and portfolio risk`
-- `Edge identification framework — finding exploitable market inefficiencies`
 
 <!-- STATS_END -->
 
