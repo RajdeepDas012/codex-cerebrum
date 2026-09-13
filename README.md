@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **738** |
-| Last Updated | `2026-09-13T11:43:05.774399+00:00` |
-| Dataset Size | `738 entries` |
+| Total Topics Learned | **739** |
+| Last Updated | `2026-09-13T11:46:13.241712+00:00` |
+| Dataset Size | `739 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
 | stocks-markets | 64 |
-| system-design | 59 |
+| system-design | 60 |
 | probability-math | 27 |
 | machine-learning | 10 |
 | databases | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Microwave trading infrastructure — speed of light trading advantage`
 - `Network effects in markets — how information spreads and prices`
 - `Narrative economics — how stories drive market movements`
 - `Reflexivity in markets — Soros theory of self-reinforcing trends`
 - `Adaptive market hypothesis — markets evolve as traders adapt`
-- `Market efficiency paradox — Grossman Stiglitz on information cost`
 
 <!-- STATS_END -->
 
