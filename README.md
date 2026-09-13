@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **772** |
-| Last Updated | `2026-09-13T19:09:37.612998+00:00` |
-| Dataset Size | `772 entries` |
+| Total Topics Learned | **773** |
+| Last Updated | `2026-09-13T19:12:43.920991+00:00` |
+| Dataset Size | `773 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 224 |
+| trading-strategies | 225 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Currency hedging strategy — managing FX risk in global portfolio`
 - `Country neutral global portfolio — removing country allocation risk`
 - `Sector neutral long short — eliminating sector timing bets`
 - `Statistical factor neutralization — removing unwanted factor exposure`
 - `Market neutral construction — beta hedging methodology`
-- `Long short equity construction — systematic long short portfolio`
 
 <!-- STATS_END -->
 
