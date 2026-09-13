@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 718,
-    "last_updated": "2026-09-13T01:28:02.043257+00:00",
-    "total_topics_learned": 718
+    "total_runs": 719,
+    "last_updated": "2026-09-13T05:50:43.793854+00:00",
+    "total_topics_learned": 719
   },
   "entries": [
     {
@@ -34691,6 +34691,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T01:28:02.043203+00:00",
       "run_number": 718
+    },
+    {
+      "topic": "Monte Carlo backtest validation — statistical significance testing",
+      "category": "trading-strategies",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Monte Carlo backtest validation uses randomized resampling of trade returns to test whether a strategy's performance is driven by true edge rather than luck or curve-fitting. By generating thousands of randomized alternative equity curves, it calculates the exact probability (p-value) that your Sharpe ratio or total return could have occurred by chance.",
+      "key_points": [
+        "Resamples actual historical trade sequences randomly (with replacement) to destroy chronological dependency while preserving trade return distributions.",
+        "Calculates a p-value representing the proportion of randomized runs that outperform the original backtest metric (e.g., net profit or Sharpe ratio).",
+        "Distinguishes true statistical significance from random data-snooping bias inherent in heavily optimized trading rules.",
+        "Provides confidence intervals for drawdowns and final equity curves to stress-test worst-case scenarios."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates calculating a p-value for a strategy's total return using trade bootstrap resampling.",
+        "correct": "import numpy as np\n\ndef monte_carlo_p_value(trade_returns, n_simulations=10000):\n    actual_return = np.sum(trade_returns)\n    simulated_returns = np.empty(n_simulations)\n    for i in range(n_simulations):\n        resampled = np.random.choice(trade_returns, size=len(trade_returns), replace=True)\n        simulated_returns[i] = np.sum(resampled)\n    p_value = np.sum(simulated_returns >= actual_return) / n_simulations\n    return p_value",
+        "wrong": "import numpy as np\n\ndef monte_carlo_p_value(trade_returns):\n    # WRONG: Shuffling trades without replacement destroys the return distribution properties and doesn't simulate independent probabilistic trials\n    simulated = np.random.permutation(trade_returns)\n    return np.mean(simulated)"
+      },
+      "common_mistakes": [
+        "Bootstrapping individual daily returns instead of discrete trade returns, which breaks autocorrelation structures and introduces severe unrealized compounding assumptions.",
+        "Ignoring trade sequencing and serial correlation (e.g., volatility clustering or trend persistence) when shuffling trades."
+      ],
+      "best_practices": [
+        "Run a minimum of 10,000 Monte Carlo simulations to ensure stable p-value estimation.",
+        "Use block bootstrapping if your strategy exhibits strong autocorrelation or holding-period overlap between consecutive trades.",
+        "Combine Monte Carlo validation with walk-out sample testing to form a robust quantitative defense against over-fitting."
+      ],
+      "when_to_use": "Use when you have finalized a set of trade returns from a backtest and need to prove to investors or risk committees that the strategy possesses genuine alpha.",
+      "when_not_to_use": "Avoid using on extremely small sample sizes (e.g., fewer than 30 trades), as resampling distributions will lack statistical power and yield unreliable significance tests.",
+      "interview_questions": [
+        {
+          "question": "Why is bootstrapping trade returns preferable to bootstrapping daily portfolio returns in Monte Carlo validation?",
+          "answer": "Bootstrapping daily returns ignores entry and exit mechanics, holding periods, and trade sequencing, whereas bootstrapping discrete trade returns preserves the actual payoff distribution of individual trade outcomes."
+        },
+        {
+          "question": "What does a Monte Carlo p-value of 0.02 indicate regarding your trading strategy?",
+          "answer": "It indicates that only 2% of the randomized simulation runs achieved a performance metric equal to or greater than your actual backtest, meaning you can reject the null hypothesis that your results were achieved purely by luck at the 95% confidence level."
+        }
+      ],
+      "related_topics": [
+        "Walk-forward analysis implementation — systematic strategy validation",
+        "Backtest engine construction — building accurate simulation system",
+        "Proprietary trading signal construction — combining multiple edges"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T05:50:43.793832+00:00",
+      "run_number": 719
     }
   ]
 }
