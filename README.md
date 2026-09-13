@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **745** |
-| Last Updated | `2026-09-13T12:04:54.237159+00:00` |
-| Dataset Size | `745 entries` |
+| Total Topics Learned | **746** |
+| Last Updated | `2026-09-13T12:08:01.157171+00:00` |
+| Dataset Size | `746 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 201 |
+| trading-strategies | 202 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `One cancels other OCO — bracket order for trade management`
 - `Conditional order strategy — using contingent orders effectively`
 - `Reserve order strategy — hiding order size with reserve`
 - `Pegged order mechanics — mid-point and primary peg orders`
 - `Order type optimization — selecting order types for execution`
-- `Colocation and latency — physical distance to exchange impact`
 
 <!-- STATS_END -->
 
