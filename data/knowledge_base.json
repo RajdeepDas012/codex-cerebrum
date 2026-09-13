@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 707,
-    "last_updated": "2026-09-13T00:53:44.562617+00:00",
-    "total_topics_learned": 707
+    "total_runs": 708,
+    "last_updated": "2026-09-13T00:56:51.416330+00:00",
+    "total_topics_learned": 708
   },
   "entries": [
     {
@@ -34166,6 +34166,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T00:53:44.562595+00:00",
       "run_number": 707
+    },
+    {
+      "topic": "Realized volatility forecasting — HAR model for vol prediction",
+      "category": "market-analysis",
+      "language": "language-agnostic",
+      "difficulty": "intermediate",
+      "summary": "The Heterogeneous Autoregressive (HAR) model forecasts realized volatility by capturing components across different time horizons, such as daily, weekly, and monthly persistence. It matters because it is computationally efficient like an AR model while effectively mimicking the long memory properties found in financial asset variance.",
+      "key_points": [
+        "Models realized volatility using additive components corresponding to daily, weekly, and monthly lags.",
+        "Reflects the 'heterogeneous market hypothesis,' assuming different market participants operate on distinct time scales.",
+        "Estimated easily using standard Ordinary Least Squares (OLS) regression, avoiding complex GARCH maximum likelihood convergence issues.",
+        "Can be extended to include jumps, leverage effects, and exogenous variables."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Estimating a standard HAR model using OLS on daily realized volatility data",
+        "correct": "import numpy as np\nimport statsmodels.api as sm\n\n# rv is a pandas Series of daily realized volatility\nrv_d = rv\nrv_w = rv.rolling(5).mean()\nrv_m = rv.rolling(22).mean()\n\n# Construct design matrix for day t+1 prediction\ndf = sm.add_constant(pd.DataFrame({'d': rv_d, 'w': rv_w, 'm': rv_m})).dropna()\ny = rv.loc[df.index]\nmodel = sm.OLS(y, df.drop(columns=['d'])).fit() # predicting next day based on past components",
+        "wrong": "model = sm.OLS(rv, rv.shift(1)).fit() # failing to include the multi-scale weekly and monthly aggregated components"
+      },
+      "common_mistakes": [
+        "Using overlapping rolling windows without properly adjusting standard errors for autocorrelation in the residuals.",
+        "Failing to account for overnight returns when calculating daily realized volatility from intraday high-frequency data."
+      ],
+      "best_practices": [
+        "Use robust Newey-West standard errors to account for serial correlation in multi-step-ahead forecasting errors.",
+        "Incorporate intraday jump-diffusion decompositions (e.g., bipower variation) to separate continuous volatility from jump components."
+      ],
+      "when_to_use": "When you need a robust, highly interpretable, and computationally fast benchmark model for medium-horizon volatility forecasting using high-frequency intraday data.",
+      "when_not_to_use": "When forecasting ultra-high-frequency tick-by-tick market microstructure noise regimes where microstructure friction dominates aggregated components.",
+      "interview_questions": [
+        {
+          "question": "Why is the HAR model preferred over a traditional AR(p) model for realized volatility?",
+          "answer": "An AR(p) model struggles to capture the slow decay (long memory) of volatility without requiring a large number of lags and parameters, whereas the HAR model parsimoniously captures long memory by averaging lags over daily, weekly, and monthly frequencies."
+        },
+        {
+          "question": "How do you incorporate the leverage effect into a standard HAR model?",
+          "answer": "By adding an asymmetric term, such as an indicator or scaled negative return component from the previous day, to capture the empirical observation that negative returns increase volatility more than positive returns of the same magnitude."
+        }
+      ],
+      "related_topics": [
+        "Volatility cone analysis — historical vol at different timeframes",
+        "GARCH models and volatility persistence",
+        "High-frequency realized variance and bipower variation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T00:56:51.416311+00:00",
+      "run_number": 708
     }
   ]
 }
