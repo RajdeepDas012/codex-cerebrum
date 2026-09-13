@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **709** |
-| Last Updated | `2026-09-13T00:59:57.528556+00:00` |
-| Dataset Size | `709 entries` |
+| Total Topics Learned | **710** |
+| Last Updated | `2026-09-13T01:03:03.640070+00:00` |
+| Dataset Size | `710 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 184 |
-| technical-analysis | 144 |
+| technical-analysis | 145 |
 | market-analysis | 107 |
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Parkinson volatility estimator — using high low for vol estimate`
 - `EWMA volatility estimation — exponentially weighted moving average`
 - `Realized volatility forecasting — HAR model for vol prediction`
 - `Volatility cone analysis — historical vol at different timeframes`
 - `Dispersion trading — index vs component volatility difference`
-- `Correlation trading — trading correlation between assets`
 
 <!-- STATS_END -->
 
