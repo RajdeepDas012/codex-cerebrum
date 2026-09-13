@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 776,
-    "last_updated": "2026-09-13T19:22:06.158521+00:00",
-    "total_topics_learned": 776
+    "total_runs": 777,
+    "last_updated": "2026-09-13T19:25:58.096616+00:00",
+    "total_topics_learned": 777
   },
   "entries": [
     {
@@ -37478,6 +37478,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T19:22:06.158503+00:00",
       "run_number": 776
+    },
+    {
+      "topic": "Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)",
+      "category": "data-structures",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Order book snapshot reconstruction involves taking an initial full-depth state of a market and continuously updating it using real-time incremental delta messages (L2/L3). This pattern is essential for high-frequency trading systems to maintain an accurate, low-latency internal representation of market liquidity without constantly polling full REST snapshots.",
+      "key_points": [
+        "Requires fetching an initial point-in-time snapshot via REST or a dedicated snapshot channel before processing any real-time delta stream.",
+        "Sequence IDs or update IDs must be strictly verified to ensure no delta messages are missed or applied out of order.",
+        "A price level with a size of zero or removed order ID indicates a deletion or complete exhaustion of liquidity at that level.",
+        "Efficient underlying data structures (like sorted maps or balanced binary search trees combined with hash maps) are necessary for O(log n) updates and O(1) best bid/ask lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates applying incremental price-level depth updates to an existing order book state using dictionaries and sorted lists.",
+        "correct": "def apply_delta(bids, price, size):\n    if size == 0.0:\n        bids.pop(price, None)\n    else:\n        bids[price] = size",
+        "wrong": "def apply_delta_wrong(bids, price, size):\n    # Failing to handle zero size as a deletion will accumulate empty price levels\n    bids[price] = size"
+      },
+      "common_mistakes": [
+        "Processing incoming WebSocket delta updates before the initial snapshot has finished loading.",
+        "Ignoring sequence gaps or exchange-specific jump logic, leading to desynchronized local order books.",
+        "Using naive linear search arrays for price level updates, causing severe latency degradation under high message rates."
+      ],
+      "best_practices": [
+        "Buffer incoming real-time websocket deltas into a queue while waiting for the REST snapshot fetch to complete.",
+        "Implement sequence number validation and trigger an automatic resubscription/snapshot reload if a gap is detected.",
+        "Use memory-pooled objects or pre-allocated collections in garbage-collected languages to minimize latency spikes from GC pauses."
+      ],
+      "when_to_use": "Use this when building low-latency trading algorithms, market makers, or quantitative analytics engines that require a real-time view of market depth.",
+      "when_not_to_use": "Avoid building custom delta parsers if you only need low-frequency aggregated candles or historical trade execution tracking.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a sequence ID gap between the historical snapshot and the real-time websocket delta stream?",
+          "answer": "Discard the current snapshot and delta buffer, re-fetch a fresh snapshot, and realign the sequence checking logic before resuming processing."
+        },
+        {
+          "question": "What data structures would you choose to maintain an L2 order book for O(1) best bid/ask retrieval and O(log n) price level insertion?",
+          "answer": "A combination of a hash map for O(1) price-to-size lookups and a self-balancing binary search tree (or skiplist) to maintain sorted price levels."
+        }
+      ],
+      "related_topics": [
+        "Order book imbalance calculation",
+        "WebSocket heartbeat and reconnection management for real-time market data feeds",
+        "Lock-free ring buffers for high-throughput market data ingestion"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T19:25:58.096596+00:00",
+      "run_number": 777
     }
   ]
 }
