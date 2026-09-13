@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **736** |
-| Last Updated | `2026-09-13T11:36:50.136030+00:00` |
-| Dataset Size | `736 entries` |
+| Total Topics Learned | **737** |
+| Last Updated | `2026-09-13T11:39:58.510160+00:00` |
+| Dataset Size | `737 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 198 |
 | technical-analysis | 147 |
-| market-analysis | 111 |
+| market-analysis | 112 |
 | crypto-blockchain | 74 |
 | stocks-markets | 64 |
 | system-design | 59 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Narrative economics — how stories drive market movements`
 - `Reflexivity in markets — Soros theory of self-reinforcing trends`
 - `Adaptive market hypothesis — markets evolve as traders adapt`
 - `Market efficiency paradox — Grossman Stiglitz on information cost`
 - `Alpha decay in factors — why factors lose edge over time`
-- `Strategy scaling problems — why small account strategies fail large`
 
 <!-- STATS_END -->
 
