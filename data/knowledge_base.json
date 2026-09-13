@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 788,
-    "last_updated": "2026-09-13T21:48:11.573190+00:00",
-    "total_topics_learned": 788
+    "total_runs": 789,
+    "last_updated": "2026-09-13T21:51:19.051254+00:00",
+    "total_topics_learned": 789
   },
   "entries": [
     {
@@ -38054,6 +38054,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:48:11.573173+00:00",
       "run_number": 788
+    },
+    {
+      "topic": "Implementation of an SSE4.2 hardware-accelerated JSON parser for high-throughput market data ingestion",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This technique utilizes x86 SSE4.2 SIMD instructions (such as `_mm_cmpestri`) to process 16 bytes of incoming JSON text in parallel, drastically accelerating structural character identification. It is vital for low-latency market data pipelines where standard serial parsers create processing bottlenecks when ingesting millions of messages per second.",
+      "key_points": [
+        "Leverages SIMD (Single Instruction, Multiple Data) registers to process 16 bytes of JSON payload simultaneously.",
+        "Uses SSE4.2 string comparison instructions to find structural tokens like quotes, colons, commas, and brackets without branching.",
+        "Minimizes CPU instruction cache misses and branch mispredictions common in character-by-character switch-case parsers.",
+        "Forms the architectural foundation of ultra-fast JSON engines like simdjson used in high-frequency trading gateways."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates using SSE4.2 intrinsics to scan for structural JSON characters within a 16-byte block",
+        "correct": "#include <nmmintrin.h>\n#include <string_view>\n\nconst char* find_next_structural(const char* ptr) {\n    __m128i chunk = _mm_loadu_si128(reinterpret_cast<const __m128i*>(ptr));\n    const char* structural_chars = \",:{}\";\n    __m128i targets = _mm_loadu_si128(reinterpret_cast<const __m128i*>(structural_chars));\n    int index = _mm_cmpestri(targets, 4, chunk, 16, _SIDD_CMP_EQUAL_ANY);\n    return (index < 16) ? ptr + index : nullptr;\n}",
+        "wrong": "const char* find_next_structural(const char* ptr) {\n    while (*ptr) {\n        if (*ptr == ',' || *ptr == ':' || *ptr == '{' || *ptr == '}') return ptr;\n        ptr++;\n    }\n    return nullptr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle unaligned memory boundaries, which can trigger segmentation faults when executing 128-bit loads.",
+        "Not validating runtime CPU support for SSE4.2 using `__builtin_cpu_supports` before executing hardware-specific intrinsics."
+      ],
+      "best_practices": [
+        "Always use unaligned load instructions (`_mm_loadu_si128`) since incoming network socket buffers rarely guarantee 16-byte alignment.",
+        "Combine stage-one structural indexing with a lightweight tape-based DOM builder to avoid deep recursion overhead during parsing.",
+        "Fallback gracefully to a standard scalar parser if the host CPU lacks SSE4.2 instruction set support."
+      ],
+      "when_to_use": "Use this when your ingest pipeline processes hundreds of megabytes or gigabytes of JSON market data per second and CPU parsing overhead becomes the primary bottleneck.",
+      "when_not_to_use": "Avoid this when dealing with low-throughput systems, heavily nested arbitrary schemas where standard parsers suffice, or architectures lacking x86 SIMD execution units (e.g., standard ARM without NEON ports).",
+      "interview_questions": [
+        {
+          "question": "How does SSE4.2 hardware acceleration improve JSON parsing throughput compared to a traditional character-by-character scanner?",
+          "answer": "It processes 16 bytes simultaneously using vector registers and hardware string comparison primitives, eliminating heavy branch prediction overhead and conditional loops."
+        },
+        {
+          "question": "What is a major safety consideration when loading network-derived byte arrays into 128-bit SIMD registers?",
+          "answer": "Memory alignment. Since socket buffers may not be 16-byte aligned, using aligned load instructions will cause a segmentation fault; unaligned loads (`_mm_loadu_si128`) must be used."
+        }
+      ],
+      "related_topics": [
+        "SIMD-accelerated string searching",
+        "Zero-copy network buffer management",
+        "High-frequency FIX and JSON protocol normalization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:51:19.051232+00:00",
+      "run_number": 789
     }
   ]
 }
