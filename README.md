@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **727** |
-| Last Updated | `2026-09-13T06:16:23.110401+00:00` |
-| Dataset Size | `727 entries` |
+| Total Topics Learned | **728** |
+| Last Updated | `2026-09-13T06:19:32.732311+00:00` |
+| Dataset Size | `728 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
-| stocks-markets | 63 |
+| stocks-markets | 64 |
 | system-design | 59 |
 | probability-math | 27 |
 | machine-learning | 10 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Data vendor comparison — Bloomberg Refinitiv Quandl quality`
 - `Point-in-time data — using only data available at decision time`
 - `Look-ahead bias detection — ensuring no future data leakage`
 - `Survivorship bias elimination — including delisted stocks in backtest`
 - `Transaction cost modeling — realistic cost estimation in backtest`
-- `Execution optimization — minimizing slippage and market impact`
 
 <!-- STATS_END -->
 
