@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **732** |
-| Last Updated | `2026-09-13T06:31:57.421165+00:00` |
-| Dataset Size | `732 entries` |
+| Total Topics Learned | **733** |
+| Last Updated | `2026-09-13T06:35:03.989025+00:00` |
+| Dataset Size | `733 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 197 |
+| trading-strategies | 198 |
 | technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Alpha decay in factors — why factors lose edge over time`
 - `Strategy scaling problems — why small account strategies fail large`
 - `Capacity analysis — maximum capital a strategy can deploy`
 - `Signal decay analysis — how long a trading edge lasts`
 - `Alternative data evaluation — signal strength and decay analysis`
-- `Data vendor comparison — Bloomberg Refinitiv Quandl quality`
 
 <!-- STATS_END -->
 
