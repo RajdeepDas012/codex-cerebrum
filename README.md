@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **775** |
-| Last Updated | `2026-09-13T19:18:57.308176+00:00` |
-| Dataset Size | `775 entries` |
+| Total Topics Learned | **776** |
+| Last Updated | `2026-09-13T19:22:06.158521+00:00` |
+| Dataset Size | `776 entries` |
 
 ## 📂 Categories Learned
 
@@ -32,17 +32,17 @@
 | security | 7 |
 | algorithms | 2 |
 | data-visualization | 2 |
+| networking | 2 |
 | best-practices | 1 |
 | testing | 1 |
-| networking | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `WebSocket heartbeat and reconnection management for real-time market data feeds`
 - `Cross-currency basis swap pricing implementation`
 - `Order book imbalance calculation`
 - `Currency hedging strategy — managing FX risk in global portfolio`
 - `Country neutral global portfolio — removing country allocation risk`
-- `Sector neutral long short — eliminating sector timing bets`
 
 <!-- STATS_END -->
 

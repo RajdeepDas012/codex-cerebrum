@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 775,
-    "last_updated": "2026-09-13T19:18:57.308176+00:00",
-    "total_topics_learned": 775
+    "total_runs": 776,
+    "last_updated": "2026-09-13T19:22:06.158521+00:00",
+    "total_topics_learned": 776
   },
   "entries": [
     {
@@ -37427,6 +37427,57 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T19:18:57.308157+00:00",
       "run_number": 775
+    },
+    {
+      "topic": "WebSocket heartbeat and reconnection management for real-time market data feeds",
+      "category": "networking",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "WebSocket heartbeat and reconnection management involves maintaining persistent, healthy socket connections through periodic ping/pong frames and implementing robust exponential backoff strategies to recover from dropped feeds. This is critical in financial engineering to prevent stale market data, detect silent network failures, and ensure automated trading systems never act on outdated order book states.",
+      "key_points": [
+        "Application-level ping/pong or transport-level WebSocket ping frames must be sent regularly to prevent intermediary proxies or NAT firewalls from silently dropping idle connections.",
+        "Reconnection logic should implement exponential backoff combined with randomized jitter to prevent thundering herd problems when an exchange recovers from an outage.",
+        "Connection state machines must handle stale feeds by tracking the timestamp of the last received message and triggering a proactive reconnect if a threshold is exceeded.",
+        "Subscription state and sequence IDs must be cached locally so they can be re-established and verified automatically upon a successful reconnection."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an asynchronous WebSocket client loop with heartbeat monitoring and exponential backoff reconnection.",
+        "correct": "import asyncio\nimport json\nimport random\nimport websockets\n\nasync class MarketDataClient:\n    def __init__(self, uri):\n        self.uri = uri\n        self.last_message_time = asyncio.get_event_loop().time()\n        self.heartbeat_interval = 30\n        self.stale_timeout = 60\n\n    async def connect(self):\n        attempt = 0\n        while True:\n            try:\n                async with websockets.connect(self.uri) as websocket:\n                    attempt = 0\n                    print(\"Connected to market data feed.\")\n                    await asyncio.gather(\n                        self._receiver(websocket),\n                        self._heartbeat(websocket),\n                        self._stale_monitor(websocket)\n                    )\n            except (websockets.ConnectionClosed, OSError) as e:\n                attempt += 1\n                sleep_time = min(30, (2 ** attempt) + random.uniform(0, 1))\n                print(f\"Connection lost: {e}. Reconnecting in {sleep_time:.2f}s...\")\n                await asyncio.sleep(sleep_time)\n\n    async def _receiver(self, websocket):\n        async for message in websocket:\n            self.last_message_time = asyncio.get_event_loop().time()\n            # Process market data message\n\n    async def _heartbeat(self, websocket):\n        while True:\n            await asyncio.sleep(self.heartbeat_interval)\n            await websocket.send(json.dumps({\"type\": \"ping\"}))\n\n    async def _stale_monitor(self, websocket):\n        while True:\n            await asyncio.sleep(5)\n            if asyncio.get_event_loop().time() - self.last_message_time > self.stale_timeout:\n                print(\"Feed stale. Forcing reconnection...\")\n                await websocket.close()",
+        "wrong": "import websockets\n\nasync def bad_client(uri):\n    while True:\n        try:\n            async with websockets.connect(uri) as websocket:\n                async for message in websocket:\n                    print(message)\n        except:\n            # Missing backoff causes aggressive hammering of the exchange API\n            pass"
+      },
+      "common_mistakes": [
+        "Relying solely on TCP keep-alive or default socket timeouts, which fail to detect application-level deadlocks or silent half-open connections.",
+        "Reconnecting immediately in a tight `while True` loop upon failure, which can trigger rate-limiting bans from the exchange or overload recovering infrastructure.",
+        "Failing to resubscribe to market data channels and replay missing sequence numbers after a successful reconnection.",
+        "Not using jitter in exponential backoff, causing all client instances to hit the gateway simultaneously."
+      ],
+      "best_practices": [
+        "Incorporate random jitter into exponential backoff delay calculations to disperse reconnection attempts.",
+        "Track message reception timestamps to detect silent connection drops even if the transport socket reports as open.",
+        "Buffer critical outgoing messages or state updates locally until the connection acknowledges recovery.",
+        "Log all disconnection events, reconnect durations, and heartbeat latencies to analyze network stability."
+      ],
+      "when_to_use": "Whenever building low-latency, real-time client applications consuming streaming market data, order book updates, or trade execution reports via WebSockets.",
+      "when_not_to_use": "When consuming infrequent, request-response historical market data where standard HTTP REST polling or gRPC unary calls are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "Why might a WebSocket connection appear open to the operating system even when data stops flowing, and how do you handle it?",
+          "answer": "Middleboxes like NAT routers or load balancers drop idle TCP connections after a timeout without sending a FIN packet. This is handled by implementing application-level ping/pong heartbeats and a watchdog timer that forcefully closes and reconnects the socket if no messages arrive within a specified threshold."
+        },
+        {
+          "question": "What is the thundering herd problem in WebSocket reconnection, and how do you mitigate it?",
+          "answer": "When an exchange gateway restarts, thousands of clients disconnect and attempt to reconnect simultaneously, overwhelming the server. This is mitigated by using exponential backoff combined with randomized jitter to stagger reconnection attempts over time."
+        }
+      ],
+      "related_topics": [
+        "TCP keep-alive and network socket tuning",
+        "Order book sequence gap detection and recovery",
+        "Thundering herd problem and mitigation algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-13T19:22:06.158503+00:00",
+      "run_number": 776
     }
   ]
 }
