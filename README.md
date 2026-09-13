@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **716** |
-| Last Updated | `2026-09-13T01:21:41.233449+00:00` |
-| Dataset Size | `716 entries` |
+| Total Topics Learned | **717** |
+| Last Updated | `2026-09-13T01:24:55.743476+00:00` |
+| Dataset Size | `717 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
-| system-design | 58 |
+| system-design | 59 |
 | probability-math | 27 |
 | databases | 9 |
 | web-dev | 9 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Backtest engine construction — building accurate simulation system`
 - `Proprietary trading signal construction — combining multiple edges`
 - `Market breadth composite indicator — combining advance decline data`
 - `Stock market regime detection — bull bear sideways classification`
 - `Crypto on-chain buy signal construction — combining 5 indicators`
-- `Yang-Zhang volatility — best unbiased volatility estimator`
 
 <!-- STATS_END -->
 

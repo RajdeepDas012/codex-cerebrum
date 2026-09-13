@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 716,
-    "last_updated": "2026-09-13T01:21:41.233449+00:00",
-    "total_topics_learned": 716
+    "total_runs": 717,
+    "last_updated": "2026-09-13T01:24:55.743476+00:00",
+    "total_topics_learned": 717
   },
   "entries": [
     {
@@ -34595,6 +34595,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T01:21:41.233427+00:00",
       "run_number": 716
+    },
+    {
+      "topic": "Backtest engine construction — building accurate simulation system",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Building a custom backtest engine requires designing an event-driven or vectorized simulation architecture that accurately models historical market data, order matching, and latency. It matters because flawed simulation mechanics lead to overly optimistic strategy evaluations and catastrophic real-world capital losses.",
+      "key_points": [
+        "Event-driven architecture processes market ticks, order book updates, and fills chronologically to prevent future information leakage.",
+        "Order matching engines must simulate realistic slippage, partial fills, exchange latency, and transaction fees.",
+        "Separating data feeds, portfolio state accounting, and execution strategy modules ensures clean testability and modularity.",
+        "Vectorized engines offer high-speed exploratory analysis for daily or higher timeframe indicators, while event-driven engines handle high-frequency limit-order books."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an event-driven loop that updates portfolio state based on historical price ticks without using future data",
+        "correct": "class EventEngine:\n    def __init__(self, data_feed):\n        self.data_feed = data_feed\n        self.cash = 100000.0\n        self.position = 0\n    def run(self):\n        for timestamp, price in self.data_feed:\n            if price < 100 and self.cash >= price:\n                self.position += 1\n                self.cash -= price",
+        "wrong": "def run_bad_backtest(df):\n    df['signal'] = df['close'].shift(-1) > df['close']"
+      },
+      "common_mistakes": [
+        "Using vectorized future-shifting operations that implicitly incorporate look-ahead bias.",
+        "Ignoring transaction costs, bid-ask spreads, and market impact which turn theoretical profits into net losses."
+      ],
+      "best_practices": [
+        "Maintain a strict immutable time-series data feed that only yields data available strictly prior to the current simulation timestamp.",
+        "Implement comprehensive logging of every simulated fill, cancellation, and margin adjustment for post-run audit analysis."
+      ],
+      "when_to_use": "Building custom, production-grade quantitative trading platforms that require highly specific execution logic or multi-asset portfolio constraints.",
+      "when_not_to_use": "Running quick exploratory data analysis on simple daily indicator crossovers where standard libraries like Backtrader or VectorBT suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent look-ahead bias in an event-driven backtest engine?",
+          "answer": "By ensuring the simulation loop processes events strictly ordered by timestamp and only exposes data to strategy logic that arrived prior to the current event timestamp."
+        },
+        {
+          "question": "Why might a vectorized backtest show profitable results that fail in an event-driven simulation?",
+          "answer": "Vectorized backtests often assume instant execution at exact closing prices without accounting for slippage, partial fills, latency, or intra-bar price paths."
+        }
+      ],
+      "related_topics": [
+        "Low latency execution systems",
+        "Transaction cost analysis (TCA)",
+        "Order book simulation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-13T01:24:55.743454+00:00",
+      "run_number": 717
     }
   ]
 }
