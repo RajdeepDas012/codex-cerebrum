@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **740** |
-| Last Updated | `2026-09-13T11:49:19.943303+00:00` |
-| Dataset Size | `740 entries` |
+| Total Topics Learned | **741** |
+| Last Updated | `2026-09-13T11:52:26.698721+00:00` |
+| Dataset Size | `741 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
-| stocks-markets | 65 |
+| stocks-markets | 66 |
 | system-design | 60 |
 | probability-math | 27 |
 | machine-learning | 10 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Colocation and latency — physical distance to exchange impact`
 - `FPGA trading systems — field programmable gate array for speed`
 - `Microwave trading infrastructure — speed of light trading advantage`
 - `Network effects in markets — how information spreads and prices`
 - `Narrative economics — how stories drive market movements`
-- `Reflexivity in markets — Soros theory of self-reinforcing trends`
 
 <!-- STATS_END -->
 
