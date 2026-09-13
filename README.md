@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **706** |
-| Last Updated | `2026-09-13T00:50:37.644035+00:00` |
-| Dataset Size | `706 entries` |
+| Total Topics Learned | **707** |
+| Last Updated | `2026-09-13T00:53:44.562617+00:00` |
+| Dataset Size | `707 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 184 |
-| technical-analysis | 143 |
+| technical-analysis | 144 |
 | market-analysis | 106 |
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volatility cone analysis — historical vol at different timeframes`
 - `Dispersion trading — index vs component volatility difference`
 - `Correlation trading — trading correlation between assets`
 - `Spread option pricing — options on price difference of two assets`
 - `Lookback option pricing — maximum minimum price options`
-- `Asian option pricing — average price option mechanics`
 
 <!-- STATS_END -->
 

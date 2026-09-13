@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 706,
-    "last_updated": "2026-09-13T00:50:37.644035+00:00",
-    "total_topics_learned": 706
+    "total_runs": 707,
+    "last_updated": "2026-09-13T00:53:44.562617+00:00",
+    "total_topics_learned": 707
   },
   "entries": [
     {
@@ -34118,6 +34118,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-13T00:50:37.644016+00:00",
       "run_number": 706
+    },
+    {
+      "topic": "Volatility cone analysis — historical vol at different timeframes",
+      "category": "technical-analysis",
+      "language": "python",
+      "difficulty": "intermediate",
+      "summary": "Volatility cone analysis is a visual tool used to compare current implied or historical volatility across various time horizons against historical ranges (such as min, max, and percentiles). It matters because it helps traders identify whether a particular option maturity is cheap or expensive relative to its historical behavior across different holding periods.",
+      "key_points": [
+        "Plots historical volatility over multiple time windows (e.g., 10-day to 250-day) on the x-axis against volatility levels on the y-axis.",
+        "Typically displays statistical boundaries such as historical minimum, maximum, median, and 25th/75th percentiles for each timeframe.",
+        "Helps detect term-structure anomalies where short-term volatility is mispriced relative to long-term volatility.",
+        "Assists in structuring calendar spreads and vega-neutral option strategies by highlighting structural cheapness/richness."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Calculates rolling historical volatility across multiple timeframes to build a volatility cone dataset.",
+        "correct": "import numpy as np\nimport pandas as pd\n\ndef calculate_vol_cone(prices, windows=[10, 30, 60, 90, 180, 250]):\n    log_returns = np.log(prices / prices.shift(1))\n    cone_data = {}\n    for w in windows:\n        rolling_vol = log_returns.rolling(window=w).std() * np.sqrt(252)\n        cone_data[f'{w}d'] = {\n            'min': rolling_vol.min(),\n            'max': rolling_vol.max(),\n            'median': rolling_vol.median()\n        }\n    return pd.DataFrame(cone_data)",
+        "wrong": "def calculate_vol_cone(prices, windows=[10, 30, 60]):\n    return prices.rolling(window=30).std() * np.sqrt(252) # Fails to evaluate multiple time horizons and aggregate distribution metrics."
+      },
+      "common_mistakes": [
+        "Comparing current implied volatility directly to historical volatility without accounting for volatility risk premium.",
+        "Using overlapping rolling windows without adjusting statistical significance, leading to overly smooth or distorted percentile bands."
+      ],
+      "best_practices": [
+        "Use a sufficiently long historical dataset (at least 3 to 5 years) to ensure the cone captures full market cycles.",
+        "Overlay current implied volatility term structure points onto the historical volatility cone to spot relative value opportunities.",
+        "Re-calculate cone boundaries periodically as market regime shifts can invalidate older baseline distributions."
+      ],
+      "when_to_use": "When evaluating the term structure of volatility to find mispriced options across different maturities for multi-period or calendar spread strategies.",
+      "when_not_to_use": "During sudden structural market shocks or regime transitions where historical distributions are entirely disconnected from future expectations.",
+      "interview_questions": [
+        {
+          "question": "How do you construct a volatility cone, and what does it tell a trader?",
+          "answer": "A volatility cone is built by calculating rolling historical volatility across multiple window lengths (e.g., 10d to 250d) over a long historical period, and plotting the min, max, and percentiles for each window. It tells a trader whether current option pricing is unusually high or low for specific maturities relative to historical norms."
+        },
+        {
+          "question": "If you plot current implied volatility on a historical volatility cone and see that 30-day IV is sitting at the 95th percentile, what trade idea might you consider?",
+          "answer": "This suggests short-term options are historically expensive, making it an attractive environment for selling premium via strategies like short straddles, iron condors, or calendar spreads where you sell the rich short-term front month."
+        }
+      ],
+      "related_topics": [
+        "Volatility term structure",
+        "Implied volatility surface",
+        "Volatility risk premium"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-13T00:53:44.562595+00:00",
+      "run_number": 707
     }
   ]
 }
