@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **748** |
-| Last Updated | `2026-09-13T12:14:14.575907+00:00` |
-| Dataset Size | `748 entries` |
+| Total Topics Learned | **749** |
+| Last Updated | `2026-09-13T15:58:34.855983+00:00` |
+| Dataset Size | `749 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 204 |
+| trading-strategies | 205 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Participation rate algorithm — tracking market volume percentage`
 - `Algorithmic order slicing — breaking large orders into pieces`
 - `Order-sends-order OSO — automated order sequences`
 - `One cancels other OCO — bracket order for trade management`
 - `Conditional order strategy — using contingent orders effectively`
-- `Reserve order strategy — hiding order size with reserve`
 
 <!-- STATS_END -->
 
