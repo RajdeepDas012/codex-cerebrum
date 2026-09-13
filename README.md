@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **765** |
-| Last Updated | `2026-09-13T18:47:51.996381+00:00` |
-| Dataset Size | `765 entries` |
+| Total Topics Learned | **766** |
+| Last Updated | `2026-09-13T18:50:58.492548+00:00` |
+| Dataset Size | `766 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 217 |
+| trading-strategies | 218 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Fundamental law of active management — IC x breadth = IR`
 - `Information coefficient — correlation of signal with outcome`
 - `Tracking error management — controlling deviation from benchmark`
 - `Factor exposure measurement — measuring portfolio factor tilts`
 - `Active return decomposition — allocation vs selection vs interaction`
-- `Benchmark selection — choosing appropriate comparison index`
 
 <!-- STATS_END -->
 
