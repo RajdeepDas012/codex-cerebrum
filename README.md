@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **717** |
-| Last Updated | `2026-09-13T01:24:55.743476+00:00` |
-| Dataset Size | `717 entries` |
+| Total Topics Learned | **718** |
+| Last Updated | `2026-09-13T01:28:02.043257+00:00` |
+| Dataset Size | `718 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 186 |
+| trading-strategies | 187 |
 | technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Walk-forward analysis implementation — systematic strategy validation`
 - `Backtest engine construction — building accurate simulation system`
 - `Proprietary trading signal construction — combining multiple edges`
 - `Market breadth composite indicator — combining advance decline data`
 - `Stock market regime detection — bull bear sideways classification`
-- `Crypto on-chain buy signal construction — combining 5 indicators`
 
 <!-- STATS_END -->
 
