@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **768** |
-| Last Updated | `2026-09-13T18:57:11.509126+00:00` |
-| Dataset Size | `768 entries` |
+| Total Topics Learned | **769** |
+| Last Updated | `2026-09-13T19:00:17.936883+00:00` |
+| Dataset Size | `769 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 220 |
+| trading-strategies | 221 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market neutral construction — beta hedging methodology`
 - `Long short equity construction — systematic long short portfolio`
 - `Transfer coefficient — how much of signal reaches portfolio`
 - `Fundamental law of active management — IC x breadth = IR`
 - `Information coefficient — correlation of signal with outcome`
-- `Tracking error management — controlling deviation from benchmark`
 
 <!-- STATS_END -->
 
