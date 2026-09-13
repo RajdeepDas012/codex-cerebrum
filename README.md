@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **780** |
-| Last Updated | `2026-09-13T21:23:14.073441+00:00` |
-| Dataset Size | `780 entries` |
+| Total Topics Learned | **781** |
+| Last Updated | `2026-09-13T21:26:21.519787+00:00` |
+| Dataset Size | `781 entries` |
 
 ## 📂 Categories Learned
 
@@ -30,20 +30,20 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
+| networking | 3 |
 | data-structures | 3 |
 | algorithms | 2 |
 | data-visualization | 2 |
-| networking | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Kernel-bypass network interface card (NIC) polling loop implementation using Solarflare EF_VI or similar low-latency APIs for financial market data ingestion`
 - `Memory-mapped file ring buffer for persistent high-throughput market data recording`
 - `Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems`
 - `Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems`
 - `Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)`
-- `WebSocket heartbeat and reconnection management for real-time market data feeds`
 
 <!-- STATS_END -->
 

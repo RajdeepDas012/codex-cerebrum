@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 780,
-    "last_updated": "2026-09-13T21:23:14.073441+00:00",
-    "total_topics_learned": 780
+    "total_runs": 781,
+    "last_updated": "2026-09-13T21:26:21.519787+00:00",
+    "total_topics_learned": 781
   },
   "entries": [
     {
@@ -37670,6 +37670,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-13T21:23:14.073422+00:00",
       "run_number": 780
+    },
+    {
+      "topic": "Kernel-bypass network interface card (NIC) polling loop implementation using Solarflare EF_VI or similar low-latency APIs for financial market data ingestion",
+      "category": "networking",
+      "language": "C",
+      "difficulty": "advanced",
+      "summary": "Kernel-bypass networking uses low-latency APIs like Solarflare EF_VI to bypass the operating system's network stack entirely, allowing user-space applications to read packets directly from NIC ring buffers. This eliminates context switches and kernel overhead, achieving sub-microsecond packet ingestion times critical for high-frequency trading.",
+      "key_points": [
+        "EF_VI (Expressively Fast Virtual Interface) provides ultra-low latency, direct user-space access to Solarflare NIC hardware rx/tx rings.",
+        "Polling loops replace interrupt-driven I/O to avoid interrupt handling latency and CPU context switching penalties.",
+        "Memory protection and direct memory access (DMA) registration are configured beforehand to map NIC buffers directly into application address space.",
+        "Busy-polling consumes 100% of a dedicated CPU core to guarantee immediate packet detection the moment it arrives on the wire."
+      ],
+      "code_example": {
+        "language": "c",
+        "description": "Demonstrates a basic busy-polling receive loop using a hypothetical low-latency API to ingest packets",
+        "correct": "while (running) {\n    int n_rx = ef_vi_receive_poll(&vi, packets, max_packets);\n    for (int i = 0; i < n_rx; ++i) {\n        process_packet(packets[i].addr, packets[i].len);\n        ef_vi_receive_restart(&vi, &packets[i]);\n    }\n}\n",
+        "wrong": "while (running) {\n    struct pollfd pfd;\n    poll(&pfd, 1, -1); // Using kernel blocking poll defeats kernel-bypass purpose\n    read(fd, buffer, sizeof(buffer));\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to pin the polling thread to an isolated CPU core sharing proximity (NUMA node) with the target NIC.",
+        "Performing heavy computations or blocking operations inside the polling loop instead of pushing raw packets to a ring buffer for downstream threads."
+      ],
+      "best_practices": [
+        "Isolate the polling thread using `isolcpus` and configure process affinity (`pthread_setaffinity_np`) to prevent OS scheduler jitter.",
+        "Prefetch packet memory cache lines immediately upon receiving descriptors to minimize cache misses during parsing.",
+        "Use hardware filtering (Solarflare EF_VI filters) to drop unwanted multicast traffic directly on the NIC before it reaches software."
+      ],
+      "when_to_use": "Use when ingestion latency must be consistently kept under a few microseconds, such as in ultra-low latency market data feeds for proprietary trading firms.",
+      "when_not_to_use": "Avoid when power consumption, CPU utilization efficiency, or standard OS portability matter more than absolute microsecond-level speed.",
+      "interview_questions": [
+        {
+          "question": "Why does a kernel-bypass polling loop require dedicating an entire CPU core to 100% utilization?",
+          "answer": "To eliminate the latency of waiting for OS interrupts or scheduler wakeups, the thread must continuously check the NIC ring buffer hardware registers for incoming packets."
+        },
+        {
+          "question": "How do you handle NUMA node placement when implementing a high-performance network polling loop?",
+          "answer": "The network interface card, the memory allocated for packet buffers, and the CPU core executing the polling loop must all reside on the exact same NUMA node to prevent cross-socket PCIe bus traversal latency."
+        }
+      ],
+      "related_topics": [
+        "Solarflare OpenOnload and EF_VI API architecture",
+        "NUMA node optimization and CPU core isolation for HFT",
+        "DPDK (Data Plane Development Kit) poll-mode drivers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T21:26:21.519765+00:00",
+      "run_number": 781
     }
   ]
 }
