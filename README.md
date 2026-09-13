@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **779** |
-| Last Updated | `2026-09-13T21:20:05.765587+00:00` |
-| Dataset Size | `779 entries` |
+| Total Topics Learned | **780** |
+| Last Updated | `2026-09-13T21:23:14.073441+00:00` |
+| Dataset Size | `780 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
 | stocks-markets | 71 |
-| system-design | 60 |
+| system-design | 61 |
 | probability-math | 27 |
 | machine-learning | 10 |
 | databases | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Memory-mapped file ring buffer for persistent high-throughput market data recording`
 - `Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems`
 - `Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems`
 - `Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)`
 - `WebSocket heartbeat and reconnection management for real-time market data feeds`
-- `Cross-currency basis swap pricing implementation`
 
 <!-- STATS_END -->
 

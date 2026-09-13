@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 779,
-    "last_updated": "2026-09-13T21:20:05.765587+00:00",
-    "total_topics_learned": 779
+    "total_runs": 780,
+    "last_updated": "2026-09-13T21:23:14.073441+00:00",
+    "total_topics_learned": 780
   },
   "entries": [
     {
@@ -37622,6 +37622,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T21:20:05.765567+00:00",
       "run_number": 779
+    },
+    {
+      "topic": "Memory-mapped file ring buffer for persistent high-throughput market data recording",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A memory-mapped file ring buffer leverages OS virtual memory paging to map disk storage directly into process address space, allowing extremely fast, zero-copy writes for persistent market data logging. It matters because it bridges the gap between ultra-low-latency in-memory recording and reliable, crash-safe disk persistence without incurring the overhead of traditional system call bottlenecks like write().",
+      "key_points": [
+        "Utilizes OS mmap primitives to treat file I/O as direct memory manipulations, eliminating user-to-kernel space buffer copies.",
+        "Implements a fixed-size circular buffer structure with atomic head and tail pointers to coordinate concurrent writes and persistence loops.",
+        "Provides crash resilience by writing data directly to disk blocks managed by the operating system's page cache and background flush mechanisms.",
+        "Requires careful handling of wrap-around logic where payloads cross the physical end of the mapped file boundary."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates initializing a memory-mapped file ring buffer and writing a fixed-size market data struct with atomic head advancement.",
+        "correct": "#include <fcntl.h>\n#include <sys/mman.h>\n#include <unistd.h>\n#include <atomic>\n#include <cstring>\n\nstruct MarketDataPacket {\n    uint64_t timestamp;\n    uint32_t symbol_id;\n    double price;\n};\n\nclass MmapRingBuffer {\n    size_t capacity_;\n    std::atomic<size_t> head_{0};\n    MarketDataPacket* buffer_;\npublic:\n    MmapRingBuffer(const char* filepath, size_t capacity) : capacity_(capacity) {\n        int fd = open(filepath, O_RDWR | O_CREAT, 0666);\n        ftruncate(fd, capacity * sizeof(MarketDataPacket));\n        buffer_ = static_cast<MarketDataPacket*>(mmap(nullptr, capacity * sizeof(MarketDataPacket), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));\n        close(fd);\n    }\n    bool push(const MarketDataPacket& packet) {\n        size_t current_head = head_.load(std::memory_order_relaxed);\n        size_t next_head = (current_head + 1) % capacity_;\n        buffer_[current_head] = packet;\n        head_.store(next_head, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "class BadMmapBuffer {\n    void* ptr;\npublic:\n    BadMmapBuffer(size_t size) {\n        // Mistake: Using standard malloc for persistence instead of mmap/file descriptors\n        ptr = malloc(size);\n    }\n    void write(const char* data, size_t len) {\n        // Mistake: Doing blocking synchronous disk writes inside the hot path\n        write_to_disk_file(data, len);\n    }\n};"
+      },
+      "common_mistakes": [
+        "Forgetting to call msync() or relying entirely on OS page replacement when strict durability guarantees are required after sudden power loss.",
+        "Failing to pre-allocate the file size via ftruncate() prior to calling mmap, resulting in SIGBUS errors when writing past the initial file bounds."
+      ],
+      "best_practices": [
+        "Pre-allocate the full backing file size upfront to avoid costly disk fragmentation and dynamic resizing overhead during high-volatility spikes.",
+        "Use memory barriers and acquire-release semantics for atomic pointer updates to guarantee thread safety between producer threads and the background flusher.",
+        "Leverage MAP_SHARED flags so that changes are correctly synchronized back to the underlying file descriptor by the kernel virtual memory subsystem."
+      ],
+      "when_to_use": "Use this when you need to capture millions of tick-level market data updates to disk with minimal latency impact on trading threads and guaranteed recovery capability.",
+      "when_not_to_use": "Avoid this when data payloads are of highly variable or unpredictable size, or when working in memory-constrained environments where large virtual address spaces cannot be allocated.",
+      "interview_questions": [
+        {
+          "question": "What happens when a process attempts to write past the initial size of a memory-mapped file that was not properly truncated?",
+          "answer": "The operating system triggers a SIGBUS signal because the virtual memory address does not map to a valid physical page or disk block."
+        },
+        {
+          "question": "How do you ensure data persistence without incurring synchronous disk I/O penalties on the critical trading path?",
+          "answer": "By writing to the memory-mapped region asynchronously and letting the operating system's background kernel threads flush dirty memory pages to disk, optionally calling msync() periodically on a separate thread if explicit durability checkpoints are needed."
+        }
+      ],
+      "related_topics": [
+        "Low-latency ring buffer implementation for inter-thread message passing in high-frequency trading systems",
+        "Order book snapshot reconstruction from incremental depth updates (L3/L2 delta parsing)",
+        "Lock-free multi-producer single-consumer queue implementation for concurrent logging in trading systems"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-13T21:23:14.073422+00:00",
+      "run_number": 780
     }
   ]
 }
