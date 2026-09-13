@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **723** |
-| Last Updated | `2026-09-13T06:03:31.403367+00:00` |
-| Dataset Size | `723 entries` |
+| Total Topics Learned | **724** |
+| Last Updated | `2026-09-13T06:06:50.363205+00:00` |
+| Dataset Size | `724 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 192 |
+| trading-strategies | 193 |
 | technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Transaction cost modeling — realistic cost estimation in backtest`
 - `Execution optimization — minimizing slippage and market impact`
 - `Live trading vs backtest gap — causes and how to minimize`
 - `Portfolio of strategies — combining uncorrelated trading systems`
 - `Strategy correlation analysis — measuring alpha overlap`
-- `Monte Carlo backtest validation — statistical significance testing`
 
 <!-- STATS_END -->
 
