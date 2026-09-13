@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **785** |
-| Last Updated | `2026-09-13T21:38:50.760371+00:00` |
-| Dataset Size | `785 entries` |
+| Total Topics Learned | **786** |
+| Last Updated | `2026-09-13T21:41:57.220184+00:00` |
+| Dataset Size | `786 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 227 |
+| trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Volume-weighted average price (VWAP) execution algorithm implementation with participation rate throttling`
 - `Time-weighted average price (TWAP) execution algorithm implementation with randomized slice sizing`
 - `Precision-timed CPU ticker implementation using `rdtsc` and `clock_gettime` for latency profiling in high-frequency trading applications`
 - `FIX protocol message parser implementation with zero-copy buffer slicing`
 - `NUMA-aware memory allocation thread pinning implementation for multi-socket low-latency trading servers`
-- `Kernel-bypass network interface card (NIC) polling loop implementation using Solarflare EF_VI or similar low-latency APIs for financial market data ingestion`
 
 <!-- STATS_END -->
 
