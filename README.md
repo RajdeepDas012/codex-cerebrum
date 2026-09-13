@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **714** |
-| Last Updated | `2026-09-13T01:15:28.973245+00:00` |
-| Dataset Size | `714 entries` |
+| Total Topics Learned | **715** |
+| Last Updated | `2026-09-13T01:18:34.925274+00:00` |
+| Dataset Size | `715 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 185 |
-| technical-analysis | 146 |
+| technical-analysis | 147 |
 | market-analysis | 108 |
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Market breadth composite indicator — combining advance decline data`
 - `Stock market regime detection — bull bear sideways classification`
 - `Crypto on-chain buy signal construction — combining 5 indicators`
 - `Yang-Zhang volatility — best unbiased volatility estimator`
 - `Garman-Klass volatility — incorporating open close high low`
-- `Parkinson volatility estimator — using high low for vol estimate`
 
 <!-- STATS_END -->
 
