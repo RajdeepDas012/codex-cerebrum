@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **756** |
-| Last Updated | `2026-09-13T16:20:18.724639+00:00` |
-| Dataset Size | `756 entries` |
+| Total Topics Learned | **757** |
+| Last Updated | `2026-09-13T16:23:25.017996+00:00` |
+| Dataset Size | `757 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 211 |
+| trading-strategies | 212 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Edge identification framework — finding exploitable market inefficiencies`
 - `Research process for trading — hypothesis generation and testing`
 - `Systematic vs discretionary trading — combining both approaches`
 - `TCA reporting — regulatory and internal execution reporting`
 - `Post-trade analysis — measuring actual vs expected execution`
-- `Pre-trade analysis — estimating cost before execution`
 
 <!-- STATS_END -->
 
