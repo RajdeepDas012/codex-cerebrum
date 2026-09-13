@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **792** |
-| Last Updated | `2026-09-13T22:00:41.240407+00:00` |
-| Dataset Size | `792 entries` |
+| Total Topics Learned | **793** |
+| Last Updated | `2026-09-13T22:03:48.877614+00:00` |
+| Dataset Size | `793 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,8 +24,8 @@
 | stocks-markets | 71 |
 | system-design | 67 |
 | probability-math | 27 |
+| databases | 10 |
 | machine-learning | 10 |
-| databases | 9 |
 | web-dev | 9 |
 | language-specific | 7 |
 | devops | 7 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a persistent append-only log storage engine with crash recovery using Write-Ahead Logging (WAL) and checksum verification`
 - `Implementation of a distributed lock using Redis and Lua scripts for idempotent payment processing in microservices`
 - `Implementation of a lock-free memory pool allocator for zero-allocation message serialization in low-latency trading systems`
 - `Implementation of a cache-conscious B-tree index node layout using SIMD-accelerated branching searches`
 - `Implementation of an SSE4.2 hardware-accelerated JSON parser for high-throughput market data ingestion`
-- `Implementation of an asynchronous WebSocket reconnection backoff strategy with jitter for resilient microservice communication`
 
 <!-- STATS_END -->
 

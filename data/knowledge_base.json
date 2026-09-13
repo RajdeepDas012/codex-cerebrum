@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 792,
-    "last_updated": "2026-09-13T22:00:41.240407+00:00",
-    "total_topics_learned": 792
+    "total_runs": 793,
+    "last_updated": "2026-09-13T22:03:48.877614+00:00",
+    "total_topics_learned": 793
   },
   "entries": [
     {
@@ -38246,6 +38246,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T22:00:41.240388+00:00",
       "run_number": 792
+    },
+    {
+      "topic": "Implementation of a persistent append-only log storage engine with crash recovery using Write-Ahead Logging (WAL) and checksum verification",
+      "category": "databases",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "An append-only log storage engine guarantees durability and crash recovery by writing mutations sequentially to disk before applying them to memory. Using Write-Ahead Logging combined with checksum verification ensures that torn writes or corrupted blocks can be detected and discarded during the recovery phase.",
+      "key_points": [
+        "Appends records sequentially to a single disk file to maximize write throughput and eliminate random I/O overhead.",
+        "Utilizes cyclic redundancy checks (CRC32) per log entry to validate data integrity and detect silent disk corruption or incomplete flushes.",
+        "Implements a crash recovery routine that scans the WAL from the last known checkpoint, validating checksums and replaying valid transactions.",
+        "Employs OS-level synchronization primitives like fsync() to ensure data is physically committed to non-volatile storage."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates writing a checksum-verified, length-prefixed record to an append-only WAL file and recovering valid records.",
+        "correct": "import struct\nimport zlib\n\nclass WAL:\n    def __init__(self, filepath):\n        self.file = open(filepath, 'a+b')\n\n    def write(self, data: bytes):\n        checksum = zlib.crc32(data)\n        length = len(data)\n        header = struct.pack('>I I', length, checksum)\n        self.file.write(header + data)\n        self.file.flush()\n\n    def recover(self):\n        self.file.seek(0)\n        valid_records = []\n        while True:\n            header = self.file.read(8)\n            if len(header) < 8:\n                break\n            length, expected_checksum = struct.unpack('>I I', header)\n            data = self.file.read(length)\n            if len(data) < length:\n                break # Torn write encountered\n            if zlib.crc32(data) != expected_checksum:\n                break # Corruption detected\n            valid_records.append(data)\n        return valid_records",
+        "wrong": "def bad_write(file, data):\n    file.write(data + b'\\n') # Missing length prefix and checksum, causing ambiguity on recovery"
+      },
+      "common_mistakes": [
+        "Failing to invoke fsync() after writing a log entry, which leaves data sitting in OS page caches and vulnerable to power loss.",
+        "Storing variable-length records without length prefixes or delimiter boundaries, rendering sequential stream parsing impossible after a crash."
+      ],
+      "best_practices": [
+        "Group multiple small writes into a single buffer and batch fsync operations to mitigate I/O bottlenecks.",
+        "Implement periodic snapshotting or checkpointing to truncate older WAL segments and reduce future recovery times.",
+        "Pre-allocate log file blocks or use fixed-size segment files to reduce file system fragmentation during high write volumes."
+      ],
+      "when_to_use": "Building custom storage engines, message queues, transactional systems, or databases requiring strong durability guarantees and high sequential write performance.",
+      "when_not_to_use": "Read-heavy workloads with frequent random updates, in-memory caches where data loss upon restart is acceptable, or simple key-value configurations.",
+      "interview_questions": [
+        {
+          "question": "How do you detect a torn write when recovering from a Write-Ahead Log?",
+          "answer": "By prefixing each record with a fixed-size header containing the payload length and a checksum (like CRC32). During recovery, if the remaining bytes in the file are less than the declared length, or if the calculated checksum does not match the stored checksum, a torn write or corruption is identified, and recovery halts at that point."
+        },
+        {
+          "question": "Why is fsync() necessary in a WAL implementation, and what is its performance trade-off?",
+          "answer": "fsync() forces the operating system to flush dirty pages from its cache to the physical storage media, ensuring durability across power failures. The trade-off is high latency, as it blocks execution until the disk acknowledges the physical write."
+        }
+      ],
+      "related_topics": [
+        "LSM-tree compaction algorithms",
+        "Database crash recovery protocols (ARIES)",
+        "Zero-copy disk I/O and memory mapping"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T22:03:48.877594+00:00",
+      "run_number": 793
     }
   ]
 }
