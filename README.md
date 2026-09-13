@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **725** |
-| Last Updated | `2026-09-13T06:10:10.299388+00:00` |
-| Dataset Size | `725 entries` |
+| Total Topics Learned | **726** |
+| Last Updated | `2026-09-13T06:13:16.992995+00:00` |
+| Dataset Size | `726 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,7 +26,7 @@
 | probability-math | 27 |
 | databases | 9 |
 | web-dev | 9 |
-| machine-learning | 8 |
+| machine-learning | 9 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Look-ahead bias detection — ensuring no future data leakage`
 - `Survivorship bias elimination — including delisted stocks in backtest`
 - `Transaction cost modeling — realistic cost estimation in backtest`
 - `Execution optimization — minimizing slippage and market impact`
 - `Live trading vs backtest gap — causes and how to minimize`
-- `Portfolio of strategies — combining uncorrelated trading systems`
 
 <!-- STATS_END -->
 

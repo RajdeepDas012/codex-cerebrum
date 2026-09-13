@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 725,
-    "last_updated": "2026-09-13T06:10:10.299388+00:00",
-    "total_topics_learned": 725
+    "total_runs": 726,
+    "last_updated": "2026-09-13T06:13:16.992995+00:00",
+    "total_topics_learned": 726
   },
   "entries": [
     {
@@ -35027,6 +35027,55 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-13T06:10:10.299365+00:00",
       "run_number": 725
+    },
+    {
+      "topic": "Look-ahead bias detection — ensuring no future data leakage",
+      "category": "machine-learning",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Look-ahead bias occurs when information from outside the training time horizon or future test periods inadvertently leaks into the model's feature set. This leads to overly optimistic performance metrics during validation that completely collapse in live production environments.",
+      "key_points": [
+        "Feature leakage happens when summary statistics (like mean or standard deviation) are computed on the entire dataset prior to train-test splitting.",
+        "Time-series cross-validation (e.g., Walk-Forward Validation) must be used instead of standard K-Fold splitting to respect temporal order.",
+        "Lagged features must be strictly constructed using only past timestamps, ensuring t-1 data predicts time t.",
+        "Corporate actions, restated earnings, and index rebalancing announcements often carry subtle timestamp discrepancies that cause silent leakage."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the correct vs incorrect way to normalize a time-series feature to prevent data leakage.",
+        "correct": "train_mean = X_train.mean()\nX_train_scaled = (X_train - train_mean) / X_train.std()\nX_test_scaled = (X_test - train_mean) / X_test.std()",
+        "wrong": "global_mean = X.mean()\nX_scaled = (X - global_mean) / X.std()\nX_train, X_test = train_test_split(X_scaled)"
+      },
+      "common_mistakes": [
+        "Applying standard scikit-learn preprocessing transformers (like StandardScaler) directly to the entire dataframe before splitting into train and test sets.",
+        "Using rolling window calculations that center the window instead of looking strictly backward.",
+        "Merging datasets on imprecise date keys where publication time is assumed to be the market close time when it was actually released mid-day."
+      ],
+      "best_practices": [
+        "Wrap custom feature engineering pipelines inside cross-validation loops or use scikit-learn Pipelines to ensure transformations only fit on training folds.",
+        "Perform rigorous feature importance audits and time-shift permutation tests to check if models rely on impossible future correlations.",
+        "Establish strict point-in-time database architectures where historical data reflects exactly what was known at that specific microsecond."
+      ],
+      "when_to_use": "Always apply strict anti-leakage controls whenever training predictive models on temporal, financial, or sequential data.",
+      "when_not_to_use": "Never bypass time-based splitting rules, even during exploratory data analysis or rapid model prototyping.",
+      "interview_questions": [
+        {
+          "question": "What is the difference between data leakage and look-ahead bias?",
+          "answer": "Data leakage is a broader term encompassing any information from the test set leaking into the training set, whereas look-ahead bias is a specific form of leakage where future information relative to the prediction timestamp is used to predict the past or present."
+        },
+        {
+          "question": "How would you detect if a deployed model is suffering from look-ahead bias introduced by data scaling?",
+          "answer": "Inspect the feature engineering pipeline to check if global summary statistics like mean and variance were computed using the entire dataset. Re-evaluate the model using a strict out-of-sample walk-forward split where scalers are dynamically fitted solely on rolling training windows."
+        }
+      ],
+      "related_topics": [
+        "Time-series cross-validation and walk-forward optimization",
+        "Point-in-time database design",
+        "Feature engineering pipelines and transformers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-13T06:13:16.992975+00:00",
+      "run_number": 726
     }
   ]
 }
