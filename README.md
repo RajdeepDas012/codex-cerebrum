@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **751** |
-| Last Updated | `2026-09-13T16:04:47.128094+00:00` |
-| Dataset Size | `751 entries` |
+| Total Topics Learned | **752** |
+| Last Updated | `2026-09-13T16:07:53.546311+00:00` |
+| Dataset Size | `752 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 207 |
+| trading-strategies | 208 |
 | technical-analysis | 147 |
 | market-analysis | 113 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Pre-trade analysis — estimating cost before execution`
 - `Implementation shortfall minimization — optimal trade scheduling`
 - `Adaptive arrival price — dynamic VWAP algorithm execution`
 - `Participation rate algorithm — tracking market volume percentage`
 - `Algorithmic order slicing — breaking large orders into pieces`
-- `Order-sends-order OSO — automated order sequences`
 
 <!-- STATS_END -->
 
