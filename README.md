@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **703** |
-| Last Updated | `2026-09-12T22:49:02.621200+00:00` |
-| Dataset Size | `703 entries` |
+| Total Topics Learned | **704** |
+| Last Updated | `2026-09-13T00:44:24.814477+00:00` |
+| Dataset Size | `704 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 74 |
 | stocks-markets | 62 |
 | system-design | 58 |
-| probability-math | 24 |
+| probability-math | 25 |
 | databases | 9 |
 | web-dev | 9 |
 | machine-learning | 8 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Spread option pricing — options on price difference of two assets`
 - `Lookback option pricing — maximum minimum price options`
 - `Asian option pricing — average price option mechanics`
 - `Barrier option pricing — knock-in knock-out exotic options`
 - `Simulation based pricing — Monte Carlo for exotic options`
-- `Finite difference methods — numerical PDE solution for options`
 
 <!-- STATS_END -->
 

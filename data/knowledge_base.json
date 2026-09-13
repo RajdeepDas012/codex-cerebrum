@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 703,
-    "last_updated": "2026-09-12T22:49:02.621200+00:00",
-    "total_topics_learned": 703
+    "total_runs": 704,
+    "last_updated": "2026-09-13T00:44:24.814477+00:00",
+    "total_topics_learned": 704
   },
   "entries": [
     {
@@ -33974,6 +33974,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-12T22:49:02.621180+00:00",
       "run_number": 703
+    },
+    {
+      "topic": "Spread option pricing — options on price difference of two assets",
+      "category": "probability-math",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "Spread options are derivative contracts whose payoff depends on the difference between the prices of two underlying assets, such as crack spreads in energy or calendar spreads in agriculture. Because the exact distribution of a difference of two log-normal prices does not have a closed-form density, valuation typically relies on analytical approximations like Margrabe's formula or Kirk's approximation.",
+      "key_points": [
+        "The payoff for a call spread option is $\\max(S_1 - S_2 - K, 0)$ or $\\max(F_1 - F_2 - K, 0)$ where $K$ is the strike price.",
+        "Margrabe's formula provides an exact closed-form solution for the special case where the strike price $K = 0$ (effectively an option to exchange one asset for another).",
+        "Kirk's approximation extends Margrabe's formula to handle a non-zero strike price by treating one asset plus the strike as a composite asset.",
+        "Monte Carlo simulation is frequently required when path dependency is introduced or when multi-asset correlation structures become complex."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Pricing a crack spread option using Kirk's approximation formula",
+        "correct": "import numpy as np\nfrom scipy.stats import norm\n\ndef kirk_spread_call(F1, F2, K, T, sigma1, sigma2, rho):\n    # Kirk's approximation for spread option on futures: max(F1 - F2 - K, 0)\n    F2_adjusted = F2 + K\n    sigma_diff = np.sqrt(sigma1**2 + (sigma2 * F2 / F2_adjusted)**2 - 2 * rho * sigma1 * sigma2 * F2 / F2_adjusted)\n    d1 = (np.log(F1 / F2_adjusted) + 0.5 * sigma_diff**2 * T) / (sigma_diff * np.sqrt(T))\n    d2 = d1 - sigma_diff * np.sqrt(T)\n    return np.exp(-0.0 * T) * (F1 * norm.cdf(d1) - F2_adjusted * norm.cdf(d2))",
+        "wrong": "def kirk_spread_call_wrong(F1, F2, K, T, sigma1, sigma2, rho):\n    # Mistake: directly applying Black-Scholes with a standard deviation difference\n    sigma_diff = np.abs(sigma1 - sigma2)\n    d1 = (np.log(F1 - F2 - K) / np.sqrt(T)) # Fails when F1 - F2 - K < 0\n    return 0.0"
+      },
+      "common_mistakes": [
+        "Assuming the difference of two log-normal processes is also log-normal, which leads to invalid analytical simplifications.",
+        "Failing to adjust the second asset's volatility weighting accurately in Kirk's approximation when the strike price is non-zero."
+      ],
+      "best_practices": [
+        "Use Margrabe's formula as a benchmark sanity check when setting the strike price to zero.",
+        "Validate approximation outputs against a high-accuracy Monte Carlo pricing engine, especially for deep out-of-the-money or long-maturity spreads.",
+        "Carefully calibrate the cross-asset correlation parameter $\\rho$, as spread option values are highly sensitive to it."
+      ],
+      "when_to_use": "When trading or hedging physical or financial margins, such as refining spreads, spark spreads in power markets, or inter-commodity pairs.",
+      "when_not_to_use": "When dealing with single-asset options where standard Black-Scholes-Merton frameworks are sufficient and introduction of multi-asset correlations adds unwarranted complexity.",
+      "interview_questions": [
+        {
+          "question": "What is Margrabe's formula used for, and what are its key limitations?",
+          "answer": "Margrabe's formula prices an option to exchange one asset for another (equivalent to a spread option with a zero strike). Its primary limitation is that it cannot directly handle non-zero strike prices without modifications like Kirk's approximation."
+        },
+        {
+          "question": "How does correlation between the two underlying assets affect the price of a spread call option?",
+          "answer": "An increase in correlation typically decreases the variance of the spread (since $\\text{Var}(A-B) = \\sigma_A^2 + \\sigma_B^2 - 2\\rho\\sigma_A\\sigma_B$), which lowers the time value and thus reduces the price of the spread option."
+        }
+      ],
+      "related_topics": [
+        "Exchange option pricing — Margrabe formula mechanics",
+        "Multi-asset correlation modeling — Cholesky decomposition",
+        "Energy derivatives — crack and spark spread valuation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-13T00:44:24.814457+00:00",
+      "run_number": 704
     }
   ]
 }
