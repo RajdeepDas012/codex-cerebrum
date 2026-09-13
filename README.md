@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **712** |
-| Last Updated | `2026-09-13T01:09:16.017934+00:00` |
-| Dataset Size | `712 entries` |
+| Total Topics Learned | **713** |
+| Last Updated | `2026-09-13T01:12:22.633177+00:00` |
+| Dataset Size | `713 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| trading-strategies | 184 |
+| trading-strategies | 185 |
 | technical-analysis | 146 |
 | market-analysis | 107 |
 | crypto-blockchain | 74 |
@@ -38,11 +38,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Crypto on-chain buy signal construction — combining 5 indicators`
 - `Yang-Zhang volatility — best unbiased volatility estimator`
 - `Garman-Klass volatility — incorporating open close high low`
 - `Parkinson volatility estimator — using high low for vol estimate`
 - `EWMA volatility estimation — exponentially weighted moving average`
-- `Realized volatility forecasting — HAR model for vol prediction`
 
 <!-- STATS_END -->
 
