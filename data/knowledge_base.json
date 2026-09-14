@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 841,
-    "last_updated": "2026-09-14T17:00:36.701467+00:00",
-    "total_topics_learned": 841
+    "total_runs": 842,
+    "last_updated": "2026-09-14T17:04:31.417763+00:00",
+    "total_topics_learned": 842
   },
   "entries": [
     {
@@ -40577,6 +40577,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T17:00:36.701446+00:00",
       "run_number": 841
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array setting and multiple hash-seed generation for high-throughput in-memory probabilistic set membership verification in edge caching systems",
+      "category": "data-structures",
+      "language": "Python",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Bloom filter optimized for high-throughput probabilistic lookups in edge caching architectures. By utilizing atomic bit-array operations and independent hash-seed generation, multiple threads can safely insert elements and query membership simultaneously without blocking.",
+      "key_points": [
+        "Utilizes an atomic bit-array structure (such as concurrent atomic integers or bytes) to guarantee thread-safe bit mutations without heavy mutex locks.",
+        "Employs independent hash-seed generation or double hashing techniques (e.g., MurmurHash3 variants) to compute multiple bit indices per key efficiently.",
+        "Guarantees no false negatives (if an item is in the set, it is always reported present) while controlling the false positive rate through optimal sizing.",
+        "Achieves high horizontal scalability in edge caching layers where read and write concurrency is extreme."
+      ],
+      "code_example": {
+        "language": "Python",
+        "description": "Demonstrates a thread-safe lock-free Bloom filter implementation using atomic integers.",
+        "correct": "import threading\nimport mmh3\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size: int, hash_count: int):\n        self.size = size\n        self.hash_count = hash_count\n        self.bit_array = [threading.local() for _ in range(size)] # Conceptual mapping\n        self._lock_free_array = [0] * size\n\n    def add(self, item: str):\n        for seed in range(self.hash_count):\n            index = mmh3.hash(item, seed) % self.size\n            # Simulate atomic bitwise OR setting\n            while True:\n                current = self._lock_free_array[index]\n                if current == 1:\n                    break\n                if compare_and_swap_simulation(self._lock_free_array, index, current, 1):\n                    break\n\n    def __contains__(self, item: str) -> bool:\n        for seed in range(self.hash_count):\n            index = mmh3.hash(item, seed) % self.size\n            if self._lock_free_array[index] == 0:\n                return False\n        return True",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.array = [0] * size\n    def add(self, item):\n        index = hash(item) % len(self.array)\n        self.array[index] = 1 # Race condition without atomic operations"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write cycles on shared byte arrays, leading to lost updates under high concurrency.",
+        "Relying on a single hash function with poor avalanche properties, resulting in clustered bit activations and elevated false positive rates."
+      ],
+      "best_practices": [
+        "Pre-calculate the optimal bit array size and hash function count based on expected insertion volume and target false positive probability.",
+        "Leverage hardware-accelerated atomic primitives or language-specific atomic variables (e.g., AtomicIntegerArray) for managing the underlying bit vector."
+      ],
+      "when_to_use": "Ideal for high-throughput edge caching tiers where fast probabilistic membership testing prevents unnecessary downstream database or backend queries under heavy concurrent load.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required, when items must be safely deleted from the filter, or when the dataset size is entirely unknown beforehand.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread safety in a Bloom filter without using explicit locks like mutexes?",
+          "answer": "By mapping the bit-array onto atomic integer arrays and using atomic compare-and-swap (CAS) or atomic bitwise OR operations for updates."
+        },
+        {
+          "question": "Why can standard Bloom filters not support item deletion out-of-the-box?",
+          "answer": "Because clearing a bit that was set by one hash function of a specific item might inadvertently clear a bit shared by another active item, causing false negatives."
+        }
+      ],
+      "related_topics": [
+        "Counting Bloom Filters",
+        "Cuckoo Filters",
+        "HyperLogLog cardinality estimation"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-14T17:04:31.417743+00:00",
+      "run_number": 842
     }
   ]
 }
