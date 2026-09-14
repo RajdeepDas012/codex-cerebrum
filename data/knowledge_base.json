@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 846,
-    "last_updated": "2026-09-14T17:17:02.392506+00:00",
-    "total_topics_learned": 846
+    "total_runs": 847,
+    "last_updated": "2026-09-14T17:20:10.396146+00:00",
+    "total_topics_learned": 847
   },
   "entries": [
     {
@@ -40813,6 +40813,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T17:17:02.392484+00:00",
       "run_number": 846
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU cache using atomic hash indexing and a generational epoch-based memory reclamation scheme for high-throughput in-memory web application session stores",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This architecture implements a high-throughput, thread-safe Least Recently Used (LRU) cache designed for web application session stores. By leveraging atomic hash indexing and generational epoch-based memory reclamation, it eliminates global locks, preventing thread contention and minimizing latency bottlenecks during concurrent read and write operations.",
+      "key_points": [
+        "Utilizes atomic hash map indexing to achieve lock-free concurrent lookups and key-value insertions.",
+        "Employs generational epoch-based memory reclamation (like Hazard Pointers or EBR) to safely free evicted or updated cache nodes without triggering use-after-free bugs.",
+        "Approximates true LRU ordering via concurrent doubly-linked list adjustments or clock-pro algorithms to avoid synchronization bottlenecks on eviction updates.",
+        "Optimizes cache hit ratios in multi-threaded runtime environments by ensuring low-latency session validation and state updates."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual epoch-based registration and safe node eviction workflow for a concurrent LRU cache",
+        "correct": "class EpochManager:\n    def __init__(self):\n        self.epoch = 0\n        self.thread_epochs = {}\n\n    def enter(self, thread_id):\n        self.thread_epochs[thread_id] = self.epoch\n\n    def leave(self, thread_id):\n        self.thread_epochs.pop(thread_id, None)\n\n    def retire(self, node):\n        # Safe deletion only when all active threads advance past current epoch\n        pass",
+        "wrong": "class UnsafeLRUCache:\n    def __init__(self):\n        self.store = {}\n    def get(self, key):\n        # Mutating LRU order inside standard dict without locks causes race conditions\n        return self.store.get(key)"
+      },
+      "common_mistakes": [
+        "Using global mutexes to protect both the hash index and the LRU eviction list, which destroys concurrency scalability.",
+        "Forgetting to guard deleted nodes against active reader threads, resulting in severe use-after-free memory corruption."
+      ],
+      "best_practices": [
+        "Separate the hash map index lock-free state updates from the approximate LRU eviction tracking structures.",
+        "Batch node retirements within epoch-based reclamation cycles to amortize the cost of memory deallocation."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed edge gateways or web session stores requiring ultra-low latency lookups under massive concurrent thread workloads.",
+      "when_not_to_use": "Avoid when running single-threaded applications or when absolute strict consistency on exact LRU eviction order is preferred over raw throughput.",
+      "interview_questions": [
+        {
+          "question": "How do you handle eviction updates in a concurrent LRU cache without introducing a heavy global lock on every read operation?",
+          "answer": "By using approximate LRU algorithms (such as clock sweep or segmented LRU) combined with atomic state flags, avoiding mandatory pointer updates on every single cache hit."
+        },
+        {
+          "question": "Why is standard garbage collection or immediate node deletion dangerous in a lock-free data structure?",
+          "answer": "Because other threads might still hold a reference to the node pointer read atomically; immediate deletion leads to use-after-free bugs, which epoch-based reclamation prevents by delaying freeing until all threads leave the active epoch."
+        }
+      ],
+      "related_topics": [
+        "Generational Epoch-Based Memory Reclamation",
+        "Lock-free Hash Maps",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T17:20:10.396124+00:00",
+      "run_number": 847
     }
   ]
 }

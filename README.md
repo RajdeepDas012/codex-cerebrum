@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **846** |
-| Last Updated | `2026-09-14T17:17:02.392506+00:00` |
-| Dataset Size | `846 entries` |
+| Total Topics Learned | **847** |
+| Last Updated | `2026-09-14T17:20:10.396146+00:00` |
+| Dataset Size | `847 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| system-design | 75 |
+| system-design | 76 |
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
 | data-structures | 37 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LRU cache using atomic hash indexing and a generational epoch-based memory reclamation scheme for high-throughput in-memory web application session stores`
 - `Implementation of a lock-free thread-safe concurrent ring buffer using atomic sequence numbers and memory barriers for high-throughput single-producer multi-consumer inter-thread messaging pipelines`
 - `Implementation of a lock-free thread-safe concurrent work-stealing deque using atomic tail/head pointer manipulation and hazard pointer memory reclamation for high-throughput task-parallel runtime execution engines`
 - `Implementation of a lock-free thread-safe concurrent lock-free skip-list using atomic forward-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory multi-threaded key-value store index concurrency`
 - `Implementation of a lock-free thread-safe concurrent persistent functional data structure using structural sharing and hazard pointer reclamation for high-throughput multi-version concurrency control in distributed transactional key-value stores`
-- `Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array setting and multiple hash-seed generation for high-throughput in-memory probabilistic set membership verification in edge caching systems`
 
 <!-- STATS_END -->
 
