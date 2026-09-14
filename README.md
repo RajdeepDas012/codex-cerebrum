@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **871** |
-| Last Updated | `2026-09-14T23:53:30.298792+00:00` |
-| Dataset Size | `871 entries` |
+| Total Topics Learned | **872** |
+| Last Updated | `2026-09-14T23:56:38.155792+00:00` |
+| Dataset Size | `872 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 53 |
+| data-structures | 54 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and epoch-based memory reclamation for high-throughput self-adjusting cache indexing in real-time memory-constrained systems`
 - `Implementation of a lock-free thread-safe concurrent B+ tree using atomic leaf-link pointer CAS operations and epoch-based memory reclamation for high-throughput in-memory range scan indexing in real-time OLTP database engines`
 - `Implementation of a lock-free thread-safe concurrent R-tree using atomic bounding-box expansion and epoch-based memory reclamation for high-throughput spatial indexing in real-time geospatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic structural sharing and epoch-based memory reclamation for high-throughput historical range query analytics in distributed stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node extension rules and epoch-based memory reclamation for high-throughput genomic pattern matching and bioinformatics sequence alignment pipelines`
-- `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression pointers and rank-based CAS operations for high-throughput parallel graph connectivity analysis and network community detection engines`
 
 <!-- STATS_END -->
 

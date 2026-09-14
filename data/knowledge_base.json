@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 871,
-    "last_updated": "2026-09-14T23:53:30.298792+00:00",
-    "total_topics_learned": 871
+    "total_runs": 872,
+    "last_updated": "2026-09-14T23:56:38.155792+00:00",
+    "total_topics_learned": 872
   },
   "entries": [
     {
@@ -42001,6 +42001,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T23:53:30.298776+00:00",
       "run_number": 871
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and epoch-based memory reclamation for high-throughput self-adjusting cache indexing in real-time memory-constrained systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Splay Tree that leverages atomic compare-and-swap (CAS) operations for node rotations and epoch-based memory reclamation (EMR). It enables high-throughput, self-adjusting cache indexing where frequently accessed elements are dynamically moved closer to the root without global lock contention.",
+      "key_points": [
+        "Utilizes atomic root-rotation and pointer CAS operations to execute splay restructuring steps safely across multiple concurrent threads.",
+        "Integrates epoch-based memory reclamation (EMR) or hazard pointers to prevent premature memory deallocation of nodes restructured during rotation steps.",
+        "Provides self-adjusting temporal locality benefits, promoting hot cache keys toward the tree root under high concurrent read-write workloads.",
+        "Addresses the inherent challenge of lock-free tree restructuring, where intermediate rotation states must be linearized or safely abandoned."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using CAS for safe concurrent structural modifications.",
+        "correct": "bool update_child(std::atomic<Node*>& parent_ptr, Node* old_node, Node* new_node) {\n    return parent_ptr.compare_exchange_strong(old_node, new_node);\n}",
+        "wrong": "Node* current = parent_ptr.load();\nif (current == old_node) {\n    parent_ptr.store(new_node); // Non-atomic check-then-act vulnerability\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes detached during rotations with epoch-based memory reclamation, causing use-after-free bugs.",
+        "Attempting to perform multi-node global rotations atomically without handling intermediate inconsistent pointer states."
+      ],
+      "best_practices": [
+        "Pin threads to active epochs before traversing or restructuring any path in the concurrent splay tree.",
+        "Keep atomic operation retry loops bounded to prevent livelock under extreme contention scenarios."
+      ],
+      "when_to_use": "When building memory-constrained, high-throughput caching systems or real-time indexes where access patterns exhibit strong temporal locality and global locks severely bottleneck performance.",
+      "when_not_to_use": "When workloads have uniform random access patterns, or when simpler thread-safe synchronization like fine-grained hand-over-hand locking or concurrent skiplists suffice.",
+      "interview_questions": [
+        {
+          "question": "Why is implementing a lock-free Splay Tree significantly harder than a lock-free stack or queue?",
+          "answer": "Because Splay Trees require non-local structural modifications (rotations involving multiple parent, child, and grandparent pointers) that cannot be easily updated with a single atomic CAS operation without introducing intermediate inconsistent states."
+        },
+        {
+          "question": "How does epoch-based memory reclamation prevent memory leaks and use-after-free issues during concurrent splay rotations?",
+          "answer": "EMR defers the physical deletion of nodes unlinked during tree rotations until all threads currently participating in an epoch have exited, guaranteeing that no thread holds a stale pointer to a deleted node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ tree indexing",
+        "Epoch-based memory reclamation mechanisms",
+        "Concurrent self-balancing binary search trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T23:56:38.155774+00:00",
+      "run_number": 872
     }
   ]
 }
