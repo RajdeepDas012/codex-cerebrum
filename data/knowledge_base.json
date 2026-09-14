@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 858,
-    "last_updated": "2026-09-14T21:02:47.569773+00:00",
-    "total_topics_learned": 858
+    "total_runs": 859,
+    "last_updated": "2026-09-14T21:05:54.929266+00:00",
+    "total_topics_learned": 859
   },
   "entries": [
     {
@@ -41385,6 +41385,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T21:02:47.569750+00:00",
       "run_number": 858
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-tree using atomic node split cascading and epoch-based memory reclamation for high-throughput in-memory transactional database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-tree enables multiple threads to perform high-throughput searches, insertions, and deletions without global locks. It achieves this by using atomic primitives for node splits and safe memory management to safely reclaim freed nodes.",
+      "key_points": [
+        "Uses atomic pointer operations and state flags to manage node splits and merges without blocking concurrent readers.",
+        "Employs epoch-based memory reclamation (EMR) or hazard pointers to prevent use-after-free errors during lock-free traversal and modification.",
+        "Handles split cascading by optimistically inserting keys and resolving structural modifications using cooperative helper threads.",
+        "Maintains balanced tree properties under heavy contention without the performance degradation of coarse-grained reader-writer locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node state transition for a lock-free split operation.",
+        "correct": "bool try_split(Node* node, int split_key) {\n    NodeState expected = NodeState::Normal;\n    return node->state.compare_exchange_strong(expected, NodeState::Splitting);\n}",
+        "wrong": "bool try_split(Node* node, int split_key) {\n    if (node->state == NodeState::Normal) {\n        node->state = NodeState::Splitting;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely reclaim memory, leading to memory leaks or premature freeing of nodes accessed by concurrent reader threads.",
+        "Not handling cascading splits properly, causing corrupted index state when multiple splits happen simultaneously up the tree."
+      ],
+      "best_practices": [
+        "Integrate an established epoch-based memory management library or hazard pointer scheme to manage node lifecycles safely.",
+        "Design node structures to fit neatly within CPU cache lines to minimize cache misses during traversal steps."
+      ],
+      "when_to_use": "Use when building high-performance, in-memory transactional databases or key-value stores requiring extreme read-write concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard lock-based data structures provide sufficient throughput with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a reader thread from accessing a node that has been deleted or split in a lock-free B-tree?",
+          "answer": "By using epoch-based memory reclamation or hazard pointers, ensuring nodes are only freed after all threads have exited the critical section referencing them."
+        },
+        {
+          "question": "What is split cascading in a concurrent B-tree and how is it managed atomically?",
+          "answer": "Split cascading occurs when a node split fills the parent node, triggering a recursive split upward; it is managed atomically by setting intermediate node states and using cooperative threads to complete structural changes."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Radix Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T21:05:54.929211+00:00",
+      "run_number": 859
     }
   ]
 }

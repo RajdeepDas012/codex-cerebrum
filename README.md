@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **858** |
-| Last Updated | `2026-09-14T21:02:47.569773+00:00` |
-| Dataset Size | `858 entries` |
+| Total Topics Learned | **859** |
+| Last Updated | `2026-09-14T21:05:54.929266+00:00` |
+| Dataset Size | `859 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 76 |
 | crypto-blockchain | 76 |
 | stocks-markets | 71 |
-| data-structures | 43 |
+| data-structures | 44 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-tree using atomic node split cascading and epoch-based memory reclamation for high-throughput in-memory transactional database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer swizzling and randomized peer routing for high-throughput decentralized peer-to-peer overlay network membership management`
 - `Implementation of a lock-free thread-safe concurrent T-Digest data structure using atomic centroid merging and compression scaling for high-throughput accurate quantile estimation in real-time distributed performance monitoring pipelines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo filter using atomic bucket fingerprint relocation and kick-out eviction chains for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Xor filter using atomic block fingerprint manipulation and coefficient matrix solving for high-throughput in-memory approximate membership query pipelines`
-- `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic matrix cell incrementation and conservative update algorithms for high-throughput frequency estimation in real-time network traffic telemetry pipelines`
 
 <!-- STATS_END -->
 
