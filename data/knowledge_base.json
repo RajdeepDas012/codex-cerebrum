@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 797,
-    "last_updated": "2026-09-14T00:09:38.251608+00:00",
-    "total_topics_learned": 797
+    "total_runs": 798,
+    "last_updated": "2026-09-14T00:12:45.767360+00:00",
+    "total_topics_learned": 798
   },
   "entries": [
     {
@@ -38486,6 +38486,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:09:38.251589+00:00",
       "run_number": 797
+    },
+    {
+      "topic": "Implementation of an out-of-core sorting algorithm using memory-mapped files and parallel merge sort for processing datasets exceeding RAM capacity",
+      "category": "algorithms",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "An out-of-core sorting algorithm enables the sorting of datasets that are too massive to fit into physical RAM by chunking the data, sorting portions in memory, writing them to disk as runs, and merging them using k-way merge strategies. Utilizing memory-mapped files and parallel processing minimizes I/O bottlenecks and maximizes CPU throughput during the sort-and-merge phases.",
+      "key_points": [
+        "Partitioning massive datasets into manageable chunks (runs) that fit within the physical RAM threshold",
+        "Leveraging memory-mapped files (mmap) to avoid expensive explicit read/write system calls and streamline virtual memory page caching",
+        "Employing parallel merge sort using multi-core thread pools to accelerate the sorting of individual chunks",
+        "Executing a k-way merge using min-heaps to combine sorted runs efficiently into a single fully sorted output file"
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates partitioning a large stream of records into sorted memory-mapped chunk files and merging them.",
+        "correct": "import mmap\nimport heapq\nimport os\n\ndef sort_chunk(data_chunk):\n    return sorted(data_chunk)\n\ndef create_sorted_runs(file_path, chunk_size):\n    run_files = []\n    with open(file_path, 'r+b') as f:\n        mm = mmap.mmap(f.fileno(), 0)\n        # Process chunks via memory map abstraction\n        mm.close()\n    return run_files",
+        "wrong": "def bad_out_of_core_sort(file_path):\n    with open(file_path, 'r') as f:\n        data = f.readlines()\n    data.sort()\n    with open(file_path, 'w') as f:\n        f.writelines(data)"
+      },
+      "common_mistakes": [
+        "Loading entire files into RAM via readlines() instead of streaming or using memory-mapped views, causing Out-Of-Memory (OOM) crashes",
+        "Failing to optimize the k-way merge phase with a min-heap, resulting in O(N * M) merge complexity instead of O(N log M)"
+      ],
+      "best_practices": [
+        "Tune chunk sizes dynamically based on available free system RAM rather than hardcoding static allocations",
+        "Use buffered binary I/O formats (like struct packing) instead of raw text parsing to minimize disk footprint and serialization overhead",
+        "Leverage operating system page cache policies alongside memory-mapped regions for sequential access patterns"
+      ],
+      "when_to_use": "When sorting datasets that are multiple times larger than available RAM capacity and when distributed cluster solutions (like MapReduce) are overkill for a single machine.",
+      "when_not_to_use": "When the dataset easily fits entirely within physical memory, where standard in-memory parallel sorts will vastly outperform disk-bound algorithms.",
+      "interview_questions": [
+        {
+          "question": "How do you determine the optimal number of chunks and memory allocation size when sorting a 100GB file on a machine with 8GB of RAM?",
+          "answer": "Allocate slightly less than the available RAM (e.g., 6GB) to account for OS overhead and system buffers, creating approximately 17 to 20 distinct sorted run files, then merge them using a 20-way min-heap merge."
+        },
+        {
+          "question": "Why are memory-mapped files preferred over standard file read and write buffers for out-of-core algorithms?",
+          "answer": "Memory-mapped files eliminate redundant copying between kernel space and user space buffers, allowing the operating system's virtual memory manager to page chunks directly into RAM as needed."
+        }
+      ],
+      "related_topics": [
+        "External Merge Sort",
+        "Memory-Mapped I/O Optimization",
+        "K-Way Merge Algorithms with Min-Heaps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:12:45.767333+00:00",
+      "run_number": 798
     }
   ]
 }

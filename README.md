@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **797** |
-| Last Updated | `2026-09-14T00:09:38.251608+00:00` |
-| Dataset Size | `797 entries` |
+| Total Topics Learned | **798** |
+| Last Updated | `2026-09-14T00:12:45.767360+00:00` |
+| Dataset Size | `798 entries` |
 
 ## 📂 Categories Learned
 
@@ -32,18 +32,18 @@
 | security | 7 |
 | networking | 5 |
 | data-structures | 4 |
-| algorithms | 2 |
+| algorithms | 3 |
 | data-visualization | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of an out-of-core sorting algorithm using memory-mapped files and parallel merge sort for processing datasets exceeding RAM capacity`
 - `Implementation of a lock-free distributed consensus protocol using Raft leader election and atomic state machine replication for resilient microservice coordination`
 - `Implementation of a lock-free distributed rate limiter using Redis Cluster and Sliding Window Log algorithm for high-concurrency API gateways`
 - `Implementation of a lock-free distributed sequence generator using Snowflake ID architecture and atomic hardware instructions for horizontal microservice scaling`
 - `Implementation of a lock-free single-producer multi-consumer event bus using atomic ring buffers for zero-copy inter-thread dispatch`
-- `Implementation of a persistent append-only log storage engine with crash recovery using Write-Ahead Logging (WAL) and checksum verification`
 
 <!-- STATS_END -->
 
