@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **842** |
-| Last Updated | `2026-09-14T17:04:31.417763+00:00` |
-| Dataset Size | `842 entries` |
+| Total Topics Learned | **843** |
+| Last Updated | `2026-09-14T17:07:39.189716+00:00` |
+| Dataset Size | `843 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 75 |
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
-| data-structures | 33 |
+| data-structures | 34 |
 | probability-math | 27 |
 | databases | 14 |
 | machine-learning | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent persistent functional data structure using structural sharing and hazard pointer reclamation for high-throughput multi-version concurrency control in distributed transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array setting and multiple hash-seed generation for high-throughput in-memory probabilistic set membership verification in edge caching systems`
 - `Implementation of a lock-free thread-safe concurrent fingerprint-based MinHash index using atomic set sketching and Jaccard similarity estimation for high-throughput real-time duplicate document detection pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-link tree using atomic node latch-coupling and right-link pointer validation for high-throughput in-memory multi-threaded database index concurrency`
 - `Implementation of a lock-free thread-safe concurrent R-tree using atomic minimum bounding rectangle (MBR) adjustments and quadratic split algorithms for high-throughput spatial database indexing and geolocation query engines`
-- `Implementation of a lock-free thread-safe concurrent k-d tree using atomic bounding-box splitting and parallel recursive traversal for high-throughput multi-dimensional nearest-neighbor search in real-time recommendation engines`
 
 <!-- STATS_END -->
 
