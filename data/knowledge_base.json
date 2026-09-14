@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 793,
-    "last_updated": "2026-09-13T22:03:48.877614+00:00",
-    "total_topics_learned": 793
+    "total_runs": 794,
+    "last_updated": "2026-09-14T00:00:15.699481+00:00",
+    "total_topics_learned": 794
   },
   "entries": [
     {
@@ -38294,6 +38294,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-13T22:03:48.877594+00:00",
       "run_number": 793
+    },
+    {
+      "topic": "Implementation of a lock-free single-producer multi-consumer event bus using atomic ring buffers for zero-copy inter-thread dispatch",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An SPMC lock-free event bus utilizes fixed-size circular buffers with atomic index management to route messages from one writer thread to multiple reader threads without blocking OS mutexes. It eliminates serialization overhead and thread contention, achieving microsecond-scale inter-thread messaging critical for real-time telemetry pipelines.",
+      "key_points": [
+        "Employs a single writer thread updating the write cursor with atomic relaxed or release operations to prevent race conditions.",
+        "Utilizes independent atomic read cursors per consumer thread to track individual consumer progress without interference.",
+        "Implements a pre-allocated circular array buffer to completely eliminate dynamic memory allocations during runtime message dispatch.",
+        "Achieves zero-copy dispatch by providing consumers direct pointers to payload slots within the ring buffer memory space."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic sequence advancement and slot reservation in a single-producer ring buffer.",
+        "correct": "bool push(const Event& item) {\n    size_t current_tail = tail_.load(std::memory_order_relaxed);\n    size_t current_head = head_.load(std::memory_order_acquire);\n    if ((current_tail - current_head) >= Capacity) return false;\n    buffer_[current_tail & Mask] = item;\n    tail_.store(current_tail + 1, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool push(const Event& item) {\n    std::lock_guard<std::mutex> lock(mtx_);\n    buffer_[tail_++] = item;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Using incorrect memory ordering constraints (e.g., relaxed stores when release-acquire synchronization is required for visibility).",
+        "Failing to handle consumer slow-down gracefully, allowing a fast producer to overwrite unread slots in the ring buffer."
+      ],
+      "best_practices": [
+        "Pad atomic counters with cacheline size (typically 64 bytes) to prevent false sharing between consumer and producer threads.",
+        "Design ring buffer capacities as powers of two to replace expensive modulo arithmetic with fast bitwise masking operations.",
+        "Use appropriate memory barriers such as acquire-release semantics to ensure payload writes are fully visible before the tail pointer updates."
+      ],
+      "when_to_use": "When building high-performance observability pipelines, game engines, or trading systems requiring high-throughput, low-latency event broadcasting from a single thread to multiple workers.",
+      "when_not_to_use": "When there are multiple producer threads requiring coordination, or when message processing times vary wildly and could lead to consumer starvation.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a fast single producer from overwriting unread data in a lock-free ring buffer shared with multiple slow consumers?",
+          "answer": "Maintain independent read cursors for every consumer, and ensure the producer checks against the minimum read cursor position across all consumers before advancing the tail pointer."
+        },
+        {
+          "question": "Why is power-of-two capacity preferred in circular buffer implementations?",
+          "answer": "It allows the use of a bitwise AND mask (capacity - 1) instead of an expensive CPU modulo instruction for index wrapping."
+        }
+      ],
+      "related_topics": [
+        "False sharing mitigation using cache line padding",
+        "Memory ordering semantics in C++ atomics",
+        "Disruptor pattern architecture"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:00:15.699417+00:00",
+      "run_number": 794
     }
   ]
 }
