@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **847** |
-| Last Updated | `2026-09-14T17:20:10.396146+00:00` |
-| Dataset Size | `847 entries` |
+| Total Topics Learned | **848** |
+| Last Updated | `2026-09-14T17:23:18.042457+00:00` |
+| Dataset Size | `848 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | system-design | 76 |
-| crypto-blockchain | 75 |
+| crypto-blockchain | 76 |
 | stocks-markets | 71 |
 | data-structures | 37 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch node recycling and path-compression masking for high-throughput verifiable state transition engines in blockchain virtual machines`
 - `Implementation of a lock-free thread-safe concurrent LRU cache using atomic hash indexing and a generational epoch-based memory reclamation scheme for high-throughput in-memory web application session stores`
 - `Implementation of a lock-free thread-safe concurrent ring buffer using atomic sequence numbers and memory barriers for high-throughput single-producer multi-consumer inter-thread messaging pipelines`
 - `Implementation of a lock-free thread-safe concurrent work-stealing deque using atomic tail/head pointer manipulation and hazard pointer memory reclamation for high-throughput task-parallel runtime execution engines`
 - `Implementation of a lock-free thread-safe concurrent lock-free skip-list using atomic forward-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory multi-threaded key-value store index concurrency`
-- `Implementation of a lock-free thread-safe concurrent persistent functional data structure using structural sharing and hazard pointer reclamation for high-throughput multi-version concurrency control in distributed transactional key-value stores`
 
 <!-- STATS_END -->
 
