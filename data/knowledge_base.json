@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 863,
-    "last_updated": "2026-09-14T21:18:26.676440+00:00",
-    "total_topics_learned": 863
+    "total_runs": 864,
+    "last_updated": "2026-09-14T21:21:34.017750+00:00",
+    "total_topics_learned": 864
   },
   "entries": [
     {
@@ -41622,6 +41622,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T21:18:26.676417+00:00",
       "run_number": 863
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order restructuring and hazard pointer reclamation for high-throughput task scheduling and event-driven asynchronous processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free priority queue that maintains heap ordering concurrently using atomic primitives and hazard pointers. It is crucial for high-throughput task schedulers and asynchronous runtime engines where thread contention on shared priority queues must be minimized without sacrificing memory safety.",
+      "key_points": [
+        "Utilizes atomic operations (like Compare-And-Swap) for thread-safe heap node insertion and extraction without global locks.",
+        "Employs hazard pointers to safely manage memory reclamation of dynamically reallocated heap nodes, preventing use-after-free bugs.",
+        "Implements atomic heap-order restructuring to resolve race conditions during concurrent structural modifications.",
+        "Optimized for high-throughput task scheduling environments to eliminate lock convoy effects and thread blocking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic enqueue operation using a hazard pointer protected slot in a lock-free priority queue node.",
+        "correct": "void enqueue(Node* newNode) {\n    HazardPointer hp;\n    while (true) {\n        Node* tail = hp.protect(tail_ptr);\n        if (CAS(&tail_ptr, tail, newNode)) break;\n    }\n}",
+        "wrong": "void enqueue(Node* newNode) {\n    mutex.lock();\n    tail_ptr->next = newNode;\n    tail_ptr = newNode;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to clear hazard pointers before a thread exits, leading to memory leaks or delayed garbage collection.",
+        "Failing to handle the ABA problem during concurrent node extraction and heap restructuring."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to reading shared reference-counted or dynamically allocated nodes.",
+        "Batch retired nodes in local thread lists to minimize the overhead of global memory reclamation checks.",
+        "Use tagged pointers or memory version counters to completely mitigate the ABA problem in atomic updates."
+      ],
+      "when_to_use": "Use this structure when building high-performance task schedulers, real-time event loops, or asynchronous processing engines experiencing heavy contention on priority-ordered tasks.",
+      "when_not_to_use": "Avoid in low-concurrency environments or systems with strict real-time determinism where simpler coarse-grained locking or single-threaded queues provide lower baseline latency and easier debugging.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and ensure safe memory reclamation in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, preventing other threads from prematurely freeing those memory addresses until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the primary performance bottleneck of using a standard mutex-locked priority queue in a multi-core task scheduler, and how does a lock-free heap resolve it?",
+          "answer": "Mutex-locked queues suffer from lock contention, context switching overhead, and lock convoy effects under high concurrency. Lock-free heaps use atomic instructions to allow multiple threads to make progress simultaneously without blocking."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Work-Stealing Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T21:21:34.017729+00:00",
+      "run_number": 864
     }
   ]
 }
