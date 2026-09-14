@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **818** |
-| Last Updated | `2026-09-14T05:15:17.745692+00:00` |
-| Dataset Size | `818 entries` |
+| Total Topics Learned | **819** |
+| Last Updated | `2026-09-14T05:18:25.133543+00:00` |
+| Dataset Size | `819 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | stocks-markets | 71 |
 | probability-math | 27 |
 | databases | 14 |
-| data-structures | 12 |
+| data-structures | 13 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | networking | 8 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a cache-oblivious B+ tree layout using van Emde Boas layouts for high-performance in-memory database index range scans`
 - `Implementation of a lock-free thread-safe hierarchical bucket priority queue using atomic bitmaps and CAS operations for deterministic task scheduling in real-time execution engines`
 - `Implementation of a lock-free distributed circuit breaker using state-machine replication and exponential moving average (EMA) failure rate tracking for resilient microservice downstream fault tolerance`
 - `Implementation of a zero-copy Linux AF_XDP socket handler with direct memory access (DMA) ring buffers for ultra-low-latency high-frequency packet processing applications`
 - `Implementation of a lock-free distributed telemetry tracing context propagator using W3C Trace Context standards and thread-local storage for asynchronous microservice call-graph profiling`
-- `Implementation of a lock-free thread-safe interval tree using atomic node rotations and versioned sequence locks for real-time order book range queries in financial matching engines`
 
 <!-- STATS_END -->
 
