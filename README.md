@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **839** |
-| Last Updated | `2026-09-14T16:54:19.666314+00:00` |
-| Dataset Size | `839 entries` |
+| Total Topics Learned | **840** |
+| Last Updated | `2026-09-14T16:57:28.210129+00:00` |
+| Dataset Size | `840 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 75 |
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
-| data-structures | 31 |
+| data-structures | 32 |
 | probability-math | 27 |
 | databases | 14 |
 | machine-learning | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-link tree using atomic node latch-coupling and right-link pointer validation for high-throughput in-memory multi-threaded database index concurrency`
 - `Implementation of a lock-free thread-safe concurrent R-tree using atomic minimum bounding rectangle (MBR) adjustments and quadratic split algorithms for high-throughput spatial database indexing and geolocation query engines`
 - `Implementation of a lock-free thread-safe concurrent k-d tree using atomic bounding-box splitting and parallel recursive traversal for high-throughput multi-dimensional nearest-neighbor search in real-time recommendation engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node allocation and active-point state propagation for high-throughput string matching and bioinformatics sequence alignment engines`
 - `Implementation of a lock-free thread-safe concurrent disjoint-set (Union-Find) data structure using atomic path compression and union-by-rank for high-throughput parallel graph connectivity and minimum spanning tree algorithms`
-- `Implementation of a lock-free thread-safe concurrent Fenwick tree (Binary Indexed Tree) using atomic point updates and prefix-sum delegation for high-throughput real-time streaming cumulative frequency analytics in financial telemetry engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 839,
-    "last_updated": "2026-09-14T16:54:19.666314+00:00",
-    "total_topics_learned": 839
+    "total_runs": 840,
+    "last_updated": "2026-09-14T16:57:28.210129+00:00",
+    "total_topics_learned": 840
   },
   "entries": [
     {
@@ -40482,6 +40482,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T16:54:19.666296+00:00",
       "run_number": 839
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-link tree using atomic node latch-coupling and right-link pointer validation for high-throughput in-memory multi-threaded database index concurrency",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A B-link tree is an extension of the B-tree that adds right-link pointers to sibling nodes at every level, allowing concurrent threads to navigate safely even when structural modifications (splits and merges) occur. This design eliminates the need for strict top-down global locking, dramatically increasing throughput in multi-threaded database systems.",
+      "key_points": [
+        "Utilizes right-link pointers to guide search operations safely to the correct sibling if a node splits concurrently.",
+        "Employs atomic operations and latch-coupling (crabbing) to coordinate node access without deadlocks.",
+        "Supports high-throughput multi-threaded operations by allowing readers to bypass write locks under specific validation conditions.",
+        "Requires careful memory management (e.g., hazard pointers or epoch-based reclamation) to prevent use-after-free bugs during concurrent node splitting."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe traversal using right-link pointer validation when encountering a concurrently split node.",
+        "correct": "Node* navigate_to_child(Node* current, int key) {\n    while (current->right && key >= current->high_key) {\n        current = current->right.load(std::memory_order_acquire);\n    }\n    return current;\n}",
+        "wrong": "Node* navigate_to_child(Node* current, int key) {\n    // Fails to check right-link pointers, leading to missed keys during splits\n    return current->find_child(key);\n}"
+      },
+      "common_mistakes": [
+        "Failing to validate the right-link pointer after reading a node's contents, which can result in reading stale data or missing newly inserted keys.",
+        "Neglecting safe memory reclamation strategies, causing race conditions where memory is freed while another thread is reading the node."
+      ],
+      "best_practices": [
+        "Always use acquire-release memory semantics when loading and storing right-link pointers and high keys.",
+        "Implement epoch-based garbage collection or hazard pointers to manage node deletions and splits safely.",
+        "Keep critical sections inside node operations as brief as possible to minimize contention."
+      ],
+      "when_to_use": "Use this when building high-performance in-memory databases, storage engines, or key-value stores that require massive concurrent read and write scalability.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms or simpler concurrent maps (like concurrent hash tables) provide sufficient performance with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do right-link pointers prevent deadlock and reader starvation during a node split in a B-link tree?",
+          "answer": "Right-link pointers allow a reader or updating thread that arrives at a node mid-split to gracefully follow the pointer to the newly created sibling node rather than waiting or restarting the traversal from the root."
+        },
+        {
+          "question": "Why is memory reclamation particularly challenging in a lock-free or latch-free B-link tree?",
+          "answer": "Because multiple threads may be traversing or referencing nodes asynchronously via right-links without holding exclusive locks on those nodes, standard deletion immediately frees memory, risking segmentation faults unless safe reclamation schemes like epoch-based reclamation are used."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "B-tree concurrency control",
+        "epoch-based memory reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T16:57:28.210107+00:00",
+      "run_number": 840
     }
   ]
 }
