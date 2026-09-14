@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 809,
-    "last_updated": "2026-09-14T04:47:08.681661+00:00",
-    "total_topics_learned": 809
+    "total_runs": 810,
+    "last_updated": "2026-09-14T04:50:16.804457+00:00",
+    "total_topics_learned": 810
   },
   "entries": [
     {
@@ -39057,6 +39057,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T04:47:08.681644+00:00",
       "run_number": 809
+    },
+    {
+      "topic": "Implementation of a hardware-timestamped network packet capture engine using Intel DPDK (Data Plane Development Kit) and ring buffers for ultra-low-latency network telemetry monitoring",
+      "category": "networking",
+      "language": "C",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance network packet capture engine leveraging Intel DPDK for kernel-bypass packet processing and hardware timestamping capabilities. It is critical for modern low-latency telemetry systems, financial trading networks, and high-speed intrusion detection where traditional OS network stacks introduce unacceptable jitter and overhead.",
+      "key_points": [
+        "Utilizes Intel DPDK PMDs (Poll Mode Drivers) to bypass the Linux kernel network stack and eliminate context switching overhead.",
+        "Leverages Network Interface Card (NIC) hardware timestamping to inject precise packet reception times directly into the mbuf metadata.",
+        "Employs lock-free multi-producer single-consumer (MPSC) ring buffers to pass captured packet descriptors safely between polling threads and consumer analytics threads.",
+        "Configures massive page memory (Hugepages) to optimize TLB (Translation Lookaside Buffer) hit rates for high-throughput memory access."
+      ],
+      "code_example": {
+        "language": "c",
+        "description": "Demonstrates initializing a DPDK port and retrieving a hardware timestamp from a received packet mbuf.",
+        "correct": "struct rte_mbuf *bufs[BURST_SIZE];\nuint16_t nb_rx = rte_rte_eth_rx_burst(port_id, 0, bufs, BURST_SIZE);\nfor (int i = 0; i < nb_rx; i++) {\n    uint64_t *hw_ts = RTE_MBUF_DYNFIELD(bufs[i], timestamp_offset, uint64_t *);\n    process_packet_with_timestamp(bufs[i], *hw_ts);\n}",
+        "wrong": "struct timeval tv; gettimeofday(&tv, NULL); process_packet_with_timestamp(buf, tv.tv_sec); // Using software timestamps instead of NIC hardware timestamps introduces kernel latency jitter."
+      },
+      "common_mistakes": [
+        "Relying on system calls like gettimeofday or clock_gettime inside the packet processing loop instead of utilizing NIC hardware timestamps.",
+        "Failing to pin DPDK poll threads to dedicated CPU cores, leading to cache thrashing and scheduling latency spikes."
+      ],
+      "best_practices": [
+        "Isolate polling threads using CPU core pinning (isolcpus or pthread_setaffinity) to maintain continuous polling loops without context switches.",
+        "Batch packet reads and ring buffer writes using DPDK burst APIs to maximize CPU instruction cache efficiency.",
+        "Pre-allocate memory pools (mempools) during application initialization to avoid dynamic memory allocation overhead in the fast path."
+      ],
+      "when_to_use": "Use when building ultra-low-latency telemetry, network monitoring, or high-frequency trading gateways that require line-rate packet processing at 10Gbps, 40Gbps, or 100Gbps+.",
+      "when_not_to_use": "Avoid when building standard web applications, microservices, or low-throughput network daemons where standard socket APIs and OS network stacks are simpler and sufficient.",
+      "interview_questions": [
+        {
+          "question": "How does DPDK eliminate the performance bottlenecks associated with the standard Linux kernel network stack?",
+          "answer": "DPDK uses kernel-bypass Poll Mode Drivers (PMDs) that continuously poll NIC ring buffers directly from user space, eliminating interrupt overhead, system calls, and expensive socket context switches."
+        },
+        {
+          "question": "Why is NIC hardware timestamping preferred over software timestamps generated in the application polling loop?",
+          "answer": "Hardware timestamps are stamped at the physical MAC layer when the packet framing hits the wire, eliminating variable queuing delays and OS scheduling jitter inherent in software timestamping."
+        }
+      ],
+      "related_topics": [
+        "Intel DPDK Poll Mode Drivers and Mempools",
+        "Kernel-bypass networking and XDP/eBPF packet processing",
+        "Lock-free ring buffer architectures for inter-thread communication"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T04:50:16.804438+00:00",
+      "run_number": 810
     }
   ]
 }

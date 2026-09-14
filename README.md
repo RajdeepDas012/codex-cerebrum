@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **809** |
-| Last Updated | `2026-09-14T04:47:08.681661+00:00` |
-| Dataset Size | `809 entries` |
+| Total Topics Learned | **810** |
+| Last Updated | `2026-09-14T04:50:16.804457+00:00` |
+| Dataset Size | `810 entries` |
 
 ## 📂 Categories Learned
 
@@ -31,7 +31,7 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| networking | 6 |
+| networking | 7 |
 | algorithms | 5 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a hardware-timestamped network packet capture engine using Intel DPDK (Data Plane Development Kit) and ring buffers for ultra-low-latency network telemetry monitoring`
 - `Implementation of a lock-free LSM-tree memtable using concurrent skiplists and atomic compaction triggers for high-throughput write-heavy storage engines`
 - `Implementation of a lock-free distributed bloom filter using atomic bitsets and consistent hashing for low-latency membership testing in distributed caching layers`
 - `Implementation of a lock-free work-stealing thread pool for high-throughput task-parallel execution engines in C++`
 - `Implementation of a lock-free garbage collection epoch mechanism for safe memory reclamation in concurrent data structures`
-- `Implementation of an adaptive radix tree (ART) index for concurrent in-memory key-value storage engines using lock-free node growth and optimistic latch coupling`
 
 <!-- STATS_END -->
 
