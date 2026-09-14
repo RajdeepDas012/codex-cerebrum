@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **799** |
-| Last Updated | `2026-09-14T00:15:52.824138+00:00` |
-| Dataset Size | `799 entries` |
+| Total Topics Learned | **800** |
+| Last Updated | `2026-09-14T00:19:00.169581+00:00` |
+| Dataset Size | `800 entries` |
 
 ## 📂 Categories Learned
 
@@ -30,7 +30,7 @@
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| networking | 5 |
+| networking | 6 |
 | data-structures | 4 |
 | algorithms | 3 |
 | data-visualization | 2 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a non-blocking TCP socket server using Linux epoll edge-triggered multiplexing and non-blocking I/O multiplexing for high-concurrency network communication`
 - `Implementation of a lock-free distributed transaction coordinator using the Two-Phase Commit protocol and Saga pattern rollback logs for resilient microservice orchestration`
 - `Implementation of an out-of-core sorting algorithm using memory-mapped files and parallel merge sort for processing datasets exceeding RAM capacity`
 - `Implementation of a lock-free distributed consensus protocol using Raft leader election and atomic state machine replication for resilient microservice coordination`
 - `Implementation of a lock-free distributed rate limiter using Redis Cluster and Sliding Window Log algorithm for high-concurrency API gateways`
-- `Implementation of a lock-free distributed sequence generator using Snowflake ID architecture and atomic hardware instructions for horizontal microservice scaling`
 
 <!-- STATS_END -->
 

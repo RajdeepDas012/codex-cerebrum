@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 799,
-    "last_updated": "2026-09-14T00:15:52.824138+00:00",
-    "total_topics_learned": 799
+    "total_runs": 800,
+    "last_updated": "2026-09-14T00:19:00.169581+00:00",
+    "total_topics_learned": 800
   },
   "entries": [
     {
@@ -38582,6 +38582,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:15:52.824121+00:00",
       "run_number": 799
+    },
+    {
+      "topic": "Implementation of a non-blocking TCP socket server using Linux epoll edge-triggered multiplexing and non-blocking I/O multiplexing for high-concurrency network communication",
+      "category": "networking",
+      "language": "C",
+      "difficulty": "advanced",
+      "summary": "This technique utilizes the Linux epoll syscall in edge-triggered (ET) mode combined with non-blocking file descriptors to handle tens of thousands of concurrent network connections efficiently. By only notifying applications when the state of an I/O channel changes, it eliminates the polling overhead of traditional select or poll mechanisms.",
+      "key_points": [
+        "Edge-triggered (ET) mode requires explicit draining of the socket read/write buffers until EAGAIN or EWOULDBLOCK is returned.",
+        "File descriptors must be explicitly configured as non-blocking using fcntl to prevent threads from locking indefinitely during read or write operations.",
+        "The epoll_wait syscall returns only the file descriptors that have pending events, reducing time complexity from O(N) to O(1) relative to active connections.",
+        "State management structures must be maintained in user-space to track partial reads and writes for each individual client socket."
+      ],
+      "code_example": {
+        "language": "c",
+        "description": "Demonstrates setting a socket to non-blocking mode and registering it with an epoll instance using edge-triggered events.",
+        "correct": "int set_nonblocking(int fd) {\n    int flags = fcntl(fd, F_GETFL, 0);\n    if (flags == -1) return -1;\n    return fcntl(fd, F_SETFL, flags | O_NONBLOCK);\n}\n\nvoid add_to_epoll(int epoll_fd, int client_fd) {\n    struct epoll_event ev;\n    ev.events = EPOLLIN | EPOLLET | EPOLLONESHOT;\n    ev.data.fd = client_fd;\n    epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);\n}",
+        "wrong": "void add_to_epoll_wrong(int epoll_fd, int client_fd) {\n    struct epoll_event ev;\n    ev.events = EPOLLIN; // Missing EPOLLET and non-blocking setup\n    ev.data.fd = client_fd;\n    epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);\n}"
+      },
+      "common_mistakes": [
+        "Failing to read until EAGAIN in edge-triggered mode, which results in permanent data starvation for unread bytes remaining in the kernel buffer.",
+        "Forgetting to set the underlying socket file descriptor to non-blocking mode, causing a blocking read/write to hang the entire event loop thread."
+      ],
+      "best_practices": [
+        "Always loop on read/write operations until the system returns EAGAIN or EWOULDBLOCK when using edge-triggered epoll.",
+        "Utilize EPOLLONESHOT to prevent multiple worker threads from accidentally handling events for the same socket concurrently.",
+        "Implement a robust connection state machine to track fragmented network payloads and partial writes."
+      ],
+      "when_to_use": "Building ultra-high-performance network services, proxies, or game servers that must sustain hundreds of thousands of concurrent persistent connections.",
+      "when_not_to_use": "Low-throughput applications, simple internal scripts, or when running on non-Linux operating systems where platform-specific alternatives like kqueue or IOCP should be preferred.",
+      "interview_questions": [
+        {
+          "question": "What is the primary difference between Level-Triggered (LT) and Edge-Triggered (ET) modes in epoll?",
+          "answer": "Level-Triggered mode notifies the application as long as the buffer contains data, whereas Edge-Triggered mode only notifies the application when the state of the socket buffer changes, requiring the application to read all available data until EAGAIN is hit."
+        },
+        {
+          "question": "Why is it mandatory to use non-blocking file descriptors with edge-triggered epoll?",
+          "answer": "If a socket is blocking and you attempt to read until EAGAIN, the final read call will block indefinitely waiting for more data, freezing your event loop thread."
+        }
+      ],
+      "related_topics": [
+        "Linux kqueue and IOCP",
+        "Reactor design pattern",
+        "Zero-copy networking with sendfile"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:19:00.169555+00:00",
+      "run_number": 800
     }
   ]
 }
