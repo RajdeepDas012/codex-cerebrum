@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 804,
-    "last_updated": "2026-09-14T00:31:30.798883+00:00",
-    "total_topics_learned": 804
+    "total_runs": 805,
+    "last_updated": "2026-09-14T00:34:37.930506+00:00",
+    "total_topics_learned": 805
   },
   "entries": [
     {
@@ -38821,6 +38821,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:31:30.798864+00:00",
       "run_number": 804
+    },
+    {
+      "topic": "Implementation of an adaptive radix tree (ART) index for concurrent in-memory key-value storage engines using lock-free node growth and optimistic latch coupling",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An adaptive radix tree (ART) is a space-efficient indexing structure that dynamically changes its internal node sizes (Node4, Node16, Node48, Node256) based on fan-out density. Combining this with optimistic latch coupling and lock-free node growth allows high-throughput concurrent in-memory key-value stores to achieve high read parallelism without global locking overhead.",
+      "key_points": [
+        "Utilizes adaptive node sizing (Node4, Node16, Node48, Node256) to eliminate wasted memory overhead typical of standard radix tries while maintaining high traversal speed.",
+        "Implements optimistic latch coupling by reading version lock counters before and after traversing internal paths, avoiding costly exclusive locks on read-heavy workloads.",
+        "Employs atomic node growth and replacement (such as CAS operations on child pointers) to transition from smaller node types to larger ones dynamically under concurrency.",
+        "Performs path compression (prefix compression) to collapse chains of single-child nodes into compressed byte arrays, drastically reducing memory footprint and tree depth."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates optimistic latch validation during concurrent reads on an ART node.",
+        "correct": "uint64_t v1 = node->version.load();\nif (is_locked(v1)) return false;\nValue val = node->val;\nuint64_t v2 = node->version.load();\nif (v1 != v2) return false; // retry if modified",
+        "wrong": "node->lock.lock(); Value val = node->val; node->lock.unlock(); // using pessimistic locking for all reads"
+      },
+      "common_mistakes": [
+        "Failing to check version counters twice (before and after reading data) during optimistic latch coupling, leading to torn reads or race conditions.",
+        "Not handling memory reclamation safely (e.g., hazard pointers or epoch-based reclamation) when replacing nodes during atomic growth, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use epoch-based memory management (EBAM) or hazard pointers to safely defer the destruction of old node structures when expanding node capacity.",
+        "Design node growth transitions to be thread-safe by allocating the new larger node, copying existing keys/pointers, and atomically swapping the parent's child pointer via CAS."
+      ],
+      "when_to_use": "Ideal for in-memory databases and high-performance key-value stores with high concurrency, stringent latency requirements, and skewed key distributions where B-trees or hash tables suffer from structural lock contention or rehashing pauses.",
+      "when_not_to_use": "Avoid when data does not fit in memory, or when the underlying storage engine is disk-based, as radix trees do not map well to block-based page layouts without complex translation layers.",
+      "interview_questions": [
+        {
+          "question": "How does an Adaptive Radix Tree (ART) solve the memory waste problem inherent in traditional radix tries?",
+          "answer": "ART dynamically alters the size of its inner nodes depending on the number of children they hold, transitioning through Node4, Node16, Node48, and Node256 layouts to avoid allocating sparse arrays."
+        },
+        {
+          "question": "What is the primary benefit of optimistic latch coupling in a concurrent ART implementation?",
+          "answer": "It allows reader threads to traverse and read nodes without acquiring write locks or even updating shared state, validating the consistency of the read via a version counter afterward to maximize read concurrency."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Bw-Tree",
+        "epoch-based memory reclamation",
+        "prefix-compressed trie optimization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:34:37.930486+00:00",
+      "run_number": 805
     }
   ]
 }
