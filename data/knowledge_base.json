@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 830,
-    "last_updated": "2026-09-14T10:47:13.172676+00:00",
-    "total_topics_learned": 830
+    "total_runs": 831,
+    "last_updated": "2026-09-14T10:50:20.521567+00:00",
+    "total_topics_learned": 831
   },
   "entries": [
     {
@@ -40056,6 +40056,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T10:47:13.172658+00:00",
       "run_number": 830
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent inverted index using atomic posting list compression and skip-pointer acceleration for high-throughput real-time full-text search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent inverted index maps terms to posting lists of document IDs while allowing concurrent insertions and queries without traditional mutex bottlenecks. By leveraging atomic operations, compressed posting lists, and skip-pointers, it achieves exceptionally high throughput for real-time full-text search engines.",
+      "key_points": [
+        "Uses atomic operations and compare-and-swap (CAS) loops to manage thread-safe updates to term dictionaries and posting lists.",
+        "Implements atomic posting list compression (such as Elias-Fano or variable-byte encoding) to minimize memory footprint and cache misses.",
+        "Integrates skip-pointers within posting lists to accelerate intersection algorithms during multi-term Boolean queries.",
+        "Guarantees linearizability for document indexing while enabling wait-free or lock-free reads for search queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic append to a thread-safe posting list using compare-and-swap loops",
+        "correct": "#include <atomic>\n#include <vector>\n#include <memory>\n\nstruct PostingNode {\n    uint32_t doc_id;\n    std::atomic<PostingNode*> next;\n    PostingNode(uint32_t id) : doc_id(id), next(nullptr) {}\n};\n\nclass AtomicPostingList {\n    std::atomic<PostingNode*> head;\npublic:\n    AtomicPostingList() : head(nullptr) {}\n    void insert(uint32_t doc_id) {\n        PostingNode* new_node = new PostingNode(doc_id);\n        PostingNode* old_head;\n        do {\n            old_head = head.load(std::atomic_memory_order_relaxed);\n            new_node->next.store(old_head, std::atomic_memory_order_relaxed);\n        } while (!head.compare_exchange_weak(old_head, new_node,\n                  std::atomic_memory_order_release,\n                  std::atomic_memory_order_relaxed));\n    }\n};",
+        "wrong": "class UnsafePostingList {\n    std::vector<uint32_t> postings;\npublic:\n    void insert(uint32_t doc_id) {\n        postings.push_back(doc_id); // Data race under concurrent writes\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to handle memory reclamation safely, leading to memory leaks or use-after-free bugs when lock-free nodes are unlinked.",
+        "Using sequential consistency everywhere instead of relaxing memory orders where appropriate, severely degrading performance."
+      ],
+      "best_practices": [
+        "Employ hazard pointers or epoch-based memory reclamation to safely free deleted or updated posting list nodes.",
+        "Structure compressed posting blocks to align with CPU cache lines for optimal vectorized search and intersection performance."
+      ],
+      "when_to_use": "Use this structure when building high-performance real-time search engines or log analytics platforms requiring massive concurrent ingestion and low-latency querying.",
+      "when_not_to_use": "Avoid when data fits within simple transactional key-value stores or when write volume is extremely low, making simpler mutex-backed structures easier to maintain.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to insert the same new term into the inverted index dictionary simultaneously?",
+          "answer": "You can use a lock-free concurrent hash map or atomic pointer installation (CAS) to ensure only one thread successfully inserts the term's root node, while others safely retrieve the existing reference."
+        },
+        {
+          "question": "What is the purpose of skip-pointers in posting lists within a concurrent search engine?",
+          "answer": "Skip-pointers allow query evaluation algorithms to skip over large blocks of document IDs that do not match the search criteria, drastically reducing the time required to intersect multiple posting lists."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent prefix trie",
+        "Hazard pointers and epoch-based garbage collection",
+        "Elias-Fano posting list compression"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T10:50:20.521548+00:00",
+      "run_number": 831
     }
   ]
 }
