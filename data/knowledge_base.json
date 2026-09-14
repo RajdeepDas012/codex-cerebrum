@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 845,
-    "last_updated": "2026-09-14T17:13:55.012593+00:00",
-    "total_topics_learned": 845
+    "total_runs": 846,
+    "last_updated": "2026-09-14T17:17:02.392506+00:00",
+    "total_topics_learned": 846
   },
   "entries": [
     {
@@ -40766,6 +40766,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T17:13:55.012571+00:00",
       "run_number": 845
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent ring buffer using atomic sequence numbers and memory barriers for high-throughput single-producer multi-consumer inter-thread messaging pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent message passing between a single producer and multiple consumers using atomic sequence numbers and explicit memory barriers. It eliminates traditional mutex overhead, enabling ultra-low-latency, high-throughput inter-thread communication.",
+      "key_points": [
+        "Utilizes a fixed-size contiguous array wrapped circularly to eliminate dynamic memory allocation during runtime execution.",
+        "Employs atomic sequence numbers per slot to track state transitions and prevent race conditions without locks.",
+        "Applies acquire-release memory semantics to ensure proper ordering of reads and writes between producer and consumers.",
+        "Supports single-producer multi-consumer (SPMC) architectures by safely coordinating shared tail read positions across consumer threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a simplified atomic sequence-based ring buffer slot state validation.",
+        "correct": "struct Cell {\n    std::atomic<size_t> sequence;\n    Data data;\n};\n\nbool push(Cell* buffer, size_t mask, size_t& tail, const Data& item) {\n    Cell* cell;\n    size_t pos = tail.load(std::memory_order_relaxed);\n    for (;;) {\n        cell = &buffer[pos & mask];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n        if (dif == 0) {\n            if (tail.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))\n                break;\n        } else if (dif < 0) {\n            return false;\n        } else {\n            pos = tail.load(std::memory_order_relaxed);\n        }\n    }\n    cell->data = item;\n    cell->sequence.store(pos + 1, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool push(Data item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to use correct acquire-release memory ordering, which allows CPU instruction reordering and data corruption.",
+        "Using sequential consistency everywhere, causing unnecessary performance degradation on modern multi-core processors."
+      ],
+      "best_practices": [
+        "Ensure buffer capacities are powers of two to allow fast bitwise masking instead of slow modulo operations.",
+        "Pad atomic sequence variables to avoid false sharing across different hardware cache lines."
+      ],
+      "when_to_use": "When building low-latency trading systems, game loops, or telemetry pipelines requiring high-throughput single-producer multi-consumer message passing.",
+      "when_not_to_use": "When workloads involve multiple competing producers, as contention on the producer write pointer requires heavier synchronization primitives.",
+      "interview_questions": [
+        {
+          "question": "How do atomic sequence numbers prevent data overwrites in a lock-free ring buffer?",
+          "answer": "Each slot maintains a sequence number indicating the number of times it has been written. Producers check that the sequence matches their expected round before writing, and consumers check that the sequence matches their read expectations before consuming."
+        },
+        {
+          "question": "Why must buffer capacity be a power of two in high-performance ring buffers?",
+          "answer": "A power-of-two size allows replacing the costly modulo operator (%) with a fast bitwise AND operation (index & (capacity - 1))."
+        }
+      ],
+      "related_topics": [
+        "Implementation of a lock-free thread-safe concurrent work-stealing deque using atomic tail/head pointer manipulation and hazard pointer memory reclamation for high-throughput task-parallel runtime execution engines",
+        "Memory barriers and acquire-release semantics",
+        "False sharing mitigation via cache line padding"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T17:17:02.392484+00:00",
+      "run_number": 846
     }
   ]
 }
