@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 798,
-    "last_updated": "2026-09-14T00:12:45.767360+00:00",
-    "total_topics_learned": 798
+    "total_runs": 799,
+    "last_updated": "2026-09-14T00:15:52.824138+00:00",
+    "total_topics_learned": 799
   },
   "entries": [
     {
@@ -38534,6 +38534,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:12:45.767333+00:00",
       "run_number": 798
+    },
+    {
+      "topic": "Implementation of a lock-free distributed transaction coordinator using the Two-Phase Commit protocol and Saga pattern rollback logs for resilient microservice orchestration",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "This architectural pattern coordinates distributed transactions across decoupled microservices without relying on heavy locks, combining Two-Phase Commit guarantees with Saga pattern compensating transactions. It matters because it ensures eventual consistency and fault tolerance at scale while avoiding system-wide deadlocks.",
+      "key_points": [
+        "Uses atomic state transitions in the coordinator to track preparation and commit phases across services.",
+        "Employs Saga pattern rollback logs (compensating transactions) to revert partial progress if a participant fails.",
+        "Eliminates blocking distributed locks by utilizing optimistic concurrency control and decentralized state tracking.",
+        "Ensures idempotency in participant services to safely handle message retries during network partitions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates executing a distributed transaction with fallback compensation logs.",
+        "correct": "class DistributedCoordinator:\n    def __init__(self, participants):\n        self.participants = participants\n        self.rollback_log = []\n\n    def execute(self, payload):\n        for p in self.participants:\n            try:\n                res = p.prepare(payload)\n                if not res:\n                    self.rollback()\n                    return False\n                self.rollback_log.append(p)\n            except Exception:\n                self.rollback()\n                return False\n        return True\n\n    def rollback(self):\n        for p in reversed(self.rollback_log):\n            p.compensate()",
+        "wrong": "class BadCoordinator:\n    def execute(self, payload):\n        for p in participants:\n            p.commit(payload) # Commits immediately without preparation or rollback tracking, risking permanent inconsistency."
+      },
+      "common_mistakes": [
+        "Failing to make participant compensation endpoints idempotent, leading to corrupted state during retries.",
+        "Relying on synchronous blocking communication during the prepare phase, which bottlenecks throughput."
+      ],
+      "best_practices": [
+        "Design all participant rollback actions to be strictly idempotent.",
+        "Persist transaction coordinator state and rollback logs to durable storage before dispatching commands.",
+        "Implement circuit breakers on participant services to fail fast when downstream dependencies drop."
+      ],
+      "when_to_use": "Use when orchestrating complex workflows across multiple independent microservices that require guaranteed eventual consistency without sacrificing availability.",
+      "when_not_to_use": "Avoid when strict ACID guarantees with immediate consistency are required within a single monolithic database boundary.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a scenario where a participant service crashes after replying 'prepared' to the coordinator?",
+          "answer": "The coordinator must persist the prepared state and continuously retry the commit message or execute the saga rollback log once the participant recovers."
+        },
+        {
+          "question": "Why combine Two-Phase Commit with the Saga pattern instead of using 2PC alone?",
+          "answer": "Pure 2PC is a blocking protocol that introduces severe latency and lock contention in distributed microservice architectures, whereas Sagas use asynchronous compensating actions for non-blocking eventual consistency."
+        }
+      ],
+      "related_topics": [
+        "Eventual Consistency Models",
+        "CQRS and Event Sourcing",
+        "Distributed Consensus Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:15:52.824121+00:00",
+      "run_number": 799
     }
   ]
 }
