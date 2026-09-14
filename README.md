@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **856** |
-| Last Updated | `2026-09-14T20:56:33.200400+00:00` |
-| Dataset Size | `856 entries` |
+| Total Topics Learned | **857** |
+| Last Updated | `2026-09-14T20:59:40.250021+00:00` |
+| Dataset Size | `857 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 76 |
 | crypto-blockchain | 76 |
 | stocks-markets | 71 |
-| data-structures | 41 |
+| data-structures | 42 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent T-Digest data structure using atomic centroid merging and compression scaling for high-throughput accurate quantile estimation in real-time distributed performance monitoring pipelines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo filter using atomic bucket fingerprint relocation and kick-out eviction chains for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Xor filter using atomic block fingerprint manipulation and coefficient matrix solving for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic matrix cell incrementation and conservative update algorithms for high-throughput frequency estimation in real-time network traffic telemetry pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog data structure using atomic register tracking and stochastic averaging for high-throughput distinct-element cardinality estimation in real-time telemetry analytics pipelines`
-- `Implementation of a lock-free thread-safe concurrent Quotient filter using atomic metadata fingerprint shifting and run-length encoding for high-throughput in-memory approximate membership query pipelines`
 
 <!-- STATS_END -->
 
