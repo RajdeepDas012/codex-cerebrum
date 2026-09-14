@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 872,
-    "last_updated": "2026-09-14T23:56:38.155792+00:00",
-    "total_topics_learned": 872
+    "total_runs": 873,
+    "last_updated": "2026-09-14T23:59:46.347840+00:00",
+    "total_topics_learned": 873
   },
   "entries": [
     {
@@ -42048,6 +42048,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T23:56:38.155774+00:00",
       "run_number": 872
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array CAS operations and cache-aligned partitioning for high-throughput in-memory approximate membership query engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, lock-free concurrent Bloom filter designed for approximate membership queries. By utilizing atomic bit-array compare-and-swap (CAS) primitives combined with cache-aligned memory partitioning, it eliminates thread contention and cache-line bouncing during parallel insertions and lookups.",
+      "key_points": [
+        "Utilizes atomic bitwise operations (like CAS or fetch-and-OR) to set filter bits safely across multiple concurrent threads without explicit locks.",
+        "Employs cache-aligned memory partitioning to prevent false sharing, ensuring threads executing on distinct cores modify independent memory blocks.",
+        "Delivers $O(k)$ time complexity for insertions and lookups, where $k$ is the number of independent hash functions.",
+        "Provides space-efficient approximate membership testing with zero false negatives and a bounded, tunable false positive probability."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe bit setting using atomic fetch-or operations on a shared bit array.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    explicit ConcurrentBloomFilter(size_t size) : bits((size + 63) / 64) {}\n    \n    void insert(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        uint64_t mask = uint64_t(1) << (bit_index % 64);\n        bits[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "void insert(std::vector<uint64_t>& bits, size_t bit_index) {\n    // Missing atomicity leads to lost updates under multi-threaded concurrency\n    bits[bit_index / 64] |= (uint64_t(1) << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic bitwise assignments on shared words, leading to race conditions and lost bit updates.",
+        "Ignoring false sharing by packing adjacent thread state into the same CPU cache line, which degrades multi-core scalability."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic bit setting operations when strict synchronization across different words is not required.",
+        "Pad underlying memory allocations to match native CPU cache line sizes (typically 64 bytes) to avoid inter-core cache invalidation overhead."
+      ],
+      "when_to_use": "Ideal for high-throughput, multi-threaded systems requiring rapid pre-filtering of elements before accessing slower underlying storage or network layers.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory, or when dynamic deletion of elements is required without rebuilding the filter.",
+      "interview_questions": [
+        {
+          "question": "How do you handle thread safety in a concurrent Bloom filter without using mutual exclusion locks?",
+          "answer": "By leveraging atomic bitwise operations (such as atomic fetch-OR or CAS loops) on the underlying bit array segments, allowing multiple threads to modify bits concurrently."
+        },
+        {
+          "question": "What is false sharing in the context of concurrent data structures, and how does cache-aligned partitioning mitigate it?",
+          "answer": "False sharing occurs when independent threads modify separate variables residing on the same CPU cache line, causing unnecessary cache invalidations. Cache-aligned partitioning ensures that concurrently modified data structures reside on distinct cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filters",
+        "Concurrent Count-Min Sketch",
+        "Cache-Conscious Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T23:59:46.347821+00:00",
+      "run_number": 873
     }
   ]
 }
