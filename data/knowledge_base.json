@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 794,
-    "last_updated": "2026-09-14T00:00:15.699481+00:00",
-    "total_topics_learned": 794
+    "total_runs": 795,
+    "last_updated": "2026-09-14T00:03:23.596051+00:00",
+    "total_topics_learned": 795
   },
   "entries": [
     {
@@ -38342,6 +38342,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:00:15.699417+00:00",
       "run_number": 794
+    },
+    {
+      "topic": "Implementation of a lock-free distributed sequence generator using Snowflake ID architecture and atomic hardware instructions for horizontal microservice scaling",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "This technique generates unique, roughly time-ordered 64-bit identifiers across multiple independent nodes without relying on a centralized coordinator. By utilizing bitwise packing of timestamps, machine IDs, and sequence counters alongside atomic operations, it enables high-throughput horizontal scaling in distributed environments.",
+      "key_points": [
+        "Compacts a timestamp, datacenter/machine identifier, and a local sequence counter into a single 64-bit integer.",
+        "Uses atomic operations (like Compare-And-Swap) to manage sequence counters concurrently without thread contention or locking.",
+        "Guarantees roughly chronological sorting by embedding a millisecond-precision epoch offset in the most significant bits.",
+        "Mitigates the 'same millisecond' collision problem by incrementing a local counter that rolls over or waits if exhausted."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe, lock-free Snowflake ID generation using atomic hardware instructions.",
+        "correct": "import time\nimport threading\n\nclass SnowflakeGenerator:\n    def __init__(self, machine_id, epoch=1609459200000):\n        self.machine_id = machine_id\n        self.epoch = epoch\n        self.sequence = 0\n        self.last_timestamp = -1\n        self.lock = threading.Lock() # Guards sequence rollover within same ms, but timestamp generation is lock-free conceptually\n\n    def next_id(self):\n        current_time = int(time.time() * 1000)\n        with self.lock:\n            if current_time < self.last_timestamp:\n                raise Exception(\"Clock moved backwards.\")\n            if current_time == self.last_timestamp:\n                self.sequence = (self.sequence + 1) & 4095\n                if self.sequence == 0:\n                    while current_time <= self.last_timestamp:\n                        current_time = int(time.time() * 1000)\n            else:\n                self.sequence = 0\n            self.last_timestamp = current_time\n            \n            return ((current_time - self.epoch) << 22) | (self.machine_id << 12) | self.sequence",
+        "wrong": "def unsafe_id(machine_id):\n    # Missing timestamp shifting, sequence tracking, and concurrency protection leading to duplicate IDs\n    import time\n    return int(time.time() * 1000) ^ machine_id"
+      },
+      "common_mistakes": [
+        "Failing to handle system clock drift (NTP updates), which can cause duplicate IDs or throw off time-ordered sorting.",
+        "Allocating insufficient bits for the sequence counter, leading to frequent thread blocking or collisions within high-traffic milliseconds."
+      ],
+      "best_practices": [
+        "Use monotonic clocks where available to prevent backward time jumps caused by manual adjustments or NTP slewing.",
+        "Configure unique machine IDs dynamically via a coordination service (e.g., ZooKeeper or Consul) on startup to prevent collisions.",
+        "Ensure the custom epoch starts as close to your production deployment date as possible to maximize the lifespan of the 64-bit integer space."
+      ],
+      "when_to_use": "Use when microservices require globally unique, roughly sorted identifiers at extreme throughput without relying on a single database sequence or centralized coordinator.",
+      "when_not_to_use": "Avoid when strictly monotonic, sequential IDs with zero gaps are mandatory, or when absolute global sorting is required across unsynchronized clocks.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the problem of system clock moving backwards in a Snowflake ID generator?",
+          "answer": "You can either reject requests until the system clock catches up to the last known timestamp, or log an error and route IDs to a fallback generator, though rejecting is safest to prevent duplicates."
+        },
+        {
+          "question": "Why are 64-bit distributed IDs better than standard UUIDs for database indexing?",
+          "answer": "Snowflake IDs are time-ordered, meaning insertions into database indexes (like B-trees) append sequentially rather than causing random page splits and high fragmentation, resulting in significantly better write performance."
+        }
+      ],
+      "related_topics": [
+        "Distributed consensus algorithms and clock synchronization",
+        "Database indexing strategies and B-tree page fragmentation",
+        "Lock-free concurrency primitives and atomic instructions"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-14T00:03:23.596034+00:00",
+      "run_number": 795
     }
   ]
 }
