@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 802,
-    "last_updated": "2026-09-14T00:25:15.696026+00:00",
-    "total_topics_learned": 802
+    "total_runs": 803,
+    "last_updated": "2026-09-14T00:28:22.694055+00:00",
+    "total_topics_learned": 803
   },
   "entries": [
     {
@@ -38726,6 +38726,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:25:15.696009+00:00",
       "run_number": 802
+    },
+    {
+      "topic": "Implementation of a thread-safe lock-free LRU cache using atomic pointer swizzling and hazard pointers for high-throughput in-memory data stores",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A thread-safe lock-free Least Recently Used (LRU) cache leverages atomic operations, pointer swizzling, and hazard pointers to manage cache eviction and lookups without thread contention or deadlocks. This approach eliminates the performance bottlenecks of global mutexes in high-concurrency multi-threaded environments.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free node insertion, deletion, and state updates.",
+        "Employs hazard pointers to safely manage memory reclamation without premature free race conditions in concurrent readers and writers.",
+        "Implements atomic pointer swizzling to rapidly update doubly-linked list references for LRU recency ordering.",
+        "Maintains high throughput under heavy multithreaded contention by avoiding lock convoy effects and context switches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node acquisition and reclamation using hazard pointers in a concurrent data structure.",
+        "correct": "void* acquire_node_safely(std::atomic<Node*>& head, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = head.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (head.load(std::memory_order_relaxed) != ptr);\n    return ptr;\n}",
+        "wrong": "void* unsafe_load(std::atomic<Node*>& head) {\n    return head.load(); // Memory might be freed by another thread right after load\n}"
+      },
+      "common_mistakes": [
+        "Failing to clear hazard pointers before executing memory reclamation, leading to use-after-free vulnerabilities.",
+        "Using sequential consistency everywhere instead of carefully tuning acquire-release memory semantics, which degrades performance."
+      ],
+      "best_practices": [
+        "Retire nodes into a thread-local deferred reclamation list once unlinked before freeing them via hazard pointer epoch checks.",
+        "Minimize the lifespan of protected hazard pointers to reduce memory footprint and latency.",
+        "Profile cache hit-to-miss ratios under high thread contention to ensure lock-free overhead does not outweigh mutex locking."
+      ],
+      "when_to_use": "When building high-throughput in-memory caches or session stores where read-heavy workloads suffer from lock contention bottlenecks.",
+      "when_not_to_use": "When application complexity needs to be kept minimal, or when workloads are single-threaded or low-concurrency where standard mutexes are faster and simpler.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the ABA problem and memory reclamation challenge in lock-free data structures?",
+          "answer": "Hazard pointers provide a mechanism where a thread announces which node it is currently accessing before reading it, preventing other threads from freeing that memory until the reference is released."
+        },
+        {
+          "question": "Why is updating a doubly-linked list LRU eviction policy particularly difficult in a lock-free environment?",
+          "answer": "Because modifying both the predecessor and successor pointers of multiple nodes simultaneously requires atomic multi-word operations (DCAS), which are rarely supported natively in hardware, necessitating clever pointer swizzling or alternative epoch-based designs."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-free skip lists and hash maps",
+        "Atomic memory ordering semantics in C++11/20"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:28:22.694037+00:00",
+      "run_number": 803
     }
   ]
 }

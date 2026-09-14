@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **802** |
-| Last Updated | `2026-09-14T00:25:15.696026+00:00` |
-| Dataset Size | `802 entries` |
+| Total Topics Learned | **803** |
+| Last Updated | `2026-09-14T00:28:22.694055+00:00` |
+| Dataset Size | `803 entries` |
 
 ## 📂 Categories Learned
 
@@ -31,7 +31,7 @@
 | devops | 7 |
 | security | 7 |
 | networking | 6 |
-| data-structures | 5 |
+| data-structures | 6 |
 | algorithms | 3 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a thread-safe lock-free LRU cache using atomic pointer swizzling and hazard pointers for high-throughput in-memory data stores`
 - `Implementation of a zero-copy Linux io_uring asynchronous file I/O engine with submission and completion ring integration for high-throughput database storage engines`
 - `Implementation of a concurrent read-copy-update (RCU) hash table for low-latency thread-safe configuration lookups in high-performance services`
 - `Implementation of a non-blocking TCP socket server using Linux epoll edge-triggered multiplexing and non-blocking I/O multiplexing for high-concurrency network communication`
 - `Implementation of a lock-free distributed transaction coordinator using the Two-Phase Commit protocol and Saga pattern rollback logs for resilient microservice orchestration`
-- `Implementation of an out-of-core sorting algorithm using memory-mapped files and parallel merge sort for processing datasets exceeding RAM capacity`
 
 <!-- STATS_END -->
 
