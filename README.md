@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **801** |
-| Last Updated | `2026-09-14T00:22:07.609569+00:00` |
-| Dataset Size | `801 entries` |
+| Total Topics Learned | **802** |
+| Last Updated | `2026-09-14T00:25:15.696026+00:00` |
+| Dataset Size | `802 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | system-design | 72 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| databases | 10 |
+| databases | 11 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | language-specific | 7 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a zero-copy Linux io_uring asynchronous file I/O engine with submission and completion ring integration for high-throughput database storage engines`
 - `Implementation of a concurrent read-copy-update (RCU) hash table for low-latency thread-safe configuration lookups in high-performance services`
 - `Implementation of a non-blocking TCP socket server using Linux epoll edge-triggered multiplexing and non-blocking I/O multiplexing for high-concurrency network communication`
 - `Implementation of a lock-free distributed transaction coordinator using the Two-Phase Commit protocol and Saga pattern rollback logs for resilient microservice orchestration`
 - `Implementation of an out-of-core sorting algorithm using memory-mapped files and parallel merge sort for processing datasets exceeding RAM capacity`
-- `Implementation of a lock-free distributed consensus protocol using Raft leader election and atomic state machine replication for resilient microservice coordination`
 
 <!-- STATS_END -->
 
