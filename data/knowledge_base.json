@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 810,
-    "last_updated": "2026-09-14T04:50:16.804457+00:00",
-    "total_topics_learned": 810
+    "total_runs": 811,
+    "last_updated": "2026-09-14T04:53:23.905830+00:00",
+    "total_topics_learned": 811
   },
   "entries": [
     {
@@ -39105,6 +39105,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T04:50:16.804438+00:00",
       "run_number": 810
+    },
+    {
+      "topic": "Implementation of a cache-line aligned lock-free multi-producer single-consumer (MPSC) queue using C++20 atomics for low-latency inter-thread logging",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An MPSC queue allows multiple producer threads to safely push log messages concurrently without blocking, while a single consumer thread drains the queue. Utilizing cache-line alignment prevents false sharing, and C++20 atomics ensure high-throughput, lock-free memory ordering for critical telemetry pipelines.",
+      "key_points": [
+        "Aligning head and tail pointers to 64-byte boundaries (using alignas) avoids false sharing between competing producer cores.",
+        "Atomic memory operations with precise acquire-release semantics guarantee thread-safe visibility without heavy mutex overhead.",
+        "A node-based or circular-buffer layout handles concurrent enqueue operations via atomic exchange or compare-and-swap (CAS) loops.",
+        "The single consumer design simplifies dequeuing logic since only one thread modifies the tail pointer."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic push operation for a lock-free MPSC node-based queue using C++20 atomics.",
+        "correct": "template <typename T> class MPSCQueue {\n    struct Node {\n        T data;\n        std::atomic<Node*> next;\n        Node(T val) : data(val), next(nullptr) {}\n    };\n    alignas(64) std::atomic<Node*> head;\n    alignas(64) std::atomic<Node*> tail;\npublic:\n    void enqueue(T item) {\n        Node* node = new Node(item);\n        Node* prev = head.exchange(node, std::memory_order_acq_rel);\n        prev->next.store(node, std::memory_order_release);\n    }\n};",
+        "wrong": "template <typename T> class MPSCQueue {\n    std::atomic<Node*> head;\n    std::atomic<Node*> tail;\n    void enqueue(T item) {\n        Node* node = new Node(item);\n        head.store(node); // Missing atomic exchange and next pointer linking leading to race conditions\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to cache-line align head and tail pointers, causing severe CPU cache thrashing (false sharing) across cores.",
+        "Using overly restrictive sequential consistency memory orders where weaker acquire-release semantics would suffice."
+      ],
+      "best_practices": [
+        "Use `alignas(64)` (or `std::hardware_destructive_interference_size`) on atomic pointers that are written to by distinct threads.",
+        "Pre-allocate node pools or use epoch-based memory reclamation to eliminate runtime allocation latency inside the hot logging path.",
+        "Employ `std::memory_order_release` for publishing writes and `std::memory_order_acquire` for synchronizing reads."
+      ],
+      "when_to_use": "High-frequency trading applications, game engines, or systems logging diagnostics from numerous worker threads to a single disk-writing thread with minimal jitter.",
+      "when_not_to_use": "When there are multiple consumer threads requiring coordination, or when standard blocking queues with OS-level condition variables are adequate due to low thread contention.",
+      "interview_questions": [
+        {
+          "question": "Why is cache-line alignment critical in a lock-free multi-producer queue?",
+          "answer": "It prevents false sharing, which occurs when multiple CPU cores modify distinct variables residing on the same 64-byte cache line, forcing continuous cache invalidation traffic across the interconnect."
+        },
+        {
+          "question": "How does the MPSC queue guarantee lock-free progress for producers?",
+          "answer": "Producers use atomic operations like `exchange` or CAS loops to claim a slot or update pointers independently. Even if another producer thread is preempted mid-operation, other threads can continue making progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free single-producer single-consumer (SPSC) ring buffers",
+        "False sharing and CPU cache coherency protocols (MESI)",
+        "Hazard pointers and epoch-based garbage collection for lock-free node reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T04:53:23.905812+00:00",
+      "run_number": 811
     }
   ]
 }
