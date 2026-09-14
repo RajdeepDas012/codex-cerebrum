@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 803,
-    "last_updated": "2026-09-14T00:28:22.694055+00:00",
-    "total_topics_learned": 803
+    "total_runs": 804,
+    "last_updated": "2026-09-14T00:31:30.798883+00:00",
+    "total_topics_learned": 804
   },
   "entries": [
     {
@@ -38774,6 +38774,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:28:22.694037+00:00",
       "run_number": 803
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe bump allocator using atomic compare-and-swap for high-frequency deterministic memory management",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free bump allocator sequentially carves out memory from a contiguous arena by atomically advancing a pointer via compare-and-swap (CAS) operations. It delivers exceptionally high allocation throughput and deterministic $O(1)$ time complexity without blocking threads, making it ideal for transient, frame-based, or batch execution contexts.",
+      "key_points": [
+        "Utilizes atomic pointer arithmetic to advance the arena offset without traditional mutex or spinlock synchronization.",
+        "Employs compare-and-swap (CAS) loops to safely handle contention and resolve race conditions among multiple concurrent threads.",
+        "Provides extremely high throughput and cache locality by packing allocations contiguously in memory.",
+        "Typically lacks individual deallocation capability, requiring bulk resets or arena lifecycle management to reclaim memory."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe lock-free bump allocation routine using atomic fetch-and-add or compare-and-swap.",
+        "correct": "#include <atomic>\n#include <cstdint>\n#include <cstdlib>\n\nclass BumpAllocator {\n    char* arena;\n    size_t capacity;\n    std::atomic<size_t> offset;\npublic:\n    BumpAllocator(size_t size) : capacity(size), offset(0) {\n        arena = static_cast<char*>(std::malloc(size));\n    }\n    ~BumpAllocator() { std::free(arena); }\n    \n    void* allocate(size_t size, size_t alignment = 8) {\n        size_t current, next;\n        do {\n            current = offset.load(std::memory_order_relaxed);\n            size_t padding = (alignment - (reinterpret_cast<uintptr_t>(arena + current) % alignment)) % alignment;\n            next = current + padding + size;\n            if (next > capacity) return nullptr;\n        } while (!offset.compare_exchange_weak(current, next, std::memory_order_release, std::memory_order_relaxed));\n        return arena + current + padding;\n    }\n};",
+        "wrong": "void* allocate(size_t size) {\n    size_t current = offset.load();\n    offset.store(current + size); // Non-atomic update prone to data races and lost updates\n    return arena + current;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to account for memory alignment requirements, leading to unaligned pointer dereference faults on strict architectures.",
+        "Failing to handle arena exhaustion, resulting in out-of-bounds memory writes when the bump pointer exceeds capacity."
+      ],
+      "best_practices": [
+        "Align allocation requests to hardware cache line sizes or native word boundaries to optimize CPU fetch performance.",
+        "Pair the allocator with a reset mechanism (like a arena roll-back) to efficiently reclaim all allocated memory at once."
+      ],
+      "when_to_use": "High-frequency scenarios with short-lived objects where bulk deallocation or arena-wide teardown is standard practice, such as game loop frame allocators or compiler intermediate representation passes.",
+      "when_not_to_use": "General-purpose heap management where individual random-access objects require fine-grained lifecycle deallocation.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory alignment in a lock-free bump allocator without introducing race conditions?",
+          "answer": "Calculate the padding needed based on the current offset inside the CAS loop before attempting to atomically update the shared offset pointer with the padded size."
+        },
+        {
+          "question": "What is the primary limitation of a bump allocator regarding memory reclamation, and how is it typically solved?",
+          "answer": "It lacks individual free operations; memory is usually reclaimed in bulk by resetting the offset counter to zero when an entire task batch or frame completes."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "arena memory allocation",
+        "memory alignment and padding"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:31:30.798864+00:00",
+      "run_number": 804
     }
   ]
 }
