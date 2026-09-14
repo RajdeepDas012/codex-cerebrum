@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 813,
-    "last_updated": "2026-09-14T04:59:39.152152+00:00",
-    "total_topics_learned": 813
+    "total_runs": 814,
+    "last_updated": "2026-09-14T05:02:46.635770+00:00",
+    "total_topics_learned": 814
   },
   "entries": [
     {
@@ -39248,6 +39248,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T04:59:39.152122+00:00",
       "run_number": 813
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe interval tree using atomic node rotations and versioned sequence locks for real-time order book range queries in financial matching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An interval tree architecture designed for concurrent financial matching engines, utilizing versioned sequence locks and atomic pointer swaps to execute non-blocking range queries and updates. It maintains high-throughput overlapping interval tracking without incurring global read-write lock contention.",
+      "key_points": [
+        "Utilizes seqlocks (sequence locks) with version counters to allow readers to detect concurrent structural modifications without acquiring locks.",
+        "Employs atomic node rotations and CAS-based child pointer updates to ensure safe concurrent insertions and deletions.",
+        "Tracks augmented maximum endpoints atomically to facilitate efficient parallel overlapping interval searches.",
+        "Minimizes cache bouncing during high-frequency order book updates by separating version metadata from node payload fields."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe sequence lock check for a non-blocking node read operation.",
+        "correct": "uint32_t version_before;\ndo {\n    version_before = node->seq.load(std::memory_order_acquire);\n    if (version_before & 1) std::this_thread::yield(); // Writer in progress\n    low = node->low.load(std::memory_order_relaxed);\n    high = node->high.load(std::memory_order_relaxed);\n} while (node->seq.load(std::memory_order_acquire) != version_before);",
+        "wrong": "uint32_t low = node->low.load(); uint32_t high = node->high.load(); // Lacks seqlock verification, leading to torn reads during concurrent writes."
+      },
+      "common_mistakes": [
+        "Failing to use memory fences or acquire-release semantics when reading augmented maximum bounds, resulting in stale search paths.",
+        "Forgetting to check the odd-numbered lock bit in the sequence lock, allowing readers to process inconsistent states while a writer performs rotations."
+      ],
+      "best_practices": [
+        "Implement exponential backoff or thread yielding inside reader retry loops when high write contention causes heavy seqlock invalidations.",
+        "Align sequence lock and critical node metadata to cache-line boundaries to eliminate false sharing between matcher threads."
+      ],
+      "when_to_use": "When building ultra-low-latency financial matching engines requiring concurrent order book range queries and high-frequency order modifications.",
+      "when_not_to_use": "When the workload is strictly single-threaded or write contention is low enough that standard coarse-grained mutexes introduce negligible latency.",
+      "interview_questions": [
+        {
+          "question": "How do sequence locks prevent readers from observing partially updated states during atomic node rotations?",
+          "answer": "Readers read a version counter before and after accessing node data. If the counter changes or is odd (indicating an active write), the reader discards the read and retries."
+        },
+        {
+          "question": "Why is standard pointer-based tree rotation challenging in lock-free data structures?",
+          "answer": "Because multiple pointers must be updated simultaneously to maintain tree invariants, requiring either multi-word CAS (CAS2) or careful transactional epoch-based memory management."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ trees",
+        "Hazard pointers and epoch-based reclamation",
+        "Optimistic concurrency control in databases"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T05:02:46.635741+00:00",
+      "run_number": 814
     }
   ]
 }
