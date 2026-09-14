@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 800,
-    "last_updated": "2026-09-14T00:19:00.169581+00:00",
-    "total_topics_learned": 800
+    "total_runs": 801,
+    "last_updated": "2026-09-14T00:22:07.609569+00:00",
+    "total_topics_learned": 801
   },
   "entries": [
     {
@@ -38630,6 +38630,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:19:00.169555+00:00",
       "run_number": 800
+    },
+    {
+      "topic": "Implementation of a concurrent read-copy-update (RCU) hash table for low-latency thread-safe configuration lookups in high-performance services",
+      "category": "data-structures",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "An RCU hash table allows multiple reader threads to traverse and query data concurrently without acquiring locks, achieving near-zero read overhead. Writers perform updates by cloning the modified structure, applying changes, and swapping pointers atomically after active readers finish.",
+      "key_points": [
+        "Readers execute lock-free and wait-free, making read operations extremely fast and predictable in high-concurrency environments.",
+        "Writers isolate modifications by duplicating the target node or bucket array, updating the copy, and publishing the change via an atomic pointer swap.",
+        "Grace periods ensure that old memory structures are not reclaimed until all pre-existing reader critical sections have completed.",
+        "Ideal for read-heavy workloads where configuration data or routing tables are accessed constantly but updated infrequently."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a thread-safe RCU hash table lookup and copy-on-write update pattern using atomic references and thread local states.",
+        "correct": "import threading\nimport copy\n\nclass RCUHashTable:\n    def __init__(self):\n        self._data = {}\n        self._lock = threading.Lock()\n\n    def lookup(self, key):\n        # Readers access the current reference lock-free\n        current = self._data\n        return current.get(key)\n\n    def update(self, key, value):\n        with self._lock:\n            # Writer copies-on-write, mutates, then swaps pointer atomically\n            new_data = dict(self._data)\n            new_data[key] = value\n            self._data = new_data",
+        "wrong": "def update_wrong(self, key, value):\n    # Modifying shared state directly without copy-on-write causes data corruption for concurrent readers\n    self._data[key] = value"
+      },
+      "common_mistakes": [
+        "Mutating shared data structures in place during a write operation instead of allocating a completely new copy.",
+        "Reclaiming or freeing old memory prematurely before ensuring all active readers have exited their critical sections."
+      ],
+      "best_practices": [
+        "Keep reader critical sections as short and lightweight as possible to minimize grace period latency for memory reclamation.",
+        "Use atomic operations or memory barriers to ensure safe pointer visibility across multi-core processor caches.",
+        "Batch write operations when possible to amortize the overhead of copying data structures and managing grace periods."
+      ],
+      "when_to_use": "Read-heavy workloads with high concurrency where lookup latency must remain minimal and bounded without lock contention.",
+      "when_not_to_use": "Write-heavy scenarios where frequent structural updates cause excessive memory allocation overhead and synchronization contention among writers.",
+      "interview_questions": [
+        {
+          "question": "How does RCU eliminate read locks and what is the role of a grace period?",
+          "answer": "RCU allows readers to access shared data without locks by ensuring they read a consistent snapshot. The grace period is the interval required for all pre-existing readers to finish their critical sections, ensuring old memory can safely be reclaimed after a write."
+        },
+        {
+          "question": "What are the trade-offs of using an RCU hash table compared to a standard read-write lock hash table?",
+          "answer": "RCU offers significantly lower latency and zero contention for readers since no locks are acquired. However, writers face higher overhead due to copying data structures, and memory management becomes more complex due to deferred reclamation."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "memory-barrier synchronization",
+        "hazard pointers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:22:07.609542+00:00",
+      "run_number": 801
     }
   ]
 }
