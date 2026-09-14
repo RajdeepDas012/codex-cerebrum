@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 824,
-    "last_updated": "2026-09-14T10:28:28.695942+00:00",
-    "total_topics_learned": 824
+    "total_runs": 825,
+    "last_updated": "2026-09-14T10:31:36.105209+00:00",
+    "total_topics_learned": 825
   },
   "entries": [
     {
@@ -39769,6 +39769,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T10:28:28.695922+00:00",
       "run_number": 824
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent cuckoo filter using atomic bucket fingerprint swizzling and dynamic table resizing for high-throughput in-memory set membership pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent cuckoo filter leverages atomic primitives and fingerprint swizzling to provide high-throughput set membership queries with deletion support. It improves upon traditional bloom filters by allowing dynamic element removal and superior space efficiency at high load factors without global locking overhead.",
+      "key_points": [
+        "Utilizes partial-key cuckoo hashing to map elements to two alternate candidate buckets determined by hash and fingerprint XOR.",
+        "Employs atomic bucket fingerprint swizzling (CAS operations on packed bucket words) to resolve concurrent insertions and displacements lock-free.",
+        "Supports dynamic table resizing safely in concurrent environments using cooperative migration or epoch-based memory reclamation.",
+        "Provides high-throughput approximate membership queries with a configurable false positive rate and native deletion capabilities."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping within a bucket using compare-and-swap operations.",
+        "correct": "bool insert_fingerprint(std::atomic<uint64_t>& bucket, uint8_t fingerprint, size_t slot) {\n    uint64_t old_val = bucket.load(std::memory_order_relaxed);\n    uint64_t new_val = set_slot(old_val, slot, fingerprint);\n    return bucket.compare_exchange_strong(old_val, new_val, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_fingerprint(uint64_t& bucket, uint8_t fingerprint, size_t slot) {\n    // Missing atomics and memory ordering leading to race conditions in multi-threaded environments\n    bucket = set_slot(bucket, slot, fingerprint);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to bound the cuckoo displacement loop, resulting in potential infinite loops or deadlocks during high load factor insertions.",
+        "Incorrectly managing memory reclamation during dynamic table resizing, leading to use-after-free errors for concurrent readers."
+      ],
+      "best_practices": [
+        "Keep bucket sizes aligned with CPU cache lines (typically 4 or 8 slots per bucket) to maximize memory access efficiency.",
+        "Use hazard pointers or epoch-based reclamation (EBR) to safely free old table allocations during dynamic resizing operations."
+      ],
+      "when_to_use": "Use when you need high-throughput, thread-safe set membership checking with deletion support and high space efficiency in multi-core telemetry or networking systems.",
+      "when_not_to_use": "Avoid when memory is extremely constrained and zero false positives are required, or when single-threaded simplicity outweighs concurrency needs.",
+      "interview_questions": [
+        {
+          "question": "How does a cuckoo filter handle concurrent insertions into the same bucket without using mutexes?",
+          "answer": "It uses atomic Compare-And-Swap (CAS) operations on packed bucket words to safely update specific fingerprint slots without locking the entire structure."
+        },
+        {
+          "question": "What happens during a cuckoo filter insertion when both alternate buckets are completely full?",
+          "answer": "The filter triggers a displacement chain (cuckoo hashing eviction) to move an existing fingerprint to its alternate bucket, or initiates a dynamic table resize if the displacement chain exceeds a pre-defined threshold."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent counting quotient filter",
+        "cuckoo hashing algorithms",
+        "epoch-based memory reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T10:31:36.105191+00:00",
+      "run_number": 825
     }
   ]
 }

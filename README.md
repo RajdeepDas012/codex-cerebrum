@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **824** |
-| Last Updated | `2026-09-14T10:28:28.695942+00:00` |
-| Dataset Size | `824 entries` |
+| Total Topics Learned | **825** |
+| Last Updated | `2026-09-14T10:31:36.105209+00:00` |
+| Dataset Size | `825 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | system-design | 74 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| data-structures | 17 |
+| data-structures | 18 |
 | databases | 14 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent cuckoo filter using atomic bucket fingerprint swizzling and dynamic table resizing for high-throughput in-memory set membership pipelines`
 - `Implementation of a lock-free thread-safe concurrent Merkle tree using atomic node hashing and incremental root hashing for high-throughput verifiable state synchronization in decentralized database clusters`
 - `Implementation of a lock-free thread-safe concurrent count-min sketch using atomic array hashing and frequency estimation for high-throughput stream-processing telemetry analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent hyperloglog cardinality estimator using atomic register merging and sparse-to-dense representation conversion for high-throughput distributed analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent counting quotient filter using atomic fingerprint compression and metadata shifting for high-throughput in-memory approximate membership querying`
-- `Implementation of a lock-free thread-safe suffix array index using atomic string pointers and parallel induced sorting for high-throughput genomic pattern matching pipelines`
 
 <!-- STATS_END -->
 
