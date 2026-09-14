@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **835** |
-| Last Updated | `2026-09-14T11:02:50.030659+00:00` |
-| Dataset Size | `835 entries` |
+| Total Topics Learned | **836** |
+| Last Updated | `2026-09-14T11:05:57.507726+00:00` |
+| Dataset Size | `836 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,8 +23,8 @@
 | system-design | 75 |
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
+| data-structures | 28 |
 | probability-math | 27 |
-| data-structures | 27 |
 | databases | 14 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent disjoint-set (Union-Find) data structure using atomic path compression and union-by-rank for high-throughput parallel graph connectivity and minimum spanning tree algorithms`
 - `Implementation of a lock-free thread-safe concurrent Fenwick tree (Binary Indexed Tree) using atomic point updates and prefix-sum delegation for high-throughput real-time streaming cumulative frequency analytics in financial telemetry engines`
 - `Implementation of a lock-free thread-safe concurrent segment tree using atomic node lazy-propagation and versioned sequence markers for high-throughput real-time interval aggregation in financial telemetry processing engines`
 - `Implementation of a lock-free thread-safe concurrent priority search tree using atomic node splitting and bounding coordinate compression for high-throughput multi-dimensional range and nearest-neighbor queries in spatial databases`
 - `Implementation of a lock-free thread-safe concurrent radix tree using atomic node allocation and bitwise prefix partitioning for high-throughput in-memory routing table lookups`
-- `Implementation of a lock-free thread-safe concurrent inverted index using atomic posting list compression and skip-pointer acceleration for high-throughput real-time full-text search engines`
 
 <!-- STATS_END -->
 
