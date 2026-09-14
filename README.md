@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **808** |
-| Last Updated | `2026-09-14T00:44:00.144040+00:00` |
-| Dataset Size | `808 entries` |
+| Total Topics Learned | **809** |
+| Last Updated | `2026-09-14T04:47:08.681661+00:00` |
+| Dataset Size | `809 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | system-design | 72 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| databases | 11 |
+| databases | 12 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | data-structures | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free LSM-tree memtable using concurrent skiplists and atomic compaction triggers for high-throughput write-heavy storage engines`
 - `Implementation of a lock-free distributed bloom filter using atomic bitsets and consistent hashing for low-latency membership testing in distributed caching layers`
 - `Implementation of a lock-free work-stealing thread pool for high-throughput task-parallel execution engines in C++`
 - `Implementation of a lock-free garbage collection epoch mechanism for safe memory reclamation in concurrent data structures`
 - `Implementation of an adaptive radix tree (ART) index for concurrent in-memory key-value storage engines using lock-free node growth and optimistic latch coupling`
-- `Implementation of a lock-free thread-safe bump allocator using atomic compare-and-swap for high-frequency deterministic memory management`
 
 <!-- STATS_END -->
 

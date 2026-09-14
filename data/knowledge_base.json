@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 808,
-    "last_updated": "2026-09-14T00:44:00.144040+00:00",
-    "total_topics_learned": 808
+    "total_runs": 809,
+    "last_updated": "2026-09-14T04:47:08.681661+00:00",
+    "total_topics_learned": 809
   },
   "entries": [
     {
@@ -39010,6 +39010,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:44:00.144023+00:00",
       "run_number": 808
+    },
+    {
+      "topic": "Implementation of a lock-free LSM-tree memtable using concurrent skiplists and atomic compaction triggers for high-throughput write-heavy storage engines",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Log-Structured Merge-tree (LSM-tree) memtable utilizes lock-free concurrent skiplists to achieve high-throughput, contention-free writes in multi-threaded environments. By incorporating atomic compaction triggers, the engine seamlessly transitions mutable memory buffers to immutable states once capacity thresholds are breached, preventing write stalls.",
+      "key_points": [
+        "Uses lock-free concurrent skiplists as the underlying memory-ordered data structure to support concurrent insertions and scans without global mutexes.",
+        "Employs atomic byte-size counters or sequence tracking to detect when the memtable reaches its capacity threshold safely across threads.",
+        "Implements atomic state transitions (e.g., Active, Immutable, Flushing) using compare-and-swap (CAS) operations to orchestrate background compaction.",
+        "Integrates memory reclamation frameworks (like epoch-based GC) to ensure safe memory deallocation of nodes after a freeze and flush cycle."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state transition and memory accumulation tracking for triggering memtable compaction.",
+        "correct": "class AtomicMemtable {\n    std::atomic<size_t> current_bytes{0};\n    std::atomic<int> state{STATE_ACTIVE};\n    size_t capacity;\npublic:\n    bool insert(size_t size) {\n        if (state.load(std::memory_order_acquire) != STATE_ACTIVE) return false;\n        size_t prev = current_bytes.fetch_add(size, std::memory_order_relaxed);\n        if (prev + size >= capacity) {\n            int expected = STATE_ACTIVE;\n            if (state.compare_exchange_strong(expected, STATE_IMMUTABLE, std::memory_order_acq_rel)) {\n                trigger_background_flush();\n            }\n        }\n        return true;\n    }\n};",
+        "wrong": "class BadMemtable {\n    size_t current_bytes = 0;\n    std::mutex mtx;\n    bool insert(size_t size) {\n        std::lock_guard<std::mutex> lock(mtx);\n        current_bytes += size;\n        if (current_bytes >= capacity) flush();\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory semantics during atomic state transitions, leading to race conditions where worker threads continue inserting into a flushing memtable.",
+        "Triggering background compaction synchronously within the insertion path when the atomic threshold is breached, causing massive tail latencies."
+      ],
+      "best_practices": [
+        "Decouple the atomic size check from the flush trigger by offloading the actual compaction task to a dedicated background thread pool using a non-blocking queue.",
+        "Pair concurrent skiplist nodes with a safe memory reclamation scheme (such as hazard pointers or epoch-based garbage collection) to eliminate use-after-free vulnerabilities during concurrent traversal."
+      ],
+      "when_to_use": "Ideal for write-heavy key-value storage engines, high-frequency logging systems, and databases requiring sustained low-latency ingestions under heavy concurrency.",
+      "when_not_to_use": "Avoid in read-heavy workloads with strict point-lookup requirements where B-Trees or specialized hash indexes provide superior cache locality and lower read amplification.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple concurrent threads from triggering duplicate compaction jobs when the memtable capacity threshold is crossed simultaneously?",
+          "answer": "By using an atomic compare-and-swap (CAS) operation to transition the memtable state from ACTIVE to IMMUTABLE. Only the single thread whose CAS succeeds is responsible for spawning the background flush task."
+        },
+        {
+          "question": "Why is a concurrent skiplist preferred over a lock-free hash map or a red-black tree for an LSM-tree memtable?",
+          "answer": "Skiplists maintain elements in sorted order natively, which is mandatory for LSM memtables to allow fast range scans and efficient sequential flushing into sorted SSTables."
+        }
+      ],
+      "related_topics": [
+        "lock-free garbage collection epoch mechanism",
+        "adaptive radix tree (ART) index",
+        "lock-free work-stealing thread pool"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T04:47:08.681644+00:00",
+      "run_number": 809
     }
   ]
 }
