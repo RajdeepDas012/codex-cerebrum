@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **823** |
-| Last Updated | `2026-09-14T05:30:54.222972+00:00` |
-| Dataset Size | `823 entries` |
+| Total Topics Learned | **824** |
+| Last Updated | `2026-09-14T10:28:28.695942+00:00` |
+| Dataset Size | `824 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,8 +20,8 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
+| crypto-blockchain | 75 |
 | system-design | 74 |
-| crypto-blockchain | 74 |
 | stocks-markets | 71 |
 | probability-math | 27 |
 | data-structures | 17 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle tree using atomic node hashing and incremental root hashing for high-throughput verifiable state synchronization in decentralized database clusters`
 - `Implementation of a lock-free thread-safe concurrent count-min sketch using atomic array hashing and frequency estimation for high-throughput stream-processing telemetry analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent hyperloglog cardinality estimator using atomic register merging and sparse-to-dense representation conversion for high-throughput distributed analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent counting quotient filter using atomic fingerprint compression and metadata shifting for high-throughput in-memory approximate membership querying`
 - `Implementation of a lock-free thread-safe suffix array index using atomic string pointers and parallel induced sorting for high-throughput genomic pattern matching pipelines`
-- `Implementation of a cache-oblivious B+ tree layout using van Emde Boas layouts for high-performance in-memory database index range scans`
 
 <!-- STATS_END -->
 
