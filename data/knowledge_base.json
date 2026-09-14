@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 796,
-    "last_updated": "2026-09-14T00:06:31.216523+00:00",
-    "total_topics_learned": 796
+    "total_runs": 797,
+    "last_updated": "2026-09-14T00:09:38.251608+00:00",
+    "total_topics_learned": 797
   },
   "entries": [
     {
@@ -38438,6 +38438,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:06:31.216498+00:00",
       "run_number": 796
+    },
+    {
+      "topic": "Implementation of a lock-free distributed consensus protocol using Raft leader election and atomic state machine replication for resilient microservice coordination",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a fault-tolerant consensus engine where a cluster of microservice nodes agrees on state transitions through leader election and replicated logs. It ensures strong consistency and high availability even during network partitions and node failures.",
+      "key_points": [
+        "Raft divides consensus into leader election, log replication, and safety guarantees to simplify distributed state management.",
+        "Nodes operate in three states: Follower, Candidate, and Leader, transitioning via randomized election timeouts to prevent split votes.",
+        "Log replication ensures that committed entries are atomically applied to the local state machine in strict index order.",
+        "Quorum-based majorities ($N/2 + 1$) are required for both elections and log entries to guarantee safety and prevent split-brain scenarios."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates processing an AppendEntries RPC with term validation and atomic log appending.",
+        "correct": "def handle_append_entries(self, term, leader_id, prev_log_index, prev_log_term, entries, leader_commit):\n    if term < self.current_term:\n        return {\"term\": self.current_term, \"success\": False}\n    self.current_term = term\n    self.state = \"Follower\"\n    self.leader_id = leader_id\n    # Check and reconcile log conflicts, then append atomic entries\n    self.commit_index = min(leader_commit, len(self.log))\n    return {\"term\": self.current_term, \"success\": True}",
+        "wrong": "def handle_append_entries(self, term, entries):\n    # Blindly appending entries without checking term or previous log index violates Raft safety\n    self.log.extend(entries)\n    return {\"success\": True}"
+      },
+      "common_mistakes": [
+        "Failing to persist currentTerm, votedFor, and the log to stable storage before responding to RPCs, leading to split-brain upon crash recovery.",
+        "Updating the commit index based on entries from previous terms directly instead of counting replicas from the current term."
+      ],
+      "best_practices": [
+        "Use randomized election timeouts (e.g., 150ms-300ms) to drastically reduce the probability of split votes during network contention.",
+        "Implement batching and pipelining for log replication RPCs to maximize throughput across high-latency WAN links.",
+        "Ensure strict state machine determinism so that identical log inputs always yield identical state outputs."
+      ],
+      "when_to_use": "When building distributed configuration stores, coordination services, or databases requiring strong linearizability and automated failover.",
+      "when_not_to_use": "When eventual consistency is sufficient or when low-latency write paths outweigh the overhead of cross-node consensus rounds.",
+      "interview_questions": [
+        {
+          "question": "How does Raft prevent a candidate from winning an election with an out-of-date log?",
+          "answer": "During RequestVote RPCs, followers check if the candidate's log is at least as up-to-date as their own by comparing the term and index of their last log entries, rejecting votes if the candidate's log is lagging."
+        },
+        {
+          "question": "Why is a randomized election timeout critical for the Raft leader election phase?",
+          "answer": "It staggers when followers transition to candidates, preventing multiple nodes from timing out simultaneously, splitting votes, and causing endless election rounds."
+        }
+      ],
+      "related_topics": [
+        "Paxos consensus algorithm",
+        "Distributed transaction two-phase commit",
+        "State machine replication and linearizability"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:09:38.251589+00:00",
+      "run_number": 797
     }
   ]
 }
