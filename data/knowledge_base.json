@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 843,
-    "last_updated": "2026-09-14T17:07:39.189716+00:00",
-    "total_topics_learned": 843
+    "total_runs": 844,
+    "last_updated": "2026-09-14T17:10:47.329869+00:00",
+    "total_topics_learned": 844
   },
   "entries": [
     {
@@ -40671,6 +40671,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T17:07:39.189693+00:00",
       "run_number": 843
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent lock-free skip-list using atomic forward-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory multi-threaded key-value store index concurrency",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free skip-list provides concurrent ordered map operations by utilizing multi-level linked lists with atomic compare-and-swap (CAS) primitives on forward pointers. It enables high-throughput multi-threaded database index concurrency without the performance degradation and deadlock risks associated with traditional coarse-grained or fine-grained lock-based synchronization.",
+      "key_points": [
+        "Uses probabilistic multi-level towers to achieve O(log n) expected time complexity for search, insertion, and deletion operations.",
+        "Relies on atomic Compare-And-Swap (CAS) instructions to update forward pointers safely across multiple threads without explicit locking.",
+        "Employs hazard pointers or epoch-based memory reclamation to prevent the ABA problem and safely free deleted nodes.",
+        "Handles logical deletions by marking nodes with a 'fully-linked' or 'deleted' bit before physically unlinking them from the forward pointer arrays."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node structure and atomic insertion mechanism of a lock-free skip-list using simulated CAS operations",
+        "correct": "class Node:\n    def __init__(self, key, value, height):\n        self.key = key\n        self.value = value\n        self.forward = [None] * height\n        self.fully_linked = False\n        self.marked = False\n\ndef atomic_insert(head, new_node, max_height):\n    # Simplified conceptual atomic insert loop using CAS simulation\n    preds = [None] * max_height\n    succs = [None] * max_height\n    while True:\n        if find(head, new_node.key, preds, succs):\n            return False # Key already exists\n        for level in range(new_node.height):\n            new_node.forward[level] = succs[level]\n        if preds[0].forward[0].compare_and_set(succs[0], new_node):\n            return True",
+        "wrong": "def unsafe_insert(head, new_node):\n    # Mistake: modifying pointers without CAS or synchronization leads to lost updates\n    current = head\n    for level in range(new_node.height):\n        new_node.forward[level] = current.forward[level]\n        current.forward[level] = new_node"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during pointer updates, which can corrupt the list structure.",
+        "Omitting logical deletion marks, allowing concurrent threads to insert new nodes after a node that is currently being unlinked."
+      ],
+      "best_practices": [
+        "Use hazard pointers or Epoch-Based Reclamation (EBR) to safely manage memory without incurring heavy garbage collection overheads.",
+        "Keep node height capped at a predictable maximum (e.g., 32) to bound memory overhead and prevent excessive pointer traversal."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory key-value stores or database indexes that require frequent concurrent reads and writes on ordered data.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of multi-level pointer arrays and safe memory reclamation outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing a CAS operation on a skip-list forward pointer?",
+          "answer": "You can combine a version counter or a deletion mark bit directly within the pointer word, or use hazard pointers/epoch-based reclamation to ensure nodes aren't reused while a thread holds a reference."
+        },
+        {
+          "question": "Why is logical deletion required before physical unlinking in a lock-free skip-list?",
+          "answer": "Logical deletion marks a node as removed (e.g., setting a flag on the pointer), preventing other threads from inserting new nodes immediately after a node that is in the process of being removed by a concurrent thread."
+        }
+      ],
+      "related_topics": [
+        "lock-free B-link tree",
+        "hazard pointers and epoch-based memory reclamation",
+        "ABA problem in concurrent data structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-14T17:10:47.329848+00:00",
+      "run_number": 844
     }
   ]
 }
