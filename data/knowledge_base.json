@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 822,
-    "last_updated": "2026-09-14T05:27:46.859169+00:00",
-    "total_topics_learned": 822
+    "total_runs": 823,
+    "last_updated": "2026-09-14T05:30:54.222972+00:00",
+    "total_topics_learned": 823
   },
   "entries": [
     {
@@ -39673,6 +39673,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T05:27:46.859141+00:00",
       "run_number": 822
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent count-min sketch using atomic array hashing and frequency estimation for high-throughput stream-processing telemetry analytics pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent count-min sketch uses multiple independent hash functions and flat atomic arrays to track frequency approximations of streaming data without explicit locking overhead. It matters because it enables high-throughput, thread-safe telemetry monitoring with strict sub-linear memory footprints and bounded estimation errors.",
+      "key_points": [
+        "Employs a 2D matrix of atomic counters indexed by multiple independent hash functions to process simultaneous stream updates safely.",
+        "Utilizes lock-free compare-and-swap (CAS) loops or atomic increments to eliminate thread contention and synchronization bottlenecks.",
+        "Provides probabilistic frequency estimation where counts may experience over-estimation due to hash collisions, but never under-estimation.",
+        "Scales horizontally across multi-core processors, making it ideal for real-time telemetry analytics and heavy hitter identification."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent count-min sketch updates using atomic operations and multiple hash passes.",
+        "correct": "import threading\nimport mmh3\n\nclass AtomicCountMinSketch:\n    def __init__(self, width, depth):\n        self.width = width\n        self.depth = depth\n        self.table = [[threading.Lock() and 0 for _ in range(width)] for _ in range(depth)]\n        self.counters = [[0] * width for _ in range(depth)]\n        self._locks = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n\n    def add(self, item, count=1):\n        for i in range(self.depth):\n            col = abs(mmh3.hash(str(item), i)) % self.width\n            with self._locks[i][col]:\n                self.counters[i][col] += count\n\n    def estimate(self, item):\n        estimates = []\n        for i in range(self.depth):\n            col = abs(mmh3.hash(str(item), i)) % self.width\n            with self._locks[i][col]:\n                estimates.append(self.counters[i][col])\n        return min(estimates)",
+        "wrong": "def add_no_lock(self, item, count=1):\n    for i in range(self.depth):\n        col = abs(hash(str(item)) + i) % self.width\n        self.counters[i][col] += count"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on counter cells, leading to lost updates under high concurrency.",
+        "Employing correlated or poorly distributed hash functions, which dramatically increases collision rates and skews frequency estimations."
+      ],
+      "best_practices": [
+        "Use hardware-accelerated non-cryptographic hash functions like MurmurHash3 or CityHash seeded independently for each depth row.",
+        "Size the width and depth dynamically based on acceptable error bounds $\\epsilon$ and failure probability $\\delta$.",
+        "Batch atomic updates or leverage lock-free atomic fetch-add instructions where supported by the runtime to maximize instruction cache locality."
+      ],
+      "when_to_use": "Use when you need to track item frequencies or identify heavy hitters in high-velocity telemetry streams where exact counting is memory-prohibitive and parallel thread safety is mandatory.",
+      "when_not_to_use": "Avoid when exact, collision-free frequency queries are required or when the total universe of unique items is small enough to fit comfortably into a standard hash map.",
+      "interview_questions": [
+        {
+          "question": "Why does a count-min sketch guarantee no under-estimation while allowing over-estimation?",
+          "answer": "Because hash collisions can map multiple distinct items to the same counter bucket, increasing the tallied value, but every actual occurrence of the target item will consistently increment all of its designated row buckets."
+        },
+        {
+          "question": "How do you implement thread-safety in a count-min sketch without relying on global mutexes?",
+          "answer": "By structuring the underlying matrix cells as atomic variables and utilizing atomic fetch-and-add or CAS loops, allowing threads to update independent hash slots concurrently without blocking."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hyperloglog cardinality estimator",
+        "Concurrent counting quotient filter",
+        "Probabilistic data structures in streaming systems"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T05:30:54.222952+00:00",
+      "run_number": 823
     }
   ]
 }
