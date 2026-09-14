@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **831** |
-| Last Updated | `2026-09-14T10:50:20.521567+00:00` |
-| Dataset Size | `831 entries` |
+| Total Topics Learned | **832** |
+| Last Updated | `2026-09-14T10:53:27.700773+00:00` |
+| Dataset Size | `832 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| data-structures | 23 |
+| data-structures | 24 |
 | databases | 14 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent radix tree using atomic node allocation and bitwise prefix partitioning for high-throughput in-memory routing table lookups`
 - `Implementation of a lock-free thread-safe concurrent inverted index using atomic posting list compression and skip-pointer acceleration for high-throughput real-time full-text search engines`
 - `Implementation of a lock-free thread-safe concurrent prefix trie using atomic node allocations and path compression for high-throughput IP routing table longest-prefix matching engines`
 - `Implementation of a lock-free thread-safe concurrent distributed lock manager using atomic lease renewals and fencing tokens for high-throughput distributed resource coordination`
 - `Implementation of a lock-free thread-safe concurrent spatial index using atomic bounding volume hierarchy (BVH) node updates and surface area heuristic (SAH) optimization for high-throughput real-time collision detection pipelines`
-- `Implementation of a lock-free thread-safe concurrent bi-directional map using atomic hash indexing and dual-index synchronization for high-throughput relational lookup engines`
 
 <!-- STATS_END -->
 
