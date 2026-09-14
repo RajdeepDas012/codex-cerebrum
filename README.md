@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **864** |
-| Last Updated | `2026-09-14T21:21:34.017750+00:00` |
-| Dataset Size | `864 entries` |
+| Total Topics Learned | **865** |
+| Last Updated | `2026-09-14T21:24:40.968116+00:00` |
+| Dataset Size | `865 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 76 |
 | crypto-blockchain | 76 |
 | stocks-markets | 71 |
-| data-structures | 47 |
+| data-structures | 48 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation state-flags and epoch-based memory reclamation for high-throughput real-time range query and update analytics in distributed stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order restructuring and hazard pointer reclamation for high-throughput task scheduling and event-driven asynchronous processing engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node compression and epoch-based memory reclamation for high-throughput IP routing table prefix lookup in high-speed software-defined networking engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link redirection and hazard pointer reclamation for high-throughput multi-pattern string matching in real-time intrusion detection systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state transition expansion and hazard pointer reclamation for high-throughput string pattern matching and substring indexing in real-time text analysis pipelines`
-- `Implementation of a lock-free thread-safe concurrent BK-tree using atomic edit-distance threshold bounding and hazard pointer reclamation for high-throughput approximate string matching in real-time spell-checking engines`
 
 <!-- STATS_END -->
 
