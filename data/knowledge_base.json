@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 870,
-    "last_updated": "2026-09-14T23:50:22.738758+00:00",
-    "total_topics_learned": 870
+    "total_runs": 871,
+    "last_updated": "2026-09-14T23:53:30.298792+00:00",
+    "total_topics_learned": 871
   },
   "entries": [
     {
@@ -41954,6 +41954,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T23:50:22.738741+00:00",
       "run_number": 870
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ tree using atomic leaf-link pointer CAS operations and epoch-based memory reclamation for high-throughput in-memory range scan indexing in real-time OLTP database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free B+ tree optimized for concurrent in-memory range queries. It utilizes atomic operations on leaf pointers and epoch-based memory management to eliminate lock contention in heavy OLTP workloads.",
+      "key_points": [
+        "Utilizes Compare-And-Swap (CAS) primitives on leaf-node pointers to execute non-blocking structural modifications.",
+        "Employs epoch-based memory reclamation (EMR) to safely free nodes without risking use-after-free errors during concurrent traversals.",
+        "Maintains sorted linked lists at the leaf level to enable efficient, lock-free sequential range scans.",
+        "Handles node splits and merges cooperatively to prevent deadlocks and minimize synchronization bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe epoch-based node acquisition and atomic leaf link traversal for range scans.",
+        "correct": "void* node = epoch_enter();\nauto* leaf = atomic_load(&root_leaf);\nwhile(leaf != nullptr) {\n    process(leaf->keys);\n    leaf = atomic_load(&leaf->next);\n}\nepoch_exit(node);",
+        "wrong": "auto* leaf = root_leaf;\nwhile(leaf != nullptr) {\n    process(leaf->keys);\n    leaf = leaf->next;\n    delete leaf->prev;\n}"
+      },
+      "common_mistakes": [
+        "Deleting nodes immediately upon unlinking without accounting for active concurrent reader threads.",
+        "Failing to handle ABA problems when updating child pointers and leaf links concurrently."
+      ],
+      "best_practices": [
+        "Integrate a robust epoch manager or Hazard Pointers to delay reclamation until all accessing threads have departed the current epoch.",
+        "Keep internal node updates lightweight and defer structural splits to dedicated helper routines."
+      ],
+      "when_to_use": "Use when designing high-concurrency in-memory databases requiring high throughput for frequent point lookups and range scans.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or systems with low concurrency where standard mutex-backed trees provide simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates on leaf nodes during a split?",
+          "answer": "By using tagged pointers or version counters combined with CAS, or by utilizing hazard pointers and epoch-based memory reclamation to ensure structural state hasn't subtly changed."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free trees?",
+          "answer": "Reference counting introduces heavy atomic write contention on every node traversal, degrading performance, whereas epoch-based reclamation batches memory deallocation and avoids read-path writes."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip Lists",
+        "Hazard Pointers",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T23:53:30.298776+00:00",
+      "run_number": 871
     }
   ]
 }
