@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 815,
-    "last_updated": "2026-09-14T05:05:54.553116+00:00",
-    "total_topics_learned": 815
+    "total_runs": 816,
+    "last_updated": "2026-09-14T05:09:02.831381+00:00",
+    "total_topics_learned": 816
   },
   "entries": [
     {
@@ -39342,6 +39342,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T05:05:54.553093+00:00",
       "run_number": 815
+    },
+    {
+      "topic": "Implementation of a zero-copy Linux AF_XDP socket handler with direct memory access (DMA) ring buffers for ultra-low-latency high-frequency packet processing applications",
+      "category": "networking",
+      "language": "C",
+      "difficulty": "advanced",
+      "summary": "AF_XDP is a Linux socket family optimized for high-speed packet processing that bypasses the traditional network stack by directly sharing memory buffers between userspace and the network interface card (NIC) driver. This zero-copy architecture eliminates redundant memory copies and system calls, allowing high-frequency trading systems and high-throughput routers to process millions of packets per second with minimal jitter.",
+      "key_points": [
+        "Utilizes four distinct ring buffers: Fill, Complete, Rx, and Tx for efficient memory and descriptor management between userspace and kernel.",
+        "Bypasses the Linux kernel networking stack entirely for matched packets, avoiding socket buffer (sk_buff) allocation overhead.",
+        "Requires driver support for zero-copy mode (XDP_ZEROCOPY), falling back to copy mode (XDP_COPY) if hardware or driver features are missing.",
+        "Operates in tandem with eBPF (Extended Berkeley Packet Filter) programs loaded onto the network interface to filter and redirect packets directly to the XDP socket queue."
+      ],
+      "code_example": {
+        "language": "c",
+        "description": "Configuring an AF_XDP socket and binding it to a specific network interface and queue ID",
+        "correct": "int sock = socket(AF_XDP, SOCK_RAW, 0);\nstruct sockaddr_xdp sxdp = {\n    .sxdp_family = AF_XDP,\n    .sxdp_ifindex = ifindex,\n    .sxdp_queue_id = queue_id,\n    .sxdp_flags = XDP_ZEROCOPY\n};\nbind(sock, (struct sockaddr *)&sxdp, sizeof(sxdp));",
+        "wrong": "int sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);\nbind(sock, (struct sockaddr *)&addr, sizeof(addr));"
+      },
+      "common_mistakes": [
+        "Failing to pre-register and pin umem (userspace memory) pages, leading to kernel faults or fallback to slower copy modes.",
+        "Neglecting to properly replenish the Fill ring when consuming packets, causing the kernel to drop incoming frames due to descriptor starvation."
+      ],
+      "best_practices": [
+        "Affinitize your polling and packet-processing threads to dedicated CPU cores using sched_setaffinity to eliminate context-switch jitter.",
+        "Use batch processing on the Rx and Tx rings (e.g., using recvmmsg/sendmmsg or direct ring pointer manipulation) to amortize system call and barrier overhead.",
+        "Implement robust fallback logic to XDP_COPY mode if the target NIC driver lacks native zero-copy support."
+      ],
+      "when_to_use": "Use when building ultra-low-latency financial market data feeds, high-frequency execution gateways, or high-performance software load balancers that must process tens of millions of packets per second.",
+      "when_not_to_use": "Avoid when standard kernel socket performance is sufficient, or when application complexity cannot justify managing manual memory pools, eBPF lifecycles, and ring descriptors.",
+      "interview_questions": [
+        {
+          "question": "What are the four ring buffers used by an AF_XDP socket and what is the purpose of each?",
+          "answer": "The Fill ring supplies empty user memory buffers to the kernel for receiving packets; the Rx ring notifies userspace of newly received packets in those buffers; the Tx ring allows userspace to submit packets for transmission; and the Complete ring notifies userspace which transmitted buffers have been sent and can be reused."
+        },
+        {
+          "question": "How does AF_XDP achieve zero-copy packet processing compared to traditional AF_PACKET sockets?",
+          "answer": "AF_XDP shares memory registration (umem) directly between the NIC driver and userspace via DMA ring buffers, eliminating the need for the kernel to allocate sk_buffs and copy packet data between kernel space and userspace buffers."
+        }
+      ],
+      "related_topics": [
+        "eBPF (Extended Berkeley Packet Filter)",
+        "DPDK (Data Plane Development Kit)",
+        "Linux network stack optimization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T05:09:02.831363+00:00",
+      "run_number": 816
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **815** |
-| Last Updated | `2026-09-14T05:05:54.553116+00:00` |
-| Dataset Size | `815 entries` |
+| Total Topics Learned | **816** |
+| Last Updated | `2026-09-14T05:09:02.831381+00:00` |
+| Dataset Size | `816 entries` |
 
 ## 📂 Categories Learned
 
@@ -28,10 +28,10 @@
 | data-structures | 11 |
 | machine-learning | 10 |
 | web-dev | 9 |
+| networking | 8 |
 | language-specific | 7 |
 | devops | 7 |
 | security | 7 |
-| networking | 7 |
 | algorithms | 5 |
 | data-visualization | 2 |
 | best-practices | 1 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a zero-copy Linux AF_XDP socket handler with direct memory access (DMA) ring buffers for ultra-low-latency high-frequency packet processing applications`
 - `Implementation of a lock-free distributed telemetry tracing context propagator using W3C Trace Context standards and thread-local storage for asynchronous microservice call-graph profiling`
 - `Implementation of a lock-free thread-safe interval tree using atomic node rotations and versioned sequence locks for real-time order book range queries in financial matching engines`
 - `Implementation of a lock-free transactional outbox pattern processor using PostgreSQL logical replication slots and change data capture (CDC) for reliable microservice event publishing`
 - `Implementation of a lock-free thread-safe vector clock tracker for causal consistency ordering in distributed transactional key-value stores`
-- `Implementation of a cache-line aligned lock-free multi-producer single-consumer (MPSC) queue using C++20 atomics for low-latency inter-thread logging`
 
 <!-- STATS_END -->
 
