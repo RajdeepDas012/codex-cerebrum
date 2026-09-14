@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 837,
-    "last_updated": "2026-09-14T11:09:04.457649+00:00",
-    "total_topics_learned": 837
+    "total_runs": 838,
+    "last_updated": "2026-09-14T11:12:12.340159+00:00",
+    "total_topics_learned": 838
   },
   "entries": [
     {
@@ -40387,6 +40387,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T11:09:04.457628+00:00",
       "run_number": 837
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent k-d tree using atomic bounding-box splitting and parallel recursive traversal for high-throughput multi-dimensional nearest-neighbor search in real-time recommendation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent k-dimensional tree designed for fast multi-dimensional spatial queries. By employing atomic bounding-box splitting and parallel recursive traversal, it allows multiple threads to read and write high-dimensional user-feature vectors simultaneously without standard locking overhead.",
+      "key_points": [
+        "Utilizes atomic primitives to manage bounding-box definitions across concurrent tree mutations without mutual exclusion locks.",
+        "Implements parallel recursive traversal to accelerate high-dimensional nearest-neighbor lookups for real-time recommendation systems.",
+        "Handles cyclic axis selection atomically to maintain balanced spatial partitioning under heavy write contention.",
+        "Mitigates memory reclamation hazards during concurrent node insertions and splits using safe memory techniques like hazard pointers or epoch-based reclamation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation for updating the k-d tree bounding box bounds concurrently.",
+        "correct": "bool update_bounds(std::atomic<BoundingBox*>& current_box, BoundingBox* new_box) {\n    BoundingBox* expected = current_box.load();\n    new_box->merge(expected);\n    return current_box.compare_exchange_weak(expected, new_box);\n}",
+        "wrong": "bool update_bounds(BoundingBox* current_box, BoundingBox* new_box) {\n    // Missing atomics and memory ordering leading to race conditions\n    current_box->min_pt = new_box->min_pt;\n    current_box->max_pt = new_box->max_pt;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use proper memory ordering constraints (e.g., sequentially consistent vs acquire-release) during pointer updates, resulting in stale bounding box coordinates.",
+        "Neglecting safe memory reclamation, which leads to use-after-free errors when threads traverse nodes that are concurrently split or deleted."
+      ],
+      "best_practices": [
+        "Employ epoch-based reclamation or hazard pointers to safely manage node lifecycles under lock-free concurrency.",
+        "Bound the maximum recursion depth during parallel traversal to prevent stack overflow when handling highly skewed point distributions.",
+        "Pre-allocate memory pools for nodes to minimize allocation overhead during high-frequency parallel insertions."
+      ],
+      "when_to_use": "Use this structure when building real-time multi-dimensional search systems, such as recommendation engines or nearest-neighbor classifiers, that experience high concurrent update and query loads.",
+      "when_not_to_use": "Avoid in low-memory environments or when data dimensionality is extremely high (the curse of dimensionality degrades k-d tree performance, making linear scans or approximate nearest neighbor structures preferable).",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during concurrent node splits in a lock-free k-d tree without locking the entire tree?",
+          "answer": "By using atomic compare-and-swap (CAS) operations on child pointers and bounding-box references, combined with optimistic concurrency control or safe memory reclamation to retry operations if another thread modifies the same subtree."
+        },
+        {
+          "question": "Why does the performance of a k-d tree degrade in very high dimensions, and how might you mitigate it in a recommendation engine?",
+          "answer": "As dimensions increase, the volume of bounding boxes overlaps significantly, forcing traversals to check nearly all branches (approaching O(N) complexity). Mitigation involves switching to approximate nearest neighbor methods like HNSW or locality-sensitive hashing (LSH)."
+        }
+      ],
+      "related_topics": [
+        "lock-free priority search trees",
+        "hazard pointers and epoch-based reclamation",
+        "approximate nearest neighbor graphs (HNSW)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T11:12:12.340139+00:00",
+      "run_number": 838
     }
   ]
 }

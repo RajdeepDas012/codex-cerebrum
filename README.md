@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **837** |
-| Last Updated | `2026-09-14T11:09:04.457649+00:00` |
-| Dataset Size | `837 entries` |
+| Total Topics Learned | **838** |
+| Last Updated | `2026-09-14T11:12:12.340159+00:00` |
+| Dataset Size | `838 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | system-design | 75 |
 | crypto-blockchain | 75 |
 | stocks-markets | 71 |
-| data-structures | 29 |
+| data-structures | 30 |
 | probability-math | 27 |
 | databases | 14 |
 | machine-learning | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent k-d tree using atomic bounding-box splitting and parallel recursive traversal for high-throughput multi-dimensional nearest-neighbor search in real-time recommendation engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node allocation and active-point state propagation for high-throughput string matching and bioinformatics sequence alignment engines`
 - `Implementation of a lock-free thread-safe concurrent disjoint-set (Union-Find) data structure using atomic path compression and union-by-rank for high-throughput parallel graph connectivity and minimum spanning tree algorithms`
 - `Implementation of a lock-free thread-safe concurrent Fenwick tree (Binary Indexed Tree) using atomic point updates and prefix-sum delegation for high-throughput real-time streaming cumulative frequency analytics in financial telemetry engines`
 - `Implementation of a lock-free thread-safe concurrent segment tree using atomic node lazy-propagation and versioned sequence markers for high-throughput real-time interval aggregation in financial telemetry processing engines`
-- `Implementation of a lock-free thread-safe concurrent priority search tree using atomic node splitting and bounding coordinate compression for high-throughput multi-dimensional range and nearest-neighbor queries in spatial databases`
 
 <!-- STATS_END -->
 
