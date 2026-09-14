@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 795,
-    "last_updated": "2026-09-14T00:03:23.596051+00:00",
-    "total_topics_learned": 795
+    "total_runs": 796,
+    "last_updated": "2026-09-14T00:06:31.216523+00:00",
+    "total_topics_learned": 796
   },
   "entries": [
     {
@@ -38390,6 +38390,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-14T00:03:23.596034+00:00",
       "run_number": 795
+    },
+    {
+      "topic": "Implementation of a lock-free distributed rate limiter using Redis Cluster and Sliding Window Log algorithm for high-concurrency API gateways",
+      "category": "system-design",
+      "language": "python",
+      "difficulty": "advanced",
+      "summary": "An enterprise-grade rate limiting solution that leverages Redis sorted sets (ZSET) and Lua scripts to enforce precise sliding window request limits across distributed API gateway nodes without application-level locks. It matters because it ensures linear scalability, microsecond-level enforcement accuracy, and immunity against request burst exploitation at cluster boundaries.",
+      "key_points": [
+        "Utilizes Redis Sorted Sets (ZSET) where timestamps act as scores and unique request IDs serve as members to track individual events.",
+        "Executes Redis Lua scripts atomically to clean expired logs, count current valid entries, and insert new timestamps in a single execution step.",
+        "Ensures multi-node consistency across a Redis Cluster by routing client keys to the same hash slot using Redis hash tags (e.g., {user_123}).",
+        "Achieves lock-free operation at the application layer by offloading concurrency control and synchronization primitives directly to Redis single-threaded execution model."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an atomic sliding window log rate limiter using a Redis Lua script",
+        "correct": "lua_script = \"\"\"\nlocal key = KEYS[1]\nlocal now = tonumber(ARGV[1])\nlocal window = tonumber(ARGV[2])\nlocal limit = tonumber(ARGV[3])\nlocal clear_before = now - window\nredis.call('ZREMRANGEBYSCORE', key, 0, clear_before)\nlocal current_count = redis.call('ZCARD', key)\nif current_count < limit then\n    redis.call('ZADD', key, now, ARGV[4])\n    redis.call('PEXPIRE', key, window)\n    return 1\nelse\n    return 0\nend\n\"\"\"",
+        "wrong": "client_time = time.time(); count = redis.zcard(key); if count < limit: redis.zadd(key, {client_time: uuid});"
+      },
+      "common_mistakes": [
+        "Relying on multiple non-atomic Redis round-trips (ZCARD followed by ZADD) which causes race conditions under high concurrency.",
+        "Failing to use Redis hash tags in a Redis Cluster, resulting in 'CROSSSLOT keys in request' errors when operations span multiple shards."
+      ],
+      "best_practices": [
+        "Always set a TTL (Time-To-Live) slightly larger than the sliding window size on the Redis key to automatically purge stale memory when users stop making requests.",
+        "Use pipelining or Lua scripts to bundle the ZREMRANGEBYSCORE, ZCARD, ZADD, and EXPIRE commands into a single network round-trip.",
+        "Include unique request identifiers as members in the sorted set to prevent score collisions when multiple requests occur at the exact same millisecond timestamp."
+      ],
+      "when_to_use": "When building high-throughput API gateways that require high precision rate limiting to prevent abuse and protect downstream microservices.",
+      "when_not_to_use": "When traffic volume is extremely low and simpler in-memory or fixed window counter algorithms backed by a single database instance are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions between checking the current request count and adding a new timestamp in a distributed Redis environment?",
+          "answer": "By executing an atomic Redis Lua script that encapsulates both the removal of expired entries, the count check, and the insertion of the new timestamp within a single atomic block."
+        },
+        {
+          "question": "How do you handle Redis Cluster hash slot routing constraints when applying a rate limit key for a specific user?",
+          "answer": "By utilizing Redis hash tags (e.g., enclosing the user ID in curly braces like '{user_123}:ratelimit') to force all rate limiting keys for that user to map to the exact same hash slot and Redis node."
+        }
+      ],
+      "related_topics": [
+        "Distributed Token Bucket Rate Limiter",
+        "Redis Lua Scripting Atomic Operations",
+        "API Gateway Traffic Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:06:31.216498+00:00",
+      "run_number": 796
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **795** |
-| Last Updated | `2026-09-14T00:03:23.596051+00:00` |
-| Dataset Size | `795 entries` |
+| Total Topics Learned | **796** |
+| Last Updated | `2026-09-14T00:06:31.216523+00:00` |
+| Dataset Size | `796 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 114 |
 | crypto-blockchain | 74 |
 | stocks-markets | 71 |
-| system-design | 69 |
+| system-design | 70 |
 | probability-math | 27 |
 | databases | 10 |
 | machine-learning | 10 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free distributed rate limiter using Redis Cluster and Sliding Window Log algorithm for high-concurrency API gateways`
 - `Implementation of a lock-free distributed sequence generator using Snowflake ID architecture and atomic hardware instructions for horizontal microservice scaling`
 - `Implementation of a lock-free single-producer multi-consumer event bus using atomic ring buffers for zero-copy inter-thread dispatch`
 - `Implementation of a persistent append-only log storage engine with crash recovery using Write-Ahead Logging (WAL) and checksum verification`
 - `Implementation of a distributed lock using Redis and Lua scripts for idempotent payment processing in microservices`
-- `Implementation of a lock-free memory pool allocator for zero-allocation message serialization in low-latency trading systems`
 
 <!-- STATS_END -->
 
