@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 812,
-    "last_updated": "2026-09-14T04:56:31.505449+00:00",
-    "total_topics_learned": 812
+    "total_runs": 813,
+    "last_updated": "2026-09-14T04:59:39.152152+00:00",
+    "total_topics_learned": 813
   },
   "entries": [
     {
@@ -39201,6 +39201,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-14T04:56:31.505431+00:00",
       "run_number": 812
+    },
+    {
+      "topic": "Implementation of a lock-free transactional outbox pattern processor using PostgreSQL logical replication slots and change data capture (CDC) for reliable microservice event publishing",
+      "category": "databases",
+      "language": "Python",
+      "difficulty": "advanced",
+      "summary": "This architectural pattern leverages PostgreSQL logical replication slots to capture outbox events directly from the Write-Ahead Log (WAL) without table polling. It ensures at-least-once message delivery to message brokers while maintaining strict atomic consistency between database state changes and event publishing.",
+      "key_points": [
+        "Utilizes PostgreSQL logical decoding plugins (like pgoutput) to stream row-level changes from the WAL.",
+        "Eliminates the performance overhead of polling-based outbox table sweepers using lock-free cursor progression.",
+        "Employs dedicated replication slots to guarantee that subscriber disconnections do not result in unacknowledged outbox event loss.",
+        "Decouples transaction writes from event broker distribution, protecting against dual-write failures."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Consuming outbox events lock-free via PostgreSQL logical replication streams using psycopg",
+        "correct": "import psycopg\nfrom psycopg.rows import dict_row\n\ndef stream_outbox_events(conn_string):\n    with psycopg.connect(conn_string, autocommit=True) as conn:\n        with conn.cursor() as cur:\n            # Create a logical replication slot if it does not exist\n            try:\n                cur.execute(\"CREATE_REPLICATION_SLOT outbox_slot LOGICAL pgoutput\")\n            except psycopg.errors.DuplicateObject:\n                pass\n            \n            # Stream WAL changes from the logical slot\n            for msg in cur.mogrify_stream(\"START_REPLICATION SLOT outbox_slot LOGICAL 0/0 (proto_version '1', publication_names 'outbox_pub')\"):\n                process_change(msg.payload)\n                msg.cursor.send_feedback(write_lsn=msg.data_start)",
+        "wrong": "import time\n\ndef poll_outbox(cursor):\n    while True:\n        cursor.execute(\"SELECT * FROM outbox WHERE published = FALSE FOR UPDATE SKIP LOCKED\")\n        for row in cursor.fetchall():\n            publish_to_broker(row)\n        time.sleep(1)"
+      },
+      "common_mistakes": [
+        "Failing to advance the replication slot LSN (Log Sequence Number) back to PostgreSQL, leading to unbounded WAL file growth and eventual disk exhaustion.",
+        "Designing the event payload parsing without handling out-of-order or duplicate events generated during database failovers or network partitions."
+      ],
+      "best_practices": [
+        "Monitor the replication slot lag metrics (pg_replication_slots) closely to detect slow or dead message consumers before WAL retention limits are exceeded.",
+        "Make event consumers strictly idempotent to safely handle potential at-least-once delivery duplicates generated during crash recoveries."
+      ],
+      "when_to_use": "Use when building event-driven microservices that require guaranteed, zero-data-loss event publishing coupled with transactional database updates under high throughput.",
+      "when_not_to_use": "Avoid when your infrastructure cannot support database-level logical replication extensions or when eventual consistency via simple dual-writes is acceptable for non-critical telemetry.",
+      "interview_questions": [
+        {
+          "question": "How does using PostgreSQL logical replication slots for an outbox pattern differ from a traditional polling table approach?",
+          "answer": "Logical replication reads directly from the database WAL asynchronously via streaming, avoiding heavy table locks, expensive table scans (`SELECT FOR UPDATE`), and continuous CPU overhead from polling empty tables."
+        },
+        {
+          "question": "What happens to unread outbox events if the replication consumer crashes for an extended period?",
+          "answer": "PostgreSQL retains the WAL logs starting from the last confirmed LSN acknowledged by the replication slot, preventing data loss until storage limits are hit, at which point the slot must be dropped or monitoring alerts triggered."
+        }
+      ],
+      "related_topics": [
+        "PostgreSQL Logical Replication and Write-Ahead Logging",
+        "Change Data Capture (CDC) Architecture",
+        "Idempotent Event Consumer Design"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T04:59:39.152122+00:00",
+      "run_number": 813
     }
   ]
 }

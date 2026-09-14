@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **812** |
-| Last Updated | `2026-09-14T04:56:31.505449+00:00` |
-| Dataset Size | `812 entries` |
+| Total Topics Learned | **813** |
+| Last Updated | `2026-09-14T04:59:39.152152+00:00` |
+| Dataset Size | `813 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | system-design | 72 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| databases | 13 |
+| databases | 14 |
 | machine-learning | 10 |
 | data-structures | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free transactional outbox pattern processor using PostgreSQL logical replication slots and change data capture (CDC) for reliable microservice event publishing`
 - `Implementation of a lock-free thread-safe vector clock tracker for causal consistency ordering in distributed transactional key-value stores`
 - `Implementation of a cache-line aligned lock-free multi-producer single-consumer (MPSC) queue using C++20 atomics for low-latency inter-thread logging`
 - `Implementation of a hardware-timestamped network packet capture engine using Intel DPDK (Data Plane Development Kit) and ring buffers for ultra-low-latency network telemetry monitoring`
 - `Implementation of a lock-free LSM-tree memtable using concurrent skiplists and atomic compaction triggers for high-throughput write-heavy storage engines`
-- `Implementation of a lock-free distributed bloom filter using atomic bitsets and consistent hashing for low-latency membership testing in distributed caching layers`
 
 <!-- STATS_END -->
 
