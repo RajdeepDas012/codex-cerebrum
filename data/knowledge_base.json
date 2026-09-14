@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 817,
-    "last_updated": "2026-09-14T05:12:10.526749+00:00",
-    "total_topics_learned": 817
+    "total_runs": 818,
+    "last_updated": "2026-09-14T05:15:17.745692+00:00",
+    "total_topics_learned": 818
   },
   "entries": [
     {
@@ -39437,6 +39437,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T05:12:10.526732+00:00",
       "run_number": 817
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe hierarchical bucket priority queue using atomic bitmaps and CAS operations for deterministic task scheduling in real-time execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free hierarchical bucket priority queue organizes tasks across multi-level grouped buckets managed by atomic bitmaps to achieve constant or near-constant time complexity for insertions and extractions. It eliminates mutual exclusion locks entirely, using compare-and-swap (CAS) primitives to ensure thread safety and deterministic execution order for high-performance real-time schedulers.",
+      "key_points": [
+        "Uses multi-level hierarchical bitmaps where each set bit indicates the presence of pending tasks within a specific bucket range.",
+        "Employs atomic Compare-And-Swap (CAS) operations to update bitmap states and bucket linked lists safely without thread blocking.",
+        "Leverages find-first-set (FFS) CPU intrinsics to locate the highest-priority non-empty bucket in O(1) time complexity.",
+        "Avoids contention hot-spots associated with traditional centralized priority queues by distributing tasks across partitioned tiers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-setting and CAS-based state updates for locating the highest priority bucket lock-free.",
+        "correct": "#include <atomic>\n#include <cstdint>\n\nclass LockFreeBucketQueue {\n    std::atomic<uint64_t> top_bitmap{0};\npublic:\n    void set_bucket(int index) {\n        uint64_t old = top_bitmap.load(std::memory_order_relaxed);\n        while (!top_bitmap.compare_exchange_weak(old, old | (1ULL << index), \n                 std::memory_order_release, std::memory_order_relaxed));\n    }\n};",
+        "wrong": "void set_bucket(int index) {\n    // Missing atomic loop leads to lost updates under concurrent modifications\n    uint64_t current = top_bitmap.load();\n    top_bitmap.store(current | (1ULL << index));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write sequences which cause lost updates under high thread contention.",
+        "Failing to manage memory reclamation safely, leading to ABA problems when nodes are popped and re-inserted concurrently."
+      ],
+      "best_practices": [
+        "Use memory_order_acquire and memory_order_release semantics correctly to synchronize state changes across threads.",
+        "Combine hierarchical bitmaps with hazard pointers or epoch-based reclamation to safely recycle task nodes without blocking.",
+        "Align atomic structures to cache line boundaries to eliminate false sharing on multi-socket NUMA systems."
+      ],
+      "when_to_use": "Use when multiple producer and consumer threads require high-throughput, deterministic priority task scheduling with strict latency bounds.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when task priority values span a sparse, unpredictable range that renders hierarchical bucketing inefficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing lock-free node extractions from a bucket?",
+          "answer": "By pairing pointers with monotonically increasing version counters or using epoch-based memory reclamation so nodes cannot be reused while another thread references them."
+        },
+        {
+          "question": "Why use a hierarchical bitmap instead of a single atomic binary heap for lock-free priority queues?",
+          "answer": "Binary heaps require structural adjustments affecting large parts of the tree during operations, making lock-free CAS implementation extremely complex and prone to high contention, whereas hierarchical bitmaps decompose the priority space into independent, parallelizable atomic word operations."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointers and epoch-based memory reclamation",
+        "software transactional memory"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T05:15:17.745675+00:00",
+      "run_number": 818
     }
   ]
 }
