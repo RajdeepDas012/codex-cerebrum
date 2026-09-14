@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 828,
-    "last_updated": "2026-09-14T10:40:58.636665+00:00",
-    "total_topics_learned": 828
+    "total_runs": 829,
+    "last_updated": "2026-09-14T10:44:05.910488+00:00",
+    "total_topics_learned": 829
   },
   "entries": [
     {
@@ -39962,6 +39962,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T10:40:58.636646+00:00",
       "run_number": 828
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent distributed lock manager using atomic lease renewals and fencing tokens for high-throughput distributed resource coordination",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free distributed lock manager coordinates exclusive access to shared resources across multi-node systems without blocking threads or using traditional mutexes. By leveraging atomic lease renewals and monotonically increasing fencing tokens, it prevents split-brain scenarios and ensures high-throughput safety guarantees in cloud-native infrastructures.",
+      "key_points": [
+        "Utilizes atomic primitives (such as Compare-And-Swap) for non-blocking local state updates and thread safety.",
+        "Employs time-bounded leases to automatically expire deadlocks and reclaim abandoned resource locks.",
+        "Generates monotonic fencing tokens on every lock acquisition to reject stale or delayed writes from partitioned nodes.",
+        "Separates memory management from lock acquisition states to prevent race conditions during high-concurrency contention."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates acquiring a distributed lock using atomic token generation and lease validation.",
+        "correct": "class DistributedLockManager:\n    def __init__(self):\n        self.locks = {}\n        self.fencing_counter = 0\n\n    def acquire_lock(self, resource_id, client_id, lease_duration):\n        current_time = time.time()\n        lock_state = self.locks.get(resource_id)\n        \n        if lock_state and lock_state['expires_at'] > current_time:\n            return None, 0 # Locked\n            \n        self.fencing_counter += 1\n        new_state = {\n            'client_id': client_id,\n            'expires_at': current_time + lease_duration,\n            'token': self.fencing_counter\n        }\n        self.locks[resource_id] = new_state\n        return new_state['token'], True",
+        "wrong": "def acquire_lock_unsafe(self, resource_id, client_id):\n    if resource_id not in self.locks:\n        self.locks[resource_id] = {'client_id': client_id}\n        return True\n    return False"
+      },
+      "common_mistakes": [
+        "Trusting absolute clock synchronization across distributed nodes for lease expiration instead of using logical counters or relative drift margins.",
+        "Failing to pass or validate the fencing token down to storage or execution layers, leaving the system vulnerable to delayed write operations from network-partitioned nodes."
+      ],
+      "best_practices": [
+        "Always pair time-based leases with strictly monotonic fencing tokens to invalidate stale client requests.",
+        "Design lock acquisition paths to be completely lock-free using atomic Compare-And-Swap (CAS) instructions to eliminate thread contention overhead."
+      ],
+      "when_to_use": "When building highly concurrent distributed databases, leader election frameworks, or resource schedulers requiring strict mutual exclusion with low latency.",
+      "when_not_to_use": "For simple single-node applications where standard language-level mutexes or database row-level locking are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a network-partitioned node that still believes it holds a lock from corrupting state in a distributed system?",
+          "answer": "By implementing monotonically increasing fencing tokens that are verified by downstream data stores to reject writes from clients holding expired leases."
+        },
+        {
+          "question": "Why are traditional blocking mutexes insufficient for a high-throughput distributed lock manager?",
+          "answer": "Blocking mutexes lead to thread context switching overhead, thread starvation, and increased tail latencies under heavy concurrent contention."
+        }
+      ],
+      "related_topics": [
+        "Distributed consensus algorithms (Paxos, Raft)",
+        "Optimistic concurrency control",
+        "Lease-based cache consistency protocols"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T10:44:05.910470+00:00",
+      "run_number": 829
     }
   ]
 }

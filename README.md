@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **828** |
-| Last Updated | `2026-09-14T10:40:58.636665+00:00` |
-| Dataset Size | `828 entries` |
+| Total Topics Learned | **829** |
+| Last Updated | `2026-09-14T10:44:05.910488+00:00` |
+| Dataset Size | `829 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,8 +20,8 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
+| system-design | 75 |
 | crypto-blockchain | 75 |
-| system-design | 74 |
 | stocks-markets | 71 |
 | probability-math | 27 |
 | data-structures | 21 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent distributed lock manager using atomic lease renewals and fencing tokens for high-throughput distributed resource coordination`
 - `Implementation of a lock-free thread-safe concurrent spatial index using atomic bounding volume hierarchy (BVH) node updates and surface area heuristic (SAH) optimization for high-throughput real-time collision detection pipelines`
 - `Implementation of a lock-free thread-safe concurrent bi-directional map using atomic hash indexing and dual-index synchronization for high-throughput relational lookup engines`
 - `Implementation of a lock-free thread-safe concurrent skip-graph using atomic pointer redirection and randomized routing tables for high-throughput decentralized peer-to-peer data routing and multi-dimensional range queries`
 - `Implementation of a lock-free thread-safe concurrent cuckoo filter using atomic bucket fingerprint swizzling and dynamic table resizing for high-throughput in-memory set membership pipelines`
-- `Implementation of a lock-free thread-safe concurrent Merkle tree using atomic node hashing and incremental root hashing for high-throughput verifiable state synchronization in decentralized database clusters`
 
 <!-- STATS_END -->
 
