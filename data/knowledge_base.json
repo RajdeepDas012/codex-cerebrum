@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 805,
-    "last_updated": "2026-09-14T00:34:37.930506+00:00",
-    "total_topics_learned": 805
+    "total_runs": 806,
+    "last_updated": "2026-09-14T00:37:45.182233+00:00",
+    "total_topics_learned": 806
   },
   "entries": [
     {
@@ -38868,6 +38868,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T00:34:37.930486+00:00",
       "run_number": 805
+    },
+    {
+      "topic": "Implementation of a lock-free garbage collection epoch mechanism for safe memory reclamation in concurrent data structures",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An epoch-based reclamation (EBR) mechanism solves the ABA problem and safe memory deletion in lock-free data structures by tracking global and thread-local epochs. It ensures memory is only freed after all threads have advanced past the epoch in which the memory was unlinked, balancing low synchronization overhead with memory safety.",
+      "key_points": [
+        "Utilizes a global epoch counter that increments periodically (e.g., across three states: 0, 1, 2).",
+        "Threads register their active status and current local epoch via thread-local storage to prevent premature reclamation.",
+        "Deferred reclamation queues (garbage lists) collect deleted nodes tagged with the epoch in which they were removed.",
+        "Memory is safely freed only when all active threads have acknowledged entering an epoch newer than the deletion epoch."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates pinning an epoch before unlinking and retiring a node in a concurrent data structure.",
+        "correct": "void retire(Node* node) {\n    uint64_t ep = global_epoch.load(std::memory_order_relaxed);\n    local_garbage[thread_id].push_back({node, ep});\n    try_gc();\n}\n\nvoid pin() {\n    active_epochs[thread_id].store(global_epoch.load(std::memory_order_acquire), std::memory_order_seq_cst);\n}",
+        "wrong": "void retire(Node* node) {\n    delete node; // Unsafe: other threads might still be traversing pointers to this node.\n}"
+      },
+      "common_mistakes": [
+        "Failing to use acquire/release memory barriers when reading and updating thread-local epoch states.",
+        "Forgetting to pin the epoch during read-only critical sections, leading to premature freeing of nodes being traversed."
+      ],
+      "best_practices": [
+        "Use thread-local batching for retired nodes to amortize the cost of epoch checks and global synchronization.",
+        "Keep critical sections short so that lagging threads do not stall the global epoch advancement and bloat memory."
+      ],
+      "when_to_use": "When implementing lock-free data structures (like queues, stacks, or trees) where standard garbage collection is absent or too slow, and hazard pointers introduce too much pointer-load overhead.",
+      "when_not_to_use": "In languages with built-in tracing garbage collection (e.g., Java, Go) or when deterministic, single-threaded performance without allocation tracking is required.",
+      "interview_questions": [
+        {
+          "question": "How does epoch-based reclamation prevent a thread from freeing memory that another thread is actively reading?",
+          "answer": "By requiring threads to announce their active epoch before reading, the reclamation engine ensures that any memory unlinked in epoch $E$ is only freed after all active threads have transitioned to epoch $E+2$, guaranteeing no thread holds a reference to it."
+        },
+        {
+          "question": "What is the primary drawback of epoch-based reclamation compared to hazard pointers?",
+          "answer": "EBR can suffer from delayed reclamation if a single thread is delayed or blocked while pinned, causing the global epoch to stall and retired memory to accumulate significantly."
+        }
+      ],
+      "related_topics": [
+        "Hazard pointers",
+        "Read-copy-update (RCU)",
+        "Lock-free memory allocation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T00:37:45.182214+00:00",
+      "run_number": 806
     }
   ]
 }
