@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 825,
-    "last_updated": "2026-09-14T10:31:36.105209+00:00",
-    "total_topics_learned": 825
+    "total_runs": 826,
+    "last_updated": "2026-09-14T10:34:43.644462+00:00",
+    "total_topics_learned": 826
   },
   "entries": [
     {
@@ -39816,6 +39816,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T10:31:36.105191+00:00",
       "run_number": 825
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent skip-graph using atomic pointer redirection and randomized routing tables for high-throughput decentralized peer-to-peer data routing and multi-dimensional range queries",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A skip-graph is a distributed, randomized data structure combining the logarithmic search capabilities of skip lists with the decentralized topology of peer-to-peer networks. This implementation utilizes atomic pointer manipulation and hazard pointers or epoch-based reclamation to achieve lock-free thread safety, enabling high-throughput multi-dimensional range queries without global coordination.",
+      "key_points": [
+        "Uses randomized membership vectors and distributed routing tables instead of a single global ordering layer.",
+        "Employs compare-and-swap (CAS) primitives and atomic pointer redirection for lock-free node insertion and deletion.",
+        "Supports efficient logarithmic routing and multi-dimensional range queries in decentralized or multi-threaded environments.",
+        "Prevents race conditions during concurrent structural updates by decoupling neighbor pointer updates from membership vector evaluations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic insertion of a node into a concurrent skip-graph using atomic pointer swizzling.",
+        "correct": "bool SkipGraph::insert(Node* newNode) {\n    while (true) {\n        Node* pred = find_predecessor(newNode->key);\n        Node* succ = pred->next[0].load(std::memory_order_acquire);\n        newNode->next[0].store(succ, std::memory_order_relaxed);\n        if (pred->next[0].compare_exchange_strong(succ, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool SkipGraph::insert(Node* newNode) {\n    Node* pred = find_predecessor(newNode->key);\n    Node* succ = pred->next[0];\n    pred->next[0] = newNode; // Missing atomics and CAS loop, causing race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory barriers (acquire-release semantics) during atomic pointer updates, leading to stale routing table views.",
+        "Neglecting proper memory reclamation strategies (like epoch-based garbage collection), causing severe memory leaks or use-after-free bugs during concurrent removals.",
+        "Mutating multi-level skip-graph pointers without ensuring atomic visibility across independent routing dimensions."
+      ],
+      "best_practices": [
+        "Leverage epoch-based memory reclamation (EBR) or hazard pointers to safely free nodes deleted concurrently by other threads.",
+        "Keep routing table updates granular to minimize contention on high-level membership nodes.",
+        "Carefully sequence memory orderings, utilizing `std::memory_order_seq_cst` only where total global order is strictly necessary."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized peer-to-peer systems, distributed databases, or multi-threaded memory stores requiring efficient range queries and zero-lock contention.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or environments where standard lock-based trees or maps provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a skip-graph differ from a traditional skip list in a concurrent, distributed environment?",
+          "answer": "Unlike a skip list which relies on a single hierarchical backbone and strict global ordering, a skip-graph uses multiple randomized membership vectors and decentralized routing tables, making it naturally fault-tolerant and partition-resilient for peer-to-peer and multi-dimensional query workloads."
+        },
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free skip-graph without suffering from the ABA problem?",
+          "answer": "The ABA problem can be mitigated by using tagged pointers (combining a pointer with a monotonically increasing version counter) alongside hazard pointers or epoch-based reclamation to ensure nodes are not recycled while other threads hold active references to them."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip-lists",
+        "distributed hash tables",
+        "epoch-based memory reclamation",
+        "multi-dimensional range trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T10:34:43.644444+00:00",
+      "run_number": 826
     }
   ]
 }
