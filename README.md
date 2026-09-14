@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **826** |
-| Last Updated | `2026-09-14T10:34:43.644462+00:00` |
-| Dataset Size | `826 entries` |
+| Total Topics Learned | **827** |
+| Last Updated | `2026-09-14T10:37:51.378183+00:00` |
+| Dataset Size | `827 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | system-design | 74 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| data-structures | 19 |
+| data-structures | 20 |
 | databases | 14 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent bi-directional map using atomic hash indexing and dual-index synchronization for high-throughput relational lookup engines`
 - `Implementation of a lock-free thread-safe concurrent skip-graph using atomic pointer redirection and randomized routing tables for high-throughput decentralized peer-to-peer data routing and multi-dimensional range queries`
 - `Implementation of a lock-free thread-safe concurrent cuckoo filter using atomic bucket fingerprint swizzling and dynamic table resizing for high-throughput in-memory set membership pipelines`
 - `Implementation of a lock-free thread-safe concurrent Merkle tree using atomic node hashing and incremental root hashing for high-throughput verifiable state synchronization in decentralized database clusters`
 - `Implementation of a lock-free thread-safe concurrent count-min sketch using atomic array hashing and frequency estimation for high-throughput stream-processing telemetry analytics pipelines`
-- `Implementation of a lock-free thread-safe concurrent hyperloglog cardinality estimator using atomic register merging and sparse-to-dense representation conversion for high-throughput distributed analytics pipelines`
 
 <!-- STATS_END -->
 
