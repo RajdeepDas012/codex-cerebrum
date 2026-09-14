@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 827,
-    "last_updated": "2026-09-14T10:37:51.378183+00:00",
-    "total_topics_learned": 827
+    "total_runs": 828,
+    "last_updated": "2026-09-14T10:40:58.636665+00:00",
+    "total_topics_learned": 828
   },
   "entries": [
     {
@@ -39915,6 +39915,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T10:37:51.378161+00:00",
       "run_number": 827
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent spatial index using atomic bounding volume hierarchy (BVH) node updates and surface area heuristic (SAH) optimization for high-throughput real-time collision detection pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure builds and updates a spatial index concurrently without locks, utilizing atomic operations for node restructuring and surface area heuristic (SAH) optimization. It is critical for high-throughput real-time systems like physics engines and simulation telemetry where multiple threads query and modify geometric hierarchies simultaneously.",
+      "key_points": [
+        "Employs atomic pointer swapping and version counters to manage tree restructuring without traditional mutexes or read-write locks.",
+        "Utilizes Surface Area Heuristic (SAH) cost metrics to construct efficiently partitioned bounding volume hierarchies (BVH).",
+        "Supports concurrent insertions, deletions, and refitting of spatial primitives while maintaining structural validity.",
+        "Prevents structural anomalies through hazard pointers or epoch-based memory reclamation for safe memory recycling."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node refitting using compare-and-swap loops for concurrent BVH leaf updates.",
+        "correct": "void updateLeafBounds(std::atomic<BVHNode*>& root, int leafId, const BBox& newBox) {\n    BVHNode* leaf = findLeaf(root, leafId);\n    while (leaf) {\n        BBox oldBounds = leaf->bounds.load();\n        if (leaf->bounds.compare_exchange_weak(oldBounds, newBox)) {\n            propagateBoundsUpward(leaf->parent, newBox);\n            break;\n        }\n    }\n}",
+        "wrong": "void updateLeafBounds(BVHNode* leaf, const BBox& newBox) {\n    std::lock_guard<std::mutex> lock(globalMutex);\n    leaf->bounds = newBox;\n    recomputeTree(root);\n}"
+      },
+      "common_mistakes": [
+        "Neglecting memory reclamation strategies, leading to severe memory leaks or use-after-free bugs during concurrent structural rotations.",
+        "Applying global locks during SAH tree rebalancing, which instantly bottlenecks throughput in multi-threaded collision pipelines."
+      ],
+      "best_practices": [
+        "Incorporate epoch-based reclamation (EBR) or hazard pointers to safely defer the deletion of old BVH nodes during structural modifications.",
+        "Perform local SAH optimizations on sub-trees rather than global tree refactoring to minimize synchronization overhead."
+      ],
+      "when_to_use": "Use when building massive real-time simulations, ray tracers, or game physics engines that require continuous object movement and collision queries across dozens of CPU cores.",
+      "when_not_to_use": "Avoid when dealing with static geometries that do not change after initialization, where a pre-built static BVH or simple grid structure suffices with far less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation for nodes that are detached during concurrent BVH tree rotations?",
+          "answer": "By employing epoch-based reclamation (EBR) or hazard pointers to ensure no active reader thread is referencing the detached node before deallocating its memory."
+        },
+        {
+          "question": "Why is standard locking inefficient for high-throughput spatial index updates in physics pipelines?",
+          "answer": "Global or even fine-grained locking causes thread contention, priority inversion, and pipeline stalls when multiple worker threads simultaneously modify overlapping regions of the hierarchy."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Trees",
+        "Epoch-based memory reclamation",
+        "Parallel Surface Area Heuristic construction"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T10:40:58.636646+00:00",
+      "run_number": 828
     }
   ]
 }
