@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 844,
-    "last_updated": "2026-09-14T17:10:47.329869+00:00",
-    "total_topics_learned": 844
+    "total_runs": 845,
+    "last_updated": "2026-09-14T17:13:55.012593+00:00",
+    "total_topics_learned": 845
   },
   "entries": [
     {
@@ -40718,6 +40718,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-14T17:10:47.329848+00:00",
       "run_number": 844
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent work-stealing deque using atomic tail/head pointer manipulation and hazard pointer memory reclamation for high-throughput task-parallel runtime execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A work-stealing deque allows an owner thread to push and pop tasks from the tail using low-overhead operations, while foreign threads steal tasks from the head using atomic synchronization. This pattern is foundational for modern task-parallel runtimes, maximizing CPU utilization and load balancing across multi-core systems.",
+      "key_points": [
+        "The owner thread interacts with the tail of the deque, executing push and pop operations with minimal contention.",
+        "Stealing threads attempt to dequeue tasks from the head using atomic Compare-And-Swap (CAS) instructions to safely compete with other thieves.",
+        "Hazard pointers or epoch-based reclamation must be used to safely manage memory and prevent use-after-free bugs when nodes are stolen or dequeued.",
+        "Circular buffer designs with dynamic resizing or bounded limits prevent memory exhaustion while maintaining high ingestion throughput."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic tail manipulation for owner push operations.",
+        "correct": "void push(T task) {\n    int64_t t = tail.load(std::memory_order_relaxed);\n    int64_t h = head.load(std::memory_order_acquire);\n    if (t - h >= capacity - 1) { resize(); }\n    buffer[t & mask] = task;\n    std::atomic_thread_fence(std::memory_order_release);\n    tail.store(t + 1, std::memory_order_relaxed);\n}",
+        "wrong": "void push(T task) {\n    buffer[tail++] = task; // Non-atomic update and missing visibility fences\n}"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory ordering between head and tail pointers, leading to race conditions or reordered instruction execution.",
+        "Neglecting safe memory reclamation when expanding the internal buffer or handling task node deletion, resulting in memory leaks or unsafe frees."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for internal thread operations where synchronization is not immediately required, paired with explicit acquire-release fences.",
+        "Integrate hazard pointers or epoch-based garbage collection to track threads currently reading shared nodes before deallocating buffers.",
+        "Design the deque capacity as a power of two to optimize modulo index wrapping using fast bitwise masking operations."
+      ],
+      "when_to_use": "Use this data structure when building high-performance task-parallel runtime execution engines, thread pools, or work-stealing schedulers where worker threads dynamically balance variable workloads.",
+      "when_not_to_use": "Avoid this pattern in low-concurrency applications or simple producer-consumer queues where a standard mutex-backed queue or single-producer single-consumer ring buffer provides lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do the owner thread and stealing threads avoid contention in a work-stealing deque?",
+          "answer": "The owner thread operates exclusively on the tail pointer, while thieves compete for the head pointer using atomic CAS operations, minimizing direct lock contention during normal execution."
+        },
+        {
+          "question": "Why is memory reclamation difficult in a lock-free work-stealing deque, and how is it solved?",
+          "answer": "Nodes can be accessed concurrently by thieves and the owner, making immediate deletion unsafe. Hazard pointers or epoch-based reclamation solve this by deferring memory deallocation until all threads confirm they no longer reference the node."
+        }
+      ],
+      "related_topics": [
+        "Hazard pointer memory reclamation",
+        "Lock-free single-producer single-consumer ring buffers",
+        "Work-stealing thread pool schedulers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T17:13:55.012571+00:00",
+      "run_number": 845
     }
   ]
 }
