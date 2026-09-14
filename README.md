@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **806** |
-| Last Updated | `2026-09-14T00:37:45.182233+00:00` |
-| Dataset Size | `806 entries` |
+| Total Topics Learned | **807** |
+| Last Updated | `2026-09-14T00:40:52.667054+00:00` |
+| Dataset Size | `807 entries` |
 
 ## 📂 Categories Learned
 
@@ -32,18 +32,18 @@
 | devops | 7 |
 | security | 7 |
 | networking | 6 |
-| algorithms | 4 |
+| algorithms | 5 |
 | data-visualization | 2 |
 | best-practices | 1 |
 | testing | 1 |
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free work-stealing thread pool for high-throughput task-parallel execution engines in C++`
 - `Implementation of a lock-free garbage collection epoch mechanism for safe memory reclamation in concurrent data structures`
 - `Implementation of an adaptive radix tree (ART) index for concurrent in-memory key-value storage engines using lock-free node growth and optimistic latch coupling`
 - `Implementation of a lock-free thread-safe bump allocator using atomic compare-and-swap for high-frequency deterministic memory management`
 - `Implementation of a thread-safe lock-free LRU cache using atomic pointer swizzling and hazard pointers for high-throughput in-memory data stores`
-- `Implementation of a zero-copy Linux io_uring asynchronous file I/O engine with submission and completion ring integration for high-throughput database storage engines`
 
 <!-- STATS_END -->
 
