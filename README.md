@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **862** |
-| Last Updated | `2026-09-14T21:15:19.118550+00:00` |
-| Dataset Size | `862 entries` |
+| Total Topics Learned | **863** |
+| Last Updated | `2026-09-14T21:18:26.676440+00:00` |
+| Dataset Size | `863 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,7 +26,7 @@
 | data-structures | 46 |
 | probability-math | 27 |
 | databases | 14 |
-| algorithms | 10 |
+| algorithms | 11 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | security | 8 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node compression and epoch-based memory reclamation for high-throughput IP routing table prefix lookup in high-speed software-defined networking engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link redirection and hazard pointer reclamation for high-throughput multi-pattern string matching in real-time intrusion detection systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state transition expansion and hazard pointer reclamation for high-throughput string pattern matching and substring indexing in real-time text analysis pipelines`
 - `Implementation of a lock-free thread-safe concurrent BK-tree using atomic edit-distance threshold bounding and hazard pointer reclamation for high-throughput approximate string matching in real-time spell-checking engines`
 - `Implementation of a lock-free thread-safe concurrent B-tree using atomic node split cascading and epoch-based memory reclamation for high-throughput in-memory transactional database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer swizzling and randomized peer routing for high-throughput decentralized peer-to-peer overlay network membership management`
 
 <!-- STATS_END -->
 
