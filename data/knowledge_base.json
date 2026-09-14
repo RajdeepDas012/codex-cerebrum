@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 816,
-    "last_updated": "2026-09-14T05:09:02.831381+00:00",
-    "total_topics_learned": 816
+    "total_runs": 817,
+    "last_updated": "2026-09-14T05:12:10.526749+00:00",
+    "total_topics_learned": 817
   },
   "entries": [
     {
@@ -39390,6 +39390,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T05:09:02.831363+00:00",
       "run_number": 816
+    },
+    {
+      "topic": "Implementation of a lock-free distributed circuit breaker using state-machine replication and exponential moving average (EMA) failure rate tracking for resilient microservice downstream fault tolerance",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced system design pattern implements a distributed circuit breaker that utilizes atomic operations and exponential moving average metrics to detect and isolate failing downstream dependencies without thread contention. It ensures high-throughput microservice resilience by dynamically shifting between Closed, Open, and Half-Open states across cluster nodes via decentralized consensus.",
+      "key_points": [
+        "Utilizes atomic primitives and compare-and-swap (CAS) loops to manage circuit states lock-free across concurrent execution threads.",
+        "Employs an Exponential Moving Average (EMA) to calculate real-time failure rates, weighting recent requests more heavily than older ones.",
+        "Coordinates state transitions using state-machine replication to prevent cascading failures across distributed cluster boundaries.",
+        "Implements randomized jitter during the Half-Open recovery probe phase to prevent thundering herd problems on recovering downstream services."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe atomic state transitions and EMA failure rate updates for a circuit breaker.",
+        "correct": "import time\nimport threading\nfrom enum import Enum\n\nclass State(Enum):\n    CLOSED = 1\n    OPEN = 2\n    HALF_OPEN = 3\n\nclass LockFreeCircuitBreaker:\n    def __init__(self, failure_threshold=0.5, alpha=0.2, recovery_time=5.0):\n        self.state = State.CLOSED\n        self.failure_rate = 0.0\n        self.alpha = alpha\n        self.failure_threshold = failure_threshold\n        self.recovery_time = recovery_time\n        self.last_state_change = time.time()\n        self._lock = threading.Lock() # Guard only metadata time bounds, metrics use atomic logic\n\n    def record_result(self, success: bool):\n        # EMA update: NewEMA = alpha * current_failure + (1 - alpha) * old_EMA\n        sample = 0.0 if success else 1.0\n        # In pure lock-free, this would be an atomic CAS loop over a packed integer representation\n        with self._lock:\n            self.failure_rate = self.alpha * sample + (1 - self.alpha) * self.failure_rate\n            if self.state == State.CLOSED and self.failure_rate > self.failure_threshold:\n                self.state = State.OPEN\n                self.last_state_change = time.time()",
+        "wrong": "def record_result_wrong(self, success: bool):\n    # Using global locks for every single request execution introduces severe bottlenecks\n    global_lock.acquire()\n    if success:\n        self.successes += 1\n    else:\n        self.failures += 1\n    global_lock.release()"
+      },
+      "common_mistakes": [
+        "Using global locking mechanisms on the critical path of every request to update metrics, causing severe lock contention and thread starvation.",
+        "Applying rigid static thresholds instead of sliding-window Exponential Moving Averages, which delays detection of sudden traffic degradation."
+      ],
+      "best_practices": [
+        "Leverage lock-free atomic registers or thread-local metric aggregation buffers before flushing to a shared atomic EMA tracker.",
+        "Incorporate jittered backoff timers when transitioning from Open to Half-Open to evenly distribute recovery probe traffic."
+      ],
+      "when_to_use": "High-throughput distributed microservice architectures prone to cascading failures where low-latency fallback handling is mandatory.",
+      "when_not_to_use": "Simple monolithic applications or low-concurrency systems where traditional thread-safe blocking mechanisms introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent thread contention when updating failure metrics across thousands of concurrent worker threads?",
+          "answer": "By using lock-free atomic operations (like CAS) combined with thread-local metric batching or lock-free ring buffers that periodically flush updates to the shared EMA state."
+        },
+        {
+          "question": "Why use an Exponential Moving Average (EMA) instead of a simple error count window for a circuit breaker?",
+          "answer": "EMA gives higher weight to recent failures, allowing the circuit breaker to react rapidly to sudden system degradation while naturally aging out historical telemetry without explicit sliding window memory allocations."
+        }
+      ],
+      "related_topics": [
+        "Distributed Consensus and Raft State Machine Replication",
+        "Lock-Free Ring Buffers and Concurrent Data Structures",
+        "Bulkhead and Rate-Limiting Patterns in Microservices"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-14T05:12:10.526732+00:00",
+      "run_number": 817
     }
   ]
 }

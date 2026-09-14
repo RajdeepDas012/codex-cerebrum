@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **816** |
-| Last Updated | `2026-09-14T05:09:02.831381+00:00` |
-| Dataset Size | `816 entries` |
+| Total Topics Learned | **817** |
+| Last Updated | `2026-09-14T05:12:10.526749+00:00` |
+| Dataset Size | `817 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,8 +20,8 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
+| system-design | 74 |
 | crypto-blockchain | 74 |
-| system-design | 73 |
 | stocks-markets | 71 |
 | probability-math | 27 |
 | databases | 14 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free distributed circuit breaker using state-machine replication and exponential moving average (EMA) failure rate tracking for resilient microservice downstream fault tolerance`
 - `Implementation of a zero-copy Linux AF_XDP socket handler with direct memory access (DMA) ring buffers for ultra-low-latency high-frequency packet processing applications`
 - `Implementation of a lock-free distributed telemetry tracing context propagator using W3C Trace Context standards and thread-local storage for asynchronous microservice call-graph profiling`
 - `Implementation of a lock-free thread-safe interval tree using atomic node rotations and versioned sequence locks for real-time order book range queries in financial matching engines`
 - `Implementation of a lock-free transactional outbox pattern processor using PostgreSQL logical replication slots and change data capture (CDC) for reliable microservice event publishing`
-- `Implementation of a lock-free thread-safe vector clock tracker for causal consistency ordering in distributed transactional key-value stores`
 
 <!-- STATS_END -->
 
