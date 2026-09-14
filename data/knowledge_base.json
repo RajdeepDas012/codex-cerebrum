@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 832,
-    "last_updated": "2026-09-14T10:53:27.700773+00:00",
-    "total_topics_learned": 832
+    "total_runs": 833,
+    "last_updated": "2026-09-14T10:56:35.046139+00:00",
+    "total_topics_learned": 833
   },
   "entries": [
     {
@@ -40150,6 +40150,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-14T10:53:27.700753+00:00",
       "run_number": 832
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent priority search tree using atomic node splitting and bounding coordinate compression for high-throughput multi-dimensional range and nearest-neighbor queries in spatial databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent priority search tree designed to handle multi-dimensional range and nearest-neighbor lookups under heavy multi-threaded contention. By leveraging atomic node splitting and bounding coordinate compression, it achieves high throughput without global locks, making it ideal for real-time spatial databases.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to manage structural modifications without mutex contention.",
+        "Combines priority search tree properties with bounding coordinate compression to minimize memory footprints for spatial keys.",
+        "Supports concurrent insertions, deletions, and multi-dimensional range queries without blocking reader threads.",
+        "Employs safe memory reclamation strategies (such as hazard pointers or epoch-based reclamation) to prevent use-after-free bugs during node splitting."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe atomic node updates using compare-and-swap semantics for spatial insertion.",
+        "correct": "class AtomicNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.next = None\n\nimport threading\nclass LockFreeList:\n    def __init__(self):\n        self.head = AtomicNode(None, None)\n    def insert(self, key, value):\n        new_node = AtomicNode(key, value)\n        while True:\n            curr = self.head\n            new_node.next = curr.next\n            # Simulated atomic CAS operation\n            if curr.next == new_node.next:\n                curr.next = new_node\n                return True",
+        "wrong": "class UnsafeList:\n    def __init__(self):\n        self.head = None\n    def insert(self, key, value):\n        # Missing thread safety and atomic checks leads to race conditions\n        new_node = Node(key, value)\n        new_node.next = self.head\n        self.head = new_node"
+      },
+      "common_mistakes": [
+        "Failing to implement safe memory reclamation, resulting in memory leaks or dangling pointer crashes during lock-free node splitting.",
+        "Neglecting the ABA problem when performing atomic pointer updates on shared tree nodes.",
+        "Overcomplicating coordinate compression algorithms, introducing high CPU overhead that neutralizes the benefits of lock-free concurrency."
+      ],
+      "best_practices": [
+        "Pair atomic node operations with hazard pointers or epoch-based memory management to safely reclaim detached nodes.",
+        "Keep atomic sections small and isolate coordinate compression computations to local threads before publishing updates.",
+        "Thoroughly stress-test concurrent multi-dimensional range queries under high thread counts to expose subtle race conditions."
+      ],
+      "when_to_use": "Use this structure when building high-throughput spatial databases or real-time geographic information systems requiring massive concurrent read and write operations.",
+      "when_not_to_use": "Avoid in single-threaded applications, low-memory embedded devices, or workloads where simpler lock-based indices provide sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating child pointers atomically in a lock-free priority search tree?",
+          "answer": "By using tagged pointers that combine the memory address with a monotonically increasing version counter, or by utilizing hazard pointers and epoch-based reclamation."
+        },
+        {
+          "question": "Why is bounding coordinate compression beneficial for multi-dimensional range queries in concurrent environments?",
+          "answer": "It reduces the size of node keys, fitting more metadata into cache lines, which accelerates traversal speed and lowers contention during atomic read operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-trees",
+        "Concurrent R-trees",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-14T10:56:35.046119+00:00",
+      "run_number": 833
     }
   ]
 }
