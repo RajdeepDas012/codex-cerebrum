@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **901** |
-| Last Updated | `2026-09-15T04:29:08.913853+00:00` |
-| Dataset Size | `901 entries` |
+| Total Topics Learned | **902** |
+| Last Updated | `2026-09-15T04:32:56.079359+00:00` |
+| Dataset Size | `902 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| data-structures | 80 |
+| data-structures | 81 |
 | crypto-blockchain | 78 |
 | system-design | 76 |
 | stocks-markets | 71 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box splitting and hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor search in real-time recommendation and spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous background job processing engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-boundary extension and epoch-based memory reclamation for high-throughput overlapping range query indexing in real-time financial order book matching engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting CAS operations and hazard pointer memory reclamation for high-throughput pattern matching and full-text indexing in real-time search engine text processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node propagation and hazard pointer memory reclamation for high-throughput cryptographic verification in real-time distributed ledger and blockchain state synchronization pipelines`
-- `Implementation of a lock-free thread-safe concurrent BK-Tree (Burkhard-Keller Tree) using atomic child-pointer CAS operations and epoch-based memory reclamation for high-throughput fuzzy string matching and spelling correction in real-time search engine autocomplete pipelines`
 
 <!-- STATS_END -->
 
