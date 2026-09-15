@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 877,
-    "last_updated": "2026-09-15T00:12:18.539542+00:00",
-    "total_topics_learned": 877
+    "total_runs": 878,
+    "last_updated": "2026-09-15T00:15:26.239117+00:00",
+    "total_topics_learned": 878
   },
   "entries": [
     {
@@ -42283,6 +42283,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T00:12:18.539521+00:00",
       "run_number": 877
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix-Tree (Patricia Trie) using atomic child-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory IP routing lookup tables in high-speed network routers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Radix-Tree (Patricia Trie) that leverages atomic Compare-And-Swap (CAS) operations on node child pointers and hazard pointers for safe memory management. It is crucial for high-speed network routers needing ultra-fast, concurrent longest-prefix-match IP routing lookups without lock contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic child-pointer CAS operations to allow multiple threads to insert, update, or delete routing entries concurrently without locking.",
+        "Employs hazard pointers to safely defer the reclamation of memory nodes removed during concurrent path compression or node restructuring.",
+        "Optimizes memory layout and traversal paths for bit-wise prefix matching critical for Internet Protocol (IP) routing lookup tables.",
+        "Eliminates global lock bottlenecks, ensuring predictable tail latencies and high throughput in multi-core packet processing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-pointer update via CAS for a Radix tree node insertion",
+        "correct": "bool insert_child(Node* parent, uint8_t bit, Node* new_node) {\n    Node* expected = nullptr;\n    while (!parent->children[bit].compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        if (expected != nullptr) return false; // Child already exists\n    }\n    return true;\n}",
+        "wrong": "bool insert_child(Node* parent, uint8_t bit, Node* new_node) {\n    // Missing mutex or atomic check leads to race conditions and lost updates\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Reclaiming memory of deleted nodes immediately without hazard pointers, leading to use-after-free bugs when concurrent readers are traversing the subtree.",
+        "Failing to handle memory ordering correctly (e.g., using sequentially consistent operations everywhere), which degrades performance on high-core-count processors."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for all nodes visited during traversal before reading their child pointers to prevent premature memory deallocation.",
+        "Keep bit-wise routing keys normalized to ensure prefix compression routines correctly identify split and merge conditions."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive network forwarding engines or routing lookup tables that experience heavy concurrent read and write operations.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when simple sequential access patterns suffice, as hazard pointers and node pointer tracking add implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Radix tree?",
+          "answer": "Hazard pointers protect nodes currently being accessed by a thread by registering them in a thread-local list, ensuring that reclamation mechanisms defer freeing those memory blocks until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is a Radix tree preferred over a standard hash map for IP routing lookup tables?",
+          "answer": "A Radix tree supports longest-prefix matching, which is fundamental for IP routing where packets are forwarded based on the most specific matching network prefix rather than exact key matches."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Longest-Prefix Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T00:15:26.239100+00:00",
+      "run_number": 878
     }
   ]
 }
