@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 930,
-    "last_updated": "2026-09-15T15:14:48.744053+00:00",
-    "total_topics_learned": 930
+    "total_runs": 931,
+    "last_updated": "2026-09-15T15:18:57.674652+00:00",
+    "total_topics_learned": 931
   },
   "entries": [
     {
@@ -44791,6 +44791,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T15:14:48.744032+00:00",
       "run_number": 930
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval boundary adjustment and epoch-based memory reclamation for high-throughput overlapping range-query indexing in real-time cybersecurity packet inspection and scheduling systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a lock-free concurrent Interval Tree that manages dynamic range overlaps safely across multiple threads. By leveraging atomic primitives for node-interval boundary adjustments and epoch-based memory reclamation, it delivers ultra-low latency lookups and insertions for high-speed packet filtering.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage interval boundaries without acquiring global mutexes.",
+        "Employs epoch-based memory management to safely reclaim memory of deleted interval nodes without premature deallocation bugs.",
+        "Maintains max-endpoint metadata concurrently to prune non-overlapping subtrees efficiently during range queries.",
+        "Prevents priority inversion and thread contention under heavy write loads from dynamic cybersecurity packet streams."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic boundary updates for an interval node using standard atomic compare-exchange operations.",
+        "correct": "struct IntervalNode {\n    std::atomic<int> low;\n    std::atomic<int> high;\n    std::atomic<int> max_end;\n    std::atomic<IntervalNode*> left;\n    std::atomic<IntervalNode*> right;\n};\n\nbool updateBoundaries(IntervalNode* node, int expected_low, int new_low, int expected_high, int new_high) {\n    return node->low.compare_exchange_weak(expected_low, new_low) &&\n           node->high.compare_exchange_weak(expected_high, new_high);\n}",
+        "wrong": "bool updateBoundaries(IntervalNode* node, int new_low, int new_high) {\n    node->low = new_low;\n    node->high = new_high;\n}"
+      },
+      "common_mistakes": [
+        "Failing to update the cached max-endpoint values atomically up the parent chain during concurrent structural modifications.",
+        "Neglecting to protect node traversal pointers with epoch-based barriers, leading to use-after-free faults during reclamation."
+      ],
+      "best_practices": [
+        "Always pin threads to an active epoch before traversing pointers in the lock-free interval tree.",
+        "Keep atomic transaction scopes as small as possible around interval insertions and boundary adjustments."
+      ],
+      "when_to_use": "Use this structure when multiple threads concurrently query and update overlapping numeric ranges under strict latency SLAs, such as network intrusion detection systems.",
+      "when_not_to_use": "Avoid this approach in single-threaded environments or applications where simple read-write locks provide sufficient throughput with less algorithmic complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to the max-endpoint metadata in a lock-free interval tree without using heavy locks?",
+          "answer": "By using atomic fetch-and-max operations or looping CAS loops that recalculate the max-endpoint from children whenever a node's boundary shifts."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over standard reference counting in high-throughput lock-free interval trees?",
+          "answer": "Epoch-based reclamation avoids the high cache contention and atomic instruction overhead associated with frequently updating shared reference counts on every traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Epoch-Based Memory Management",
+        "Concurrent Range Indexing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T15:18:57.674630+00:00",
+      "run_number": 931
     }
   ]
 }
