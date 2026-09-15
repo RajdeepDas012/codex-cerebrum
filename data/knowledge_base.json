@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 914,
-    "last_updated": "2026-09-15T09:54:27.811939+00:00",
-    "total_topics_learned": 914
+    "total_runs": 915,
+    "last_updated": "2026-09-15T09:57:35.298201+00:00",
+    "total_topics_learned": 915
   },
   "entries": [
     {
@@ -44034,6 +44034,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T09:54:27.811929+00:00",
       "run_number": 914
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HyperLogLog cardinality estimator using atomic register-max updating and dense-array bit-packing for high-throughput distinct-element counting in real-time web analytics and telemetry ingestion pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent HyperLogLog (HLL) cardinality estimator approximates the number of distinct elements in a multiset with low memory usage by using probabilistic counting techniques. By leveraging atomic register-max operations and dense-array bit-packing, multiple threads can safely insert elements concurrently without locking overhead, making it ideal for high-throughput streaming analytics.",
+      "key_points": [
+        "Uses a hash function to map incoming stream elements uniformly to bit-strings, determining index positions and leading-zero counts.",
+        "Employs atomic fetch-and-max operations on packed register arrays to handle concurrent writes without mutual exclusion locks.",
+        "Utilizes dense-array bit-packing (e.g., packing multiple 6-bit registers into 64-bit words) to minimize memory foot-print.",
+        "Applies harmonic mean calculation with correction factors to compute the final cardinality estimate efficiently."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic maximum updates to packed register arrays in a concurrent HyperLogLog data structure.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <stdint.h>\n\nclass ConcurrentHLL {\n    static const int BITS = 6;\n    static const int NUM_REGISTERS = 1024;\n    std::atomic<uint64_t> words[16]; // Packed storage\npublic:\n    void add(uint32_t hash) {\n        uint32_t idx = hash & (NUM_REGISTERS - 1);\n        uint32_t val = __builtin_clz(hash >> 10) + 1;\n        // Atomic bit-packed max update logic omitted for brevity\n    }\n};",
+        "wrong": "void add(uint32_t hash) {\n    int idx = hash % NUM_REGISTERS;\n    // Non-atomic read-modify-write race condition\n    if (val > registers[idx]) registers[idx] = val;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle word boundaries properly when bit-packing multiple small registers into larger atomic words, leading to data corruption.",
+        "Using standard lock-based synchronization on registers which completely destroys write-throughput in multi-threaded ingestion engines."
+      ],
+      "best_practices": [
+        "Align atomic register arrays to cache lines to eliminate false sharing across intensely active concurrent writer threads.",
+        "Precompute hash masks and use fast non-cryptographic hash functions like MurmurHash3 or CityHash for low CPU overhead."
+      ],
+      "when_to_use": "When you need to estimate massive cardinalities across millions of concurrent streaming events with strict memory footprints and high write-throughput.",
+      "when_not_to_use": "When exact set cardinalities are required, or when the total number of distinct elements is small enough to fit comfortably in an exact hash set.",
+      "interview_questions": [
+        {
+          "question": "How do you safely update bit-packed registers atomically without using heavy mutex locks?",
+          "answer": "By using atomic compare-and-swap (CAS) loops on the underlying machine-word (e.g., uint64_t) containing the target register bits."
+        },
+        {
+          "question": "What is the primary trade-off of using HyperLogLog instead of a traditional concurrent hash set for distinct element counting?",
+          "answer": "HyperLogLog trades absolute accuracy for a fixed, highly compressed memory footprint and O(1) concurrent update times."
+        }
+      ],
+      "related_topics": [
+        "Probabilistic Data Structures",
+        "Lock-Free Programming",
+        "Stream Processing",
+        "Atomic Operations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T09:57:35.298191+00:00",
+      "run_number": 915
     }
   ]
 }
