@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 926,
-    "last_updated": "2026-09-15T14:56:09.996927+00:00",
-    "total_topics_learned": 926
+    "total_runs": 927,
+    "last_updated": "2026-09-15T15:03:56.488983+00:00",
+    "total_topics_learned": 927
   },
   "entries": [
     {
@@ -44603,6 +44603,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T14:56:09.996906+00:00",
       "run_number": 926
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and epoch-based memory reclamation for high-throughput disk-backed and in-memory index management in real-time relational database storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free B-Tree index structure tailored for high-performance relational databases. By leveraging atomic primitives for node-splitting and epoch-based memory management, it eliminates global mutex bottlenecks, allowing thousands of concurrent threads to insert, update, and query indices with minimal latency.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to handle concurrent node splits and insertions without blocking reader threads.",
+        "Employs epoch-based memory reclamation (EMR) to safely deallocate old node versions only after all active threads have exited the current memory epoch.",
+        "Maintains balanced tree properties and high fan-out characteristics to optimize cache locality and minimize cache-miss penalties.",
+        "Ensures linearizability across concurrent page allocations and modifications in multi-threaded database transaction workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation using CAS on a child pointer array in a lock-free B-Tree node.",
+        "correct": "bool try_split_node(BTreeNode* parent, int index, BTreeNode* left_child, BTreeNode* right_child) {\n    // Atomically swap the old child reference with a new split descriptor or updated node\n    return parent->children[index].compare_exchange_strong(left_child, right_child);\n}",
+        "wrong": "bool try_split_node(BTreeNode* parent, int index, BTreeNode* right_child) {\n    // Modifying pointer without atomic CAS leads to race conditions and lost updates\n    parent->children[index + 1] = right_child;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to guard node deallocations with epoch-based memory reclamation, resulting in use-after-free errors when concurrent readers access deleted nodes.",
+        "Failing to handle cascading node splits properly when a parent node is also full during a child split attempt."
+      ],
+      "best_practices": [
+        "Integrate an efficient epoch manager (like hazard pointers or EBR) to track thread participation before reclaiming freed tree nodes.",
+        "Design node layouts to fit neatly into CPU cache lines (e.g., 64 bytes) to maximize memory bandwidth during traversals."
+      ],
+      "when_to_use": "Use when building high-throughput relational database storage engines or in-memory caches that experience heavy multi-threaded write and read contention on hierarchical index structures.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free synchronization outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B-Tree where nodes are frequently split and replaced?",
+          "answer": "By using epoch-based memory reclamation (EMR) or hazard pointers, ensuring a node is only freed after all threads active during its removal have exited the memory epoch."
+        },
+        {
+          "question": "What is the primary synchronization challenge when implementing lock-free node splits in a B-Tree?",
+          "answer": "Ensuring that parent pointers and child arrays are updated atomically so that readers never observe an inconsistent tree state or missing keys during a split."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "MVCC Storage Engine Architecture"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T15:03:56.488961+00:00",
+      "run_number": 927
     }
   ]
 }
