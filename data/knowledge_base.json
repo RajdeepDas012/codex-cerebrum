@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 904,
-    "last_updated": "2026-09-15T04:39:11.498462+00:00",
-    "total_topics_learned": 904
+    "total_runs": 905,
+    "last_updated": "2026-09-15T04:42:19.092208+00:00",
+    "total_topics_learned": 905
   },
   "entries": [
     {
@@ -43563,6 +43563,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:39:11.498441+00:00",
       "run_number": 904
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Tree using atomic balance-factor adjustment and epoch-based memory reclamation for high-throughput in-memory index management in real-time relational database engines",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free T-Tree index optimized for in-memory relational databases using atomic operations for balance updates and epoch-based memory reclamation. It matters because it enables high-throughput, contention-free concurrent range and point queries in multi-threaded transaction engines.",
+      "key_points": [
+        "Utilizes atomic primitive operations (like compare-and-swap) to manage node rotations and balance-factor updates without global locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely free deleted tree nodes without incurring immediate garbage collection overhead or use-after-free bugs.",
+        "Combines the structural properties of AVL trees and B-trees (internal sorted arrays per node) to minimize pointer chasing and cache misses in memory.",
+        "Guarantees linearizability for concurrent inserts, updates, and range scans under high contention loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node entry acquisition using epoch-based memory management during concurrent T-Tree traversal.",
+        "correct": "template<typename T>\nvoid TTreeIndex<T>::safe_traverse(EpochManager& em) {\n    EpochGuard guard(em);\n    Node* current = root.load(std::memory_order_acquire);\n    // Perform lock-free traversal safely within the epoch scope\n}",
+        "wrong": "template<typename T>\nvoid TTreeIndex<T>::unsafe_traverse() {\n    Node* current = root.load();\n    delete current; // Prematurely frees memory while other threads might be reading\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers or epoch guards, leading to use-after-free vulnerabilities during concurrent node deletions.",
+        "Attempting to perform multi-node balancing rotations via complex atomic transactions without handling intermediate inconsistent intermediate states."
+      ],
+      "best_practices": [
+        "Keep atomic sections as short as possible and use relaxed memory ordering where strict synchronization is unneeded.",
+        "Ensure thread local epoch states are regularly advanced to prevent stalled threads from blocking reclamation queues."
+      ],
+      "when_to_use": "Use when building high-performance, in-memory relational databases requiring maximum concurrent throughput and low-latency range indexing.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or disk-based databases where standard lock-based B+ trees or page latches are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How does epoch-based memory reclamation prevent use-after-free bugs in a lock-free T-Tree without locking reads?",
+          "answer": "Epoch-based memory reclamation defers the actual deletion of retired nodes until all active threads have registered an epoch newer than or equal to the epoch in which the node was removed."
+        },
+        {
+          "question": "Why is a T-Tree often chosen over a B+ Tree for in-memory database index implementations?",
+          "answer": "T-Trees combine the characteristics of AVL trees and B-trees, storing sorted elements inside nodes to reduce pointer overhead and improve cache locality for in-memory access."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free B+ Trees",
+        "Concurrent AVL Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:42:19.092187+00:00",
+      "run_number": 905
     }
   ]
 }

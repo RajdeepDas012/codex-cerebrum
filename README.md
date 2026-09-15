@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **904** |
-| Last Updated | `2026-09-15T04:39:11.498462+00:00` |
-| Dataset Size | `904 entries` |
+| Total Topics Learned | **905** |
+| Last Updated | `2026-09-15T04:42:19.092208+00:00` |
+| Dataset Size | `905 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | system-design | 76 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| databases | 14 |
+| databases | 15 |
 | algorithms | 13 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent T-Tree using atomic balance-factor adjustment and epoch-based memory reclamation for high-throughput in-memory index management in real-time relational database engines`
 - `Implementation of a lock-free thread-safe concurrent Octree using atomic bounding-box octant splitting and epoch-based memory reclamation for high-throughput 3D spatial partitioning and physics collision detection in real-time 3D simulation and gaming engines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box quadrant splitting and epoch-based memory reclamation for high-throughput 2D spatial partitioning and collision detection in real-time gaming server engines`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box splitting and hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor search in real-time recommendation and spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous background job processing engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-boundary extension and epoch-based memory reclamation for high-throughput overlapping range query indexing in real-time financial order book matching engines`
 
 <!-- STATS_END -->
 
