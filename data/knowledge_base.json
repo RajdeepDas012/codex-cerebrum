@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 875,
-    "last_updated": "2026-09-15T00:06:02.083533+00:00",
-    "total_topics_learned": 875
+    "total_runs": 876,
+    "last_updated": "2026-09-15T00:09:10.864368+00:00",
+    "total_topics_learned": 876
   },
   "entries": [
     {
@@ -42189,6 +42189,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T00:06:02.083516+00:00",
       "run_number": 875
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height extension and epoch-based memory reclamation for high-throughput in-memory ordered map indexing in real-time transactional database systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip List that utilizes atomic compare-and-swap (CAS) primitives for tower-height extensions and node insertions across multiple probabilistic linked list levels. By combining this with epoch-based memory reclamation, it safely manages memory recycling without blocking threads, ensuring high-throughput ordered key-value indexing for real-time transactional databases.",
+      "key_points": [
+        "Uses probabilistic multi-level linked lists to achieve O(log n) expected time complexity for search, insertion, and deletion operations.",
+        "Leverages atomic pointer updates and CAS operations to link and unlink nodes safely across multiple height levels without global locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely defer the deallocation of retired nodes until all concurrent reader and writer threads have exited the current epoch.",
+        "Handles concurrent insertions and logical deletions (marked via marker bits on pointers) to prevent race conditions during structural modifications."
+      ],
+      "code_example": {
+        "language": "C++",
+        "description": "Demonstrates atomic node insertion using CAS operations across multiple skip list levels.",
+        "correct": "bool insert(int key, int val) {\n    Node* preds[MAX_LEVEL];\n    Node* succs[MAX_LEVEL];\n    int top_level = generate_random_level();\n    while (true) {\n        if (find(key, preds, succs)) return false; // Already exists\n        Node* new_node = new Node(key, val, top_level);\n        for (int i = 0; i <= top_level; i++) {\n            new_node->next[i].store(succs[i], std::memory_order_relaxed);\n        }\n        if (preds[0]->next[0].compare_exchange_weak(succs[0], new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            for (int i = 1; i <= top_level; i++) {\n                while (true) {\n                    Node* pred = preds[i];\n                    Node* succ = succs[i];\n                    if (pred->next[i].compare_exchange_weak(succ, new_node, std::memory_order_release, std::memory_order_relaxed)) break;\n                    find(key, preds, succs);\n                }\n            }\n            return true;\n        }\n        delete new_node;\n    }\n}",
+        "wrong": "bool insert(int key, int val) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Using a global mutex defeats the purpose of a lock-free skip list implementation\n    return simple_insert_internal(key, val);\n}"
+      },
+      "common_mistakes": [
+        "Failing to atomically mark nodes for deletion before unlinking them, which leads to race conditions where concurrent insertions attach nodes below a half-deleted node.",
+        "Improper memory management where retired nodes are freed immediately while other threads still hold references via older traversal pointers."
+      ],
+      "best_practices": [
+        "Use epoch-based memory reclamation or hazard pointers to track active thread traversal states before freeing memory.",
+        "Ensure memory order semantics (acquire-release) are correctly paired during atomic pointer reads and CAS updates to preserve structural visibility across cores."
+      ],
+      "when_to_use": "Use when building high-concurrency in-memory ordered maps or range-scan indexes where lock contention becomes a major bottleneck under high thread counts.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained, as multi-level pointer towers consume significantly more memory than flat arrays or standard trees.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic pointer updates during concurrent skip list insertions?",
+          "answer": "You can combine the pointer with a version counter or use epoch-based memory reclamation so that recycled nodes are not immediately reused while a thread holds a stale pointer."
+        },
+        {
+          "question": "Why is logical deletion (using a marker bit) necessary before physical unlinking in a lock-free skip list?",
+          "answer": "It ensures that concurrent inserters do not attach new nodes below a node that is currently in the process of being removed by another thread, preserving list integrity."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Linked Lists",
+        "Lock-Free Range Scans"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T00:09:10.864351+00:00",
+      "run_number": 876
     }
   ]
 }

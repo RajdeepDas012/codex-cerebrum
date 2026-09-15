@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **875** |
-| Last Updated | `2026-09-15T00:06:02.083533+00:00` |
-| Dataset Size | `875 entries` |
+| Total Topics Learned | **876** |
+| Last Updated | `2026-09-15T00:09:10.864368+00:00` |
+| Dataset Size | `876 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 57 |
+| data-structures | 58 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height extension and epoch-based memory reclamation for high-throughput in-memory ordered map indexing in real-time transactional database systems`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci heap using atomic minimum-pointer CAS operations and hazard pointer memory reclamation for high-throughput Dijkstra shortest-path routing in real-time network graph analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotation CAS primitives and hazard pointer memory reclamation for high-throughput randomized balanced search tree indexing in real-time in-memory key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array CAS operations and cache-aligned partitioning for high-throughput in-memory approximate membership query engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and epoch-based memory reclamation for high-throughput self-adjusting cache indexing in real-time memory-constrained systems`
-- `Implementation of a lock-free thread-safe concurrent B+ tree using atomic leaf-link pointer CAS operations and epoch-based memory reclamation for high-throughput in-memory range scan indexing in real-time OLTP database engines`
 
 <!-- STATS_END -->
 
