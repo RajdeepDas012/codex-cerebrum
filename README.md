@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **966** |
-| Last Updated | `2026-09-15T22:38:55.714353+00:00` |
-| Dataset Size | `966 entries` |
+| Total Topics Learned | **967** |
+| Last Updated | `2026-09-15T22:42:03.548296+00:00` |
+| Dataset Size | `967 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 133 |
+| data-structures | 134 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable heap operations in real-time event-driven simulation and job scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time distributed task dispatching and job scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time distributed task scheduling and network routing engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key operations in real-time Dijkstra's shortest path routing and network optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling in real-time distributed execution engines`
-- `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic refit-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ray-triangle intersection querying in real-time ray tracing and GPU-accelerated rendering engines`
 
 <!-- STATS_END -->
 
