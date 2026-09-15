@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **935** |
-| Last Updated | `2026-09-15T15:33:15.576294+00:00` |
-| Dataset Size | `935 entries` |
+| Total Topics Learned | **936** |
+| Last Updated | `2026-09-15T15:36:23.612037+00:00` |
+| Dataset Size | `936 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| data-structures | 107 |
+| data-structures | 108 |
 | crypto-blockchain | 79 |
 | system-design | 77 |
 | stocks-markets | 71 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box subdivision and hazard pointer memory reclamation for high-throughput 2D spatial collision detection in real-time game physics simulation engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box expansion and epoch-based memory reclamation for high-throughput spatial indexing and geographical querying in real-time location-based services engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-plane subdivision and hazard pointer memory reclamation for high-throughput multi-dimensional spatial nearest-neighbor search in real-time geographic information systems (GIS) and robotics perception engines`
 - `Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-switching and epoch-based memory reclamation for high-throughput write-heavy key-value ingestion in real-time distributed storage engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous execution engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval boundary adjustment and epoch-based memory reclamation for high-throughput overlapping range-query indexing in real-time cybersecurity packet inspection and scheduling systems`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 935,
-    "last_updated": "2026-09-15T15:33:15.576294+00:00",
-    "total_topics_learned": 935
+    "total_runs": 936,
+    "last_updated": "2026-09-15T15:36:23.612037+00:00",
+    "total_topics_learned": 936
   },
   "entries": [
     {
@@ -45026,6 +45026,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T15:33:15.576272+00:00",
       "run_number": 935
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box subdivision and hazard pointer memory reclamation for high-throughput 2D spatial collision detection in real-time game physics simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Quadtree data structure designed for real-time game physics engines. By utilizing atomic operations for node subdivision and hazard pointers for safe memory management, it enables multiple worker threads to execute high-throughput 2D spatial collision queries and updates simultaneously without bottlenecking.",
+      "key_points": [
+        "Utilizes atomic primitives (such as Compare-And-Swap) to manage node subdivision states and prevent race conditions during concurrent structural modifications.",
+        "Employs hazard pointers to track active thread references to specific quadtree nodes, safely delaying memory reclamation until no threads are reading the nodes.",
+        "Partition 2D space recursively into four quadrants to minimize the search space for collision detection among dynamic game entities.",
+        "Avoids global locks entirely, ensuring deterministic latency and high scalability across multi-core processors in physics simulation pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node subdivision state updates using compare-and-swap in a concurrent quadtree.",
+        "correct": "bool QuadNode::try_subdivide(std::atomic<NodeState>& state, NodeState expected) {\n    return state.compare_exchange_strong(expected, NodeState::Subdivided);\n}",
+        "wrong": "if (node->state == NodeState::Empty) { node->state = NodeState::Subdivided; }"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted child nodes with hazard pointers, leading to use-after-free bugs when concurrent threads traverse old branches.",
+        "Using coarse-grained locks on tree quadrants, which quickly introduces lock contention and degrades throughput under heavy multi-threaded workloads."
+      ],
+      "best_practices": [
+        "Retire memory asynchronously via a deferred reclamation list once hazard pointers confirm no active threads reference the node.",
+        "Keep bounding box calculations lightweight to ensure atomic operations execute within tight CPU instruction cycles."
+      ],
+      "when_to_use": "Use this structure when building high-performance multi-threaded game physics engines or simulations that require frequent, concurrent spatial queries and updates in a 2D environment.",
+      "when_not_to_use": "Avoid this pattern for single-threaded applications or static datasets where simpler, lock-based spatial indices provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free quadtree?",
+          "answer": "Hazard pointers allow a thread to announce which node it is currently accessing. Before a node is reclaimed or freed, the memory reclamation mechanism scans all active hazard pointers to ensure no thread holds a reference to that node."
+        },
+        {
+          "question": "Why is atomic bounding-box subdivision necessary in a concurrent spatial index?",
+          "answer": "It ensures that multiple threads attempting to insert items into the same leaf node simultaneously do not create duplicate child nodes or corrupt the structural integrity of the tree."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent KD-Tree",
+        "Hazard Pointer Memory Management",
+        "Real-Time Spatial Indexing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T15:36:23.612016+00:00",
+      "run_number": 936
     }
   ]
 }
