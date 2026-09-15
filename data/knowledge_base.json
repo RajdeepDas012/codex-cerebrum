@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 899,
-    "last_updated": "2026-09-15T04:26:00.466646+00:00",
-    "total_topics_learned": 899
+    "total_runs": 900,
+    "last_updated": "2026-09-15T04:28:25.317012+00:00",
+    "total_topics_learned": 900
   },
   "entries": [
     {
@@ -43327,6 +43327,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:26:00.466623+00:00",
       "run_number": 899
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-boundary extension and epoch-based memory reclamation for high-throughput overlapping range query indexing in real-time financial order book matching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a non-blocking, concurrent Interval Tree tailored for low-latency financial matching engines. It utilizes atomic operations for node boundary adjustments and epoch-based memory management to safely process overlapping price ranges without global locking.",
+      "key_points": [
+        "Uses atomic CAS primitives for thread-safe node insertion and maximum-boundary updates during concurrent range modifications.",
+        "Employs epoch-based memory reclamation (EMR) to safely deallocate interval nodes while concurrent threads traverse overlapping ranges.",
+        "Optimizes for high-throughput interval lookups to match overlapping buy and sell orders in real-time order books.",
+        "Minimizes lock contention on tree rebalancing paths by leveraging lock-free localized adjustments and optimistic concurrency control."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern for atomically updating an interval node's maximum boundary during concurrent range insertions.",
+        "correct": "void update_max_bound(std::atomic<uint64_t>& max_bound, uint64_t new_high) {\n    uint64_t current = max_bound.load(std::memory_order_relaxed);\n    while (current < new_high && !max_bound.compare_exchange_weak(current, new_high, std::memory_order_release, std::memory_order_relaxed)) {}\n}",
+        "wrong": "void update_max_bound(uint64_t& max_bound, uint64_t new_high) {\n    if (max_bound < new_high) max_bound = new_high;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use epoch-based memory reclamation, leading to use-after-free errors when a concurrent reader traverses a node being deleted.",
+        "Ignoring memory ordering constraints when performing atomic compare-and-swap loops on node boundaries, causing stale reads of maximum endpoints."
+      ],
+      "best_practices": [
+        "Pin threads to epochs before initiating an interval range traversal query to guarantee safe memory visibility.",
+        "Cache high-watermark maximum endpoints in parent nodes to prune dead subtrees early during overlapping searches."
+      ],
+      "when_to_use": "Use when building ultra-low-latency financial matching systems requiring concurrent insertions and overlapping range queries over price intervals without thread blocking.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simpler lock-based interval maps provide sufficient performance with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Interval Tree when nodes are continuously inserted and deleted by multiple threads?",
+          "answer": "By using epoch-based memory reclamation or hazard pointers, ensuring threads register their active traversal state so nodes are only freed after all referencing threads have exited the epoch."
+        },
+        {
+          "question": "Why is atomic node-boundary extension critical for overlapping range queries in concurrent interval trees?",
+          "answer": "It allows child insertions to propagate maximum endpoint changes up the tree atomically without locking ancestors, ensuring range queries correctly identify overlapping intervals without race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Concurrent Augmented Red-Black Trees",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:28:25.316991+00:00",
+      "run_number": 900
     }
   ]
 }
