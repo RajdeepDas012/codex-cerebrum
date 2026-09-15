@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 942,
-    "last_updated": "2026-09-15T18:59:31.449941+00:00",
-    "total_topics_learned": 942
+    "total_runs": 943,
+    "last_updated": "2026-09-15T19:02:39.639706+00:00",
+    "total_topics_learned": 943
   },
   "entries": [
     {
@@ -45359,6 +45359,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T18:59:31.449923+00:00",
       "run_number": 942
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node indirection CAS primitives and epoch-based memory reclamation for high-throughput IP routing table lookup in real-time software-defined networking (SDN) packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance concurrent Radix Tree optimized for software-defined networking (SDN) IP routing. It leverages atomic Compare-And-Swap (CAS) operations for lock-free child node manipulation and epoch-based memory management to safely reclaim nodes under heavy multi-threaded packet forwarding loads.",
+      "key_points": [
+        "Utilizes bitwise prefix matching on IP addresses to traverse internal radix tree nodes efficiently without holding global locks.",
+        "Employs atomic CAS primitives to link new child nodes or update forwarding pointers safely across concurrent worker threads.",
+        "Integrates epoch-based memory reclamation (EMR) to prevent use-after-free bugs when threads concurrently delete or replace routing table entries.",
+        "Minimizes cache contention by structuring node indirection tables to fit within cache lines during high-throughput packet lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node insertion via CAS for a radix tree routing table.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    RadixNode* expected = nullptr;\n    return parent->children[bit].compare_exchange_strong(expected, new_child, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_child_wrong(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted routing nodes with epoch-based reclamation, leading to premature memory deallocation while other threads are traversing the subtree.",
+        "Using sequential consistency everywhere, introducing unnecessary memory barrier overhead that bottlenecks multi-core packet forwarding performance."
+      ],
+      "best_practices": [
+        "Pin worker threads to specific CPU cores and utilize thread-local epoch registration to minimize synchronization overhead in the memory reclamation subsystem.",
+        "Optimize radix node branching factors (e.g., 4-bit or 8-bit strides) to balance memory footprint against tree depth for fast IP subnet lookups."
+      ],
+      "when_to_use": "Ideal for high-speed software-defined networking data planes requiring concurrent, lock-free IP routing table lookups and dynamic updates.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with sparse, non-prefix keys where a standard hash map or concurrent skip-list is simpler and more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions and deletions in a lock-free radix tree without causing memory corruption?",
+          "answer": "By using atomic CAS primitives for pointer updates combined with epoch-based memory reclamation (or hazard pointers) to defer physical node deallocation until all reader threads have exited the critical section."
+        },
+        {
+          "question": "Why is a radix tree preferred over a standard hash table for SDN IP routing table lookups?",
+          "answer": "Radix trees naturally support longest-prefix matching, which is mandatory for IP routing rule resolution, whereas hash tables only support exact key lookups."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Tries (Prefix Tree)",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:02:39.639687+00:00",
+      "run_number": 943
     }
   ]
 }
