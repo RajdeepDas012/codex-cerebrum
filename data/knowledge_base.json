@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 929,
-    "last_updated": "2026-09-15T15:11:38.921041+00:00",
-    "total_topics_learned": 929
+    "total_runs": 930,
+    "last_updated": "2026-09-15T15:14:48.744053+00:00",
+    "total_topics_learned": 930
   },
   "entries": [
     {
@@ -44744,6 +44744,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T15:11:38.921021+00:00",
       "run_number": 929
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and epoch-based memory reclamation for high-throughput string pattern indexing in real-time genomic bioinformatics sequence alignment engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent suffix tree optimized for multi-threaded genomic pipelines using atomic Compare-And-Swap (CAS) primitives and epoch-based memory management. It enables lock-free string matching and indexing at scale without blocking concurrent readers and writers.",
+      "key_points": [
+        "Utilizes atomic node-linking operations to safely insert new suffixes into the tree structure without global mutexes.",
+        "Employs epoch-based memory reclamation (EMR) to safely deallocate obsolete nodes without risking use-after-free bugs during concurrent reads.",
+        "Maximizes throughput in genomic sequence alignment by allowing multiple threads to query and extend the index simultaneously.",
+        "Addresses the high memory footprint of suffix trees through careful node compaction and cache-conscious pointer layouts."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer insertion using CAS for a suffix tree edge transition.",
+        "correct": "bool link_child(Node* parent, char ch, Node* new_child, EpochGuard& guard) {\n    Node* expected = nullptr;\n    while (parent->children[ch].compare_exchange_weak(expected, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n        return true;\n    }\n    return false;\n}",
+        "wrong": "bool link_child(Node* parent, char ch, Node* new_child) {\n    if (parent->children[ch] == nullptr) {\n        parent->children[ch] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with an active epoch guard, leading to premature node destruction by concurrent writers.",
+        "Using sequential container locks inside the tree nodes, which completely negates the performance benefits of a lock-free architecture."
+      ],
+      "best_practices": [
+        "Design tree nodes to fit within standard cache line sizes to minimize CPU cache invalidation overhead during CAS operations.",
+        "Pin threads to specific epochs during intensive read phases to prevent memory buildup in the reclamation queue."
+      ],
+      "when_to_use": "Use when building real-time genomic alignment tools or large-scale substring search engines that must handle thousands of concurrent queries and insertions on dynamic text corpora.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with static text where simpler, memory-efficient indices like compressed suffix arrays or FM-indexes are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to insert the same child suffix edge simultaneously?",
+          "answer": "By using an atomic compare-and-swap (CAS) operation on the parent node's child pointer map, ensuring only one thread succeeds while others retry."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in a lock-free suffix tree?",
+          "answer": "Epoch-based reclamation avoids the severe cache contention and atomic write overhead that frequent atomic increments and decrements of reference counters introduce on every node traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Array",
+        "FM-Index",
+        "Concurrent Directed Acyclic Word Graph (DAWG)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T15:14:48.744032+00:00",
+      "run_number": 930
     }
   ]
 }
