@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 897,
-    "last_updated": "2026-09-15T04:22:52.478633+00:00",
-    "total_topics_learned": 897
+    "total_runs": 898,
+    "last_updated": "2026-09-15T04:25:16.896499+00:00",
+    "total_topics_learned": 898
   },
   "entries": [
     {
@@ -43232,6 +43232,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-15T04:22:52.478612+00:00",
       "run_number": 897
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node propagation and hazard pointer memory reclamation for high-throughput cryptographic verification in real-time distributed ledger and blockchain state synchronization pipelines",
+      "category": "crypto-blockchain",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Merkle Tree that propagates cryptographic hash updates atomically across nodes without blocking threads. Utilizing hazard pointers for safe memory reclamation ensures high-throughput state verification in real-time distributed ledgers and blockchain synchronization pipelines.",
+      "key_points": [
+        "Employs atomic Compare-And-Swap (CAS) primitives to update node hashes and manage tree growth without coarse-grained locking.",
+        "Utilizes hazard pointers to track active thread references to tree nodes, preventing premature reclamation during concurrent updates.",
+        "Ensures thread-safe bottom-up hash propagation when leaf nodes are inserted or modified in distributed ledger workloads.",
+        "Delivers high-throughput cryptographic proof generation and state validation critical for real-time blockchain consensus engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and hazard pointer protection for a Merkle tree node modification.",
+        "correct": "void update_merkle_node(std::atomic<Node*>& node_ptr, const std::string& new_hash, HazardPointerList& hp_list) {\n    Node* old_node;\n    Node* new_node;\n    do {\n        old_node = hp_list.protect(node_ptr);\n        new_node = new Node(new_hash, old_node->left, old_node->right);\n    } while (!node_ptr.compare_exchange_weak(old_node, new_node));\n    hp_list.retire(old_node);\n}",
+        "wrong": "void update_merkle_node(Node* node_ptr, const std::string& new_hash) {\n    mutex.lock();\n    node_ptr->hash = new_hash;\n    recompute_parent_hashes(node_ptr);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly shield nodes with hazard pointers before reading child pointers, leading to use-after-free race conditions.",
+        "Mutating tree nodes in place rather than replacing them immutably via atomic CAS, violating lock-free safety guarantees."
+      ],
+      "best_practices": [
+        "Keep hazard pointer tracking lists thread-local to minimize cache-coherency overhead during heavy contention.",
+        "Batch root hash propagation where possible to reduce contention on high-level tree nodes during massive block ingestion."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput decentralized ledger architectures or verifiable distributed databases requiring concurrent multi-threaded state updates.",
+      "when_not_to_use": "Avoid in single-threaded environments or lightweight systems where simpler sequential hash structures or coarse-grained mutex locking provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when freeing nodes in a lock-free Merkle tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that concurrent deallocation routines know to defer freeing those specific memory addresses until references are cleared."
+        },
+        {
+          "question": "Why is structural immutability combined with atomic CAS preferred over in-place locking for concurrent tree updates?",
+          "answer": "Immutability avoids reader-writer locking bottlenecks and prevents readers from observing partially updated cryptographic hash states, ensuring strict linearizability."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free AVL Trees",
+        "Cryptographic Accumulators"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T04:25:16.896479+00:00",
+      "run_number": 898
     }
   ]
 }
