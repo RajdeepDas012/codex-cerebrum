@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 949,
-    "last_updated": "2026-09-15T19:21:51.043849+00:00",
-    "total_topics_learned": 949
+    "total_runs": 950,
+    "last_updated": "2026-09-15T19:26:22.063330+00:00",
+    "total_topics_learned": 950
   },
   "entries": [
     {
@@ -45689,6 +45689,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:21:51.043830+00:00",
       "run_number": 949
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node pointer chaining and epoch-based memory reclamation for high-throughput range scans in real-time transactional database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent B+ Tree utilizing atomic node operations and epoch-based memory management. It is crucial for building scalable transactional database engines that demand high-throughput concurrent point lookups and sequential range scans without global lock bottlenecks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for node splits, merges, and pointer updates to guarantee lock-free progress.",
+        "Employs atomic leaf-node pointer chaining to enable fast, linearizable concurrent range scans without traversing parent nodes.",
+        "Integrates epoch-based memory reclamation (EMR) to safely free deleted internal and leaf nodes while threads are actively traversing.",
+        "Balances tree depth and branching factor asynchronously to minimize contention hot-spots during high write concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer CAS insertion on a B+ Tree internal node",
+        "correct": "bool insert_child(std::atomic<Node*>& child_slot, Node* expected, Node* fresh) {\n    return child_slot.compare_exchange_strong(expected, fresh, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = child_slot.load();\nif (current != nullptr) {\n    child_slot.store(fresh);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node deletions with epoch-based memory reclamation, leading to use-after-free race conditions during concurrent traversals.",
+        "Attempting to perform structural modifications (splits and merges) without validating that the targeted node state has not changed mid-operation."
+      ],
+      "best_practices": [
+        "Pin threads to an active epoch prior to traversing any read-heavy paths down the tree.",
+        "Use optimistic lock coupling or lock-free validation flags on internal nodes to safely manage multi-step structural modification operations (SMOs).",
+        "Keep leaf node chains clean and properly linked to allow lock-free reader threads to fallback gracefully if a leaf split occurs concurrently."
+      ],
+      "when_to_use": "Use when building high-concurrency storage engines, in-memory databases, or multi-threaded indexing layers that require high-throughput read-heavy and range-scan workloads.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where the added complexity of epoch management and atomic pointer tracking outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do lock-free B+ Trees handle structural modifications like node splits without locking out concurrent reader threads?",
+          "answer": "They use cooperative multi-step atomic operations and version/validation stamps, allowing readers to retry if they encounter an intermediate state."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in high-throughput lock-free B+ Trees?",
+          "answer": "Reference counting introduces heavy atomic write contention on every node traversal across multiple CPU cores, whereas epoch-based reclamation defers deallocation until all threads exit the current epoch."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Optimistic Lock Coupling in B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:26:22.063316+00:00",
+      "run_number": 950
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **949** |
-| Last Updated | `2026-09-15T19:21:51.043849+00:00` |
-| Dataset Size | `949 entries` |
+| Total Topics Learned | **950** |
+| Last Updated | `2026-09-15T19:26:22.063330+00:00` |
+| Dataset Size | `950 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 119 |
+| data-structures | 120 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node pointer chaining and epoch-based memory reclamation for high-throughput range scans in real-time transactional database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient set-membership querying in real-time distributed storage and caching engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating CAS primitives and epoch-based memory reclamation for high-throughput cardinality estimation in real-time big data stream analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic counter-increment CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter frequency estimation in real-time network traffic monitoring and stream processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic hash-map bucket chaining and hazard pointer memory reclamation for high-throughput low-latency eviction in real-time in-memory web application caching engines`
-- `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-node bucket linking and hazard pointer memory reclamation for high-throughput frequency-bounded eviction in real-time in-memory caching and content delivery networks`
 
 <!-- STATS_END -->
 
