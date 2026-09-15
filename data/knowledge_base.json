@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 945,
-    "last_updated": "2026-09-15T19:09:19.279586+00:00",
-    "total_topics_learned": 945
+    "total_runs": 946,
+    "last_updated": "2026-09-15T19:12:27.365296+00:00",
+    "total_topics_learned": 946
   },
   "entries": [
     {
@@ -45501,6 +45501,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-15T19:09:19.279567+00:00",
       "run_number": 945
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic hash-map bucket chaining and hazard pointer memory reclamation for high-throughput low-latency eviction in real-time in-memory web application caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Least Recently Used (LRU) cache that operates completely lock-free using atomic hash-map bucket chaining and hazard pointers. It enables extremely high-throughput, low-latency item lookups and evictions across multiple threads without lock contention or memory corruption.",
+      "key_points": [
+        "Utilizes atomic pointer-cas primitives for lock-free hash-map bucket chaining and node insertion/deletion.",
+        "Employs hazard pointers to safely manage memory reclamation of evicted cache nodes without race conditions.",
+        "Maintains an approximation of the LRU eviction policy optimized for concurrent multi-threaded access patterns.",
+        "Achieves minimal latency and high throughput crucial for real-time web application session and data caching."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection for lock-free node access during concurrent cache reads.",
+        "correct": "template <typename T> void acquire_and_read(std::atomic<T*>& node_ptr, HazardPointer& hp) {\n    T* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n    // Safe to read ptr\n}",
+        "wrong": "template <typename T> void unsafe_read(std::atomic<T*>& node_ptr) {\n    T* ptr = node_ptr.load();\n    // Another thread might free ptr here before it is read\n    process(ptr->value);\n}"
+      },
+      "common_mistakes": [
+        "Failing to clear hazard pointers immediately after node access finishes, causing memory leaks due to blocked reclamation lists.",
+        "Using global locks for LRU doubly-linked list updates while making the hash-map lookups lock-free, destroying overall scalability."
+      ],
+      "best_practices": [
+        "Batch hazard pointer scans to amortize the overhead of retired node reclamation across multiple cache operations.",
+        "Use relaxed atomic memory ordering where strict synchronization is not explicitly required to maximize CPU cache efficiency."
+      ],
+      "when_to_use": "Use when building high-performance, multithreaded in-memory caching layers where minimizing latency spikes and avoiding global lock bottlenecks are paramount.",
+      "when_not_to_use": "Avoid in simpler single-threaded applications or systems with low concurrency where standard mutex-protected caches are much easier to maintain and debug.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain strict LRU eviction order in a completely lock-free concurrent cache without global locking?",
+          "answer": "Exact global ordering is typically relaxed in lock-free designs using probabilistic or approximate LRU structures, such as concurrent hash-maps paired with randomized or segmented tick counters, because maintaining a strict global doubly-linked list lock-free introduces severe CAS contention."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection or reference counting in high-throughput lock-free caches?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the overhead of runtime garbage collection pauses or the atomic overhead of updating reference counts on every single cache read hit."
+        }
+      ],
+      "related_topics": [
+        "Lock-free LFU Cache",
+        "Hazard Pointer Memory Management",
+        "Concurrent Hash-Map Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:12:27.365276+00:00",
+      "run_number": 946
     }
   ]
 }

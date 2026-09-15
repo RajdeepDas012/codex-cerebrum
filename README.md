@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **945** |
-| Last Updated | `2026-09-15T19:09:19.279586+00:00` |
-| Dataset Size | `945 entries` |
+| Total Topics Learned | **946** |
+| Last Updated | `2026-09-15T19:12:27.365296+00:00` |
+| Dataset Size | `946 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 116 |
+| data-structures | 117 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic hash-map bucket chaining and hazard pointer memory reclamation for high-throughput low-latency eviction in real-time in-memory web application caching engines`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-node bucket linking and hazard pointer memory reclamation for high-throughput frequency-bounded eviction in real-time in-memory caching and content delivery networks`
 - `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node linking and epoch-based memory reclamation for high-throughput cryptographically verified state storage in real-time blockchain execution engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node indirection CAS primitives and epoch-based memory reclamation for high-throughput IP routing table lookup in real-time software-defined networking (SDN) packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Ring Buffer (Circular Queue) using atomic head-tail pointer wrapping and hazard pointer memory reclamation for high-throughput single-producer multi-consumer event streaming in real-time telemetry ingestion pipelines`
-- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic pointer-cas linking and hazard pointer memory reclamation for high-throughput sorted key-value indexing in real-time in-memory key-value database storage engines`
 
 <!-- STATS_END -->
 
