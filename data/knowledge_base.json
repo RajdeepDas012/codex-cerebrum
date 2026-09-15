@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 961,
-    "last_updated": "2026-09-15T22:23:18.712231+00:00",
-    "total_topics_learned": 961
+    "total_runs": 962,
+    "last_updated": "2026-09-15T22:26:25.993978+00:00",
+    "total_topics_learned": 962
   },
   "entries": [
     {
@@ -46256,6 +46256,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-15T22:23:18.712209+00:00",
       "run_number": 961
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic refit-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ray-triangle intersection querying in real-time ray tracing and GPU-accelerated rendering engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bounding Volume Hierarchy (BVH) tailored for real-time ray tracing. It leverages atomic Compare-And-Swap (CAS) operations for safe node refitting and hazard pointers to safely manage dynamic memory reclamation under high-concurrency workloads.",
+      "key_points": [
+        "Utilizes atomic refit-pointer CAS primitives to safely update parent bounding boxes without coarse-grained locking.",
+        "Employs hazard pointers to guarantee safe memory reclamation of dynamic nodes during structural updates and ray traversal.",
+        "Optimizes ray-triangle intersection query pipelines by maintaining a balanced spatial hierarchy in a lock-free manner.",
+        "Ensures high-throughput spatial queries for real-time ray tracing and GPU-accelerated rendering frameworks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bounding box expansion and refit operation for BVH nodes.",
+        "correct": "bool update_bvh_node_bounds(std::atomic<BBox*>& node_ptr, const BBox& new_box) {\n    BBox* current = node_ptr.load();\n    BBox* updated = new BBox(*current);\n    updated->expand(new_box);\n    return node_ptr.compare_exchange_weak(current, updated);\n}",
+        "wrong": "BBox* current = node_ptr.load();\ncurrent->expand(new_box); // Non-atomic modification leading to race conditions during ray traversal"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently read BVH nodes with hazard pointers, leading to use-after-free bugs when nodes are reorganized.",
+        "Using heavy mutex locks instead of fine-grained atomic CAS operations for node refitting, destroying multi-threaded traversal scalability."
+      ],
+      "best_practices": [
+        "Integrate hazard pointer protection domains around any active traversal thread accessing dynamic child node references.",
+        "Batch structural tree modifications and use incremental refitting where possible to minimize CAS contention."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or interactive rendering engines that require dynamic geometry updates and concurrent ray intersection queries across many CPU threads.",
+      "when_not_to_use": "Avoid in static scenes where a standard pre-built, read-only BVH using simpler locking or single-threaded construction is sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives assist in updating a lock-free BVH node's bounding box during dynamic geometry insertion?",
+          "answer": "They allow threads to attempt to swap in a newly fitted bounding box pointer atomically, retrying if another thread has modified the node concurrently."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free data structures like a BVH for ray tracing?",
+          "answer": "They prevent other threads from prematurely freeing node memory while a ray traversal thread is actively reading its coordinates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Hazard Pointer Memory Management",
+        "Ray-Triangle Intersection Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:26:25.993956+00:00",
+      "run_number": 962
     }
   ]
 }
