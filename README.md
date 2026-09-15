@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **887** |
-| Last Updated | `2026-09-15T03:53:01.611083+00:00` |
-| Dataset Size | `887 entries` |
+| Total Topics Learned | **888** |
+| Last Updated | `2026-09-15T03:56:09.460413+00:00` |
+| Dataset Size | `888 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 68 |
+| data-structures | 69 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 12 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint substitution and block-based hashing for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking eviction loops and tag-fingerprint collision resolution for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Quotient filter using atomic metadata-bit shifting and remainder-slot displacement for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-table cell incrementing and multi-hash slot collisions for high-throughput heavy-hitter stream frequency estimation in real-time network traffic monitoring pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog sketch using atomic register merging and max-value bitwise CAS operations for high-throughput cardinality estimation in real-time distributed stream analytics pipelines`
-- `Implementation of a lock-free thread-safe concurrent Critique-Bit-Vector sketch using atomic rank-select primitives and hazard pointer reclamation for high-throughput compressed inverted index searching in real-time enterprise search engines`
 
 <!-- STATS_END -->
 
