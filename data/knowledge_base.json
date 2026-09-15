@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 962,
-    "last_updated": "2026-09-15T22:26:25.993978+00:00",
-    "total_topics_learned": 962
+    "total_runs": 963,
+    "last_updated": "2026-09-15T22:29:33.243204+00:00",
+    "total_topics_learned": 963
   },
   "entries": [
     {
@@ -46303,6 +46303,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T22:26:25.993956+00:00",
       "run_number": 962
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling in real-time distributed execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking concurrent priority queue utilizing atomic compare-and-swap (CAS) primitives for heap node displacement and hazard pointers for safe memory management. It enables high-throughput, contention-resilient task scheduling across multiple threads without relying on coarse-grained locks.",
+      "key_points": [
+        "Utilizes atomic heap-node displacement to maintain heap invariants under concurrent insertions and extractions.",
+        "Employs hazard pointers to track thread-local active node references, preventing premature memory reclamation during concurrent modifications.",
+        "Eliminates lock contention bottlenecks to achieve scalable high-throughput performance in multi-threaded execution engines.",
+        "Handles ABA problems common in lock-free pointer manipulations via version stamps or atomic state tags."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe hazard pointer registration pattern before performing an atomic CAS operation on a queue node.",
+        "correct": "void* ptr = head.load();\nwhile (!hazard_ptr.cas(ptr, head.load())) {\n    ptr = head.load();\n}\n// Safe to access pointed node here",
+        "wrong": "void* ptr = head.load();\n// Missing hazard pointer registration allows another thread to free ptr here\ndo_something_with(ptr);"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing structural pointers, leading to use-after-free bugs.",
+        "Neglecting the ABA problem during node displacement CAS operations, causing silent data corruption."
+      ],
+      "best_practices": [
+        "Always register hazard pointers prior to reading shared reference addresses in lock-free loops.",
+        "Batch retired memory nodes into thread-local deferred reclamation lists to amortize synchronization overhead."
+      ],
+      "when_to_use": "Use when building real-time distributed execution engines or task schedulers requiring extreme concurrency and predictable low-latency performance under high thread contention.",
+      "when_not_to_use": "Avoid when target hardware lacks native double-word CAS instructions or when simpler mutex-based priority queues provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that concurrent reclamation threads know not to free those memory blocks until they are no longer hazardous."
+        },
+        {
+          "question": "What is the primary challenge of implementing a lock-free binary heap compared to a lock-free linked list?",
+          "answer": "A binary heap requires maintaining structural balance and parental heap invariants across multiple distant nodes simultaneously, making atomic multi-location updates extremely difficult without complex displacement protocols."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Non-Blocking Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:29:33.243182+00:00",
+      "run_number": 963
     }
   ]
 }
