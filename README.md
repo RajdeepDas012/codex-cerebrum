@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **878** |
-| Last Updated | `2026-09-15T00:15:26.239117+00:00` |
-| Dataset Size | `878 entries` |
+| Total Topics Learned | **879** |
+| Last Updated | `2026-09-15T00:18:36.750114+00:00` |
+| Dataset Size | `879 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 60 |
+| data-structures | 61 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Sparse Table using atomic interval-index mapping and epoch-based memory reclamation for high-throughput static range minimum query analytics in real-time financial trading telemetry engines`
 - `Implementation of a lock-free thread-safe concurrent Radix-Tree (Patricia Trie) using atomic child-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory IP routing lookup tables in high-speed network routers`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child link-merging CAS operations and hazard pointer memory reclamation for high-throughput priority scheduling in real-time operating system kernel event loops`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height extension and epoch-based memory reclamation for high-throughput in-memory ordered map indexing in real-time transactional database systems`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci heap using atomic minimum-pointer CAS operations and hazard pointer memory reclamation for high-throughput Dijkstra shortest-path routing in real-time network graph analytics engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotation CAS primitives and hazard pointer memory reclamation for high-throughput randomized balanced search tree indexing in real-time in-memory key-value stores`
 
 <!-- STATS_END -->
 
