@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 952,
-    "last_updated": "2026-09-15T19:33:07.255603+00:00",
-    "total_topics_learned": 952
+    "total_runs": 953,
+    "last_updated": "2026-09-15T19:36:42.770578+00:00",
+    "total_topics_learned": 953
   },
   "entries": [
     {
@@ -45831,6 +45831,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:33:07.255584+00:00",
       "run_number": 952
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and epoch-based memory reclamation for high-throughput substring searching in real-time genomic sequence analysis pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent suffix array that allows multiple threads to safely perform suffix sorting and high-speed pattern matching without blocking locks. By combining atomic Compare-And-Swap (CAS) operations with epoch-based memory reclamation, the structure ensures thread safety and high throughput for real-time genomic queries.",
+      "key_points": [
+        "Utilizes atomic index-sorting CAS primitives to update suffix pointers concurrently without global locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely deallocate stale suffix index arrays while reader threads traverse them.",
+        "Enables binary-search-based pattern matching over sorted suffix references for rapid genomic sequence analysis.",
+        "Avoids lock contention bottlenecks, scaling linearly with the number of CPU cores in real-time stream processors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic updating of suffix indices in a concurrent array using compare_exchange_weak.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct ConcurrentSuffixArray {\n    std::vector<std::atomic<size_t>> indices;\n    void update_index(size_t pos, size_t expected, size_t desired) {\n        indices[pos].compare_exchange_weak(expected, desired);\n    }\n};",
+        "wrong": "#include <vector>\n\nstruct UnsafeSuffixArray {\n    std::vector<size_t> indices;\n    void update_index(size_t pos, size_t desired) {\n        indices[pos] = desired; // Race condition: unprotected non-atomic write\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory ordering on CAS operations, leading to stale reads of underlying genomic strings.",
+        "Reclaiming memory for old suffix arrays immediately without verifying that all active reader epochs have completed."
+      ],
+      "best_practices": [
+        "Pin reader threads to explicit epochs before performing binary searches over the suffix array.",
+        "Pad atomic reference counters to prevent false sharing across multiple NUMA nodes."
+      ],
+      "when_to_use": "Use this when building high-throughput genomic search systems that require heavy concurrent read workloads with occasional dynamic updates to reference sequences.",
+      "when_not_to_use": "Do not use this for static, read-only datasets where a simple locked or single-threaded suffix array construction suffices, or where memory overhead of tracking epochs is prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation of old suffix arrays during concurrent structural updates?",
+          "answer": "By implementing an epoch-based memory reclamation scheme where threads register entry and exit from critical sections, allowing safe deletion only after all threads have advanced past the reclamation epoch."
+        },
+        {
+          "question": "Why are lock-free CAS primitives preferred over mutexes for concurrent suffix array modifications?",
+          "answer": "Locks introduce convoying, deadlocks, and severe thread contention under high-throughput scenarios, whereas lock-free CAS operations ensure progress and eliminate kernel-level context switching."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Epoch-based memory reclamation",
+        "Concurrent string searching algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:36:42.770560+00:00",
+      "run_number": 953
     }
   ]
 }
