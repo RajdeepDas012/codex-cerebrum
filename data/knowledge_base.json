@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 918,
-    "last_updated": "2026-09-15T10:07:31.008744+00:00",
-    "total_topics_learned": 918
+    "total_runs": 919,
+    "last_updated": "2026-09-15T10:10:38.885684+00:00",
+    "total_topics_learned": 919
   },
   "entries": [
     {
@@ -44225,6 +44225,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T10:07:31.008725+00:00",
       "run_number": 918
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) graph using atomic node-layer connection CAS operations and epoch-based memory reclamation for high-throughput approximate nearest neighbor vector search in real-time machine learning embedding retrieval engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Hierarchical Navigable Small World graph, enabling multiple threads to execute approximate nearest neighbor vector searches and point insertions simultaneously without global locks. It relies on atomic compare-and-swap operations for updating neighbor lists across multi-layered graph structures paired with epoch-based memory management to safely handle dynamic node removal.",
+      "key_points": [
+        "Utilizes multi-layered skip-list-like hierarchy where upper layers provide coarse-grained routing and lower layers enable fine-grained neighborhood search.",
+        "Employs atomic CAS primitives to safely modify neighbor connection links at specific node layers without blocking concurrent readers.",
+        "Integrates epoch-based memory reclamation (hazard pointers or epoch guards) to prevent use-after-free bugs when concurrent mutations prune edges or detach nodes.",
+        "Maintains high query throughput and low latency for approximate nearest neighbor searches across massive high-dimensional vector spaces in machine learning pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic addition of a neighbor link to a graph node layer using a Compare-And-Swap loop.",
+        "correct": "void add_neighbor_cas(Node* node, int layer, Neighbor new_neighbor) {\n    while (true) {\n        auto current_neighbors = node->layers[layer].neighbors.load();\n        if (contains(current_neighbors, new_neighbor)) return;\n        auto updated_neighbors = current_neighbors;\n        updated_neighbors.push_back(new_neighbor);\n        if (node->layers[layer].neighbors.compare_exchange_weak(current_neighbors, updated_neighbors)) {\n            break;\n        }\n    }\n}",
+        "wrong": "void add_neighbor_unsafe(Node* node, int layer, Neighbor new_neighbor) {\n    mutex.lock();\n    node->layers[layer].neighbors.push_back(new_neighbor);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with epoch-based memory reclamation, leading to catastrophic segmentation faults when another thread deletes a traversed node.",
+        "Using coarse-grained locks on graph entry points or entire layers, which heavily throttles write scalability in multi-threaded ingestion workloads."
+      ],
+      "best_practices": [
+        "Bound the maximum degree of graph nodes per layer to prevent unbounded list growth during concurrent heuristic edge selection updates.",
+        "Pin threads to appropriate epochs before traversing graph links to guarantee safe deferred reclamation of deleted node structures.",
+        "Stagger neighbor shrinking heuristics cleanly to avoid race conditions where two threads simultaneously prune the same bidirectional edge."
+      ],
+      "when_to_use": "Use when building high-throughput real-time embedding retrieval systems, vector databases, or recommendation engines that must handle heavy concurrent vector insertions and approximate nearest neighbor queries.",
+      "when_not_to_use": "Avoid when data scale is extremely small, memory overhead of multi-layered structures is prohibitive, or absolute 100% recall precision is required over low-latency search speeds.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two concurrent threads attempt to insert new neighbors into the same node layer simultaneously?",
+          "answer": "By using a lock-free Compare-And-Swap (CAS) retry loop that loads the current neighbor list, computes the updated list according to heuristic pruning rules, and atomically swaps it in only if no other thread has modified the pointer in the interim."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation critical when implementing a concurrent HNSW graph?",
+          "answer": "Because readers traverse graph pointers concurrently without locks, standard dynamic memory deallocation could free a node while another thread is reading its adjacency list, causing a segmentation fault; epoch-based reclamation defers actual memory freeing until all active reader threads have exited the current epoch."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent skip lists",
+        "epoch-based memory reclamation",
+        "approximate nearest neighbor vector search algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T10:10:38.885673+00:00",
+      "run_number": 919
     }
   ]
 }
