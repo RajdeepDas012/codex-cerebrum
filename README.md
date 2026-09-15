@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **873** |
-| Last Updated | `2026-09-14T23:59:46.347840+00:00` |
-| Dataset Size | `873 entries` |
+| Total Topics Learned | **874** |
+| Last Updated | `2026-09-15T00:02:54.604954+00:00` |
+| Dataset Size | `874 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 55 |
+| data-structures | 56 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotation CAS primitives and hazard pointer memory reclamation for high-throughput randomized balanced search tree indexing in real-time in-memory key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Bloom filter using atomic bit-array CAS operations and cache-aligned partitioning for high-throughput in-memory approximate membership query engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and epoch-based memory reclamation for high-throughput self-adjusting cache indexing in real-time memory-constrained systems`
 - `Implementation of a lock-free thread-safe concurrent B+ tree using atomic leaf-link pointer CAS operations and epoch-based memory reclamation for high-throughput in-memory range scan indexing in real-time OLTP database engines`
 - `Implementation of a lock-free thread-safe concurrent R-tree using atomic bounding-box expansion and epoch-based memory reclamation for high-throughput spatial indexing in real-time geospatial database engines`
-- `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic structural sharing and epoch-based memory reclamation for high-throughput historical range query analytics in distributed stream processing engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 873,
-    "last_updated": "2026-09-14T23:59:46.347840+00:00",
-    "total_topics_learned": 873
+    "total_runs": 874,
+    "last_updated": "2026-09-15T00:02:54.604954+00:00",
+    "total_topics_learned": 874
   },
   "entries": [
     {
@@ -42095,6 +42095,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-14T23:59:46.347821+00:00",
       "run_number": 873
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotation CAS primitives and hazard pointer memory reclamation for high-throughput randomized balanced search tree indexing in real-time in-memory key-value stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent randomized search tree that combines binary search tree keys with heap priorities. It utilizes atomic compare-and-swap (CAS) operations for priority-based rotations and hazard pointers to safely manage memory reclamation under high-concurrency workloads.",
+      "key_points": [
+        "Integrates binary search tree ordering with randomized heap priorities to maintain probabilistic balance without global locks.",
+        "Employs atomic priority-rotation CAS primitives to execute structural rotations safely across competing threads.",
+        "Uses hazard pointers to track active node references, preventing premature deallocation by concurrent mutators.",
+        "Enables high-throughput concurrent insertions, deletions, and point lookups for real-time in-memory key-value storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and hazard pointer protection during a concurrent treap rotation.",
+        "correct": "void* hazard_ptr = acquire_hazard_pointer(&node->left);\nNode* expected = node->left;\nNode* desired = new_child;\nif (atomic_compare_exchange_strong(&node->left, &expected, desired)) {\n    release_hazard_pointer(hazard_ptr);\n} else {\n    release_hazard_pointer(hazard_ptr);\n}",
+        "wrong": "node->left = new_child; // Unsafe non-atomic write causing race conditions and memory corruption"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before reading node pointers, leading to use-after-free bugs during concurrent reclamation.",
+        "Performing multi-word structural modifications without ensuring intermediate states remain safe for concurrent traversers."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are cleared and retired through a deferred reclamation queue once unlinked from the tree.",
+        "Keep atomic operation retry loops bounded and use backoff strategies to reduce memory bus contention under heavy thread contention."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive in-memory key-value stores requiring balanced range or point indexing under heavy concurrent multi-threaded access.",
+      "when_not_to_use": "Avoid in systems with strict deterministic balance requirements or where simpler lock-based fine-grained synchronization provides sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free treap?",
+          "answer": "Hazard pointers allow threads to locally publish references to nodes they are currently accessing, blocking other threads from reclaiming those memory addresses until the reference is dropped."
+        },
+        {
+          "question": "Why are randomized priorities used in a treap instead of deterministic balancing mechanisms like AVL or Red-Black trees in a lock-free context?",
+          "answer": "Randomized priorities decouple the balancing structure from the keys, simplifying local rotation logic and making it easier to implement using atomic CAS primitives without complex multi-node restructuring."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Management",
+        "Lock-free Skip Lists",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T00:02:54.604935+00:00",
+      "run_number": 874
     }
   ]
 }
