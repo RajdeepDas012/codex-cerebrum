@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 882,
-    "last_updated": "2026-09-15T00:28:00.888865+00:00",
-    "total_topics_learned": 882
+    "total_runs": 883,
+    "last_updated": "2026-09-15T00:31:08.406656+00:00",
+    "total_topics_learned": 883
   },
   "entries": [
     {
@@ -42521,6 +42521,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T00:28:00.888847+00:00",
       "run_number": 882
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Critique-Bit-Vector sketch using atomic rank-select primitives and hazard pointer reclamation for high-throughput compressed inverted index searching in real-time enterprise search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Critique-Bit-Vector sketch optimized for compressed inverted indices. It leverages atomic rank-select operations for constant-time index navigation and hazard pointers to safely manage memory in high-throughput enterprise search engines without locking overhead.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free modifications of the underlying bit vector sketch.",
+        "Employs succinct data structure rank-select primitives for $O(1)$ navigational queries inside compressed posting lists.",
+        "Integrates hazard pointers to safely reclaim memory of retired blocks without incurring garbage collection pauses.",
+        "Maximizes cache locality and parallel search throughput for real-time document retrieval in enterprise search pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic rank query on a concurrent block using thread-safe bit manipulation.",
+        "correct": "size_t atomic_rank(std::atomic<uint64_t>* blocks, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t word = blocks[word_idx].load(std::memory_order_relaxed);\n    size_t bit_offset = bit_index % 64;\n    uint64_t mask = (1ULL << bit_offset) - 1;\n    return std::popcount(word & mask);\n}",
+        "wrong": "size_t atomic_rank(uint64_t* blocks, size_t bit_index) {\n    // Missing atomics and memory ordering leading to race conditions\n    return std::popcount(blocks[bit_index / 64]);\n}"
+      },
+      "common_mistakes": [
+        "Failing to use appropriate memory barriers (acquire-release semantics) when loading atomic bit blocks across threads.",
+        "Neglecting hazard pointer registration before traversing dynamically resized bit-vector blocks, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Cache frequently accessed rank-select block metadata to minimize costly multi-word traversal overhead.",
+        "Batch hazard pointer unlinks during index updates to reduce contention on the global thread-local reclamation record."
+      ],
+      "when_to_use": "Use when building low-latency, highly concurrent inverted index query engines that require compressed memory footprints and lock-free thread scaling.",
+      "when_not_to_use": "Avoid when the index undergoes frequent, unpredictable inserts and deletes that trigger massive structural bit-shifting overhead.",
+      "interview_questions": [
+        {
+          "question": "How do atomic rank-select primitives accelerate inverted index searches in a Critique-Bit-Vector?",
+          "answer": "They allow threads to compute the exact position of set bits in $O(1)$ time without locking, enabling rapid document ID decoding in compressed posting lists."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free bit vector modifications?",
+          "answer": "Hazard pointers avoid the high cache-coherence traffic and atomic write contention associated with updating shared reference count fields on every read operation."
+        }
+      ],
+      "related_topics": [
+        "Succinct Data Structures",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Inverted Index Compression"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T00:31:08.406639+00:00",
+      "run_number": 883
     }
   ]
 }

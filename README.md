@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **882** |
-| Last Updated | `2026-09-15T00:28:00.888865+00:00` |
-| Dataset Size | `882 entries` |
+| Total Topics Learned | **883** |
+| Last Updated | `2026-09-15T00:31:08.406656+00:00` |
+| Dataset Size | `883 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 77 |
 | system-design | 76 |
 | stocks-markets | 71 |
-| data-structures | 64 |
+| data-structures | 65 |
 | probability-math | 27 |
 | databases | 14 |
 | algorithms | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Critique-Bit-Vector sketch using atomic rank-select primitives and hazard pointer reclamation for high-throughput compressed inverted index searching in real-time enterprise search engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient-Cuckoo hybrid filter using atomic fingerprint migration and dynamic resizing primitives for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length merge operations and hazard pointer memory reclamation for high-throughput priority queue scheduling in real-time task management pipelines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list pointer CAS operations and hazard pointer memory reclamation for high-throughput mergeable priority queue scheduling in real-time distributed task execution engines`
 - `Implementation of a lock-free thread-safe concurrent Sparse Table using atomic interval-index mapping and epoch-based memory reclamation for high-throughput static range minimum query analytics in real-time financial trading telemetry engines`
-- `Implementation of a lock-free thread-safe concurrent Radix-Tree (Patricia Trie) using atomic child-pointer CAS operations and hazard pointer memory reclamation for high-throughput in-memory IP routing lookup tables in high-speed network routers`
 
 <!-- STATS_END -->
 
