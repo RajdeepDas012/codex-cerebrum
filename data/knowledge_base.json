@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 938,
-    "last_updated": "2026-09-15T15:42:41.868178+00:00",
-    "total_topics_learned": 938
+    "total_runs": 939,
+    "last_updated": "2026-09-15T18:49:45.997068+00:00",
+    "total_topics_learned": 939
   },
   "entries": [
     {
@@ -45169,6 +45169,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T15:42:41.868156+00:00",
       "run_number": 938
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) data structure using atomic parent-pointer compression CAS primitives and epoch-based memory reclamation for high-throughput connected-components querying in real-time social network graph analytics pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Disjoint Set (Union-Find) data structure utilizing atomic compare-and-swap (CAS) operations on parent pointers combined with epoch-based memory management. It enables high-throughput, lock-free parallel execution of find and union operations, which is crucial for real-time connected-components analysis in large-scale social network graph processing.",
+      "key_points": [
+        "Utilizes atomic pointer compression via Compare-And-Swap (CAS) primitives to ensure thread safety without heavy mutual exclusion locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely manage memory overhead and avoid deadlocks during concurrent node reallocation and path compression.",
+        "Implements lock-free find operations that traverse and flatten parent chains safely in multi-threaded environments.",
+        "Optimizes concurrent union operations to prevent race conditions when merging distinct sets under high thread contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find operation with lock-free parent pointer compression using CAS.",
+        "correct": "struct Node { std::atomic<Node*> parent; };\nNode* find(Node* node) {\n    Node* p = node->parent.load(std::memory_order_acquire);\n    while (p != node->parent.load(std::memory_order_acquire)->parent) {\n        Node* pp = p->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(p, pp, std::memory_order_release, std::memory_order_relaxed);\n        p = node->parent.load(std::memory_order_acquire);\n    }\n    return p;\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic update and recursion race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during atomic parent pointer updates via CAS operations.",
+        "Directly updating parent pointers during traversal without looping CAS retry logic, leading to missed updates under contention.",
+        "Neglecting memory safety during path compression, which can cause use-after-free bugs when worker threads reclaim nodes concurrently."
+      ],
+      "best_practices": [
+        "Pair atomic operations with an established memory reclamation scheme like hazard pointers or epoch-based garbage collection.",
+        "Use relaxed memory orderings for read-heavy operations where appropriate, but enforce acquire-release semantics around pointer updates.",
+        "Keep path compression bounded or flattened iteratively to avoid excessive CAS retry loops under massive thread contention."
+      ],
+      "when_to_use": "Use when building high-performance graph processing engines, real-time social network analysis tools, or clustering systems requiring concurrent equivalence-class queries.",
+      "when_not_to_use": "Avoid when working with single-threaded applications or small workloads where the synchronization overhead of atomic CAS primitives and epoch tracking outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during path compression in a lock-free Union-Find data structure?",
+          "answer": "By using Compare-And-Swap (CAS) loops to update parent pointers, ensuring that if another thread modifies the pointer concurrently, the retry mechanism handles the updated reference."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing lock-free data structures like Disjoint Sets?",
+          "answer": "It ensures that dynamically reallocated or compressed nodes are not freed while other threads might still hold stale pointers to them during traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Graph Algorithms",
+        "Epoch-Based Memory Reclamation",
+        "Atomic CAS Primitives and Memory Ordering"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T18:49:45.997049+00:00",
+      "run_number": 939
     }
   ]
 }
