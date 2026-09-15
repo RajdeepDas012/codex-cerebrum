@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **963** |
-| Last Updated | `2026-09-15T22:29:33.243204+00:00` |
-| Dataset Size | `963 entries` |
+| Total Topics Learned | **964** |
+| Last Updated | `2026-09-15T22:32:40.831654+00:00` |
+| Dataset Size | `964 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 130 |
+| data-structures | 131 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key operations in real-time Dijkstra's shortest path routing and network optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling in real-time distributed execution engines`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic refit-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ray-triangle intersection querying in real-time ray tracing and GPU-accelerated rendering engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-extension CAS primitives and hazard pointer memory reclamation for high-throughput exact substring pattern matching in real-time bioinformatics DNA sequencing and regex security filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized priority-rotation CAS primitives and hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree indexing in real-time in-memory database and caching engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer distributed lookup in real-time content delivery networks`
 
 <!-- STATS_END -->
 
