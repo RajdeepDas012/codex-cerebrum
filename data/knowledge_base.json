@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 892,
-    "last_updated": "2026-09-15T04:09:25.730456+00:00",
-    "total_topics_learned": 892
+    "total_runs": 893,
+    "last_updated": "2026-09-15T04:12:34.751060+00:00",
+    "total_topics_learned": 893
   },
   "entries": [
     {
@@ -42994,6 +42994,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-15T04:09:25.730436+00:00",
       "run_number": 892
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and epoch-based memory reclamation for high-throughput decentralized peer-to-peer overlay network routing in distributed systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-Graph utilizes atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation to manage multi-level logarithmic routing pointers without global locks. It is critical for high-throughput, fault-tolerant peer-to-peer overlays and decentralized distributed hash tables where nodes frequently join and depart under heavy contention.",
+      "key_points": [
+        "Employs multiple levels of linked lists similar to a skip list, but with membership vectors enabling decentralized peer-to-peer search routing without centralized coordinators.",
+        "Uses atomic operations (CAS) to safely update routing pointers and handle concurrent node insertions and deletions without blocking reader or writer threads.",
+        "Integrates epoch-based memory reclamation (EMR) or hazard pointers to ensure nodes deleted from upper routing levels are safely reclaimed only after active traversals complete.",
+        "Guarantees probabilistic logarithmic search and routing performance bounds even under chaotic concurrent mutations across distributed system nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic routing pointer updates using CAS for concurrent node insertion in a Skip-Graph level.",
+        "correct": "bool insert_routing_node(Node* head, Node* new_node, int level) {\n    while (true) {\n        Node* pred = find_predecessor(head, new_node->key, level);\n        Node* succ = pred->next[level].load(std::memory_order_acquire);\n        new_node->next[level].store(succ, std::memory_order_relaxed);\n        if (pred->next[level].compare_exchange_strong(succ, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_routing_node_wrong(Node* pred, Node* new_node, int level) {\n    // Missing loop and atomic verification causes missed updates under high contention\n    new_node->next[level] = pred->next[level];\n    pred->next[level] = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted routing nodes with epoch-based reclamation, leading to use-after-free race conditions during concurrent traversal.",
+        "Using sequential consistency everywhere instead of carefully tuned acquire-release memory orderings, causing severe performance degradation."
+      ],
+      "best_practices": [
+        "Pair atomic pointer modifications with an established epoch-based memory management library to safely defer node destruction.",
+        "Maintain strict invariants on membership vectors during multi-level pointer updates to prevent infinite routing loops."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized peer-to-peer networks, distributed hash tables, or resilient overlay routing fabrics requiring lock-free concurrent scalability.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple local applications where traditional locking skip-lists or standard balanced search trees provide simpler maintenance and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating routing pointers in a lock-free Skip-Graph?",
+          "answer": "By using tagged pointers that combine the memory address with a monotonically increasing version counter, or by leveraging epoch-based memory reclamation which prevents nodes from being immediately recycled."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in high-throughput concurrent skip-graphs?",
+          "answer": "Reference counting introduces heavy atomic write contention on every node traversal due to reference count increments and decrements, whereas epoch-based reclamation batches retirements and avoids atomic operations on read paths."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Epoch-Based Memory Reclamation",
+        "Distributed Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:12:34.751042+00:00",
+      "run_number": 893
     }
   ]
 }

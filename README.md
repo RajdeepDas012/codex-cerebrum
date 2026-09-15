@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **892** |
-| Last Updated | `2026-09-15T04:09:25.730456+00:00` |
-| Dataset Size | `892 entries` |
+| Total Topics Learned | **893** |
+| Last Updated | `2026-09-15T04:12:34.751060+00:00` |
+| Dataset Size | `893 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | market-analysis | 114 |
 | crypto-blockchain | 77 |
 | system-design | 76 |
-| data-structures | 73 |
+| data-structures | 74 |
 | stocks-markets | 71 |
 | probability-math | 27 |
 | databases | 14 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and epoch-based memory reclamation for high-throughput decentralized peer-to-peer overlay network routing in distributed systems`
 - `Implementation of a lock-free thread-safe concurrent Rank-Select Succinct Bit-Vector using atomic block-descriptor updates and epoch-based memory reclamation for high-throughput compressed inverted index searching in real-time enterprise document retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent B-link tree using atomic right-link pointer propagation and epoch-based memory reclamation for high-throughput concurrent index traversal in real-time in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Finger Tree using atomic spine-node restructuring and hazard pointer memory reclamation for high-throughput persistent sequence and functional queue operations in real-time stream transformation engines`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning bit-vector CAS operations and epoch-based memory reclamation for high-throughput compressed text indexing and range quantile query analytics in real-time search engine text processing pipelines`
-- `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint substitution and block-based hashing for high-throughput in-memory approximate membership query pipelines`
 
 <!-- STATS_END -->
 
