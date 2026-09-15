@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **953** |
-| Last Updated | `2026-09-15T19:36:42.770578+00:00` |
-| Dataset Size | `953 entries` |
+| Total Topics Learned | **954** |
+| Last Updated | `2026-09-15T22:01:22.648839+00:00` |
+| Dataset Size | `954 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,8 +25,8 @@
 | system-design | 77 |
 | stocks-markets | 71 |
 | probability-math | 27 |
+| algorithms | 18 |
 | databases | 17 |
-| algorithms | 17 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | security | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent RCU (Read-Copy Update) hash table using atomic pointer-swap primitives and epoch-based memory reclamation for high-throughput read-mostly lookups in real-time Linux kernel networking and high-frequency trading configurations`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and epoch-based memory reclamation for high-throughput substring searching in real-time genomic sequence analysis pipelines`
 - `Implementation of a lock-free thread-safe concurrent Levenshtein Distance matrix using atomic state-transition CAS primitives and epoch-based memory reclamation for high-throughput approximate string matching in real-time spelling correction and search suggestion pipelines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link redirection and hazard pointer memory reclamation for high-throughput multi-pattern string matching in real-time intrusion detection and security log analysis systems`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node pointer chaining and epoch-based memory reclamation for high-throughput range scans in real-time transactional database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient set-membership querying in real-time distributed storage and caching engines`
 
 <!-- STATS_END -->
 

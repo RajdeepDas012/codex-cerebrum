@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 953,
-    "last_updated": "2026-09-15T19:36:42.770578+00:00",
-    "total_topics_learned": 953
+    "total_runs": 954,
+    "last_updated": "2026-09-15T22:01:22.648839+00:00",
+    "total_topics_learned": 954
   },
   "entries": [
     {
@@ -45878,6 +45878,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:36:42.770560+00:00",
       "run_number": 953
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent RCU (Read-Copy Update) hash table using atomic pointer-swap primitives and epoch-based memory reclamation for high-throughput read-mostly lookups in real-time Linux kernel networking and high-frequency trading configurations",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This technique combines Read-Copy Update (RCU) mechanics with atomic pointer swaps and epoch-based memory management to deliver wait-free read performance on hash tables. It matters because it completely eliminates read-side locks, allowing massive horizontal scalability for read-mostly workloads.",
+      "key_points": [
+        "Readers execute entirely lock-free and wait-free without acquiring any locks or performing atomic write instructions.",
+        "Writers perform updates out-of-place by cloning the target node, applying modifications, and publishing the change atomically via pointer-swap CAS primitives.",
+        "Epoch-based memory reclamation (EMR) defers the physical deallocation of old nodes until all concurrent readers active during the update epoch have exited.",
+        "Hash collisions are typically managed through chaining with atomic next-pointer updates to prevent data corruption during concurrent modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic pointer swap for inserting a new node into an RCU-protected hash bucket list without locking.",
+        "correct": "void insert_node(std::atomic<Node*>& bucket_head, Node* new_node) {\n    Node* old_head;\n    do {\n        old_head = bucket_head.load(std::memory_order_relaxed);\n        new_node->next = old_head;\n    } while (!bucket_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_node(std::atomic<Node*>& bucket_head, Node* new_node) {\n    Node* old_head = bucket_head.load();\n    new_node->next = old_head;\n    bucket_head.store(new_node); // Missing CAS loop, leading to lost updates under race conditions\n}"
+      },
+      "common_mistakes": [
+        "Reclaiming memory immediately after a write or pointer swap instead of waiting for active reader epochs to flush.",
+        "Using incorrect memory ordering constraints (such as sequential consistency everywhere) which introduces unnecessary hardware memory barrier overhead."
+      ],
+      "best_practices": [
+        "Utilize acquire-release semantics for pointer loads and stores to guarantee visibility of newly populated node fields.",
+        "Batch epoch reclamation checks to minimize thread-local synchronization overhead during high-frequency mutation bursts."
+      ],
+      "when_to_use": "Ideal for high-throughput read-mostly data structures where read operations vastly outnumber write operations (e.g., routing tables, feature flags, configuration caches).",
+      "when_not_to_use": "Avoid in write-heavy scenarios where frequent copying and allocation churn degrade performance and exhaust memory.",
+      "interview_questions": [
+        {
+          "question": "How do RCU read-side operations achieve zero synchronization overhead?",
+          "answer": "By relying on pointer-immutability and memory barriers, readers access data directly without acquiring locks, modifying state, or executing atomic operations."
+        },
+        {
+          "question": "What is the role of epoch-based memory reclamation in a lock-free hash table?",
+          "answer": "It tracks active reader threads across global epochs so that writers know when old, unlinked node versions are no longer referenced and can be safely freed."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:01:22.648817+00:00",
+      "run_number": 954
     }
   ]
 }
