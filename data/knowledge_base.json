@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 896,
-    "last_updated": "2026-09-15T04:22:08.933502+00:00",
-    "total_topics_learned": 896
+    "total_runs": 897,
+    "last_updated": "2026-09-15T04:22:52.478633+00:00",
+    "total_topics_learned": 897
   },
   "entries": [
     {
@@ -43183,6 +43183,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:22:08.933484+00:00",
       "run_number": 896
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree (Burkhard-Keller Tree) using atomic child-pointer CAS operations and epoch-based memory reclamation for high-throughput fuzzy string matching and spelling correction in real-time search engine autocomplete pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent BK-Tree utilizes atomic Compare-And-Swap (CAS) primitives and epoch-based memory reclamation to safely insert and query metric space data structures across multiple threads without locking. This architecture is vital for high-throughput, low-latency fuzzy string matching and spelling correction in large-scale search engine autocomplete systems.",
+      "key_points": [
+        "Leverages metric space properties (typically Levenshtein distance) to index and search strings efficiently without locking.",
+        "Uses atomic child-pointer updates via CAS to safely attach new nodes to metric distance buckets under high concurrency.",
+        "Employs epoch-based memory reclamation (hazard pointers or epoch guards) to safely deallocate tree nodes without dangling pointer races.",
+        "Guarantees wait-free reads and lock-free writes, ensuring predictable tail latencies in high-throughput autocomplete microservices."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-pointer CAS insertion into a concurrent BK-Tree node bucket",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    auto& child_slot = parent->children[distance];\n    Node* expected = nullptr;\n    while (!child_slot.compare_exchange_weak(expected, new_child)) {\n        if (expected != nullptr) {\n            // Bucket already occupied; traverse or handle collision\n            return insert_recursive(expected, new_child);\n        }\n    }\n    return true;\n}",
+        "wrong": "bool insert_child_unsafe(Node* parent, int distance, Node* new_child) {\n    if (parent->children[distance] == nullptr) {\n        parent->children[distance] = new_child; // Non-atomic check-then-act race condition\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with epoch-based reclamation, leading to use-after-free crashes during concurrent traversal.",
+        "Using coarse-grained locks on tree branches during insertion, which degrades throughput and introduces thread contention.",
+        "Ignoring memory ordering constraints during atomic CAS operations, resulting in stale reads of child pointers."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics on atomic pointer loads and stores to ensure visibility of newly allocated subtrees.",
+        "Integrate lightweight epoch guards around read-heavy fuzzy search threads to defer node memory recycling safely.",
+        "Pre-allocate node pools or use lock-free memory allocators to minimize heap allocation overhead during high-frequency insertions."
+      ],
+      "when_to_use": "Use when building real-time search engine autocomplete or spelling correction systems that handle heavy concurrent writes and metric-space distance queries.",
+      "when_not_to_use": "Avoid when data does not conform to a metric space (violates triangle inequality) or when exact-match lookups are sufficient and simpler hash maps can be used.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node insertions in a lock-free BK-Tree when multiple threads attempt to insert strings that map to the same distance bucket?",
+          "answer": "You use an atomic Compare-And-Swap (CAS) operation on the child pointer slot for that specific distance. If the CAS fails because another thread populated the slot, you load the existing node and recursively insert into that subtree."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when deleting or modifying nodes in a concurrent BK-Tree?",
+          "answer": "It prevents use-after-free errors by ensuring that a node is only reclaimed and freed back to the OS or memory pool after all reader threads have exited the epoch in which they accessed that node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Graphs",
+        "Epoch-Based Memory Reclamation",
+        "Levenshtein Automata and Metric Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T04:22:52.478612+00:00",
+      "run_number": 897
     }
   ]
 }
