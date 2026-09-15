@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 946,
-    "last_updated": "2026-09-15T19:12:27.365296+00:00",
-    "total_topics_learned": 946
+    "total_runs": 947,
+    "last_updated": "2026-09-15T19:15:35.950286+00:00",
+    "total_topics_learned": 947
   },
   "entries": [
     {
@@ -45548,6 +45548,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:12:27.365276+00:00",
       "run_number": 946
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic counter-increment CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter frequency estimation in real-time network traffic monitoring and stream processing pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent probabilistic frequency estimation data structure. It utilizes atomic compare-and-swap operations for multi-threaded counter increments across multiple hash matrices and epoch-based reclamation to safely manage memory updates in high-throughput streaming environments.",
+      "key_points": [
+        "Uses a 2D array of atomic counters paired with independent hash functions to estimate stream item frequencies with bounded error.",
+        "Employs atomic fetch-add or CAS loop primitives on individual counters to ensure safe concurrent increments without global locks.",
+        "Integrates epoch-based memory reclamation to safely resize or reallocate sketch structures while active threads traverse them.",
+        "Provides high throughput and sub-linear space complexity suitable for real-time heavy-hitter detection and network anomaly monitoring."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe concurrent counter increments in a Count-Min Sketch row using atomics.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCMSRow {\n    std::vector<std::atomic<uint64_t>> counters;\npublic:\n    explicit ConcurrentCMSRow(size_t width) : counters(width) {\n        for (auto& c : counters) c.store(0, std::memory_order_relaxed);\n    }\n    void increment(size_t index) {\n        counters[index].fetch_add(1, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class UnsafeCMSRow {\n    std::vector<uint64_t> counters;\npublic:\n    void increment(size_t index) {\n        counters[index]++; // Data race under concurrent stream ingestion!\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using sequential consistency (`memory_order_seq_cst`) for high-frequency counter updates, severely degrading multi-core performance.",
+        "Failing to handle hash collisions properly, leading to overestimation errors that distort heavy-hitter identification."
+      ],
+      "best_practices": [
+        "Utilize relaxed memory ordering (`std::memory_order_relaxed`) for independent counter increments where cross-thread synchronization is unneeded.",
+        "Choose prime numbers for row widths and distinct hash seeds to minimize systematic collision bias across independent hash functions."
+      ],
+      "when_to_use": "When you need to track item frequencies across massive data streams in real-time where exact counts are memory-prohibitive and approximate bounds are acceptable.",
+      "when_not_to_use": "When exact frequency guarantees are mandatory, or when the domain size of items is small enough to fit into an exact hash map without memory pressure.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent increments to the same counter cell without locking?",
+          "answer": "By using atomic fetch-add operations (or CAS loops) with relaxed memory ordering to maximize throughput across multiple threads."
+        },
+        {
+          "question": "What is the primary trade-off when configuring the depth and width of a Count-Min Sketch?",
+          "answer": "Increasing width reduces the error magnitude of estimates, while increasing depth (number of hash functions) decreases the probability of exceeding that error bound, both at the cost of higher memory usage."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:15:35.950269+00:00",
+      "run_number": 947
     }
   ]
 }
