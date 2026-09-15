@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 932,
-    "last_updated": "2026-09-15T15:22:49.391395+00:00",
-    "total_topics_learned": 932
+    "total_runs": 933,
+    "last_updated": "2026-09-15T15:25:59.795832+00:00",
+    "total_topics_learned": 933
   },
   "entries": [
     {
@@ -44885,6 +44885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T15:22:49.391375+00:00",
       "run_number": 932
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-switching and epoch-based memory reclamation for high-throughput write-heavy key-value ingestion in real-time distributed storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Log-Structured Merge-Tree that optimizes write amplification and throughput in distributed databases. By utilizing atomic pointer swaps for memtable flushes and epoch-based garbage collection, it eliminates read-write lock contention during massive real-time data ingestion.",
+      "key_points": [
+        "Atomic memtable-switching allows concurrent background flushing of immutable active memtables to disk while active writers seamlessly transition to a newly allocated mutable memtable without blocking.",
+        "Epoch-based memory reclamation (EMR) safely tracks thread participation intervals, ensuring memory allocated to old memtable nodes or index structures is only freed after all threads have exited the active epoch.",
+        "Lock-free synchronization avoids OS-level thread context switches, drastically reducing latency spikes and scaling linearly across multi-core architectures under heavy write workloads.",
+        "Sequential append-only logging to a Write-Ahead Log (WAL) combined with immutable disk sstables minimizes random disk I/O, maximizing hardware bandwidth efficiency."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an atomic memtable switch and epoch registration pattern for lock-free multi-threaded key-value ingestion.",
+        "correct": "import threading\nimport atomic\n\nclass ConcurrentLSMNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.next = None\n\nclass EpochManager:\n    def __init__(self):\n        self.epoch = 0\n        self.threads = threading.local()\n    \n    def enter(self):\n        self.threads.epoch = self.epoch\n\n    def leave(self):\n        self.threads.epoch = None\n\nclass MemTable:\n    def __init__(self):\n        self.head = ConcurrentLSMNode(None, None)\n    \n    def put(self, key, value):\n        new_node = ConcurrentLSMNode(key, value)\n        new_node.next = self.head.next\n        self.head.next = new_node\n\nclass LockFreeLSM:\n    def __init__(self):\n        self.active_memtable = atomic.AtomicReference(MemTable())\n        self.immutable_memtable = None\n        self.epoch_mgr = EpochManager()\n\n    def write(self, key, value):\n        self.epoch_mgr.enter()\n        try:\n            current_mem = self.active_memtable.get()\n            current_mem.put(key, value)\n        finally:\n            self.epoch_mgr.leave()\n\n    def rotate_memtable(self):\n        old_mem = self.active_memtable.get()\n        new_mem = MemTable()\n        while not self.active_memtable.compare_and_set(old_mem, new_mem):\n            old_mem = self.active_memtable.get()\n        self.immutable_memtable = old_mem",
+        "wrong": "class UnsafeLSM:\n    def __init__(self):\n        self.lock = threading.Lock()\n        self.memtable = {}\n    \n    def write(self, key, value):\n        with self.lock:\n            self.memtable[key] = value"
+      },
+      "common_mistakes": [
+        "Failing to safely isolate immutable memtables before passing them to disk flushing threads, leading to data races and corruption during iteration.",
+        "Neglecting to bound epoch reclamation lag, which can cause unbounded memory growth if a thread stalls indefinitely inside an active epoch."
+      ],
+      "best_practices": [
+        "Pair atomic memtable swaps with a durable Write-Ahead Log (WAL) before acknowledging writes to ensure durability in crash scenarios.",
+        "Implement explicit thread registration and unregistration phases for epoch-based reclamation to prevent dangling pointer access during memtable destruction."
+      ],
+      "when_to_use": "Use this when designing high-throughput, write-heavy distributed storage engines, time-series databases, or real-time logging pipelines requiring minimal latency variance.",
+      "when_not_to_use": "Avoid this for read-heavy workloads with strict point-lookup latency requirements, where B-Trees or specialized hash-index structures provide more direct access paths.",
+      "interview_questions": [
+        {
+          "question": "How does atomic memtable-switching prevent write stalls in a concurrent LSM-Tree?",
+          "answer": "Instead of acquiring a global write lock to flush full memtables, the engine uses an atomic Compare-And-Swap (CAS) operation to swap the active memtable pointer with a fresh instance, allowing writers to continue appending to the new memtable immediately while the old one is flushed asynchronously."
+        },
+        {
+          "question": "Why is Epoch-Based Memory Reclamation preferred over reference counting in high-throughput lock-free storage engines?",
+          "answer": "Reference counting requires atomic increment and decrement operations on shared memory locations for every read and write, causing severe cache-coherence traffic bottlenecks across CPU cores. Epoch-based reclamation batches thread state updates locally, eliminating cache line bouncing."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip Lists",
+        "Write-Ahead Logging and Crash Recovery Protocols",
+        "Compaction Strategies in Log-Structured Merge-Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T15:25:59.795810+00:00",
+      "run_number": 933
     }
   ]
 }
