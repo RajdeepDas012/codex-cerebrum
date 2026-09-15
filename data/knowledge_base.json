@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 950,
-    "last_updated": "2026-09-15T19:26:22.063330+00:00",
-    "total_topics_learned": 950
+    "total_runs": 951,
+    "last_updated": "2026-09-15T19:29:29.779288+00:00",
+    "total_topics_learned": 951
   },
   "entries": [
     {
@@ -45737,6 +45737,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:26:22.063316+00:00",
       "run_number": 950
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link redirection and hazard pointer memory reclamation for high-throughput multi-pattern string matching in real-time intrusion detection and security log analysis systems",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent Aho-Corasick string-matching automaton that allows multiple threads to simultaneously search text for thousands of patterns. By utilizing atomic operations for failure-link redirection and hazard pointers for safe memory reclamation, it prevents race conditions without relying on heavy global mutexes.",
+      "key_points": [
+        "Uses atomic transitions and CAS (Compare-And-Swap) primitives to allow concurrent state additions and modifications without blocking reader threads.",
+        "Implements hazard pointer-based memory management to safely reclaim nodes deleted during dynamic pattern insertion without triggering use-after-free bugs.",
+        "Maintains concurrent failure links updated via atomic pointers to guarantee linearizable multi-pattern matching across worker threads.",
+        "Optimizes throughput in security log analysis pipelines by parallelizing the exact matching phase across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent node traversal using atomic-like references in an Aho-Corasick structure.",
+        "correct": "class ACNode:\n    def __init__(self):\n        self.children = {}\n        self.failure = None\n        self.outputs = []\n\nclass ConcurrentAC:\n    def __init__(self):\n        self.root = ACNode()\n    \n    def search_step(self, current_node, char):\n        while current_node and char not in current_node.children:\n            current_node = current_node.failure\n        return current_node.children.get(char, self.root)",
+        "wrong": "class UnsafeAC:\n    def __init__(self):\n        self.root = {}\n    def insert(self, pattern):\n        # Modifying shared graph structure without synchronization locks or atomic wrappers\n        pass"
+      },
+      "common_mistakes": [
+        "Failing to protect state transitions with hazard pointers, leading to memory corruption when another thread modifies or deletes failure links.",
+        "Applying coarse-grained locking on the root node during streaming updates, which destroys the lock-free performance advantage."
+      ],
+      "best_practices": [
+        "Protect every shared pointer dereference with thread-local hazard pointers before traversing mutable failure links.",
+        "Pre-allocate automaton nodes using lock-free memory pools to minimize OS-level allocation overhead during heavy traffic bursts."
+      ],
+      "when_to_use": "Use this when you need to stream and scan high-velocity logs against thousands of signatures concurrently across multiple CPU cores without thread contention bottlenecks.",
+      "when_not_to_use": "Avoid when patterns are entirely static and updates are extremely rare, where a simpler read-only automaton with standard thread synchronization suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a race condition when a reader thread traverses a failure link that is simultaneously being updated or removed by a writer thread?",
+          "answer": "By using hazard pointers to register the node currently being accessed, ensuring the memory reclamation subsystem delays freeing the node until all referencing threads release their hazard pointers."
+        },
+        {
+          "question": "Why is standard garbage collection insufficient for ultra-low-latency real-time intrusion detection systems?",
+          "answer": "Garbage collection introduces unpredictable stop-the-world pause times that violate strict latency SLOs, whereas epoch-based or hazard pointer reclamation offers deterministic, bounded reclamation bounds."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Trie and Radix Tree",
+        "Parallel String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:29:29.779271+00:00",
+      "run_number": 951
     }
   ]
 }
