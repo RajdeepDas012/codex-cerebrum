@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 958,
-    "last_updated": "2026-09-15T22:13:55.014790+00:00",
-    "total_topics_learned": 958
+    "total_runs": 959,
+    "last_updated": "2026-09-15T22:17:02.473583+00:00",
+    "total_topics_learned": 959
   },
   "entries": [
     {
@@ -46114,6 +46114,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T22:13:55.014768+00:00",
       "run_number": 958
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer distributed lookup in real-time content delivery networks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-Graph organizes nodes across multiple logarithmic search levels using atomic Compare-And-Swap (CAS) primitives for routing pointers while relying on hazard pointers to safely manage memory reclamation. It matters because it allows highly concurrent peer-to-peer distributed lookups in real-time content delivery networks without suffering from global lock contention.",
+      "key_points": [
+        "Utilizes multi-level probabilistic skip-list structures adapted for distributed peer-to-peer graphs with independent membership lists.",
+        "Employs atomic routing-pointer CAS operations to safely link and unlink nodes across various hierarchy levels concurrently.",
+        "Integrates hazard pointers to track active thread references and defer memory deallocation safely without blocking readers.",
+        "Ensures high-throughput decentralized lookups and membership management suitable for real-time edge streaming networks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic routing-pointer CAS loop for inserting a node level in a lock-free Skip-Graph.",
+        "correct": "bool link_node(Node* curr, Node* next, int level) {\n    Node* old_next = curr->forward[level].load(std::memory_order_acquire);\n    do {\n        next->forward[level].store(old_next, std::memory_order_relaxed);\n    } while (!curr->forward[level].compare_exchange_weak(old_next, next, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool link_node_wrong(Node* curr, Node* next, int level) {\n    curr->forward[level] = next; // Non-atomic assignment causing race conditions and inconsistent routing states\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers, leading to use-after-free bugs when concurrent threads prune nodes.",
+        "Using incorrect memory ordering constraints (e.g., sequentially consistent everywhere instead of acquire-release semantics), degrading concurrency performance."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in hazard pointer thread-local domains prior to traversing multi-level routing pointers.",
+        "Validate that nodes remain active and unlinked markers are checked before committing structural updates with CAS loops."
+      ],
+      "when_to_use": "Use when building decentralized peer-to-peer lookup engines or real-time content delivery network routing fabrics requiring lock-free concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple centralized caching systems where standard lock-based maps provide lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node removal in a lock-free Skip-Graph?",
+          "answer": "Hazard pointers protect actively traversed nodes by publishing references to thread-local records, preventing reclamation and reuse until all reading threads unpublish their hazard pointers."
+        },
+        {
+          "question": "Why are atomic routing-pointer CAS primitives preferred over fine-grained mutexes in high-throughput content delivery networks?",
+          "answer": "CAS primitives eliminate kernel-level context switching, thread blocking, and convoy effects, allowing maximum throughput under heavy read-heavy decentralized routing loads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Lists",
+        "Hazard Pointer Memory Reclamation",
+        "Decentralized Peer-to-Peer Routing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:17:02.473561+00:00",
+      "run_number": 959
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **958** |
-| Last Updated | `2026-09-15T22:13:55.014790+00:00` |
-| Dataset Size | `958 entries` |
+| Total Topics Learned | **959** |
+| Last Updated | `2026-09-15T22:17:02.473583+00:00` |
+| Dataset Size | `959 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 125 |
+| data-structures | 126 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer distributed lookup in real-time content delivery networks`
 - `Implementation of a lock-free thread-safe concurrent B* Tree using atomic node-splitting and epoch-based memory reclamation for high-throughput concurrency-optimized node balancing in real-time distributed database management systems`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation update CAS primitives and hazard pointer memory reclamation for high-throughput range updates and queries in real-time financial market data ticker streaming and high-frequency order book analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum CAS primitives and epoch-based memory reclamation for high-throughput cumulative frequency updates and range-sum queries in real-time clickstream analytics and streaming metrics aggregation pipelines`
 - `Implementation of a lock-free thread-safe concurrent Persistent AVL Tree using atomic node-versioning CAS primitives and hazard pointer memory reclamation for high-throughput time-travel querying and immutable state management in real-time distributed version control storage engines`
-- `Implementation of a lock-free thread-safe concurrent RCU (Read-Copy Update) hash table using atomic pointer-swap primitives and epoch-based memory reclamation for high-throughput read-mostly lookups in real-time Linux kernel networking and high-frequency trading configurations`
 
 <!-- STATS_END -->
 
