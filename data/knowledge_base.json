@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 941,
-    "last_updated": "2026-09-15T18:56:22.702517+00:00",
-    "total_topics_learned": 941
+    "total_runs": 942,
+    "last_updated": "2026-09-15T18:59:31.449941+00:00",
+    "total_topics_learned": 942
   },
   "entries": [
     {
@@ -45312,6 +45312,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T18:56:22.702498+00:00",
       "run_number": 941
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Ring Buffer (Circular Queue) using atomic head-tail pointer wrapping and hazard pointer memory reclamation for high-throughput single-producer multi-consumer event streaming in real-time telemetry ingestion pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent ring buffer utilizes atomic head and tail pointer manipulation to allow continuous data streaming in a fixed-size memory array without locking overhead. Integrating hazard pointers ensures safe memory reclamation for dynamic node or buffer allocations under heavy multi-consumer contention.",
+      "key_points": [
+        "Employs atomic fetch-and-add or compare-and-swap operations on head and tail indices to manage queue wrapping safely.",
+        "Eliminates locks to prevent thread contention, priority inversion, and kernel context switches in real-time ingestion pipelines.",
+        "Utilizes hazard pointers to track active reader references, preventing premature deallocation or reuse of buffer slots by writers.",
+        "Optimizes cache utilization by pre-allocating contiguous memory blocks, making it ideal for high-frequency telemetry streams."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic tail advancement and wrap-around calculation in a lock-free ring buffer.",
+        "correct": "bool push(const T& item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    size_t current_head = head.load(std::memory_order_acquire);\n    if ((current_tail + 1) % Capacity == current_head) return false; // Full\n    buffer[current_tail] = item;\n    tail.store((current_tail + 1) % Capacity, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool push(const T& item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to distinguish between buffer capacity and usable slots, leading off-by-one errors or permanent buffer full states.",
+        "Incorrect memory ordering (e.g., using relaxed memory order where acquire-release semantics are required for pointer synchronization)."
+      ],
+      "best_practices": [
+        "Use power-of-two buffer capacities to replace expensive modulo arithmetic with fast bitwise AND operations.",
+        "Align atomic head and tail pointers to cache lines (e.g., 64 bytes) to prevent false sharing between producer and consumer threads."
+      ],
+      "when_to_use": "When designing high-throughput, low-latency single-producer multi-consumer architectures such as real-time IoT telemetry or financial tick data ingestion engines.",
+      "when_not_to_use": "When the queue size must dynamically expand beyond a fixed upper bound or when multiple concurrent producers write to the same buffer without complex coordination.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer when head equals tail?",
+          "answer": "By either leaving one slot permanently empty to differentiate states, or by utilizing an external monotonic sequence counter for total items pushed and popped."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free ring buffer with dynamic resizing?",
+          "answer": "Hazard pointers allow threads to publish which memory nodes they are currently accessing, preventing other threads from reclaiming or freeing those nodes until all readers have unlinked their hazard references."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Queues",
+        "Hazard Pointers and Memory Reclamation",
+        "False Sharing and Cache Line Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T18:59:31.449923+00:00",
+      "run_number": 942
     }
   ]
 }
