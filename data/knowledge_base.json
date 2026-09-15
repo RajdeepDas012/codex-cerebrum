@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 964,
-    "last_updated": "2026-09-15T22:32:40.831654+00:00",
-    "total_topics_learned": 964
+    "total_runs": 965,
+    "last_updated": "2026-09-15T22:35:48.041208+00:00",
+    "total_topics_learned": 965
   },
   "entries": [
     {
@@ -46397,6 +46397,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T22:32:40.831632+00:00",
       "run_number": 964
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time distributed task scheduling and network routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Binomial Heap leveraging atomic root-list pointer manipulations and hazard pointers for safe memory management. It enables efficient mergeable priority queue operations, allowing multiple threads to concurrently combine heaps and extract extrema without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage root lists and safely link binomial trees of equal degree.",
+        "Employs hazard pointers to track and safely reclaim memory of deleted nodes or detached binomial trees without triggering ABA problems.",
+        "Provides efficient merge operations by uniting root lists of binomial heaps in logarithmic time bounds.",
+        "Ensures thread-safe concurrent insertions and minimum extractions under heavy contention in real-time distributed systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic linking of two binomial tree roots using a CAS loop.",
+        "correct": "bool link_trees(std::atomic<Node*>& root_a, Node* root_b) {\n    Node* current = root_a.load();\n    while (true) {\n        root_b->child = current;\n        if (root_a.compare_exchange_weak(current, root_b)) return true;\n    }\n}",
+        "wrong": "bool link_trees(std::atomic<Node*>& root_a, Node* root_b) {\n    root_b->child = root_a.load();\n    root_a.store(root_b); // Non-atomic read-modify-write causes data races\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child and sibling pointers, leading to use-after-free bugs.",
+        "Not handling degree collisions correctly during parallel root-list merges, resulting in malformed binomial tree structures."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers in thread-local hazard pointer records prior to dereferencing heap nodes.",
+        "Batch retired node reclamation to amortize the overhead of hazard pointer scans across multiple queue operations."
+      ],
+      "when_to_use": "Use when multiple producer-consumer threads need to frequently merge distinct priority queues and extract minimums concurrently with minimal latency.",
+      "when_not_to_use": "Avoid when standard single-threaded priority queues suffice or when memory overhead from hazard pointer tracking is prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating root pointers via CAS in a concurrent binomial heap?",
+          "answer": "By pairing pointers with monotonically increasing version tags or counters, or by using hazard pointers that prevent concurrent reclamation until the reference is dropped."
+        },
+        {
+          "question": "What makes merging a binomial heap more complex in a lock-free setting compared to a sequential one?",
+          "answer": "Concurrent threads may simultaneously attempt to link binomial trees of the same degree into the same parent root list, requiring careful atomic CAS retry loops to reconcile structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Fibonacci Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:35:48.041187+00:00",
+      "run_number": 965
     }
   ]
 }
