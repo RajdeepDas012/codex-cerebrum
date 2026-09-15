@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 890,
-    "last_updated": "2026-09-15T04:02:25.797819+00:00",
-    "total_topics_learned": 890
+    "total_runs": 891,
+    "last_updated": "2026-09-15T04:06:17.693407+00:00",
+    "total_topics_learned": 891
   },
   "entries": [
     {
@@ -42898,6 +42898,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:02:25.797800+00:00",
       "run_number": 890
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-link tree using atomic right-link pointer propagation and epoch-based memory reclamation for high-throughput concurrent index traversal in real-time in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-link tree extends the classic B-tree by adding right-link pointers to all nodes at the same level, enabling lock-free or optimistic latch-free traversals. By leveraging atomic operations for pointer propagation and epoch-based reclamation, it allows high-throughput concurrent reads and writes without global locks.",
+      "key_points": [
+        "Incorporates explicit right-link pointers on every tree level to guide traversals if nodes are concurrently split.",
+        "Utilizes atomic Compare-And-Swap (CAS) operations to install new child pointers and propagate right links during node splits.",
+        "Employs epoch-based memory reclamation (EBMR) or hazard pointers to safely free node memory without premature deallocation.",
+        "Eliminates cascading locks during splits by completing structural modifications in small, atomic steps."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic right-link pointer loading and traversal correction during concurrent splits",
+        "correct": "Node* curr = root;\nwhile (!curr->is_leaf) {\n    Node* next = curr->find_child(key);\n    while (next->right_link != nullptr && key >= next->right_link->min_key) {\n        next = next->right_link;\n    }\n    curr = next;\n}",
+        "wrong": "Node* curr = root;\nwhile (!curr->is_leaf) {\n    curr = curr->find_child(key); // Missing right-link check during concurrent splits leads to missed keys\n}"
+      },
+      "common_mistakes": [
+        "Failing to check right-link pointers when a reader arrives at a node that has undergone a concurrent split.",
+        "Reclaiming memory of deleted nodes immediately without ensuring active threads have exited the current epoch.",
+        "Not handling deadlocks or livelocks properly during multi-node restructuring operations."
+      ],
+      "best_practices": [
+        "Always validate node versions or epoch guards before and after reading internal node pointers.",
+        "Keep node split and right-link installation steps atomic to minimize the window for stale traversals.",
+        "Use cache-line aligned allocations for tree nodes to maximize performance in multi-core memory architectures."
+      ],
+      "when_to_use": "High-throughput in-memory database engines and multi-threaded key-value stores requiring heavy concurrent read and write workloads on ordered indices.",
+      "when_not_to_use": "Single-threaded applications or environments with extremely low concurrency where standard blocking B-trees offer simpler implementation and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a B-link tree prevent reader threads from missing data when a node splits concurrently?",
+          "answer": "By adding right-link pointers to every node level, readers that fall behind a split can follow the right-link pointer to find the newly migrated keys without requiring a restart or global lock."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation critical for lock-free B-link trees?",
+          "answer": "It ensures that memory allocated to nodes removed during splits or merges is not freed while other threads might still be traversing or referencing those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:06:17.693388+00:00",
+      "run_number": 891
     }
   ]
 }
