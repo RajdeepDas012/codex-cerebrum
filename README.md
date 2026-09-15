@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **931** |
-| Last Updated | `2026-09-15T15:18:57.674652+00:00` |
-| Dataset Size | `931 entries` |
+| Total Topics Learned | **932** |
+| Last Updated | `2026-09-15T15:22:49.391395+00:00` |
+| Dataset Size | `932 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| data-structures | 104 |
+| data-structures | 105 |
 | crypto-blockchain | 79 |
 | system-design | 77 |
 | stocks-markets | 71 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous execution engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval boundary adjustment and epoch-based memory reclamation for high-throughput overlapping range-query indexing in real-time cybersecurity packet inspection and scheduling systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and epoch-based memory reclamation for high-throughput string pattern indexing in real-time genomic bioinformatics sequence alignment engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node propagation and hazard pointer memory reclamation for high-throughput incremental data verification in real-time distributed storage synchronization pipelines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and epoch-based memory reclamation for high-throughput decentralized peer-to-peer distributed lookup in real-time cloud storage overlays`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and epoch-based memory reclamation for high-throughput disk-backed and in-memory index management in real-time relational database storage engines`
 
 <!-- STATS_END -->
 

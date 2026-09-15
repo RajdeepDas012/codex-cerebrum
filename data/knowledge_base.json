@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 931,
-    "last_updated": "2026-09-15T15:18:57.674652+00:00",
-    "total_topics_learned": 931
+    "total_runs": 932,
+    "last_updated": "2026-09-15T15:22:49.391395+00:00",
+    "total_topics_learned": 932
   },
   "entries": [
     {
@@ -44838,6 +44838,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-15T15:18:57.674630+00:00",
       "run_number": 931
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent priority queue that utilizes lock-free atomic primitives for heap-node displacement alongside hazard pointers to manage memory safely without blocking threads. It is crucial for high-performance task schedulers where thread contention must be minimized to maintain low-latency asynchronous execution.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) operations to manipulate heap nodes and handle concurrent insertions and extractions without locks.",
+        "Employs hazard pointers to track threads actively referencing specific heap nodes, preventing premature memory recycling.",
+        "Manages heap-node displacement gracefully to resolve race conditions during priority inversions and structural rebalancing.",
+        "Maximizes throughput in real-time asynchronous engines by eliminating mutual exclusion overhead and kernel context switches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic heap-node CAS manipulation protected by hazard pointers during concurrent priority queue extraction.",
+        "correct": "void* extract_min(LockFreePriorityQueue* q, HazardPointerRegistry* hp) {\n    Node* old_root;\n    void* val;\n    do {\n        old_root = q->root.load(std::memory_order_acquire);\n        if (!old_root) return nullptr;\n        hp->protect(0, old_root);\n    } while (q->root.load(std::memory_order_acquire) != old_root);\n    val = old_root->value;\n    if (q->root.compare_exchange_strong(old_root, get_replacement_node(q))) {\n        hp->retire(old_root);\n    }\n    hp->clear(0);\n    return val;\n}",
+        "wrong": "void* extract_min(LockFreePriorityQueue* q) {\n    std::lock_guard<std::mutex> lock(q->mu);\n    return q->pop();\n}"
+      },
+      "common_mistakes": [
+        "Failing to re-check node stability after setting a hazard pointer, leading to use-after-free race conditions.",
+        "Using expensive synchronization primitives like mutexes inside low-latency critical paths instead of pure atomic operations."
+      ],
+      "best_practices": [
+        "Ensure hazard pointer protection slots are acquired and cleared strictly in accordance with thread-local lifecycle protocols.",
+        "Design heap-node displacement algorithms to minimize cascading structural updates under high contention."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous execution engines or real-time task schedulers requiring extreme concurrent scaling under heavy thread contention.",
+      "when_not_to_use": "Avoid in low-concurrency environments or memory-constrained embedded systems where simpler blocking priority queues or garbage-collected runtimes are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing before reading it, signaling memory management subsystems to defer freeing that specific node until no thread holds a hazard pointer referencing it."
+        },
+        {
+          "question": "What is the primary challenge of maintaining a heap structure lock-free, and how is atomic node displacement used to address it?",
+          "answer": "The primary challenge is that modifying a heap often requires updating multiple distant nodes (like parent-child relationships) atomically. Atomic node displacement uses multi-step CAS sequences or state flags on nodes to allow concurrent threads to help complete pending structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip-Lists",
+        "Atomic Compare-And-Swap Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T15:22:49.391375+00:00",
+      "run_number": 932
     }
   ]
 }
