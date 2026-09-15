@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 957,
-    "last_updated": "2026-09-15T22:10:47.804450+00:00",
-    "total_topics_learned": 957
+    "total_runs": 958,
+    "last_updated": "2026-09-15T22:13:55.014790+00:00",
+    "total_topics_learned": 958
   },
   "entries": [
     {
@@ -46067,6 +46067,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T22:10:47.804428+00:00",
       "run_number": 957
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B* Tree using atomic node-splitting and epoch-based memory reclamation for high-throughput concurrency-optimized node balancing in real-time distributed database management systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent B* Tree utilizing atomic operations for node splitting and epoch-based memory management. It enables high-throughput, lock-free node balancing, minimizing lock contention and ensuring safe memory reclamation in high-performance distributed databases.",
+      "key_points": [
+        "Utilizes atomic primitives to handle concurrent node-splitting and routing table updates without acquiring global mutex locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely free nodes removed during balancing operations only after active threads have exited the current epoch.",
+        "Maximizes node occupancy compared to standard B-trees by enforcing a higher fill factor through key redistribution among siblings prior to splits.",
+        "Provides linearizable range queries and point lookups suited for high-concurrency storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-splitting mechanics for safe concurrent insertion in a lock-free B* tree structure.",
+        "correct": "bool try_split_node(std::atomic<Node*>& node_ptr, Node* expected_node, Node* new_right_node) {\n    return node_ptr.compare_exchange_strong(expected_node, new_right_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool unsafe_split(Node* node_ptr, Node* new_node) {\n    node_ptr->next = new_node; // Missing atomic CAS operation, leading to race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to guard deleted nodes with epoch tracking, leading to use-after-free bugs when concurrent readers access split paths.",
+        "Failing to handle failed compare-and-swap (CAS) loops on saturated nodes, resulting in lost updates or infinite spin cycles."
+      ],
+      "best_practices": [
+        "Integrate backoff strategies in CAS retry loops to reduce memory bus contention during heavy multi-threaded write spikes.",
+        "Ensure node layouts are cache-line aligned to optimize traversal performance across multiple CPU cores."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed database engines requiring low-latency, read-heavy workloads with frequent concurrent index modifications.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with extremely scarce memory where epoch-based deferred reclamation overhead is unjustified.",
+      "interview_questions": [
+        {
+          "question": "How does a B* tree differ from a standard B+ tree regarding node balancing, and why does this matter for concurrency?",
+          "answer": "B* trees ensure nodes are filled to at least 2/3 (instead of 1/2) by redistributing keys to adjacent siblings before splitting, reducing tree depth and the frequency of structural modifications under high concurrency."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting when implementing lock-free tree structures?",
+          "answer": "Epoch-based reclamation avoids the high cache-coherency overhead and atomic instruction traffic associated with updating shared reference counters on every read traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T22:13:55.014768+00:00",
+      "run_number": 958
     }
   ]
 }
