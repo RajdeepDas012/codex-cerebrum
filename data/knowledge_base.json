@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 948,
-    "last_updated": "2026-09-15T19:18:43.655256+00:00",
-    "total_topics_learned": 948
+    "total_runs": 949,
+    "last_updated": "2026-09-15T19:21:51.043849+00:00",
+    "total_topics_learned": 949
   },
   "entries": [
     {
@@ -45642,6 +45642,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T19:18:43.655238+00:00",
       "run_number": 948
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient set-membership querying in real-time distributed storage and caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Cuckoo Filter that supports high-throughput set-membership queries without global locks. By combining atomic Compare-And-Swap (CAS) fingerprint operations with epoch-based memory management, it allows multiple threads to safely insert, delete, and check items simultaneously while minimizing cache misses and memory overhead.",
+      "key_points": [
+        "Utilizes cuckoo hashing principles where each item maps to two alternative bucket locations based on its fingerprint and hash.",
+        "Employs atomic CAS primitives to swap or place fingerprints into buckets without locking the entire filter structure.",
+        "Integrates epoch-based memory reclamation (EBMR) to safely manage dynamic resizing and node displacement without causing use-after-free bugs.",
+        "Provides deletion support natively—unlike traditional Bloom filters—while maintaining higher space efficiency under high load factors."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of alternative bucket index calculation using partial-key cuckoo hashing.",
+        "correct": "def get_alt_index(index, fingerprint, table_size):\n    h_fp = hash(fingerprint)\n    return (index ^ h_fp) % table_size",
+        "wrong": "def get_alt_index(index, fingerprint, table_size):\n    return (index + 1) % table_size"
+      },
+      "common_mistakes": [
+        "Failing to bound the cuckoo displacement loop, leading to infinite loops when the filter approaches maximum capacity.",
+        "Using naive locking mechanisms that degrade parallel scaling instead of leveraging atomic CAS loops for fingerprint relocation."
+      ],
+      "best_practices": [
+        "Keep fingerprints compact (e.g., 8 to 16 bits) to maximize cache locality and fit more buckets into CPU cache lines.",
+        "Implement a maximum displacement threshold (e.g., 500 re-entries) to trigger automatic resizing or re-hashing when insertion fails."
+      ],
+      "when_to_use": "When you need high-throughput, lock-free set-membership queries with support for item deletion in memory-constrained distributed environments.",
+      "when_not_to_use": "When your application requires zero false positives or when the workload has extremely low concurrency where simple locked structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter resolve a collision during insertion when both alternative buckets are occupied?",
+          "answer": "It displaces an existing fingerprint from one of the buckets, moving the evicted fingerprint to its own alternative bucket, repeating this process iteratively until an empty slot is found or a max displacement limit is reached."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in a lock-free Cuckoo Filter resize operation?",
+          "answer": "Epoch-based reclamation avoids the high overhead and cache-line bouncing associated with frequent atomic reference count increments on every read operation, delaying reclamation until all participating threads exit the current safe epoch."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent Hash Tables",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T19:21:51.043830+00:00",
+      "run_number": 949
     }
   ]
 }
