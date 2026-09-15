@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 900,
-    "last_updated": "2026-09-15T04:28:25.317012+00:00",
-    "total_topics_learned": 900
+    "total_runs": 901,
+    "last_updated": "2026-09-15T04:29:08.913853+00:00",
+    "total_topics_learned": 901
   },
   "entries": [
     {
@@ -43374,6 +43374,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:28:25.316991+00:00",
       "run_number": 900
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and hazard pointer memory reclamation for high-throughput task scheduling in real-time asynchronous background job processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent priority queue utilizing atomic primitives for heap-node displacement alongside hazard pointers to safely manage dynamic memory reclamation under high contention. This architecture allows multiple worker threads to enqueue and dequeue prioritized tasks simultaneously without blocking, preventing bottlenecks in high-throughput asynchronous job systems.",
+      "key_points": [
+        "Employs atomic Compare-And-Swap (CAS) operations to manage thread-safe heap reordering and node displacement.",
+        "Utilizes hazard pointers to track active thread references to heap nodes, preventing premature deallocation and use-after-free bugs.",
+        "Minimizes synchronization overhead by avoiding traditional mutexes, ensuring high-throughput task scheduling for background worker pools.",
+        "Maintains heap invariants under concurrent modifications via optimistic concurrency control and retry loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node pushing using atomic pointer updates with hazard pointers.",
+        "correct": "void enqueue(Node* newNode) {\n    while (true) {\n        Node* oldTop = atomic_load(&top);\n        newNode->next = oldTop;\n        if (atomic_compare_exchange_weak(&top, &oldTop, newNode)) break;\n    }\n}",
+        "wrong": "void enqueue(Node* newNode) {\n    mutex.lock();\n    newNode->next = top;\n    top = newNode;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to memory corruption if another thread deletes the node.",
+        "Using strong CAS operations unconditionally in tight loops on architectures where weak CAS offers better performance characteristics."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer records per thread to minimize cache-line bouncing and false sharing.",
+        "Implement exponential backoff or randomized jitter within retry loops during periods of extreme thread contention.",
+        "Batch memory reclamation requests to amortize the performance cost of scanning hazard pointer arrays."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous task schedulers where thread contention on priority queues creates severe bottlenecks with standard locks.",
+      "when_not_to_use": "Avoid in systems with low concurrency, simple single-threaded requirements, or platforms lacking robust native atomic CAS primitives.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free priority queue?",
+          "answer": "Hazard pointers act as a publication mechanism where a thread announces which node it is currently accessing. Reclamation mechanisms check these pointers before freeing memory, ensuring no other thread can access a deallocated node, while version counters or pointer tagging handle the ABA problem."
+        },
+        {
+          "question": "Why is maintaining a complete binary heap structure lock-free significantly harder than a lock-free stack or queue?",
+          "answer": "Unlike stacks or queues where modifications happen exclusively at the head or tail, heap operations often require structural updates across multiple branches (such as percolate-up or percolate-down), making atomic multi-node updates difficult without extensive CAS validation loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Epoch-based memory reclamation",
+        "Concurrent work-stealing schedulers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T04:29:08.913832+00:00",
+      "run_number": 901
     }
   ]
 }
