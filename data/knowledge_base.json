@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 893,
-    "last_updated": "2026-09-15T04:12:34.751060+00:00",
-    "total_topics_learned": 893
+    "total_runs": 894,
+    "last_updated": "2026-09-15T04:15:42.202506+00:00",
+    "total_topics_learned": 894
   },
   "entries": [
     {
@@ -43041,6 +43041,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:12:34.751042+00:00",
       "run_number": 893
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and epoch-based memory reclamation for high-throughput substring search and genomic sequence alignment in real-time bioinformatics pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a thread-safe, lock-free Suffix Array optimized for parallel genomic matching and rapid text analysis. By utilizing atomic operations for index manipulation and epoch-based memory management, it avoids global lock contention during high-throughput query operations.",
+      "key_points": [
+        "Employs atomic CAS primitives to safely manage suffix index updates across multiple concurrent threads.",
+        "Integrates epoch-based memory reclamation (EMR) to safely deallocate obsolete index structures without blocking readers.",
+        "Maximizes cache locality through compact index representation tailored for massive biological datasets.",
+        "Enables logarithmic-time substring searches via parallelized binary searches over the sorted suffix array."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic registration of a suffix array read operation using an epoch-based protection guard.",
+        "correct": "void safe_search(EpochManager& em, const SuffixArray& sa, const std::string& pattern) {\n    EpochGuard guard(em);\n    auto range = sa.find_concurrent(pattern);\n    process_matches(range);\n}",
+        "wrong": "void unsafe_search(SuffixArray& sa, const std::string& pattern) {\n    // Missing epoch protection, leading to use-after-free if another thread updates the array\n    auto range = sa.find_unsafe(pattern);\n    process_matches(range);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to pin the current thread's epoch before traversing pointers, risking premature memory reclamation.",
+        "Using heavy mutex locks for internal index re-sorting, which creates severe bottlenecks in multi-core bioinformatics pipelines."
+      ],
+      "best_practices": [
+        "Batch atomic updates where possible to minimize CAS instruction retry loops under high thread contention.",
+        "Align structural metadata to cache-line boundaries to prevent false sharing between worker threads.",
+        "Profile memory reclamation latency to balance garbage collection frequency against peak memory consumption."
+      ],
+      "when_to_use": "Ideal for high-throughput, latency-critical bioinformatics applications requiring real-time concurrent reads and writes on massive genomic text corpuses.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of epoch management and atomic primitives outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to update suffix indices concurrently without using coarse-grained locks?",
+          "answer": "By leveraging atomic Compare-And-Swap (CAS) operations to update descriptor pointers and index references safely."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in a high-throughput lock-free Suffix Array?",
+          "answer": "Epoch-based reclamation avoids the severe memory bus contention and cache-line bouncing associated with frequent atomic increments and decrements of reference counts on shared read-heavy nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Epoch-Based Memory Reclamation",
+        "Compressed Suffix Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:15:42.202485+00:00",
+      "run_number": 894
     }
   ]
 }
