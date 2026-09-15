@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **883** |
-| Last Updated | `2026-09-15T00:31:08.406656+00:00` |
-| Dataset Size | `883 entries` |
+| Total Topics Learned | **884** |
+| Last Updated | `2026-09-15T03:43:38.631731+00:00` |
+| Dataset Size | `884 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,7 +26,7 @@
 | data-structures | 65 |
 | probability-math | 27 |
 | databases | 14 |
-| algorithms | 11 |
+| algorithms | 12 |
 | machine-learning | 10 |
 | web-dev | 9 |
 | security | 8 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent HyperLogLog sketch using atomic register merging and max-value bitwise CAS operations for high-throughput cardinality estimation in real-time distributed stream analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent Critique-Bit-Vector sketch using atomic rank-select primitives and hazard pointer reclamation for high-throughput compressed inverted index searching in real-time enterprise search engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient-Cuckoo hybrid filter using atomic fingerprint migration and dynamic resizing primitives for high-throughput in-memory approximate membership query pipelines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length merge operations and hazard pointer memory reclamation for high-throughput priority queue scheduling in real-time task management pipelines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list pointer CAS operations and hazard pointer memory reclamation for high-throughput mergeable priority queue scheduling in real-time distributed task execution engines`
-- `Implementation of a lock-free thread-safe concurrent Sparse Table using atomic interval-index mapping and epoch-based memory reclamation for high-throughput static range minimum query analytics in real-time financial trading telemetry engines`
 
 <!-- STATS_END -->
 
