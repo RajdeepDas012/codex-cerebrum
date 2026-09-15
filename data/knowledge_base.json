@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 908,
-    "last_updated": "2026-09-15T04:51:42.228751+00:00",
-    "total_topics_learned": 908
+    "total_runs": 909,
+    "last_updated": "2026-09-15T04:54:49.555314+00:00",
+    "total_topics_learned": 909
   },
   "entries": [
     {
@@ -43751,6 +43751,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T04:51:42.228729+00:00",
       "run_number": 908
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation CAS primitives and epoch-based memory reclamation for high-throughput IP routing table longest-prefix matching in real-time software-defined networking packet processing pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a highly concurrent Radix Tree optimized for lock-free IP routing lookups. By leveraging atomic Compare-And-Swap (CAS) primitives and epoch-based memory reclamation, it enables multiple packet processing threads to query and update routing tables simultaneously without lock contention.",
+      "key_points": [
+        "Utilizes bitwise trie traversal to execute high-throughput longest-prefix matching for IP addresses.",
+        "Employs atomic node allocation and pointer CAS operations to achieve lock-free thread safety.",
+        "Integrates epoch-based memory reclamation (EMR) to safely deallocate deleted routing nodes without ABA hazards.",
+        "Minimizes thread contention and synchronization bottlenecks in multi-core software-defined networking (SDN) data planes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using CAS for concurrent Radix Tree child insertion",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    return __atomic_compare_exchange_n(&parent->children[bit], &parent->children[bit], new_node, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED);\n}",
+        "wrong": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect memory reclamation with an epoch manager, leading to use-after-free faults during concurrent deletions.",
+        "Using non-atomic checks followed by atomic writes (check-then-act race conditions) when instantiating missing intermediate nodes."
+      ],
+      "best_practices": [
+        "Wrap multi-step traversals and node insertions inside proper epoch guard scopes to guarantee safe memory lifecycles.",
+        "Optimize memory layouts by compacting node child pointers to fit cache lines and reduce cache misses during deep packet lookups."
+      ],
+      "when_to_use": "When implementing high-performance packet forwarding engines or software-defined networking control planes requiring ultra-low latency longest-prefix lookups under heavy multi-threaded concurrency.",
+      "when_not_to_use": "When memory usage is heavily constrained and simple hash-based exact matching or sequential single-threaded lookups are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when multiple threads concurrently add or remove children in a lock-free Radix Tree?",
+          "answer": "By combining atomic pointer updates with version tags or by utilizing epoch-based memory reclamation which delays actual node deallocation until all active threads have exited the current epoch."
+        },
+        {
+          "question": "Why is a Radix Tree preferred over a standard Hash Table for IP routing table lookups in network switches?",
+          "answer": "Because IP routing requires longest-prefix matching (finding the route entry with the most significant matching bits), which hash tables cannot support natively without scanning all possible prefix lengths."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Trie",
+        "Software-Defined Networking Data Planes"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T04:54:49.555292+00:00",
+      "run_number": 909
     }
   ]
 }
