@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 936,
-    "last_updated": "2026-09-15T15:36:23.612037+00:00",
-    "total_topics_learned": 936
+    "total_runs": 937,
+    "last_updated": "2026-09-15T15:39:33.469832+00:00",
+    "total_topics_learned": 937
   },
   "entries": [
     {
@@ -45073,6 +45073,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-15T15:36:23.612016+00:00",
       "run_number": 936
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Octree using atomic voxel-subdivision and epoch-based memory reclamation for high-throughput 3D spatial occupancy querying in real-time robotic lidar point-cloud mapping engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent 3D spatial index that uses atomic operations to manage voxel subdivisions and epoch-based memory reclamation to safely free nodes without locks. It is critical for autonomous robotics systems processing dense, high-frequency lidar point clouds simultaneously across multiple threads.",
+      "key_points": [
+        "Utilizes atomic pointer swapping to handle concurrent voxel node subdivision without blocking worker threads",
+        "Employs epoch-based memory reclamation (EMR) to safely defer deletion of deprecated tree nodes until all active readers have exited the critical section",
+        "Structures 3D space recursively into eight octants, allowing fast raycasting and volume querying for lidar-based point clouds",
+        "Ensures linearizability of point insertions and occupancy checks under heavy contention from multiple sensor-processing pipelines"
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node CAS-based insertion in a concurrent octree node",
+        "correct": "bool Octant::try_insert_child(int octant_index, Octant* new_child) {\n    Octant* expected = nullptr;\n    return children[octant_index].compare_exchange_strong(expected, new_child);\n}",
+        "wrong": "bool Octant::try_insert_child(int octant_index, Octant* new_child) {\n    if (children[octant_index] == nullptr) {\n        children[octant_index] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Using standard garbage collection or manual deletion without epochs, leading to use-after-free race conditions during concurrent traversals",
+        "Failing to handle spurious failures of compare-and-swap (CAS) loops when multiple worker threads attempt to subdivide the same boundary voxel simultaneously"
+      ],
+      "best_practices": [
+        "Integrate an epoch-based reclamation manager (like EBR or Hazard Pointers) to track thread participation in spatial query loops",
+        "Keep spatial bounding-box calculations lightweight and pre-compute bitwise octant indexing macros to minimize CPU overhead during point insertion"
+      ],
+      "when_to_use": "When multiple processing threads need to read and update a shared 3D spatial point cloud map simultaneously with minimal latency, such as in autonomous vehicle navigation.",
+      "when_not_to_use": "When the application is single-threaded, or when memory overhead from pointer structures and epoch tracking outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free bugs when another thread deletes an octant node during a concurrent spatial query?",
+          "answer": "By using epoch-based memory reclamation, threads entering a traversal register their active epoch, ensuring nodes are only reclaimed after all threads have advanced past that epoch."
+        },
+        {
+          "question": "What is the primary synchronization challenge when two threads attempt to subdivide the same leaf voxel simultaneously?",
+          "answer": "Race conditions on child pointer initialization, which must be resolved using atomic compare-and-swap (CAS) operations to ensure only one child pointer installation succeeds."
+        }
+      ],
+      "related_topics": [
+        "Epoch-based memory reclamation",
+        "Lock-free data structures",
+        "3D Spatial Indexing and Lidar Processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-15T15:39:33.469811+00:00",
+      "run_number": 937
     }
   ]
 }
