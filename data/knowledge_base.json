@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 915,
-    "last_updated": "2026-09-15T09:57:35.298201+00:00",
-    "total_topics_learned": 915
+    "total_runs": 916,
+    "last_updated": "2026-09-15T10:00:43.377925+00:00",
+    "total_topics_learned": 916
   },
   "entries": [
     {
@@ -44082,6 +44082,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-15T09:57:35.298191+00:00",
       "run_number": 915
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell increment CAS primitives and array-slot multi-hashing for high-throughput heavy-hitter and frequency estimation queries in real-time network traffic monitoring pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch provides a probabilistic data structure for estimating item frequencies in data streams without the overhead of global locks. By utilizing atomic Compare-And-Swap (CAS) operations on frequency-cell arrays mapped via multiple hash functions, it achieves scalable high-throughput updates ideal for real-time network telemetry.",
+      "key_points": [
+        "Employs multiple independent hash functions to map incoming stream elements into a 2D grid of counters.",
+        "Uses atomic increment (CAS) primitives to avoid mutex contention during simultaneous multi-threaded updates.",
+        "Guarantees sub-linear space complexity while bounding frequency estimation error within predictable probabilistic limits.",
+        "Eliminates false negatives entirely while bounding false positives strictly to overestimations caused by hash collisions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual atomic frequency increment across multiple hash rows for a concurrent Count-Min Sketch.",
+        "correct": "import threading\n\nclass ConcurrentCMS:\n    def __init__(self, width, depth):\n        self.width = width\n        self.depth = depth\n        self.table = [[0] * width for _ in range(depth)]\n        self.locks = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n\n    def add(self, item):\n        for i in range(self.depth):\n            col = hash((item, i)) % self.width\n            with self.locks[i][col]:\n                self.table[i][col] += 1",
+        "wrong": "class UnsafeCMS:\n    def __init__(self, width, depth):\n        self.table = [[0] * width for _ in range(depth)]\n    def add(self, item):\n        for i in range(self.depth):\n            col = hash((item, i)) % self.width\n            self.table[i][col] += 1  # Race condition on concurrent updates!"
+      },
+      "common_mistakes": [
+        "Relying on non-atomic read-modify-write sequences which leads to lost frequency increments under high concurrency.",
+        "Using correlated hash functions instead of independent universal hash families, which inflates the estimation error bounds."
+      ],
+      "best_practices": [
+        "Size the sketch dimensions (width and depth) based on acceptable error bounds and memory constraints prior to initialization.",
+        "Leverage hardware-level atomic fetch-and-add instructions where available instead of heavier software CAS loops to minimize CPU cycle overhead."
+      ],
+      "when_to_use": "Use when tracking high-velocity item streams in multi-threaded environments where exact counting is too memory-intensive and approximate frequency bounds are acceptable.",
+      "when_not_to_use": "Avoid when absolute exact frequency counts are required or when the input data stream size is small enough to fit a standard exact hash map comfortably.",
+      "interview_questions": [
+        {
+          "question": "How does a Count-Min Sketch handle hash collisions, and can it underestimate frequencies?",
+          "answer": "Collisions cause frequency values to be shared with other items, resulting in potential overestimations. It never underestimates because counts are only ever incremented."
+        },
+        {
+          "question": "Why are atomic CAS operations or fetch-and-add instructions necessary when scaling a Count-Min Sketch for multi-threaded environments?",
+          "answer": "Without atomic primitives, concurrent threads updating the same array slots will experience race conditions, resulting in lost updates and severely corrupted frequency estimates."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filter",
+        "Lock-Free Programming",
+        "Stream Processing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-15T10:00:43.377913+00:00",
+      "run_number": 916
     }
   ]
 }
