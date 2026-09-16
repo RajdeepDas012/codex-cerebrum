@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 976,
-    "last_updated": "2026-09-16T01:34:56.964366+00:00",
-    "total_topics_learned": 976
+    "total_runs": 977,
+    "last_updated": "2026-09-16T01:38:06.645170+00:00",
+    "total_topics_learned": 977
   },
   "entries": [
     {
@@ -46964,6 +46964,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T01:34:56.964348+00:00",
       "run_number": 976
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic distance-node CAS primitives and hazard pointer memory reclamation for high-throughput approximate string matching and spell checking in real-time dictionary search and autocomplete pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Burkhard-Keller (BK) tree that leverages atomic compare-and-swap (CAS) operations on child distance pointers alongside hazard pointers for safe memory reclamation. It enables high-throughput, multi-threaded approximate string matching and edit-distance calculations without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic distance-node mapping to link child nodes based on metric distance (e.g., Levenshtein distance) in a lock-free manner.",
+        "Employs hazard pointer reclamation to safely free detached tree nodes without causing use-after-free race conditions in concurrent readers.",
+        "Supports concurrent insertions and lookups, allowing multi-threaded autocomplete engines to query approximate matches simultaneously.",
+        "Minimizes thread contention by avoiding coarse-grained mutexes during recursive tree traversal and branch expansion."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS insertion of a child node into a BK-tree distance bucket using hazard pointers.",
+        "correct": "bool insert_child(Node* parent, int dist, Node* new_child, HazardPointerList& hp_list) {\n    HazardPointerGuard guard(hp_list, parent);\n    while (true) {\n        Node* current = parent->children[dist].load(std::memory_order_acquire);\n        new_child->next.store(current, std::memory_order_relaxed);\n        if (parent->children[dist].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int dist, Node* new_child) {\n    parent->lock.lock();\n    parent->children_map[dist] = new_child;\n    parent->lock.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to memory corruption if another thread deletes or reorganizes a subtree.",
+        "Using sequential memory ordering on CAS operations instead of acquiring and releasing correctly, resulting in stale structural views across threads."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with a thread-local hazard pointer domain before reading child pointers or distance values.",
+        "Batch retired nodes in thread-local reclamation lists to reduce the synchronization overhead of global memory management."
+      ],
+      "when_to_use": "Ideal for high-throughput autocomplete and spell-checking systems running on multi-core hardware that require real-time approximate string searches.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low read/write concurrency where standard blocking trees offer simpler implementation and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent memory leaks and race conditions when a node is concurrently replaced or unlinked in a lock-free BK-Tree?",
+          "answer": "By using hazard pointers to track active thread references to nodes, delaying actual memory deallocation until no threads hold a hazard pointer to the targeted node."
+        },
+        {
+          "question": "Why is structural modification in a concurrent BK-Tree more complex than in a concurrent flat hash map?",
+          "answer": "Because BK-Trees rely on hierarchical metric space properties where updates involve navigating multi-way distance branches, requiring fine-grained atomic pointer updates rather than simple bucket-level slot swaps."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Radix Trees",
+        "Hazard Pointer Memory Management",
+        "Metric Space Indexing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:38:06.645150+00:00",
+      "run_number": 977
     }
   ]
 }
