@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1034,
-    "last_updated": "2026-09-16T22:15:21.104959+00:00",
-    "total_topics_learned": 1034
+    "total_runs": 1035,
+    "last_updated": "2026-09-16T22:18:28.735584+00:00",
+    "total_topics_learned": 1035
   },
   "entries": [
     {
@@ -49718,6 +49718,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T22:15:21.104939+00:00",
       "run_number": 1034
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and hazard pointer memory reclamation for high-throughput range-scan queries and key-value indexing in real-time in-memory database management systems",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent data structure designed for real-time in-memory databases, enabling high-throughput point lookups and range scans without global locks. It uses atomic compare-and-swap (CAS) primitives on leaf-sibling pointers and hazard pointers to safely manage memory reclamation in multi-threaded environments.",
+      "key_points": [
+        "Utilizes atomic leaf-sibling pointers to maintain sequential traversal paths during concurrent splits and merges without locking parent nodes.",
+        "Employs hazard pointers to track thread access to nodes, preventing premature deallocation and ensuring safe memory reclamation in lock-free designs.",
+        "Optimizes range-scan queries by allowing threads to traverse directly across leaf nodes via atomic link pointers, bypassing the root and internal nodes.",
+        "Minimizes contention hotspots through fine-grained node-level modifications and optimistic lock-free retry loops on structural updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe pointer acquisition using hazard pointers during a concurrent tree traversal.",
+        "correct": "Node* hazard_protect_node(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "Node* unsafe_traverse(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(std::memory_order_relaxed); // Fails to protect against concurrent deletion\n}"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory barriers (acquire-release semantics) when loading and updating atomic sibling pointers.",
+        "Forgetting to clear or retire hazard pointers promptly, leading to massive memory leaks or blocked reclamation queues."
+      ],
+      "best_practices": [
+        "Always validate that a protected node has not been detached from the tree after acquiring its hazard pointer.",
+        "Batch retired nodes in thread-local storage to amortize the cost of global hazard pointer scans during memory reclamation."
+      ],
+      "when_to_use": "Ideal for in-memory database systems experiencing high-frequency concurrent read-write workloads and heavy range-scan requirements.",
+      "when_not_to_use": "Avoid in simple or low-concurrency applications where standard coarse-grained locking or single-threaded B+ trees provide sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do atomic leaf-sibling pointers help avoid locking parent nodes during range scans?",
+          "answer": "They provide alternative horizontal traversal paths across leaf nodes, allowing reader threads to scan contiguous data ranges without traversing back up to internal routing nodes."
+        },
+        {
+          "question": "What is the primary role of hazard pointers in a lock-free B+ Tree implementation?",
+          "answer": "They act as a local synchronization mechanism that announces which nodes are currently being accessed by a thread, preventing other threads from prematurely freeing those memory blocks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Skip Lists",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Index Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T22:18:28.735564+00:00",
+      "run_number": 1035
     }
   ]
 }
