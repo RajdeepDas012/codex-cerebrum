@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 977,
-    "last_updated": "2026-09-16T01:38:06.645170+00:00",
-    "total_topics_learned": 977
+    "total_runs": 978,
+    "last_updated": "2026-09-16T01:41:14.629243+00:00",
+    "total_topics_learned": 978
   },
   "entries": [
     {
@@ -47011,6 +47011,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T01:38:06.645150+00:00",
       "run_number": 977
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell increment CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter stream frequency estimation in real-time network traffic monitoring and distributed telemetry analytics pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Count-Min Sketch data structure optimized for multi-threaded streaming data analysis. By leveraging atomic compare-and-swap (CAS) operations for frequency cell increments and epoch-based memory management, it guarantees high-throughput updates and queries without global locks for real-time network telemetry and heavy-hitter detection.",
+      "key_points": [
+        "Utilizes a 2D array of frequency counters backed by multiple independent hash functions to map incoming stream elements.",
+        "Employs atomic fetch-add or CAS primitives on individual frequency cells to achieve lock-free concurrent updates from multiple worker threads.",
+        "Integrates epoch-based memory reclamation (EBMR) to safely manage dynamic resizing or structural adjustments without incurring garbage collection pauses.",
+        "Provides a probabilistic frequency upper bound guarantee with controllable error bounds and confidence parameters."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic increment on a Count-Min Sketch matrix row cell using a CAS loop.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCMSCell {\n    std::vector<std::atomic<uint64_t>> table;\npublic:\n    void increment(size_t hash_idx) {\n        uint64_t current = table[hash_idx].load(std::memory_order_relaxed);\n        while (!table[hash_idx].compare_exchange_weak(current, current + 1,\n            std::memory_order_release, std::memory_order_relaxed)) {\n            // Retries automatically on CAS failure\n        }\n    }\n};",
+        "wrong": "class UnsafeCMSCell {\n    std::vector<uint64_t> table;\npublic:\n    void increment(size_t hash_idx) {\n        table[hash_idx]++; // Data race under concurrent multithreading\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic increments on the frequency matrix, leading to lost updates and severe estimation undercounts under high concurrency.",
+        "Failing to use appropriate memory orderings (like acquire-release or relaxed), causing unnecessary synchronization overhead and cache line bouncing."
+      ],
+      "best_practices": [
+        "Align matrix rows or cells to CPU cache line boundaries to prevent false sharing across intensely active concurrent writer threads.",
+        "Select hash functions that are computationally efficient and distribute stream keys uniformly across the sketch width to minimize collision error."
+      ],
+      "when_to_use": "Use when you need to track item frequencies or identify heavy hitters across ultra-high-speed data streams in multi-threaded environments where exact counting requires too much memory.",
+      "when_not_to_use": "Avoid when exact counts are strictly required without any probabilistic overestimation error, or when stream volumes are low enough for simple hash maps.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions in a Count-Min Sketch, and what impact do they have on frequency estimates?",
+          "answer": "Collisions cause the sketch to return an estimated frequency that is greater than or equal to the true frequency, bounded by the error parameters, but never an underestimate."
+        },
+        {
+          "question": "Why is a lock-free CAS-based approach preferred over a global mutex lock when implementing high-throughput stream estimators?",
+          "answer": "Global locks introduce thread contention and serialization bottlenecks, whereas atomic CAS operations allow multiple worker threads to update distinct frequency cells concurrently without blocking."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:41:14.629224+00:00",
+      "run_number": 978
     }
   ]
 }
