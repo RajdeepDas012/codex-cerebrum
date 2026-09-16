@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1010,
-    "last_updated": "2026-09-16T13:57:50.248578+00:00",
-    "total_topics_learned": 1010
+    "total_runs": 1011,
+    "last_updated": "2026-09-16T14:01:50.164207+00:00",
+    "total_topics_learned": 1011
   },
   "entries": [
     {
@@ -48582,6 +48582,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T13:57:50.248559+00:00",
       "run_number": 1010
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking CAS primitives and epoch-based memory reclamation for high-throughput deletion-supported set-membership querying in real-time distributed storage and caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Cuckoo Filter that supports item deletions and high-throughput set-membership queries without global locks. By using atomic Compare-And-Swap (CAS) primitives for bucket displacement chains and epoch-based memory reclamation, multiple threads can safely insert, delete, and query probabilistic items concurrently.",
+      "key_points": [
+        "Utilizes fingerprint-based hashing and two alternative candidate buckets to provide space-efficient set-membership testing.",
+        "Employs atomic bucket-kicking (cuckoo displacement) via CAS primitives to resolve collisions safely across multiple concurrent writer threads.",
+        "Integrates epoch-based memory reclamation (EMR) to safely manage memory overhead and reuse during dynamic structural adjustments.",
+        "Supports true item deletions unlike classic Bloom filters, which prevents phantom positive matches and unbounded storage growth."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic fingerprint insertion with bucket displacement via CAS for a concurrent Cuckoo Filter.",
+        "correct": "bool insert_item(std::atomic<Bucket>& bucket, uint8_t fingerprint) {\n    uint8_t current = bucket.load(std::memory_order_relaxed);\n    while (true) {\n        if (current == 0) {\n            if (bucket.compare_exchange_weak(current, fingerprint, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            break; // Needs kicking logic\n        }\n    }\n    return false;\n}",
+        "wrong": "bool insert_item(std::atomic<Bucket>& bucket, uint8_t fingerprint) {\n    // Missing atomic loop and hazard/epoch tracking, leading to race conditions during concurrent evictions\n    bucket.store(fingerprint);\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to bound the cuckoo displacement loop, resulting in infinite loops or deadlocks during high load factors.",
+        "Neglecting epoch-based memory management during bucket resizing operations, causing use-after-free bugs for concurrent reader threads."
+      ],
+      "best_practices": [
+        "Set a strict maximum displacement threshold (e.g., 500 kicks) before triggering a concurrent filter resize.",
+        "Use relaxed memory ordering for non-critical reads, and acquire-release semantics strictly around state-changing CAS operations."
+      ],
+      "when_to_use": "Ideal for high-concurrency distributed caching systems requiring space-efficient probabilistic set-membership queries with frequent item deletions.",
+      "when_not_to_use": "Avoid when zero false positives are mandatory or when memory constraints are non-existent, as exact hash sets or traditional locking structures may be simpler.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent cuckoo kicking loops without falling into infinite deadlock states?",
+          "answer": "By imposing a strict maximum displacement threshold and transitioning the filter to a resizing state or returning a table-full status when the limit is breached."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free cuckoo filters?",
+          "answer": "Epoch-based reclamation avoids the high atomic write contention and overhead of updating reference counters on every single read operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent Hash Maps",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T14:01:50.164186+00:00",
+      "run_number": 1011
     }
   ]
 }
