@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **981** |
-| Last Updated | `2026-09-16T01:50:40.310557+00:00` |
-| Dataset Size | `981 entries` |
+| Total Topics Learned | **982** |
+| Last Updated | `2026-09-16T01:53:47.818865+00:00` |
+| Dataset Size | `982 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 146 |
+| data-structures | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box splitting CAS primitives and hazard pointer memory reclamation for high-throughput spatial indexing and multi-dimensional range querying in real-time geographic information systems (GIS) and autonomous vehicle mapping engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic coordinate-splitting CAS primitives and hazard pointer memory reclamation for high-throughput spatial indexing and nearest-neighbor querying in real-time location-based services and multi-player gaming spatial partitioning servers`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking CAS primitives and epoch-based memory reclamation for high-throughput deletion-supported set-membership querying in real-time distributed key-value storage and web caching engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating CAS primitives and epoch-based memory reclamation for high-throughput cardinality estimation in real-time big data stream analytics and distributed unique-visitor tracking engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell increment CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter stream frequency estimation in real-time network traffic monitoring and distributed telemetry analytics pipelines`
-- `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic distance-node CAS primitives and hazard pointer memory reclamation for high-throughput approximate string matching and spell checking in real-time dictionary search and autocomplete pipelines`
 
 <!-- STATS_END -->
 
