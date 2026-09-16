@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1026,
-    "last_updated": "2026-09-16T18:41:17.608732+00:00",
-    "total_topics_learned": 1026
+    "total_runs": 1027,
+    "last_updated": "2026-09-16T18:44:25.776119+00:00",
+    "total_topics_learned": 1027
   },
   "entries": [
     {
@@ -49340,6 +49340,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-16T18:41:17.608709+00:00",
       "run_number": 1026
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and merge operations in real-time graph algorithms and shortest-path routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Fibonacci Heap utilizing atomic compare-and-swap (CAS) operations and hazard pointers. It ensures safe memory reclamation and high-throughput updates, which are essential for performance-critical real-time graph traversal and distributed routing protocols.",
+      "key_points": [
+        "Leverages atomic min-pointer updates using CAS primitives to manage the global minimum root across concurrent threads without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural root-list consolidations without causing ABA problems or memory leaks.",
+        "Supports amortized $O(1)$ insert and merge operations, making it uniquely suited for algorithms requiring frequent priority updates like Dijkstra's.",
+        "Addresses concurrency challenges during decrease-key operations where multi-parent structural cutting requires synchronization across disconnected tree branches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node registration and atomic min-pointer updates using hazard pointers.",
+        "correct": "void* hazard_ptr = acquire_hazard_pointer(&thread_local_hp, node);\nwhile (!min_ptr.compare_exchange_weak(current_min, new_node)) {\n    if (new_node->key >= current_min->key) break;\n}\nrelease_hazard_pointer(&thread_local_hp);",
+        "wrong": "min_ptr = new_node;"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes being actively unlinked during structural consolidation with hazard pointers, leading to use-after-free race conditions.",
+        "Using naive compare-and-swap loops on multi-pointer cascading cuts without validating the node state, causing inconsistent heap topologies."
+      ],
+      "best_practices": [
+        "Group hazard pointers into a thread-local array and scan the global reclamation retired list only when a threshold limit is crossed.",
+        "Ensure node state flags (e.g., marked status for cascading cuts) are packed into the same atomic word as pointer metadata to enable single-instruction state transitions."
+      ],
+      "when_to_use": "Use when implementing high-performance concurrent graph algorithms like distributed Dijkstra's or Prim's algorithm where decrease-key and merge operations dominate the workload.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or workloads where standard binary heaps or pairing heaps provide better cache locality and lower constant overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when multiple threads concurrently modify and delete nodes in a lock-free Fibonacci Heap?",
+          "answer": "By using hazard pointers to protect nodes currently being accessed by threads, combined with epoch-based reclamation or tagged pointers that incorporate version counters into the atomic CAS word."
+        },
+        {
+          "question": "Why is the traditional cascading cut operation difficult to implement in a lock-free environment?",
+          "answer": "Because it requires traversing up parent pointers and modifying multiple nodes atomically across different branches, which can lead to deadlocks or race conditions if not carefully broken down into atomic step-by-step CAS validations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free B-link Tree",
+        "Concurrent Priority Queues",
+        "Atomic CAS Primitives"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-16T18:44:25.776098+00:00",
+      "run_number": 1027
     }
   ]
 }
