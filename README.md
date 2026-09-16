@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1008** |
-| Last Updated | `2026-09-16T13:50:45.583523+00:00` |
-| Dataset Size | `1008 entries` |
+| Total Topics Learned | **1009** |
+| Last Updated | `2026-09-16T13:53:58.813982+00:00` |
+| Dataset Size | `1009 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | system-design | 77 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| algorithms | 19 |
+| algorithms | 20 |
 | databases | 17 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Count-Sketch using atomic frequency-bucket updating CAS primitives and epoch-based memory reclamation for high-throughput heavy hitter and inner product estimation in real-time streaming telemetry and distributed network monitoring engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom-ier Than You Filter using atomic fingerprint-vector shifting CAS primitives and epoch-based memory reclamation for high-throughput deletion-supported probabilistic set-membership querying in real-time distributed storage and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node linking CAS primitives and hazard pointer memory reclamation for high-throughput cryptographic verification and state synchronization in real-time distributed ledger and blockchain consensus engines`
 - `Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic node-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix string searching and autocompletion in real-time search engine query suggestion pipelines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation CAS primitives and hazard pointer memory reclamation for high-throughput prefix routing and IP table lookups in real-time software-defined networking packet processing engines`
-- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-linking CAS primitives and hazard pointer memory reclamation for high-throughput range searches and flash-memory optimized indexing in real-time embedded database storage engines`
 
 <!-- STATS_END -->
 
