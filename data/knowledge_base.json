@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 991,
-    "last_updated": "2026-09-16T07:52:20.487681+00:00",
-    "total_topics_learned": 991
+    "total_runs": 992,
+    "last_updated": "2026-09-16T07:55:28.513680+00:00",
+    "total_topics_learned": 992
   },
   "entries": [
     {
@@ -47674,6 +47674,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T07:52:20.487665+00:00",
       "run_number": 991
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking CAS primitives and hazard pointer memory reclamation for high-throughput generalized suffix matching and genomic sequence analysis in real-time bioinformatics data processing pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Suffix Tree utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely manage node links and memory reclamation. It enables high-throughput generalized substring matching and pattern discovery essential for real-time genomic analysis pipelines.",
+      "key_points": [
+        "Utilizes atomic operations (CAS) to manage child pointer links and node insertions without acquiring global locks.",
+        "Employs hazard pointers to track thread-local active node accesses, preventing premature memory reclamation and ABA problems.",
+        "Supports generalized suffix structures containing multiple genomic sequences for simultaneous multi-genome alignment queries.",
+        "Guarantees linearizability and progress guarantees (lock-free) for concurrent thread insertions and traversal operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer insertion in a concurrent suffix tree node using CAS.",
+        "correct": "bool insert_child(Node* parent, char c, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[c].load();\n        if (current != nullptr) return false; // Already exists\n        if (parent->children[c].compare_exchange_weak(current, new_child)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, char c, Node* new_child) {\n    if (parent->children[c] == nullptr) {\n        parent->children[c] = new_child; // Non-atomic write causes race conditions\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free race conditions when another thread unlinks nodes.",
+        "Forgetting to handle the ABA problem when performing CAS operations on node transition pointers during concurrent node splits."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for root-to-leaf traversal nodes before reading their transition links.",
+        "Batch retired nodes into thread-local free lists and reclaim them only after all active hazard pointer epochs clear."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to insert and query large collections of strings or genomic sequences with minimal contention.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where memory overhead of hazard pointers and complex lock-free mechanics outweigh raw throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation races in a lock-free suffix tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, preventing other threads from freeing those memory locations until all references are cleared."
+        },
+        {
+          "question": "Why is standard lock-based synchronization inefficient for concurrent suffix tree insertions?",
+          "answer": "Global or fine-grained locking causes thread contention and convoying during deep tree traversals and cascading node splits, whereas lock-free CAS ensures continuous thread progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Array",
+        "Concurrent Directed Acyclic Word Graph (DAWG)",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T07:55:28.513661+00:00",
+      "run_number": 992
     }
   ]
 }
