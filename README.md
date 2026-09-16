@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **996** |
-| Last Updated | `2026-09-16T08:08:12.775895+00:00` |
-| Dataset Size | `996 entries` |
+| Total Topics Learned | **997** |
+| Last Updated | `2026-09-16T08:11:20.473841+00:00` |
+| Dataset Size | `997 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 161 |
+| data-structures | 162 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task dispatching and discrete event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic pointer-linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task scheduling and multi-agent simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra pathfinding and network optimization routing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and hazard pointer memory reclamation for high-throughput range scans and ordered key-value indexing in real-time in-memory database transaction processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory key-value storage and database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking CAS primitives and hazard pointer memory reclamation for high-throughput generalized suffix matching and genomic sequence analysis in real-time bioinformatics data processing pipelines`
 
 <!-- STATS_END -->
 

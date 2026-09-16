@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 996,
-    "last_updated": "2026-09-16T08:08:12.775895+00:00",
-    "total_topics_learned": 996
+    "total_runs": 997,
+    "last_updated": "2026-09-16T08:11:20.473841+00:00",
+    "total_topics_learned": 997
   },
   "entries": [
     {
@@ -47911,6 +47911,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T08:08:12.775878+00:00",
       "run_number": 996
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task dispatching and discrete event simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Leftist Heap that guarantees fast merge operations by maintaining leftist properties via atomic Compare-And-Swap (CAS) primitives. It leverages hazard pointers to safely manage memory reclamation under high contention without relying on coarse-grained locks.",
+      "key_points": [
+        "Utilizes atomic root-merging CAS operations to combine two concurrent leftist heaps without blocking worker threads.",
+        "Maintains leftist tree invariants—where the null path length of the left child is at least as large as that of the right child—despite concurrent modifications.",
+        "Employs hazard pointers to track active references to tree nodes, preventing premature deallocation during lock-free traversal and restructuring.",
+        "Ensures high-throughput priority queue operations tailored for real-time task dispatchers and complex event-driven simulators."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic root-merging step for a concurrent leftist heap node using memory reclamation safety.",
+        "correct": "Node* safe_merge(Node* volatile* root_ptr, Node* new_node, HazardPointer& hp) {\n    Node* current;\n    do {\n        current = hp.protect(*root_ptr);\n        new_node->right = current;\n    } while (!__atomic_compare_exchange_n(root_ptr, &current, new_node, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED));\n    return new_node;\n}",
+        "wrong": "Node* unsafe_merge(Node** root_ptr, Node* new_node) {\n    new_node->right = *root_ptr;\n    *root_ptr = new_node;\n    return new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate tree nodes with hazard pointers, leading to use-after-free race conditions during concurrent merges.",
+        "Neglecting to rebalance or maintain the leftist property invariant after executing lock-free pointer swaps."
+      ],
+      "best_practices": [
+        "Always acquire and clear hazard pointer slots locally within thread execution contexts before altering shared pointers.",
+        "Minimize CAS retry loops by batching merge operations or utilizing backoff strategies under heavy thread contention."
+      ],
+      "when_to_use": "Use when multiple worker threads frequently need to merge priority queues and schedule time-sensitive events concurrently with minimal latency.",
+      "when_not_to_use": "Avoid in single-threaded contexts or scenarios where standard mutex-protected binary heaps provide sufficient performance with simpler implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node-merging in a lock-free leftist heap?",
+          "answer": "Hazard pointers publish the nodes a thread is currently accessing, preventing any other thread from reclaiming those specific memory addresses until the reference is released, thus ensuring safe traversal and atomic validation."
+        },
+        {
+          "question": "What is the primary structural invariant maintained by a leftist heap, and how does concurrent merging complicate its preservation?",
+          "answer": "A leftist heap ensures that the null path length (NPL) of the left child is greater than or equal to the NPL of the right child. Concurrent merging complicates this because structural swaps to preserve the invariant can conflict with other threads modifying overlapping subtrees, requiring careful CAS validation loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queue Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T08:11:20.473821+00:00",
+      "run_number": 997
     }
   ]
 }
