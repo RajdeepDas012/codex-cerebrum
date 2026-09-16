@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 998,
-    "last_updated": "2026-09-16T08:14:27.783070+00:00",
-    "total_topics_learned": 998
+    "total_runs": 999,
+    "last_updated": "2026-09-16T13:20:15.451710+00:00",
+    "total_topics_learned": 999
   },
   "entries": [
     {
@@ -48005,6 +48005,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-16T08:14:27.783050+00:00",
       "run_number": 998
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic root-rebalancing CAS primitives and hazard pointer memory reclamation for high-throughput amortized balanced search tree operations in real-time in-memory key-value caching and database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Scapegoat Tree that achieves balance through partial rebuilds rather than complex node color rotations or strict height invariants. It uses atomic compare-and-swap (CAS) primitives and hazard pointers to ensure safe memory reclamation and high-concurrency performance without explicit mutex locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage tree restructuring and root pointer updates safely across multiple concurrent threads.",
+        "Employs hazard pointers to track active references to tree nodes, preventing premature memory deallocation during asynchronous rebalancing cycles.",
+        "Implements amortized weight-balanced invariants where a subtree exceeding a specific depth threshold triggers a complete flattening and rebuilding of that subtree.",
+        "Eliminates global lock contention, making it exceptionally well-suited for high-throughput real-time in-memory caching and database indexing workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of checking subtree weight imbalances to trigger a scapegoat structural rebuild.",
+        "correct": "def check_and_rebuild(node, alpha):\n    if node and (node.left_weight > alpha * node.total_weight or node.right_weight > alpha * node.total_weight):\n        return rebuild_subtree(node)\n    return node",
+        "wrong": "def check_and_rebuild(node, alpha):\n    global_lock.acquire()\n    rebalance_entire_tree()\n    global_lock.release()"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to use-after-free errors when concurrent threads trigger a subtree rebuild.",
+        "Attempting to perform fine-grained rotations like standard AVL or Red-Black trees under a lock-free model instead of utilizing Scapegoat's bulk-rebuilding approach."
+      ],
+      "best_practices": [
+        "Keep hazard pointer tracking lists thread-local to minimize cache-line bouncing and lock-free coordination overhead.",
+        "Batch node deletions and recycling requests to reduce the immediate strain on the hazard pointer reclamation subsystem.",
+        "Carefully tune the weight-balance parameter (alpha) to balance the frequency of costly structural rebuilds against search performance."
+      ],
+      "when_to_use": "Use this when building high-concurrency in-memory caching layers or key-value indices where lock-free progress guarantees and amortized balance characteristics are required.",
+      "when_not_to_use": "Avoid this in simple single-threaded applications or environments where the overhead of hazard pointers and heavy subtree rebuilding outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How does a Scapegoat Tree differ from traditional balanced search trees like AVL or Red-Black trees in a lock-free concurrent environment?",
+          "answer": "Unlike AVL or Red-Black trees which require localized rotations that are notoriously difficult to implement lock-free, Scapegoat trees rely on periodic weight-based subtree flattening and rebuilding, which maps much more cleanly to atomic CAS-based operations."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Scapegoat Tree?",
+          "answer": "Hazard pointers protect nodes from being reclaimed or freed by memory management systems while another thread is actively traversing or reading them during concurrent modifications or subtree rebuilds."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip List",
+        "Amortized Balanced Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T13:20:15.451690+00:00",
+      "run_number": 999
     }
   ]
 }

@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **998** |
-| Last Updated | `2026-09-16T08:14:27.783070+00:00` |
-| Dataset Size | `998 entries` |
+| Total Topics Learned | **999** |
+| Last Updated | `2026-09-16T13:20:15.451710+00:00` |
+| Dataset Size | `999 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 163 |
+| data-structures | 164 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic root-rebalancing CAS primitives and hazard pointer memory reclamation for high-throughput amortized balanced search tree operations in real-time in-memory key-value caching and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time event-driven simulation and asynchronous task scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task dispatching and discrete event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic pointer-linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task scheduling and multi-agent simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra pathfinding and network optimization routing engines`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and hazard pointer memory reclamation for high-throughput range scans and ordered key-value indexing in real-time in-memory database transaction processing engines`
 
 <!-- STATS_END -->
 
