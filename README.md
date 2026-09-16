@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1003** |
-| Last Updated | `2026-09-16T13:34:42.063876+00:00` |
-| Dataset Size | `1003 entries` |
+| Total Topics Learned | **1004** |
+| Last Updated | `2026-09-16T13:37:59.446522+00:00` |
+| Dataset Size | `1004 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 168 |
+| data-structures | 169 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-linking CAS primitives and hazard pointer memory reclamation for high-throughput range searches and flash-memory optimized indexing in real-time embedded database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value indexing in real-time in-memory database storage and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput cache-efficient set-membership querying in real-time distributed storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-splaying CAS primitives and hazard pointer memory reclamation for high-throughput self-adjusting search tree operations in real-time in-memory key-value caching and database transaction engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed caching and database query optimization engines`
-- `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic root-rebalancing CAS primitives and hazard pointer memory reclamation for high-throughput amortized balanced search tree operations in real-time in-memory key-value caching and database indexing engines`
 
 <!-- STATS_END -->
 
