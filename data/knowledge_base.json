@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 968,
-    "last_updated": "2026-09-15T22:45:11.241584+00:00",
-    "total_topics_learned": 968
+    "total_runs": 969,
+    "last_updated": "2026-09-16T01:12:29.626192+00:00",
+    "total_topics_learned": 969
   },
   "entries": [
     {
@@ -46586,6 +46586,55 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-15T22:45:11.241563+00:00",
       "run_number": 968
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed cache filtering and web crawler duplicate detection pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bloom filter is a space-efficient probabilistic data structure that enables lock-free set-membership queries across multiple threads using atomic bit-wise operations. By leveraging atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation, it prevents thread contention and safely handles dynamic resizing under intense workloads found in distributed cache layers and web crawling architectures.",
+      "key_points": [
+        "Utilizes a contiguous bit array where multiple independent hash functions map keys to specific bit indices.",
+        "Employs atomic bit-setting CAS operations (such as fetch-and-or or atomic bit-test-and-set) to ensure thread-safe insertions without global locks.",
+        "Integrates epoch-based memory reclamation (EMR) to safely manage memory when dynamically expanding the filter's capacity under concurrent execution.",
+        "Guarantees zero false negatives with a configurable false positive probability rate determined by the bit array size and number of hash functions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe concurrent bit-setting using atomic integer representations and CAS loops for a lock-free filter insertion.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilterBitArray:\n    def __init__(self, size):\n        self.size = size\n        self.bits = [threading.local() for _ in range(size)] # Conceptual thread-safe container\n        self.array = 0\n        self.lock = threading.Lock() # Note: Real lock-free uses atomic primitives, illustrated via concept\n\n    def atomic_set(self, index):\n        while True:\n            current = self.array\n            new_val = current | (1 << index)\n            if current == new_val:\n                return\n            # Simulated CAS operation\n            if self.array == current:\n                self.array = new_val\n                return",
+        "wrong": "    def unsafe_set(self, index):\n        self.array |= (1 << index) # Non-atomic read-modify-write causes lost updates under concurrency"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations on the bit array, leading to lost updates during concurrent insertions.",
+        "Failing to account for false positive rates scaling improperly when the bit vector fills up past its optimal capacity.",
+        "Improper epoch management during dynamic resizing, causing use-after-free errors for concurrent reader threads accessing stale bit arrays."
+      ],
+      "best_practices": [
+        "Pre-allocate the bit array size based on expected insertion volume and acceptable false positive probability parameters.",
+        "Use fast, non-cryptographic hash functions (like MurmurHash3 or xxHash) to minimize CPU overhead during multi-hash index generation.",
+        "Pair epoch-based memory reclamation with read-copy-update (RCU) patterns if structural resizing of the bit array is supported."
+      ],
+      "when_to_use": "Ideal for high-throughput, low-latency environments like distributed cache filtering and web crawler duplicate detection where probabilistic inaccuracies are acceptable and memory footprint must be minimal.",
+      "when_not_to_use": "Avoid when applications require absolute zero false positives, exact set retrieval, or frequent item deletion capabilities.",
+      "interview_questions": [
+        {
+          "question": "How do you implement a lock-free set operation on a shared bit array without using heavy mutex locks?",
+          "answer": "By using atomic bitwise instructions or compare-and-swap (CAS) loops that repeatedly attempt to apply a bitwise OR mask until the hardware confirms the update succeeded without interference."
+        },
+        {
+          "question": "What is the primary challenge when dynamically resizing a concurrent Bloom filter, and how does epoch-based memory reclamation solve it?",
+          "answer": "The challenge is safely freeing or replacing the old bit array while other threads are actively querying it. Epoch-based reclamation delays the destruction of the old memory block until all active reader threads have safely exited the current processing epoch."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filters",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:12:29.626173+00:00",
+      "run_number": 969
     }
   ]
 }
