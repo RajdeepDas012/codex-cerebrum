@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 993,
-    "last_updated": "2026-09-16T07:58:36.439689+00:00",
-    "total_topics_learned": 993
+    "total_runs": 994,
+    "last_updated": "2026-09-16T08:01:43.778829+00:00",
+    "total_topics_learned": 994
   },
   "entries": [
     {
@@ -47768,6 +47768,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-16T07:58:36.439668+00:00",
       "run_number": 993
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and hazard pointer memory reclamation for high-throughput range scans and ordered key-value indexing in real-time in-memory database transaction processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree that utilizes atomic leaf-sibling pointer modifications via Compare-And-Swap (CAS) and hazard pointers for safe memory management. It is crucial for high-throughput in-memory databases requiring scalable range scans and ordered key lookups without thread contention.",
+      "key_points": [
+        "Uses atomic leaf-sibling pointers to allow readers to bypass lock acquisitions during sequential range scans across nodes.",
+        "Employs CAS (Compare-And-Swap) primitives for lock-free node splitting, merging, and pointer updates under high contention.",
+        "Integrates hazard pointers to safely defer memory reclamation of deleted nodes until all concurrent traversal threads have detached.",
+        "Maintains strict internal separation between routing keys in inner nodes and actual key-value records stored exclusively in leaf nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for updating leaf-sibling pointers during a concurrent node split operation.",
+        "correct": "while (!node->next.compare_exchange_weak(old_next, new_node, std::memory_order_release, std::memory_order_relaxed));",
+        "wrong": "node->next = new_node;"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption or use-after-free bugs when another thread deletes a node.",
+        "Updating leaf-sibling pointers out of order during splits, which causes range scan threads to miss keys or fall into infinite loops."
+      ],
+      "best_practices": [
+        "Ensure memory ordering constraints (acquire-release) are correctly paired with atomic CAS operations to guarantee visibility of split node contents across threads.",
+        "Epoch-based reclamation or hazard pointers should be scoped tightly around tree traversals to minimize memory footprint latency."
+      ],
+      "when_to_use": "Use when building high-performance, in-memory transactional storage engines requiring massive concurrent reads, writes, and ordered range scans with minimal thread blocking.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where simpler locking mechanisms or standard library containers provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do leaf-sibling pointers help maintain lock-free progress during a concurrent range scan if a node split occurs mid-traversal?",
+          "answer": "If a split happens, the traversal thread can follow the atomic leaf-sibling pointer to access the newly created right sibling without needing to restart the search from the root."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing internal nodes or leaf nodes in a lock-free B+ Tree?",
+          "answer": "Hazard pointers prevent a thread from reclaiming memory of a node that another concurrent thread is currently reading or traversing, avoiding use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B-link Tree",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T08:01:43.778809+00:00",
+      "run_number": 994
     }
   ]
 }
