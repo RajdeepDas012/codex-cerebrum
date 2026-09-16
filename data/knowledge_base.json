@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 973,
-    "last_updated": "2026-09-16T01:25:28.159645+00:00",
-    "total_topics_learned": 973
+    "total_runs": 974,
+    "last_updated": "2026-09-16T01:28:36.381236+00:00",
+    "total_topics_learned": 974
   },
   "entries": [
     {
@@ -46823,6 +46823,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T01:25:28.159626+00:00",
       "run_number": 973
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix-based routing and IP lookup in real-time software-defined networking (SDN) packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance concurrent Radix Tree optimized for lock-free prefix routing. By combining atomic edge-splitting with hazard pointers, it allows multiple threads to concurrently query and modify IP routing tables without blocking or memory corruption.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely manage node insertions and edge splits without global locks.",
+        "Employs hazard pointers to track active thread references to nodes, safely deferring memory reclamation until no thread is inspecting the node.",
+        "Optimizes memory layout and path compression for rapid longest-prefix matching required in modern software-defined networking (SDN) data planes.",
+        "Prevents race conditions when two threads attempt to insert overlapping prefixes simultaneously by rolling back or retrying atomic transitions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic updating of a Radix Tree node edge pointer using CAS.",
+        "correct": "bool update_edge(RadixNode* parent, RadixNode* old_child, RadixNode* new_child) {\n    return __atomic_compare_exchange_n(&parent->child, &old_child, new_child, false, __ATOMIC_RELEASE, __ATOMIC_RELAXED);\n}",
+        "wrong": "RadixNode* old_child = parent->child;\nparent->child = new_child; // Non-atomic update causes data races in multi-threaded environments"
+      },
+      "common_mistakes": [
+        "Reclaiming node memory immediately after unlinking it from the tree while other threads still hold active traversal pointers.",
+        "Failing to handle mid-insertion edge splits correctly, resulting in orphaned subtrees or infinite traversal loops."
+      ],
+      "best_practices": [
+        "Wrap all pointer traversals in a hazard pointer domain to protect nodes from being freed mid-read.",
+        "Keep edge split operations atomic by constructing the new intermediate node locally before attempting to swing the parent pointer via CAS."
+      ],
+      "when_to_use": "Use this when building high-throughput packet forwarders, routers, or routing tables in software-defined networking where concurrent IP prefix lookup latency must be minimized.",
+      "when_not_to_use": "Avoid this for simple key-value workloads with exact-match requirements where standard concurrent hash maps or skip-lists are significantly simpler to implement.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs during concurrent node deletion in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow reader threads to publish the address of the node they are currently visiting. Reclaimer threads scan these published pointers and defer freeing any node until no hazard pointer references it, avoiding premature deallocation."
+        },
+        {
+          "question": "What is the primary challenge when two threads simultaneously split the same edge in a concurrent Radix Tree?",
+          "answer": "Both threads will attempt to CAS the parent's child pointer to their newly created intermediate node. Only one CAS will succeed; the other thread must detect the failure, reload the new state, and retry its operation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Trie Data Structures",
+        "Longest Prefix Matching Algorithms in SDN"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:28:36.381217+00:00",
+      "run_number": 974
     }
   ]
 }

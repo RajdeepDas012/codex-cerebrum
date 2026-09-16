@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **973** |
-| Last Updated | `2026-09-16T01:25:28.159645+00:00` |
-| Dataset Size | `973 entries` |
+| Total Topics Learned | **974** |
+| Last Updated | `2026-09-16T01:28:36.381236+00:00` |
+| Dataset Size | `974 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| data-structures | 139 |
+| data-structures | 140 |
 | market-analysis | 114 |
 | crypto-blockchain | 80 |
 | system-design | 77 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix-based routing and IP lookup in real-time software-defined networking (SDN) packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion CAS primitives and epoch-based memory reclamation for high-throughput immutable key-value lookups in real-time distributed state management and functional programming state stores`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value lookups in real-time in-memory database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging CAS primitives and epoch-based memory reclamation for high-throughput percentile estimation in real-time distributed telemetry and APM performance monitoring pipelines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput quotient-remainder set-membership querying in real-time distributed database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed cache filtering and web crawler duplicate detection pipelines`
 
 <!-- STATS_END -->
 
