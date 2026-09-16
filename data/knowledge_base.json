@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1035,
-    "last_updated": "2026-09-16T22:18:28.735584+00:00",
-    "total_topics_learned": 1035
+    "total_runs": 1036,
+    "last_updated": "2026-09-16T22:21:37.001536+00:00",
+    "total_topics_learned": 1036
   },
   "entries": [
     {
@@ -49766,6 +49766,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T22:18:28.735564+00:00",
       "run_number": 1035
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer CAS primitives and hazard pointer memory reclamation for high-throughput IP routing table lookup and prefix matching in real-time software-defined networking (SDN) packet forwarding engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Radix Tree utilizing atomic compare-and-swap (CAS) operations for child-pointer updates and hazard pointers for safe memory management. It is vital for achieving ultra-low latency and high scalability in real-time SDN routers performing millions of concurrent IP prefix lookups.",
+      "key_points": [
+        "Utilizes atomic child-pointer CAS primitives to enable lock-free node insertion, deletion, and traversal.",
+        "Employs hazard pointer memory reclamation to securely free nodes removed from the tree without risking use-after-free race conditions.",
+        "Optimizes memory layout and bitwise path decoding for rapid longest-prefix matching in IP routing tables.",
+        "Ensures thread safety and high throughput under high contention across multi-core SDN packet processing pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic child-pointer CAS operation for inserting a child node into a Radix Tree node safely.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    RadixNode* expected = nullptr;\n    return parent->children[bit].compare_exchange_strong(expected, new_child, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_child_wrong(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption or use-after-free bugs.",
+        "Using overly strict sequential consistency memory orders everywhere, which degrades traversal and lookup throughput."
+      ],
+      "best_practices": [
+        "Retire deleted nodes to a thread-local hazard pointer epoch list and reclaim them only after all active threads drop their references.",
+        "Use acquire-release memory semantics on atomic child pointers to ensure visibility of node payload updates."
+      ],
+      "when_to_use": "Use when building high-throughput networking components, packet forwarding engines, or routing tables that require lock-free concurrent prefix matching across many CPU cores.",
+      "when_not_to_use": "Avoid when keys have arbitrary string or dense integer distributions where simpler concurrent hash maps or lock-free skip lists are more space-efficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free Radix Tree?",
+          "answer": "Threads announce which nodes they are currently accessing by writing pointers to hazard pointer slots before traversal, preventing the reclamation engine from freeing those nodes until the announcements are cleared."
+        },
+        {
+          "question": "Why is a lock-free Radix Tree preferred over a lock-based Trie for SDN packet forwarding?",
+          "answer": "It eliminates lock contention, thread blocking, and priority inversion overhead, ensuring predictable line-rate packet processing latencies across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Software-Defined Networking (SDN) Packet Forwarding"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-16T22:21:37.001518+00:00",
+      "run_number": 1036
     }
   ]
 }
