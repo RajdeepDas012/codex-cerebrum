@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **975** |
-| Last Updated | `2026-09-16T01:31:48.656322+00:00` |
-| Dataset Size | `975 entries` |
+| Total Topics Learned | **976** |
+| Last Updated | `2026-09-16T01:34:56.964366+00:00` |
+| Dataset Size | `976 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | technical-analysis | 147 |
 | data-structures | 141 |
 | market-analysis | 114 |
-| crypto-blockchain | 80 |
+| crypto-blockchain | 81 |
 | system-design | 77 |
 | stocks-markets | 71 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic node-hashing CAS primitives and epoch-based memory reclamation for high-throughput cryptographic verification in real-time blockchain synchronization and distributed trust validation engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition CAS primitives and hazard pointer memory reclamation for high-throughput substring indexing and pattern matching in real-time text search and full-text retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix-based routing and IP lookup in real-time software-defined networking (SDN) packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion CAS primitives and epoch-based memory reclamation for high-throughput immutable key-value lookups in real-time distributed state management and functional programming state stores`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value lookups in real-time in-memory database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging CAS primitives and epoch-based memory reclamation for high-throughput percentile estimation in real-time distributed telemetry and APM performance monitoring pipelines`
 
 <!-- STATS_END -->
 
