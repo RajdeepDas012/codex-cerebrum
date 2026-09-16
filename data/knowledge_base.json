@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 971,
-    "last_updated": "2026-09-16T01:19:10.567710+00:00",
-    "total_topics_learned": 971
+    "total_runs": 972,
+    "last_updated": "2026-09-16T01:22:20.674547+00:00",
+    "total_topics_learned": 972
   },
   "entries": [
     {
@@ -46729,6 +46729,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T01:19:10.567692+00:00",
       "run_number": 971
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value lookups in real-time in-memory database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-List leverages atomic Compare-And-Swap (CAS) operations on forward pointers to enable high-throughput, multi-threaded ordered key-value insertions, deletions, and lookups. By integrating hazard pointer memory reclamation, it safely manages dynamic node deallocations without risking the ABA problem or use-after-free bugs in extreme performance environments like real-time database engines.",
+      "key_points": [
+        "Utilizes probabilistic multi-level linked structures to maintain O(log n) search, insertion, and deletion times without global locks.",
+        "Employs atomic forward-pointer CAS primitives to safely swing references and link new or deleted nodes into concurrent execution paths.",
+        "Integrates hazard pointers to track active thread references to nodes, ensuring memory is only reclaimed when no thread can safely access it.",
+        "Handles logical versus physical deletion flags on nodes to prevent race conditions during concurrent structural modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward pointer CAS linking for skip-list node insertion.",
+        "correct": "bool CASForward(Node* expectedNext, Node* newNext) {\n    return next.compare_exchange_strong(expectedNext, newNext);\n}",
+        "wrong": "bool BadInsert(Node* newNext) {\n    next = newNext;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to check the logical deletion bit (marked flag) on a forward pointer before attempting updates, leading to corrupted index structures.",
+        "Failing to protect nodes traversed during the search phase with hazard pointers, resulting in premature memory reclamation and segmentation faults."
+      ],
+      "best_practices": [
+        "Always validate that the predecessor and successor pointers have not changed between the find and insertion phase using atomic CAS checks.",
+        "Batch hazard pointer retirements or use thread-local free lists to minimize synchronization overhead during high-frequency memory reclamation."
+      ],
+      "when_to_use": "Use this structure when building high-throughput, multi-threaded in-memory databases or indexing engines that require fast, ordered range queries and frequent concurrent mutations.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with strict memory constraints where simpler, pointer-heavy layouts induce unacceptable memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating forward pointers via CAS in a lock-free skip list?",
+          "answer": "By combining pointer values with version tags or epoch counters, or by using hazard pointers that guarantee thread safety and prevent node recycling while an operation is in flight."
+        },
+        {
+          "question": "Why are logical deletions separated from physical deletions in concurrent skip lists?",
+          "answer": "Logical deletion marks a node as removed by setting a bit in the pointer without altering the links, allowing concurrent search operations to safely traverse past it before another thread physically unlinks it."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Linked Lists",
+        "Hazard Pointer Memory Management",
+        "Lock-free B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:22:20.674526+00:00",
+      "run_number": 972
     }
   ]
 }
