@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **992** |
-| Last Updated | `2026-09-16T07:55:28.513680+00:00` |
-| Dataset Size | `992 entries` |
+| Total Topics Learned | **993** |
+| Last Updated | `2026-09-16T07:58:36.439689+00:00` |
+| Dataset Size | `993 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 157 |
+| data-structures | 158 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory key-value storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking CAS primitives and hazard pointer memory reclamation for high-throughput generalized suffix matching and genomic sequence analysis in real-time bioinformatics data processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and hazard pointer memory reclamation for high-throughput substring search and pattern matching in real-time text retrieval and log analysis pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent node splitting and range querying in real-time in-memory relational database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput connected component querying in real-time social network graph analysis and dynamic connectivity clustering engines`
-- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation CAS primitives and hazard pointer memory reclamation for high-throughput range query and interval update operations in real-time financial trading systems and analytics streaming engines`
 
 <!-- STATS_END -->
 
