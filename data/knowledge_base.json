@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1009,
-    "last_updated": "2026-09-16T13:53:58.813982+00:00",
-    "total_topics_learned": 1009
+    "total_runs": 1010,
+    "last_updated": "2026-09-16T13:57:50.248578+00:00",
+    "total_topics_learned": 1010
   },
   "entries": [
     {
@@ -48535,6 +48535,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T13:53:58.813960+00:00",
       "run_number": 1009
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating CAS primitives and epoch-based memory reclamation for high-throughput cardinality estimation in real-time big data analytics and distributed stream processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent HyperLogLog (HLL) data structure optimized for massively parallel environments. By using atomic compare-and-swap (CAS) operations on internal register arrays and epoch-based memory reclamation, it achieves high-throughput cardinality estimation without global lock contention in distributed stream analytics.",
+      "key_points": [
+        "Utilizes an array of 8-bit registers updated via atomic fetch-and-max or CAS loops to track leading zeros of hashed input elements.",
+        "Employs epoch-based memory reclamation (EBR) to safely manage memory layouts and shared register buckets across concurrent threads without blocking writers.",
+        "Eliminates sequential bottlenecks in high-throughput data streams by avoiding mutual exclusion locks during insertion and estimation phases.",
+        "Combines harmonic mean estimation with bias correction formulas to compute accurate distinct element counts over massive data volumes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic register updating for a concurrent HyperLogLog structure.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <cmath>\n\nclass ConcurrentHyperLogLog {\n    std::vector<std::atomic<uint8_t>> registers;\n    size_t m;\npublic:\n    ConcurrentHyperLogLog(size_t num_buckets) : m(num_buckets), registers(num_buckets) {\n        for (auto& reg : registers) reg.store(0, std::memory_order_relaxed);\n    }\n    void add(uint64_t hash, uint8_t leading_zeros) {\n        size_t index = hash % m;\n        uint8_t val = leading_zeros + 1;\n        uint8_t current = registers[index].load(std::memory_order_relaxed);\n        while (val > current && !registers[index].compare_exchange_weak(current, val, std::memory_order_release, std::memory_order_relaxed)) {\n            // retry CAS if another thread updated the register\n        }\n    }\n};",
+        "wrong": "#include <vector>\n#include <mutex>\n\nclass UnsafeOrLockedHLL {\n    std::vector<uint8_t> registers;\n    std::mutex mtx;\npublic:\n    void add(size_t index, uint8_t val) {\n        std::lock_guard<std::mutex> lock(mtx); // Bottleneck: locks entire updates\n        if (val > registers[index]) registers[index] = val;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using standard mutexes inside tight ingestion loops, causing severe thread contention in high-throughput stream processing pipelines.",
+        "Failing to handle relaxed memory ordering correctly, resulting in stale register states visible to parallel estimation threads."
+      ],
+      "best_practices": [
+        "Use atomic fetch-and-max or CAS loops to update individual registers independently without locking neighboring buckets.",
+        "Incorporate epoch-based or hazard pointer memory management if resizing or dynamic register reallocation is supported."
+      ],
+      "when_to_use": "When building real-time distributed analytics engines that require estimating unique counts (cardinality) across massive, multi-threaded event streams.",
+      "when_not_to_use": "When exact set-membership or exact distinct counting is strictly required and memory overhead permits maintaining full hash sets.",
+      "interview_questions": [
+        {
+          "question": "How do you avoid lock contention when multiple threads update the same HLL register bucket concurrently?",
+          "answer": "By using atomic compare-and-swap (CAS) retry loops to conditionally update register values only if the new value exceeds the currently stored value."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation beneficial for concurrent probabilistic data structures?",
+          "answer": "It safely defers the deallocation of shared memory structures until all participating threads have exited the current access epoch, eliminating unsafe use-after-free bugs without heavy locking."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Count-Min Sketch",
+        "Lock-Free Bloom Filters",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T13:57:50.248559+00:00",
+      "run_number": 1010
     }
   ]
 }
