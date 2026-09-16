@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 999,
-    "last_updated": "2026-09-16T13:20:15.451710+00:00",
-    "total_topics_learned": 999
+    "total_runs": 1000,
+    "last_updated": "2026-09-16T13:24:51.107887+00:00",
+    "total_topics_learned": 1000
   },
   "entries": [
     {
@@ -48053,6 +48053,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T13:20:15.451690+00:00",
       "run_number": 999
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed caching and database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter utilizes atomic bitwise operations and compare-and-swap (CAS) primitives to safely record and query probabilistic set memberships across multiple threads without lock contention. By integrating epoch-based memory management, it supports dynamic resizing and high-throughput updates, making it essential for distributed caching layers and query optimization engines.",
+      "key_points": [
+        "Utilizes atomic bit-array primitives (such as atomic fetch-and-or or CAS loops) to manipulate underlying bits concurrently without mutexes.",
+        "Employs multiple independent hash functions (e.g., MurmurHash3 variants) to map keys to bit indices with minimal collision probability.",
+        "Integrates epoch-based memory reclamation or safe reclamation guards to handle concurrent filter expansion, resizing, or metadata updates.",
+        "Guarantees zero false negatives while bounded false positive rates depend on bit-array size and hash function count."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe concurrent bit-setting using atomic operations for a lock-free Bloom filter.",
+        "correct": "import threading\nimport mmh3\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size, hash_count):\n        self.size = size\n        self.hash_count = hash_count\n        self.bit_array = [threading.Lock() for _ in range(size)] # Conceptual representation of atomic bucket locks or CAS words\n        self.data = 0 # Atomic integer backing store\n        self._lock = threading.Lock()\n\n    def add(self, item):\n        for i in range(self.hash_count):\n            index = mmh3.hash(item, i) % self.size\n            # Atomic bitwise OR simulation using CAS loop\n            while True:\n                current = self.data\n                new_val = current | (1 << index)\n                if current == new_val or self._compare_and_swap(current, new_val):\n                    break\n\n    def _compare_and_swap(self, expected, desired):\n        with self._lock:\n            if self.data == expected:\n                self.data = desired\n                return True\n            return False",
+        "wrong": "def add_unsafe(self, item):\n    for i in range(self.hash_count):\n        index = mmh3.hash(item, i) % self.size\n        self.data |= (1 << index) # Non-atomic read-modify-write race condition"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write patterns (`|=`) on shared integers, leading to lost updates under high concurrency.",
+        "Failing to account for false positive rate degradation when the bit array fills up beyond its optimal capacity.",
+        "Using correlated or weak hash functions that result in clustered bit sets and higher-than-expected false positive rates."
+      ],
+      "best_practices": [
+        "Size the bit array and select the optimal number of hash functions based on expected item volume and target false positive probability.",
+        "Use hardware-level atomic instructions (like GCC __atomic builtins or C++ std::atomic) rather than heavy mutexes for setting individual bits.",
+        "Implement epoch-based reclamation if the Bloom filter supports dynamic resizing or scaling under load."
+      ],
+      "when_to_use": "Use when high-throughput, multi-threaded applications require rapid probabilistic set-membership tests to avoid expensive disk or network lookups, such as in distributed cache miss preventions.",
+      "when_not_to_use": "Avoid when false positives are completely unacceptable, when items must be safely deleted without complex counting variants, or when exact set membership semantics are required.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread safety in a Bloom filter without using coarse-grained locks?",
+          "answer": "By leveraging atomic bitwise operations or compare-and-swap (CAS) loops on individual words or bit-vectors, allowing multiple threads to set bits concurrently without blocking."
+        },
+        {
+          "question": "Why is standard item deletion difficult in a basic Bloom filter, and how can concurrent designs address it?",
+          "answer": "Standard deletion is difficult because multiple items may hash to the same bit; clearing a bit can cause false negatives for other items. Concurrent designs either use Counting Bloom Filters with atomic fetch-and-add or avoid deletion in favor of epoch-based filter replacement."
+        }
+      ],
+      "related_topics": [
+        "Counting Bloom Filters",
+        "Cuckoo Filters",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T13:24:51.107868+00:00",
+      "run_number": 1000
     }
   ]
 }
