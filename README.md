@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1005** |
-| Last Updated | `2026-09-16T13:41:09.015711+00:00` |
-| Dataset Size | `1005 entries` |
+| Total Topics Learned | **1006** |
+| Last Updated | `2026-09-16T13:44:24.114269+00:00` |
+| Dataset Size | `1006 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 170 |
+| data-structures | 171 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic node-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix string searching and autocompletion in real-time search engine query suggestion pipelines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation CAS primitives and hazard pointer memory reclamation for high-throughput prefix routing and IP table lookups in real-time software-defined networking packet processing engines`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-linking CAS primitives and hazard pointer memory reclamation for high-throughput range searches and flash-memory optimized indexing in real-time embedded database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value indexing in real-time in-memory database storage and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput cache-efficient set-membership querying in real-time distributed storage and database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-splaying CAS primitives and hazard pointer memory reclamation for high-throughput self-adjusting search tree operations in real-time in-memory key-value caching and database transaction engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1005,
-    "last_updated": "2026-09-16T13:41:09.015711+00:00",
-    "total_topics_learned": 1005
+    "total_runs": 1006,
+    "last_updated": "2026-09-16T13:44:24.114269+00:00",
+    "total_topics_learned": 1006
   },
   "entries": [
     {
@@ -48342,6 +48342,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-16T13:41:09.015691+00:00",
       "run_number": 1005
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic node-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix string searching and autocompletion in real-time search engine query suggestion pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Ternary Search Tree (TST) designed for prefix-based string lookups under high contention. By combining atomic node-splitting via Compare-And-Swap (CAS) with hazard pointer memory management, it enables multiple threads to perform insertions and autocomplete queries concurrently without locks.",
+      "key_points": [
+        "Utilizes atomic node-splitting operations via CAS primitives to safely add low-level child pointers (left, equal, right) without blocking concurrent readers or writers.",
+        "Employs hazard pointer-based memory reclamation to prevent the ABA problem and safe-free nodes that are concurrently unlinked during tree expansion.",
+        "Maintains cache-friendly string prefix indexing by combining the memory efficiency of tries with the search flexibility of binary search trees.",
+        "Guarantees linearizability for core search and insertion primitives in lock-free real-time environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-splitting update using CAS for a TST equal child pointer.",
+        "correct": "bool insert_equal_child(TSTNode* parent, TSTNode* new_node, char expected_char) {\n    TSTNode* expected = nullptr;\n    return parent->equal_child.compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_equal_child(TSTNode* parent, TSTNode* new_node) {\n    if (parent->equal_child == nullptr) {\n        parent->equal_child = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed child pointers with hazard pointers, leading to premature deallocation and segmentation faults during concurrent writes.",
+        "Using sequential locking on the root or major subtrees while attempting lock-free operations on leaves, introducing serialization bottlenecks."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for all parent and child nodes prior to evaluating traversal paths to ensure safe memory access.",
+        "Order memory fences carefully using acquire-release semantics on pointer updates to guarantee visibility of newly allocated child nodes."
+      ],
+      "when_to_use": "Use when building high-throughput autocomplete services or prefix-routing engines that undergo heavy concurrent reads and writes.",
+      "when_not_to_use": "Avoid when memory usage per node must be strictly minimized, as TST nodes store multiple pointers and split character overheads compared to packed arrays.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when a thread unlinks a branch in a concurrent lock-free TST?",
+          "answer": "You use hazard pointers to register nodes currently being accessed by reader threads, deferring actual memory deallocation via a free-list until no thread holds a hazard pointer to the targeted nodes."
+        },
+        {
+          "question": "Why use a Ternary Search Tree instead of a standard Trie in concurrent string search engines?",
+          "answer": "A TST significantly reduces memory overhead for sparse character sets because each node only allocates pointers for three directions (left, equal, right) rather than a fixed array of pointers for every possible character in the alphabet."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Trie Data Structures",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Prefix Routing Tables"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-16T13:44:24.114249+00:00",
+      "run_number": 1006
     }
   ]
 }
