@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 985,
-    "last_updated": "2026-09-16T07:33:05.569955+00:00",
-    "total_topics_learned": 985
+    "total_runs": 986,
+    "last_updated": "2026-09-16T07:36:14.086780+00:00",
+    "total_topics_learned": 986
   },
   "entries": [
     {
@@ -47392,6 +47392,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T07:33:05.569934+00:00",
       "run_number": 985
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Y-Fast Trie using atomic leaf-bucketing CAS primitives and hazard pointer memory reclamation for high-throughput integer successor and predecessor lookups in real-time software-defined networking routing tables and IP lookup engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Y-Fast Trie combines an X-Fast Trie backbone with balanced binary search trees (like treaps or red-black trees) in its leaves to achieve $O(\\log \\log W)$ time complexity for predecessor and successor queries while maintaining small memory footprints. This lock-free implementation utilizes atomic leaf-bucketing Compare-And-Swap (CAS) primitives and hazard pointers to safely manage dynamic memory reclamation across multi-threaded networking workloads without locks.",
+      "key_points": [
+        "Uses an X-Fast Trie as a foundational sparse trie structure for prefix routing, paired with doubly-linked balanced search tree buckets at the leaves to store actual integer keys.",
+        "Employs atomic leaf-bucketing CAS primitives to safely insert and split keys within concurrent local buckets without blocking sibling threads.",
+        "Leverages hazard pointers to defer memory deallocation of deleted trie nodes and split leaf buckets until no concurrent reader thread holds an active reference.",
+        "Delivers $O(\\log \\log W)$ query performance, making it optimal for high-speed IP address routing, next-hop lookup, and software-defined networking packet processing tables."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic insertion of a key into a lock-free Y-Fast Trie leaf bucket using hazard pointers for safe memory management.",
+        "correct": "bool YFastTrie::insert(uint32_t key) {\n    HazardPointerGuard hg;\n    while (true) {\n        Node* leaf = find_responsible_leaf(key, hg);\n        if (leaf->bucket.try_insert_lock_free(key)) {\n            if (leaf->bucket.size() > THRESHOLD) {\n                split_bucket(leaf);\n            }\n            return true;\n        }\n    }\n}",
+        "wrong": "bool YFastTrie::insert(uint32_t key) {\n    std::lock_guard<std::mutex> lock(global_mutex);\n    Node* leaf = find_leaf(key);\n    leaf->bucket.insert(key); // Using global locks defeats the lock-free design and creates severe thread contention\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to catastrophic use-after-free errors when concurrent threads split or delete trie nodes.",
+        "Setting bucket size thresholds too high or too low, resulting in either excessive traversal overhead within large buckets or high memory fragmentation from frequent splits."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing parent-child pointers in the X-Fast Trie spine to guarantee safe memory reclamation.",
+        "Keep local bucket operations lightweight by utilizing fine-grained atomic state transitions or lock-free micro-structures for internal bucket updates."
+      ],
+      "when_to_use": "Use when building ultra-high-throughput routing engines, software-defined networking forwarding tables, or real-time IP lookup systems requiring rapid predecessor/successor evaluations across vast integer key spaces under heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid when working with non-integer keys, constrained embedded environments with strict memory footprints, or low-concurrency systems where simpler lock-based structures or standard concurrent maps are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How does a Y-Fast Trie improve upon an X-Fast Trie in terms of space complexity?",
+          "answer": "While an X-Fast Trie requires $O(n \\log W)$ space due to pointers stored at every level for all keys, a Y-Fast Trie groups keys into buckets of size $\\Theta(\\log W)$ at the leaves, reducing the overall space complexity to $O(n)$ while maintaining $O(\\log \\log W)$ query times."
+        },
+        {
+          "question": "Why are hazard pointers crucial when implementing a lock-free Y-Fast Trie?",
+          "answer": "Hazard pointers provide a lock-free mechanism to safely track references held by reader and writer threads on dynamically changing trie nodes and buckets, ensuring memory is only reclaimed after all threads have finished accessing those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free X-Fast Tries",
+        "Concurrent Treaps and B-Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-16T07:36:14.086758+00:00",
+      "run_number": 986
     }
   ]
 }
