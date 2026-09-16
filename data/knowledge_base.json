@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 972,
-    "last_updated": "2026-09-16T01:22:20.674547+00:00",
-    "total_topics_learned": 972
+    "total_runs": 973,
+    "last_updated": "2026-09-16T01:25:28.159645+00:00",
+    "total_topics_learned": 973
   },
   "entries": [
     {
@@ -46776,6 +46776,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T01:22:20.674526+00:00",
       "run_number": 972
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion CAS primitives and epoch-based memory reclamation for high-throughput immutable key-value lookups in real-time distributed state management and functional programming state stores",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent Hash Array Mapped Trie (HAMT) utilizing atomic Compare-And-Swap (CAS) operations for node expansions and epoch-based memory reclamation to ensure safe garbage collection. It provides high-throughput, lock-free, thread-safe key-value operations, making it optimal for persistent data structures and distributed state management.",
+      "key_points": [
+        "Uses a bitmapped array structure to compress sparse nodes, reducing memory overhead and cache misses.",
+        "Employs atomic CAS primitives for lock-free node insertion, expansion, and structural modifications.",
+        "Integrates epoch-based memory reclamation (hazard pointers or epoch-based GC) to safely reclaim memory without blocking concurrent readers.",
+        "Supports persistent, immutable-style structural sharing ideal for functional programming environments and concurrent state tracking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node expansion using CAS for a lock-free HAMT child node insertion.",
+        "correct": "bool insert_child(std::atomic<Node*>& slot, Node* new_node, EpochGuard& guard) {\n    Node* current = slot.load(std::memory_order_acquire);\n    while (true) {\n        new_node->next = current;\n        if (slot.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node*& slot, Node* new_node) {\n    // Non-atomic modification vulnerable to race conditions in multithreaded environments\n    new_node->next = slot;\n    slot = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use proper memory ordering (e.g., acquire-release semantics) during CAS operations, leading to stale pointer reads.",
+        "Neglecting safe memory reclamation, which causes severe memory leaks or use-after-free bugs when nodes are replaced concurrently."
+      ],
+      "best_practices": [
+        "Always pair lock-free data structures with a robust memory reclamation scheme like epoch-based garbage collection or hazard pointers.",
+        "Optimize hash bit-partitioning sizes (e.g., 5 bits per level resulting in 32-way branching) to balance tree depth and node allocation overhead."
+      ],
+      "when_to_use": "High-concurrency systems requiring lock-free reads and writes on associative arrays with frequent structural updates and functional state-sharing characteristics.",
+      "when_not_to_use": "Single-threaded applications or memory-constrained environments where standard lock-based hash tables or simple pointer-based maps suffice without lock contention overhead.",
+      "interview_questions": [
+        {
+          "question": "How do bitmapped vectors in a HAMT reduce memory consumption compared to standard 32-way or 256-way branching tries?",
+          "answer": "Instead of allocating fixed-size arrays for all possible child pointers, a HAMT uses a bitmap integer where each set bit indicates the presence of a child at that index, allowing the node to allocate only the exact memory needed for existing children."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing a lock-free HAMT?",
+          "answer": "When a thread updates or replaces a compressed node via CAS, other threads might still be traversing the old node. Epoch-based reclamation defers the physical deletion of old nodes until all concurrent traversal threads have exited the current epoch."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Epoch-Based Memory Reclamation",
+        "Persistent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T01:25:28.159626+00:00",
+      "run_number": 973
     }
   ]
 }
