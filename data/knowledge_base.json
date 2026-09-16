@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1030,
-    "last_updated": "2026-09-16T22:02:37.782691+00:00",
-    "total_topics_learned": 1030
+    "total_runs": 1031,
+    "last_updated": "2026-09-16T22:05:46.647931+00:00",
+    "total_topics_learned": 1031
   },
   "entries": [
     {
@@ -49529,6 +49529,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T22:02:37.782638+00:00",
       "run_number": 1030
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node swapping CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling and message broker job routing in real-time distributed systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance concurrent priority queue using lock-free synchronization primitives and safe memory reclamation. It ensures multi-threaded workers can insert and extract prioritized tasks without blocking, eliminating lock contention bottlenecks in distributed message brokers.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage heap nodes and structural modifications without traditional mutexes.",
+        "Employs hazard pointers to safely defer memory deallocation of extracted queue nodes until no active threads are referencing them.",
+        "Maintains heap invariants under high concurrency through optimistic retry loops and validation steps.",
+        "Optimizes throughput for real-time task schedulers and message routing engines by avoiding thread sleep states and context switches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic push operation via heap-node swapping and hazard pointer registration in a lock-free concurrent priority queue.",
+        "correct": "#include <atomic>\n#include <vector>\n\ntemplate<typename T>\nclass LockFreePriorityQueue {\n    struct Node {\n        T data;\n        int priority;\n        std::atomic<Node*> next;\n    };\n    std::atomic<Node*> head;\npublic:\n    void push(T val, int prio) {\n        Node* newNode = new Node{val, prio, nullptr};\n        Node* oldHead;\n        do {\n            oldHead = head.load();\n            newNode->next.store(oldHead);\n        } while (!head.compare_exchange_weak(oldHead, newNode));\n    }\n};",
+        "wrong": "#include <mutex>\n#include <queue>\n\ntemplate<typename T>\nclass BadConcurrentQueue {\n    std::priority_queue<T> pq;\n    std::mutex mtx;\npublic:\n    void push(T val) {\n        std::lock_guard<std::mutex> lock(mtx);\n        pq.push(val); // Bottleneck: Blocks all threads on contention\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to ABA problems and use-after-free race conditions.",
+        "Using naive atomic wrappers around standard blocking containers instead of designing lock-free node-based structures."
+      ],
+      "best_practices": [
+        "Pin hazard pointers before traversing shared node references to guarantee memory validity during pointer dereference.",
+        "Keep critical CAS retry loops concise to minimize CPU cache invalidation and spin-wait overhead.",
+        "Batch retired nodes in thread-local storage before invoking global memory reclamation routines."
+      ],
+      "when_to_use": "Use when building ultra-low-latency distributed task schedulers, high-frequency trading engines, or message brokers requiring maximum concurrent queue throughput.",
+      "when_not_to_use": "Avoid in systems with low core counts where standard mutex-locked queues offer simpler maintenance and comparable performance without complex memory management overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node swaps in a lock-free priority queue?",
+          "answer": "By using tagged pointers (combining a pointer with a monotonically increasing version counter) or hazard pointers that ensure nodes currently being examined cannot be reused or freed."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free priority queues?",
+          "answer": "Hazard pointers avoid atomic write contention on shared node metadata during traversal, whereas global reference counts require costly atomic increments on every pointer read."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Skip List"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-16T22:05:46.647912+00:00",
+      "run_number": 1031
     }
   ]
 }
