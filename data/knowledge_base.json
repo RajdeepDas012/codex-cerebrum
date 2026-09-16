@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1002,
-    "last_updated": "2026-09-16T13:31:10.804277+00:00",
-    "total_topics_learned": 1002
+    "total_runs": 1003,
+    "last_updated": "2026-09-16T13:34:42.063876+00:00",
+    "total_topics_learned": 1003
   },
   "entries": [
     {
@@ -48196,6 +48196,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T13:31:10.804256+00:00",
       "run_number": 1002
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value indexing in real-time in-memory database storage and caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent skip list is a probabilistic multi-level linked structure that enables lock-free ordered key-value indexing. By leveraging atomic compare-and-swap (CAS) operations on forward pointers alongside hazard pointers for safe memory reclamation, it delivers high throughput and logarithmic search complexity without global locks.",
+      "key_points": [
+        "Uses a multi-level probabilistic hierarchy where each node has a random height to maintain logarithmic search paths.",
+        "Employs atomic forward-pointer Compare-And-Swap (CAS) primitives to insert and delete nodes safely across multiple threads without locking.",
+        "Integrates hazard pointers to manage memory reclamation, preventing use-after-free bugs when concurrently unlinking nodes.",
+        "Maintains strict logical vs. physical deletion flags (marked bits) to handle concurrent modifications correctly during search and traversal."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic CAS insertion of a node into a lock-free skip list level using hazard pointers.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level].store(curr, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(curr, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level_wrong(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level] = curr;\n    pred->next[level] = newNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to atomically check if the predecessor node has been logically marked for deletion before attempting an insertion.",
+        "Neglecting hazard pointer registration during traversals, leading to memory corruption or premature deallocation by concurrent threads."
+      ],
+      "best_practices": [
+        "Always perform physical node unlinking in a top-down or bottom-up manner only after successfully setting the logical deletion flag (mark bit) at the highest level.",
+        "Bound the maximum height of the skip list based on expected maximum capacity to optimize pointer array allocation overhead.",
+        "Use appropriate memory ordering semantics (acquire-release) on atomic forward pointers to ensure proper synchronization across threads."
+      ],
+      "when_to_use": "Use when you need high-throughput, lock-free ordered range queries and key-value indexing in multi-threaded in-memory databases or caching layers.",
+      "when_not_to_use": "Avoid when memory overhead per node for multi-level forward pointers is prohibitive, or when simpler lock-based structures suffice under low contention.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a thread from freeing a node while another thread is concurrently traversing through its pointers in a lock-free skip list?",
+          "answer": "By using hazard pointers to protect the accessed nodes during traversal, ensuring they are not reclaimed until no thread holds a reference to them."
+        },
+        {
+          "question": "What is the purpose of the logical deletion mark bit on a skip list node?",
+          "answer": "It informs concurrent threads that a node is pending removal so they can help bypass it physically before it is reclaimed from memory."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Linked Lists",
+        "Hazard Pointer memory management",
+        "Lock-free concurrent B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-16T13:34:42.063855+00:00",
+      "run_number": 1003
     }
   ]
 }
