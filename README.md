@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **994** |
-| Last Updated | `2026-09-16T08:01:43.778829+00:00` |
-| Dataset Size | `994 entries` |
+| Total Topics Learned | **995** |
+| Last Updated | `2026-09-16T08:04:52.591012+00:00` |
+| Dataset Size | `995 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 159 |
+| data-structures | 160 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 81 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra pathfinding and network optimization routing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and hazard pointer memory reclamation for high-throughput range scans and ordered key-value indexing in real-time in-memory database transaction processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory key-value storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking CAS primitives and hazard pointer memory reclamation for high-throughput generalized suffix matching and genomic sequence analysis in real-time bioinformatics data processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and hazard pointer memory reclamation for high-throughput substring search and pattern matching in real-time text retrieval and log analysis pipelines`
-- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent node splitting and range querying in real-time in-memory relational database indexing engines`
 
 <!-- STATS_END -->
 
