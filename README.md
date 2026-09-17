@@ -9,16 +9,16 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1065** |
-| Last Updated | `2026-09-17T06:16:56.049607+00:00` |
-| Dataset Size | `1065 entries` |
+| Total Topics Learned | **1066** |
+| Last Updated | `2026-09-17T06:20:03.976981+00:00` |
+| Dataset Size | `1066 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | trading-strategies | 228 |
-| data-structures | 222 |
+| data-structures | 223 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 83 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value lookup and range queries in real-time in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput succinct set-membership querying and metadata caching in real-time distributed storage systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and hazard pointer memory reclamation for high-throughput substring searching and full-text indexing in real-time enterprise log analysis and search engine infrastructure`
 - `Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic state-versioning CAS primitives and quiescent-state detection for high-throughput read-heavy concurrent data structure navigation in real-time Linux kernel sub-systems and high-performance networking engines`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent page indexing and range queries in real-time relational database management systems`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time graph algorithm execution and discrete event simulation engines`
 
 <!-- STATS_END -->
 
