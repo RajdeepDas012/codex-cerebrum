@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1092** |
-| Last Updated | `2026-09-17T16:50:00.873930+00:00` |
-| Dataset Size | `1092 entries` |
+| Total Topics Learned | **1093** |
+| Last Updated | `2026-09-17T16:53:09.903814+00:00` |
+| Dataset Size | `1093 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 248 |
+| data-structures | 249 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent node splitting and multi-threaded index traversal in real-time enterprise database engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time discrete event simulation and event-driven architecture engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-degree linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time task scheduling and priority-based resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic rank-merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time job scheduling and priority-based message broker engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra graph algorithms and network routing optimization engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quadrant-pointer CAS primitives and hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and region searching in real-time geographic information systems and multiplayer gaming state servers`
 
 <!-- STATS_END -->
 
