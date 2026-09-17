@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1081,
-    "last_updated": "2026-09-17T11:49:58.996456+00:00",
-    "total_topics_learned": 1081
+    "total_runs": 1082,
+    "last_updated": "2026-09-17T11:53:07.494639+00:00",
+    "total_topics_learned": 1082
   },
   "entries": [
     {
@@ -51947,6 +51947,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T11:49:58.996437+00:00",
       "run_number": 1081
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-ier Than You (Blocked Bloom) Filter using atomic block-word setting CAS primitives and epoch-based memory reclamation for high-throughput block-aligned cache-efficient probabilistic set-membership querying in real-time distributed key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure maps items to cache-line-sized blocks using multiple hash functions and leverages atomic Compare-And-Swap (CAS) operations alongside epoch-based memory reclamation. It achieves high-throughput, thread-safe probabilistic set-membership testing without global locking, minimizing CPU cache misses in distributed storage engines.",
+      "key_points": [
+        "Divides the bit array into blocks that fit within a single CPU cache line to eliminate expensive cross-cache traffic during queries and insertions.",
+        "Uses atomic block-word setting CAS primitives to allow multiple concurrent threads to update the same block without race conditions.",
+        "Employs epoch-based memory reclamation (EBR) to safely manage memory across dynamic filter resizing without blocking readers.",
+        "Provides probabilistic guarantees with a tunable false positive rate, ensuring zero false negatives for set membership."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe block-word setting using atomic CAS operations on a cache-line-aligned block.",
+        "correct": "bool insert(uint64_t* block_word, uint64_t mask) {\n    uint64_t old_val, new_val;\n    do {\n        old_val = __atomic_load_n(block_word, __ATOMIC_RELAXED);\n        if ((old_val & mask) == mask) return false; // Already set\n        new_val = old_val | mask;\n    } while (!__atomic_compare_exchange_n(block_word, &old_val, new_val, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED));\n    return true;\n}",
+        "wrong": "bool insert(uint64_t* block_word, uint64_t mask) {\n    // Missing atomic loop leads to race conditions and lost updates\n    *block_word |= mask;\n}"
+      },
+      "common_mistakes": [
+        "Failing to align blocks to CPU cache line boundaries, leading to false sharing and degraded multi-core throughput.",
+        "Using heavy mutex locks instead of fine-grained atomic word CAS primitives for bit manipulation."
+      ],
+      "best_practices": [
+        "Ensure the block size matches the hardware architecture's cache line size (typically 64 bytes).",
+        "Integrate epoch-based memory reclamation to handle dynamic expansions safely in concurrent execution environments."
+      ],
+      "when_to_use": "High-concurrency systems requiring rapid set-membership checks with strict latency bounds, such as avoiding costly disk lookups in distributed key-value stores.",
+      "when_not_to_use": "Applications requiring zero false positives, or low-throughput single-threaded environments where standard structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do Blocked Bloom Filters improve cache efficiency over standard Bloom filters?",
+          "answer": "By containing all hash-mapped bits for an element within a single cache-line-sized block, minimizing CPU cache misses."
+        },
+        {
+          "question": "Why use atomic block-word CAS instead of global locking for concurrent insertions?",
+          "answer": "Global locks serialize access and create bottlenecks, whereas fine-grained atomic CAS allows multiple threads to update disjoint or shared blocks concurrently."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filters",
+        "Epoch-Based Memory Reclamation",
+        "Cache-Conscious Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T11:53:07.494619+00:00",
+      "run_number": 1082
     }
   ]
 }
