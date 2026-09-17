@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1062** |
-| Last Updated | `2026-09-17T06:07:03.631095+00:00` |
-| Dataset Size | `1062 entries` |
+| Total Topics Learned | **1063** |
+| Last Updated | `2026-09-17T06:10:15.196586+00:00` |
+| Dataset Size | `1063 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | system-design | 77 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| algorithms | 21 |
+| algorithms | 22 |
 | databases | 18 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic state-versioning CAS primitives and quiescent-state detection for high-throughput read-heavy concurrent data structure navigation in real-time Linux kernel sub-systems and high-performance networking engines`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent page indexing and range queries in real-time relational database management systems`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time graph algorithm execution and discrete event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-degree linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time task scheduling and distributed operating system kernel engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time task scheduling and discrete event simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key operations and graph algorithm optimization in real-time route planning and network optimization engines`
 
 <!-- STATS_END -->
 
