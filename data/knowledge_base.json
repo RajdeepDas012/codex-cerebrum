@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1111,
-    "last_updated": "2026-09-17T20:28:23.774795+00:00",
-    "total_topics_learned": 1111
+    "total_runs": 1112,
+    "last_updated": "2026-09-17T20:31:31.917160+00:00",
+    "total_topics_learned": 1112
   },
   "entries": [
     {
@@ -53366,6 +53366,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T20:28:23.774775+00:00",
       "run_number": 1111
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking CAS primitives and epoch-based memory reclamation for high-throughput range scans and point lookups in real-time transactional database indexing engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent B+ Tree index that avoids traditional coarse-grained locks by leveraging atomic Compare-And-Swap (CAS) operations for node modifications and leaf-sibling pointer linking. It incorporates epoch-based memory reclamation (EMR) to safely deallocate nodes without blocking concurrent readers, maximizing throughput in real-time database management systems.",
+      "key_points": [
+        "Utilizes atomic leaf-sibling pointers to enable lock-free forward and backward range scans across node splits.",
+        "Employs Compare-And-Swap (CAS) primitives for atomic updates to internal routing nodes and leaf structures.",
+        "Integrates epoch-based memory reclamation (EMR) to track thread grace periods and prevent premature node deallocation.",
+        "Optimizes point lookups and range scans for high-contention multi-threaded transactional database workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS operation on an internal B+ Tree pointer alongside epoch-based protection for safe node traversal.",
+        "correct": "bool update_child_pointer(BPlusNode* parent, int key, BPlusNode* old_child, BPlusNode* new_child, EpochGuard& guard) {\n    guard.enter();\n    bool success = atomic_compare_exchange_strong(&parent->children[key], &old_child, new_child);\n    guard.leave();\n    return success;\n}",
+        "wrong": "bool update_child_pointer(BPlusNode* parent, int key, BPlusNode* old_child, BPlusNode* new_child) {\n    // Missing epoch protection; old_child might be freed mid-operation by another thread\n    parent->children[key] = new_child;\n    delete old_child;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with epoch-based memory management, leading to use-after-free bugs during concurrent node splits.",
+        "Performing multi-word modifications without validation steps, which corrupts tree structural invariants during concurrent insertions."
+      ],
+      "best_practices": [
+        "Use epoch-based memory reclamation to batch deferred frees and lower synchronization overhead compared to reference counting.",
+        "Design leaf-sibling chains to handle concurrent splits gracefully, allowing reader threads to bypass locks entirely during range scans."
+      ],
+      "when_to_use": "Ideal for high-concurrency transactional database engines requiring sustained throughput for point lookups and ordered range scans under heavy multi-core contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-memory embedded systems where the structural complexity and memory overhead of lock-free mechanisms outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do atomic leaf-sibling links help maintain lock-free range scans during concurrent node splits?",
+          "answer": "They provide alternative traversal paths when a reader encounters a node that has split, allowing the scan to progress to the correct sibling without acquiring a lock or restarting from the root."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over hazard pointers for concurrent tree structures with frequent range scans?",
+          "answer": "Epoch-based reclamation allows threads to register themselves within global epochs in batches rather than updating individual pointer guards per node, significantly reducing overhead during deep traversals and range scans."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Epoch-based memory reclamation",
+        "Concurrent database indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T20:31:31.917139+00:00",
+      "run_number": 1112
     }
   ]
 }
