@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1090,
-    "last_updated": "2026-09-17T16:43:43.192609+00:00",
-    "total_topics_learned": 1090
+    "total_runs": 1091,
+    "last_updated": "2026-09-17T16:46:51.254670+00:00",
+    "total_topics_learned": 1091
   },
   "entries": [
     {
@@ -52372,6 +52372,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T16:43:43.192582+00:00",
       "run_number": 1090
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-degree linking CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time task scheduling and priority-based resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Binomial Heap that supports lock-free meldable priority queue operations. By leveraging atomic root-degree linking via Compare-And-Swap (CAS) primitives and hazard pointers for safe memory reclamation, it delivers high throughput for real-time task scheduling without lock contention.",
+      "key_points": [
+        "Utilizes binomial trees of order $k$ where each tree satisfies the min-heap property and consists of a root with $k$ children.",
+        "Employs atomic root-degree linking CAS primitives to safely merge roots of identical degrees during union and insertion operations.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes actively traversed by concurrent threads.",
+        "Ensures logarithmic time complexity for core operations like merge, insert, and extract-min while maintaining lock-free progress guarantees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of CAS-based binomial tree node linking for concurrent root merging.",
+        "correct": "bool link_binomial_roots(std::atomic<Node*>& root_slot, Node* expected_root, Node* new_root) {\n    return root_slot.compare_exchange_strong(expected_root, new_root);\n}",
+        "wrong": "Node* link_binomial_roots(Node* root_slot, Node* new_root) {\n    root_slot->next = new_root;\n    return root_slot;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to use-after-free race conditions during concurrent heap merges.",
+        "Attempting to perform multi-word CAS operations without a proper descriptor pattern or epoch-based validation."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory management to safely reclaim detached binomial tree nodes.",
+        "Minimize CAS retry loops by pre-computing restructured binomial tree linkages locally before attempting global atomic swings."
+      ],
+      "when_to_use": "Use when multiple producer and consumer threads must concurrently merge, insert, and extract priorities from a shared priority queue with strict latency requirements.",
+      "when_not_to_use": "Avoid in single-threaded contexts or applications where simple binary heaps or standard locking mechanisms provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent structural modifications when two threads attempt to link binomial trees of the same degree simultaneously?",
+          "answer": "By using a Compare-And-Swap (CAS) primitive on the root pointer slot to ensure only one thread successfully updates the root list, forcing competing threads to retry their merge step."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free binomial heap implementation?",
+          "answer": "Hazard pointers prevent other threads from freeing memory of nodes that are currently being accessed or traversed during concurrent heap operations like extract-min or meld."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queue Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T16:46:51.254646+00:00",
+      "run_number": 1091
     }
   ]
 }
