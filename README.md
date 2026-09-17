@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1102** |
-| Last Updated | `2026-09-17T17:24:29.369205+00:00` |
-| Dataset Size | `1102 entries` |
+| Total Topics Learned | **1103** |
+| Last Updated | `2026-09-17T17:27:39.560504+00:00` |
+| Dataset Size | `1103 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | system-design | 77 |
 | stocks-markets | 71 |
 | probability-math | 27 |
-| algorithms | 23 |
+| algorithms | 24 |
 | databases | 18 |
 | machine-learning | 10 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating CAS primitives and epoch-based memory reclamation for high-throughput cardinality estimation and unique visitor counting in real-time big data analytics and web tracking engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node linking CAS primitives and hazard pointer memory reclamation for high-throughput cryptographic verification and state synchronization in real-time distributed ledger and blockchain systems engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell incrementing CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter detection and stream frequency estimation in real-time network traffic monitoring and distributed analytics engines`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging CAS primitives and epoch-based memory reclamation for high-throughput accurate quantile estimation and percentile tracking in real-time distributed performance monitoring and telemetry data stream engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node swapping CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling and message prioritization in real-time asynchronous processing and thread-pool execution engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-node allocation CAS primitives and hazard pointer memory reclamation for high-throughput IP routing table lookups and network packet forwarding in real-time software-defined networking (SDN) and telecommunication engines`
 
 <!-- STATS_END -->
 
