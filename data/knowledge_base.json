@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1105,
-    "last_updated": "2026-09-17T20:09:35.338950+00:00",
-    "total_topics_learned": 1105
+    "total_runs": 1106,
+    "last_updated": "2026-09-17T20:12:43.529619+00:00",
+    "total_topics_learned": 1106
   },
   "entries": [
     {
@@ -53082,6 +53082,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T20:09:35.338929+00:00",
       "run_number": 1105
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting CAS primitives and hazard pointer memory reclamation for high-throughput substring searching and full-text document indexing in real-time search engines and log analysis platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent suffix array optimized for high-throughput multi-threaded environments using lock-free synchronization techniques. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe, non-blocking index sorting and memory management for intensive full-text search applications.",
+      "key_points": [
+        "Utilizes atomic CAS operations to safely manipulate array pointers and sort indices without global locks.",
+        "Employs hazard pointers for deterministic, lock-free memory reclamation of dynamically updated index nodes.",
+        "Optimizes substring matching performance by maintaining contiguous memory layouts suitable for parallel binary searches.",
+        "Prevents race conditions during concurrent document ingestion and index reconstruction in high-write pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic index insertion and hazard pointer protection during concurrent suffix array reads.",
+        "correct": "void* read_suffix(std::atomic<Node*>& head, HazardPointerManager& hpm, thread_id tid) {\n    Node* node;\n    while (true) {\n        node = hpm.protect(0, head, tid);\n        if (head.load() == node) break;\n    }\n    void* data = node->data;\n    hpm.clear(0, tid);\n    return data;\n}",
+        "wrong": "void* read_suffix_unsafe(Node* head) {\n    // Missing atomic load and hazard pointer protection causes use-after-free under concurrency\n    return head->data;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically reallocated suffix nodes with hazard pointers, leading to memory corruption.",
+        "Relying on coarse-grained mutexes instead of atomic CAS primitives, which creates bottlenecks in high-throughput engines."
+      ],
+      "best_practices": [
+        "Design lock-free index structures with bounded retry loops (backoff strategies) to minimize CPU contention under heavy workloads.",
+        "Batch dynamic updates to the suffix array where possible to reduce the frequency of expensive global resort operations."
+      ],
+      "when_to_use": "Use when building real-time log analytics systems or search engines that demand high read/write concurrency and ultra-low latency substring lookups.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers and lock-free retry loops outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free suffix array?",
+          "answer": "Hazard pointers allow threads to locally register pointers they are actively reading, informing memory reclamation mechanisms not to free those nodes until the reader unprotects them."
+        },
+        {
+          "question": "Why is standard sorting difficult to implement in a lock-free data structure?",
+          "answer": "Standard sorting algorithms require global or wide-range structural modifications that are hard to atomize via CAS primitives without causing high contention or deadlocks."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Suffix Trees",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Radix Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T20:12:43.529599+00:00",
+      "run_number": 1106
     }
   ]
 }
