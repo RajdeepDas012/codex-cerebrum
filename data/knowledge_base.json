@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1117,
-    "last_updated": "2026-09-17T20:47:15.693566+00:00",
-    "total_topics_learned": 1117
+    "total_runs": 1118,
+    "last_updated": "2026-09-17T20:50:24.092050+00:00",
+    "total_topics_learned": 1118
   },
   "entries": [
     {
@@ -53652,6 +53652,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-17T20:47:15.693545+00:00",
       "run_number": 1117
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory databases and concurrent caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent treap combines a binary search tree ordered by keys with a heap ordered by randomized priorities, maintaining balance probabilistically without global locks. Implementing it lock-free requires atomic Compare-And-Swap (CAS) operations for node insertions, structural rotations, and hazard pointers to safely manage memory reclamation under concurrent modifications.",
+      "key_points": [
+        "Merges binary search tree key ordering with heap priority ordering to maintain probabilistic balance.",
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage pointer swings during node insertion and structural rotations.",
+        "Employs hazard pointers to track thread-local active references, preventing premature freeing of nodes modified concurrently.",
+        "Eliminates locking overhead, enabling scalable high-throughput operations in multi-threaded in-memory databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node insertion into a lock-free treap using atomic CAS and hazard pointers",
+        "correct": "bool insert(Node*& root, int key, int priority) {\n    Node* newNode = new Node(key, priority);\n    while (true) {\n        HazardPointerGuard guard(newNode);\n        Node* curr = root.load();\n        if (!curr) {\n            if (root.compare_exchange_weak(curr, newNode)) return true;\n        } else if (key < curr->key) {\n            // traverse left and apply CAS\n        } else {\n            // traverse right and apply CAS\n        }\n    }\n}",
+        "wrong": "bool insert(Node*& root, int key, int priority) {\n    // Mutating pointer without hazard protection or CAS loop leads to race conditions\n    root->left = new Node(key, priority);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal steps with hazard pointers, leading to use-after-free bugs during concurrent rotations.",
+        "Using blocking synchronization primitives inside lock-free paths, which introduces priority inversion and degrades throughput."
+      ],
+      "best_practices": [
+        "Batch hazard pointer retirement lists to amortize the overhead of deferred memory reclamation.",
+        "Ensure randomized priorities are generated using a thread-safe, high-performance pseudo-random number generator to avoid bottlenecks."
+      ],
+      "when_to_use": "Use when building high-throughput, low-latency in-memory data stores or concurrent caching systems requiring dynamic ordered set operations with minimal contention.",
+      "when_not_to_use": "Avoid when deterministic worst-case balance guarantees are mandatory, as treaps rely on probabilistic balancing rather than strict rebalancing invariants.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem during structural rotations in a lock-free treap?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives so that pointer modifications detect if an intermediate state change occurred."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection for a concurrent treap?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without stop-the-world pauses, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent AVL Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-17T20:50:24.092030+00:00",
+      "run_number": 1118
     }
   ]
 }
