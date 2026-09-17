@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1103,
-    "last_updated": "2026-09-17T17:27:39.560504+00:00",
-    "total_topics_learned": 1103
+    "total_runs": 1104,
+    "last_updated": "2026-09-17T20:06:27.400247+00:00",
+    "total_topics_learned": 1104
   },
   "entries": [
     {
@@ -52988,6 +52988,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T17:27:39.560479+00:00",
       "run_number": 1103
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic fingerprint-bucket swapping CAS primitives and epoch-based memory reclamation for high-throughput compact set-membership querying and item deletion in real-time distributed caching and storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Cuckoo Filter is a space-efficient probabilistic data structure that supports dynamic item insertion, deletion, and high-throughput set-membership queries. Utilizing atomic compare-and-swap (CAS) primitives alongside epoch-based memory reclamation ensures lock-free thread safety, making it ideal for distributed caching and storage systems.",
+      "key_points": [
+        "Utilizes fingerprint-bucket swapping to resolve collisions without blocking concurrent reader threads.",
+        "Employs atomic CAS primitives for safe modification of bucket entries across multiple threads.",
+        "Integrates epoch-based memory reclamation (EBR) to safely free memory when resizing or restructuring buckets without blocking active accessors.",
+        "Supports efficient item deletions, unlike standard Bloom filters which require complex counting variants that consume more space."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping in a concurrent cuckoo bucket using CAS operations.",
+        "correct": "bool swap_fingerprint(std::atomic<uint32_t>& bucket, uint32_t expected_fp, uint32_t new_fp) {\n    return bucket.compare_exchange_strong(expected_fp, new_fp, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool swap_fingerprint(uint32_t& bucket, uint32_t expected_fp, uint32_t new_fp) {\n    bucket = new_fp; // Non-atomic update causes race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect structural filter expansions with proper epoch-based synchronization, leading to memory corruption.",
+        "Using weak memory orderings without necessary synchronizations during bucket relocation chains."
+      ],
+      "best_practices": [
+        "Pair epoch-based memory reclamation with thread-local state tracking to guarantee safe memory recycling during high-contention writes.",
+        "Limit the maximum loop depth for cuckoo displacement chains to avoid infinite loops during high load factors."
+      ],
+      "when_to_use": "Use when you need high-throughput, memory-efficient set-membership testing that frequently requires dynamic item deletion in multi-threaded environments.",
+      "when_not_to_use": "Avoid when memory usage is completely unconstrained, or when false positive rates must be strictly zero.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter handle bucket collisions during concurrent inserts?",
+          "answer": "It displaces existing items to their alternate hash locations using atomic CAS operations to update fingerprints safely."
+        },
+        {
+          "question": "Why is epoch-preferred memory reclamation preferred over standard locking in high-throughput Cuckoo filters?",
+          "answer": "It avoids thread blocking on read operations, allowing lock-free concurrent lookups while enabling safe cleanup during filter resizing."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filter",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T20:06:27.400226+00:00",
+      "run_number": 1104
     }
   ]
 }
