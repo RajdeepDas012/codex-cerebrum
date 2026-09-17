@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1119,
-    "last_updated": "2026-09-17T23:28:10.653072+00:00",
-    "total_topics_learned": 1119
+    "total_runs": 1120,
+    "last_updated": "2026-09-17T23:31:18.592686+00:00",
+    "total_topics_learned": 1120
   },
   "entries": [
     {
@@ -53748,6 +53748,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T23:28:10.653050+00:00",
       "run_number": 1119
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput equivalence class merging and connected component tracking in real-time graph processing and network clustering engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Disjoint-Set data structure using Compare-And-Swap (CAS) primitives for atomic parent-pointer updates and path compression. It is critical for scalable graph analysis, dynamic connectivity queries, and network clustering where multiple threads concurrently merge sets and query components without global locks.",
+      "key_points": [
+        "Utilizes atomic pointers for node representations to allow safe concurrent reads and speculative updates.",
+        "Implements lock-free Find operations with atomic path compression to flatten trees without locking parents.",
+        "Applies hazard pointers to manage memory safely during concurrent node reallocation and structure restructuring.",
+        "Handles concurrent Union operations gracefully by resolving race conditions via atomic CAS loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find with path compression using CAS primitives in C++.",
+        "correct": "struct Node { std::atomic<Node*> parent; };\nNode* find(Node* node) {\n    Node* p = node->parent.load(std::memory_order_acquire);\n    while (p != p->parent.load(std::memory_order_acquire)) {\n        Node* pp = p->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(p, pp, std::memory_order_release);\n        node = p;\n        p = pp;\n    }\n    return p;\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic, prone to data races and broken chains in multi-threaded contexts.\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for intermediate pointer changes during the CAS loop in path compression, leading to lost updates.",
+        "Neglecting safe memory reclamation (e.g., hazard pointers or epoch-based GC), resulting in ABA problems or use-after-free faults."
+      ],
+      "best_practices": [
+        "Use appropriate memory ordering flags (acquire-release semantics) for atomic loads and CAS operations.",
+        "Integrate hazard pointers or epoch-based reclamation to safely recycle nodes modified during concurrent unions."
+      ],
+      "when_to_use": "Use when multiple worker threads must simultaneously perform high-frequency disjoint-set operations on massive graphs without suffering from lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or workloads with extremely low contention where standard pointer-based Disjoint-Sets with path compression are simpler and faster.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem during concurrent parent-pointer updates in a lock-free Disjoint-Set structure?",
+          "answer": "By using hazard pointers or tagged pointers (version counts) combined with CAS primitives to ensure a node's identity and state have not changed mid-operation."
+        },
+        {
+          "question": "Why is standard path compression difficult to implement in a lock-free environment?",
+          "answer": "Because multiple threads might attempt to update the parent pointer of the same node concurrently to different ancestors, requiring carefully designed CAS retry loops to avoid breaking the tree."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Graphs",
+        "Concurrent Segment Trees",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T23:31:18.592667+00:00",
+      "run_number": 1120
     }
   ]
 }
