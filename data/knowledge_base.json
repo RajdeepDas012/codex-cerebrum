@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1067,
-    "last_updated": "2026-09-17T06:23:12.598312+00:00",
-    "total_topics_learned": 1067
+    "total_runs": 1068,
+    "last_updated": "2026-09-17T06:26:21.447416+00:00",
+    "total_topics_learned": 1068
   },
   "entries": [
     {
@@ -51283,6 +51283,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T06:23:12.598293+00:00",
       "run_number": 1067
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node balancing CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling and message routing in real-time distributed execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent priority queue uses atomic compare-and-swap (CAS) operations to manage heap nodes and hazard pointers for safe memory reclamation without blocking threads. It is crucial for high-throughput task scheduling and real-time event processing where traditional locks introduce severe contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic heap-node balancing primitives to maintain structural integrity under high concurrency without global locks.",
+        "Employs hazard pointers to track active thread references and safely reclaim memory of deleted nodes without race conditions.",
+        "Ensures thread safety and progress guarantees (lock-free or wait-free) for push, pop, and priority-peek operations.",
+        "Minimizes cache-line bouncing through localized atomic updates during heap restructuring and index rearrangement."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic heap node CAS operation and hazard pointer protection during priority queue node extraction",
+        "correct": "bool try_extract_min(std::atomic<Node*>& root, ThreadDescriptor* desc) {\n    Node* current;\n    do {\n        current = root.load(std::memory_order_acquire);\n        if (!current) return false;\n        desc->hazard_ptr.store(current, std::memory_order_release);\n    } while (root.load(std::memory_order_acquire) != current);\n    // Perform atomic CAS-based heap balancing and extraction\n    return root.compare_exchange_weak(current, get_replacement_node(current));\n}",
+        "wrong": "Node* extract_min(std::atomic<Node*>& root) {\n    Node* current = root.load();\n    // Missing hazard pointer protection and validation check leads to use-after-free under concurrent deletion\n    root.store(current->left);\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to re-verify node pointers after acquiring a hazard pointer, leading to race conditions if another thread frees the node concurrently.",
+        "Introducing ABA problems during atomic pointer swaps on heap re-balancing paths without version counters or tagged pointers."
+      ],
+      "best_practices": [
+        "Pair every hazard pointer assignment with immediate validation against the source shared memory location.",
+        "Use tagged pointers or atomic double-word CAS (DCAS) when updating parent-child heap links to eliminate ABA vulnerabilities.",
+        "Batch retired nodes into thread-local reclamation lists to amortize the performance overhead of hazard pointer scans."
+      ],
+      "when_to_use": "Use when building low-latency task schedulers, real-time event dispatchers, or high-throughput message routing engines requiring extreme concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard blocking mutex-protected heaps offer lower complexity and overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that other threads know not to free those memory addresses until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the primary synchronization challenge when implementing a lock-free heap compared to a lock-free stack or queue?",
+          "answer": "Heaps require structural modifications across multiple non-adjacent nodes to maintain heap-balance properties, making single CAS operations insufficient without complex multi-step cooperative restructuring."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Skip-Lists",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T06:26:21.447395+00:00",
+      "run_number": 1068
     }
   ]
 }
