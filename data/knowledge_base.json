@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1112,
-    "last_updated": "2026-09-17T20:31:31.917160+00:00",
-    "total_topics_learned": 1112
+    "total_runs": 1113,
+    "last_updated": "2026-09-17T20:34:40.230816+00:00",
+    "total_topics_learned": 1113
   },
   "entries": [
     {
@@ -53413,6 +53413,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T20:31:31.917139+00:00",
       "run_number": 1112
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed caching and web crawler deduplication engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter leverages atomic bit-setting operations (such as fetch_or) and epoch-based memory management to enable high-throughput, thread-safe probabilistic set-membership tests. It eliminates explicit locking overheads, making it ideal for high-concurrency systems like distributed caches and web crawler URL filtering.",
+      "key_points": [
+        "Utilizes atomic bit-vector operations to safely update filter bits across multiple concurrent writer threads without mutex locks.",
+        "Employs epoch-based memory reclamation (or lock-free dynamic resizing strategies) to safely manage memory when expanding the underlying bit array.",
+        "Provides O(k) time complexity for both insertions and membership queries, where k is the number of independent hash functions.",
+        "Guarantees zero false negatives while bounded by a predictable false-positive rate determined by the bit array size and number of hash functions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe concurrent insertions into an atomic bit-vector Bloom filter.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <cstdint>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\n    size_t num_bits;\npublic:\n    ConcurrentBloomFilter(size_t size) : num_bits(size), bits((size + 63) / 64) {\n        for(auto& b : bits) b.store(0, std::memory_order_relaxed);\n    }\n    void insert(size_t hash) {\n        size_t bit_idx = hash % num_bits;\n        size_t word_idx = bit_idx / 64;\n        uint64_t mask = 1ULL << (bit_idx % 64);\n        bits[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\nclass UnsafeBloomFilter {\n    std::vector<uint64_t> bits;\npublic:\n    void insert(size_t hash) {\n        size_t bit_idx = hash % 64;\n        bits[bit_idx / 64] |= (1ULL << (bit_idx % 64)); // Data race under multi-threading!\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared words of the bit-vector, introducing severe race conditions and lost bit updates.",
+        "Failing to use appropriate memory ordering semantics, which can lead to visibility delays across cores in weakly-ordered CPU architectures.",
+        "Choosing poor hash functions or insufficient bit array sizes, resulting in a spike of false positive rates under heavy loads."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for non-synchronizing bit sets where strict sequential consistency is unnecessary for performance.",
+        "Combine multiple hash values using techniques like Kirsch-Mitzenmacher optimization (double hashing) to generate k hash positions efficiently.",
+        "Integrate epoch-based memory management if the filter supports dynamic scaling or resizing under high concurrency."
+      ],
+      "when_to_use": "Use when you need extreme read and write concurrency for set-membership tests where occasional false positives are acceptable and avoiding lock contention is critical.",
+      "when_not_to_use": "Do not use when false positives are strictly intolerable or when elements must be reliably deleted from the set without rebuilding.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads try to set bits in the same underlying 64-bit word simultaneously?",
+          "answer": "By using atomic bitwise operations such as std::atomic::fetch_or with appropriate memory orderings, ensuring atomicity at the hardware instruction level."
+        },
+        {
+          "question": "Can you delete an element from a standard lock-free Bloom filter?",
+          "answer": "No, standard Bloom filters do not support deletion because clearing a bit might inadvertently remove an element shared by multiple hashes."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent cuckoo filter",
+        "epoch-based memory reclamation",
+        "scalable concurrent quotient filter"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-17T20:34:40.230796+00:00",
+      "run_number": 1113
     }
   ]
 }
