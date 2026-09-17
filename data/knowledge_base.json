@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1109,
-    "last_updated": "2026-09-17T20:22:07.847889+00:00",
-    "total_topics_learned": 1109
+    "total_runs": 1110,
+    "last_updated": "2026-09-17T20:25:16.290647+00:00",
+    "total_topics_learned": 1110
   },
   "entries": [
     {
@@ -53272,6 +53272,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T20:22:07.847867+00:00",
       "run_number": 1109
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition linking CAS primitives and hazard pointer memory reclamation for high-throughput substring indexing and text analysis in real-time document search and computational biology engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "Building a concurrent Suffix Automaton requires atomic state-transition link updates and safe memory management using hazard pointers to support multiple threads inserting substrings and querying the index simultaneously without locks. This architecture enables high-throughput pattern matching and genome sequence alignment in real-time search engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely add new states and transition pointers without locking the automaton graph.",
+        "Employs hazard pointers to defer the reclamation of deleted or split automaton states, preventing use-after-free race conditions among concurrent readers and writers.",
+        "Handles complex state cloning and suffix link redirection atomically to maintain the minimal deterministic acyclic finite state automaton invariant.",
+        "Achieves linear space complexity $O(N)$ and linear time construction $O(N)$ while supporting massive concurrent scaling for online string processing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state extension and transition linking in a lock-free Suffix Automaton using hazard pointers.",
+        "correct": "void ConcurrentSuffixAutomaton::extend(char c) {\n    int cur = create_node(length.load() + 1);\n    int p = last.load();\n    while (p != -1 && !transitions[p][c].load()) {\n        atomic_store(&transitions[p][c], cur);\n        p = suffix_link[p].load();\n    }\n    // Atomic redirection and cloning logic with hazard pointers...\n    last.store(cur);\n}",
+        "wrong": "void ConcurrentSuffixAutomaton::extend(char c) {\n    // Missing synchronization: standard non-atomic modifications cause race conditions and corrupted suffix links\n    int cur = ++sz;\n    int p = last;\n    while (p != -1 && !transitions[p][c]) {\n        transitions[p][c] = cur;\n        p = suffix_link[p];\n    }\n    last = cur;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect state splitting and suffix link redirections with hazard pointers, leading to memory corruption when concurrent threads traverse old links.",
+        "Assuming standard non-atomic pointer assignments are thread-safe when multiple threads extend the automaton with new text streams simultaneously."
+      ],
+      "best_practices": [
+        "Protect every concurrent node traversal and link dereference by registering pointers in thread-local hazard pointer records.",
+        "Order atomic memory operations carefully using acquire-release semantics to guarantee that state metadata is fully initialized before transition links become visible."
+      ],
+      "when_to_use": "When building real-time multi-threaded document search engines or bioinformatics alignment pipelines that require simultaneous online text indexing and sub-string matching.",
+      "when_not_to_use": "When working with static text where standard single-threaded suffix automata are sufficient, or when memory overhead from hazard pointer management outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle state cloning in a lock-free Suffix Automaton when multiple threads try to clone the same transition target simultaneously?",
+          "answer": "By using CAS primitives on the transition pointers to ensure only one thread successfully installs the cloned state while others retry or adopt the newly created clone."
+        },
+        {
+          "question": "Why are hazard pointers necessary instead of traditional garbage collection when managing concurrent Suffix Automaton updates?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the pause times or global coordination overhead of standard garbage collection, which is critical for low-latency real-time search engines."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Suffix Tree",
+        "Lock-Free Aho-Corasick Automaton",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T20:25:16.290627+00:00",
+      "run_number": 1110
     }
   ]
 }
