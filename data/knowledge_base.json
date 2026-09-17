@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1061,
-    "last_updated": "2026-09-17T06:03:05.794050+00:00",
-    "total_topics_learned": 1061
+    "total_runs": 1062,
+    "last_updated": "2026-09-17T06:07:03.631095+00:00",
+    "total_topics_learned": 1062
   },
   "entries": [
     {
@@ -50999,6 +50999,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T06:03:05.794031+00:00",
       "run_number": 1061
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent page indexing and range queries in real-time relational database management systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B-Link Tree where child pointers and right-links are modified atomically using Compare-And-Swap (CAS) operations. It matters because it enables high-throughput multi-threaded range queries and page indexing without global locks in relational database engines.",
+      "key_points": [
+        "Utilizes atomic right-link pointers to allow threads to recover from concurrent node splits safely.",
+        "Employs hazard pointers for safe memory reclamation without stalling concurrent readers or writers.",
+        "Supports lock-free node splitting and merging primitives via low-level hardware CAS instructions.",
+        "Ensures linearizable range queries by following right-links when encountering concurrent structure modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic right-link CAS pointer update during a node insertion split.",
+        "correct": "bool update_right_link(Node* node, Node* expected_right, Node* new_right) {\n    return std::atomic_compare_exchange_strong(&node->right_link, &expected_right, new_right);\n}",
+        "wrong": "Node* update_right_link(Node* node, Node* new_right) {\n    node->right_link = new_right;\n    return node->right_link;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child or right pointers, leading to use-after-free bugs.",
+        "Ignoring the right-link during searches, which can cause readers to miss keys inserted during concurrent node splits."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for current and child nodes before attempting any CAS operation.",
+        "Design node splits to update child pointers and right-links in a specific deterministic order to prevent deadlocks or lost updates."
+      ],
+      "when_to_use": "Use when building high-performance storage engines requiring massive concurrent multi-threaded read and write workloads on ordered indexes.",
+      "when_not_to_use": "Avoid in low-memory environments or single-threaded applications where the complexity of lock-free memory management overhead outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How does a B-Link Tree prevent readers from getting lost during a concurrent node split?",
+          "answer": "By maintaining an explicit right-link pointer in every node, allowing a thread that falls behind a split to traverse horizontally to the newly created sibling node."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B-Link Tree?",
+          "answer": "They safely track which nodes are currently being accessed by threads, preventing memory from being reclaimed prematurely while other threads hold pointers to it."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Range Queries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T06:07:03.631074+00:00",
+      "run_number": 1062
     }
   ]
 }
