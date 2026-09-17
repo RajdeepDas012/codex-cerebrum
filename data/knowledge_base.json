@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1099,
-    "last_updated": "2026-09-17T17:14:43.505089+00:00",
-    "total_topics_learned": 1099
+    "total_runs": 1100,
+    "last_updated": "2026-09-17T17:18:11.590059+00:00",
+    "total_topics_learned": 1100
   },
   "entries": [
     {
@@ -52799,6 +52799,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T17:14:43.505068+00:00",
       "run_number": 1099
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging CAS primitives and epoch-based memory reclamation for high-throughput accurate quantile estimation and percentile tracking in real-time distributed performance monitoring and telemetry data stream engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure enables lock-free, thread-safe approximate quantile estimation across multi-threaded data streams using atomic centroid compression and epoch-based garbage collection. It matters because it allows real-time telemetry systems to calculate precise extreme percentiles (like p99.9) under heavy concurrent write loads without incurring locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to safely manage centroid nodes and merge operations without mutex locks.",
+        "Employs epoch-based memory reclamation to safely free old or compressed centroid clusters once all threads exit the current epoch.",
+        "Maintains higher accuracy at the tails of the distribution (p99, p99.9) compared to traditional uniform streaming quantile sketches.",
+        "Supports high-throughput distributed performance telemetry by scaling lock-free ingestion across multiple concurrent worker threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based loop to update a concurrent T-Digest centroid buffer.",
+        "correct": "bool add_value(std::atomic<Centroid*>& root, double val) {\n    Centroid* old_root = root.load();\n    Centroid* new_root = create_centroid(old_root, val);\n    return root.compare_exchange_weak(old_root, new_root);\n}",
+        "wrong": "Centroid* old_root = root.load();\nold_root->weight += 1.0; // Non-atomic modification leading to race conditions"
+      },
+      "common_mistakes": [
+        "Modifying centroid weights and means in place without atomic primitives, causing severe data corruption under high contention.",
+        "Failing to properly synchronize epoch transitions, leading to use-after-free bugs when threads access old uncompressed centroid arrays."
+      ],
+      "best_practices": [
+        "Use thread-local buffering to batch telemetry inputs before attempting global atomic CAS centroid merging.",
+        "Trigger background compression passes conditionally based on buffer size thresholds to maintain bounded memory usage."
+      ],
+      "when_to_use": "Use when tracking extreme percentiles (p99, p99.99) in real-time high-throughput telemetry or distributed logging engines with thousands of concurrent ingestion threads.",
+      "when_not_to_use": "Avoid when exact percentiles are strictly required over unbounded data sets, or when single-threaded simplicity and low memory footprints are prioritized.",
+      "interview_questions": [
+        {
+          "question": "How does a T-Digest achieve higher accuracy at the tails (p99+) than traditional uniform binning algorithms?",
+          "answer": "It uses dynamically sized clusters (centroids) that allocate more capacity and finer granularity to the extreme ends of the cumulative distribution function."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over hazard pointers for complex sketching data structures like T-Digests?",
+          "answer": "Because structural modifications often involve bulk restructuring and merging of multiple centroids simultaneously, making per-node pointer protection overly complex compared to epoch-based batch reclamation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip Lists",
+        "Epoch-Based Memory Reclamation",
+        "Approximate Quantile Sketches (Datasketches)"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-17T17:18:11.590036+00:00",
+      "run_number": 1100
     }
   ]
 }
