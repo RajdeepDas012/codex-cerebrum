@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1085,
-    "last_updated": "2026-09-17T12:02:35.720115+00:00",
-    "total_topics_learned": 1085
+    "total_runs": 1086,
+    "last_updated": "2026-09-17T12:06:06.928048+00:00",
+    "total_topics_learned": 1086
   },
   "entries": [
     {
@@ -52137,6 +52137,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T12:02:35.720096+00:00",
       "run_number": 1085
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput connected components querying and cycle detection in real-time graph processing and network connectivity engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Disjoint Set (Union-Find) data structure using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput concurrent processing of connected components and cycle detection without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic parent pointers to facilitate lock-free reads and updates across multiple concurrent threads.",
+        "Implements atomic path compression via CAS loops to flatten tree structures and accelerate future lookups.",
+        "Employs hazard pointer memory reclamation to safely manage node deallocation without ABA problems or use-after-free race conditions.",
+        "Ensures thread-safe union operations by resolving race conditions when two threads attempt to link distinct root nodes simultaneously."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find with path compression using CAS in a concurrent disjoint set.",
+        "correct": "std::atomic<int>* parent;\nint find(int i) {\n    int root = i;\n    while (parent[root].load() != root) {\n        root = parent[root].load();\n    }\n    int curr = i;\n    while (curr != root) {\n        int nxt = parent[curr].load();\n        parent[curr].compare_exchange_weak(nxt, root);\n        curr = nxt;\n    }\n    return root;\n}",
+        "wrong": "int find(int i) {\n    if (parent[i] == i) return i;\n    return parent[i] = find(parent[i]); // Non-atomic and unsafe under concurrency\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when updating parent pointers atomically.",
+        "Performing recursive path compression without loop guards, leading to race conditions and infinite loops under concurrent updates."
+      ],
+      "best_practices": [
+        "Always pair lock-free data structures with robust memory reclamation schemes like hazard pointers or epoch-based reclamation.",
+        "Bound CAS retry loops to prevent thread starvation under extreme contention."
+      ],
+      "when_to_use": "Use when building high-throughput real-time graph processing, dynamic connectivity checking, or network routing engines with heavy thread contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where simple coarse-grained locking provides sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during the union operation in a lock-free Disjoint Set?",
+          "answer": "By using atomic CAS operations to update the root parent pointer of one set to point to the root of the other set, retrying if another thread modifies it concurrently."
+        },
+        {
+          "question": "Why is standard recursive path compression dangerous in a lock-free concurrent Union-Find implementation?",
+          "answer": "It can introduce severe race conditions, stack overflows, and inconsistent intermediate states when multiple threads modify parent pointers simultaneously."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Graph Processing Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T12:06:06.928027+00:00",
+      "run_number": 1086
     }
   ]
 }
