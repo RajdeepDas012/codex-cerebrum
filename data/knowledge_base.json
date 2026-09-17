@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1089,
-    "last_updated": "2026-09-17T16:40:35.021724+00:00",
-    "total_topics_learned": 1089
+    "total_runs": 1090,
+    "last_updated": "2026-09-17T16:43:43.192609+00:00",
+    "total_topics_learned": 1090
   },
   "entries": [
     {
@@ -52325,6 +52325,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T16:40:35.021700+00:00",
       "run_number": 1089
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic rank-merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time job scheduling and priority-based message broker engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Leftist Heap is a priority queue variant that supports efficient meld operations by maintaining a leftist property where the null path length of the left child is at least as large as that of the right child. Implementing this structure in a lock-free manner uses atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage node links and memory reclamation across multiple concurrent threads.",
+      "key_points": [
+        "Leverages the leftist tree property to ensure logarithmic merge, insert, and delete-min operations.",
+        "Uses atomic operations (CAS) to update left and right child pointers safely without global locks.",
+        "Employs hazard pointers to defer the reclamation of deleted nodes until no active threads are referencing them.",
+        "Optimizes throughput in real-time job schedulers and message brokers where rapid priority queue merging is critical."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the node structure and atomic merge routine for a lock-free leftist heap.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int priority;\n    int rank;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n    Node(int p) : priority(p), rank(1), left(nullptr), right(nullptr) {}\n};\n\nNode* merge(Node* h1, Node* h2) {\n    if (!h1) return h2;\n    if (!h2) return h1;\n    if (h1->priority > h2->priority) std::swap(h1, h2);\n    Node* new_right = merge(h1->right.load(), h2);\n    h1->right.store(new_right);\n    if ((!h1->left.load() ? 0 : h1->left.load()->rank) < (!h1->right.load() ? 0 : h1->right.load()->rank)) {\n        Node* temp = h1->left.load();\n        h1->left.store(h1->right.load());\n        h1->right.store(temp);\n    }\n    h1->rank = (!h1->right.load() ? 0 : h1->right.load()->rank) + 1;\n    return h1;\n}",
+        "wrong": "Node* merge(Node* h1, Node* h2) {\n    // Mutating nodes directly without atomic operations or proper hazard pointer protection\n    if (h1->priority < h2->priority) {\n        h1->right = merge(h1->right, h2); // Race condition on non-atomic pointer assignment\n        return h1;\n    }\n    return h2;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers, leading to use-after-free bugs during concurrent node extraction.",
+        "Neglecting to update leftist ranks atomically after structural modifications, causing imbalances and degraded performance."
+      ],
+      "best_practices": [
+        "Always register active nodes in a thread-local hazard pointer domain before executing any CAS-based pointer modifications.",
+        "Batch memory deallocations to minimize atomic overhead and contention on the central memory reclamation queue."
+      ],
+      "when_to_use": "Use when building high-concurrency systems requiring frequent priority queue merging operations, such as distributed task schedulers and advanced message brokers.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where simpler binary heaps or standard locking mechanisms provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How does the leftist property guarantee efficient meld operations compared to binary heaps?",
+          "answer": "The leftist property ensures that the right subtree of any node is always the shorter path, bounding the right spine length to logarithmic time and restricting structural modifications primarily to the right spine during a merge."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free leftist heap?",
+          "answer": "Hazard pointers prevent other threads from freeing memory out from underneath a thread that is actively traversing or modifying a node pointer during concurrent CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T16:43:43.192582+00:00",
+      "run_number": 1090
     }
   ]
 }

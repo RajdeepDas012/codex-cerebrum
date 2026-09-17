@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1089** |
-| Last Updated | `2026-09-17T16:40:35.021724+00:00` |
-| Dataset Size | `1089 entries` |
+| Total Topics Learned | **1090** |
+| Last Updated | `2026-09-17T16:43:43.192609+00:00` |
+| Dataset Size | `1090 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 245 |
+| data-structures | 246 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic rank-merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time job scheduling and priority-based message broker engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra graph algorithms and network routing optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quadrant-pointer CAS primitives and hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and region searching in real-time geographic information systems and multiplayer gaming state servers`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations in real-time in-memory caching and session state management engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput connected components querying and cycle detection in real-time graph processing and network connectivity engines`
-- `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-extension CAS primitives and hazard pointer memory reclamation for high-throughput exact pattern matching and bioinformatics sequence alignment in real-time genomic analysis engines`
 
 <!-- STATS_END -->
 
