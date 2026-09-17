@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1100,
-    "last_updated": "2026-09-17T17:18:11.590059+00:00",
-    "total_topics_learned": 1100
+    "total_runs": 1101,
+    "last_updated": "2026-09-17T17:21:21.516196+00:00",
+    "total_topics_learned": 1101
   },
   "entries": [
     {
@@ -52846,6 +52846,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-17T17:18:11.590036+00:00",
       "run_number": 1100
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell incrementing CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter detection and stream frequency estimation in real-time network traffic monitoring and distributed analytics engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch uses a 2D array of frequency counters paired with multiple independent hash functions to provide probabilistic frequency estimations of stream elements. By utilizing atomic Compare-And-Swap (CAS) primitives for counter increments and epoch-based memory reclamation, it safely handles high-concurrency ingestion workloads without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes a 2D matrix of width (columns) and depth (hash functions) to map incoming keys to counters.",
+        "Employs atomic fetch-and-add or CAS loop primitives to increment frequency cells safely across multiple concurrent threads.",
+        "Integrates epoch-based memory reclamation (EBMR) or hazard pointers to manage safe resizing or reallocation of sketch matrices without blocking readers or writers.",
+        "Provides sub-linear space bounds while trading off exact precision for high-throughput probabilistic frequency estimates and heavy-hitter identification."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the core concept of multi-hashed atomic frequency updates in a concurrent Count-Min Sketch matrix.",
+        "correct": "import threading\n\nclass ConcurrentCMS:\n    def __init__(self, width, depth):\n        self.width = width\n        self.depth = depth\n        self.table = [[0] * width for _ in range(depth)]\n        self.locks = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n\n    def add(self, key):\n        for i in range(self.depth):\n            col = hash((key, i)) % self.width\n            with self.locks[i][col]:\n                self.table[i][col] += 1",
+        "wrong": "def add(self, key):\n    for i in range(self.depth):\n        col = hash((key, i)) % self.width\n        self.table[i][col] += 1  # Race condition: non-atomic increment across threads"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic increments on sketch cells, leading to lost updates under high thread contention.",
+        "Applying correlated hash functions instead of independent universal hash families, which degrades estimation accuracy."
+      ],
+      "best_practices": [
+        "Design hash functions that are fast to compute (e.g., MurmurHash or CityHash variants) to minimize ingestion latency in streaming systems.",
+        "Leverage hardware-level atomic instructions (like fetch-add) rather than heavy mutex locks for each matrix cell."
+      ],
+      "when_to_use": "Use when tracking the frequency of massive data streams in real-time with strict memory constraints, where exact counts are unnecessary.",
+      "when_not_to_use": "Do not use when absolute zero-error frequency counts are required or when the domain of elements is extremely small and fits easily into an exact hash map.",
+      "interview_questions": [
+        {
+          "question": "How does a Count-Min Sketch handle hash collisions, and how does it affect frequency estimates?",
+          "answer": "Collisions cause overestimation because cells accumulate counts from multiple distinct keys. The query returns the minimum value across all hash functions, bounding the maximum possible overestimation error."
+        },
+        {
+          "question": "Why is lock-free atomicity preferred over global mutexes when scaling Count-Min Sketches in multi-threaded streaming pipelines?",
+          "answer": "Global mutexes create contention bottlenecks that serialize thread ingestion, drastically reducing throughput. Lock-free atomicity allows multiple threads to update independent cells concurrently without blocking."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filter",
+        "Count-Sketch"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T17:21:21.516174+00:00",
+      "run_number": 1101
     }
   ]
 }
