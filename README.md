@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1079** |
-| Last Updated | `2026-09-17T11:43:42.317743+00:00` |
-| Dataset Size | `1079 entries` |
+| Total Topics Learned | **1080** |
+| Last Updated | `2026-09-17T11:46:51.253736+00:00` |
+| Dataset Size | `1080 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 235 |
+| data-structures | 236 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent k-d Tree using atomic spatial-partitioning CAS primitives and hazard pointer memory reclamation for high-throughput multi-dimensional point location and nearest-neighbor queries in real-time robotic motion planning and spatial indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Vantage-Point Tree (VP-Tree) using atomic metric-space partitioning CAS primitives and hazard pointer memory reclamation for high-throughput non-Euclidean metric space nearest-neighbor searches in real-time high-dimensional similarity matching and image retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation CAS primitives and hazard pointer memory reclamation for high-throughput overlapping time-range queries and interval scheduling in real-time calendar management and event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer network routing and distributed key-value lookup in real-time distributed systems engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box splitting CAS primitives and hazard pointer memory reclamation for high-throughput spatial indexing and geographic range queries in real-time mapping and location-based services engines`
-- `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-insertion CAS primitives and hazard pointer memory reclamation for high-throughput prefix-based key lookups and autocompletion in real-time search engines and routing tables`
 
 <!-- STATS_END -->
 
