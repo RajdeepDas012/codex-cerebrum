@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1047,
-    "last_updated": "2026-09-17T00:30:59.223359+00:00",
-    "total_topics_learned": 1047
+    "total_runs": 1048,
+    "last_updated": "2026-09-17T00:34:06.935999+00:00",
+    "total_topics_learned": 1048
   },
   "entries": [
     {
@@ -50334,6 +50334,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-17T00:30:59.223340+00:00",
       "run_number": 1047
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance partitioning CAS primitives and hazard pointer memory reclamation for high-throughput approximate string matching and spell checking in real-time text processing and autocomplete suggestion engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Burkhard-Keller (BK) tree optimized for lock-free operations using atomic edit-distance primitives and hazard pointers. It enables high-throughput approximate string matching and spell checking without locks, ensuring safe memory reclamation under heavy multithreaded workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely insert child nodes corresponding to specific Levenshtein or edit distances without global locking.",
+        "Employs hazard pointers to safely manage and reclaim memory of dynamically unlinked nodes during concurrent tree restructuring.",
+        "Organizes string nodes into metric space partitions based on edit distance, restricting search spaces during approximate queries.",
+        "Provides lock-free thread safety, preventing priority inversion and thread starvation under heavy real-time autocomplete loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node insertion into a lock-free concurrent BK-Tree using atomic CAS and hazard pointers",
+        "correct": "bool BKTree::insert_lock_free(const std::string& word) {\n    Node* new_node = new Node(word);\n    HazardPointerGuard hp_guard;\n    while (true) {\n        Node* curr = hp_guard.protect(root);\n        if (!curr) {\n            if (cas(&root, nullptr, new_node)) return true;\n            continue;\n        }\n        int dist = edit_distance(curr->word, word);\n        if (dist == 0) { delete new_node; return false; }\n        Node* child = curr->children[dist].load();\n        if (!child) {\n            if (curr->children[dist].compare_exchange_strong(child, new_node)) return true;\n        } else {\n            // traverse further down the tree\n        }\n    }\n}",
+        "wrong": "bool BKTree::insert_unsafe(const std::string& word) {\n    // Missing synchronization and memory reclamation\n    Node* curr = root;\n    int dist = edit_distance(curr->word, word);\n    if (!curr->children[dist]) {\n        curr->children[dist] = new Node(word); // Race condition and memory leak potential\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs when another thread concurrently modifies or deletes subtrees.",
+        "Using standard map implementations for child pointers instead of fixed-size or lock-free arrays, causing high overhead during concurrent CAS loops."
+      ],
+      "best_practices": [
+        "Pre-allocate or pool node memory to minimize allocation latency under high-frequency spell-checking threads.",
+        "Keep hazard pointer tracking lists bounded and retire nodes asynchronously only when no active thread references them."
+      ],
+      "when_to_use": "Use when building low-latency, highly concurrent spell checkers or autocomplete engines that must process thousands of approximate string matching queries per second across multiple CPU cores.",
+      "when_not_to_use": "Avoid when exact string matching is sufficient (where standard concurrent hash maps or tries perform better) or in single-threaded environments where lock overhead is absent.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free BK-Tree where nodes can be concurrently bypassed or removed?",
+          "answer": "By implementing hazard pointers, which allow threads to register nodes they are currently accessing so that deleters know it is safe to reclaim memory only after all hazard pointers are cleared."
+        },
+        {
+          "question": "Why are standard lock-based approaches inefficient for BK-Trees handling real-time autocomplete streams?",
+          "answer": "Locks cause thread contention, context switching overhead, and potential deadlocks when multiple threads attempt deep traversals and insertions simultaneously, degrading throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Data Structures",
+        "Hazard Pointers",
+        "Approximate String Matching"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T00:34:06.935982+00:00",
+      "run_number": 1048
     }
   ]
 }
