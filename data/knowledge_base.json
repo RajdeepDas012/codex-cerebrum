@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1116,
-    "last_updated": "2026-09-17T20:44:06.851233+00:00",
-    "total_topics_learned": 1116
+    "total_runs": 1117,
+    "last_updated": "2026-09-17T20:47:15.693566+00:00",
+    "total_topics_learned": 1117
   },
   "entries": [
     {
@@ -53604,6 +53604,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-17T20:44:06.851212+00:00",
       "run_number": 1116
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic state-versioning CAS primitives and quiescent-state detection for high-throughput read-mostly data structure access in real-time Linux kernel sub-systems and high-performance networking data planes",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "Scoped Read-Copy Update (RCU) is a synchronization mechanism designed for read-heavy scenarios where readers incur zero synchronization overhead, while writers safely publish updates by copying data, mutating the copy, and replacing the pointer atomically. By utilizing quiescent-state detection and atomic versioning, it ensures that memory reclaimed after a write operation is only freed once all pre-existing readers have exited their critical sections.",
+      "key_points": [
+        "Readers execute lock-free critical sections with zero atomic instructions or memory barriers on the fast path, providing near-linear scalability.",
+        "Writers perform copy-update-replace cycles, updating pointers atomically via CAS primitives while keeping old versions alive for active readers.",
+        "Quiescent-state detection tracks thread execution milestones to determine when obsolete data structures can be safely reclaimed.",
+        "Scoped semantics tie the reader critical section lifecycle to lexical scopes, preventing leaks of active read references."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a simplified simulation of a thread-safe RCU read-copy-update cycle with versioning and reader tracking.",
+        "correct": "class RCUManager:\n    def __init__(self, initial_data):\n        self._data = initial_data\n        self._readers = set()\n        self._garbage = []\n\n    def read_lock(self, thread_id):\n        self._readers.add(thread_id)\n        return self._data\n\n    def read_unlock(self, thread_id):\n        self._readers.remove(thread_id)\n\n    def update(self, new_data, active_thread_checker):\n        old_data = self._data\n        self._data = new_data\n        self._garbage.append(old_data)\n        self._reclaim(active_thread_checker)\n\n    def _reclaim(self, active_thread_checker):\n        self._garbage = [g for g in self._garbage if active_thread_checker(g)]",
+        "wrong": "def update_immediately(self, new_data):\n    # Modifying shared data in-place without copying or checking active readers causes data races\n    self._data.update(new_data)"
+      },
+      "common_mistakes": [
+        "Blocking or sleeping inside an RCU read-side critical section, which stalls quiescent-state detection and causes memory reclamation starvation.",
+        "Freeing or mutating old data structures directly in-place without allocating a brand new copied instance for the writer path."
+      ],
+      "best_practices": [
+        "Keep RCU read-side critical sections extremely short, strictly avoiding I/O operations, blocking locks, or long-running loops.",
+        "Use scoped RAII wrappers in system languages (like C++ or Rust) to automatically register and deregister reader states upon entry and exit.",
+        "Batch reclamation of old memory blocks to amortize the overhead of checking quiescent states across multiple update cycles."
+      ],
+      "when_to_use": "Use RCU when data structures experience high-frequency read operations and infrequent updates, requiring ultra-low latency read paths with minimal contention.",
+      "when_not_to_use": "Avoid RCU when write operations are frequent, as the cost of copying entire data structures and waiting for quiescent states will outweigh lock-free benefits.",
+      "interview_questions": [
+        {
+          "question": "How does RCU achieve zero synchronization overhead for readers on the fast path?",
+          "answer": "Readers do not acquire locks, modify shared state, or execute atomic write instructions; they simply access pointers directly, eliminating cache-line bouncing."
+        },
+        {
+          "question": "What is a quiescent state, and why is it critical for RCU memory reclamation?",
+          "answer": "A quiescent state is a point in a thread's execution where it is guaranteed not to hold any references to old RCU-protected data, allowing the reclamation mechanism to safely free obsolete memory."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-17T20:47:15.693545+00:00",
+      "run_number": 1117
     }
   ]
 }
