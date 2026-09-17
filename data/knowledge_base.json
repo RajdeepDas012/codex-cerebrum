@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1043,
-    "last_updated": "2026-09-16T22:43:32.072105+00:00",
-    "total_topics_learned": 1043
+    "total_runs": 1044,
+    "last_updated": "2026-09-17T00:21:36.771764+00:00",
+    "total_topics_learned": 1044
   },
   "entries": [
     {
@@ -50144,6 +50144,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-16T22:43:32.072087+00:00",
       "run_number": 1043
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Y-Fast Trie using atomic leaf-bucketing CAS primitives and hazard pointer memory reclamation for high-throughput integer prefix routing and dynamic predecessor/successor queries in real-time high-frequency trading order matching and IP networking engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A Y-Fast Trie combines a compressed trie (like an X-Fast trie) with balanced binary search trees (such as AVL trees or treaps) at its leaves to achieve $O(\\log \\log W)$ query times while reducing space complexity to $O(n)$. This lock-free concurrent implementation utilizes atomic CAS primitives for leaf-bucketing operations and hazard pointers for safe memory reclamation, ensuring high throughput under heavy concurrent write and query workloads.",
+      "key_points": [
+        "Reduces space complexity from $O(n \\log W)$ of an X-Fast trie down to $O(n)$ by grouping elements into leaf buckets of size $O(\\log W)$.",
+        "Uses atomic Compare-And-Swap (CAS) primitives to manage concurrent insertions and deletions within the trie structure and leaf buckets without global locks.",
+        "Employs hazard pointers to track threads accessing dynamic nodes, preventing premature deallocation and safely reclaiming memory in a lock-free environment.",
+        "Delivers $O(\\log \\log W)$ time complexity for predecessor, successor, lookup, insertion, and deletion operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node update structure for concurrent leaf-bucket management in a Y-Fast trie.",
+        "correct": "struct LeafBucket {\n    std::atomic<Node*> next;\n    std::atomic<Node*> prev;\n    std::set<uint64_t> elements;\n    std::atomic<bool> is_locked;\n};\n\nbool insert_element(std::atomic<LeafBucket*>& bucket_ref, uint64_t val) {\n    LeafBucket* current = bucket_ref.load();\n    // Hazard pointer registration omitted for brevity\n    while (true) {\n        // Perform transactional update via CAS or locked bucket slice\n        if (current->elements.size() < MAX_BUCKET_SIZE) {\n            LeafBucket* new_bucket = clone_and_insert(current, val);\n            if (bucket_ref.compare_exchange_weak(current, new_bucket)) {\n                return true;\n            }\n        } else {\n            split_bucket(bucket_ref, current);\n            current = bucket_ref.load();\n        }\n    }\n}",
+        "wrong": "bool insert_element(LeafBucket* bucket, uint64_t val) {\n    // Missing thread safety: direct non-atomic mutation of bucket elements causes race conditions\n    bucket->elements.insert(val);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly handle bucket splits and merges atomically, leading to lost updates or corrupted tree topology.",
+        "Neglecting hazard pointer protection during traversal, resulting in use-after-free bugs when concurrent threads delete or split buckets."
+      ],
+      "best_practices": [
+        "Keep leaf bucket sizes proportional to $\\log W$ to maintain the optimal theoretical balance between trie depth and local search time.",
+        "Combine hazard pointers with deferred reclamation queues to amortize the cost of memory deallocation in high-contention environments."
+      ],
+      "when_to_use": "Use when you need dynamic, ordered integer set-membership with predecessor/successor lookups under extreme concurrency where lock-based structures become performance bottlenecks.",
+      "when_not_to_use": "Avoid when memory usage is tightly constrained and simpler lock-free structures (like skip lists) or standard single-threaded maps are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How does a Y-Fast Trie improve upon the space complexity of an X-Fast Trie?",
+          "answer": "An X-Fast Trie requires $O(n \\log W)$ space because it stores all prefixes and pointers in hash tables at every level. A Y-Fast Trie stores only a representative subset of elements in the trie structure and groups the actual data items into leaf buckets of size $O(\\log W)$, bringing the overall space complexity down to $O(n)$."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-frequency trading Y-Fast Trie implementations?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable latency pauses introduced by tracing garbage collectors, which is critical for meeting strict latency SLAs in financial systems."
+        }
+      ],
+      "related_topics": [
+        "X-Fast Trie",
+        "Lock-free Skip Lists",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T00:21:36.771745+00:00",
+      "run_number": 1044
     }
   ]
 }
