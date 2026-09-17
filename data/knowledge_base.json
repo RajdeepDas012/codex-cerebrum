@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1070,
-    "last_updated": "2026-09-17T06:32:59.444694+00:00",
-    "total_topics_learned": 1070
+    "total_runs": 1071,
+    "last_updated": "2026-09-17T06:36:08.221293+00:00",
+    "total_topics_learned": 1071
   },
   "entries": [
     {
@@ -51425,6 +51425,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-17T06:32:59.444677+00:00",
       "run_number": 1070
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set-membership querying in real-time distributed caching and database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a high-throughput, lock-free concurrent Bloom Filter optimized for real-time distributed environments. It leverages atomic bit-array modifications and epoch-based memory reclamation to ensure safe, scalable, and non-blocking multi-threaded probabilistic membership checking.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations on a shared bit array to safely set filter bits across concurrent threads without locks.",
+        "Employs epoch-based memory reclamation (EBR) to manage safe resizing or reallocation of underlying filter structures without blocking readers.",
+        "Combines multiple independent hash functions (e.g., MurmurHash3 or CityHash) to map keys onto specific bit positions with minimized collision rates.",
+        "Delivers high-throughput, low-latency set-membership tests ideal for shielding distributed caching layers and storage engines from expensive disk or network lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe atomic bit-setting using logical OR via CAS loops.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bit_array = [0] * ((size + 63) // 64)\n\n    def set_bit(self, index):\n        word_idx = index // 64\n        bit_mask = 1 << (index % 64)\n        while True:\n            current = self.bit_array[word_idx]\n            if (current & bit_mask) == bit_mask:\n                break\n            # Simulated atomic CAS operation\n            if self.bit_array[word_idx] == current:\n                self.bit_array[word_idx] = current | bit_mask\n                break",
+        "wrong": "def set_bit_unsafe(self, index):\n    # Non-atomic update leads to lost bit updates under high concurrency\n    self.bit_array[index // 64] |= (1 << (index % 64))"
+      },
+      "common_mistakes": [
+        "Failing to use atomic bitwise operations, resulting in lost updates when multiple threads write to the same 64-bit word simultaneously.",
+        "Ignoring epoch-based memory management during dynamic scaling phases, leading to premature memory reclamation and segmentation faults."
+      ],
+      "best_practices": [
+        "Group individual bits into machine-word-sized chunks (e.g., 64-bit integers) to optimize atomic CAS granularity.",
+        "Precompute and cache hash function parameters or utilize fast hardware-accelerated hashing to reduce CPU overhead during lookups.",
+        "Size the bit array appropriately based on expected insertion volume to keep the false positive rate within acceptable bounds."
+      ],
+      "when_to_use": "Use when you need extreme read and write concurrency for set-membership testing to avoid costly downstream storage queries in distributed systems.",
+      "when_not_to_use": "Do not use when absolute zero false positives are required, or when elements must be frequently deleted from the set without rebuilding the filter.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent bit updates on the same underlying 64-bit integer word without using heavy mutexes?",
+          "answer": "By using a compare-and-swap (CAS) loop that reads the word, computes the new bitmask via a bitwise OR, and attempts to atomically swap it back if the word has not changed."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation important when resizing a concurrent Bloom filter?",
+          "answer": "It ensures that worker threads currently traversing or writing to an older memory layout are not prematurely interrupted or freed, preventing use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Count-Min Sketch",
+        "Epoch-Based Memory Management",
+        "Concurrent Cuckoo Filters"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-17T06:36:08.221271+00:00",
+      "run_number": 1071
     }
   ]
 }
