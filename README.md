@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1097** |
-| Last Updated | `2026-09-17T17:07:46.247603+00:00` |
-| Dataset Size | `1097 entries` |
+| Total Topics Learned | **1098** |
+| Last Updated | `2026-09-17T17:11:00.902401+00:00` |
+| Dataset Size | `1098 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 253 |
+| data-structures | 254 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-node allocation CAS primitives and hazard pointer memory reclamation for high-throughput IP routing table lookups and network packet forwarding in real-time software-defined networking (SDN) and telecommunication engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer CAS primitives and hazard pointer memory reclamation for high-throughput ordered key-value lookup and range scanning in real-time in-memory database and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput quotient-based compact probabilistic set-membership querying in real-time distributed storage and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-access rotation CAS primitives and hazard pointer memory reclamation for high-throughput self-adjusting frequently accessed key lookup and dynamic caching in real-time in-memory key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Circular Buffer (Ring Buffer) using atomic head-tail pointer wrapping CAS primitives and epoch-based memory reclamation for high-throughput single-producer single-consumer or multi-producer multi-consumer inter-thread messaging in real-time low-latency financial trading platforms and network packet processing engines`
-- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent node splitting and multi-threaded index traversal in real-time enterprise database engines`
 
 <!-- STATS_END -->
 
