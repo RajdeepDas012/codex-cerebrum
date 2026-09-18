@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1181,
-    "last_updated": "2026-09-18T21:33:11.436199+00:00",
-    "total_topics_learned": 1181
+    "total_runs": 1182,
+    "last_updated": "2026-09-18T21:36:19.528418+00:00",
+    "total_topics_learned": 1182
   },
   "entries": [
     {
@@ -56687,6 +56687,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T21:33:11.436177+00:00",
       "run_number": 1181
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-descriptor CAS primitives and hazard pointer memory reclamation for high-throughput multi-core index maintenance and disk-based page-cache storage in real-time relational database management engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-tree replaces coarse-grained locking on database index nodes with fine-grained atomic operations and structural descriptors. Utilizing compare-and-swap (CAS) primitives alongside hazard pointers, it ensures safe memory reclamation and seamless multi-core index scaling without blocking concurrent reader and writer threads.",
+      "key_points": [
+        "Employs structural descriptors to atomically coordinate complex multi-step operations like node splits and merges across threads.",
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to modify child pointers and insert keys without acquiring exclusive mutex locks.",
+        "Integrates hazard pointers to safely defer the reclamation of deleted nodes until all concurrent traversal threads have detached.",
+        "Maintains high throughput and low latency for multi-core relational databases managing large-scale page-cache indexes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the usage of a hazard pointer protected node lookup in a lock-free concurrent B-tree.",
+        "correct": "Node* search_node(HazardPointerManager& hpm, std::atomic<Node*>& root, int key) {\n    HazardPointer hp = hpm.acquire();\n    while (true) {\n        Node* curr = hp.protect(root);\n        if (!curr) return nullptr;\n        if (curr->is_leaf()) return curr;\n        root = curr->find_child(key);\n    }\n}\n",
+        "wrong": "Node* search_node(std::atomic<Node*>& root, int key) {\n    Node* curr = root.load();\n    // Unsafe: another thread could free curr immediately after load\n    return curr->find_child(key);\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate navigation nodes with hazard pointers, leading to use-after-free vulnerabilities during concurrent node splits.",
+        "Neglecting to handle incomplete structural descriptors left behind by stalled threads, which can block subsequent tree modifications."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer dereferences in a hazard pointer protection epoch before reading node contents.",
+        "Design structural descriptors to be idempotent so that helping operations can safely complete stalled splits or merges."
+      ],
+      "when_to_use": "Use when building high-performance relational databases or distributed storage engines requiring extreme concurrent throughput on multi-core hardware without lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments, memory-constrained embedded systems, or applications where simpler lock-based concurrency or append-only structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do structural descriptors prevent race conditions during node splits in a lock-free B-tree?",
+          "answer": "Structural descriptors encapsulate the state of an ongoing operation, allowing helper threads to complete or bypass the split atomically via CAS before any thread attempts a conflicting modification."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-throughput lock-free B-trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times and overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T21:36:19.528393+00:00",
+      "run_number": 1182
     }
   ]
 }
