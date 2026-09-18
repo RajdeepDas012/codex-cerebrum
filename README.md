@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1120** |
-| Last Updated | `2026-09-17T23:31:18.592686+00:00` |
-| Dataset Size | `1120 entries` |
+| Total Topics Learned | **1121** |
+| Last Updated | `2026-09-18T04:09:01.198623+00:00` |
+| Dataset Size | `1121 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 271 |
+| data-structures | 272 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Tree using atomic null-path-length (NPL) balancing CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time asynchronous task scheduling and job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput equivalence class merging and connected component tracking in real-time graph processing and network clustering engines`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic bitwise-cluster indexing CAS primitives and hazard pointer memory reclamation for high-throughput $O(\log \log U)$ integer priority queue operations in real-time IP packet scheduling and core network routing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic state-versioning CAS primitives and quiescent-state detection for high-throughput read-mostly data structure access in real-time Linux kernel sub-systems and high-performance networking data planes`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer routing CAS primitives and hazard pointer memory reclamation for high-throughput distributed peer-to-peer decentralized lookup and dynamic network routing in real-time distributed systems and cloud storage engines`
 
 <!-- STATS_END -->
 
