@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1150,
-    "last_updated": "2026-09-18T10:15:50.731987+00:00",
-    "total_topics_learned": 1150
+    "total_runs": 1151,
+    "last_updated": "2026-09-18T14:16:37.279330+00:00",
+    "total_topics_learned": 1151
   },
   "entries": [
     {
@@ -55211,6 +55211,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T10:15:50.731969+00:00",
       "run_number": 1150
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer CAS primitives and epoch-based memory reclamation for high-throughput range queries and concurrent updates in real-time transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree optimized for modern multi-core transactional storage engines. It relies on atomic compare-and-swap (CAS) operations on leaf-sibling pointers and epoch-based memory management to maintain consistency during high-throughput concurrent range queries and data modifications.",
+      "key_points": [
+        "Utilizes atomic primitives to safely update leaf-sibling pointers without global locks, enabling scalable range scans.",
+        "Employs epoch-based memory reclamation (EBR) to safely defer the deallocation of nodes until active reader and writer threads have completed their operations.",
+        "Balances tree nodes dynamically while handling concurrent insertions, deletions, and structural splits or merges safely.",
+        "Maximizes cache locality and minimizes thread contention in multi-threaded transactional environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for updating leaf node pointers and linking sibling nodes in a lock-free B+ Tree.",
+        "correct": "bool link_leaves(std::atomic<Node*>& current_next, Node* expected_next, Node* new_node) {\n    return current_next.compare_exchange_strong(expected_next, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = current_next.load();\ncurrent_next.store(new_node); // Not thread-safe; race conditions will cause lost pointer updates."
+      },
+      "common_mistakes": [
+        "Failing to use epoch-based memory reclamation, leading to use-after-free bugs when threads access nodes concurrently being deleted or split.",
+        "Incorrect memory ordering semantics during atomic pointer updates, causing stale visibility of sibling links across CPU cores."
+      ],
+      "best_practices": [
+        "Always pair lock-free structural modifications with robust hazard pointers or epoch-based reclamation schemes.",
+        "Ensure memory barriers (acquire-release semantics) are properly specified for all shared pointer manipulations to guarantee visibility."
+      ],
+      "when_to_use": "Use when building high-performance transactional databases, multi-threaded index engines, or storage systems requiring heavy concurrent reads, writes, and efficient range scans.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide sufficient performance without the extreme complexity of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent leaf node splits in a lock-free B+ Tree without blocking readers?",
+          "answer": "By utilizing atomic leaf-sibling pointers that allow readers to traverse to the newly created sibling node via a fallback pointer even if a concurrent split is currently in progress."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation crucial when implementing lock-free data structures like a B+ Tree?",
+          "answer": "Because standard garbage collection or immediate deletion can cause use-after-free errors if another thread is currently traversing or reading a node that gets unlinked and deleted by a modifier thread."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Transactional Memory and Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T14:16:37.279310+00:00",
+      "run_number": 1151
     }
   ]
 }
