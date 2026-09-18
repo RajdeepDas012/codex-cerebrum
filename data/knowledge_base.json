@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1144,
-    "last_updated": "2026-09-18T09:57:02.265444+00:00",
-    "total_topics_learned": 1144
+    "total_runs": 1145,
+    "last_updated": "2026-09-18T10:00:10.225541+00:00",
+    "total_topics_learned": 1145
   },
   "entries": [
     {
@@ -54929,6 +54929,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T09:57:02.265422+00:00",
       "run_number": 1144
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array with atomic index-sorting and LCP-array construction primitives and hazard pointer reclamation",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a thread-safe, lock-free Suffix Array combined with a Longest Common Prefix (LCP) array, utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput substring searches and rapid genomic sequence indexing without locking overhead in real-time bioinformatics pipelines.",
+      "key_points": [
+        "Uses atomic operations to sort suffix indices and construct LCP arrays concurrently across multiple threads.",
+        "Employs hazard pointers for safe, lock-free memory reclamation of dynamically updated string data structures.",
+        "Supports $O(m \\log n)$ or better substring querying leveraging binary search over the suffix array.",
+        "Optimizes genomic sequence alignment and pattern matching by eliminating thread contention bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe suffix array element access using hazard pointers for lock-free thread safety.",
+        "correct": "template <typename T> void safe_access(std::atomic<Node*>& head, ThreadHazardRegistry& registry) {\n    HazardPointer& hp = registry.acquire();\n    Node* ptr;\n    do {\n        ptr = head.load(std::memory_order_acquire);\n        hp.set(ptr);\n    } while (ptr != head.load(std::memory_order_relaxed));\n    // Safe to access *ptr here\n    registry.release(hp);\n}",
+        "wrong": "Node* ptr = head.load();\n// Another thread might free ptr here\nprocess(ptr->suffix_index);"
+      },
+      "common_mistakes": [
+        "Failing to properly publish hazard pointers before validating atomic loads, leading to use-after-free bugs.",
+        "Using overly strict memory ordering that degrades concurrency performance on modern NUMA architectures."
+      ],
+      "best_practices": [
+        "Always pair every hazard pointer acquisition with a validation loop to ensure the referenced node was not unlinked.",
+        "Batch LCP array construction updates to minimize atomic write contention among concurrent worker threads."
+      ],
+      "when_to_use": "High-concurrency genomics platforms requiring real-time pattern matching and substring indexing over massive shared text corpora.",
+      "when_not_to_use": "Single-threaded environments or static texts where simpler sequential suffix array construction algorithms suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption in a lock-free suffix array?",
+          "answer": "Hazard pointers explicitly mark nodes currently accessed by a thread as un-reclaimable, ensuring memory allocators do not reuse or free nodes until all threads drop their references."
+        },
+        {
+          "question": "Why is integrating an LCP array crucial for substring searching performance in suffix arrays?",
+          "answer": "The LCP array stores lengths of longest common prefixes between adjacent suffixes, allowing binary search bounds to skip redundant character comparisons and improving query times to $O(m + \\log n)$."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Concurrent Suffix Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T10:00:10.225521+00:00",
+      "run_number": 1145
     }
   ]
 }
