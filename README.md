@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1122** |
-| Last Updated | `2026-09-18T04:12:09.007000+00:00` |
-| Dataset Size | `1122 entries` |
+| Total Topics Learned | **1123** |
+| Last Updated | `2026-09-18T04:15:16.608756+00:00` |
+| Dataset Size | `1123 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 273 |
+| data-structures | 274 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer linking CAS primitives and hazard pointer memory reclamation for high-throughput decrease-key and meldable priority queue operations in real-time Dijkstra pathfinding and graph optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list merging CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time task scheduling and graph algorithm engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Tree using atomic null-path-length (NPL) balancing CAS primitives and hazard pointer memory reclamation for high-throughput meldable priority queue operations in real-time asynchronous task scheduling and job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic parent-pointer compression CAS primitives and hazard pointer memory reclamation for high-throughput equivalence class merging and connected component tracking in real-time graph processing and network clustering engines`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic bitwise-cluster indexing CAS primitives and hazard pointer memory reclamation for high-throughput $O(\log \log U)$ integer priority queue operations in real-time IP packet scheduling and core network routing engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory databases and concurrent caching systems`
 
 <!-- STATS_END -->
 
