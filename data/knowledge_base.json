@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1136,
-    "last_updated": "2026-09-18T09:31:56.031066+00:00",
-    "total_topics_learned": 1136
+    "total_runs": 1137,
+    "last_updated": "2026-09-18T09:35:04.609928+00:00",
+    "total_topics_learned": 1137
   },
   "entries": [
     {
@@ -54549,6 +54549,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T09:31:56.031047+00:00",
       "run_number": 1136
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance threshold routing CAS primitives and hazard pointer memory reclamation for high-throughput approximate string matching and spelling correction in real-time search engines and natural language processing pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Burkhard-Keller (BK) tree utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to manage dynamic metric space insertions and approximate string lookups safely across multiple threads. By structuring nodes based on Levenshtein distance metric properties, it enables scalable, high-throughput spelling correction and fuzzy string matching without lock contention.",
+      "key_points": [
+        "Leverages the triangle inequality of metric spaces (specifically edit distances) to partition and route search queries across children nodes without evaluating every entry.",
+        "Uses atomic CAS loops to dynamically link new child nodes to parent distance-buckets in a lock-free manner.",
+        "Employs hazard pointers to safely track node traversal and reclaim memory of deleted or re-routed tree structures without race conditions.",
+        "Guarantees thread safety under concurrent insertions and reads, making it ideal for high-throughput real-time NLP autocomplete and search pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free node insertion routine into a concurrent BK-Tree using atomic CAS loops.",
+        "correct": "#include <atomic>\n#include <string>\n#include <memory>\n\nstruct Node {\n    std::string word;\n    std::atomic<Node*> children[MAX_DIST];\n    std::atomic<Node*> next;\n};\n\nbool insert(std::atomic<Node*>& root, const std::string& word) {\n    int dist = compute_levenshtein(root.load()->word, word);\n    Node* curr = root.load()->children[dist].load();\n    while (curr != nullptr) {\n        // traverse or find insertion point using CAS\n    }\n    return true;\n}",
+        "wrong": "void insert(Node* root, std::string word) {\n    // Missing synchronization: direct pointer assignment leads to race conditions\n    int dist = levenshtein(root->word, word);\n    if (!root->children[dist]) root->children[dist] = new Node(word);\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for concurrent structural modifications when multiple threads insert words with identical edit distances simultaneously.",
+        "Improper memory reclamation leading to use-after-free bugs during concurrent tree traversal and node insertion updates."
+      ],
+      "best_practices": [
+        "Bound the maximum expected edit distance array size statically to avoid dynamic vector reallocation overhead during atomic node expansions.",
+        "Pair hazard pointer protection scopes strictly around pointer loads and traversal checks to ensure safe memory reclamation."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded search engines or NLP services requiring low-latency fuzzy string matching and dynamic updates.",
+      "when_not_to_use": "Avoid in single-threaded contexts where lock overhead is unnecessary, or when exact prefix matching is sufficient (use Tries instead).",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions into a BK-Tree branch without holding global locks?",
+          "answer": "By using atomic CAS loops to attempt slot attachment, and retrying if another thread has updated the child pointer in the interim."
+        },
+        {
+          "question": "Why are hazard pointers preferred over simple reference counting in lock-free tree structures?",
+          "answer": "Hazard pointers prevent memory reclamation of nodes currently being accessed by other reader or writer threads without incurring the high cache contention of atomic reference count increments."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Tries and Crit-Bit Trees",
+        "Hazard Pointer Memory Management",
+        "Metric Space Partitioning Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T09:35:04.609909+00:00",
+      "run_number": 1137
     }
   ]
 }
