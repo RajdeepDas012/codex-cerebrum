@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1165,
-    "last_updated": "2026-09-18T15:00:38.252167+00:00",
-    "total_topics_learned": 1165
+    "total_runs": 1166,
+    "last_updated": "2026-09-18T18:14:19.550731+00:00",
+    "total_topics_learned": 1166
   },
   "entries": [
     {
@@ -55919,6 +55919,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-18T15:00:38.252146+00:00",
       "run_number": 1165
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient approximate membership testing and item deletion in real-time distributed caching and network security engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Cuckoo Filter that allows concurrent approximate membership queries and item deletions. By leveraging atomic compare-and-swap (CAS) primitives for fingerprint displacement and epoch-based memory management, it achieves high throughput without global locks, making it ideal for distributed systems and firewalls.",
+      "key_points": [
+        "Uses alternative hash locations and fingerprints to store items compactly with support for dynamic deletions unlike standard Bloom filters.",
+        "Employs atomic CAS primitives to safely swap and relocate fingerprints during concurrent insertions and bucket evictions.",
+        "Utilizes epoch-based memory reclamation (EMR) to safely free bucket arrays and handle resizing without blocking reader threads.",
+        "Guarantees $O(1)$ expected time complexity for membership queries, insertions, and deletions under favorable load factors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping using CAS during cuckoo displacement.",
+        "correct": "bool cuckoo_insert(bucket_t* table, uint32_t index, uint8_t fp) {\n    for (int n = 0; n < MAX_DISPLACEMENTS; ++n) {\n        uint64_t current = atomic_load(&table[index].slot);\n        if (is_empty(current)) {\n            if (atomic_compare_exchange_weak(&table[index].slot, &current, fp)) return true;\n        } else {\n            uint8_t evicted = get_fingerprint(current);\n            if (atomic_compare_exchange_weak(&table[index].slot, &current, fp)) {\n                fp = evicted;\n                index = alt_index(index, fp);\n            }\n        }\n    }\n    return false;\n}",
+        "wrong": "bool cuckoo_insert_bad(bucket_t* table, uint32_t index, uint8_t fp) {\n    // Lacking atomics and synchronization leads to race conditions and data corruption\n    table[index].slot = fp;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle infinite displacement loops when the filter approaches high load factors.",
+        "Using traditional locks instead of fine-grained atomic CAS primitives, creating severe contention bottlenecks.",
+        "Neglecting memory reclamation safety during table resizing, leading to use-after-free bugs for concurrent reader threads."
+      ],
+      "best_practices": [
+        "Keep load factors below 95% to maintain high insertion success rates and avoid excessive cuckoo displacement chains.",
+        "Integrate epoch-based memory management to track reader threads and safely reclaim old bucket structures during structural modifications.",
+        "Align bucket memory layouts to CPU cache lines to maximize cache efficiency during parallel hash lookups."
+      ],
+      "when_to_use": "When you need high-throughput, space-efficient set membership testing with support for item deletions in multi-threaded environments.",
+      "when_not_to_use": "When false positives are entirely unacceptable or when memory overhead is completely unconstrained, making exact hash sets preferable.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter overcome the deletion limitation of a standard Bloom filter?",
+          "answer": "By storing compact fingerprints in one of two alternating buckets rather than applying multiple bitwise hashes, allowing exact fingerprint matching and removal."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free hash structures?",
+          "answer": "It avoids heavy atomic write overhead on shared pointers during read-heavy operations, drastically scaling concurrent lookup throughput."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "Epoch-Based Memory Management",
+        "Lock-Free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T18:14:19.550712+00:00",
+      "run_number": 1166
     }
   ]
 }
