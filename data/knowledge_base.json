@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1163,
-    "last_updated": "2026-09-18T14:54:22.618705+00:00",
-    "total_topics_learned": 1163
+    "total_runs": 1164,
+    "last_updated": "2026-09-18T14:57:30.656310+00:00",
+    "total_topics_learned": 1164
   },
   "entries": [
     {
@@ -55825,6 +55825,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T14:54:22.618686+00:00",
       "run_number": 1163
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-marking CAS primitives and hazard pointer memory reclamation for high-throughput parallel prime number generation and number-theoretic computation in real-time cryptographic key generation engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free prime number generation engine utilizing atomic bitwise operations and hazard pointers. By eliminating mutual exclusion locks during composite marking phases, it achieves high-throughput parallel sieve execution essential for real-time cryptographic prime generation.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations on packed bit-arrays to safely mark composite numbers across multiple concurrent threads.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation of shared bitset segments without blocking reader or writer threads.",
+        "Optimizes throughput by partitioning prime candidate intervals and assigning thread-local work units to minimize cache line bouncing.",
+        "Provides deterministic, lock-free progress guarantees (obstruction-free to lock-free depending on CAS retry bounds) preventing deadlocks during intensive cryptographic operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-marking using CAS primitives for parallel sieve marking",
+        "correct": "bool mark_composite(std::atomic<uint64_t>* bitset, size_t index) {\n    size_t word_idx = index / 64;\n    uint64_t mask = 1ULL << (index % 64);\n    uint64_t old_val = bitset[word_idx].load(std::memory_order_relaxed);\n    while (!(old_val & mask)) {\n        if (bitset[word_idx].compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool mark_composite(uint64_t* bitset, size_t index) {\n    size_t word_idx = index / 64;\n    bitset[word_idx] |= (1ULL << (index % 64)); // Non-atomic race condition\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory acquisition and release barriers correctly with CAS loops, leading to stale visibility of newly marked composite bits across CPU cores.",
+        "Ignoring false sharing issues when multiple threads concurrently write to adjacent bits residing within the same CPU cache line."
+      ],
+      "best_practices": [
+        "Pad atomic words or group thread workloads to distinct cache lines to mitigate false sharing penalties during dense parallel marking phases.",
+        "Combine segment-based sieving with thread-local work queues to maximize L1/L2 cache locality during massive number-theoretic computations."
+      ],
+      "when_to_use": "Use when building high-throughput cryptographic engines that require rapid generation of large prime numbers on multi-core systems without thread contention overhead.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when single-threaded classical sieving overhead is negligible for small upper bounds $U$.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple threads from redundantly processing and marking the same composite multiples concurrently in a lock-free sieve?",
+          "answer": "By using atomic CAS operations when setting the bit status; only the thread that successfully transitions the bit from 0 to 1 claims ownership of marking its subsequent multiples for that specific iteration step."
+        },
+        {
+          "question": "What is the primary synchronization challenge when scaling the Sieve of Eratosthenes across numerous CPU cores?",
+          "answer": "False sharing and atomic bus contention caused by multiple cores writing to adjacent bits within the same shared cache line."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory management with hazard pointers and epoch-based reclamation",
+        "Cache-conscious algorithm design and false sharing mitigation",
+        "Parallel number-theoretic algorithms for cryptographic key generation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-18T14:57:30.656291+00:00",
+      "run_number": 1164
     }
   ]
 }
