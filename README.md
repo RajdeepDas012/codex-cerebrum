@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1182** |
-| Last Updated | `2026-09-18T21:36:19.528418+00:00` |
-| Dataset Size | `1182 entries` |
+| Total Topics Learned | **1183** |
+| Last Updated | `2026-09-18T21:39:28.933088+00:00` |
+| Dataset Size | `1183 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 327 |
+| data-structures | 328 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length (NPL) merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time job scheduling and parallel task execution engines`
 - `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-descriptor CAS primitives and hazard pointer memory reclamation for high-throughput multi-core index maintenance and disk-based page-cache storage in real-time relational database management engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced binary search tree operations in real-time in-memory caching and session management engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-update and prefix-sum CAS primitives and hazard pointer memory reclamation for high-throughput cumulative frequency queries and dynamic rank tracking in real-time stream processing and financial analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer redirection CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer routing and distributed multi-attribute range querying in real-time cloud-native storage infrastructure engines`
-- `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link redirection CAS primitives and hazard pointer memory reclamation for high-throughput multi-pattern string matching and payload inspection in real-time intrusion detection and network security gateway engines`
 
 <!-- STATS_END -->
 
