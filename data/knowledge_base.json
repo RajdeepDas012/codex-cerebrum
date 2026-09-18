@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1151,
-    "last_updated": "2026-09-18T14:16:37.279330+00:00",
-    "total_topics_learned": 1151
+    "total_runs": 1152,
+    "last_updated": "2026-09-18T14:19:45.003515+00:00",
+    "total_topics_learned": 1152
   },
   "entries": [
     {
@@ -55258,6 +55258,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T14:16:37.279310+00:00",
       "run_number": 1151
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length root-linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time job scheduling and priority-based task dispatching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent leftist heap that supports lock-free merges, insertions, and deletions using atomic operations and hazard pointers. It is crucial for high-throughput priority-based scheduling systems where multiple threads simultaneously insert tasks and merge priority queues.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe root-linking and node modifications without blocking locks.",
+        "Maintains leftist tree properties using null-path-lengths (NPL) stored atomically within node headers.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent use-after-free race conditions during concurrent merges and deletions.",
+        "Ensures logarithmic merge times and optimal priority queue performance under heavy multi-threaded contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free node pointer swap using atomic CAS for leftist heap root linking.",
+        "correct": "bool link_roots(std::atomic<Node*>& root, Node* expected, Node* desired) {\n    return root.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* link_roots(std::atomic<Node*>& root, Node* desired) {\n    Node* current = root.load();\n    root.store(desired);\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate child pointers with hazard pointers during concurrent merge traversals, leading to memory corruption.",
+        "Using non-atomic updates for null-path-length (NPL) calculations which results in skewed trees and violated heap invariants."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for root and child nodes before attempting a merge CAS operation.",
+        "Ensure memory order semantics (acquire-release) are correctly applied to synchronization barriers around pointer swaps."
+      ],
+      "when_to_use": "Use when building real-time job schedulers or event dispatchers requiring high-concurrency priority queue merging with minimal contention overhead.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple mutex-locked binary heaps provide sufficient throughput with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation during a lock-free merge operation on a leftist heap?",
+          "answer": "By protecting traversed nodes with hazard pointers so that concurrent threads do not free memory out from under an active pointer reference."
+        },
+        {
+          "question": "Why is the null-path-length (NPL) property important in a leftist heap, and how is it kept thread-safe?",
+          "answer": "NPL ensures the right subtree remains short, guaranteeing logarithmic height. In a lock-free version, NPL values and child pointers are updated atomically or re-evaluated via validation checks during CAS loops."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Binomial and Fibonacci Heaps",
+        "Concurrent Priority Queue Design Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T14:19:45.003488+00:00",
+      "run_number": 1152
     }
   ]
 }
