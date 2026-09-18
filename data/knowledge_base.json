@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1141,
-    "last_updated": "2026-09-18T09:47:36.717969+00:00",
-    "total_topics_learned": 1141
+    "total_runs": 1142,
+    "last_updated": "2026-09-18T09:50:45.073332+00:00",
+    "total_topics_learned": 1142
   },
   "entries": [
     {
@@ -54788,6 +54788,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-18T09:47:36.717951+00:00",
       "run_number": 1141
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane splitting CAS primitives and hazard pointer memory reclamation for high-throughput multi-dimensional nearest-neighbor searching and spatial clustering in real-time machine learning inference and recommendation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent K-Dimensional Tree using atomic operations for bounding-hyperplane node splitting and hazard pointers for safe memory management. It is crucial for achieving high-throughput, low-latency nearest-neighbor lookups in real-time feature matching and recommendation pipelines without thread contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely split bounding hyperplanes and insert new multi-dimensional nodes without global locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes removed or restructured during concurrent insertions.",
+        "Maintains multi-dimensional point partitioning across alternating splitting axes for efficient logarithmic-time nearest-neighbor retrieval.",
+        "Enables high-throughput parallel inference workloads in recommendation systems by allowing non-blocking concurrent reads and writes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion into a lock-free KD-Tree using atomic CAS and hazard pointers.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct Node {\n    std::vector<double> point;\n    std::atomic<Node*> left{nullptr};\n    std::atomic<Node*> right{nullptr};\n    int axis;\n};\n\nvoid insert_node(std::atomic<Node*>& root, const std::vector<double>& pt, int depth) {\n    int axis = depth % pt.size();\n    Node* new_node = new Node{pt, nullptr, nullptr, axis};\n    Node* curr = root.load();\n    while (true) {\n        if (!curr) {\n            if (root.compare_exchange_weak(curr, new_node)) return;\n        } else {\n            if (pt[axis] < curr->point[axis]) {\n                if (curr->left.compare_exchange_weak(curr->left, new_node)) return;\n                curr = curr->left.load();\n            } else {\n                if (curr->right.compare_exchange_weak(curr->right, new_node)) return;\n                curr = curr->right.load();\n            }\n        }\n    }\n}",
+        "wrong": "void unsafe_insert(Node* root, std::vector<double> pt, int depth) {\n    int axis = depth % pt.size();\n    if (pt[axis] < root->point[axis]) {\n        if (!root->left) root->left = new Node{pt, nullptr, nullptr, axis}; // Non-atomic check-then-act race condition\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to track hazard pointers during tree traversal, leading to memory corruption when another thread frees a node being read.",
+        "Forgetting to cycle the partitioning axis based on tree depth, which unbalances the KD-Tree and degrades search performance to $O(N)$."
+      ],
+      "best_practices": [
+        "Use thread-local hazard pointer pools to minimize atomic contention during frequent read-heavy nearest-neighbor queries.",
+        "Pre-allocate memory pools for nodes to reduce system allocator overhead under high-throughput machine learning inference loads."
+      ],
+      "when_to_use": "Use when building real-time recommendation systems or machine learning inference engines requiring ultra-low latency multi-dimensional nearest-neighbor searches under heavy multi-threaded concurrency.",
+      "when_not_to_use": "Avoid when working with extremely high-dimensional spaces (e.g., > 50 dimensions) where KD-Trees suffer from the curse of dimensionality, or for simple single-threaded applications where a mutex-locked tree suffices.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node updates in a lock-free KD-Tree?",
+          "answer": "Hazard pointers explicitly register which nodes a thread is currently reading, blocking other threads from reclaiming or freeing those memory addresses until the read reference is released."
+        },
+        {
+          "question": "Why does alternating the splitting axis per depth level matter for a KD-Tree?",
+          "answer": "It ensures the multi-dimensional space is partitioned evenly across all dimensions, preserving the balanced hierarchical structure required for logarithmic $O(\\log N)$ nearest-neighbor search times."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent R-Tree",
+        "Hazard pointer memory reclamation",
+        "Multi-dimensional approximate nearest neighbor search"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T09:50:45.073313+00:00",
+      "run_number": 1142
     }
   ]
 }
