@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1149** |
-| Last Updated | `2026-09-18T10:12:42.897312+00:00` |
-| Dataset Size | `1149 entries` |
+| Total Topics Learned | **1150** |
+| Last Updated | `2026-09-18T10:15:50.731987+00:00` |
+| Dataset Size | `1150 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 297 |
+| data-structures | 298 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced search tree operations in real-time in-memory databases and concurrent key-value indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum updating CAS primitives and epoch-based memory reclamation for high-throughput cumulative frequency queries and dynamic rank updates in real-time stream analytics and financial order-book engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer routing CAS primitives and hazard pointer memory reclamation for high-throughput decentralized peer-to-peer searching and distributed hash table routing in real-time distributed file systems and cloud storage engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and hazard pointer memory reclamation for high-throughput self-adjusting search tree operations in real-time in-memory caching and frequently-accessed item tracking engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting CAS primitives and epoch-based memory reclamation for high-throughput probabilistic set membership testing and real-time malicious URL blocking engines`
-- `Implementation of a lock-free thread-safe concurrent Suffix Array with atomic index-sorting and LCP-array construction primitives and hazard pointer reclamation`
 
 <!-- STATS_END -->
 
