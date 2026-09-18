@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1185** |
-| Last Updated | `2026-09-18T21:45:43.798549+00:00` |
-| Dataset Size | `1185 entries` |
+| Total Topics Learned | **1186** |
+| Last Updated | `2026-09-18T21:48:51.457673+00:00` |
+| Dataset Size | `1186 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 330 |
+| data-structures | 331 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic ray-box intersection descriptor CAS primitives and hazard pointer memory reclamation for high-throughput 3D ray tracing and geometric collision detection in real-time game physics and graphics rendering engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer and root-list restructuring CAS primitives and hazard pointer memory reclamation for high-throughput amortized $O(1)$ decrease-key and priority queue operations in real-time Dijkstra graph optimization and network routing engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time discrete event simulation and scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length (NPL) merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time job scheduling and parallel task execution engines`
 - `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-descriptor CAS primitives and hazard pointer memory reclamation for high-throughput multi-core index maintenance and disk-based page-cache storage in real-time relational database management engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation CAS primitives and hazard pointer memory reclamation for high-throughput balanced binary search tree operations in real-time in-memory caching and session management engines`
 
 <!-- STATS_END -->
 
