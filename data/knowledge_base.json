@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1191,
-    "last_updated": "2026-09-18T22:06:34.276550+00:00",
-    "total_topics_learned": 1191
+    "total_runs": 1192,
+    "last_updated": "2026-09-18T22:09:52.816089+00:00",
+    "total_topics_learned": 1192
   },
   "entries": [
     {
@@ -57159,6 +57159,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T22:06:34.276527+00:00",
       "run_number": 1191
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and structural descriptor CAS primitives and hazard pointer memory reclamation for high-throughput range scans and multi-core index lookup in real-time in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent, lock-free B+ Tree relies on atomic node modifications, structural descriptors for multi-step tree transformations, and hazard pointers to safely manage node reclamation during concurrent structural splits and merges. This architecture guarantees high-throughput multi-core index lookups and non-blocking linearizable range scans for high-performance in-memory database systems.",
+      "key_points": [
+        "Utilizes structural descriptors to represent multi-step split and merge operations atomically, ensuring threads can help complete unfinished operations.",
+        "Employs atomic leaf-sibling pointers to allow linearizable, lock-free sequential range scans without backtracking to parent nodes.",
+        "Integrates hazard pointer memory reclamation to securely defer physical memory deallocation until all accessing concurrent reader threads have safely detached.",
+        "Avoids global mutex bottlenecks by executing fine-grained Compare-And-Swap (CAS) primitives on child pointers and metadata bits."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer swapping via CAS and hazard pointer protection for lock-free node access.",
+        "correct": "bool update_child_pointer(std::atomic<Node*>& parent_slot, Node* expected, Node* desired, HazardPointerManager& hpm, ThreadState* state) {\n    hpm.protect(0, desired, state);\n    return parent_slot.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* current = parent_slot.load(); parent_slot.store(desired); delete current;"
+      },
+      "common_mistakes": [
+        "Reclaiming node memory immediately after unlinking it from the tree without accounting for delayed reader threads currently traversing the subtree.",
+        "Failing to handle intermediate structural states caused by incomplete split operations, leading to infinite traversal loops or missed keys."
+      ],
+      "best_practices": [
+        "Implement helping mechanisms where traversing threads assist in finishing pending split or merge operations before proceeding with their own searches.",
+        "Maintain strict epoch or hazard pointer registration protocols per thread to guarantee bounded memory consumption and safe reclamation."
+      ],
+      "when_to_use": "Ideal for high-concurrency in-memory databases and key-value stores requiring sustained high-throughput range queries and low-latency multi-core index lookups.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers, descriptor allocations, and atomic retries outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+ tree when nodes are continuously split and unlinked?",
+          "answer": "By using hazard pointers or epoch-based memory management to defer the physical deletion of unlinked nodes until all active readers have finished traversing them."
+        },
+        {
+          "question": "What is the purpose of structural descriptors in a lock-free B+ tree implementation?",
+          "answer": "Structural descriptors encapsulate complex, multi-step tree modifications (like node splits) into atomic states, allowing concurrent threads to identify, help complete, and safely bypass incomplete operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Concurrent lock-free hash maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T22:09:52.816069+00:00",
+      "run_number": 1192
     }
   ]
 }
