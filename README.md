@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1157** |
-| Last Updated | `2026-09-18T14:35:31.641715+00:00` |
-| Dataset Size | `1157 entries` |
+| Total Topics Learned | **1158** |
+| Last Updated | `2026-09-18T14:38:40.389836+00:00` |
+| Dataset Size | `1158 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 305 |
+| data-structures | 306 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-splitting and routing-key CAS primitives and hazard pointer memory reclamation for high-throughput multi-core index maintenance and range queries in real-time in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Trie using atomic child-node redirection CAS primitives and epoch-based memory reclamation for high-throughput string key-value storage and prefix routing in real-time DNS server lookup engines`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic summary-cluster pointer CAS primitives and hazard pointer memory reclamation for high-throughput $O(\log \log U)$ integer universe operations and priority queue management in real-time network packet scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child root-linking CAS primitives and hazard pointer memory reclamation for high-throughput efficient priority queue operations in real-time graph traversal and pathfinding engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing CAS primitives and hazard pointer memory reclamation for high-throughput amortized $O(1)$ decrease-key and priority queue operations in real-time graph optimization and shortest-path routing engines`
-- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time task scheduling and concurrent event-driven simulation engines`
 
 <!-- STATS_END -->
 
