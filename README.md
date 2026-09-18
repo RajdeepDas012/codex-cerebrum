@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1187** |
-| Last Updated | `2026-09-18T21:52:07.064450+00:00` |
-| Dataset Size | `1187 entries` |
+| Total Topics Learned | **1188** |
+| Last Updated | `2026-09-18T21:56:02.689961+00:00` |
+| Dataset Size | `1188 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 331 |
+| data-structures | 332 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-array pointer redirection CAS primitives and hazard pointer memory reclamation for high-throughput IP routing table lookups and prefix matching in real-time software-defined networking and telecom infrastructure engines`
 - `Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-number wrapping and hazard pointer memory reclamation for high-throughput inter-thread messaging and event-driven logging in real-time financial trading systems`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic ray-box intersection descriptor CAS primitives and hazard pointer memory reclamation for high-throughput 3D ray tracing and geometric collision detection in real-time game physics and graphics rendering engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer and root-list restructuring CAS primitives and hazard pointer memory reclamation for high-throughput amortized $O(1)$ decrease-key and priority queue operations in real-time Dijkstra graph optimization and network routing engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree linking CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time discrete event simulation and scheduling engines`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length (NPL) merging CAS primitives and hazard pointer memory reclamation for high-throughput mergeable priority queue operations in real-time job scheduling and parallel task execution engines`
 
 <!-- STATS_END -->
 
