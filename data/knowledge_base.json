@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1153,
-    "last_updated": "2026-09-18T14:22:52.969827+00:00",
-    "total_topics_learned": 1153
+    "total_runs": 1154,
+    "last_updated": "2026-09-18T14:26:00.837280+00:00",
+    "total_topics_learned": 1154
   },
   "entries": [
     {
@@ -55352,6 +55352,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T14:22:52.969807+00:00",
       "run_number": 1153
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing CAS primitives and hazard pointer memory reclamation for high-throughput amortized $O(1)$ decrease-key and priority queue operations in real-time graph optimization and shortest-path routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Fibonacci Heap using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput, thread-safe amortized $O(1)$ decrease-key operations crucial for real-time graph algorithms like Dijkstra's shortest path.",
+      "key_points": [
+        "Utilizes atomic root-list splicing via CAS primitives to allow multiple threads to insert and merge nodes concurrently without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural consolidation without incurring lock contention.",
+        "Maintains relaxed structural invariants using lazy consolidation, allowing rapid insertions and decrease-key updates.",
+        "Provides efficient amortized $O(1)$ time complexity for decrease-key and insertion operations, benefiting massive parallel graph optimization engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-list insertion using compare-and-swap on the heap's minimum pointer.",
+        "correct": "template<typename T> void insert(Node<T>* new_node) {\n    Node<T>* old_min;\n    do {\n        old_min = min_node.load(std::memory_order_relaxed);\n        new_node->right = old_min;\n    } while (!min_node.compare_exchange_weak(old_min, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "template<typename T> void insert(Node<T>* new_node) {\n    // Missing atomic CAS loop, leading to race conditions on the root list\n    new_node->right = min_node.load();\n    min_node.store(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Attempting to maintain strict structural consolidation eagerly during concurrent insertions, which destroys the lock-free property and introduces severe bottlenecks.",
+        "Failing to protect nodes accessed during concurrent node-merging or pointer-splicing operations with hazard pointers, leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to track thread ownership of nodes undergoing structural rearrangement.",
+        "Keep atomic pointer updates localized to the root list during standard insertions and decrease-key requests to maximize concurrency."
+      ],
+      "when_to_use": "Use when building highly concurrent graph routing engines or parallel optimization systems requiring frequent, high-throughput decrease-key operations.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where worst-case deterministic latency guarantees are strictly preferred over amortized performance due to high pointer-overhead complexity.",
+      "interview_questions": [
+        {
+          "question": "Why is implementing a lock-free Fibonacci Heap significantly more complex than a binary heap?",
+          "answer": "Because Fibonacci heaps rely on lazy consolidation and deferred structural adjustments across a multi-rooted tree structure, making global pointer updates and re-linking vulnerable to concurrent interference, requiring sophisticated atomic primitives and hazard pointers."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during node deletion and consolidation?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing, ensuring that memory allocators and other threads do not reclaim or free those nodes until the owning thread releases its hazard pointer protection."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Graph Optimization Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T14:26:00.837261+00:00",
+      "run_number": 1154
     }
   ]
 }
