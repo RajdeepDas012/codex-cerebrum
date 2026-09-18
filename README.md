@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1168** |
-| Last Updated | `2026-09-18T18:20:59.014061+00:00` |
-| Dataset Size | `1168 entries` |
+| Total Topics Learned | **1169** |
+| Last Updated | `2026-09-18T18:24:06.616210+00:00` |
+| Dataset Size | `1169 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 314 |
+| data-structures | 315 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-array restructuring CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling and message broker dispatching in real-time distributed systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detection and endpoint-updating CAS primitives and hazard pointer memory reclamation for high-throughput temporal and 1D range overlapping queries in real-time calendar scheduling and computational biology overlapping feature engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash propagation CAS primitives and hazard pointer memory reclamation for high-throughput block verification and cryptographic integrity proofs in real-time distributed ledger and secure storage engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient approximate membership testing and item deletion in real-time distributed caching and network security engines`
 - `Implementation of a lock-free thread-safe concurrent Ternary Search Tree using atomic child-pointer redirection CAS primitives and hazard pointer memory reclamation for high-throughput string prefix searching and auto-complete suggestion in real-time search engines and text-processing pipelines`
-- `Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-marking CAS primitives and hazard pointer memory reclamation for high-throughput parallel prime number generation and number-theoretic computation in real-time cryptographic key generation engines`
 
 <!-- STATS_END -->
 
