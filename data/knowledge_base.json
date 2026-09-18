@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1134,
-    "last_updated": "2026-09-18T04:49:46.792044+00:00",
-    "total_topics_learned": 1134
+    "total_runs": 1135,
+    "last_updated": "2026-09-18T04:52:53.860253+00:00",
+    "total_topics_learned": 1135
   },
   "entries": [
     {
@@ -54455,6 +54455,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-18T04:49:46.792027+00:00",
       "run_number": 1134
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint swapping CAS primitives and epoch-based memory reclamation for high-throughput space-efficient set membership testing and dynamic deletion support in real-time distributed storage and caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Cuckoo Filter that supports lock-free insertions, lookups, and deletions using atomic compare-and-swap (CAS) operations on bucket fingerprints alongside epoch-based memory reclamation. It matters because it enables high-throughput, space-efficient probabilistic set membership testing with support for item deletion in multi-threaded distributed caching layers without the overhead of heavy global locks.",
+      "key_points": [
+        "Utilizes fingerprint-based buckets with two alternative candidate hash locations derived from partial-key cuckoo hashing.",
+        "Employs atomic CAS primitives to swap or insert fingerprints into buckets concurrently without locking.",
+        "Integrates epoch-based memory reclamation (EBMR) to safely manage dynamic resizing and structural adjustments under heavy concurrency.",
+        "Provides dynamic deletion capabilities natively superior to standard Bloom filters by clearing specific fingerprint entries safely."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bucket fingerprint swapping using CAS in a concurrent Cuckoo Filter",
+        "correct": "bool insert_fingerprint(Bucket* table, size_t index1, size_t index2, uint8_t fp) {\n    if (try_insert(table, index1, fp)) return true;\n    if (try_insert(table, index2, fp)) return true;\n    return relocate_and_insert(table, index1, index2, fp);\n}",
+        "wrong": "bool insert_fingerprint(Bucket* table, size_t index1, size_t index2, uint8_t fp) {\n    table[index1].lock();\n    table[index1].add(fp); // Non-atomic locking approach prone to deadlocks and contention\n    table[index1].unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to bound cuckoo kick-out loops, leading to infinite loops when the filter approaches high load factors.",
+        "Neglecting memory barriers during atomic fingerprint swaps, resulting in inconsistent state visibility across threads."
+      ],
+      "best_practices": [
+        "Maintain the load factor below 95% to ensure cuckoo displacement paths terminate quickly.",
+        "Use epoch-based memory reclamation to safely defer deallocation during dynamic table resizing phases."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching or storage systems requiring space-efficient set membership with frequent item deletions.",
+      "when_not_to_use": "Avoid when memory usage is completely unconstrained or when absolute zero false positives are mandatory.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter resolve collisions during concurrent insertions without global locking?",
+          "answer": "It uses alternative hash locations (index1 and index2) and atomic CAS operations to displace existing fingerprints, relocating them recursively if necessary."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation required when resizing a concurrent Cuckoo Filter?",
+          "answer": "It ensures that worker threads safely finish accessing old bucket arrays before memory is reclaimed or freed by the resizing thread."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T04:52:53.860233+00:00",
+      "run_number": 1135
     }
   ]
 }
