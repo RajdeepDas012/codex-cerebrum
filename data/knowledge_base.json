@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1146,
-    "last_updated": "2026-09-18T10:03:19.006272+00:00",
-    "total_topics_learned": 1146
+    "total_runs": 1147,
+    "last_updated": "2026-09-18T10:06:26.864577+00:00",
+    "total_topics_learned": 1147
   },
   "entries": [
     {
@@ -55023,6 +55023,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-18T10:03:19.006252+00:00",
       "run_number": 1146
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation CAS primitives and hazard pointer memory reclamation for high-throughput self-adjusting search tree operations in real-time in-memory caching and frequently-accessed item tracking engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent lock-free Splay Tree that employs atomic Compare-And-Swap (CAS) operations for executing self-adjusting rotations and hazard pointers for safe memory management. It enables high-throughput, thread-safe access to frequently queried keys, optimizing performance for real-time in-memory caching layers.",
+      "key_points": [
+        "Utilizes atomic pointer updates for executing lock-free zig, zag, and double-rotation primitives.",
+        "Employs hazard pointers to safely track and reclaim memory for dynamically restructured tree nodes without deadlocks.",
+        "Automatically brings frequently accessed keys to the root to improve locality in high-concurrency caching environments.",
+        "Mitigates contention hotspots at the root by using fine-grained optimistic linking and transactional rollbacks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates executing an atomic node rotation step using a CAS loop in a lock-free splay tree structure.",
+        "correct": "bool rotateLeft(std::atomic<Node*>& parentRef, Node* child) {\n    Node* grandchild = child->right.load();\n    child->right.store(grandchild);\n    return parentRef.compare_exchange_strong(child, grandchild);\n}",
+        "wrong": "Node* rotateLeft(Node* parent) {\n    Node* child = parent->right;\n    parent->right = child->left;\n    child->left = parent;\n    return child;\n}"
+      },
+      "common_mistakes": [
+        "Attempting to implement multi-step splay restructuring as a single non-atomic transaction without rollback mechanisms.",
+        "Failing to protect nodes accessed during deep traversal with hazard pointers, leading to use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Keep atomic rotation routines short and use hazard pointer protection windows to minimize memory reclamation latency.",
+        "Combine local epoch tracking with hazard pointers to reduce contention when multiple threads simultaneously restructure the root region."
+      ],
+      "when_to_use": "Use when building high-concurrency in-memory caches or frequency-tracking systems where hot items benefit from self-adjusting root proximity.",
+      "when_not_to_use": "Avoid when access patterns are uniformly random or write contention on the root node outweighs the locality benefits of splaying.",
+      "interview_questions": [
+        {
+          "question": "Why is implementing a lock-free Splay Tree significantly harder than a lock-free BST?",
+          "answer": "Because standard splaying fundamentally modifies multiple links across various tree depths (including the root) during a single search or access operation, making atomic synchronization prone to heavy contention and complex rollback requirements."
+        },
+        {
+          "question": "How do hazard pointers prevent memory corruption during concurrent tree rotations?",
+          "answer": "Hazard pointers allow threads to register nodes they are actively reading or modifying as protected, ensuring that background memory reclamation routines do not free those nodes while pointer updates are in flight."
+        }
+      ],
+      "related_topics": [
+        "lock-free B+ Tree",
+        "lock-free AVL Tree",
+        "hazard pointer memory reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-18T10:06:26.864557+00:00",
+      "run_number": 1147
     }
   ]
 }
