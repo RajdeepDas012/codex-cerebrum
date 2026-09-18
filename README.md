@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1129** |
-| Last Updated | `2026-09-18T04:34:08.773638+00:00` |
-| Dataset Size | `1129 entries` |
+| Total Topics Learned | **1130** |
+| Last Updated | `2026-09-18T04:37:16.575688+00:00` |
+| Dataset Size | `1130 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 279 |
+| data-structures | 280 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer routing CAS primitives and epoch-based memory reclamation for high-throughput IP routing table lookups and prefix matching in real-time software-defined networking (SDN) and telecommunications infrastructure engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link CAS primitives and hazard pointer memory reclamation for high-throughput string pattern matching and bioinformatics sequence alignment in real-time genomic analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting CAS primitives and epoch-based memory reclamation for high-throughput space-efficient approximate membership querying and dynamic resizing in real-time distributed storage and database caching engines`
 - `Implementation of a lock-free thread-safe concurrent Y-Fast Trie using atomic leaf-pointer bucket CAS primitives and hazard pointer memory reclamation for high-throughput $O(\log \log W)$ integer lookup and memory-efficient predecessor/successor querying in real-time IP routing and core network traffic analysis engines`
 - `Implementation of a lock-free thread-safe concurrent X-Fast Trie using atomic hashed-prefix table CAS primitives and hazard pointer memory reclamation for high-throughput $O(\log \log W)$ integer lookup and predecessor/successor querying in real-time IP routing and core network traffic analysis engines`
-- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link pointer CAS primitives and hazard pointer memory reclamation for high-throughput concurrent node splitting and range scanning in real-time transactional database indexing engines`
 
 <!-- STATS_END -->
 
