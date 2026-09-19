@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1211,
-    "last_updated": "2026-09-19T05:37:45.071006+00:00",
-    "total_topics_learned": 1211
+    "total_runs": 1212,
+    "last_updated": "2026-09-19T05:40:53.037989+00:00",
+    "total_topics_learned": 1212
   },
   "entries": [
     {
@@ -58112,6 +58112,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T05:37:45.070982+00:00",
       "run_number": 1211
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation and split-merge CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced binary search tree operations in real-time in-memory database and caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Treap combines binary search tree keys with heap priorities using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe multi-threaded split and merge operations without explicit locks, maximizing performance in high-throughput database and cache engines.",
+      "key_points": [
+        "Uses randomized priorities assigned to nodes upon insertion to probabilistically maintain balance without global rebalancing locks.",
+        "Employs atomic CAS primitives to handle concurrent pointer modifications for node rotations and structural updates.",
+        "Utilizes hazard pointers to safely track and reclaim memory reclaimed during dynamic node restructuring without reader-writer starvation.",
+        "Implements split and merge primitives as foundational building blocks for functional, thread-safe range queries and updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of validating and acquiring a hazard pointer before reading a treap node pointer safely in a concurrent environment.",
+        "correct": "Node* acquire_node(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "Node* ptr = node_ptr.load(); // Unprotected access vulnerable to ABA and use-after-free by concurrent deletions"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate tree pointers with hazard pointers during complex multi-step split operations, leading to race conditions.",
+        "Ignoring the ABA problem on child pointers when concurrent threads modify subtrees between read and CAS phases."
+      ],
+      "best_practices": [
+        "Always validate hazard pointer protection loops to guarantee that the guarded node was not concurrently unlinked.",
+        "Keep atomic transaction scopes as tight as possible around split-merge state transitions to minimize CAS contention."
+      ],
+      "when_to_use": "When building low-latency, highly concurrent in-memory caching layers or key-value stores requiring balanced ordered-set operations under heavy multi-core contention.",
+      "when_not_to_use": "In single-threaded applications or environments where simpler lock-based coarse-grained synchronization suffices without throughput bottlenecks.",
+      "interview_questions": [
+        {
+          "question": "How do randomized priorities prevent the need for global tree rotations in a concurrent Treap?",
+          "answer": "Priorities satisfy the heap property independently of key order, meaning insertions and deletions only affect a localized path proportional to the tree height rather than requiring global structural rebalancing."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing lock-free split-merge operations on a Treap?",
+          "answer": "Hazard pointers prevent other threads from freeing memory associated with nodes that have been detached during a split operation while a thread is still traversing or reading them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Binary Search Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-19T05:40:53.037967+00:00",
+      "run_number": 1212
     }
   ]
 }
