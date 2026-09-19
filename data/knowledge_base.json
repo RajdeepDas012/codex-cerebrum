@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1276,
-    "last_updated": "2026-09-19T20:38:35.195147+00:00",
-    "total_topics_learned": 1276
+    "total_runs": 1277,
+    "last_updated": "2026-09-19T20:41:42.335004+00:00",
+    "total_topics_learned": 1277
   },
   "entries": [
     {
@@ -61201,6 +61201,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:38:35.195127+00:00",
       "run_number": 1276
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SkuTree using atomic bounding-volume hierarchy refitting and surface-area-heuristic partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and real-time collision detection in GPU rendering and simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent bounding-volume hierarchy (SkuTree) tailored for dynamic spatial indexing. It utilizes atomic surface-area-heuristic (SAH) partitioning and hazard pointers to guarantee safe concurrent memory management under high-frequency updates.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives for lock-free node insertion, deletion, and refitting in spatial hierarchies.",
+        "Implements surface-area-heuristic (SAH) cost metrics dynamically to optimize tree topology during concurrent parallel updates.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free race conditions when worker threads modify spatial nodes concurrently.",
+        "Enables high-throughput spatial queries and ray intersection testing for real-time ray tracing and collision simulation engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node refitting via CAS in a concurrent spatial hierarchy",
+        "correct": "bool update_bounds_cas(std::atomic<Node*>& node_ptr, const BoundingBox& new_box) {\n    Node* old_node = node_ptr.load();\n    Node* new_node = new Node(*old_node, new_box);\n    return node_ptr.compare_exchange_weak(old_node, new_node);\n}",
+        "wrong": "Node* old_node = node_ptr.load();\nold_node->box = new_box; // Non-atomic write causes race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted spatial nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Relying on global locks during SAH tree restructuring, which degrades parallel throughput in multi-threaded ray tracing."
+      ],
+      "best_practices": [
+        "Use thread-local hazard pointer pools to minimize contention when acquiring references to dynamic tree nodes.",
+        "Implement incremental refitting for minor geometry shifts and restrict full SAH subtree rebuilds to major structural mutations."
+      ],
+      "when_to_use": "When building real-time ray tracing engines or physics simulators requiring rapid dynamic geometry updates across multiple CPU/GPU threads.",
+      "when_not_to_use": "For static scenes where a pre-built, non-concurrent bounding-volume hierarchy provides superior traversal performance without synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory corruption during concurrent tree node replacement in a lock-free SkuTree?",
+          "answer": "Hazard pointers allow a thread to announce which node it is currently traversing or reading, ensuring that garbage collection threads do not reclaim that memory until the hazard reference is cleared."
+        },
+        {
+          "question": "Why is surface-area-heuristic (SAH) partitioning difficult to implement in a lock-free structure?",
+          "answer": "Because SAH optimization requires global or subtree cost evaluations that span multiple nodes, making it challenging to perform atomic updates without causing excessive CAS retries or structural inconsistency."
+        }
+      ],
+      "related_topics": [
+        "Bounding Volume Hierarchy (BVH)",
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:41:42.334982+00:00",
+      "run_number": 1277
     }
   ]
 }
