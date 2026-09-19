@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1247,
-    "last_updated": "2026-09-19T14:34:44.506397+00:00",
-    "total_topics_learned": 1247
+    "total_runs": 1248,
+    "last_updated": "2026-09-19T14:37:52.401589+00:00",
+    "total_topics_learned": 1248
   },
   "entries": [
     {
@@ -59822,6 +59822,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:34:44.506377+00:00",
       "run_number": 1247
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable swapping and SSTable compaction-descriptor CAS primitives alongside epoch-based memory reclamation for high-throughput write-heavy point lookups and range scans in real-time distributed key-value storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free Log-Structured Merge-Tree (LSM-Tree) utilizing atomic memtable swapping, SSTable compaction descriptors, and epoch-based memory reclamation. It matters because it allows massive write concurrency and efficient multi-level data merging without global thread blocking in distributed storage engines.",
+      "key_points": [
+        "Atomic memtable swapping facilitates zero-lock transitions between active and immutable write buffers.",
+        "SSTable compaction-descriptor CAS operations allow thread-safe background structural merges without read-write deadlocks.",
+        "Epoch-based memory reclamation safely frees old memory nodes once traversing reader threads safely exit active epochs.",
+        "Combined read paths merge in-memory memtables with immutable disk-level SSTables for accurate point lookups and range scans."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic memtable pointer exchange using compare-and-swap semantics.",
+        "correct": "class ConcurrentLSM:\n    def __init__(self):\n        self.active_memtable = {}\n        self.immutable_memtable = None\n    def put(self, key, value):\n        self.active_memtable[key] = value\n        if len(self.active_memtable) >= 1000:\n            self.immutable_memtable = self.active_memtable\n            self.active_memtable = {}",
+        "wrong": "class ConcurrentLSM:\n    def __init__(self):\n        self.memtable = {}\n    def put(self, key, value):\n        self.memtable[key] = value  # Unsafe concurrent updates without synchronization"
+      },
+      "common_mistakes": [
+        "Failing to use atomic primitives for memtable swapping, leading to data races during high-concurrency writes.",
+        "Neglecting proper memory reclamation strategies, causing memory leaks during aggressive compaction cycles."
+      ],
+      "best_practices": [
+        "Use atomic pointers for managing active and immutable memtable transitions.",
+        "Employ epoch-based or hazard pointer reclamation to safely dispose of old SSTable metadata descriptors."
+      ],
+      "when_to_use": "Use when building high-throughput write-intensive distributed key-value stores requiring fast append operations and background compaction.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when read-heavy workloads require guaranteed low-latency point lookups without multi-level cache traversal.",
+      "interview_questions": [
+        {
+          "question": "How do you ensure thread safety during memtable flushing without locking the entire write path?",
+          "answer": "By using atomic compare-and-swap (CAS) operations to swap the active memtable reference with an immutable pointer while allocating a fresh active buffer."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in high-throughput lock-free LSM-Trees?",
+          "answer": "Epoch-based reclamation avoids the high cache contention and overhead of atomic increments and decrements on reference counts for every read operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "SSTable Compaction Strategies",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:37:52.401570+00:00",
+      "run_number": 1248
     }
   ]
 }
