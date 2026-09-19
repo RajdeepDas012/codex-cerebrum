@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1281,
-    "last_updated": "2026-09-19T20:54:25.381390+00:00",
-    "total_topics_learned": 1281
+    "total_runs": 1282,
+    "last_updated": "2026-09-19T20:57:32.762928+00:00",
+    "total_topics_learned": 1282
   },
   "entries": [
     {
@@ -61439,6 +61439,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:54:25.381367+00:00",
       "run_number": 1281
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector word-setting and double-hashing slot-checking CAS primitives alongside epoch-based memory reclamation for high-throughput space-efficient approximate membership testing and distributed cache-miss mitigation in real-time key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a concurrent Bloom filter that leverages atomic bitwise operations and epoch-based memory management. It enables high-throughput, lock-free approximate membership queries, making it ideal for distributed systems looking to prevent unnecessary disk or network lookups.",
+      "key_points": [
+        "Utilizes atomic bit-vector word-setting (e.g., atomic OR operations) to mutate filter bits without coarse-grained locking.",
+        "Employs double hashing to compute multiple independent hash positions efficiently per key insert or query.",
+        "Integrates epoch-based memory reclamation to safely handle resizing operations without stalling concurrent readers.",
+        "Provides low memory overhead and predictable latency profiles under high contention in key-value stores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic bit setting via bitwise OR operations on a shared array.",
+        "correct": "import ctypes\n\ndef atomic_set_bit(word_array, word_index, bit_offset):\n    mask = 1 << bit_offset\n    # Conceptual atomic bit-wise OR using loop or atomic primitive\n    while True:\n        old_val = word_array[word_index].value\n        new_val = old_val | mask\n        if word_array[word_index].compare_exchange(old_val, new_val):\n            break",
+        "wrong": "def unsafe_set_bit(word_array, word_index, bit_offset):\n    # Race condition: non-atomic read-modify-write corrupts concurrent updates\n    word_array[word_index] |= (1 << bit_offset)"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write patterns for bit manipulation, which causes lost updates under concurrent insertions.",
+        "Failing to account for false positive rate degradation when the filter capacity is exceeded."
+      ],
+      "best_practices": [
+        "Pre-allocate the optimal bit-array size and hash count based on expected maximum item count and target false positive rate.",
+        "Use cache-aligned word boundaries for bit-vectors to minimize false sharing across concurrent CPU cores."
+      ],
+      "when_to_use": "When building high-throughput distributed key-value storage engines that require fast approximate membership testing to mitigate expensive cache-miss disk lookups.",
+      "when_not_to_use": "When exact membership queries are mandatory or when false positives carry catastrophic business logic consequences.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom filter without using global mutexes?",
+          "answer": "By treating the bit array as an array of atomic words and using atomic bitwise-OR CAS primitives to set bits."
+        },
+        {
+          "question": "What is the primary challenge when resizing a lock-free Bloom filter concurrently?",
+          "answer": "Ensuring readers do not access freed memory or stale bit vectors during the transition, which is typically managed via epoch-based memory reclamation."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "epoch-based memory reclamation",
+        "hash functions and hashing strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:57:32.762907+00:00",
+      "run_number": 1282
     }
   ]
 }
