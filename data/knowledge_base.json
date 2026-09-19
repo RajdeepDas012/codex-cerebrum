@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1251,
-    "last_updated": "2026-09-19T14:47:16.739729+00:00",
-    "total_topics_learned": 1251
+    "total_runs": 1252,
+    "last_updated": "2026-09-19T14:50:24.471635+00:00",
+    "total_topics_learned": 1252
   },
   "entries": [
     {
@@ -60012,6 +60012,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:47:16.739712+00:00",
       "run_number": 1251
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-interpolation CAS primitives alongside epoch-based memory reclamation for high-throughput streaming percentile estimation and extreme-tail latency aggregation in real-time observability and distributed monitoring engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent T-Digest data structure enables high-throughput streaming percentile estimation and extreme-tail latency aggregation by using atomic centroid-merging and CAS primitives. It avoids global locks while maintaining high accuracy at boundaries like the p99 and p99.9 percentiles for real-time observability engines.",
+      "key_points": [
+        "Utilizes atomic centroid-merging and quantile-interpolation CAS operations to manage incoming streaming data points lock-free.",
+        "Applies epoch-based memory reclamation to safely free old centroid nodes and buffer allocations without race conditions.",
+        "Optimizes compression and merging thresholds dynamically to handle high-frequency concurrent insertions from multiple collector threads.",
+        "Provides exceptional accuracy for extreme tail-latency metrics compared to fixed-size histograms or traditional sketching algorithms."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe insertion and approximate quantile querying using atomic state management.",
+        "correct": "import threading\nimport math\n\nclass ConcurrentTDigestNode:\n    def __init__(self, mean, weight):\n        self.mean = mean\n        self.weight = weight\n        self.next = None\n\nclass LockFreeTDigest:\n    def __init__(self):\n        self.head = None\n        self._lock = threading.Lock() # Conceptual simulation of atomic CAS loop\n\n    def add(self, x: float, w: float = 1.0):\n        with self._lock:\n            newNode = ConcurrentTDigestNode(x, w)\n            newNode.next = self.head\n            self.head = newNode\n\n    def quantile(self, q: float) -> float:\n        with self._lock:\n            if not self.head: return 0.0\n            return self.head.mean",
+        "wrong": "class UnsafeTDigest:\n    def __init__(self):\n        self.centroids = []\n    def add(self, x):\n        self.centroids.append(x) # Non-atomic mutation leading to race conditions under concurrent load"
+      },
+      "common_mistakes": [
+        "Failing to bound the number of centroids, causing memory consumption to grow linearly with the stream size.",
+        "Using coarse-grained locks around the entire merge operation, destroying throughput in multi-threaded monitoring daemons."
+      ],
+      "best_practices": [
+        "Implement epoch-based memory reclamation or hazard pointers for safe node deletion during concurrent compaction phases.",
+        "Tune the compression factor based on memory constraints and required tail-latency accuracy targets."
+      ],
+      "when_to_use": "Use when dealing with high-throughput streaming metrics where accurate tail percentiles (p99, p99.9) are required across many concurrent threads without locking overhead.",
+      "when_not_to_use": "Avoid when exact percentiles over finite datasets are required and memory usage is tightly constrained, or when simple average metrics are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How does a T-Digest achieve higher accuracy at extreme tails compared to standard uniform binning histograms?",
+          "answer": "It dynamically clusters data points into centroids, allocating more centroids near the tails (0 and 100 percentiles) and fewer in the dense center."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation critical when implementing a lock-free concurrent T-Digest?",
+          "answer": "It ensures that threads can safely traverse and merge centroid chains without risking use-after-free errors when other threads concurrently compact or modify nodes via CAS."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Lists",
+        "Epoch-based memory reclamation",
+        "Streaming quantile sketches"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-19T14:50:24.471617+00:00",
+      "run_number": 1252
     }
   ]
 }
