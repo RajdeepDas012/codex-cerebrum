@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1253** |
-| Last Updated | `2026-09-19T14:53:32.904830+00:00` |
-| Dataset Size | `1253 entries` |
+| Total Topics Learned | **1254** |
+| Last Updated | `2026-09-19T14:56:40.932183+00:00` |
+| Dataset Size | `1254 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 388 |
+| data-structures | 389 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node array extension and prefix-compression splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and in-memory string prefix indexing in real-time networking and telecommunication switching engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting and remainder-relocation CAS primitives alongside epoch-based memory reclamation for high-throughput space-efficient dynamic approximate membership testing and quotient-cluster compression in real-time distributed storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-interpolation CAS primitives alongside epoch-based memory reclamation for high-throughput streaming percentile estimation and extreme-tail latency aggregation in real-time observability and distributed monitoring engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic peer-pointer routing and membership-vector redirection CAS primitives alongside epoch-based memory reclamation for high-throughput decentralized peer-to-peer searching and distributed lookup routing in real-time cloud-native storage and overlay network engines`
 - `Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table pointer swinging and delta-chain installation CAS primitives alongside epoch-based memory reclamation for high-throughput multi-core index updates and point lookups in real-time in-memory database and storage engines`
-- `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-allocation and bitwise-path redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value lookups and concurrent map updates in real-time functional data structures and distributed state-store engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1253,
-    "last_updated": "2026-09-19T14:53:32.904830+00:00",
-    "total_topics_learned": 1253
+    "total_runs": 1254,
+    "last_updated": "2026-09-19T14:56:40.932183+00:00",
+    "total_topics_learned": 1254
   },
   "entries": [
     {
@@ -60106,6 +60106,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:53:32.904811+00:00",
       "run_number": 1253
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node array extension and prefix-compression splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and in-memory string prefix indexing in real-time networking and telecommunication switching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Radix Tree utilizing atomic primitives and hazard pointers. It enables high-throughput, non-blocking prefix searches and lookups essential for high-speed IP routing and string-based indexing in multi-threaded network appliances.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely extend child-node arrays and split compressed prefixes without global locks.",
+        "Employs hazard pointers for safe, lock-free memory reclamation of retired tree nodes in highly concurrent environments.",
+        "Manages prefix compression dynamically to keep depth minimal and optimize cache line utilization during long prefix matches.",
+        "Provides linearizable reads and updates for high-throughput packet classification and IP routing table lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic prefix-compression splitting for a lock-free radix tree node update using CAS.",
+        "correct": "bool RadixNode::try_split_prefix(RadixNode* expected_child, RadixNode* new_child, const std::string& new_prefix) {\n    // Hazard pointer protection ensures expected_child is safe to access\n    hazard_pointer_guard guard(expected_child);\n    return child_array.compare_exchange_strong(expected_child, new_child);\n}",
+        "wrong": "bool RadixNode::try_split_prefix(RadixNode* expected_child, RadixNode* new_child, const std::string& new_prefix) {\n    // Mutating without CAS or hazard pointers leads to race conditions and use-after-free\n    child_pointer = new_child;\n    delete expected_child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child nodes with hazard pointers before performing pointer-swinging CAS operations.",
+        "Incorrectly handling edge cases during mid-edge prefix-compression splits, leading to lost updates or memory leaks."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any node traversed during a concurrent read or update operation before reading its internal pointers.",
+        "Design memory reclamation buffers carefully to recycle old radix nodes efficiently without exhausting system resources."
+      ],
+      "when_to_use": "Use when building high-performance networking engines, IP routing tables, or real-time string prefix routing indexes requiring heavy concurrent read and write access.",
+      "when_not_to_use": "Avoid when keys have very low prefix overlap or when dataset sizes are small enough that simpler concurrent maps or mutex-protected trees suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Radix Tree where nodes are frequently split and replaced?",
+          "answer": "By using hazard pointers or epoch-based reclamation to ensure that threads traversing or modifying a subtree maintain a reference, preventing premature deletion until no threads can access the retired node."
+        },
+        {
+          "question": "What is the primary challenge when performing a prefix-compression split using CAS in a concurrent Radix Tree?",
+          "answer": "Ensuring atomicity when replacing a single edge with a new intermediate node and multiple children, preventing concurrent writers from overwriting sibling changes or leaving the tree in an inconsistent state."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Bw-Tree",
+        "Prefix Trees and Tries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:56:40.932165+00:00",
+      "run_number": 1254
     }
   ]
 }
