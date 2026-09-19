@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1290,
-    "last_updated": "2026-09-19T23:01:30.941780+00:00",
-    "total_topics_learned": 1290
+    "total_runs": 1291,
+    "last_updated": "2026-09-19T23:04:38.432894+00:00",
+    "total_topics_learned": 1291
   },
   "entries": [
     {
@@ -61862,6 +61862,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T23:01:30.941762+00:00",
       "run_number": 1290
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and index-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput concurrent task scheduling and job execution in real-time multi-threaded server engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent priority queue uses atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation to manage heap-node positioning without blocking threads. This guarantees high-throughput task scheduling and low-latency job execution in multi-threaded server engines.",
+      "key_points": [
+        "Utilizes atomic heap-node displacement and index-swapping operations to maintain ordering invariants without coarse-grained locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely free retired heap nodes once all participating threads have progressed past a safe synchronization point.",
+        "Prevents thread contention bottlenecks by decoupling enqueue and dequeue contention hot spots using fine-grained pointer CASing.",
+        "Balances scheduling priority accuracy with concurrent traversal overhead in multi-core distributed workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based swap for safe heap node displacement",
+        "correct": "bool try_swap_nodes(std::atomic<Node*>& parent, std::atomic<Node*>& child, Node* expected_parent, Node* expected_child) {\n    return parent.compare_exchange_strong(expected_parent, expected_child);\n}",
+        "wrong": "Node* temp = parent.load(); parent.store(child.load()); child.store(temp);"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic pointer assignments inside multi-threaded heap fix-up loops, causing data races and corrupted pointers.",
+        "Failing to account for the ABA problem during concurrent index swapping and node repositioning.",
+        "Reclaiming memory of deleted nodes immediately without an epoch-based or hazard-pointer grace period, resulting in use-after-free bugs."
+      ],
+      "best_practices": [
+        "Integrate robust epoch-based memory management (EMR) to safely defer node deallocation until threads finish active traversals.",
+        "Use hardware-specific memory ordering semantics (acquire-release) to ensure correct visibility of heap modifications across CPU cores.",
+        "Minimize retry loops on high-contention nodes by incorporating exponential backoff or combining trees."
+      ],
+      "when_to_use": "Use when building high-performance task schedulers, asynchronous event loops, or real-time simulation engines requiring extreme thread concurrency and minimal latency jitter.",
+      "when_not_to_use": "Avoid when simple thread-confined task queues or coarse-grained lock-based heaps provide sufficient throughput without the immense implementation complexity of lock-free atomics.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node displacement in a concurrent lock-free heap?",
+          "answer": "By pairing pointers with monotonically increasing version tags or counters, ensuring that a CAS operation fails if another thread modified the node reference even if the pointer value itself appears unchanged."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over standard garbage collection or immediate deletion in lock-free priority queues?",
+          "answer": "It avoids global garbage collection pauses and stop-the-world overhead while preventing use-after-free errors by safely deferring deallocation until all active threads have exited the current epoch."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip-Lists",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Task Scheduling Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T23:04:38.432875+00:00",
+      "run_number": 1291
     }
   ]
 }

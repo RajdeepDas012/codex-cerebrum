@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1290** |
-| Last Updated | `2026-09-19T23:01:30.941780+00:00` |
-| Dataset Size | `1290 entries` |
+| Total Topics Learned | **1291** |
+| Last Updated | `2026-09-19T23:04:38.432894+00:00` |
+| Dataset Size | `1291 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 420 |
+| data-structures | 421 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and index-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput concurrent task scheduling and job execution in real-time multi-threaded server engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic fingerprint-relocation and bucket-eviction CAS primitives alongside epoch-based memory reclamation for high-throughput succinct dynamic approximate membership testing and multi-core cache-line optimization in real-time distributed storage and memory-constrained database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer swinging and tower-height growth CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value map operations and multi-threaded range scans in real-time in-memory key-value database engines`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic Levenshtein-distance partitioning and metric-space node-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and spelling correction in real-time search engine autocomplete and natural language processing systems`
 - `Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput packet classification and IP address lookup in real-time software-defined networking and telecom routing engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer routing and node-compression CAS primitives alongside epoch-based memory reclamation for high-throughput IP routing table lookups and exact-match prefix searches in real-time software-defined networking and telecom routing engines`
 
 <!-- STATS_END -->
 
