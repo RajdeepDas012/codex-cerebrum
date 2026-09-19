@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1271,
-    "last_updated": "2026-09-19T20:22:39.819908+00:00",
-    "total_topics_learned": 1271
+    "total_runs": 1272,
+    "last_updated": "2026-09-19T20:25:47.562866+00:00",
+    "total_topics_learned": 1272
   },
   "entries": [
     {
@@ -60963,6 +60963,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:22:39.819887+00:00",
       "run_number": 1271
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and union-by-rank CAS primitives alongside epoch-based memory reclamation for high-throughput dynamic connectivity queries and parallel graph clustering in real-time network topology analysis and compiler optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Disjoint-Set Union (DSU) structure that supports concurrent finds and unions using Compare-And-Swap (CAS) operations. By applying atomic path compression and union-by-rank alongside epoch-based memory management, it guarantees thread safety and high scalability without global locks.",
+      "key_points": [
+        "Utilizes atomic pointers for parent references to allow lock-free navigation during find operations.",
+        "Implements atomic path compression via CAS to flatten trees progressively under concurrent access.",
+        "Performs union-by-rank using conditional atomic updates to maintain balanced trees and prevent excessive height.",
+        "Integrates epoch-based memory reclamation (EMR) to safely manage and recycle node memory without race conditions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free find operation with atomic path compression using CAS",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        if (grandparent != parent) {\n            node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release);\n        }\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic, prone to data races and broken chains under concurrency\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle intermediate structural changes during path compression, leading to infinite loops or detached subtrees.",
+        "Neglecting memory safety, which causes use-after-free bugs when nodes are concurrently merged and deleted."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics on atomic pointer loads and stores to ensure visibility of tree restructuring.",
+        "Pair thread registration routines with epoch-based reclamation to defer node destruction until all active readers finish."
+      ],
+      "when_to_use": "When multiple threads concurrently perform frequent set-merge and connectivity query operations on massive graphs.",
+      "when_not_to_use": "When the workload is strictly single-threaded or requires frequent deletion of individual nodes, which standard DSU does not natively support efficiently.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic path compression on parent pointers?",
+          "answer": "By embedding version counters or epoch tags inside the pointer representation, or by ensuring memory addresses are never immediately reused upon deletion using epoch-based reclamation."
+        },
+        {
+          "question": "Why is standard union-by-rank difficult to implement lock-free?",
+          "answer": "Because updating both the parent pointer and the rank atomically across multiple nodes requires multi-word CAS primitives or carefully ordered single-word CAS steps that handle intermediate inconsistent states."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Algorithms",
+        "Parallel Graph Processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:25:47.562845+00:00",
+      "run_number": 1272
     }
   ]
 }
