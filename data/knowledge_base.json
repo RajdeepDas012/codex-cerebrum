@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1274,
-    "last_updated": "2026-09-19T20:32:19.625159+00:00",
-    "total_topics_learned": 1274
+    "total_runs": 1275,
+    "last_updated": "2026-09-19T20:35:27.252744+00:00",
+    "total_topics_learned": 1275
   },
   "entries": [
     {
@@ -61106,6 +61106,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:32:19.625139+00:00",
       "run_number": 1274
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass child-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-threaded event scheduling in real-time simulation and asynchronous task execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent pairing heap provides high-performance mergeable priority queue operations without locks by combining atomic root-linking and multi-pass child-merging CAS primitives with hazard pointers. It is critical for scalable, multi-threaded event schedulers and asynchronous task execution engines where contention must be minimized.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free root linking during node insertions and heap merges.",
+        "Employs multi-pass child-merging algorithms to safely restructure subtrees during delete-min operations under concurrent access.",
+        "Integrates hazard pointers for safe memory reclamation, preventing use-after-free bugs in dynamic, lock-free pointer graphs.",
+        "Optimizes throughput for mergeable priority queue workloads characteristic of real-time simulations and distributed task schedulers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic root-linking operation for inserting a node into a concurrent pairing heap using a CAS loop.",
+        "correct": "bool insert(Node* new_node) {\n    while (true) {\n        Node* old_root = root.load(std::memory_order_relaxed);\n        new_node->child_or_next.store(old_root, std::memory_order_relaxed);\n        if (root.compare_exchange_weak(old_root, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* new_node) {\n    Node* old_root = root.load();\n    new_node->child_or_next = old_root;\n    root = new_node; // Non-atomic assignment causes data races and lost updates under concurrency\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during multi-pass child-merging, leading to ABA problems and memory corruption.",
+        "Using sequential consistency everywhere instead of relaxing atomic operations where appropriate, which severely degrades performance."
+      ],
+      "best_practices": [
+        "Pair hazard pointer protection zones tightly around pointer dereferencing and traversal steps in multi-pass delete-min routines.",
+        "Favor fine-grained retry loops with exponential backoff or yielding when CAS operations experience high contention."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous event schedulers, real-time simulations, or graph algorithms requiring fast mergeable priority queue operations across numerous concurrent threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple queue applications where standard lock-based heaps or simpler binary heaps introduce significantly less implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node removal in a lock-free pairing heap?",
+          "answer": "Hazard pointers register references to nodes that threads are currently inspecting, preventing memory allocators from recycling or freeing those nodes until all accessing threads have released their hazard pointers."
+        },
+        {
+          "question": "Why is multi-pass child-merging more complex to implement lock-free than standard root linking?",
+          "answer": "Multi-pass child-merging involves modifying multiple node pointers across subtrees simultaneously while other threads may be concurrently mutating or deleting elements, requiring careful atomic coordination and state validation."
+        }
+      ],
+      "related_topics": [
+        "Binomial Heap",
+        "Fibonacci Heap",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:35:27.252723+00:00",
+      "run_number": 1275
     }
   ]
 }
