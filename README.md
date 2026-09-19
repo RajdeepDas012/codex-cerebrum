@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1216** |
-| Last Updated | `2026-09-19T05:53:26.105463+00:00` |
-| Dataset Size | `1216 entries` |
+| Total Topics Learned | **1217** |
+| Last Updated | `2026-09-19T05:56:34.049625+00:00` |
+| Dataset Size | `1217 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 355 |
+| data-structures | 356 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box quadrant splitting and leaf-node point insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D collision detection and particle simulation in real-time game physics and graphics rendering engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane splitting and leaf-node coordinate descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and spatial point-location queries in real-time robotics path planning and computational geometry engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node pointer redirection and node-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput state verification and cryptographic key-value storage in real-time blockchain execution and state database engines`
 - `Implementation of a lock-free thread-safe concurrent Scs-Tree using atomic string-comparison node-splitting CAS primitives and hazard pointer memory reclamation for high-throughput prefix compression and dynamic dictionary lookup in real-time network protocol analysis and compression engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and peer-node linking CAS primitives and hazard pointer memory reclamation for high-throughput distributed peer-to-peer lookup and decentralized range querying in real-time distributed hash table engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation and split-merge CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced binary search tree operations in real-time in-memory database and caching engines`
 
 <!-- STATS_END -->
 
