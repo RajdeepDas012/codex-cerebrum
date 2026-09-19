@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1255,
-    "last_updated": "2026-09-19T14:59:49.775838+00:00",
-    "total_topics_learned": 1255
+    "total_runs": 1256,
+    "last_updated": "2026-09-19T17:53:14.050928+00:00",
+    "total_topics_learned": 1256
   },
   "entries": [
     {
@@ -60202,6 +60202,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:59:49.775819+00:00",
       "run_number": 1255
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer splicing and tower-height growth CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and range lookups in real-time in-memory database and distributed caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip-List data structure utilizing atomic Compare-And-Swap (CAS) operations for node insertion, pointer splicing, and tower-height expansion. It leverages hazard pointers for safe memory reclamation, achieving high-throughput ordered key-value operations suitable for real-time in-memory databases and distributed caching layers.",
+      "key_points": [
+        "Utilizes atomic forward-pointer splicing via CAS primitives to link new nodes across multiple probabilistic height levels without blocking.",
+        "Implements probabilistic tower-height growth to maintain O(log n) search and update time bounds in concurrent environments.",
+        "Employs hazard pointer memory reclamation to safely manage node deletion and prevent use-after-free bugs in lock-free traversal.",
+        "Provides linearizable ordered key-value insertions and lock-free range lookups for high-contention multi-threaded workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion step for a concurrent skip-list level.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level].store(curr, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(curr, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level_wrong(Node* pred, Node* curr, Node* newNode, int level) {\n    pred->next[level] = newNode;\n    newNode->next[level] = curr;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically deleted before physically unlinking them via CAS, leading to inconsistent traversal states.",
+        "Neglecting proper memory reclamation strategies like hazard pointers or epoch-based collection, causing memory leaks or race conditions during node deletion."
+      ],
+      "best_practices": [
+        "Always perform a logical deletion flag update before attempting physical pointer splicing to coordinate concurrent modifiers.",
+        "Ensure hazard pointers protect nodes currently being accessed during traversal, insertion, and unlinking phases."
+      ],
+      "when_to_use": "Use when you need high-throughput ordered key-value data structures with heavy multi-threaded contention and minimal blocking overhead.",
+      "when_not_to_use": "Avoid when memory overhead from multi-level pointer towers is prohibitive or when simpler synchronization (like fine-grained locking) suffices for low-concurrency scenarios.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free skip-list when a thread removes a node while other threads are traversing it?",
+          "answer": "You use hazard pointers or epoch-based memory management to register references to nodes currently under traversal, delaying actual physical deallocation until no active threads reference them."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical pointer removal in a lock-free skip-list?",
+          "answer": "Logical deletion marks a node as removed using a marked reference bit, signaling concurrent inserters and deleters to bypass or help clean up the node before physical CAS pointer updates occur."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B-tree",
+        "Hazard pointer memory reclamation",
+        "Lock-free concurrent priority queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T17:53:14.050908+00:00",
+      "run_number": 1256
     }
   ]
 }
