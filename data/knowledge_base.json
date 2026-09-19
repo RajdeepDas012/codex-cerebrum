@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1248,
-    "last_updated": "2026-09-19T14:37:52.401589+00:00",
-    "total_topics_learned": 1248
+    "total_runs": 1249,
+    "last_updated": "2026-09-19T14:41:00.004269+00:00",
+    "total_topics_learned": 1249
   },
   "entries": [
     {
@@ -59869,6 +59869,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:37:52.401570+00:00",
       "run_number": 1248
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-allocation and bitwise-path redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value lookups and concurrent map updates in real-time functional data structures and distributed state-store engines",
+      "category": "data-structures",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Hash Array Mapped Trie (HAMT) utilizing atomic pointer manipulation and hazard pointers. It enables high-performance, contention-resistant map updates and key-value retrievals by partitioning hash bits into fixed-size chunks to index sparse child arrays safely in concurrent environments.",
+      "key_points": [
+        "Utilizes bitwise chunking of hash values to route insertions and lookups down a multi-level tree structure without global locks.",
+        "Employs compare-and-swap (CAS) primitives to atomically swap child node pointers and manage bitmap indices representing present sub-nodes.",
+        "Integrates hazard pointer memory reclamation to safely free deprecated node allocations without violating memory visibility across threads.",
+        "Optimizes memory usage via sparse arrays combined with bitmap compression rather than allocating full branch arrays for every chunk level."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates via CAS and hazard pointer protection during HAMT traversal.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    std::atomic<Node*> children[16];\n    uint32_t bitmap;\n};\n\nbool update_child(std::atomic<Node*>& slot, Node* expected, Node* desired) {\n    return slot.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = slot.load();\nif (current != expected) return false;\nslot.store(desired); // Non-atomic check-then-act race condition!"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, causing use-after-free race conditions when concurrent writers modify trie branches.",
+        "Not using memory barriers correctly (e.g., sequentially consistent vs. acquire-release), resulting in stale view states in multi-threaded readers."
+      ],
+      "best_practices": [
+        "Use acquire-release semantics consistently for atomic pointer loads and stores in the trie path.",
+        "Keep bitmap calculations synchronized with actual array offsets to prevent out-of-bounds pointer indexing."
+      ],
+      "when_to_use": "When building high-throughput distributed state-stores or functional data structures requiring concurrent key-value updates with minimal lock contention.",
+      "when_not_to_use": "For small-scale datasets or single-threaded applications where standard hash maps provide simpler implementation and lower memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions into the same HAMT bucket slot without locking?",
+          "answer": "By using compare-and-swap (CAS) loops to attempt atomic pointer redirection on the specific child slot or bitmap entry."
+        },
+        {
+          "question": "Why are hazard pointers or epoch-based reclamation necessary in a lock-free HAMT?",
+          "answer": "Because nodes replaced during structural updates cannot be freed immediately while other threads might still be traversing them."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free B-Trees",
+        "Persistent Functional Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:41:00.004249+00:00",
+      "run_number": 1249
     }
   ]
 }
