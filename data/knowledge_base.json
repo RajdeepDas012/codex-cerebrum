@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1242,
-    "last_updated": "2026-09-19T14:19:05.237004+00:00",
-    "total_topics_learned": 1242
+    "total_runs": 1243,
+    "last_updated": "2026-09-19T14:22:13.946402+00:00",
+    "total_topics_learned": 1243
   },
   "entries": [
     {
@@ -59583,6 +59583,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:19:05.236986+00:00",
       "run_number": 1242
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Mountain Range using atomic append-only peak redirection and node-hashing CAS primitives alongside epoch-based memory reclamation for high-throughput verifiable historical data logging and cryptographic proof generation in real-time blockchain telemetry and decentralized audit trail engines",
+      "category": "crypto-blockchain",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A Merkle Mountain Range (MMR) is an append-only cryptographic data structure that efficiently maintains a list of peaks representing balanced binary trees of varying sizes. This lock-free concurrent implementation utilizes atomic Compare-And-Swap (CAS) operations and epoch-based memory reclamation to enable high-throughput parallel data logging and instantaneous inclusion proof generation without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic append-only peak redirection to allow multiple producer threads to add new leaves simultaneously without global lock contention.",
+        "Employs node-hashing CAS primitives to compute intermediate and root hash values deterministically as new subtrees merge.",
+        "Integrates epoch-based memory reclamation to safely manage node allocations and deallocations under heavy concurrent reads and writes.",
+        "Supports efficient generation and verification of cryptographic inclusion proofs for historical data entries in decentralized audit pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node appending and peak updating in a concurrent MMR using compare-and-swap loops.",
+        "correct": "void append_leaf(std::atomic<Node*>& peak_ptr, Node* new_node) {\n    Node* current;\n    do {\n        current = peak_ptr.load();\n        new_node->left = current;\n        new_node->hash = hash_combine(current ? current->hash : 0, new_node->data_hash);\n    } while (!peak_ptr.compare_exchange_weak(current, new_node));\n}",
+        "wrong": "void append_leaf_wrong(Node*& peak_ptr, Node* new_node) {\n    mutex.lock();\n    new_node->left = peak_ptr;\n    peak_ptr = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle ABA problems when reusing memory addresses during concurrent node insertions and peak merges.",
+        "Neglecting proper memory ordering semantics (e.g., using sequentially consistent stores everywhere instead of acquire-release), hurting throughput.",
+        "Improper epoch management leading to premature reclamation of nodes still traversed by concurrent proof-generation readers."
+      ],
+      "best_practices": [
+        "Use epoch-based reclamation (EBR) or hazard pointers to track active reader threads before freeing merged or replaced subtree nodes.",
+        "Leverage memory_order_acquire and memory_order_release explicitly around atomic state transitions to guarantee visibility of node hash payloads.",
+        "Design tree indices and peak arrays to align with cache lines, minimizing false sharing in high-frequency concurrent append scenarios."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized logging frameworks, blockchain telemetry collectors, or verifiable audit trails requiring concurrent writes and fast cryptographic proof generation.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where a standard append-only array or traditional sequential Merkle tree provides sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a Merkle Mountain Range differ from a standard binary Merkle tree regarding dynamic size additions?",
+          "answer": "Unlike standard binary Merkle trees which require a fixed power-of-two number of leaves or padding, an MMR dynamically maintains a collection of peaks representing perfectly balanced subtrees of sizes that correspond to the binary representation of the total leaf count."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in a lock-free concurrent MMR?",
+          "answer": "Epoch-based reclamation avoids the high atomic overhead and cache-line bouncing associated with frequent atomic increment and decrement operations on reference counts across multiple threads during high-speed tree traversals and proof generation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Cryptographic Accumulators",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Accumulator Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:22:13.946382+00:00",
+      "run_number": 1243
     }
   ]
 }
