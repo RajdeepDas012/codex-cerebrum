@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1297,
-    "last_updated": "2026-09-19T23:23:24.739019+00:00",
-    "total_topics_learned": 1297
+    "total_runs": 1298,
+    "last_updated": "2026-09-19T23:26:33.843159+00:00",
+    "total_topics_learned": 1298
   },
   "entries": [
     {
@@ -62195,6 +62195,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T23:23:24.738999+00:00",
       "run_number": 1297
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimation CAS primitives alongside epoch-based memory reclamation for high-throughput streaming percentile aggregation and accurate tail-latency measurement in real-time distributed performance monitoring and observability engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free, thread-safe concurrent T-Digest data structure using atomic operations and epoch-based memory reclamation. It enables high-throughput streaming percentile aggregation and precise tail-latency measurements without global locks, which is crucial for distributed observability platforms.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free updates to streaming centroids and quantile boundaries.",
+        "Employs epoch-based memory reclamation to safely manage dynamic memory allocation and deallocation across concurrent worker threads without blocking.",
+        "Maintains higher accuracy at extreme tails (p99, p999) compared to fixed-size quantile estimators by clustering centroids dynamically.",
+        "Ensures linearizability and high throughput for high-frequency performance monitoring and tracing data pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free centroid insertion and compression using atomic CAS loops in C++.",
+        "correct": "void insert_centroid(std::atomic<Centroid*>& head, double mean, double weight) {\n    Centroid* new_node = new Centroid(mean, weight);\n    Centroid* old_head;\n    do {\n        old_head = head.load(std::memory_order_relaxed);\n        new_node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_centroid(Centroid*& head, double mean, double weight) {\n    std::lock_guard<std::mutex> lock(mtx);\n    Centroid* new_node = new Centroid(mean, weight);\n    new_node->next = head;\n    head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Using blocking global mutexes for centroid merging, which destroys throughput under high concurrency in streaming engines.",
+        "Neglecting memory reclamation strategies like epoch-based garbage collection, leading to severe memory leaks during intense streaming loads."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering where strict sequential consistency is not required to optimize CAS loop performance.",
+        "Batch incoming data values locally per-thread before pushing them to the shared concurrent T-Digest structure to reduce atomic contention."
+      ],
+      "when_to_use": "Use when you need high-throughput, real-time calculation of accurate extreme percentiles (e.g., p99, p99.9) across multiple concurrent threads in distributed observability tools.",
+      "when_not_to_use": "Avoid when dealing with low-throughput single-threaded applications or when exact median/percentile aggregation without compression is strictly required and memory is unbound.",
+      "interview_questions": [
+        {
+          "question": "How does a T-Digest achieve higher accuracy at extreme quantiles compared to traditional Q-Digest or fixed histograms?",
+          "answer": "T-Digest dynamically clusters values into centroids using a scale function that allocates more centroids (higher resolution) near the tails (0 and 100) and fewer in the middle."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free concurrent data structures like T-Digest?",
+          "answer": "Epoch-based memory reclamation avoids the heavy cache-coherency overhead and atomic write contention associated with frequent atomic reference count increments and decrements on shared nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Skip List",
+        "Epoch-based memory management",
+        "Streaming quantile estimation algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-19T23:26:33.843141+00:00",
+      "run_number": 1298
     }
   ]
 }
