@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1275,
-    "last_updated": "2026-09-19T20:35:27.252744+00:00",
-    "total_topics_learned": 1275
+    "total_runs": 1276,
+    "last_updated": "2026-09-19T20:38:35.195147+00:00",
+    "total_topics_learned": 1276
   },
   "entries": [
     {
@@ -61154,6 +61154,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:35:27.252723+00:00",
       "run_number": 1275
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging and null-path-length skew CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-threaded job scheduling in real-time task execution and workflow orchestration engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Leftist Heap leverages atomic Compare-And-Swap (CAS) operations to maintain structural balance via null-path-length (NPL) properties during parallel merges. By integrating hazard pointers, it ensures safe memory reclamation for dynamically changing node pointers, enabling high-throughput mergeable priority queues in real-time task schedulers.",
+      "key_points": [
+        "Utilizes atomic pointers and CAS operations to safely update root references and child linkages without coarse-grained locking.",
+        "Maintains the leftist property by ensuring the null path length of the left child is greater than or equal to the right child.",
+        "Employs hazard pointers to protect active nodes from being reclaimed by concurrent threads during tree modification and merging phases.",
+        "Supports efficient meld (merge) operations, making it ideal for distributed and multi-threaded workflow orchestration engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic hazard pointer protection during a lock-free leftist heap node traversal and merge attempt",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\n\nstruct Node {\n    int key;\n    int npl;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n};\n\nbool try_merge_roots(std::atomic<Node*>& root, Node* new_root, HazardPointer& hp) {\n    Node* current = hp.protect(root);\n    return root.compare_exchange_weak(current, new_root);\n}",
+        "wrong": "Node* current = root.load();\nroot.compare_exchange_strong(current, new_root); // Missing hazard pointer protection leads to ABA problems and use-after-free."
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing down leftist subtrees, causing use-after-free bugs.",
+        "Neglecting to recalculate or validate the null-path-length (NPL) skew property during concurrent structural modifications."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection for any node fetched from a shared atomic pointer before reading its children.",
+        "Keep critical sections inside lock-free loops concise to minimize CAS contention across multiple worker threads."
+      ],
+      "when_to_use": "Use when building multi-threaded job schedulers or workflow engines that require frequent, high-throughput merging of separate priority queues.",
+      "when_not_to_use": "Avoid in single-threaded contexts or scenarios requiring strict deterministic latency bounds where simpler sequential heaps or lock-based alternatives suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node swaps in a concurrent Leftist Heap?",
+          "answer": "By pairing hazard pointers with version counters or tag bits inside the atomic pointer word to ensure stale references are rejected by CAS operations."
+        },
+        {
+          "question": "What is the role of the null-path-length (NPL) in a Leftist Heap, and why is it challenging to maintain lock-free?",
+          "answer": "NPL dictates that the right spine is always the shortest path, maintaining logarithmic height. Maintaining it lock-free is challenging because concurrent modifications can invalidate NPL invariants across multiple nodes, requiring atomic re-skewing during merges."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Mergeable Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:38:35.195127+00:00",
+      "run_number": 1276
     }
   ]
 }
