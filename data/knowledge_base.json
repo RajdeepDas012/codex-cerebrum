@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1246,
-    "last_updated": "2026-09-19T14:31:36.984384+00:00",
-    "total_topics_learned": 1246
+    "total_runs": 1247,
+    "last_updated": "2026-09-19T14:34:44.506397+00:00",
+    "total_topics_learned": 1247
   },
   "entries": [
     {
@@ -59775,6 +59775,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:31:36.984366+00:00",
       "run_number": 1246
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-number wrapping and ring-slot reservation CAS primitives alongside epoch-based memory reclamation for high-throughput inter-thread messaging and event processing in real-time low-latency financial trading platforms and message broker engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A high-performance circular buffer pattern that uses atomic sequence wrapping and CAS-based slot reservation to eliminate locks and thread contention. It enables ultra-low latency inter-thread messaging and event processing, making it ideal for financial trading platforms and message brokers.",
+      "key_points": [
+        "Utilizes contiguous memory allocation to maximize CPU cache locality and reduce cache misses.",
+        "Employs atomic sequence numbers to track producer and consumer progress without heavy mutual exclusion locks.",
+        "Implements ring-slot reservation using Compare-And-Swap (CAS) primitives for safe multi-producer coordination.",
+        "Leverages memory reclamation strategies like epoch-based tracking to safely manage dynamic event data without garbage collection pauses."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic sequence reservation and slot updating in a lock-free ring buffer.",
+        "correct": "import threading\nimport atomic\n\nclass RingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.cursor = atomic.AtomicLong(0)\n\n    def claim_slot(self):\n        while True:\n            current = self.cursor.get()\n            next_seq = current + 1\n            if self.cursor.compare_and_set(current, next_seq):\n                return next_seq % self.capacity, next_seq",
+        "wrong": "class RingBuffer:\n    def __init__(self, capacity):\n        self.buffer = [None] * capacity\n        self.cursor = 0\n    def claim_slot(self):\n        self.cursor += 1 # Not thread-safe without locks or atomic operations"
+      },
+      "common_mistakes": [
+        "Failing to pad sequence numbers to avoid false sharing across different CPU cache lines.",
+        "Overwriting unconsumed buffer slots when producers outpace slow consumers."
+      ],
+      "best_practices": [
+        "Ensure sequence counters are explicitly padded (cache-line padding) to prevent CPU cache contention.",
+        "Design consumers with batching mechanisms to process multiple events simultaneously and reduce overhead."
+      ],
+      "when_to_use": "Use when building ultra-low latency systems, high-frequency financial trading applications, or high-throughput message brokers requiring maximal IPC efficiency.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when simple, low-frequency thread synchronization using standard locks suffices.",
+      "interview_questions": [
+        {
+          "question": "How does the Disruptor pattern differ from a traditional blocking queue in terms of concurrency control?",
+          "answer": "The Disruptor uses lock-free atomic sequence numbers and ring-slot reservation CAS primitives instead of operating systems locks and condition variables, drastically reducing context switching and latency."
+        },
+        {
+          "question": "What is false sharing and how do you prevent it in a multi-producer ring buffer?",
+          "answer": "False sharing occurs when independent threads modify variables residing on the same CPU cache line, causing cache invalidations. It is prevented by applying cache-line padding (e.g., 64 bytes) around atomic sequence counters."
+        }
+      ],
+      "related_topics": [
+        "Lock-free queues",
+        "False sharing and CPU cache optimization",
+        "Epoch-based memory reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:34:44.506377+00:00",
+      "run_number": 1247
     }
   ]
 }
