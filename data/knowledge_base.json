@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1205,
-    "last_updated": "2026-09-19T00:31:37.271104+00:00",
-    "total_topics_learned": 1205
+    "total_runs": 1206,
+    "last_updated": "2026-09-19T00:34:45.304940+00:00",
+    "total_topics_learned": 1206
   },
   "entries": [
     {
@@ -57827,6 +57827,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-19T00:31:37.271086+00:00",
       "run_number": 1205
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and multi-word CAS primitives and hazard pointer memory reclamation for high-throughput task scheduling and message routing in real-time distributed execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent priority queue utilizing atomic heap restructuring and multi-word compare-and-swap operations. It ensures safe memory management via hazard pointers, enabling massive parallel task scheduling and message routing without thread blocking.",
+      "key_points": [
+        "Uses atomic heap-node displacement to maintain priority ordering without global locking.",
+        "Leverages multi-word CAS primitives (CAS2/MCAS) to atomically update parent-child pointer relationships during structural mutations.",
+        "Employs hazard pointer memory reclamation to safely free retired heap nodes only after active threads have finished referencing them.",
+        "Optimizes throughput for multi-threaded task schedulers and distributed message brokers by eliminating mutex contention."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of hazard pointer protected node access during concurrent heap navigation",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazard_pointers = {}\n    def protect(self, thread_id, node):\n        self.hazard_pointers[thread_id] = node\n    def clear(self, thread_id):\n        if thread_id in self.hazard_pointers:\n            del self.hazard_pointers[thread_id]",
+        "wrong": "def unsafe_free(node, active_threads):\n    # Deallocating node immediately while other threads might read it causes use-after-free\n    del node"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child links, leading to race conditions and memory corruption.",
+        "Using single-word CAS operations for structural heap modifications that require atomic updates to multiple disconnected memory locations."
+      ],
+      "best_practices": [
+        "Always register active traversal targets in thread-local hazard pointer slots prior to dereferencing pointers.",
+        "Batch retired nodes in local epoch lists before executing deferred safe reclamation sweeps.",
+        "Keep critical sections inside atomic primitives extremely brief to maximize multi-core throughput."
+      ],
+      "when_to_use": "Use when building high-frequency real-time execution engines, task schedulers, or message routers where priority inversion and lock contention severely limit scalability.",
+      "when_not_to_use": "Avoid in systems with simple concurrency requirements or platforms lacking robust multi-word atomic primitives, where a coarse-grained locked heap or simpler concurrent skip-list is sufficient.",
+      "interview_questions": [
+        {
+          "question": "Why are standard single-word CAS operations insufficient for completely locking-free heap rebalancing in priority queues?",
+          "answer": "Standard CAS can only update a single memory address atomically. Heap rebalancing often requires simultaneous modification of multiple parent-child pointers, necessitating multi-word CAS primitives to prevent transient inconsistent states."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in concurrent data structures?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing. Memory reclaimers check these active hazard lists before freeing nodes, ensuring a node is never deallocated while another thread holds a pointer to it."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Multi-Word Compare-And-Swap (MCAS)",
+        "Lock-Free Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T00:34:45.304923+00:00",
+      "run_number": 1206
     }
   ]
 }
