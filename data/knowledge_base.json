@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1236,
-    "last_updated": "2026-09-19T11:11:26.736557+00:00",
-    "total_topics_learned": 1236
+    "total_runs": 1237,
+    "last_updated": "2026-09-19T11:14:34.921677+00:00",
+    "total_topics_learned": 1237
   },
   "entries": [
     {
@@ -59301,6 +59301,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T11:11:26.736535+00:00",
       "run_number": 1236
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent AVL Tree using atomic height-balancing rotation and node-cloning CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable state history tracking and transactional data-store versioning in real-time multi-core concurrency engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent persistent AVL tree that utilizes node cloning and atomic CAS operations to safely manage structural modifications without locking. It matters because it allows multiple threads to read and write version-controlled, self-balancing immutable states concurrently with maximal throughput and strict linearizability.",
+      "key_points": [
+        "Utilizes structural sharing through node cloning to achieve persistence and immutability across historical versions.",
+        "Employs compare-and-swap (CAS) primitives to atomically update root pointers and child links during height-balancing rotations.",
+        "Integrates hazard pointers to safely reclaim memory of abandoned clones without triggering use-after-free race conditions.",
+        "Maintains strict AVL balance factors across concurrent insertions and updates via multi-phase validation loops."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the immutable node-cloning pattern combined with an atomic reference update loop for persistent tree mutations.",
+        "correct": "class PersistentNode:\n    def __init__(self, val, left=None, right=None, height=1):\n        self.val = val\n        self.left = left\n        self.right = right\n        self.height = height\n\ndef insert_version(root, val):\n    # Clone path nodes for path copying persistence\n    def _insert(node):\n        if not node:\n            return PersistentNode(val)\n        if val < node.val:\n            new_left = _insert(node.left)\n            return PersistentNode(node.val, new_left, node.right)\n        else:\n            new_right = _insert(node.right)\n            return PersistentNode(node.val, node.left, new_right)\n    return _insert(root)",
+        "wrong": "def unsafe_mutate(node, val):\n    # Directly mutating existing nodes breaks persistence and thread safety\n    node.val = val"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed old tree roots with hazard pointers, leading to premature memory deallocation.",
+        "Applying in-place rotations on shared immutable nodes instead of cloning the entire modification path up to the root."
+      ],
+      "best_practices": [
+        "Always validate node heights after cloning path elements to ensure the AVL invariant remains uncompromised.",
+        "Batch hazard pointer retirements to minimize atomic overhead during high-frequency transaction processing."
+      ],
+      "when_to_use": "Use when applications demand strict snapshot isolation, multi-version concurrency control (MVCC), and high-throughput thread-safe immutable historical state tracking.",
+      "when_not_to_use": "Avoid in memory-constrained or single-threaded embedded environments where the memory overhead of path cloning and hazard pointer tracking outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you guarantee thread safety during a structural rotation in a lock-free persistent AVL tree?",
+          "answer": "By using CAS primitives to update parent pointers to point to newly cloned and re-balanced subtrees, retrying if another thread modifies the same path concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a concurrent persistent tree?",
+          "answer": "They prevent worker threads from freeing or reusing node memory that other concurrent threads are currently traversing or referencing during a read or write operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B-Trees",
+        "Persistent Data Structures",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T11:14:34.921658+00:00",
+      "run_number": 1237
     }
   ]
 }
