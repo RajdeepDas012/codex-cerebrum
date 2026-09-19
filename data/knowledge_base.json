@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1282,
-    "last_updated": "2026-09-19T20:57:32.762928+00:00",
-    "total_topics_learned": 1282
+    "total_runs": 1283,
+    "last_updated": "2026-09-19T21:00:40.557848+00:00",
+    "total_topics_learned": 1283
   },
   "entries": [
     {
@@ -61486,6 +61486,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:57:32.762907+00:00",
       "run_number": 1282
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling pointer chaining and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput range scans and multi-core index lookups in real-time in-memory relational database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free B+ Tree where structural modifications like node splits and leaf-sibling pointer updates are coordinated via compare-and-swap (CAS) primitives. It leverages epoch-based memory reclamation to safely free unlinked nodes, ensuring ultra-low latency point lookups and range scans across multiple cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to handle concurrent node splits and insertions without coarse-grained locking.",
+        "Maintains lock-free leaf-sibling pointer chaining to facilitate high-throughput sequential range scans across threads.",
+        "Employs epoch-based memory reclamation to defer the destruction of split or merged nodes until active thread epochs complete.",
+        "Balances multi-core scaling requirements by eliminating lock contention on root-to-leaf traversal paths."
+      ],
+      "code_example": {
+        "language": "pseudo",
+        "description": "Demonstrates atomic leaf-sibling pointer linking and node-splitting using CAS loops",
+        "correct": "function insert_leaf(node, key, value) {\n  while (true) {\n    let snapshot = node.copy();\n    if (snapshot.is_full()) {\n      let new_node = split_node(snapshot);\n      if (node.next.compare_and_set(snapshot.next, new_node)) {\n        break;\n      }\n    } else {\n      snapshot.insert(key, value);\n      if (node.cas(snapshot.old_data, snapshot.new_data)) break;\n    }\n  }\n}",
+        "wrong": "function insert_leaf(node, key, value) {\n  mutex.lock();\n  node.insert(key, value);\n  mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect split nodes from immediate deallocation, leading to use-after-free errors during concurrent reads.",
+        "Neglecting edge cases where multiple threads attempt to split the same full node simultaneously."
+      ],
+      "best_practices": [
+        "Use robust epoch-based or hazard-pointer memory management schemes to safely reclaim retired tree nodes.",
+        "Design traversal algorithms to gracefully handle split states by following sibling pointers when encountering outdated routing keys."
+      ],
+      "when_to_use": "When building high-concurrency in-memory database indexes that demand maximum throughput for both point lookups and range queries under heavy multi-threaded contention.",
+      "when_not_to_use": "In single-threaded applications or environments where memory overhead and the complexity of lock-free design outweigh raw performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation for nodes that are removed or split in a lock-free B+ Tree?",
+          "answer": "You use epoch-based memory reclamation or hazard pointers to ensure that a node is only freed after all threads that might have observed its pointer have exited the current epoch or released their hazard reference."
+        },
+        {
+          "question": "What is the purpose of leaf-sibling pointers in a concurrent lock-free B+ Tree during range queries?",
+          "answer": "They allow threads performing range scans to traverse horizontally across leaf nodes without backing up to parent nodes, bypassing structural modifications happening higher up in the tree."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Epoch-based memory reclamation",
+        "Concurrent B-link trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T21:00:40.557825+00:00",
+      "run_number": 1283
     }
   ]
 }
