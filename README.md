@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1277** |
-| Last Updated | `2026-09-19T20:41:42.335004+00:00` |
-| Dataset Size | `1277 entries` |
+| Total Topics Learned | **1278** |
+| Last Updated | `2026-09-19T20:44:51.488303+00:00` |
+| Dataset Size | `1278 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 408 |
+| data-structures | 409 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum accumulation and point-update CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and dynamic stream updates in real-time metrics aggregation and rank-tracking engines`
 - `Implementation of a lock-free thread-safe concurrent SkuTree using atomic bounding-volume hierarchy refitting and surface-area-heuristic partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and real-time collision detection in GPU rendering and simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging and null-path-length skew CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-threaded job scheduling in real-time task execution and workflow orchestration engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass child-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-threaded event scheduling in real-time simulation and asynchronous task execution engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list linking and degree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-threaded task scheduling in real-time operating systems and concurrent job execution engines`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer swinging and root-list consolidation CAS primitives alongside epoch-based memory reclamation for high-throughput priority queue operations and Dijkstra-like shortest path graph algorithms in real-time network routing and pathfinding engines`
 
 <!-- STATS_END -->
 
