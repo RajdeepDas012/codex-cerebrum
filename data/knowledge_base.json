@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1240,
-    "last_updated": "2026-09-19T11:23:59.108163+00:00",
-    "total_topics_learned": 1240
+    "total_runs": 1241,
+    "last_updated": "2026-09-19T14:15:57.184727+00:00",
+    "total_topics_learned": 1241
   },
   "entries": [
     {
@@ -59489,6 +59489,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T11:23:59.108142+00:00",
       "run_number": 1240
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node pointer relocation and structural-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and message passing in real-time asynchronous execution and thread pool engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure provides lock-free concurrency for priority-based task scheduling by employing atomic compare-and-swap (CAS) primitives and hazard pointers. It ensures safe memory reclamation and high-throughput execution without blocking threads, making it ideal for multi-core real-time task executors.",
+      "key_points": [
+        "Utilizes atomic heap-node pointer relocation to manage structural mutations safely across concurrent threads.",
+        "Employs structural-balancing CAS primitives to maintain heap properties without acquiring global locks.",
+        "Integrates hazard pointers to safely track and reclaim memory allocated for nodes removed or rearranged under contention.",
+        "Maximizes throughput and minimizes latency in real-time task scheduling and asynchronous execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a hazard-pointer protected lock-free priority node swap using atomic operations.",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\n\nstruct Node {\n    int priority;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n};\n\nbool atomicRelocate(std::atomic<Node*>& parent, Node* expected, Node* desired) {\n    return parent.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "void unsafeRelocate(Node* parent, Node* desired) {\n    // Missing atomic operations and hazard pointer protection leads to race conditions and memory corruption\n    parent->left = desired;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to ABA problems or use-after-free bugs.",
+        "Using sequential consistency everywhere instead of fine-grained memory ordering (acquire-release), degrading performance."
+      ],
+      "best_practices": [
+        "Pair every dynamic memory deallocation with a robust hazard pointer epoch or reference counting scheme.",
+        "Thoroughly test concurrent insert and extract-min routines under high thread contention to expose subtle race conditions."
+      ],
+      "when_to_use": "Use when building ultra-low latency thread pools, real-time message passing systems, or asynchronous event schedulers requiring maximum concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where simpler lock-based priority queues provide adequate performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing, preventing other threads from prematurely freeing those memory blocks until all references are released."
+        },
+        {
+          "question": "Why is structural balancing difficult to implement in a lock-free heap compared to a lock-based heap?",
+          "answer": "Because multiple threads can simultaneously modify neighboring pointers, maintaining global heap invariants requires complex retry loops and fine-grained atomic CAS primitives rather than a single mutex."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skiplists",
+        "Concurrent Work-Stealing Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:15:57.184708+00:00",
+      "run_number": 1241
     }
   ]
 }
