@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1219** |
-| Last Updated | `2026-09-19T06:02:50.144398+00:00` |
-| Dataset Size | `1219 entries` |
+| Total Topics Learned | **1220** |
+| Last Updated | `2026-09-19T06:05:58.310595+00:00` |
+| Dataset Size | `1220 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 358 |
+| data-structures | 359 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-matching node-allocation and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and in-memory key-value prefix indexing in real-time networking and high-performance router engines`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer navigation and node-splitting descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range searches and multi-core index updates in real-time in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Octree using atomic volumetric octant splitting and bounding-box voxel node insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial partitioning and volumetric collision detection in real-time voxel engines and computer graphics simulation pipelines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box quadrant splitting and leaf-node point insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D collision detection and particle simulation in real-time game physics and graphics rendering engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane splitting and leaf-node coordinate descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and spatial point-location queries in real-time robotics path planning and computational geometry engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node pointer redirection and node-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput state verification and cryptographic key-value storage in real-time blockchain execution and state database engines`
 
 <!-- STATS_END -->
 
