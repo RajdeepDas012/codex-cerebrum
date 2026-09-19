@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1293,
-    "last_updated": "2026-09-19T23:10:53.781014+00:00",
-    "total_topics_learned": 1293
+    "total_runs": 1294,
+    "last_updated": "2026-09-19T23:14:01.178028+00:00",
+    "total_topics_learned": 1294
   },
   "entries": [
     {
@@ -62007,6 +62007,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T23:10:53.780995+00:00",
       "run_number": 1293
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic doubly-linked list restructuring and hash-table pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and hot-key management in real-time distributed in-memory caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Least Recently Used (LRU) cache coordinates multi-threaded access without mutual exclusion locks by combining atomic hash-table lookups with lock-free doubly-linked list pointer restructuring. It relies on hardware Compare-And-Swap (CAS) primitives and hazard pointers to safely manage node updates and prevent memory reclamation races during high-throughput cache evictions.",
+      "key_points": [
+        "Utilizes atomic pointer-swinging on hash-table buckets to map keys to doubly-linked list nodes without global locks.",
+        "Performs lock-free doubly-linked list restructuring (moving accessed nodes to the head) via atomic CAS operations on predecessor and successor pointers.",
+        "Employs hazard pointers to track threads actively reading nodes, preventing premature deallocation and use-after-free bugs during eviction.",
+        "Achieves high-throughput hot-key management and evictions essential for real-time distributed in-memory caching infrastructure."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of acquiring a hazard pointer before inspecting a shared cache node to ensure safe concurrent reclamation.",
+        "correct": "class HazardPointerRegistry:\n    def __init__(self):\n        self.hazard_ptr = None\n    def protect(self, node):\n        self.hazard_ptr = node\n        return node\n    def clear(self):\n        self.hazard_ptr = None\n\nregistry = HazardPointerRegistry()\nnode = registry.protect(shared_cache_node)\n# safely read node.value\nregistry.clear()",
+        "wrong": "node = shared_cache_node\n# another thread frees node here\nprint(node.value)  # Use-after-free race condition!"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer links, leading to memory corruption and use-after-free faults.",
+        "Updating doubly-linked list pointers non-atomically, which results in broken chains and lost nodes during concurrent cache hits."
+      ],
+      "best_practices": [
+        "Retire nodes to a local deferred reclamation list and free them only after confirming no active hazard pointers reference them.",
+        "Minimize CAS retry loops by optimizing node granularity and reducing contention hot spots on highly accessed cache head nodes."
+      ],
+      "when_to_use": "When building high-throughput, low-latency in-memory caching systems where coarse-grained locks cause severe thread contention under heavy read and write workloads.",
+      "when_not_to_use": "When simpler blocking structures or distributed cache partitioning (like sharded caches with single-threaded event loops) suffice for the application's throughput requirements.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free LRU cache?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing before reading them, ensuring that a concurrently evicting thread delays actual memory deallocation until no active hazard pointers target that node."
+        },
+        {
+          "question": "Why is implementing a lock-free doubly-linked list more complex than a lock-free singly-linked list?",
+          "answer": "Because nodes require atomic updates to both their prev and next pointers simultaneously to maintain list integrity, which standard single-word CAS operations cannot accomplish natively without specialized descriptor structures or multi-word atomic primitives."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip-List",
+        "Lock-Free LFU Cache"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T23:14:01.178008+00:00",
+      "run_number": 1294
     }
   ]
 }
