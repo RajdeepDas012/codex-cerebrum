@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1204,
-    "last_updated": "2026-09-19T00:28:29.307183+00:00",
-    "total_topics_learned": 1204
+    "total_runs": 1205,
+    "last_updated": "2026-09-19T00:31:37.271104+00:00",
+    "total_topics_learned": 1205
   },
   "entries": [
     {
@@ -57777,6 +57777,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T00:28:29.307161+00:00",
       "run_number": 1204
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance metric weighting and child-pointer CAS primitives and hazard pointer memory reclamation for high-throughput fuzzy string matching and spelling correction in real-time search engine autocomplete and natural language processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Burkhard-Keller (BK) tree utilizing atomic compare-and-swap (CAS) operations for child-pointer insertion and hazard pointers for safe memory reclamation. It enables high-throughput, thread-safe approximate string matching essential for modern autocomplete systems.",
+      "key_points": [
+        "Utilizes atomic child-pointer updates via CAS to manage metric-space tree structures without global locks.",
+        "Employs Levenshtein or Damerau-Levenshtein edit-distance metrics to partition keys into branches based on distance weights.",
+        "Integrates hazard pointers to safely track threads reading tree nodes during concurrent structural modifications.",
+        "Facilitates high-throughput real-time fuzzy queries for spell-checkers and autocomplete suggestions under heavy contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node insertion into a concurrent BK-Tree using CAS primitives.",
+        "correct": "bool BKTree::insert_node(Node* parent, Node* new_node, int distance) {\n    while (true) {\n        Node* current_child = parent->children[distance].load(std::memory_order_acquire);\n        if (current_child == nullptr) {\n            if (parent->children[distance].compare_exchange_weak(current_child, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            return insert_recursive(current_child, new_node);\n        }\n    }\n}",
+        "wrong": "bool BKTree::insert_node(Node* parent, Node* new_node, int distance) {\n    // Missing lock-free loop and atomic CAS, causing race conditions\n    if (parent->children[distance] == nullptr) {\n        parent->children[distance] = new_node;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free bugs during concurrent traversals.",
+        "Using naive locking mechanisms that create bottlenecks during heavy multi-threaded insert and search operations.",
+        "Incorrectly calculating distance bounds during concurrent range searches, missing valid fuzzy matches."
+      ],
+      "best_practices": [
+        "Protect all node pointers traversed during reads with thread-local hazard pointer records.",
+        "Keep edit distance calculations optimized and branchless where possible to reduce per-node traversal latency.",
+        "Recycle unlinked node memory using epoch-based or hazard-pointer-deferred free lists."
+      ],
+      "when_to_use": "Use when building high-concurrency systems requiring real-time approximate string matching, spell correction, or autocomplete engines.",
+      "when_not_to_use": "Avoid in single-threaded applications where simpler recursive structures suffice, or when exact-match hash lookups are strictly required.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free BK-Tree when nodes are bypassed or restructured?",
+          "answer": "By using hazard pointers or epoch-based reclamation to ensure a node is only freed after all threads currently traversing it have detached their hazard references."
+        },
+        {
+          "question": "Why is CAS insufficient on its own for complex multi-node structural updates in a metric tree?",
+          "answer": "Because CAS operates atomically on a single memory location, complex multi-pointer rotations or splits require careful protocol design (like helping mechanisms or transactional memory) to avoid intermediate inconsistent states."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free R-Tree",
+        "Hazard Pointers",
+        "Levenshtein Distance Metrics",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-19T00:31:37.271086+00:00",
+      "run_number": 1205
     }
   ]
 }
