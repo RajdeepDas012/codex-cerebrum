@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1254,
-    "last_updated": "2026-09-19T14:56:40.932183+00:00",
-    "total_topics_learned": 1254
+    "total_runs": 1255,
+    "last_updated": "2026-09-19T14:59:49.775838+00:00",
+    "total_topics_learned": 1255
   },
   "entries": [
     {
@@ -60153,6 +60153,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T14:56:40.932165+00:00",
       "run_number": 1254
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-descriptor CAS primitives alongside epoch-based memory reclamation for high-throughput multi-core index updates and range scans in real-time in-memory relational database engines",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent B-tree that utilizes atomic operations, structural descriptors for node splitting, and epoch-based memory reclamation. It enables extreme multi-core throughput and minimal contention for real-time transactional databases requiring rigorous consistency and predictable latency during intense range scans and index mutations.",
+      "key_points": [
+        "Utilizes Compare-And-Swap (CAS) primitives to atomically modify pointers and update metadata without incurring global lock overhead.",
+        "Employs structural descriptors to orchestrate complex multi-step node splits and merges safely across concurrent reader and writer threads.",
+        "Integrates epoch-based memory reclamation (EMR) to safely defer the deallocation of nodes until all accessing threads have exited the active read epoch.",
+        "Guarantees linearizability for point lookups and maintains consistent snapshot views necessary for high-throughput transactional range scans."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and epoch registration for safe concurrent traversal.",
+        "correct": "#include <atomic>\n#include <iostream>\n\nstruct Node {\n    std::atomic<Node*> next;\n    int key;\n};\n\nvoid safe_traverse(std::atomic<Node*>& head) {\n    Node* current = head.load(std::memory_order_acquire);\n    while (current != nullptr) {\n        std::cout << current->key << \"\\n\";\n        current = current->next.load(std::memory_order_relaxed);\n    }\n}",
+        "wrong": "void unsafe_traverse(Node* head) {\n    Node* current = head;\n    while (current != nullptr) {\n        std::cout << current->key << \"\\n\";\n        delete current; // Prematurely deleting nodes without epoch protection leads to race conditions and segmentation faults\n        current = current->next;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to use appropriate memory ordering barriers (acquire-release semantics), leading to stale node reads or reordered pointer updates.",
+        "Neglecting proper epoch-based reclamation tracking, causing memory leaks or premature freeing of nodes currently traversed by concurrent readers.",
+        "Attempting to perform node splits via multiple discrete CAS operations instead of using atomic structural descriptors, leaving the tree in an inconsistent intermediate state."
+      ],
+      "best_practices": [
+        "Pair every atomic pointer modification with rigorous epoch protection guards to safely manage thread lifecycles and memory deallocation.",
+        "Design structural descriptors that represent atomic multi-node state changes, allowing lagging threads to help complete ongoing operations (lock-free progress guarantee).",
+        "Profile multi-core contention hotspots carefully using thread sanitizers to catch subtle race conditions around node bounds and split points."
+      ],
+      "when_to_use": "Use this when building high-performance in-memory relational databases or storage engines that demand maximum multi-core scaling, predictable low-latency updates, and lock-free concurrent range scans.",
+      "when_not_to_use": "Avoid this for simple applications, disk-based storage engines with buffer pools where latch-crabbing is sufficient, or environments where implementation complexity and debugging overhead outweigh raw throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do structural descriptors help achieve lock-free progress during a B-tree node split?",
+          "answer": "Structural descriptors encapsulate the entire multi-step split operation into a single atomic state. If a thread encounters a node marked with an active descriptor, it can help complete the operation before proceeding, avoiding blocking and ensuring lock-free progress guarantees."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over traditional garbage collection or manual reference counting in high-throughput lock-free indexes?",
+          "answer": "Epoch-based memory reclamation avoids the heavy synchronization overhead and memory footprint of reference counting, and the unpredictable pause times of tracing garbage collection, by batching deleted nodes and freeing them only after all active threads have safely exited the current epoch."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Transactional Memory and Multi-Version Concurrency Control"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T14:59:49.775819+00:00",
+      "run_number": 1255
     }
   ]
 }
