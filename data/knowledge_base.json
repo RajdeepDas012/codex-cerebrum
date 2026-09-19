@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1272,
-    "last_updated": "2026-09-19T20:25:47.562866+00:00",
-    "total_topics_learned": 1272
+    "total_runs": 1273,
+    "last_updated": "2026-09-19T20:28:55.628222+00:00",
+    "total_topics_learned": 1273
   },
   "entries": [
     {
@@ -61010,6 +61010,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T20:25:47.562845+00:00",
       "run_number": 1272
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer swinging and root-list consolidation CAS primitives alongside epoch-based memory reclamation for high-throughput priority queue operations and Dijkstra-like shortest path graph algorithms in real-time network routing and pathfinding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a lock-free concurrent Fibonacci Heap leveraging atomic compare-and-swap (CAS) operations for min-pointer updates and root consolidation, secured by epoch-based memory reclamation. It enables high-throughput priority queue insertions and decreases-key operations critical for parallel graph routing. This ensures safe, non-blocking multi-threaded coordination under heavy contention without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic min-pointer swinging via CAS to maintain and update the global minimum reference across concurrent threads safely.",
+        "Implements lock-free root-list linking and degree-based consolidation steps to keep amortized time bounds efficient in a parallel setting.",
+        "Employs epoch-based memory reclamation (EMR) to safely free deleted or consolidated nodes without risking use-after-free bugs in concurrent readers.",
+        "Optimizes concurrent priority-key modification paths, reducing thread contention during real-time network pathfinding execution."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node structure and atomic min-pointer update pattern using a mock atomic reference.",
+        "correct": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.degree = 0\n        self.parent = None\n        self.child = None\n        self.left = self\n        self.right = self\n        self.marked = False\n\nclass ConcurrentFibonacciHeap:\n    def __init__(self):\n        self.min_node = None\n    \n    def cas_min(self, old_min, new_min):\n        if self.min_node == old_min:\n            self.min_node = new_min\n            return True\n        return False",
+        "wrong": "class UnsafeFibonacciHeap:\n    def __init__(self):\n        self.min_node = None\n    \n    def update_min(self, new_min):\n        # Missing thread synchronization / atomic CAS leading to race conditions\n        self.min_node = new_min"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when performing atomic root-list restructuring or min-pointer CAS operations.",
+        "Neglecting epoch barriers during node deletion, leading to premature memory deallocation while other threads traverse child pointers.",
+        "Over-synchronizing consolidation steps which degrades the data structure into a globally locked heap."
+      ],
+      "best_practices": [
+        "Pair every node allocation and pointer removal with precise epoch-based memory management guards.",
+        "Keep root-list modifications fine-grained by applying local node CAS routines before attempting global pointer swinging.",
+        "Thoroughly test concurrent insert and extract-min sequences under high thread concurrency using stress test harnesses."
+      ],
+      "when_to_use": "Use when multiple concurrent worker threads need to execute priority-driven graph algorithms like parallel Dijkstra's shortest path where decrease-key and insert operations dominate.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where the high overhead of atomic operations and epoch management outweighs structural amortization benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two concurrent threads attempt to update the global minimum pointer in a Fibonacci Heap via CAS?",
+          "answer": "By using a loop with a compare-and-swap (CAS) primitive that re-reads the current minimum pointer if the validation fails, ensuring that no stale references replace an intervening thread's update."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over standard garbage collection or manual freeing in lock-free Fibonacci Heaps?",
+          "answer": "Epoch-based memory reclamation avoids heavy garbage collection pauses and prevents manual freeing from creating use-after-free faults by safely deferring reclamation until all active threads have exited the current access epoch."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Priority Queues",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Graph Algorithms and Parallel Dijkstra"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T20:28:55.628201+00:00",
+      "run_number": 1273
     }
   ]
 }

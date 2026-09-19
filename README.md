@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1272** |
-| Last Updated | `2026-09-19T20:25:47.562866+00:00` |
-| Dataset Size | `1272 entries` |
+| Total Topics Learned | **1273** |
+| Last Updated | `2026-09-19T20:28:55.628222+00:00` |
+| Dataset Size | `1273 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 403 |
+| data-structures | 404 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer swinging and root-list consolidation CAS primitives alongside epoch-based memory reclamation for high-throughput priority queue operations and Dijkstra-like shortest path graph algorithms in real-time network routing and pathfinding engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and union-by-rank CAS primitives alongside epoch-based memory reclamation for high-throughput dynamic connectivity queries and parallel graph clustering in real-time network topology analysis and compiler optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority rotation and node-splicing CAS primitives alongside epoch-based memory reclamation for high-throughput balanced search tree operations and concurrent priority-keyed map insertions in real-time in-memory database and caching engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and LCP-interval (Longest Common Prefix) construction CAS primitives alongside epoch-based memory reclamation for high-throughput substring indexing and full-text search in real-time document analysis and bioinformatics pattern-matching engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic historical-node sharing and path-copying CAS primitives alongside epoch-based memory reclamation for high-throughput time-travel querying and immutable interval modification in real-time financial auditing and version-controlled data analytics engines`
-- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update CAS primitives alongside epoch-based memory reclamation for high-throughput interval querying and dynamic range modification in real-time financial analytics and game physics collision detection engines`
 
 <!-- STATS_END -->
 
