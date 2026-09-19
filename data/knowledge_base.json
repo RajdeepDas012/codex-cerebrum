@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1286,
-    "last_updated": "2026-09-19T22:49:00.900404+00:00",
-    "total_topics_learned": 1286
+    "total_runs": 1287,
+    "last_updated": "2026-09-19T22:52:08.600459+00:00",
+    "total_topics_learned": 1287
   },
   "entries": [
     {
@@ -61674,6 +61674,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T22:49:00.900385+00:00",
       "run_number": 1286
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput packet classification and IP address lookup in real-time software-defined networking and telecom routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent trie-based IP routing table that leverages atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation. It enables high-throughput, thread-safe longest-prefix matching for software-defined networking and telecom routers without heavy mutex contention.",
+      "key_points": [
+        "Utilizes atomic pointer-swapping and CAS primitives to safely insert and delete prefix routes without global locks.",
+        "Employs epoch-based memory reclamation (EMR) to prevent use-after-free bugs during concurrent node modifications.",
+        "Performs efficient bit-by-bit or stride-based prefix traversal to execute high-speed IP address lookups.",
+        "Maximizes multi-core scalability for real-time packet classification and dynamic routing table updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer-swapping for lock-free routing table insertions",
+        "correct": "bool insert_prefix(std::atomic<Node*>& root, uint32_t ip, uint8_t prefix_len, int port) {\n    Node* current = root.load();\n    // Navigate and insert using CAS loop with EMR protection\n    return true;\n}",
+        "wrong": "bool insert_prefix(Node* root, uint32_t ip, uint8_t prefix_len, int port) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Modifying tree inside a blocking mutex instead of lock-free CAS\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect node deletions with epoch-based reclamation, leading to premature memory deallocation while other threads read traversal paths.",
+        "Using blocking locks for fast-path routing lookups, drastically reducing packet throughput on multi-core routing hardware."
+      ],
+      "best_practices": [
+        "Integrate a robust epoch manager to defer node destruction until all concurrent readers have exited their critical sections.",
+        "Optimize stride lengths (e.g., multi-bit tries) to reduce tree depth and minimize cache-miss latency during IP lookups."
+      ],
+      "when_to_use": "Use when building high-performance software routers, software-defined networking (SDN) data planes, or firewalls requiring millions of concurrent lookups and updates per second.",
+      "when_not_to_use": "Avoid in memory-constrained embedded systems with static routing tables where simple array-based or static binary searches suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic pointer swaps on trie nodes during concurrent updates?",
+          "answer": "By using tagged pointers or version counters combined with the pointer value inside a double-word CAS (DCAS or 128-bit atomic), ensuring that an updated pointer with the same address but a different generation is detected as a mismatch."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting for lock-free tries?",
+          "answer": "Reference counting requires atomic increments and decrements on every single node traversal during a read, creating heavy cache-line contention. Epoch-based reclamation tracks thread participation lazily, allowing lock-free reads with zero atomic overhead on the fast path."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Radix Tree",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T22:52:08.600440+00:00",
+      "run_number": 1287
     }
   ]
 }
