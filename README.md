@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1292** |
-| Last Updated | `2026-09-19T23:07:45.788679+00:00` |
-| Dataset Size | `1292 entries` |
+| Total Topics Learned | **1293** |
+| Last Updated | `2026-09-19T23:10:53.781014+00:00` |
+| Dataset Size | `1293 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 421 |
+| data-structures | 422 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-node list restructuring and pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and hot-key management in real-time distributed in-memory caching engines`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer propagation and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput concurrent range queries and multi-core index updates in real-time in-memory relational database engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node displacement and index-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput concurrent task scheduling and job execution in real-time multi-threaded server engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic fingerprint-relocation and bucket-eviction CAS primitives alongside epoch-based memory reclamation for high-throughput succinct dynamic approximate membership testing and multi-core cache-line optimization in real-time distributed storage and memory-constrained database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer swinging and tower-height growth CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value map operations and multi-threaded range scans in real-time in-memory key-value database engines`
-- `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic Levenshtein-distance partitioning and metric-space node-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and spelling correction in real-time search engine autocomplete and natural language processing systems`
 
 <!-- STATS_END -->
 

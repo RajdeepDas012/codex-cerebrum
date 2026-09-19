@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1292,
-    "last_updated": "2026-09-19T23:07:45.788679+00:00",
-    "total_topics_learned": 1292
+    "total_runs": 1293,
+    "last_updated": "2026-09-19T23:10:53.781014+00:00",
+    "total_topics_learned": 1293
   },
   "entries": [
     {
@@ -61958,6 +61958,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-19T23:07:45.788660+00:00",
       "run_number": 1292
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-node list restructuring and pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and hot-key management in real-time distributed in-memory caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free Least Frequently Used (LFU) cache, utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It is crucial for high-concurrency caching tiers where lock contention on hot keys and eviction metadata would otherwise bottleneck throughput.",
+      "key_points": [
+        "Utilizes atomic pointer-swinging CAS operations to modify frequency-node linked lists without global locks.",
+        "Employs hazard pointers to safely manage memory reclamation of evicted cache nodes and frequency buckets under concurrent access.",
+        "Maintains constant O(1) time complexity for insertions, lookups, and evictions using hash maps paired with doubly linked frequency lists.",
+        "Prevents thread contention on hot-spot keys by decoupling access-frequency increments from the read path via fine-grained synchronization."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic frequency updates and hazard pointer tracking for lock-free cache node access",
+        "correct": "import threading\nfrom atomic import AtomicInteger\n\nclass ConcurrentLFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = AtomicInteger(1)\n        self.hazard_count = 0\n\n    def increment_frequency(self):\n        while True:\n            current = self.freq.get()\n            if self.freq.compare_and_set(current, current + 1):\n                break",
+        "wrong": "class UnsafeLFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = 1\n\n    def increment_frequency(self):\n        self.freq += 1  # Race condition under multi-threaded load"
+      },
+      "common_mistakes": [
+        "Failing to protect freed memory nodes with hazard pointers, leading to ABA problems and use-after-free segmentation faults.",
+        "Using coarse-grained mutexes around the frequency adjustment step, which defeats the purpose of a lock-free cache design.",
+        "Neglecting edge cases where frequency list head/tail pointers shift concurrently during eviction cycles."
+      ],
+      "best_practices": [
+        "Retire memory blocks safely using hazard pointer epoch retirement queues instead of immediate deallocation.",
+        "Batch frequency increments if strict recency is secondary to minimizing CAS retry loops under heavy contention.",
+        "Align cache metadata structures to CPU cache-line boundaries to prevent false sharing across concurrent cores."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded in-memory databases or caching layers that must handle millions of read/write requests per second with strict eviction policies.",
+      "when_not_to_use": "Avoid when application concurrency is low, where standard synchronized maps or simple mutex-protected LRU caches provide simpler maintenance and adequate performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when updating frequency pointers in a lock-free LFU cache?",
+          "answer": "By using tagged pointers (version counters combined with memory addresses) or hazard pointers to ensure that a pointer value hasn't changed underneath a thread during a CAS operation."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard garbage collection in high-throughput lock-free caches?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation without the latency spikes and CPU overhead introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent hash maps",
+        "hazard pointer memory management",
+        "concurrent LRU cache architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T23:10:53.780995+00:00",
+      "run_number": 1293
     }
   ]
 }
