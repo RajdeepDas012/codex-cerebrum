@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1223,
-    "last_updated": "2026-09-19T06:15:55.361149+00:00",
-    "total_topics_learned": 1223
+    "total_runs": 1224,
+    "last_updated": "2026-09-19T06:19:04.024732+00:00",
+    "total_topics_learned": 1224
   },
   "entries": [
     {
@@ -58680,6 +58680,55 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-19T06:15:55.361129+00:00",
       "run_number": 1223
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic sibling-pointer navigation and leaf-node splitting descriptor CAS primitives alongside epoch-based memory reclamation for high-throughput range queries and point lookups in real-time in-memory database and storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B+ Tree uses atomic primitives like Compare-And-Swap (CAS) alongside node-splitting descriptors and epoch-based memory reclamation to allow simultaneous multi-core reads and writes without locks. It guarantees high-throughput range queries and point lookups by enabling helper threads to assist with incomplete node splits during traversal.",
+      "key_points": [
+        "Utilizes atomic sibling pointers and root redirection to guide search threads past nodes currently undergoing modification.",
+        "Employs explicit splitting descriptors to make node-splitting multi-step operations atomic and cooperative across threads.",
+        "Integrates epoch-based memory reclamation (EMR) to safely deallocate old tree nodes only after all concurrent accessor threads have exited the active epoch.",
+        "Separates internal routing keys from leaf-node data records to optimize cache locality and accelerate both point lookups and ordered range scans."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and cooperative split assistance using CAS primitives in a concurrent B+ Tree leaf.",
+        "correct": "bool insert_key(Node* leaf, int key, Value val) {\n    while (true) {\n        Descriptor* desc = leaf->desc.load();\n        if (desc != nullptr) {\n            help_split(desc);\n            continue;\n        }\n        if (leaf->is_full()) {\n            Descriptor* new_desc = new SplitDescriptor(leaf);\n            if (leaf->desc.compare_exchange_weak(desc, new_desc)) {\n                help_split(new_desc);\n                return true;\n            }\n            delete new_desc;\n        } else {\n            if (leaf->insert_locally(key, val)) return true;\n        }\n    }\n}",
+        "wrong": "bool insert_key_wrong(Node* leaf, int key, Value val) {\n    mutex.lock();\n    leaf->keys.push_back(key);\n    mutex.unlock();\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to handle in-progress splits encountered during a traversal, leading to missed keys or infinite loops.",
+        "Reclaiming memory of deleted nodes immediately without an epoch-based or hazard-pointer mechanism, causing use-after-free race conditions.",
+        "Neglecting ABA problems on node pointers when updating child references using standard CAS without version tags or descriptors."
+      ],
+      "best_practices": [
+        "Always check for and complete pending split descriptors before attempting modifications on a node.",
+        "Use epoch-based memory management to defer node deallocations until all threads active in the current epoch finish their operations.",
+        "Keep critical sections inside lock-free paths minimal by batching updates where possible or deferring structural adjustments to cooperating helper routines."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, storage engines, or distributed indexes requiring maximum concurrency and minimal latency for heavy mixed read/write workloads.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or memory-constrained embedded systems where the overhead of lock-free descriptors and epoch reclamation outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do concurrent search threads safely navigate a B+ Tree if a target node is currently being split by another thread?",
+          "answer": "Search threads check for a split descriptor attached to the node; if found, they execute or help complete the split operation before proceeding, or use atomic sibling pointers to route around the transitional state."
+        },
+        {
+          "question": "Why is standard garbage collection or immediate node deletion dangerous in lock-free tree structures?",
+          "answer": "Immediate deletion can cause a use-after-free error if another concurrent thread holds a stale pointer to the node and attempts to read or traverse its memory before realizing it has been unlinked."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent B-Link Tree",
+        "Compare-And-Swap (CAS) Synchronization Primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-19T06:19:04.024713+00:00",
+      "run_number": 1224
     }
   ]
 }
