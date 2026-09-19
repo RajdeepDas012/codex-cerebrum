@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1291,
-    "last_updated": "2026-09-19T23:04:38.432894+00:00",
-    "total_topics_learned": 1291
+    "total_runs": 1292,
+    "last_updated": "2026-09-19T23:07:45.788679+00:00",
+    "total_topics_learned": 1292
   },
   "entries": [
     {
@@ -61911,6 +61911,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-19T23:04:38.432875+00:00",
       "run_number": 1291
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link pointer propagation and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput concurrent range queries and multi-core index updates in real-time in-memory relational database engines",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free B-Link Tree index structure tailored for multi-threaded in-memory databases. By using atomic right-link pointers and epoch-based memory reclamation, it enables safe, non-blocking node splits and high-throughput parallel range queries without global locking overhead.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe structural modifications like node splits and key insertions.",
+        "Employs right-link pointers on every tree node to guide reader threads safely to sibling nodes when concurrent splits occur mid-traversal.",
+        "Integrates epoch-based memory reclamation (EMR) to safely free retired node memory without blocking active reader threads.",
+        "Eliminates latch crabbing and global database locks to maximize scalability across multi-core modern CPU architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic right-link navigation during concurrent node splitting",
+        "correct": "struct BLinkNode {\n    std::atomic<BLinkNode*> right_link;\n    std::atomic<bool> is_locked;\n    bool try_lock() {\n        bool expected = false;\n        return right_link.is_lock_free() && is_locked.compare_exchange_strong(expected, true);\n    }\n};",
+        "wrong": "struct BLinkNode {\n    BLinkNode* right_link;\n    std::mutex mtx;\n    void lock() { mtx.lock(); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to update the parent pointer or right-link atomically, causing reader threads to fall into infinite traversal loops.",
+        "Forgetting to guard deleted nodes with an epoch-based memory reclamation scheme, leading to severe use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Ensure read-only traversal paths do not acquire exclusive locks, relying entirely on atomic loads and right-link routing.",
+        "Keep critical sections inside node splits as short as possible to minimize contention on high-traffic root and intermediate index nodes."
+      ],
+      "when_to_use": "Use this when building high-performance in-memory database storage engines that require massive concurrent range query throughput and frequent multi-core index updates.",
+      "when_not_to_use": "Avoid this for simple single-threaded applications or write-infrequent workloads where standard mutex-protected B+ Trees provide simpler maintenance and adequate performance.",
+      "interview_questions": [
+        {
+          "question": "How does a B-Link Tree handle concurrent reader threads while a writer thread is actively splitting a node?",
+          "answer": "Readers use the atomic right-link pointer present on each node to safely traverse to the newly created sibling node if the search key exceeds the current node's high key boundary."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free tree indexes?",
+          "answer": "Epoch-based reclamation avoids the high cache-line contention and atomic overhead of updating global reference counters on every node access during high-speed tree traversals."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Epoch-Based Memory Management",
+        "Concurrent B+ Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-19T23:07:45.788660+00:00",
+      "run_number": 1292
     }
   ]
 }
