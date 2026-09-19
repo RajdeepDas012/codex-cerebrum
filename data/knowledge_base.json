@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1202,
-    "last_updated": "2026-09-19T00:22:11.328119+00:00",
-    "total_topics_learned": 1202
+    "total_runs": 1203,
+    "last_updated": "2026-09-19T00:25:21.728219+00:00",
+    "total_topics_learned": 1203
   },
   "entries": [
     {
@@ -57682,6 +57682,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-19T00:22:11.328102+00:00",
       "run_number": 1202
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell increment CAS primitives and epoch-based memory reclamation for high-throughput heavy-hitter stream frequency estimation and real-time network traffic analytics engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure provides a lock-free, thread-safe probabilistic frequency table designed for high-throughput data streams. It uses atomic Compare-And-Swap (CAS) primitives for concurrent frequency updates and epoch-based memory reclamation to enable safe dynamic resizing without blocking ingestion threads.",
+      "key_points": [
+        "Utilizes a 2D array of counters coupled with multiple independent hash functions to process high-velocity data streams with bounded memory.",
+        "Employs atomic fetch-and-add or CAS loop primitives on individual frequency cells to achieve lock-free concurrent updates across multiple threads.",
+        "Integrates epoch-based memory reclamation (EMR) to safely manage memory freeing during concurrent structural resizing or table rehash operations.",
+        "Provides efficient point-query frequency estimates and heavy-hitter identification with guaranteed error bounds and no global locking overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based frequency increment loop on a Count-Min Sketch cell.",
+        "correct": "void increment(const std::string& key) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t idx = hash(key, i) % width;\n        uint64_t current = table[i][idx].load(std::memory_order_relaxed);\n        while (!table[i][idx].compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            // Retries automatically on CAS failure\n        }\n    }\n}",
+        "wrong": "void increment(const std::string& key) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t idx = hash(key, i) % width;\n        table[i][idx]++; // Non-atomic increment causes lost updates under high concurrency\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments on the frequency cells, leading to lost counts and inaccurate frequency estimation under heavy multithreaded contention.",
+        "Failing to use appropriate memory ordering semantics (e.g., relaxed vs. acquire-release), which can lead to visibility issues across CPU cores."
+      ],
+      "best_practices": [
+        "Pair atomic cell updates with epoch-based memory reclamation or hazard pointers if supporting dynamic resizing or sketch merging operations.",
+        "Tune the matrix width and depth parameters based on acceptable error bounds and failure probability.",
+        "Use thread-local batching of updates before applying them to the global sketch structure when contention on specific hot keys becomes a bottleneck."
+      ],
+      "when_to_use": "Use when you need to track approximate frequencies of heavy hitters in massive, high-throughput concurrent streams where absolute precision is sacrificed for constant memory usage and zero lock contention.",
+      "when_not_to_use": "Avoid when exact counts are strictly required or when the input data stream has a low volume where standard concurrent hash maps fit comfortably in memory.",
+      "interview_questions": [
+        {
+          "question": "How do you guarantee thread safety on individual frequency cells without using global mutexes in a Count-Min Sketch?",
+          "answer": "By using atomic types for each cell and executing a Compare-And-Swap (CAS) retry loop to safely increment the frequency value."
+        },
+        {
+          "question": "What is the primary trade-off when sizing the width and depth of a Count-Min Sketch?",
+          "answer": "Increasing width and depth decreases the error bounds and collision probability of frequency estimation at the cost of higher memory consumption and slightly more hash computation overhead."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-19T00:25:21.728200+00:00",
+      "run_number": 1203
     }
   ]
 }
