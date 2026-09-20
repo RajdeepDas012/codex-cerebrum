@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1366,
-    "last_updated": "2026-09-20T18:52:26.600180+00:00",
-    "total_topics_learned": 1366
+    "total_runs": 1367,
+    "last_updated": "2026-09-20T18:55:35.067994+00:00",
+    "total_topics_learned": 1367
   },
   "entries": [
     {
@@ -65476,6 +65476,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T18:52:26.600160+00:00",
       "run_number": 1366
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and union-by-rank CAS primitives alongside epoch-based memory reclamation for high-throughput connected components analysis and dynamic network connectivity in real-time distributed graph processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Disjoint-Set (Union-Find) data structure utilizing atomic Compare-And-Swap (CAS) instructions for lock-free find and union operations. By integrating lock-free path-halving and union-by-rank heuristics alongside epoch-based memory management, it enables scalable real-time connected component analysis across multi-core systems without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic pointers and CAS operations to mutate parent and rank links without global locks.",
+        "Implements lock-free path-halving during the Find operation to flatten tree structures safely under concurrent modifications.",
+        "Applies union-by-rank combined with retry loops to ensure deterministic tree balancing during concurrent merges.",
+        "Employs epoch-based memory reclamation (EMR) to safely manage node allocations and prevent use-after-free bugs in dynamic graph topologies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free atomic find operation with path-halving using compare_exchange_weak.",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        if (grandparent == parent) return parent;\n        node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release);\n        node = grandparent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic update and recursion prone to race conditions and deadlocks\n}"
+      },
+      "common_mistakes": [
+        "Using traditional recursive path compression without considering concurrent modifications, leading to infinite loops or split-brain trees.",
+        "Failing to use appropriate memory ordering semantics (acquire-release) when loading and updating atomic parent pointers.",
+        "Neglecting hazard pointers or epoch-based memory reclamation, resulting in memory leaks or unsafe frees during concurrent reads and writes."
+      ],
+      "best_practices": [
+        "Always use atomic load with acquire semantics when traversing parent pointers during Find routines.",
+        "Employ path-halving instead of full path-compression in concurrent settings to limit the write distance and reduce CAS contention.",
+        "Integrate an epoch-based reclamation or hazard pointer scheme to safely retire deleted nodes during dynamic graph restructuring."
+      ],
+      "when_to_use": "Use when designing high-throughput distributed graph processing systems, real-time network connectivity analysis, or image segmentation engines requiring heavy concurrent reads and writes on disjoint sets.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard pointer manipulations and coarse-grained locking introduce less overhead and implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "Why is path-halving generally preferred over full path-compression in lock-free concurrent Union-Find implementations?",
+          "answer": "Path-halving updates every other node to point to its grandparent during a single traversal step, reducing the number of CAS writes and contention compared to full path compression which mutates every node along the entire path to point directly to the root."
+        },
+        {
+          "question": "How do you prevent the ABA problem when updating parent pointers via CAS in a concurrent Disjoint-Set?",
+          "answer": "By packing a version counter or epoch tag alongside the node pointer into a double-word atomic variable (or using pointer-tagging if alignment permits), ensuring that if a node's pointer changes from A to B and back to A, the CAS operation still detects the intermediate modification."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Algorithms",
+        "Concurrent Graph Processing"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-20T18:55:35.067975+00:00",
+      "run_number": 1367
     }
   ]
 }
