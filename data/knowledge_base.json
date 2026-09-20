@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1353,
-    "last_updated": "2026-09-20T16:12:40.075707+00:00",
-    "total_topics_learned": 1353
+    "total_runs": 1354,
+    "last_updated": "2026-09-20T16:15:48.619681+00:00",
+    "total_topics_learned": 1354
   },
   "entries": [
     {
@@ -64861,6 +64861,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T16:12:40.075686+00:00",
       "run_number": 1353
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic bitmap-indexing and node-expansion CAS primitives alongside epoch-based memory reclamation for high-throughput immutable persistent data structures and multi-core key-value state management in real-time functional programming runtimes and concurrent database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Hash Array Mapped Trie (HAMT) is an advanced persistent associative array data structure that enables lock-free thread safety through atomic bitmap-indexing and node-expansion CAS operations. By leveraging epoch-based memory reclamation, it delivers high-throughput multi-core key-value state management and structural sharing ideal for modern functional programming runtimes and concurrent database engines.",
+      "key_points": [
+        "Utilizes a compact sparse bitmap at each trie node level to track present child pointers, drastically reducing memory overhead.",
+        "Employs compare-and-swap (CAS) primitives on atomic references for lock-free structural modifications and node expansions.",
+        "Integrates epoch-based memory reclamation to safely manage deleted or replaced internal nodes without locking overhead.",
+        "Facilitates efficient structural sharing and persistent data snapshots suited for lock-free functional data structures."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic pointer swapping via CAS for lock-free node updates in a trie structure.",
+        "correct": "import threading\n\nclass AtomicNode:\n    def __init__(self, bitmap=0, children=None):\n        self.bitmap = bitmap\n        self.children = children or []\n\nclass ConcurrentHAMT:\n    def __init__(self):\n        self.root = threading.local()\n        self.root.value = AtomicNode()\n    \n    def cas_update(self, expected_node, new_node):\n        # Simulated atomic CAS on root reference\n        if self.root.value == expected_node:\n            self.root.value = new_node\n            return True\n        return False",
+        "wrong": "class UnsafeHAMT:\n    def __init__(self):\n        self.root = {}\n    def update(self, key, val):\n        # Missing thread synchronization, causing race conditions during node reallocation\n        self.root[key] = val"
+      },
+      "common_mistakes": [
+        "Failing to handle ABA problems or pointer stale-reads when children arrays are dynamically reallocated during node expansion.",
+        "Neglecting proper epoch-based reclamation barriers, leading to premature memory deallocation of nodes still traversed by concurrent reader threads."
+      ],
+      "best_practices": [
+        "Use population count (popcount) instructions hardware-accelerated where possible to efficiently map sparse indices to dense child arrays.",
+        "Ensure memory reclamation phases batch node retirements to amortize synchronization overhead across worker threads."
+      ],
+      "when_to_use": "Use when building high-concurrency systems requiring persistent immutable data structures, lock-free key-value stores, or functional state snapshots.",
+      "when_not_to_use": "Avoid in single-threaded environments or resource-constrained embedded systems where the overhead of atomic operations and bitmap index calculations outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How does a Hash Array Mapped Trie (HAMT) save memory compared to a standard branching trie?",
+          "answer": "It uses a bitmap at each node to track which child pointers are populated, allowing sparse allocation where only non-null child nodes are stored in a compact array."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing a lock-free concurrent HAMT?",
+          "answer": "It allows safe recycling of old node structures that have been detached via CAS operations, ensuring that concurrent reader threads safely finish traversing before memory is freed."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Persistent Data Structures",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T16:15:48.619660+00:00",
+      "run_number": 1354
     }
   ]
 }
