@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1346,
-    "last_updated": "2026-09-20T15:49:28.548594+00:00",
-    "total_topics_learned": 1346
+    "total_runs": 1347,
+    "last_updated": "2026-09-20T15:52:42.882846+00:00",
+    "total_topics_learned": 1347
   },
   "entries": [
     {
@@ -64525,6 +64525,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T15:49:28.548572+00:00",
       "run_number": 1346
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Hash Map using atomic bucket-relocation and key-value swapping CAS primitives alongside epoch-based memory reclamation for high-throughput multi-core key-value storage and dynamic table resizing in real-time in-memory caching and distributed database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Cuckoo Hash Map leverages atomic bucket-relocation and key-value swapping compare-and-swap (CAS) primitives across multiple hash functions and hash tables to resolve collisions via displacement. By combining this with epoch-based memory reclamation, it safely manages dynamic table resizing and memory cleanup without global locking, ensuring high-throughput performance for multi-core in-memory caching and distributed databases.",
+      "key_points": [
+        "Utilizes multiple hash functions mapping keys to alternative candidate buckets to guarantee $O(1)$ worst-case lookup time.",
+        "Employs atomic CAS primitives for key-value swapping and bucket relocation to coordinate concurrent insertions and displacement chains without deadlocks.",
+        "Integrates epoch-based memory reclamation to safely deallocate old table arrays during dynamic resizing without premature deletion of active reader or writer references.",
+        "Manages eviction cycles using bounded displacement loops or cooperative migration threads to prevent infinite loops during high load factor states."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bucket swap operation for resolving key collisions in a lock-free cuckoo hash map.",
+        "correct": "bool insert_or_relocate(Bucket* table1, Bucket* table2, Key k, Value v) {\n    Key current_k = k;\n    Value current_v = v;\n    for (int step = 0; step < MAX_DISPLACEMENTS; ++step) {\n        size_t idx1 = hash1(current_k);\n        if (table1[idx1].compare_exchange_strong(expected_empty, {current_k, current_v})) return true;\n        // Displace existing element\n        Bucket displaced = table1[idx1].exchange({current_k, current_v});\n        current_k = displaced.key;\n        current_v = displaced.value;\n        \n        size_t idx2 = hash2(current_k);\n        if (table2[idx2].compare_exchange_strong(expected_empty, {current_k, current_v})) return true;\n        displaced = table2[idx2].exchange({current_k, current_v});\n        current_k = displaced.key;\n        current_v = displaced.value;\n    }\n    trigger_resize();\n    return false;\n}",
+        "wrong": "bool unsafe_insert(Bucket* table, Key k, Value v) {\n    size_t idx = hash(k);\n    table[idx].key = k;\n    table[idx].value = v;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle infinite displacement loops that occur when the hash map approaches high load factors or cyclic dependencies form.",
+        "Neglecting memory barriers or epoch reclamation during table resizing, leading to use-after-free bugs when concurrent threads access old table buckets."
+      ],
+      "best_practices": [
+        "Keep load factors below 50% to 60% to drastically reduce the frequency of long displacement chains and insertion failures.",
+        "Use cooperative resizing mechanisms where multiple threads help migrate entries to the new table array rather than blocking on a single resizer thread."
+      ],
+      "when_to_use": "Ideal for read-heavy and write-intensive multi-core in-memory caching layers and distributed databases requiring strict $O(1)$ lookups and lock-free scaling.",
+      "when_not_to_use": "Avoid when memory usage is severely constrained, as maintaining low load factors requires significant spare capacity, or when keys have extremely poor hashing distributions.",
+      "interview_questions": [
+        {
+          "question": "How do you handle infinite displacement loops during a concurrent cuckoo hash map insertion without using global locks?",
+          "answer": "By setting a maximum displacement threshold; if an insertion exceeds this limit, the operation aborts and triggers a lock-free dynamic table resize or rehash operation."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting when resizing a lock-free cuckoo hash map?",
+          "answer": "Epoch-based reclamation avoids the high atomic overhead and cache contention of updating reference counts on every read operation, delaying deallocation until all active threads exit the current epoch."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip-Graph",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Quotient Filter"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T15:52:42.882828+00:00",
+      "run_number": 1347
     }
   ]
 }

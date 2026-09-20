@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1346** |
-| Last Updated | `2026-09-20T15:49:28.548594+00:00` |
-| Dataset Size | `1346 entries` |
+| Total Topics Learned | **1347** |
+| Last Updated | `2026-09-20T15:52:42.882846+00:00` |
+| Dataset Size | `1347 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 465 |
+| data-structures | 466 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Cuckoo Hash Map using atomic bucket-relocation and key-value swapping CAS primitives alongside epoch-based memory reclamation for high-throughput multi-core key-value storage and dynamic table resizing in real-time in-memory caching and distributed database engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting and cluster-probing CAS primitives alongside epoch-based memory reclamation for high-throughput space-efficient approximate membership testing and quotient-block resizing in real-time distributed storage and database caching engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min-Mean Sketch using atomic frequency-estimation and bias-reduction CAS primitives alongside epoch-based memory reclamation for high-throughput unbiased frequency estimation and heavy-hitter stream processing in real-time distributed telemetry and network monitoring engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting and bitwise-OR CAS primitives alongside epoch-based memory reclamation for high-throughput probabilistic set membership and fast cache filtering in real-time distributed database and web caching engines`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bit-vector partitioning and rank-select index CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct range querying and compressed text indexing in real-time genomic analytics and text search engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer cascading and neighbor-list balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and peer-to-peer routing in real-time distributed overlay network systems`
 
 <!-- STATS_END -->
 
