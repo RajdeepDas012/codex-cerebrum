@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1344,
-    "last_updated": "2026-09-20T11:49:34.420404+00:00",
-    "total_topics_learned": 1344
+    "total_runs": 1345,
+    "last_updated": "2026-09-20T11:52:42.106707+00:00",
+    "total_topics_learned": 1345
   },
   "entries": [
     {
@@ -64429,6 +64429,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T11:49:34.420382+00:00",
       "run_number": 1344
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min-Mean Sketch using atomic frequency-estimation and bias-reduction CAS primitives alongside epoch-based memory reclamation for high-throughput unbiased frequency estimation and heavy-hitter stream processing in real-time distributed telemetry and network monitoring engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Count-Min-Mean sketch for high-throughput stream processing. It utilizes atomic compare-and-swap primitives and bias-reduction mechanisms to deliver unbiased frequency estimation across concurrent threads without locks.",
+      "key_points": [
+        "Uses atomic operations to update counter matrices without blocking threads.",
+        "Applies bias-reduction adjustments to counteract the overestimation inherent in standard Count-Min sketches.",
+        "Integrates epoch-based memory reclamation for safe dynamic buffer resizing and thread tracking.",
+        "Designed for real-time distributed telemetry, packet inspection, and heavy-hitter detection."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency updating with bias correction in a lock-free sketch structure",
+        "correct": "#include <atomic>\n#include <vector>\n#include <cmath>\n\nclass LockFreeCountMinMean {\n    struct Counter {\n        std::atomic<uint64_t> value{0};\n    };\n    std::vector<std::vector<Counter>> table;\n    size_t depth, width;\npublic:\n    LockFreeCountMinMean(size_t d, size_t w) : depth(d), width(w), table(d, std::vector<Counter>(w)) {}\n    void add(uint64_t hash_val, uint64_t freq) {\n        for (size_t i = 0; i < depth; ++i) {\n            size_t col = (hash_val ^ (i + 1)) % width;\n            table[i][col].value.fetch_add(freq, std::memory_order_relaxed);\n        }\n    }\n};",
+        "wrong": "#include <vector>\nclass BadSketch {\n    std::vector<std::vector<int>> table;\npublic:\n    void add(int col, int val) {\n        table[0][col] += val; // Not thread-safe, race conditions occur\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for hash collisions which introduce positive bias into frequency estimates.",
+        "Using sequential locks on high-frequency stream updates, bottlenecking throughput.",
+        "Neglecting memory reclamation mechanisms when reallocating underlying sketch dimensions dynamically."
+      ],
+      "best_practices": [
+        "Use distinct independent hash functions for each row to minimize correlated collisions.",
+        "Leverage relaxed memory ordering where strict sequential consistency is not required for performance counters.",
+        "Periodically checkpoint or merge sketches across distributed nodes to bound error rates."
+      ],
+      "when_to_use": "Use when tracking heavy hitters and frequency estimations over massive, high-velocity data streams across multi-threaded or distributed environments where lock contention is unacceptable.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory with zero tolerance for estimation error, or when working with low-throughput datasets where simple hash maps suffice.",
+      "interview_questions": [
+        {
+          "question": "How does the Count-Min-Mean sketch improve upon the standard Count-Min sketch?",
+          "answer": "It applies a bias-correction step during query time to estimate and subtract the expected collision noise from other keys, significantly reducing overestimation error."
+        },
+        {
+          "question": "Why is lock-free atomicity critical for telemetry collection engines?",
+          "answer": "Locks introduce thread serialization and context-switching overheads under high contention, whereas lock-free atomic updates maintain high throughput and predictable latency."
+        }
+      ],
+      "related_topics": [
+        "Count-Min Sketch",
+        "HyperLogLog",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T11:52:42.106687+00:00",
+      "run_number": 1345
     }
   ]
 }
