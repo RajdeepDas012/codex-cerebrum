@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1376,
-    "last_updated": "2026-09-20T21:37:04.400506+00:00",
-    "total_topics_learned": 1376
+    "total_runs": 1377,
+    "last_updated": "2026-09-20T21:40:12.393647+00:00",
+    "total_topics_learned": 1377
   },
   "entries": [
     {
@@ -65950,6 +65950,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T21:37:04.400489+00:00",
       "run_number": 1376
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting and remainder-slot resolution CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and cache-conscious dynamic resizing in real-time distributed storage and database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Quotient Filter is a space-efficient approximate membership data structure that supports dynamic resizing and metadata-bit manipulation using atomic compare-and-swap primitives. By employing hazard pointers for memory reclamation, it allows high-throughput multi-threaded insertions and lookups without global locks.",
+      "key_points": [
+        "Utilizes atomic metadata-bit shifting (is_occupied, run_continuation, shifted) to manage cluster slots under concurrency.",
+        "Employs hazard pointers to safely reclaim memory during cache-conscious dynamic resizing operations.",
+        "Provides high-throughput approximate membership testing and quotient-remainder hashing suited for database index acceleration.",
+        "Prevents race conditions during cluster displacement and slot resolution via fine-grained CAS primitives."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot insertion using metadata-bit shifting and hazard pointer protection",
+        "correct": "bool insert_key(uint64_t fingerprint) {\n    uint64_t q = fingerprint >> remainder_bits;\n    uint64_t r = fingerprint & remainder_mask;\n    HazardPointerGuard hg(hazard_mgr, current_filter);\n    while (true) {\n        // Atomically find slot and update metadata bits via CAS\n        if (try_atomic_insert(q, r)) return true;\n        if (needs_resize()) trigger_concurrent_resize();\n    }\n}",
+        "wrong": "bool insert_key(uint64_t fingerprint) {\n    // Anti-pattern: Mutating filter slots and metadata without locking or CAS primitives, causing race conditions\n    filter_slots[hash(fingerprint)] = fingerprint;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect slot reallocations with hazard pointers, leading to use-after-free bugs during concurrent resizing.",
+        "Updating metadata bits (is_occupied, run_continuation, shifted) in separate non-atomic steps instead of a unified CAS loop."
+      ],
+      "best_practices": [
+        "Pack metadata bits tightly alongside remainder bits into aligned machine words to maximize cache-line efficiency.",
+        "Use hazard pointers or epoch-based reclamation to cleanly swap old underlying arrays with newly resized arrays."
+      ],
+      "when_to_use": "Use when you need high-throughput, space-efficient approximate membership testing with dynamic resizing capabilities in multi-threaded storage engines.",
+      "when_not_to_use": "Avoid when exact membership guarantees are mandatory or when the workload consists entirely of single-threaded, low-contention operations where simpler filters suffice.",
+      "interview_questions": [
+        {
+          "question": "How do metadata bits (is_occupied, run_continuation, shifted) coordinate concurrent insertions in a lock-free quotient filter?",
+          "answer": "They track slot displacement clusters atomically, allowing threads to use CAS loops to locate home slots and shift existing runs without global locking."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a concurrently resizable quotient filter?",
+          "answer": "Hazard pointers ensure that reader and writer threads safely reference old filter arrays during dynamic resizing operations before memory is reclaimed."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Bloom Filters",
+        "Hazard Pointers and Memory Reclamation",
+        "Cache-Conscious Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T21:40:12.393627+00:00",
+      "run_number": 1377
     }
   ]
 }
