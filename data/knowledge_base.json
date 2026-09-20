@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1343,
-    "last_updated": "2026-09-20T11:46:24.768324+00:00",
-    "total_topics_learned": 1343
+    "total_runs": 1344,
+    "last_updated": "2026-09-20T11:49:34.420404+00:00",
+    "total_topics_learned": 1344
   },
   "entries": [
     {
@@ -64382,6 +64382,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-20T11:46:24.768302+00:00",
       "run_number": 1343
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting and bitwise-OR CAS primitives alongside epoch-based memory reclamation for high-throughput probabilistic set membership and fast cache filtering in real-time distributed database and web caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance concurrent Bloom Filter that avoids heavy locking by utilizing atomic bitwise operations and compare-and-swap (CAS) primitives. It leverages epoch-based memory management to ensure safe scaling and safe memory reclamation across multi-threaded caching layers and distributed storage engines.",
+      "key_points": [
+        "Utilizes atomic bit-array setting and bitwise-OR CAS primitives to enable lock-free concurrent writes across multiple worker threads.",
+        "Employs epoch-based memory reclamation to safely manage dynamic resizing or structural updates without blocking concurrent read operations.",
+        "Provides O(k) time complexity for both insertions and membership queries, where k is the number of independent hash functions.",
+        "Delivers high-throughput probabilistic set membership suitable for protecting disk-based storage engines from costly cache misses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting using fetch_or for lock-free Bloom filter insertion.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bit_array;\npublic:\n    explicit ConcurrentBloomFilter(size_t size) : bit_array((size + 63) / 64) {}\n    \n    void insert(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        uint64_t mask = 1ULL << bit_offset;\n        bit_array[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "void insert(size_t bit_index) {\n    // Mistake: Non-atomic read-modify-write on shared bits causes race conditions and data corruption\n    bit_array[bit_index / 64] |= (1ULL << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic bitwise assignments on shared cache words, leading to lost updates under multi-threaded contention.",
+        "Failing to utilize appropriate memory ordering constraints (e.g., memory_order_relaxed vs sequentially consistent), unnecessarily degrading performance."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic bit updates since individual bit insertions in a Bloom filter generally do not synchronize other memory locations.",
+        "Size the underlying bit array and select the optimal number of hash functions based on your expected dataset cardinality and acceptable false positive rate."
+      ],
+      "when_to_use": "When building high-throughput distributed databases, web caches, or storage engines that require fast, lock-free set membership queries to bypass expensive disk or network lookups.",
+      "when_not_to_use": "When exact set membership is mandatory, or when elements must be frequently deleted, as standard Bloom filters do not support native deletions without counting variants.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom filter without using mutual exclusion locks?",
+          "answer": "By using atomic integers for the underlying bit array and applying atomic bitwise-OR operations (like fetch_or) via hardware-supported CAS primitives."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation useful when scaling a concurrent Bloom filter?",
+          "answer": "It allows threads to safely traverse or resize the underlying structure without incurring the high latency of garbage collection stop-the-world phases or heavy read-write locks."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Caching Layers",
+        "Epoch-Based Memory Management",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T11:49:34.420382+00:00",
+      "run_number": 1344
     }
   ]
 }
