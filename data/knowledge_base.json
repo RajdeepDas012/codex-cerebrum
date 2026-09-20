@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1323,
-    "last_updated": "2026-09-20T06:18:06.551587+00:00",
-    "total_topics_learned": 1323
+    "total_runs": 1324,
+    "last_updated": "2026-09-20T06:21:14.787094+00:00",
+    "total_topics_learned": 1324
   },
   "entries": [
     {
@@ -63427,6 +63427,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-20T06:18:06.551569+00:00",
       "run_number": 1323
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and split-coordination CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database indexing and real-time storage engine record management",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure provides lock-free concurrency for B-Tree operations by utilizing atomic Compare-And-Swap (CAS) primitives for node-merging and split-coordination. It integrates hazard pointers to safely manage memory reclamation across multiple threads without locks, ensuring ultra-low latency and high scalability for modern multi-core transactional database engines.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to safely coordinate node splits and merges without acquiring global or node-level mutexes.",
+        "Employs hazard pointers to track threads actively accessing specific tree nodes, preventing premature deallocation and use-after-free bugs.",
+        "Maintains multi-way search tree balance concurrently under heavy write and read contention across multiple CPU cores.",
+        "Optimizes throughput for real-time storage engine record management by eliminating thread blocking and lock contention overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer update via CAS for a concurrent B-Tree node split coordination",
+        "correct": "bool update_child_pointer(BTreeNode* parent, int index, BTreeNode* old_child, BTreeNode* new_child) {\n    return std::atomic_compare_exchange_strong(\n        reinterpret_cast<std::atomic<BTreeNode**>>(&(parent->children[index])),\n        &old_child,\n        new_child\n    );\n}",
+        "wrong": "bool update_child_pointer(BTreeNode* parent, int index, BTreeNode* old_child, BTreeNode* new_child) {\n    if (parent->children[index] == old_child) {\n        parent->children[index] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate node references with hazard pointers during structural modification operations, leading to race conditions and memory corruption.",
+        "Neglecting the ABA problem when performing atomic updates on pointer-based tree nodes under high concurrency."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for parent and child nodes prior to traversing or modifying pointers in concurrent tree structures.",
+        "Design split and merge protocols to be cleanly re-entrant and idempotent to gracefully handle failed CAS operations under heavy contention."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput in-memory database indexes or storage engines that require massive multi-core read-write concurrency with strict non-blocking guarantees.",
+      "when_not_to_use": "Avoid this in single-threaded environments or simple applications where the extreme complexity of lock-free memory management and CAS-based restructuring outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free B-Tree during node splits and merges?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that other threads performing structural modifications know to defer memory deallocation until no thread holds a hazard pointer to the target node."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for ultra-high-throughput multi-core database indexing?",
+          "answer": "Standard mutexes introduce thread blocking, context switching overhead, and convoy effects under high contention, whereas lock-free designs allow threads to make progress independently using atomic CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B+ Tree",
+        "Hazard Pointer Memory Management",
+        "Atomic CAS Primitives and ABA Problem Mitigation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T06:21:14.787076+00:00",
+      "run_number": 1324
     }
   ]
 }
