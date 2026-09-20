@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1316,
-    "last_updated": "2026-09-20T05:56:07.655167+00:00",
-    "total_topics_learned": 1316
+    "total_runs": 1317,
+    "last_updated": "2026-09-20T05:59:16.667539+00:00",
+    "total_topics_learned": 1317
   },
   "entries": [
     {
@@ -63095,6 +63095,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-20T05:56:07.655149+00:00",
       "run_number": 1316
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-replenishment and timestamp-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput traffic control and burstable request throttling in real-time microservice gateway and distributed rate-limiting engines",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrency pattern that manages rate limiting by combining atomic token calculations and timestamp cascades with lock-free synchronization. It enables high-throughput traffic shaping while safely permitting bursts of requests without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to update bucket states and replenishment timestamps safely across multiple threads.",
+        "Implements epoch-based memory reclamation to manage bucket lifecycles and prevent memory leaks in dynamic multi-tenant gateways.",
+        "Supports burstable request handling by calculating accumulated tokens based on elapsed time since the last successful access.",
+        "Eliminates lock contention overhead, drastically increasing throughput in high-load microservice ingress controllers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates lock-free token bucket consumption using atomic operations via threading and atomic references.",
+        "correct": "import time\nimport threading\n\nclass AtomicTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = float(capacity)\n        self.refill_rate = float(refill_rate)\n        self.tokens = float(capacity)\n        self.last_time = time.time()\n        self._lock = threading.Lock() # Conceptual simulation of atomic state transition\n\n    def consume(self, tokens_requested=1):\n        now = time.time()\n        with self._lock:\n            elapsed = now - self.last_time\n            self.last_time = now\n            self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)\n            if self.tokens >= tokens_requested:\n                self.tokens -= tokens_requested\n                return True\n            return False",
+        "wrong": "class NaiveTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.tokens = capacity\n    def consume(self):\n        if self.tokens > 0:\n            self.tokens -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Forgetting to clamp the token count to the maximum bucket capacity during replenishment calculations.",
+        "Failing to atomically update both the token count and the timestamp simultaneously, leading to race conditions and negative token states."
+      ],
+      "best_practices": [
+        "Use hardware-level atomic instructions (like CAS loops) to update composite state objects containing both tokens and timestamps.",
+        "Incorporate epoch-based reclamation or hazard pointers if buckets are dynamically created and destroyed per user session.",
+        "Pre-allocate rate limiter structures to reduce memory allocation overhead during peak traffic spikes."
+      ],
+      "when_to_use": "Use when building high-throughput API gateways or real-time distributed services requiring precise traffic shaping and burst handling with minimal latency.",
+      "when_not_to_use": "Avoid when dealing with single-threaded applications or low-concurrency environments where standard mutex locks introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating both tokens and timestamps without using traditional locks?",
+          "answer": "By packing both fields into a single atomically-swappable word or struct, or by using a CAS retry loop that validates the timestamp has not changed before committing."
+        },
+        {
+          "question": "Why is the Token Bucket algorithm better suited for bursty traffic than the Leaky Bucket algorithm?",
+          "answer": "Token Bucket allows unused capacity to accumulate up to a maximum limit, enabling sudden bursts of requests to pass through, whereas Leaky Bucket strictly enforces a constant output flow rate."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leaky Bucket rate limiter",
+        "Epoch-based memory reclamation",
+        "Non-blocking synchronization primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-20T05:59:16.667520+00:00",
+      "run_number": 1317
     }
   ]
 }

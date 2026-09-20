@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1316** |
-| Last Updated | `2026-09-20T05:56:07.655167+00:00` |
-| Dataset Size | `1316 entries` |
+| Total Topics Learned | **1317** |
+| Last Updated | `2026-09-20T05:59:16.667539+00:00` |
+| Dataset Size | `1317 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | crypto-blockchain | 93 |
-| system-design | 79 |
+| system-design | 80 |
 | stocks-markets | 71 |
 | algorithms | 33 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-replenishment and timestamp-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput traffic control and burstable request throttling in real-time microservice gateway and distributed rate-limiting engines`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and timestamp-reconciliation CAS primitives alongside epoch-based memory reclamation for high-throughput traffic shaping and request throttling in real-time API gateway and distributed rate-limiting engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting and fingerprint relocation CAS primitives alongside epoch-based memory reclamation for high-throughput succinct approximate membership testing and cache-conscious querying in real-time distributed storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Vector Clock using atomic version-stamp incrementing and vector-dominance comparison CAS primitives alongside epoch-based memory reclamation for high-throughput causal ordering and conflict resolution in real-time distributed key-value storage and collaborative editing engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector setting and multi-hash slot-updating CAS primitives alongside epoch-based memory reclamation for high-throughput probabilistic membership testing and multi-core cache optimization in real-time distributed caching and database query routing engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlapping-node linking and interval-boundary adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range queries and event scheduling in real-time calendar and trading system engines`
 
 <!-- STATS_END -->
 
