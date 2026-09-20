@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1361,
-    "last_updated": "2026-09-20T18:36:47.187204+00:00",
-    "total_topics_learned": 1361
+    "total_runs": 1362,
+    "last_updated": "2026-09-20T18:39:55.346183+00:00",
+    "total_topics_learned": 1362
   },
   "entries": [
     {
@@ -65239,6 +65239,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T18:36:47.187186+00:00",
       "run_number": 1361
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent AVL Tree using atomic version-node linking and single-rotation CAS primitives alongside epoch-based memory reclamation for high-throughput immutable state management and multi-core transactional memory in real-time functional database runtimes",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free data structure that maintains self-balancing AVL tree properties immutably across multiple threads. By combining atomic version-node linking, single-rotation CAS primitives, and epoch-based memory reclamation, it delivers high-throughput state management and transactional memory capabilities without deadlocks.",
+      "key_points": [
+        "Uses atomic operations and compare-and-swap (CAS) primitives to handle concurrent insertions and modifications without blocking threads.",
+        "Employs single-rotation CAS primitives to maintain strict AVL balance invariants (`|balance factor| <= 1`) across concurrently mutating paths.",
+        "Utilizes persistent data structure principles with version-node linking, enabling safe rollback and multi-version concurrency control (MVCC).",
+        "Integrates epoch-based memory reclamation (EMR) to safely free retired tree nodes only after all concurrent reader and writer epochs have advanced."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the thread-safe atomic pointer CAS update pattern for persistent node linking in an AVL tree",
+        "correct": "bool update_child(std::atomic<Node*>& parent_ptr, Node* expected_old, Node* new_node) {\n    return parent_ptr.compare_exchange_strong(expected_old, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = parent_ptr.load();\nif (current == expected_old) {\n    parent_ptr.store(new_node); // Non-atomic check-then-act race condition\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for ABA problems when performing CAS operations on node pointers without epoch or version validation counters.",
+        "Neglecting memory safety during structural rotations, which can leak memory or cause use-after-free exceptions when concurrent traversals access old subtrees."
+      ],
+      "best_practices": [
+        "Always pair pointer CAS loops with epoch guard scopes to protect threads from premature memory deallocation during tree traversals.",
+        "Ensure balance factor calculations and rotation cascades use acquire-release memory semantics to properly synchronize state changes across processor cores."
+      ],
+      "when_to_use": "Use when building multi-threaded functional database runtimes or transactional memory systems that require high-throughput immutable state management and lock-free historical snapshots.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of atomic primitives, path-copying persistence, and epoch-based garbage collection outweighs lock-free concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads simultaneously perform single rotations on overlapping AVL tree subtrees?",
+          "answer": "By using atomic compare-and-swap (CAS) primitives to update parent pointers, ensuring only one thread successfully modifies the common subtree root while the losing thread retries with the updated state."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary alongside lock-free atomic pointers in a persistent AVL tree?",
+          "answer": "It defers the deallocation of old nodes and subtrees replaced during mutations until all threads have exited the critical epoch section, preventing concurrent readers from dereferencing freed memory."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Epoch-based memory reclamation",
+        "Persistent data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T18:39:55.346165+00:00",
+      "run_number": 1362
     }
   ]
 }
