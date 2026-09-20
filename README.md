@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1383** |
-| Last Updated | `2026-09-20T21:58:58.975785+00:00` |
-| Dataset Size | `1383 entries` |
+| Total Topics Learned | **1384** |
+| Last Updated | `2026-09-20T22:02:06.952390+00:00` |
+| Dataset Size | `1384 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | crypto-blockchain | 95 |
 | system-design | 81 |
 | stocks-markets | 71 |
-| algorithms | 40 |
+| algorithms | 41 |
 | probability-math | 27 |
 | databases | 24 |
 | security | 13 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic grace-period detection and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput read-mostly data structures and multi-core configuration management in real-time Linux kernel modules and high-performance networking engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-bounding and node-insertion CAS primitives alongside epoch-based memory reclamation for high-throughput multi-dimensional range-minimum queries and concurrent resource allocation in real-time computational geometry and spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer linking and tower-height cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value storage and multi-core range querying in real-time in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and index-reconciliation CAS primitives alongside epoch-based memory reclamation for high-throughput substring search and genomic pattern matching in real-time bioinformatics data processing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput range scans and multi-core index management in real-time transactional database systems`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlapping-interval detection and endpoint-node linking CAS primitives alongside epoch-based memory reclamation for high-throughput range-overlap querying and dynamic schedule management in real-time calendar and event allocation systems`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1383,
-    "last_updated": "2026-09-20T21:58:58.975785+00:00",
-    "total_topics_learned": 1383
+    "total_runs": 1384,
+    "last_updated": "2026-09-20T22:02:06.952390+00:00",
+    "total_topics_learned": 1384
   },
   "entries": [
     {
@@ -66280,6 +66280,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T21:58:58.975766+00:00",
       "run_number": 1383
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization primitive using atomic grace-period detection and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput read-mostly data structures and multi-core configuration management in real-time Linux kernel modules and high-performance networking engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the implementation of a lock-free Scoped Read-Copy Update (RCU) synchronization primitive designed for high-throughput, read-mostly environments. By combining atomic grace-period detection, pointer-swapping compare-and-swap (CAS) operations, and hazard pointer memory reclamation, it allows readers to execute concurrently with zero locking overhead while safely managing dynamic memory updates.",
+      "key_points": [
+        "Readers operate completely lock-free, reading pointers directly without atomic read-side barriers in optimized configurations.",
+        "Writers perform updates out-of-place by duplicating data, modifying the copy, and atomically swapping pointers using CAS primitives.",
+        "Grace-period detection ensures that old data versions are not reclaimed until all pre-existing reader threads have exited their read critical sections.",
+        "Hazard pointers are integrated to track active thread references, preventing premature memory deallocation during concurrent read traversals."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a simplified atomic pointer swap and hazard-pointer protected read-copy update mechanism.",
+        "correct": "class RCUManager {\n    std::atomic<Node*> head;\n    HazardPointerRegistry hp_registry;\npublic:\n    Node* read_lock(HazardPointer& hp) {\n        Node* p;\n        do {\n            p = head.load(std::memory_order_acquire);\n            hp.protect(p);\n        } while (p != head.load(std::memory_order_relaxed));\n        return p;\n    }\n    void update(Node* new_node) {\n        Node* old_node = head.load(std::memory_order_relaxed);\n        do {\n            new_node->next = old_node;\n        } while (!head.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed));\n        reclaim_later(old_node);\n    }\n};",
+        "wrong": "void update_unsafe(Node* new_node) {\n    delete head;\n    head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory barriers (acquire-release semantics), leading to readers viewing partially constructed data structures.",
+        "Reclaiming old memory blocks before all concurrent readers have completed their critical sections or released their hazard pointers."
+      ],
+      "best_practices": [
+        "Always pair reader entry points with explicit hazard pointer registration or epoch check-ins to guarantee memory safety.",
+        "Use relaxed memory ordering for non-dependent loads inside loops while maintaining strict acquire-release semantics on pointer swaps and synchronization barriers."
+      ],
+      "when_to_use": "Use when workloads are heavily read-skewed (e.g., routing tables, feature flags, configuration registries) where read latency and throughput are critical.",
+      "when_not_to_use": "Avoid in write-heavy scenarios where frequent out-of-place copying and grace-period waiting overhead outweigh the benefits of lock-free reading.",
+      "interview_questions": [
+        {
+          "question": "How does RCU achieve wait-free read operations compared to standard reader-writer locks?",
+          "answer": "RCU allows readers to traverse data structures without acquiring locks or executing expensive atomic write instructions, relying instead on pointer stability and deferred memory reclamation."
+        },
+        {
+          "question": "What is the role of a grace period in an RCU implementation?",
+          "answer": "A grace period is the interval of time that must elapse to guarantee that all pre-existing readers have completed their critical sections, ensuring it is safe to free or recycle the old memory version."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Linked Lists"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-20T22:02:06.952371+00:00",
+      "run_number": 1384
     }
   ]
 }
