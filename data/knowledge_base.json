@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1335,
-    "last_updated": "2026-09-20T11:21:20.832498+00:00",
-    "total_topics_learned": 1335
+    "total_runs": 1336,
+    "last_updated": "2026-09-20T11:24:29.644661+00:00",
+    "total_topics_learned": 1336
   },
   "entries": [
     {
@@ -64001,6 +64001,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T11:21:20.832477+00:00",
       "run_number": 1335
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) data structure using atomic rank-compaction and parent-pointer swinging CAS primitives alongside epoch-based memory reclamation for high-throughput connected-component analysis and dynamic equivalence relation tracking in real-time network topology discovery and cluster-computing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Disjoint Set (Union-Find) data structure designed for multi-threaded environments. It utilizes atomic compare-and-swap (CAS) primitives for rank-compaction and parent-pointer swinging, paired with epoch-based memory reclamation to ensure safe concurrent access and high-throughput dynamic equivalence operations.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to handle concurrent finds and unions without lock contention.",
+        "Implements atomic parent-pointer swinging and rank-compaction to keep tree heights flat under heavy multi-core updates.",
+        "Integrates epoch-based memory reclamation (EMR) to safely manage and recycle memory nodes removed during structural modifications.",
+        "Enables high-throughput connected-component analysis ideal for real-time network topology discovery and large-scale cluster computing."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a simplified logical pattern of atomic parent-pointer updates for a lock-free find operation.",
+        "correct": "class ConcurrentDisjointSet:\n    def __init__(self, size):\n        self.parent = list(range(size))\n    def find_set(self, i):\n        root = i\n        while root != self.parent[root]:\n            root = self.parent[root]\n        curr = i\n        while curr != root:\n            nxt = self.parent[curr]\n            self.parent[curr] = root\n            curr = nxt\n        return root",
+        "wrong": "class UnsafeDisjointSet:\n    def __init__(self, size):\n        self.parent = list(range(size))\n    def find_set(self, i):\n        if self.parent[i] == i:\n            return i\n        # Unsafe recursion without atomics or path compression guard\n        self.parent[i] = self.find_set(self.parent[i])\n        return self.parent[i]"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when performing CAS operations on parent pointers.",
+        "Using traditional locking mechanisms which creates serialization bottlenecks across threads.",
+        "Neglecting safe memory reclamation, leading to use-after-free errors when nodes are detached during path compression."
+      ],
+      "best_practices": [
+        "Pair every lock-free structural modification with a robust epoch-based memory management scheme.",
+        "Use tagged pointers or hazard pointers to mitigate the ABA problem on shared parent references.",
+        "Keep atomic retry loops concise to minimize CPU cache invalidation storms under intense thread contention."
+      ],
+      "when_to_use": "Use when multiple threads concurrently query and update equivalence classes, union operations, and connected components at very high frequencies.",
+      "when_not_to_use": "Avoid in single-threaded contexts or applications with low concurrency where standard pointer-based Disjoint Sets with path compression are simpler and faster.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic parent pointer updates in a lock-free Disjoint Set?",
+          "answer": "You can mitigate the ABA problem by incorporating version counters or epoch tags into the pointer value, ensuring that a CAS operation fails if the node has been modified and reused even if the target pointer address appears identical."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing lock-free data structures like Union-Find?",
+          "answer": "Epoch-based memory reclamation ensures that memory nodes disconnected during path compression or union operations are not freed until all active threads have exited the current epoch, preventing use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "lock-free algorithms",
+        "epoch-based memory reclamation",
+        "concurrent data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T11:24:29.644632+00:00",
+      "run_number": 1336
     }
   ]
 }
