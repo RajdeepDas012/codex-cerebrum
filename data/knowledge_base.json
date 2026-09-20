@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1354,
-    "last_updated": "2026-09-20T16:15:48.619681+00:00",
-    "total_topics_learned": 1354
+    "total_runs": 1355,
+    "last_updated": "2026-09-20T16:20:47.581574+00:00",
+    "total_topics_learned": 1355
   },
   "entries": [
     {
@@ -64908,6 +64908,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T16:15:48.619660+00:00",
       "run_number": 1354
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link cascading and leaf-node splitting CAS primitives alongside epoch-based memory reclamation for high-throughput multi-core index traversal and concurrent page management in real-time relational database engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-Link Tree extends traditional B-Trees by adding right-links to nodes, enabling lock-free tree traversal and safe page splits without global mutexes. By combining atomic compare-and-swap (CAS) primitives for node modification and epoch-based memory reclamation, database engines can achieve extreme multi-core scalability during concurrent reads and writes.",
+      "key_points": [
+        "Utilizes right-links on tree nodes to allow threads to recover if they encounter a node that has split during traversal.",
+        "Employs atomic CAS operations to insert keys and split leaf/internal nodes without acquiring pessimistic locks.",
+        "Integrates epoch-based memory reclamation to safely deallocate retired database pages only after active concurrent readers have exited the epoch.",
+        "Guarantees high-throughput index management and prevents reader starvation under heavy multi-threaded transactional workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of epoch-based protection for a lock-free node split and pointer update",
+        "correct": "class EpochManager:\n    def __init__(self):\n        self.current_epoch = 0\n        self.threads = set()\n    def enter(self, thread_id):\n        self.threads.add((thread_id, self.current_epoch))\n    def leave(self, thread_id):\n        self.threads = {t for t in self.threads if t[0] != thread_id}",
+        "wrong": "def unsafe_free_node(node, memory_pool):\n    # Deallocating node immediately while other threads might be reading its right-link\n    del memory_pool[node]"
+      },
+      "common_mistakes": [
+        "Failing to check and follow right-links when a concurrent thread splits a node, leading to missed keys during index traversal.",
+        "Reclaiming memory of deleted or split pages prematurely without ensuring all participating threads have exited the current epoch."
+      ],
+      "best_practices": [
+        "Always update child pointers and right-links in a strictly ordered sequence using atomic CAS operations.",
+        "Increment epoch counters periodically only after verifying that all active threads have transitioned out of older epochs."
+      ],
+      "when_to_use": "Ideal for high-throughput relational database engines requiring concurrent, multi-core transactional indexing with minimal lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple key-value stores where standard lock-based structures or simpler skip-lists provide lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a B-Link Tree handle a situation where a traversal thread visits a node that splits concurrently?",
+          "answer": "The traversal thread reads the high-key or right-link of the node to determine if the search key belongs in the newly split sibling node, then navigates right instead of restarting from the root."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing lock-free data structures like the B-Link Tree?",
+          "answer": "It prevents the ABA problem and ensures that memory for deleted or split pages is not freed while concurrent reader threads still hold references to those memory addresses."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B-Trees",
+        "Epoch-Based Memory Management",
+        "Lock-Free Database Indexing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-20T16:20:47.581556+00:00",
+      "run_number": 1355
     }
   ]
 }
