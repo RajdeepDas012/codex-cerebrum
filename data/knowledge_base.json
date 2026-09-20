@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1303,
-    "last_updated": "2026-09-20T00:59:07.623996+00:00",
-    "total_topics_learned": 1303
+    "total_runs": 1304,
+    "last_updated": "2026-09-20T01:02:15.504875+00:00",
+    "total_topics_learned": 1304
   },
   "entries": [
     {
@@ -62479,6 +62479,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T00:59:07.623975+00:00",
       "run_number": 1303
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing and consolidated-minimum CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-threaded graph algorithm execution in real-time network optimization and route-planning engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Fibonacci Heap leveraging atomic primitives for root-list manipulation and tree consolidation, paired with hazard pointers to ensure safe memory reclamation. It enables high-throughput priority queue operations, notably efficient decrease-key routines vital for concurrent graph algorithms like Dijkstra's.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to manage root-list splicing without lock contention.",
+        "Implements consolidated-minimum tracking to safely extract the minimum node across concurrent modifications.",
+        "Employs hazard pointers to defer memory deallocation of deleted or consolidated nodes until safe from reader/writer race conditions.",
+        "Optimizes multi-threaded graph algorithm execution by supporting O(1) amortized time decrease-key operations concurrently."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic node insertion into the concurrent Fibonacci Heap root list using a CAS loop.",
+        "correct": "bool insert(Node* new_node) {\n    while (true) {\n        Node* old_head = root_list_head.load(std::memory_order_relaxed);\n        new_node->right = old_head;\n        if (root_list_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* new_node) {\n    Node* old_head = root_list_head.load();\n    new_node->right = old_head;\n    root_list_head.store(new_node); // Non-atomic write causes race conditions and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs during concurrent node extraction.",
+        "Attempting full structural consolidation during every operation instead of lazy consolidation, which destroys concurrency benefits."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to manage node lifecycle safety under high thread contention.",
+        "Keep atomic sections minimal by performing localized CAS loops on pointers rather than locking the entire heap structure."
+      ],
+      "when_to_use": "Use when building multi-threaded graph routing systems or real-time optimization engines that require high-frequency decrease-key operations across numerous concurrent workers.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple queue applications where standard binary heaps or sequential Fibonacci heaps provide lower constant-factor overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Fibonacci heap when multiple threads concurrently delete or consolidate nodes?",
+          "answer": "By using hazard pointers to register nodes currently being accessed by a thread, ensuring memory is only reclaimed after all threads release their references."
+        },
+        {
+          "question": "What is the primary challenge in implementing concurrent decrease-key operations in a Fibonacci heap?",
+          "answer": "Maintaining tree invariants and cascading cuts safely under concurrent modifications without resorting to global locks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Data Structures",
+        "Parallel Graph Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T01:02:15.504857+00:00",
+      "run_number": 1304
     }
   ]
 }
