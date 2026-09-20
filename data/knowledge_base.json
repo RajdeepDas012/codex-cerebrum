@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1350,
-    "last_updated": "2026-09-20T16:03:05.528014+00:00",
-    "total_topics_learned": 1350
+    "total_runs": 1351,
+    "last_updated": "2026-09-20T16:06:16.024299+00:00",
+    "total_topics_learned": 1351
   },
   "entries": [
     {
@@ -64718,6 +64718,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T16:03:05.527993+00:00",
       "run_number": 1350
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer linking and tower-height CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core key-value storage and sorted range scanning in real-time transactional database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip-list utilizes atomic primitives to manage multi-level forward pointers and probabilistic tower heights without global locks. It is crucial for high-throughput transactional database engines requiring scalable concurrent insertions, deletions, and sorted range queries.",
+      "key_points": [
+        "Uses probabilistic tower height generation to balance depth and maintain expected $O(\\log N)$ search and modification complexities.",
+        "Employs compare-and-swap (CAS) primitives on forward pointers to safely link and unlink nodes across multiple levels concurrently.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safe-free nodes only after all concurrent readers have unlinked them.",
+        "Supports efficient lock-free sorted range scans by traversing bottom-level linked nodes without acquiring blocking mutexes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS for a skip-list forward pointer update.",
+        "correct": "bool link_node(Node* pred, Node* curr, Node* succ, int level) {\n    curr->next[level].store(succ, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(succ, curr, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_node(Node* pred, Node* curr, int level) {\n    // Missing expected witness value and improper ordering causes race conditions\n    pred->next[level] = curr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark deleted nodes logically before attempting physical pointer unlinking via CAS.",
+        "Neglecting hazard pointer protection during multi-level traversals, leading to use-after-free crashes."
+      ],
+      "best_practices": [
+        "Use marked pointers (e.g., lowest bit set) to indicate that a node is logically deleted and pending physical removal.",
+        "Ensure memory reclamation schemes like hazard pointers or epoch-based collection are strictly enforced on all deleted skip-list nodes."
+      ],
+      "when_to_use": "When building multi-core in-memory databases requiring high write concurrency paired with ordered range queries.",
+      "when_not_to_use": "In single-threaded applications or systems with constrained memory where simpler synchronized structures or standard lock-based trees suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating forward pointers in a lock-free skip-list?",
+          "answer": "By embedding version counts or utilization flags within tagged pointers, or by utilizing hazard pointers / epoch-based reclamation."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical deletion in a concurrent skip-list?",
+          "answer": "Logical deletion marks a node as inactive across all levels atomically, preventing concurrent inserters from linking new nodes beneath a deleted element during unlinking."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Linked List",
+        "Hazard Pointers",
+        "Epoch-based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T16:06:16.024281+00:00",
+      "run_number": 1351
     }
   ]
 }
