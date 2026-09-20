@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1334,
-    "last_updated": "2026-09-20T11:18:13.814322+00:00",
-    "total_topics_learned": 1334
+    "total_runs": 1335,
+    "last_updated": "2026-09-20T11:21:20.832498+00:00",
+    "total_topics_learned": 1335
   },
   "entries": [
     {
@@ -63954,6 +63954,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T11:18:13.814300+00:00",
       "run_number": 1334
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic tree-rotation and bounding-box refitting CAS primitives alongside epoch-based memory reclamation for high-throughput ray tracing and real-time collision detection in multi-core graphics rendering engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bounding Volume Hierarchy (BVH) enables lock-free spatial partitioning for multi-core ray tracing and collision detection. By utilizing atomic tree-rotation and bounding-box refitting via Compare-And-Swap (CAS) along with epoch-based memory reclamation, it safely handles dynamic updates without global lock contention.",
+      "key_points": [
+        "Uses atomic operations for safe child-pointer modifications and node linking during structural changes.",
+        "Employs epoch-based memory reclamation (EMR) to safely free retired nodes without dangling pointer race conditions.",
+        "Applies atomic bounding-box refitting to propagate spatial boundary changes upward through the hierarchy.",
+        "Optimizes multi-core graphics rendering and real-time physics simulation workloads by removing bottlenecks from tree traversal and updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic Compare-And-Swap for updating a BVH child pointer during structural reorganization.",
+        "correct": "bool update_child(std::atomic<Node*>& parent_slot, Node* expected_node, Node* new_node) {\n    return parent_slot.compare_exchange_strong(expected_node, new_node);\n}",
+        "wrong": "Node* update_child_unsafe(Node* parent, Node* new_node) {\n    Node* old = parent->child;\n    parent->child = new_node;\n    return old;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent node replacements.",
+        "Reclaiming node memory immediately without checking active epochs, leading to segmentation faults."
+      ],
+      "best_practices": [
+        "Integrate an epoch-based or hazard-pointer-based memory manager for safe reclamation of deleted tree nodes.",
+        "Minimize the scope of CAS retry loops to reduce contention on heavily accessed parent nodes near the root."
+      ],
+      "when_to_use": "Use when high-frequency dynamic geometry updates and ray tracing queries must scale linearly across many CPU cores.",
+      "when_not_to_use": "Avoid in static scenes where a standard pre-built static BVH can be constructed once and accessed read-only.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating child pointers in a lock-free BVH?",
+          "answer": "By using tagged pointers that combine the memory address with an incrementing version counter or sequence number in a single atomic word."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over standard garbage collection or immediate deletion in a concurrent BVH?",
+          "answer": "It avoids heavy garbage collection pause times while guaranteeing that nodes are not freed until all concurrent traversal threads have exited the epoch in which the nodes were unlinked."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Tree",
+        "Epoch-based memory management",
+        "Parallel Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T11:21:20.832477+00:00",
+      "run_number": 1335
     }
   ]
 }
