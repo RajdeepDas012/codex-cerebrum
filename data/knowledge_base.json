@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1352,
-    "last_updated": "2026-09-20T16:09:32.040004+00:00",
-    "total_topics_learned": 1352
+    "total_runs": 1353,
+    "last_updated": "2026-09-20T16:12:40.075707+00:00",
+    "total_topics_learned": 1353
   },
   "entries": [
     {
@@ -64814,6 +64814,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T16:09:32.039985+00:00",
       "run_number": 1352
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node promotion and cascading-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core task scheduling and event-driven asynchronous execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent priority queue utilizing lock-free heap-node promotion and cascading-pointer compare-and-swap (CAS) primitives to ensure thread safety without thread blocking. It incorporates hazard pointers for safe, memory-reclamation management, maximizing multi-core throughput for task scheduling and asynchronous execution engines.",
+      "key_points": [
+        "Uses atomic heap-node promotion and cascading-pointer CAS primitives to maintain heap invariants under high concurrency without explicit locking.",
+        "Employs hazard pointer memory reclamation to safely manage deleted nodes and prevent ABA problems and use-after-free anomalies.",
+        "Provides high-throughput multi-core task scheduling suitable for low-latency event-driven asynchronous systems.",
+        "Balances concurrent insertions and extractions by minimizing contention points across distinct regions of the heap structure."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of executing a hazard pointer protected atomic CAS operation for node promotion in a lock-free priority queue.",
+        "correct": "bool promote_node(std::atomic<Node*>& parent_ptr, Node* expected_child, Node* new_parent, HazardPointerRegistry& hp_reg) {\n    HazardPointer& hp = hp_reg.acquire();\n    while (true) {\n        Node* current = hp.protect(parent_ptr);\n        if (current != expected_child) return false;\n        if (parent_ptr.compare_exchange_weak(expected_child, new_parent)) {\n            hp_reg.release(hp);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool promote_node(std::atomic<Node*>& parent_ptr, Node* expected_child, Node* new_parent) {\n    return parent_ptr.compare_exchange_strong(expected_child, new_parent);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading underlying pointers, leading to premature memory reclamation and segmentation faults.",
+        "Ignoring the cascading updates required when a heap restructure affects multiple ancestor or descendant levels simultaneously."
+      ],
+      "best_practices": [
+        "Design safe reclamation protocols (like hazard pointers or epoch-based reclamation) before writing any structural modification logic.",
+        "Implement exponential backoff or randomized spinning on CAS failure loops under extremely high contention to reduce cache-coherency traffic."
+      ],
+      "when_to_use": "Use this structure when building real-time multi-threaded task schedulers or event-driven engines where thread blocking on a shared priority queue creates catastrophic latency bottlenecks.",
+      "when_not_to_use": "Avoid this when a simple mutex-protected std::priority_queue provides sufficient throughput or when target platforms lack robust atomic primitives and memory management support.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free priority queue?",
+          "answer": "Hazard pointers allow a thread to atomically publish a pointer it is currently accessing, signaling to the memory reclamation subsystem that the node cannot be safely freed or recycled until the reference is cleared."
+        },
+        {
+          "question": "Why is structural modification of a heap more challenging to make lock-free compared to a linked list or stack?",
+          "answer": "Heaps require maintaining structural balance and global ordering invariants (like parent-child priority relationships) across multiple levels, which often requires cascading updates that cannot be completed in a single atomic instruction."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Skip-List",
+        "Compare-And-Swap (CAS) Synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T16:12:40.075686+00:00",
+      "run_number": 1353
     }
   ]
 }
