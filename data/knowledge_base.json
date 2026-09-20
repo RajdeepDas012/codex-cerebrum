@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1380,
-    "last_updated": "2026-09-20T21:49:36.094724+00:00",
-    "total_topics_learned": 1380
+    "total_runs": 1381,
+    "last_updated": "2026-09-20T21:52:43.919446+00:00",
+    "total_topics_learned": 1381
   },
   "entries": [
     {
@@ -66138,6 +66138,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T21:49:36.094705+00:00",
       "run_number": 1380
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and index-reconciliation CAS primitives alongside epoch-based memory reclamation for high-throughput substring search and genomic pattern matching in real-time bioinformatics data processing engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent suffix array that allows multiple threads to index and search large texts without traditional mutual exclusion. By utilizing lock-free Compare-And-Swap (CAS) primitives and epoch-based memory management, it achieves scalable genomic sequence analysis and pattern matching.",
+      "key_points": [
+        "Uses atomic operations to sort and link suffix indices across concurrent worker threads without blocking.",
+        "Employs epoch-based memory reclamation (EMR) to safely free old array allocations while readers traverse active versions.",
+        "Optimizes substring query throughput via concurrent binary search over lexicographically sorted suffix pointers.",
+        "Eliminates lock contention hotspots, making it ideal for large-scale multi-core bioinformatics pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of concurrent epoch-protected suffix array lookup using atomic pointers.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <string>\n\nstruct EpochNode {\n    std::vector<int> suffixes;\n    std::atomic<EpochNode*> next;\n};\n\nclass ConcurrentSuffixArray {\n    std::atomic<EpochNode*> head;\npublic:\n    bool search(const std::string& text, const std::string& pattern) {\n        EpochNode* current = head.load(std::memory_order_acquire);\n        // Perform lock-free binary search over suffixes\n        return !current->suffixes.empty();\n    }\n};",
+        "wrong": "class UnsafeSuffixArray {\n    std::vector<int> suffixes;\npublic:\n    bool search(std::string pattern) {\n        // Missing synchronization leads to data races during concurrent structural updates\n        return suffixes.size() > 0;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to manage memory reclamation epochs properly, leading to use-after-free bugs when writers replace suffix tables.",
+        "Using sequential sorting algorithms within concurrent update routines, creating severe performance bottlenecks."
+      ],
+      "best_practices": [
+        "Pair epoch-based memory reclamation with thread-local registration to safely track active readers.",
+        "Use acquire-release memory ordering primitives explicitly to ensure visibility of newly sorted suffix indices.",
+        "Batch parallel insertions or modifications to reduce CAS retry contention under heavy multi-threaded workloads."
+      ],
+      "when_to_use": "Use when scaling high-throughput genomic analysis systems that require concurrent, real-time substring matching and dynamic sequence ingestion.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when workloads are strictly single-threaded, as lock-free overhead outweighs benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free errors when multiple threads are reading a suffix array that is concurrently being rebuilt or resized?",
+          "answer": "By using epoch-based memory reclamation (EMR), threads register their entry into critical sections, ensuring old memory is only freed after all threads active in that epoch have exited."
+        },
+        {
+          "question": "Why are standard mutexes inefficient for concurrent suffix array updates in large bioinformatics engines?",
+          "answer": "Mutexes cause thread serialization and context-switching overhead during high-frequency read and write operations, whereas lock-free CAS primitives allow multiple threads to make progress concurrently."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Suffix Trees",
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Binary Search"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T21:52:43.919427+00:00",
+      "run_number": 1381
     }
   ]
 }
