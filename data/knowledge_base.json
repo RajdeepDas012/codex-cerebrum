@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1348,
-    "last_updated": "2026-09-20T15:56:07.630985+00:00",
-    "total_topics_learned": 1348
+    "total_runs": 1349,
+    "last_updated": "2026-09-20T15:59:38.985895+00:00",
+    "total_topics_learned": 1349
   },
   "entries": [
     {
@@ -64619,6 +64619,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T15:56:07.630966+00:00",
       "run_number": 1348
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and LCP-array construction CAS primitives alongside epoch-based memory reclamation for high-throughput substring indexing and full-text search in real-time document analysis and log aggregation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Suffix Array leverages atomic primitives and epoch-based memory reclamation to enable multiple threads to simultaneously query, construct, and update text indices. It facilitates high-throughput, memory-efficient substring searches and pattern matching, which are essential for real-time document analysis and log aggregation engines.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) operations to coordinate concurrent suffix-sorting and pointer adjustments across multiple threads.",
+        "Employs epoch-based memory reclamation (EMR) to safely free stale suffix array blocks without blocking concurrent readers.",
+        "Integrates Longest Common Prefix (LCP) array construction to accelerate pattern searches and range queries.",
+        "Maximizes cache efficiency and read throughput by avoiding mutual exclusion locks during frequent read-heavy index lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the core concept of a thread-safe suffix array index lookup using atomic reference loading for safe concurrent access",
+        "correct": "import threading\nfrom atomicwrites import atomic_write\n\nclass ConcurrentSuffixArray:\n    def __init__(self, text):\n        self.text = text\n        self.sa = sorted(range(len(text)), key=lambda i: text[i:])\n        self._lock = threading.Lock()\n\n    def search(self, pattern):\n        # Thread-safe read path using immutable snapshot\n        sa_snapshot = self.sa\n        low, high = 0, len(sa_snapshot)\n        while low < high:\n            mid = (low + high) // 2\n            suffix = self.text[sa_snapshot[mid]:]\n            if suffix.startswith(pattern):\n                return sa_snapshot[mid]\n            elif suffix < pattern:\n                low = mid + 1\n            else:\n                high = mid\n        return -1",
+        "wrong": "class UnsafeSuffixArray:\n    def __init__(self, text):\n        self.text = text\n        self.sa = []\n    def update(self, new_text):\n        # Modifying shared state without synchronization leads to race conditions\n        self.text = new_text\n        self.sa = sorted(range(len(new_text)), key=lambda i: new_text[i:])"
+      },
+      "common_mistakes": [
+        "Failing to use proper memory barriers when publishing newly computed suffix arrays, leading to stale reads on weak memory models.",
+        "Using heavy global locks during background index updates, which bottlenecks concurrent search throughput.",
+        "Neglecting epoch-based reclamation tracking for old suffix array buffers, causing memory leaks during dynamic text mutations."
+      ],
+      "best_practices": [
+        "Use immutable data structures or copy-on-write pointer swapping for suffix array updates to naturally support lock-free reads.",
+        "Precompute and store the LCP array alongside the suffix array to reduce search complexity from logarithmic to optimal string length matching.",
+        "Implement robust epoch-based memory management to safely reclaim memory allocated for previous index versions."
+      ],
+      "when_to_use": "Ideal for high-throughput systems requiring real-time full-text search, genomic sequencing, and log aggregation where read concurrency is critical.",
+      "when_not_to_use": "Avoid when memory is severely constrained or when text mutations occur at a much higher frequency than read queries, as rebuilding suffix arrays is computationally expensive.",
+      "interview_questions": [
+        {
+          "question": "How do you ensure safe memory reclamation when updating a concurrent suffix array without using locks?",
+          "answer": "By using epoch-based memory reclamation (EMR), threads register their active read epoch before accessing the suffix array, ensuring old index versions are only freed after all concurrent readers have exited that epoch."
+        },
+        {
+          "question": "What is the purpose of the LCP array in a suffix array implementation, and how does it assist concurrency?",
+          "answer": "The LCP (Longest Common Prefix) array stores lengths of longest common prefixes of adjacent suffixes, speeding up binary search queries and reducing redundant string comparisons across worker threads."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Patricia Tries",
+        "Parallel Suffix Sorting Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T15:59:38.985877+00:00",
+      "run_number": 1349
     }
   ]
 }
