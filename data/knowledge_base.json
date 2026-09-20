@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1312,
-    "last_updated": "2026-09-20T01:27:22.389759+00:00",
-    "total_topics_learned": 1312
+    "total_runs": 1313,
+    "last_updated": "2026-09-20T01:30:31.122110+00:00",
+    "total_topics_learned": 1313
   },
   "entries": [
     {
@@ -62907,6 +62907,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T01:27:22.389741+00:00",
       "run_number": 1312
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector setting and multi-hash slot-updating CAS primitives alongside epoch-based memory reclamation for high-throughput probabilistic membership testing and multi-core cache optimization in real-time distributed caching and database query routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter leverages atomic bit-vector updates and multi-hash slot reconciliation using Compare-And-Swap (CAS) operations alongside epoch-based memory reclamation. It enables high-throughput, thread-safe probabilistic membership queries without thread blocking, optimizing multi-core cache performance for distributed caching and database systems.",
+      "key_points": [
+        "Utilizes atomic bit-vector operations to set individual bits safely across concurrent threads without global locks.",
+        "Employs multi-hash slot-updating CAS primitives to handle simultaneous insertions by multiple threads into overlapping bit locations.",
+        "Integrates epoch-based memory reclamation (EBMR) to safely manage dynamic resizing and memory lifecycle without blocking readers.",
+        "Maximizes multi-core cache efficiency by minimizing cache-line bouncing through localized atomic word updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic bit-setting for a concurrent Bloom Filter using fetch_or.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> table;\n    size_t num_bits;\npublic:\n    ConcurrentBloomFilter(size_t bits) : num_bits(bits), table((bits + 63) / 64) {\n        for(auto& word : table) word.store(0, std::memory_order_relaxed);\n    }\n    void insert(size_t hash) {\n        size_t bit_index = hash % num_bits;\n        size_t word_idx = bit_index / 64;\n        uint64_t bit_mask = 1ULL << (bit_index % 64);\n        table[word_idx].fetch_or(bit_mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "void insert(size_t hash) {\n    size_t bit_index = hash % num_bits;\n    // Non-atomic read-modify-write race condition\n    table[bit_index / 64] |= (1ULL << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operators on shared words, leading to lost updates during concurrent insertions.",
+        "Failing to handle false positives in sizing calculations, resulting in higher-than-expected error rates under heavy multi-threaded loads."
+      ],
+      "best_practices": [
+        "Group bits into machine-word chunks (e.g., uint64_t) to utilize native atomic word instructions (fetch_or) and reduce atomic overhead.",
+        "Apply relaxed memory ordering where strict synchronization across independent bits is unnecessary to boost throughput."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed caches and database routing engines requiring frequent concurrent membership checks and minimal latency.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory or when false positives cannot be tolerated under any circumstance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent lost updates when two threads try to set different bits within the same 64-bit word simultaneously?",
+          "answer": "By using atomic fetch_or operations, which perform the read-modify-write cycle atomically at the hardware level."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary for a dynamic concurrent Bloom filter?",
+          "answer": "It ensures that memory blocks allocated for resized bit-vectors are only freed after all concurrent reader threads have exited their critical sections."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-free Hash Maps",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T01:30:31.122090+00:00",
+      "run_number": 1313
     }
   ]
 }
