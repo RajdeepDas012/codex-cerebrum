@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1363,
-    "last_updated": "2026-09-20T18:43:03.111473+00:00",
-    "total_topics_learned": 1363
+    "total_runs": 1364,
+    "last_updated": "2026-09-20T18:46:11.546190+00:00",
+    "total_topics_learned": 1364
   },
   "entries": [
     {
@@ -65335,6 +65335,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T18:43:03.111452+00:00",
       "run_number": 1363
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box partitioning and point-insertion CAS primitives alongside epoch-based memory reclamation for high-throughput multi-dimensional nearest neighbor searching and spatial indexing in real-time machine learning inference and point-cloud processing systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe K-dimensional tree (KD-Tree) that handles concurrent multi-dimensional point insertions and spatial queries without traditional mutex locks. By combining atomic bounding-box partitioning, Compare-And-Swap (CAS) primitives, and epoch-based memory reclamation, it achieves high throughput for real-time machine learning inference and large-scale point-cloud processing.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free point insertion and node splitting along alternating hyperplanes.",
+        "Employs epoch-based memory reclamation (EMR) to safely free node structures without dangling pointers during concurrent reads and writes.",
+        "Maintains thread-safe spatial bounding-box partitions to accelerate multi-dimensional nearest neighbor searches under heavy contention.",
+        "Eliminates global lock bottlenecks, allowing linear scalability across multiple CPU cores in real-time data ingestion pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using CAS for lock-free point insertion in a concurrent KD-Tree.",
+        "correct": "bool insert_point(std::atomic<Node*>& current_root, Point new_pt, int depth) {\n    Node* expected = current_root.load(std::memory_order_acquire);\n    Node* new_node = new Node(new_pt);\n    while (!current_root.compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        // Retry logic or traversal based on expected node\n    }\n    return true;\n}",
+        "wrong": "bool insert_point(Node*& current_root, Point new_pt) {\n    std::lock_guard<std::mutex> lock(tree_mutex);\n    current_root = new Node(new_pt); // Using mutex locks defeats the lock-free concurrent objective\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect memory reclamation, resulting in use-after-free errors when threads read nodes concurrently being modified or split.",
+        "Ignoring memory ordering constraints (e.g., using sequentially consistent fences everywhere unnecessarily), leading to poor multi-core cache performance."
+      ],
+      "best_practices": [
+        "Integrate robust epoch-based memory management (or hazard pointers) to safely defer node destructions until all active reader epochs complete.",
+        "Optimize dimensionality checks and splitting axes to minimize deep tree degradation under high-velocity streaming insertions."
+      ],
+      "when_to_use": "Use when you need ultra-low latency, multi-threaded nearest-neighbor searches or spatial filtering for high-frequency point clouds or real-time ML feature lookups.",
+      "when_not_to_use": "Avoid when data is low-dimensional (where standard grids or linear scans outperform trees) or when single-threaded simplicity is preferred over maximum core utilization.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during node splitting in a concurrent lock-free KD-Tree?",
+          "answer": "By utilizing Compare-And-Swap (CAS) operations to atomically update child pointers and bounding-box definitions, coupled with epoch-based memory reclamation to handle structural modifications safely."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation crucial when implementing lock-free spatial data structures?",
+          "answer": "Because standard garbage collection or immediate `free()` calls can cause segmentation faults if another thread is concurrently traversing a node pointer that gets unlinked and destroyed."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free R-Tree",
+        "Epoch-Based Memory Management",
+        "Concurrent Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T18:46:11.546171+00:00",
+      "run_number": 1364
     }
   ]
 }
