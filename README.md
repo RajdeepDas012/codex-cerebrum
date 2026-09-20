@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1379** |
-| Last Updated | `2026-09-20T21:46:28.121018+00:00` |
-| Dataset Size | `1379 entries` |
+| Total Topics Learned | **1380** |
+| Last Updated | `2026-09-20T21:49:36.094724+00:00` |
+| Dataset Size | `1380 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 491 |
+| data-structures | 492 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput range scans and multi-core index management in real-time transactional database systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlapping-interval detection and endpoint-node linking CAS primitives alongside epoch-based memory reclamation for high-throughput range-overlap querying and dynamic schedule management in real-time calendar and event allocation systems`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and item deletion support in real-time distributed storage and caching systems`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit shifting and remainder-slot resolution CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and cache-conscious dynamic resizing in real-time distributed storage and database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting and multiple hash-function hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and rapid negative-lookup filtering in real-time distributed key-value storage and web crawling engines`
-- `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-estimation and bucket-increment CAS primitives alongside epoch-based memory reclamation for high-throughput heavy-hitter stream processing and frequency analysis in real-time network traffic monitoring engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1379,
-    "last_updated": "2026-09-20T21:46:28.121018+00:00",
-    "total_topics_learned": 1379
+    "total_runs": 1380,
+    "last_updated": "2026-09-20T21:49:36.094724+00:00",
+    "total_topics_learned": 1380
   },
   "entries": [
     {
@@ -66091,6 +66091,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T21:46:28.121001+00:00",
       "run_number": 1379
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput range scans and multi-core index management in real-time transactional database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a lock-free, thread-safe concurrent B+ Tree designed for high-performance databases. It utilizes atomic compare-and-swap (CAS) operations for node splits and leaf-sibling linkages, paired with epoch-based memory reclamation to manage concurrent range scans without lock contention.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to execute node splits and leaf insertions without traditional mutex locking.",
+        "Maintains concurrent range scans via atomic leaf-sibling pointer linkages that allow readers to traverse data nodes safely even during active tree mutations.",
+        "Employs epoch-based memory reclamation (EBR) to safely defer the deallocation of split or deleted nodes until all concurrent reader epochs have advanced.",
+        "Balances multi-core thread scaling against cache locality and memory bandwidth saturation during intensive transactional workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of epoch-based safe node retirement and atomic sibling linking during a B+ Tree node split.",
+        "correct": "class EpochManager:\n    def __init__(self):\n        self.epoch = 0\n    def enter(self):\n        return self.epoch\n    def leave(self, token):\n        pass\n\nclass BPlusNode:\n    def __init__(self, keys, values, next_node=None):\n        self.keys = keys\n        self.values = values\n        self.next = next_node\n\ndef atomic_split_and_link(node, split_idx):\n    new_keys = node.keys[split_idx:]\n    new_vals = node.values[split_idx:]\n    node.keys = node.keys[:split_idx]\n    node.values = node.values[:split_idx]\n    new_node = BPlusNode(new_keys, new_vals, node.next)\n    node.next = new_node\n    return new_node",
+        "wrong": "def unsafe_split_and_link(node, split_idx):\n    # Modifying shared node pointers without thread synchronization or hazard protection\n    new_node = BPlusNode(node.keys[split_idx:], node.values[split_idx:])\n    node.next = new_node\n    return new_node"
+      },
+      "common_mistakes": [
+        "Forgetting to update atomic leaf-sibling pointers in the correct linearization order, resulting in broken range scan traversals.",
+        "Reclaiming node memory immediately upon splitting or deletion, causing use-after-free errors for concurrent readers traversing the old paths."
+      ],
+      "best_practices": [
+        "Always wrap concurrent range scan traversals inside epoch protection blocks to guarantee safe node access.",
+        "Design node layouts to fit neatly within CPU cache lines to maximize multi-core traversal speeds."
+      ],
+      "when_to_use": "Use when building high-throughput transactional storage engines and in-memory databases requiring lock-free concurrent range scans across many CPU cores.",
+      "when_not_to_use": "Avoid when dealing with single-threaded applications or write-heavy workloads where simpler coarse-grained locking or standard read-write locks suffice without the complexity of lock-free memory reclamation.",
+      "interview_questions": [
+        {
+          "question": "How do you ensure safe range scans in a lock-free B+ Tree without holding latches on nodes?",
+          "answer": "By linking leaf nodes via atomic sibling pointers and utilizing epoch-based memory reclamation or hazard pointers, ensuring readers can follow next-pointers safely even if the tree structure changes underneath them."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splits in a B+ Tree?",
+          "answer": "Ensuring that the split state is atomically visible to parent pointers and sibling links simultaneously, preventing threads from missing keys or traversing inconsistent subtrees."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Cache-Conscious Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-20T21:49:36.094705+00:00",
+      "run_number": 1380
     }
   ]
 }
