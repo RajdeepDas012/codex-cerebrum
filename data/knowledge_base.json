@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1418,
-    "last_updated": "2026-09-21T13:56:17.626412+00:00",
-    "total_topics_learned": 1418
+    "total_runs": 1419,
+    "last_updated": "2026-09-21T14:00:50.236728+00:00",
+    "total_topics_learned": 1419
   },
   "entries": [
     {
@@ -67934,6 +67934,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-21T13:56:17.626392+00:00",
       "run_number": 1418
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management and dynamic database storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent B-Tree that utilizes atomic compare-and-swap (CAS) operations for node merging and leaf redirection, combined with hazard pointers to safely manage dynamic memory. This design enables high-throughput multi-core index updates and queries without global locking bottlenecks.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) primitives to handle structural modifications like node merging and leaf redirection safely without locks.",
+        "Employs hazard pointers for lock-free memory reclamation, preventing use-after-free bugs during concurrent node deletions and merges.",
+        "Maximizes multi-core throughput and minimizes contention in database storage engines handling frequent insertions and deletions.",
+        "Maintains structural invariants dynamically across nodes despite simultaneous reads, splits, and merges by competing threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer CAS updates for lock-free node modification",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\n\nstruct Node {\n    std::atomic<Node*> next;\n    int key;\n};\n\nbool CAS_Redirect(std::atomic<Node*>& target, Node* expected, Node* desired) {\n    return target.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "#include <atomic>\n\nstruct Node {\n    Node* next;\n    int key;\n};\n\n// Missing atomicity and memory ordering causes race conditions\nvoid unsafe_redirect(Node* target, Node* new_node) {\n    target->next = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes with hazard pointers, leading to race conditions and memory corruption.",
+        "Using incorrect memory ordering semantics (like sequentially consistent ordering everywhere) which degrades cache-coherency performance on multi-core processors."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based reclamation systematically before implementing any lock-free deletion or merging logic.",
+        "Thoroughly test concurrent correctness under high thread contention using stress tools like ThreadSanitizer."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded database systems or storage engines where lock contention on index structures becomes a performance bottleneck.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free primitives and memory reclamation outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in lock-free B-Trees?",
+          "answer": "Hazard pointers allow a thread to atomically register a pointer it is currently accessing, signaling to other threads that the memory cannot be reclaimed or freed until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is atomic node-merging and leaf-redirection complex in a lock-free B-Tree?",
+          "answer": "Because multiple threads may simultaneously attempt to modify, split, or merge adjacent nodes, requiring careful coordination using CAS primitives to ensure tree invariants and atomicity without locks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Concurrent B+ Trees",
+        "Atomic Compare-And-Swap (CAS) Synchronization Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T14:00:50.236702+00:00",
+      "run_number": 1419
     }
   ]
 }
