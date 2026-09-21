@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1412,
-    "last_updated": "2026-09-21T06:37:17.758288+00:00",
-    "total_topics_learned": 1412
+    "total_runs": 1413,
+    "last_updated": "2026-09-21T06:40:26.655405+00:00",
+    "total_topics_learned": 1413
   },
   "entries": [
     {
@@ -67651,6 +67651,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T06:37:17.758265+00:00",
       "run_number": 1412
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List data structure using atomic forward-pointer linking and tower-height cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scan execution in real-time distributed key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent skip list utilizing atomic Compare-And-Swap (CAS) primitives for pointer linking and tower-height adjustments, combined with hazard pointers for safe memory management. It is crucial for high-performance distributed systems requiring scalable, lock-free ordered key-value operations and efficient multi-core range queries.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to modify forward pointers and tower heights without traditional locking mechanisms.",
+        "Employs hazard pointer memory reclamation to safely defer deallocation of nodes removed concurrently by multiple threads.",
+        "Achieves high-throughput ordered key-value lookups and logarithmic expected time complexity across multi-core architectures.",
+        "Enables lock-free multi-core range scan execution by traversing forward pointers at bottom levels safely in dynamic environments."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of atomic node insertion and hazard pointer protection in a concurrent skip list.",
+        "correct": "class Node:\n    def __init__(self, key, value, height):\n        self.key = key\n        self.value = value\n        self.forward = [None] * height\n        self.fully_linked = False\n        self.marked = False\n\ndef atomic_insert(list_head, new_node, hazard_manager):\n    while True:\n        preds, succs = list_head.find(new_node.key, hazard_manager)\n        if preds[0].key == new_node.key:\n            return False\n        \n        top_level = len(new_node.forward) - 1\n        for level in range(top_level + 1):\n            new_node.forward[level] = succs[level]\n            \n        pred = preds[0]\n        succ = succs[0]\n        if not pred.forward[0].cas(succ, new_node):\n            continue\n        \n        new_node.fully_linked = True\n        return True",
+        "wrong": "def unsafe_insert(list_head, new_node):\n    # Missing atomic CAS and hazard pointers leads to race conditions and memory corruption\n    pred = list_head\n    while pred.next:\n        pred = pred.next\n    new_node.next = pred.next\n    pred.next = new_node"
+      },
+      "common_mistakes": [
+        "Failing to atomically mark nodes as deleted before physically unlinking them, which can allow stale insertions to reappear.",
+        "Improper memory reclamation timing using hazard pointers, leading to use-after-free errors when threads access unlinked tower levels."
+      ],
+      "best_practices": [
+        "Always validate that predecessor and successor nodes have not changed concurrently before executing the CAS operation on forward pointers.",
+        "Integrate a robust hazard pointer framework to protect deleted node structures from immediate garbage collection until all reader threads finish traversal."
+      ],
+      "when_to_use": "Use when building high-throughput distributed key-value stores or storage engines that demand frequent concurrent ordered range scans and low-latency insertions without global locks.",
+      "when_not_to_use": "Avoid in memory-constrained embedded systems or single-threaded applications where the overhead of hazard pointers and probabilistic balancing outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when modifying forward pointers in a lock-free skip list?",
+          "answer": "By embedding marked bits or version tags directly within the atomic pointer references or utilizing hazard pointers to ensure nodes are not prematurely freed and reused."
+        },
+        {
+          "question": "Why are hazard pointers preferred over simple reference counting in lock-free skip lists?",
+          "answer": "Hazard pointers avoid the massive cache-contention bottlenecks and atomic read-modify-write overhead associated with updating shared reference counters on every single node traversal."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent hash tables",
+        "hazard pointer memory management",
+        "lock-free B-trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-21T06:40:26.655382+00:00",
+      "run_number": 1413
     }
   ]
 }
