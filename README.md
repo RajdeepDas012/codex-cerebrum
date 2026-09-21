@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1395** |
-| Last Updated | `2026-09-21T00:29:06.903895+00:00` |
-| Dataset Size | `1395 entries` |
+| Total Topics Learned | **1396** |
+| Last Updated | `2026-09-21T00:32:17.173372+00:00` |
+| Dataset Size | `1396 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 504 |
+| data-structures | 505 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length (NPL) updating and priority-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside epoch-based memory reclamation for high-throughput historical range queries and concurrent time-travel state tracking in real-time financial auditing and versioned analytics engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box expansion and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput spatial indexing and multi-core geographic query processing in real-time location-based services and GIS databases`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer cascading and node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core graph algorithm execution in real-time network routing and optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Linear-Probing Hash Map using atomic state-transition marking and bucket-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core state management in real-time distributed caching engines`
-- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update CAS primitives alongside epoch-based memory reclamation for high-throughput interval queries and dynamic range modifications in real-time financial trading systems and telemetry analytics engines`
 
 <!-- STATS_END -->
 
