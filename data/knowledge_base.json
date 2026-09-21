@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1419,
-    "last_updated": "2026-09-21T14:00:50.236728+00:00",
-    "total_topics_learned": 1419
+    "total_runs": 1420,
+    "last_updated": "2026-09-21T14:09:46.144281+00:00",
+    "total_topics_learned": 1420
   },
   "entries": [
     {
@@ -67981,6 +67981,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T14:00:50.236702+00:00",
       "run_number": 1419
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element caching and multi-core amortized search optimization in real-time memory management systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Splay Tree, leveraging atomic Compare-And-Swap (CAS) primitives for thread-safe root rotations and self-adjusting tree restructuring. It utilizes hazard pointers to ensure safe memory reclamation without blocking concurrent readers and writers, optimizing amortized lookup times for heavily skewed access patterns in multi-threaded caching layers.",
+      "key_points": [
+        "Employs atomic CAS primitives to execute structural root-rotations and zig-zag splay operations without traditional mutex locks.",
+        "Integrates hazard pointer memory reclamation to safely manage retired node memory asynchronously in concurrent environments.",
+        "Provides amortized self-adjustment guarantees, moving frequently accessed nodes closer to the root for high-throughput caching applications.",
+        "Mitigates thread contention during deep restructuring passes by utilizing fine-grained pointer redirection techniques."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based pointer update for a tree node rotation",
+        "correct": "bool rotate_left(std::atomic<Node*>& parent_ptr, Node* old_node) {\n    Node* right_child = old_node->right.load(std::memory_order_acquire);\n    if (!right_child) return false;\n    Node* grand_child = right_child->left.load(std::memory_order_acquire);\n    right_child->left.store(old_node, std::memory_order_release);\n    old_node->right.store(grand_child, std::memory_order_release);\n    return parent_ptr.compare_exchange_strong(old_node, right_child, std::memory_order_acq_rel);\n}",
+        "wrong": "bool rotate_left_wrong(Node* parent, Node* old_node) {\n    Node* right_child = old_node->right;\n    old_node->right = right_child->left;\n    right_child->left = old_node;\n    parent->right = right_child; // Non-atomic updates cause race conditions and data corruption\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to use-after-free bugs during concurrent splay restructuring.",
+        "Attempting to perform multi-step global splay rotations under a single atomic operation without breaking them down into localized CAS steps."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for all nodes involved in a splay rotation path before executing pointer modifications.",
+        "Use appropriate memory ordering fences (acquire-release) to guarantee visibility of node payload and child pointer updates across threads."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded caching systems or memory allocators where access patterns exhibit strong temporal locality.",
+      "when_not_to_use": "Avoid when access patterns are uniformly distributed or when strict worst-case latency bounds are required instead of amortized guarantees.",
+      "interview_questions": [
+        {
+          "question": "How do you handle structural modifications like splay rotations concurrently without using global locks?",
+          "answer": "By breaking rotations down into localized atomic Compare-And-Swap (CAS) operations on parent-child pointers, combined with hazard pointers to safely manage node lifecycles during restructuring."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a concurrent lock-free Splay Tree?",
+          "answer": "They prevent threads from freeing or reusing node memory while other concurrent threads are traversing or rotating pointers through those exact nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Tree",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Self-Balancing Search Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-21T14:09:46.144262+00:00",
+      "run_number": 1420
     }
   ]
 }
