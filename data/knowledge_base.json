@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1426,
-    "last_updated": "2026-09-21T14:36:14.291575+00:00",
-    "total_topics_learned": 1426
+    "total_runs": 1427,
+    "last_updated": "2026-09-21T14:40:30.048028+00:00",
+    "total_topics_learned": 1427
   },
   "entries": [
     {
@@ -68313,6 +68313,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T14:36:14.291555+00:00",
       "run_number": 1426
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length updating and merge-spine CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time distributed execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent Leftist Heap using atomic null-path-length (NPL) updates and merge-spine CAS primitives backed by hazard pointers. It enables high-throughput, thread-safe mergeable priority queue operations and multi-core task scheduling without explicit global locks.",
+      "key_points": [
+        "Utilizes atomic primitives on merge spines to allow concurrent heap merging without blocking.",
+        "Maintains leftist tree invariants via atomic null-path-length (NPL) updates during structural modifications.",
+        "Employs hazard pointers for safe memory reclamation in dynamic, lock-free pointer-based tree restructuring.",
+        "Optimized for high-throughput concurrent priority queue applications like multi-core task schedulers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node structure and atomic spine-merging approach for a lock-free leftist heap.",
+        "correct": "import threading\n\nclass LeftistNode:\n    def __init__(self, val, npl=1):\n        self.val = val\n        self.npl = npl\n        self.left = None\n        self.right = None\n\ndef safe_merge_spine(h1, h2):\n    if not h1: return h2\n    if not h2: return h1\n    if h1.val > h2.val:\n        h1, h2 = h2, h1\n    # Atomic CAS simulation for right spine merging\n    h1.right = safe_merge_spine(h1.right, h2)\n    if (not h1.left or (h1.right and h1.left.npl < h1.right.npl)):\n        h1.left, h1.right = h1.right, h1.left\n    h1.npl = (h1.right.npl if h1.right else 0) + 1\n    return h1",
+        "wrong": "def unsafe_merge(h1, h2):\n    # Modifying shared nodes without atomic operations or hazard pointers\n    h1.right = unsafe_merge(h1.right, h2)\n    return h1"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during spine traversal, leading to use-after-free bugs.",
+        "Updating null-path-lengths non-atomically, which breaks the leftist balance invariant under concurrent modifications."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based reclamation to safely manage deleted and re-linked nodes in lock-free trees.",
+        "Ensure CAS loops on spine pointers handle ABA problems correctly by utilizing versioned pointers or tagged references."
+      ],
+      "when_to_use": "Use when you need high-throughput, concurrent priority queue merging operations across multiple threads with minimal contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free primitives and hazard pointers outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property (NPL invariant) in a lock-free concurrent environment?",
+          "answer": "By recomputing null-path-lengths locally during structural modifications and using CAS loops to swap subtrees on the merge spine atomically."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Leftist Heap?",
+          "answer": "They prevent other threads from freeing or modifying nodes that a thread is currently traversing along the merge spine, avoiding use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Hazard Pointers",
+        "Concurrent Mergeable Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T14:40:30.048006+00:00",
+      "run_number": 1427
     }
   ]
 }
