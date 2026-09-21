@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1413,
-    "last_updated": "2026-09-21T06:40:26.655405+00:00",
-    "total_topics_learned": 1413
+    "total_runs": 1414,
+    "last_updated": "2026-09-21T06:43:35.602799+00:00",
+    "total_topics_learned": 1414
   },
   "entries": [
     {
@@ -67698,6 +67698,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-21T06:40:26.655382+00:00",
       "run_number": 1413
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed range queries and multi-core database index management in real-time transactional storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree index that utilizes atomic Compare-And-Swap (CAS) operations for node-splitting and leaf-linking alongside hazard pointers. It is crucial for high-throughput transactional database systems requiring concurrent range scans and key-value lookups without global locks.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to manage structural node modifications like splitting and merging without acquiring global mutexes.",
+        "Employs leaf-node pointer linking to maintain sequence order for fast multi-threaded concurrent range queries.",
+        "Integrates hazard pointers for safe memory reclamation, preventing use-after-free bugs during asynchronous node deletions.",
+        "Ensures linearizability across insert, update, and search operations under high multi-core contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer CAS setup for thread-safe B+ Tree node child linking",
+        "correct": "bool link_child(std::atomic<Node*>& parent_slot, Node* expected, Node* desired) {\n    return parent_slot.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* link_child(Node** parent_slot, Node* desired) {\n    Node* old = *parent_slot;\n    *parent_slot = desired;\n    return old;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption or use-after-free errors.",
+        "Using sequential consistency everywhere instead of carefully matching acquire-release memory orderings, degrading performance."
+      ],
+      "best_practices": [
+        "Protect read operations on traversal paths by registering pointers in a thread-local hazard pointer domain.",
+        "Implement cooperative node splitting where helper threads assist in completing unfinished structural modifications before proceeding."
+      ],
+      "when_to_use": "Use when building high-performance in-memory database engines or storage systems requiring massive multi-core concurrency for ordered range queries.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or systems with low concurrency where standard blocking trees or lock-based synchronization suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+ tree when nodes are being split and deleted concurrently?",
+          "answer": "Hazard pointers are used by reader threads to announce which nodes they are currently accessing, preventing the reclamation engine from freeing memory until no threads hold references to those nodes."
+        },
+        {
+          "question": "What is the challenge with node splits in a lock-free B+ tree, and how is it resolved?",
+          "answer": "A node split requires updating multiple pointers atomically. This is typically solved by using descriptive CAS operations or cooperative split states where helper threads finish partial structural updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Skip Lists",
+        "Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-21T06:43:35.602776+00:00",
+      "run_number": 1414
     }
   ]
 }
