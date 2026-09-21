@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1456,
-    "last_updated": "2026-09-21T23:43:36.878615+00:00",
-    "total_topics_learned": 1456
+    "total_runs": 1457,
+    "last_updated": "2026-09-21T23:46:44.437520+00:00",
+    "total_topics_learned": 1457
   },
   "entries": [
     {
@@ -69729,6 +69729,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T23:43:36.878601+00:00",
       "run_number": 1456
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-detection CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core schedule conflict evaluation in real-time calendar and resource allocation engines",
+      "category": "data-structures",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Interval Tree that manages overlapping time ranges safely across multiple cores without locks. It uses atomic primitives for node augmentation and overlap checking, paired with hazard pointers to ensure safe memory reclamation during high-throughput schedule queries.",
+      "key_points": [
+        "Utilizes atomic operations for node augmentation to track maximum endpoint values across subtrees without global locks.",
+        "Implements hazard pointers to safely manage memory reclamation and prevent use-after-free errors during concurrent node traversal and updates.",
+        "Performs lock-free overlap detection and insertion using compare-and-swap (CAS) primitives to guarantee thread safety.",
+        "Optimized for high-throughput temporal range queries and multi-core resource allocation in real-time environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic overlap check and hazard pointer protection pattern for an interval node.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct IntervalNode {\n    int low, high, max_high;\n    std::atomic<IntervalNode*> left{nullptr};\n    std::atomic<IntervalNode*> right{nullptr};\n};\n\nbool do_overlap(int l1, int h1, int l2, int h2) {\n    return l1 <= h2 && l2 <= h1;\n}",
+        "wrong": "IntervalNode* search(IntervalNode* root, int l, int h) {\n    // Missing hazard pointer protection and non-atomic traversal can lead to data races.\n    if (!root) return nullptr;\n    if (do_overlap(root->low, root->high, l, h)) return root;\n    return search(root->left.load(), l, h);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption or use-after-free bugs.",
+        "Forgetting to update augmented maximum endpoint values atomically during concurrent tree insertions and deletions."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for nodes before reading their child pointers or interval boundaries in a lock-free loop.",
+        "Keep atomic transactions short and use retry loops with exponential backoff on CAS failure to minimize CPU contention."
+      ],
+      "when_to_use": "When building high-throughput real-time systems like calendar schedulers or resource allocation engines requiring concurrent range queries with minimal latency.",
+      "when_not_to_use": "In single-threaded applications or systems with low concurrency where standard lock-based interval trees offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free Interval Tree without using garbage collection?",
+          "answer": "By using hazard pointers, which allow threads to register nodes they are currently accessing so that deleters know when it is safe to free memory."
+        },
+        {
+          "question": "Why is node augmentation necessary in an Interval Tree, and how does it complicate lock-free implementations?",
+          "answer": "Augmentation (tracking the maximum high endpoint in subtrees) speeds up range searches, but updating it concurrently requires complex atomic CAS loops to maintain consistency."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Tree",
+        "Hazard Pointers Memory Management",
+        "Concurrent Segment Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T23:46:44.437505+00:00",
+      "run_number": 1457
     }
   ]
 }
