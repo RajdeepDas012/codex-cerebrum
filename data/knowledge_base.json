@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1422,
-    "last_updated": "2026-09-21T14:18:33.413402+00:00",
-    "total_topics_learned": 1422
+    "total_runs": 1423,
+    "last_updated": "2026-09-21T14:24:04.075834+00:00",
+    "total_topics_learned": 1423
   },
   "entries": [
     {
@@ -68123,6 +68123,55 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-21T14:18:33.413381+00:00",
       "run_number": 1422
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fenwick-Tree based Order Statistics Tree using atomic rank-incrementing and node-traversal CAS primitives alongside epoch-based memory reclamation for high-throughput dynamic percentile tracking and multi-core rank queries in real-time trading engines and analytics pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Order Statistics Tree backed by a Fenwick tree (Binary Indexed Tree) structure. By leveraging atomic compare-and-swap (CAS) operations for rank modifications and epoch-based memory management, it enables multi-core systems to efficiently insert elements and query dynamic percentiles without blocking.",
+      "key_points": [
+        "Utilizes Fenwick tree index mapping for $O(\\log N)$ rank updates and prefix sum queries.",
+        "Employs atomic rank-incrementing CAS primitives to handle concurrent frequency modifications safely across threads.",
+        "Integrates epoch-based memory reclamation to prevent memory leaks and safely reclaim nodes during high-throughput updates.",
+        "Supports real-time percentile tracking and order statistics queries for low-latency streaming analytics."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic rank increments on a lock-free Fenwick tree structure using CAS loops.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentFenwickTree {\n    std::vector<std::atomic<long>> tree;\n    size_t size;\npublic:\n    ConcurrentFenwickTree(size_t n) : size(n), tree(n + 1) {\n        for(auto& node : tree) node.store(0, std::memory_order_relaxed);\n    }\n    void add(size_t idx, long val) {\n        for (++idx; idx <= size; idx += idx & -idx) {\n            long current = tree[idx].load(std::memory_order_relaxed);\n            while (!tree[idx].compare_exchange_weak(current, current + val, std::memory_order_release, std::memory_order_relaxed));\n        }\n    }\n};",
+        "wrong": "#include <vector>\n// Mistake: Using non-atomic operations or standard locks inside a concurrent environment\nclass UnsafeFenwickTree {\n    std::vector<long> tree;\npublic:\n    void add(size_t idx, long val) {\n        for (++idx; idx < tree.size(); idx += idx & -idx) {\n            tree[idx] += val; // Race condition on concurrent updates\n        }\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to handle memory reclamation properly, leading to severe memory bloat or use-after-free bugs during node restructuring.",
+        "Using overly strong memory orderings on uncontended loops, which degrades multi-core throughput.",
+        "Neglecting ABA problems or failing to validate node states correctly during multi-step tree traversals via CAS."
+      ],
+      "best_practices": [
+        "Employ relaxed memory ordering for non-dependent loads, utilizing acquire-release semantics specifically for the CAS operations modifying cumulative sums.",
+        "Integrate epoch-based or hazard-pointer-based reclamation to ensure safe concurrent memory freeing.",
+        "Pad atomic counters or utilize striped arrays to mitigate false sharing under extreme thread contention."
+      ],
+      "when_to_use": "When multiple threads concurrently insert elements and query exact percentiles or rank statistics in ultra-low-latency environments like high-frequency trading engines.",
+      "when_not_to_use": "When datasets are small, single-threaded, or when standard locked collections provide sufficient throughput without the complexity of lock-free primitives.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent prefix sum updates in a lock-free Fenwick tree without locking the entire path?",
+          "answer": "By using atomic compare-and-swap (CAS) loops on each individual node index affected along the Fenwick update path, paired with memory barriers to ensure visibility."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free order statistic trees?",
+          "answer": "Epoch-based reclamation avoids the high cache contention and atomic instruction overhead associated with updating shared reference counters on every node traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Concurrent Binary Indexed Trees",
+        "Epoch-Based Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T14:24:04.075817+00:00",
+      "run_number": 1423
     }
   ]
 }
