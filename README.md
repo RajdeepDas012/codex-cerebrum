@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1451** |
-| Last Updated | `2026-09-21T23:27:55.849142+00:00` |
-| Dataset Size | `1451 entries` |
+| Total Topics Learned | **1452** |
+| Last Updated | `2026-09-21T23:31:03.621712+00:00` |
+| Dataset Size | `1452 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 553 |
+| data-structures | 554 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority linking and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search tree operations and multi-core in-memory database index management in real-time transactional systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and prefix-doubling CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core pattern matching in real-time genomic sequence analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order restoration and multi-producer multi-consumer array-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput task scheduling and multi-core work-stealing execution in real-time asynchronous processing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core database index management in real-time transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer splicing and node-level marker CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core in-memory database indexing in real-time transactional systems`
-- `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocation and child-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput dictionary lookups and multi-core autocomplete indexing in real-time search engine and text processing systems`
 
 <!-- STATS_END -->
 
