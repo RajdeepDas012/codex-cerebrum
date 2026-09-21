@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1393,
-    "last_updated": "2026-09-21T00:22:51.340273+00:00",
-    "total_topics_learned": 1393
+    "total_runs": 1394,
+    "last_updated": "2026-09-21T00:25:59.321099+00:00",
+    "total_topics_learned": 1394
   },
   "entries": [
     {
@@ -66750,6 +66750,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T00:22:51.340254+00:00",
       "run_number": 1393
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box expansion and node-splitting CAS primitives alongside epoch-based memory reclamation for high-throughput spatial indexing and multi-core geographic query processing in real-time location-based services and GIS databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent R-Tree spatial index that utilizes atomic bounding-box expansion and node-splitting via Compare-And-Swap (CAS) operations, paired with epoch-based memory reclamation. It enables high-throughput multi-core execution for real-time geographic query processing without global locks.",
+      "key_points": [
+        "Uses atomic operations to safely expand bounding boxes and manage concurrent node splits without blocking reader threads.",
+        "Employs epoch-based memory reclamation (EBR) to safely deallocate obsolete R-Tree nodes after structural modifications.",
+        "Facilitates efficient multi-core spatial queries such as k-nearest neighbor (k-NN) and bounding box intersections.",
+        "Maintains structural balance and minimizes deadlocks in high-contention location-based services."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for updating a spatial node's bounding box in a lock-free R-Tree.",
+        "correct": "bool update_bbox(Node* node, const BBox& new_box) {\n    while (true) {\n        BBox current = node->bbox.load(std::memory_order_acquire);\n        BBox expanded = current.merge(new_box);\n        if (node->bbox.compare_exchange_weak(current, expanded, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_bbox(Node* node, const BBox& new_box) {\n    // Missing CAS loop leads to lost updates under multi-threaded contention\n    BBox current = node->bbox.load();\n    node->bbox.store(current.merge(new_box));\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node memory reclamation, leading to use-after-free bugs when concurrent readers access splitting nodes.",
+        "Ignoring ABA problems during structural modifications like node splits and pointer updates.",
+        "Over-contention on root bounding-box updates due to naive CAS implementations."
+      ],
+      "best_practices": [
+        "Integrate epoch-based memory management or hazard pointers to track active traversals before reclaiming old tree nodes.",
+        "Keep atomic sections small by computing bounding-box expansions locally before attempting the CAS loop.",
+        "Use backoff strategies within retry loops to reduce CPU cache coherency traffic under high write contention."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput geographic databases, real-time dispatch systems, or location-based services requiring low-latency concurrent spatial reads and writes.",
+      "when_not_to_use": "Avoid when memory usage is tightly constrained, or when read/write workloads are low enough that traditional reader-writer lock-based R-Trees offer simpler and more maintainable code.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits in a lock-free R-Tree without acquiring a global tree lock?",
+          "answer": "Node splits are executed locally and published atomically using CAS primitives to swing parent pointers, while old nodes are safely reclaimed using epoch-based memory management."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation crucial for concurrent spatial indexes like the R-Tree?",
+          "answer": "It ensures that worker threads traversing the tree do not encounter use-after-free errors when another thread concurrently splits or replaces a node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Interval Tree",
+        "Epoch-Based Memory Reclamation",
+        "Spatial Indexing and R-Tree Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T00:25:59.321080+00:00",
+      "run_number": 1394
     }
   ]
 }
