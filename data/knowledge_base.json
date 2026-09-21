@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1396,
-    "last_updated": "2026-09-21T00:32:17.173372+00:00",
-    "total_topics_learned": 1396
+    "total_runs": 1397,
+    "last_updated": "2026-09-21T00:35:25.196816+00:00",
+    "total_topics_learned": 1397
   },
   "entries": [
     {
@@ -66893,6 +66893,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T00:32:17.173349+00:00",
       "run_number": 1396
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list merging and node-degree linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system schedulers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent binomial heap, utilizing atomic operations to manage root-list merging and node-degree linking. It employs hazard pointers for safe memory reclamation, enabling high-performance, non-blocking mergeable priority queue operations suitable for multi-core OS task schedulers.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) primitives to execute root-list merging without traditional mutex locks.",
+        "Implements node-degree linking to systematically combine binomial trees of identical rank during heap unions.",
+        "Integrates hazard pointers to safely defer memory reclamation of nodes concurrently accessed or unlinked by other threads.",
+        "Optimizes multi-core task scheduling in real-time operating systems by supporting scalable, contention-resistant priority queue merges."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic root-list update using a CAS loop for a lock-free binomial heap node insertion.",
+        "correct": "bool link_binomial_roots(std::atomic<Node*>& root_list, Node* new_root) {\n    Node* old_head = root_list.load();\n    do {\n        new_root->next = old_head;\n    } while (!root_list.compare_exchange_weak(old_head, new_root));\n    return true;\n}",
+        "wrong": "Node* link_binomial_roots(std::atomic<Node*>& root_list, Node* new_root) {\n    // Missing CAS loop leads to lost updates under high concurrency\n    new_root->next = root_list.load();\n    root_list.store(new_root);\n    return new_root;\n}"
+      },
+      "common_mistakes": [
+        "Performing non-atomic pointer modifications on binomial tree sibling and child pointers during degree linking.",
+        "Reclaiming memory of unlinked binomial tree nodes immediately without tracking thread hazard pointers, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Wrap all pointer access to shared root lists and node children within a robust hazard pointer acquisition protocol.",
+        "Design degree-linking routines to be idempotent or properly handle retry loops when concurrent threads attempt to merge trees of identical rank."
+      ],
+      "when_to_use": "Use this when implementing multi-threaded priority queue systems that require frequent, high-throughput heap merging operations across many cores without lock contention.",
+      "when_not_to_use": "Avoid this in single-threaded environments or simple applications where the extreme overhead of lock-free atomics and hazard pointers outweighs throughput benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free binomial heap when nodes are unlinked during a merge operation?",
+          "answer": "Hazard pointers are used to protect nodes from being prematurely freed while other threads might still be traversing or referencing them during root-list operations."
+        },
+        {
+          "question": "What is the primary synchronization challenge when performing atomic node-degree linking in a concurrent binomial heap?",
+          "answer": "Ensuring that two binomial trees of the same degree are linked consistently without race conditions where multiple threads attempt to merge the same roots simultaneously."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Leftist Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T00:35:25.196795+00:00",
+      "run_number": 1397
     }
   ]
 }
