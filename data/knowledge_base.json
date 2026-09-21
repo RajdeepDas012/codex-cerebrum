@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1388,
-    "last_updated": "2026-09-21T00:07:12.084752+00:00",
-    "total_topics_learned": 1388
+    "total_runs": 1389,
+    "last_updated": "2026-09-21T00:10:19.692528+00:00",
+    "total_topics_learned": 1389
   },
   "entries": [
     {
@@ -66515,6 +66515,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T00:07:12.084731+00:00",
       "run_number": 1388
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Interval Tree using atomic range-boundary updating and interval-merging CAS primitives alongside epoch-based memory reclamation for high-throughput temporal range indexing and multi-core spatial query evaluation in real-time geographic tracking and telemetry database systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent B-Interval Tree optimized for high-throughput temporal and spatial interval queries. By leveraging atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation, it safely manages multi-core range boundary updates and node splits without blocking threads.",
+      "key_points": [
+        "Utilizes atomic CAS primitives for lock-free range-boundary updating and interval merging across multi-core systems.",
+        "Employs epoch-based memory reclamation (EMR) to safely defer the deallocation of nodes modified during concurrent structural modifications.",
+        "Optimizes index structures for rapid temporal range-searching and spatial query evaluation in high-frequency tracking environments.",
+        "Balances multi-way branching (B-Tree property) with interval tracking to minimize cache misses and tree depth during massive concurrent reads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe atomic interval boundary updates using compare-and-swap loops under epoch protection",
+        "correct": "#include <atomic>\n#include <iostream>\n\nstruct IntervalNode {\n    std::atomic<int> low;\n    std::atomic<int> high;\n    std::atomic<IntervalNode*> next;\n};\n\nbool updateInterval(IntervalNode* node, int expected_low, int new_low) {\n    return node->low.compare_exchange_weak(expected_low, new_low);\n}",
+        "wrong": "void updateIntervalUnsafe(IntervalNode* node, int new_low) {\n    node->low = new_low;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with epoch-based reclamation, leading to use-after-free race conditions.",
+        "Using naive locks around interval insertion paths, creating contention bottlenecks in multi-core workloads."
+      ],
+      "best_practices": [
+        "Ensure epoch threads register and unregister cleanly to avoid stalling memory reclamation queues.",
+        "Keep atomic retry loops tight and short to minimize CPU cycle waste during high-contention node modifications."
+      ],
+      "when_to_use": "Use when building high-performance geospatial tracking or temporal database systems that undergo heavy concurrent reads and writes on overlapping intervals.",
+      "when_not_to_use": "Avoid in low-concurrency environments or simple CRUD applications where standard locking data structures offer sufficient throughput with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic range boundary updates in a lock-free B-Interval Tree?",
+          "answer": "By utilizing tagged pointers or version counters combined with the CAS operation so that any modification to the node increments the version, invalidating stale expectations."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over standard reference counting in high-throughput concurrent trees?",
+          "answer": "Reference counting introduces heavy atomic write overhead on every pointer traversal, whereas epoch-based reclamation groups reader synchronization into lightweight local epoch announcements."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Epoch-Based Memory Reclamation",
+        "Concurrent Interval Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T00:10:19.692508+00:00",
+      "run_number": 1389
     }
   ]
 }
