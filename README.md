@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1425** |
-| Last Updated | `2026-09-21T14:31:41.795077+00:00` |
-| Dataset Size | `1425 entries` |
+| Total Topics Learned | **1426** |
+| Last Updated | `2026-09-21T14:36:14.291575+00:00` |
+| Dataset Size | `1426 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 531 |
+| data-structures | 532 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-link and multi-pass merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core job scheduling in real-time execution engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree data structure using atomic bounding-rectangle expansion and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geographic query processing in real-time location-based services and mapping engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing and min-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path and Prim's minimum spanning tree computations in real-time network routing and graph analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick-Tree based Order Statistics Tree using atomic rank-incrementing and node-traversal CAS primitives alongside epoch-based memory reclamation for high-throughput dynamic percentile tracking and multi-core rank queries in real-time trading engines and analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog data structure using atomic register-register merging and stochastic cardinality estimation CAS primitives alongside epoch-based memory reclamation for high-throughput distinct-value stream counting and real-time unique visitor analytics in distributed telemetry ingestion pipelines`
-- `Implementation of a lock-free thread-safe concurrent Treap data structure using atomic priority-rotation and heap-property balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core dynamic set management in real-time key-value indexing engines`
 
 <!-- STATS_END -->
 
