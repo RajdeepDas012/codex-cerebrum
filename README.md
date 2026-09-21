@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1431** |
-| Last Updated | `2026-09-21T19:18:28.883252+00:00` |
-| Dataset Size | `1431 entries` |
+| Total Topics Learned | **1432** |
+| Last Updated | `2026-09-21T19:21:36.920049+00:00` |
+| Dataset Size | `1432 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 537 |
+| data-structures | 538 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer expansion and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking and packet processing engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update CAS primitives alongside hazard pointer memory reclamation for high-throughput interval arithmetic and multi-core range query evaluation in real-time financial analytics and computational geometry engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array setting and double-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and pre-filtering in real-time distributed caching and database query engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected-component queries and multi-core network connectivity analysis in real-time graph processing engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree linking and root-list merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time distributed execution engines`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length updating and merge-spine CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time distributed execution engines`
 
 <!-- STATS_END -->
 
