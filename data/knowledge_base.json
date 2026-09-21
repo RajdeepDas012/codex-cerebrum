@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1391,
-    "last_updated": "2026-09-21T00:16:35.389272+00:00",
-    "total_topics_learned": 1391
+    "total_runs": 1392,
+    "last_updated": "2026-09-21T00:19:43.495754+00:00",
+    "total_topics_learned": 1392
   },
   "entries": [
     {
@@ -66656,6 +66656,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T00:16:35.389251+00:00",
       "run_number": 1391
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Linear-Probing Hash Map using atomic state-transition marking and bucket-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core state management in real-time distributed caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of an open-addressing hash map that utilizes linear probing and atomic compare-and-swap (CAS) operations to achieve lock-free thread safety. It employs hazard pointers to safely manage dynamic memory reclamation during high-concurrency table resize operations.",
+      "key_points": [
+        "Utilizes atomic state-transition marking (e.g., active, deleted, forwarding) within table buckets to coordinate multi-threaded updates.",
+        "Implements lock-free bucket resizing via cooperative migration where threads help transfer entries to a newly allocated table.",
+        "Applies hazard pointers to prevent premature memory deallocation of buckets or old tables while threads are actively reading or writing them.",
+        "Ensures high-throughput performance in distributed caching by eliminating lock contention during key-value lookups and insertions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state transition for inserting a key-value pair into a linear-probing hash map bucket using CAS.",
+        "correct": "bool insert(K key, V val) {\n    size_t idx = hash(key) % capacity;\n    while (true) {\n        Bucket& b = table[idx];\n        State expected = State::EMPTY;\n        if (b.state.compare_exchange_weak(expected, State::PROCESSING)) {\n            b.key = key;\n            b.val = val;\n            b.state.store(State::ACTIVE, std::memory_order_release);\n            return true;\n        }\n        idx = (idx + 1) % capacity;\n    }\n}",
+        "wrong": "bool insert(K key, V val) {\n    size_t idx = hash(key) % capacity;\n    if (table[idx].state == State::EMPTY) {\n        table[idx].key = key;\n        table[idx].val = val;\n        table[idx].state = State::ACTIVE;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed table buckets with hazard pointers, leading to use-after-free bugs during table resizing.",
+        "Incorrectly handling memory orderings (using sequential consistency everywhere instead of appropriate acquire-release semantics), degrading concurrency performance."
+      ],
+      "best_practices": [
+        "Retire old memory tables safely using a hazard pointer framework or epoch-based reclamation after a full migration cycle completes.",
+        "Implement cooperative resizing where helper threads assist in migrating remaining elements when they encounter a resize marker."
+      ],
+      "when_to_use": "Use when building ultra-low-latency distributed caching engines or high-frequency telemetry tracking systems requiring massive concurrent read/write scaling without thread blocking.",
+      "when_not_to_use": "Avoid in memory-constrained environments where linear probing's high load-factor sensitivity causes frequent, expensive resizing storms.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions when two threads probe and try to claim the same empty bucket simultaneously?",
+          "answer": "You use an atomic Compare-And-Swap (CAS) operation to transition the bucket state from EMPTY to a processing or occupied state; only one thread will successfully change the state, while the other will continue probing."
+        },
+        {
+          "question": "Why are hazard pointers essential when resizing a lock-free linear probing hash map?",
+          "answer": "Hazard pointers protect threads that are currently reading or writing to buckets in the old table from crashing if another thread successfully completes the resize and frees the old underlying memory array."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Open-Addressing Hash Tables",
+        "Cooperative Concurrent Table Resizing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T00:19:43.495734+00:00",
+      "run_number": 1392
     }
   ]
 }
