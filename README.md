@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1448** |
-| Last Updated | `2026-09-21T23:18:31.638567+00:00` |
-| Dataset Size | `1448 entries` |
+| Total Topics Learned | **1449** |
+| Last Updated | `2026-09-21T23:21:39.971228+00:00` |
+| Dataset Size | `1449 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 550 |
+| data-structures | 551 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core database index management in real-time transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer splicing and node-level marker CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core in-memory database indexing in real-time transactional systems`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocation and child-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput dictionary lookups and multi-core autocomplete indexing in real-time search engine and text processing systems`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics and physics simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Labeled Directed Graph using atomic vertex-insertion and edge-CAS primitives alongside hazard pointer memory reclamation for high-throughput relationship querying and multi-core traversal evaluation in real-time social network and recommendation engine systems`
-- `Implementation of a lock-free thread-safe concurrent CRDT (Conflict-Free Replicated Data Type) Observed-Removed Set using atomic state-tombstoning and causal-context merging CAS primitives alongside epoch-based memory reclamation for high-throughput distributed state convergence and multi-core conflict resolution in real-time collaborative editing engines`
 
 <!-- STATS_END -->
 
