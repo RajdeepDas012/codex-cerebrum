@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1449** |
-| Last Updated | `2026-09-21T23:21:39.971228+00:00` |
-| Dataset Size | `1449 entries` |
+| Total Topics Learned | **1450** |
+| Last Updated | `2026-09-21T23:24:47.581346+00:00` |
+| Dataset Size | `1450 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 551 |
+| data-structures | 552 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order restoration and multi-producer multi-consumer array-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput task scheduling and multi-core work-stealing execution in real-time asynchronous processing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core database index management in real-time transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer splicing and node-level marker CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core in-memory database indexing in real-time transactional systems`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocation and child-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput dictionary lookups and multi-core autocomplete indexing in real-time search engine and text processing systems`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics and physics simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Labeled Directed Graph using atomic vertex-insertion and edge-CAS primitives alongside hazard pointer memory reclamation for high-throughput relationship querying and multi-core traversal evaluation in real-time social network and recommendation engine systems`
 
 <!-- STATS_END -->
 

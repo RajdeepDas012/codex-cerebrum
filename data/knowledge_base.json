@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1449,
-    "last_updated": "2026-09-21T23:21:39.971228+00:00",
-    "total_topics_learned": 1449
+    "total_runs": 1450,
+    "last_updated": "2026-09-21T23:24:47.581346+00:00",
+    "total_topics_learned": 1450
   },
   "entries": [
     {
@@ -69399,6 +69399,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-21T23:21:39.971214+00:00",
       "run_number": 1449
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order restoration and multi-producer multi-consumer array-swapping CAS primitives alongside epoch-based memory reclamation for high-throughput task scheduling and multi-core work-stealing execution in real-time asynchronous processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent priority queue built on atomic heap operations and epoch-based memory management. It enables high-throughput multi-producer multi-consumer task scheduling without blocking threads, making it critical for real-time asynchronous processing engines and work-stealing schedulers.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage heap indices and node swapping without acquiring mutual exclusion locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely free nodes once no active threads are referencing them during queue updates.",
+        "Handles race conditions arising from concurrent insertions and extractions (sift-up and sift-down operations) via optimistic concurrency control.",
+        "Optimizes multi-core work-stealing execution by allowing concurrent tasks to be prioritized and dispatched with minimal synchronization overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic CAS loop for swapping nodes during heap-order restoration in a lock-free priority queue.",
+        "correct": "bool restoreHeapOrder(std::atomic<Node*>& parent, std::atomic<Node*>& child) {\n    Node* pVal = parent.load();\n    Node* cVal = child.load();\n    if (pVal->priority >= cVal->priority) return false;\n    return parent.compare_exchange_strong(pVal, cVal);\n}",
+        "wrong": "bool restoreHeapOrder(Node* parent, Node* child) {\n    if (parent->priority < child->priority) {\n        std::swap(parent->priority, child->priority);\n    }\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when managing node pointers in free lists or shared heap arrays.",
+        "Using blocking synchronization primitives inside epoch-protected critical sections, defeating the lock-free guarantee."
+      ],
+      "best_practices": [
+        "Protect dynamic node allocations and deletions using a robust epoch-based garbage collection framework.",
+        "Minimize CAS retry loops by backing off or using localized queues when contention scales up heavily across multiple CPU cores."
+      ],
+      "when_to_use": "Use when building high-throughput, low-latency asynchronous job schedulers or real-time event loops where thread contention on a shared priority queue creates severe bottlenecks.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when simple mutex-based synchronization satisfies performance requirements without the added complexity of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How do you handle structural modifications like heap-order restoration using CAS without risking consistency violations?",
+          "answer": "By using optimistic concurrency control where threads attempt CAS operations on pointers, and retrying if another thread modified the target nodes concurrently, coupled with epoch-based reclamation to ensure safe memory access."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free priority queues?",
+          "answer": "Epoch-based memory reclamation avoids the heavy cache contention and atomic instruction overhead associated with frequently updating reference counts on every node read or pointer traversal."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Work-Stealing Schedulers",
+        "Concurrent Binary Heaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T23:24:47.581334+00:00",
+      "run_number": 1450
     }
   ]
 }
