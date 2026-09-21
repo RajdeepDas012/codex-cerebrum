@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1428** |
-| Last Updated | `2026-09-21T14:44:39.339954+00:00` |
-| Dataset Size | `1428 entries` |
+| Total Topics Learned | **1429** |
+| Last Updated | `2026-09-21T19:11:39.920035+00:00` |
+| Dataset Size | `1429 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 534 |
+| data-structures | 535 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected-component queries and multi-core network connectivity analysis in real-time graph processing engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree linking and root-list merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time distributed execution engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length updating and merge-spine CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time distributed execution engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-link and multi-pass merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core job scheduling in real-time execution engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree data structure using atomic bounding-rectangle expansion and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geographic query processing in real-time location-based services and mapping engines`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing and min-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path and Prim's minimum spanning tree computations in real-time network routing and graph analytics engines`
 
 <!-- STATS_END -->
 
