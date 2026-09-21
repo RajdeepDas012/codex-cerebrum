@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1423** |
-| Last Updated | `2026-09-21T14:24:04.075834+00:00` |
-| Dataset Size | `1423 entries` |
+| Total Topics Learned | **1424** |
+| Last Updated | `2026-09-21T14:27:41.093667+00:00` |
+| Dataset Size | `1424 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 529 |
+| data-structures | 530 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing and min-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path and Prim's minimum spanning tree computations in real-time network routing and graph analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick-Tree based Order Statistics Tree using atomic rank-incrementing and node-traversal CAS primitives alongside epoch-based memory reclamation for high-throughput dynamic percentile tracking and multi-core rank queries in real-time trading engines and analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog data structure using atomic register-register merging and stochastic cardinality estimation CAS primitives alongside epoch-based memory reclamation for high-throughput distinct-value stream counting and real-time unique visitor analytics in distributed telemetry ingestion pipelines`
 - `Implementation of a lock-free thread-safe concurrent Treap data structure using atomic priority-rotation and heap-property balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core dynamic set management in real-time key-value indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element caching and multi-core amortized search optimization in real-time memory management systems`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management and dynamic database storage engines`
 
 <!-- STATS_END -->
 

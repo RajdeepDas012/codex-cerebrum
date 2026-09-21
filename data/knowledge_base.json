@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1423,
-    "last_updated": "2026-09-21T14:24:04.075834+00:00",
-    "total_topics_learned": 1423
+    "total_runs": 1424,
+    "last_updated": "2026-09-21T14:27:41.093667+00:00",
+    "total_topics_learned": 1424
   },
   "entries": [
     {
@@ -68172,6 +68172,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T14:24:04.075817+00:00",
       "run_number": 1423
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list splicing and min-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path and Prim's minimum spanning tree computations in real-time network routing and graph analytics engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Fibonacci Heap utilizing atomic root-list splicing, CAS-based minimum pointer updates, and hazard pointers. It enables high-throughput priority queue operations required by distributed graph traversal algorithms and real-time network routing engines without mutual exclusion bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for updating global minimum pointers and splicing new root nodes into the heap root list without locks.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural reorganizations across concurrent threads.",
+        "Optimizes amortized decrease-key and insert operations to maintain efficient performance under heavy multi-core contention.",
+        "Balances structural nodes dynamically to support performance-critical graph algorithms like Dijkstra's shortest path and Prim's MST."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free atomic minimum pointer update using CAS during concurrent heap node insertions.",
+        "correct": "bool try_insert(std::atomic<Node*>& min_ptr, Node* new_node) {\n    while (true) {\n        Node* current_min = min_ptr.load();\n        new_node->right = current_min;\n        if (min_ptr.compare_exchange_weak(current_min, new_node)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "Node* try_insert(std::atomic<Node*>& min_ptr, Node* new_node) {\n    Node* current = min_ptr.load();\n    min_ptr.store(new_node); // Missing CAS loop leads to race conditions and lost updates\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to ABA problems and use-after-free bugs.",
+        "Attempting to maintain strict global consolidation of trees in a lock-free context instead of lazy structural adjustments."
+      ],
+      "best_practices": [
+        "Keep critical sections inside atomic retry loops as minimal as possible to reduce multi-core cache contention.",
+        "Implement robust epoch or hazard pointer reclamation phases to prevent memory leaks during intense concurrent deletions."
+      ],
+      "when_to_use": "Use when building high-throughput distributed graph processing pipelines or real-time routing algorithms requiring frequent concurrent priority updates and minimum extractions.",
+      "when_not_to_use": "Avoid in single-threaded environments or lightweight applications where the high memory and CPU overhead of hazard pointers and CAS loops outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the global minimum pointer update safely in a lock-free Fibonacci Heap without locks?",
+          "answer": "By using a compare-and-swap (CAS) retry loop that checks if the minimum pointer has changed since it was loaded before attempting to replace it with the new node."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent heaps with node merging and extraction?",
+          "answer": "Hazard pointers prevent another thread from freeing or reusing a node's memory while a thread is actively traversing or modifying pointers connected to that node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Priority Queues",
+        "Hazard Pointer Memory Management",
+        "Concurrent Graph Analytics Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T14:27:41.093645+00:00",
+      "run_number": 1424
     }
   ]
 }
