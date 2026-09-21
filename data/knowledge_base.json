@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1437,
-    "last_updated": "2026-09-21T19:37:18.955623+00:00",
-    "total_topics_learned": 1437
+    "total_runs": 1438,
+    "last_updated": "2026-09-21T19:40:26.701100+00:00",
+    "total_topics_learned": 1438
   },
   "entries": [
     {
@@ -68831,6 +68831,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T19:37:18.955604+00:00",
       "run_number": 1437
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer linking and hierarchical routing-table CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core distributed routing in real-time peer-to-peer overlay networks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Skip Graph combines the distributed search efficiency of skip lists with peer-to-peer overlay routing, allowing logarithmic search and traversal times without centralized coordination. By utilizing atomic compare-and-swap (CAS) operations for peer-pointer linking and hazard pointers for safe memory management, it achieves high-throughput lock-free operations across multiple cores.",
+      "key_points": [
+        "Uses hierarchical routing tables to achieve O(log N) search performance in a distributed environment.",
+        "Employs atomic CAS primitives to link and unlink peer pointers without traditional locks.",
+        "Leverages hazard pointers to securely reclaim memory of deleted nodes amidst concurrent traversals.",
+        "Eliminates global synchronization barriers, enhancing scalability on multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic updating of a Skip Graph node's peer pointer using a CAS loop and hazard pointer protection.",
+        "correct": "bool link_peer(HazardPointer& hp, std::atomic<Node*>& target_ptr, Node* new_node) {\n    Node* current;\n    do {\n        current = target_ptr.load(std::memory_order_acquire);\n        hp.protect(current);\n        new_node->next.store(current, std::memory_order_relaxed);\n    } while (!target_ptr.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool link_peer_unsafe(std::atomic<Node*>& target_ptr, Node* new_node) {\n    target_ptr.store(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Improper memory ordering constraints (e.g., using relaxed memory order where acquire-release is necessary for pointer visibility)."
+      ],
+      "best_practices": [
+        "Always wrap node reads in hazard pointer protection domains before traversing references in lock-free structures.",
+        "Carefully design fallback paths in CAS loops to handle high contention gracefully.",
+        "Batch retired nodes to minimize the overhead of hazard pointer scanning routines."
+      ],
+      "when_to_use": "Use when building high-throughput, decentralized peer-to-peer overlay networks or multi-core distributed routing tables requiring lock-free concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of hazard pointers and lock-free CAS loops outweighs the scalability benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free Skip Graph?",
+          "answer": "Hazard pointers protect nodes currently being accessed by a thread by registering them in a globally visible list, preventing other threads from reclaiming their memory until the traversal or mutation completes."
+        },
+        {
+          "question": "Why are atomic CAS primitives preferred over mutexes in concurrent Skip Graphs?",
+          "answer": "CAS primitives avoid thread blocking, context switching overhead, and susceptibility to deadlocks, thus maximizing throughput on multi-core systems under high contention."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Distributed Hash Tables (DHT)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T19:40:26.701082+00:00",
+      "run_number": 1438
     }
   ]
 }
