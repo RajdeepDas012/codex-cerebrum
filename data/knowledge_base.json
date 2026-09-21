@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1385,
-    "last_updated": "2026-09-20T22:05:14.897731+00:00",
-    "total_topics_learned": 1385
+    "total_runs": 1386,
+    "last_updated": "2026-09-21T00:00:56.215356+00:00",
+    "total_topics_learned": 1386
   },
   "entries": [
     {
@@ -66374,6 +66374,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-20T22:05:14.897713+00:00",
       "run_number": 1385
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SimHash data structure using atomic bitwise-hamming distance tracking and fingerprint-merging CAS primitives alongside epoch-based memory reclamation for high-throughput near-duplicate document detection and web-scale crawling deduplication in real-time search engine pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure provides lock-free, thread-safe management of SimHash fingerprints using atomic bitwise operations and compare-and-swap (CAS) primitives. It enables high-throughput near-duplicate document identification and real-time web-crawler deduplication without thread contention or blocking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic bitwise-hamming distance tracking to evaluate fingerprint similarities across multiple concurrent threads safely.",
+        "Employs fingerprint-merging CAS primitives to update shared bucket values without explicit locking mechanisms.",
+        "Integrates epoch-based memory reclamation to safely manage deleted or updated fingerprint nodes without dangling pointers.",
+        "Optimizes real-time web-scale crawling pipelines by eliminating locking overhead during massive near-duplicate detection workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based updating of SimHash fingerprint accumulator bits in a lock-free manner.",
+        "correct": "void update_simhash_bucket(std::atomic<int64_t>* bucket, int64_t feature_vector) {\n    int64_t old_val, new_val;\n    do {\n        old_val = bucket->load(std::memory_order_relaxed);\n        new_val = old_val + feature_vector;\n    } while (!bucket->compare_exchange_weak(old_val, new_val, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void update_simhash_bucket(int64_t* bucket, int64_t feature_vector) {\n    // Missing synchronization leading to data races\n    *bucket += feature_vector;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use relaxed and acquire-release memory orderings appropriately, resulting in unnecessary synchronization overhead.",
+        "Neglecting proper epoch tracking or hazard management when replacing or deleting old fingerprint nodes, leading to memory leaks or segmentation faults."
+      ],
+      "best_practices": [
+        "Use atomic operations exclusively for fine-grained updates on accumulator vectors rather than locking entire hash tables.",
+        "Batch feature vector accumulations locally per thread before performing global atomic updates to maximize cache locality and throughput."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded search engine ingestion or web-crawling pipelines that require real-time near-duplicate detection under extreme concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with low throughput requirements where standard lock-based maps are significantly simpler to maintain.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to the same SimHash bit accumulator vector without using mutexes?",
+          "answer": "By using atomic load-and-CAS loops (compare_exchange_weak) to safely add weighted feature vectors to the shared bit counter array."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation critical when dynamically updating fingerprint buckets in a concurrent data structure?",
+          "answer": "It ensures that memory associated with old or replaced fingerprint nodes is only reclaimed after all active reader and writer threads have exited the current epoch, preventing use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Locality-Sensitive Hashing (LSH)",
+        "Lock-Free Hash Maps",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T00:00:56.215336+00:00",
+      "run_number": 1386
     }
   ]
 }
