@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1447,
-    "last_updated": "2026-09-21T23:15:22.795481+00:00",
-    "total_topics_learned": 1447
+    "total_runs": 1448,
+    "last_updated": "2026-09-21T23:18:31.638567+00:00",
+    "total_topics_learned": 1448
   },
   "entries": [
     {
@@ -69304,6 +69304,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T23:15:22.795466+00:00",
       "run_number": 1447
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer splicing and node-level marker CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core in-memory database indexing in real-time transactional systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent skip list optimized for high-throughput ordered set operations and multi-core in-memory database indexing. It leverages atomic forward-pointer splicing, logical deletion markers, and hazard pointers to ensure safe, wait-free traversal and lock-free updates.",
+      "key_points": [
+        "Uses multi-level probabilistic balancing to achieve expected O(log n) search, insertion, and deletion times without locks.",
+        "Employs Compare-And-Swap (CAS) primitives on forward pointers for thread-safe node splicing and unsplicing.",
+        "Utilizes logical deletion markers on nodes to signal concurrent threads that a node is pending physical removal.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent the ABA problem during concurrent node manipulation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward pointer CAS updating with logical deletion marking in a lock-free skip list node.",
+        "correct": "bool mark = false; auto next = curr->forward[level].load(); while (!curr->forward[level].compare_exchange_weak(next, reinterpret_cast<Node*>((uintptr_t)next | 0x1)));",
+        "wrong": "curr->forward[level] = next; // Non-atomic write causing race conditions and memory corruption in concurrent environments."
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when updating pointer references via CAS primitives without hazard pointers or version tags.",
+        "Forgetting to check and handle logical deletion markers during traversal, leading to broken links or missing nodes."
+      ],
+      "best_practices": [
+        "Always pair atomic operations with hazard pointer registration to ensure nodes are not reclaimed while other threads traverse them.",
+        "Ensure bottom-level (level 0) physical deletion occurs only after all upper-level forward pointers have been successfully unlinked."
+      ],
+      "when_to_use": "Use when you need high-throughput, ordered range queries and sorted set operations across multiple CPU cores with minimal contention.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when a simple single-threaded implementation or coarse-grained mutex suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating forward pointers in a lock-free skip list?",
+          "answer": "By utilizing hazard pointers to protect nodes currently being accessed during traversal or by embedding version counters/marked pointers into the address bits."
+        },
+        {
+          "question": "Why is logical deletion required before physical deletion in a concurrent lock-free skip list?",
+          "answer": "Logical deletion via a marker bit signals concurrent traversers that a node is being removed, allowing them to help bypass it or retry safely before the memory is reclaimed."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Priority Queues",
+        "Multi-Core In-Memory Database Indexing Structures"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-09-21T23:18:31.638551+00:00",
+      "run_number": 1448
     }
   ]
 }
