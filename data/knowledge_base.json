@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1436,
-    "last_updated": "2026-09-21T19:34:09.561996+00:00",
-    "total_topics_learned": 1436
+    "total_runs": 1437,
+    "last_updated": "2026-09-21T19:37:18.955623+00:00",
+    "total_topics_learned": 1437
   },
   "entries": [
     {
@@ -68784,6 +68784,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T19:34:09.561976+00:00",
       "run_number": 1436
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic counter-incrementing and hash-bucket collision-resolution CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and heavy-hitter stream analytics in real-time distributed telemetry and networking monitoring engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch utilizes atomic counter increments and hazard pointer memory management to track item frequencies across multiple threads without locking bottlenecks. It enables scalable, high-throughput heavy-hitter detection and frequency estimation in real-time streaming data environments.",
+      "key_points": [
+        "Utilizes a 2D array of counters coupled with multiple independent hash functions to summarize data streams with bounded space.",
+        "Employs atomic fetch-add operations to safely increment bucket values across concurrent worker threads without acquiring global mutexes.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation for scalable resizing or node allocation without garbage collection pauses.",
+        "Guarantees sub-linear space complexity while bounding frequency estimation overestimation errors within configurable parameters."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic incrementing of Count-Min Sketch hash buckets using standard atomic operations",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCMS {\n    std::vector<std::vector<std::atomic<uint64_t>>> table;\n    size_t depth, width;\npublic:\n    ConcurrentCMS(size_t d, size_t w) : depth(d), width(w), table(d, std::vector<std::atomic<uint64_t>>(w)) {}\n    void add(uint64_t hash1, uint64_t hash2, uint64_t val) {\n        for (size_t i = 0; i < depth; ++i) {\n            size_t idx = (hash1 + i * hash2) % width;\n            table[i][idx].fetch_add(val, std::memory_order_relaxed);\n        }\n    }\n};",
+        "wrong": "#include <vector>\n#include <mutex>\n\nclass BadCMS {\n    std::vector<std::vector<uint64_t>> table;\n    std::mutex mtx;\npublic:\n    void add(size_t row, size_t col) {\n        std::lock_guard<std::mutex> lock(mtx); // Bottleneck under high concurrency\n        table[row][col]++;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using strict sequentially consistent memory orders where relaxed or acquire-release semantics would suffice, degrading throughput.",
+        "Failing to handle hash collisions properly, resulting in severe frequency overestimation for skewed streaming workloads."
+      ],
+      "best_practices": [
+        "Apply memory_order_relaxed for atomic counter increments since exact ordering between independent bucket updates is unneeded.",
+        "Select hash functions with low collision rates and fast computation speeds, such as MurmurHash3 or WyHash, to maintain stream processing line-rate."
+      ],
+      "when_to_use": "Use when processing massive, high-velocity data streams across multi-core systems where approximate frequency queries and heavy-hitter identification are required with strict latency budgets.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory or when the universe of distinct items is small enough to fit comfortably into an exact hash map.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads increment the same bucket in a Count-Min Sketch without using locks?",
+          "answer": "By using atomic compare-and-swap (CAS) loops or atomic fetch-add operations combined with relaxed memory ordering."
+        },
+        {
+          "question": "What is the trade-off between memory footprint and estimation accuracy in a Count-Min Sketch?",
+          "answer": "Increasing the width and depth reduces the error bounds and collision probabilities but linearly increases the memory consumption of the sketch."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-21T19:37:18.955604+00:00",
+      "run_number": 1437
     }
   ]
 }
