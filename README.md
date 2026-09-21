@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1420** |
-| Last Updated | `2026-09-21T14:09:46.144281+00:00` |
-| Dataset Size | `1420 entries` |
+| Total Topics Learned | **1421** |
+| Last Updated | `2026-09-21T14:14:25.036712+00:00` |
+| Dataset Size | `1421 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 526 |
+| data-structures | 527 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap data structure using atomic priority-rotation and heap-property balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core dynamic set management in real-time key-value indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element caching and multi-core amortized search optimization in real-time memory management systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management and dynamic database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Octree using atomic voxel-subdivision and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial partitioning and multi-core collision detection in real-time game engines and autonomous vehicle simulation systems`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-box coordinate updating and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point indexing and nearest-neighbor search in real-time robotics and spatial database systems`
-- `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-indexing and rank-select CAS primitives alongside epoch-based memory reclamation for high-throughput succinct range queries and multi-core compressed text indexing in real-time string processing and genomic analysis engines`
 
 <!-- STATS_END -->
 
