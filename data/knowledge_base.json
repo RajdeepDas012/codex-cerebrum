@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1443,
-    "last_updated": "2026-09-21T19:56:10.543099+00:00",
-    "total_topics_learned": 1443
+    "total_runs": 1444,
+    "last_updated": "2026-09-21T23:05:58.703717+00:00",
+    "total_topics_learned": 1444
   },
   "entries": [
     {
@@ -69114,6 +69114,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-21T19:56:10.543079+00:00",
       "run_number": 1443
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent CRDT (Conflict-Free Replicated Data Type) Observed-Removed Set using atomic state-tombstoning and causal-context merging CAS primitives alongside epoch-based memory reclamation for high-throughput distributed state convergence and multi-core conflict resolution in real-time collaborative editing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure enables lock-free concurrent additions and removals in an Observed-Removed Set (OR-Set) CRDT by leveraging atomic Compare-And-Swap (CAS) primitives and epoch-based memory reclamation. It guarantees eventual consistency and conflict-free state convergence across multiple cores and distributed nodes without blocking threads.",
+      "key_points": [
+        "Uses atomic state-tombstoning to mark deleted elements while preserving causal context for concurrent operations.",
+        "Employs CAS-based primitives to manage state transitions and structure updates safely across multiple threads without locks.",
+        "Integrates epoch-based memory reclamation to safely free tombstoned elements without premature memory deallocation issues.",
+        "Ensures strong eventual consistency for real-time collaborative editing engines where operations can occur concurrently offline and online."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic insertion into an OR-Set concurrent node using CAS loops and epoch protection.",
+        "correct": "bool ConcurrentORSet::insert(const std::string& element, const UUID& tag) {\n    EpochGuard guard;\n    Node* new_node = allocate_node(element, tag);\n    while (true) {\n        Node* head = head_.load(std::memory_order_acquire);\n        new_node->next = head;\n        if (head_.compare_exchange_weak(head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool ConcurrentORSet::insert(const std::string& element, const UUID& tag) {\n    mutex.lock();\n    head = new Node(element, tag, head);\n    mutex.unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle ABA problems during atomic pointer updates of the causal context nodes.",
+        "Leaking memory by not utilizing proper epoch-based reclamation or hazard pointers when removing tombstoned metadata.",
+        "Neglecting causal context ordering, leading to lost updates or incorrect resurrection of deleted elements during merges."
+      ],
+      "best_practices": [
+        "Pair CAS operations with robust memory management models like epoch-based reclamation to prevent use-after-free bugs under high concurrency.",
+        "Isolate causal contexts into immutable version vectors or unique tag sets to ensure deterministic conflict resolution.",
+        "Benchmark atomic read-modify-write loops under high contention to minimize retry overhead."
+      ],
+      "when_to_use": "Use when building real-time collaborative applications (like concurrent document editors or shared whiteboards) requiring high-throughput, lock-free concurrent updates and guaranteed eventual consistency.",
+      "when_not_to_use": "Avoid when dealing with single-threaded environments or strict linearizability requirements where simpler synchronized data structures suffice without the overhead of CRDT metadata.",
+      "interview_questions": [
+        {
+          "question": "How does an Observed-Removed Set (OR-Set) handle the case where an element is concurrently added and removed?",
+          "answer": "An OR-Set uses unique monotonically increasing tags or unique identifiers for every add operation. A remove operation targets specific add tags rather than the element itself. Thus, a concurrent add introduces a new unique tag that survives the removal of older tags, ensuring the element remains present."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation necessary when implementing lock-free CRDT data structures?",
+          "answer": "Lock-free structures allow multiple threads to access and traverse shared nodes concurrently. When nodes are tombstoned or unlinked, standard deallocation (like free or delete) could cause use-after-free errors for other threads traversing those nodes. Epoch-based reclamation delays actual memory freeing until all threads currently active in an epoch have exited."
+        }
+      ],
+      "related_topics": [
+        "Conflict-Free Replicated Data Types (CRDTs)",
+        "Epoch-Based Memory Management",
+        "Lock-Free Concurrent Programming"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-09-21T23:05:58.703699+00:00",
+      "run_number": 1444
     }
   ]
 }
