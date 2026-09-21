@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1414,
-    "last_updated": "2026-09-21T06:43:35.602799+00:00",
-    "total_topics_learned": 1414
+    "total_runs": 1415,
+    "last_updated": "2026-09-21T06:46:44.624046+00:00",
+    "total_topics_learned": 1415
   },
   "entries": [
     {
@@ -67745,6 +67745,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-21T06:43:35.602776+00:00",
       "run_number": 1414
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-bounding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range searching and multi-core spatial-priority query evaluation in real-time geographic information systems and database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Priority Search Tree tailored for real-time spatial databases and GIS applications. By utilizing atomic compare-and-swap (CAS) operations for coordinate bounding and node splitting alongside hazard pointers, it ensures safe memory reclamation and high-throughput orthogonal range searches across multiple CPU cores.",
+      "key_points": [
+        "Combines priority queue ordering (by priority coordinate) with search tree properties (by spatial coordinate) to handle orthogonal range queries efficiently.",
+        "Employs atomic coordinate-bounding and node-splitting CAS primitives to achieve lock-free concurrent updates without global mutex contention.",
+        "Integrates hazard pointers for safe, lock-free memory management, preventing premature node reclamation while threads traverse concurrent paths.",
+        "Optimized for multi-core scalability, making it ideal for real-time geographic information systems (GIS) and spatial database query engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a lock-free hazard pointer protected node access during a concurrent Priority Search Tree traversal.",
+        "correct": "template<typename T> void traverse_pst_safely(AtomicNode<T>* root, const Range& query, HazardPointerList& hp_list) { HazardPointer<T>* hp = hp_list.acquire(); AtomicNode<T>* current; do { current = root->load(std::memory_order_acquire); hp->set(current); } while (current != root->load(std::memory_order_relaxed)); if (current && current->bounds.intersects(query)) { process_node(current); } hp_list.release(hp); }",
+        "wrong": "template<typename T> void traverse_pst_unsafe(Node<T>* root, const Range& query) { if (root->bounds.intersects(query)) { process_node(root); } }"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to memory corruption or use-after-free bugs when concurrent threads split or delete nodes.",
+        "Neglecting memory ordering semantics (using sequentially consistent accesses everywhere), which degrades multi-core scalability."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are published and verified via retry loops to prevent race conditions during node deletion and restructuring.",
+        "Keep critical sections inside atomic primitives as tight as possible to maximize multi-core throughput."
+      ],
+      "when_to_use": "When building real-time geographic information systems or database engines requiring high-throughput, concurrent multi-dimensional range searching and spatial-priority evaluations.",
+      "when_not_to_use": "In single-threaded applications or environments with low concurrency where standard locking data structures offer simpler implementation and maintenance overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in a lock-free Priority Search Tree?",
+          "answer": "Hazard pointers protect nodes currently being accessed by a thread by registering them in a thread-local list, ensuring that no other thread can free or reclaim the memory of those nodes via CAS until they are safely released."
+        },
+        {
+          "question": "Why is a Priority Search Tree preferred over a standard quadtree or R-tree for certain 2D orthogonal range queries in high-concurrency settings?",
+          "answer": "A Priority Search Tree provides optimal $O(\\log n + k)$ query time for orthogonal range searching by combining a heap ordered by one coordinate and a search tree ordered by the other, making atomic node-splitting and coordinate-bounding updates cleaner to implement lock-free."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Spatial Indexing and Orthogonal Range Searching"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-21T06:46:44.624024+00:00",
+      "run_number": 1415
     }
   ]
 }
