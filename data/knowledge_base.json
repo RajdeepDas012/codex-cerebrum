@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1444,
-    "last_updated": "2026-09-21T23:05:58.703717+00:00",
-    "total_topics_learned": 1444
+    "total_runs": 1445,
+    "last_updated": "2026-09-21T23:09:06.892405+00:00",
+    "total_topics_learned": 1445
   },
   "entries": [
     {
@@ -69163,6 +69163,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-21T23:05:58.703699+00:00",
       "run_number": 1444
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Labeled Directed Graph using atomic vertex-insertion and edge-CAS primitives alongside hazard pointer memory reclamation for high-throughput relationship querying and multi-core traversal evaluation in real-time social network and recommendation engine systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent labeled directed graph utilizing atomic primitives (CAS) for vertex and edge mutations alongside hazard pointers for safe memory management. It enables high-throughput multi-core graph traversals without locking, vital for real-time social networking and recommendation workloads.",
+      "key_points": [
+        "Uses atomic operations (CAS) to achieve lock-free vertex insertion and edge linking without global mutex bottlenecks.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted vertices and edges until active reader threads release them.",
+        "Maintains labeled directed edges to support rich relationship metadata necessary for recommendation filtering and social graph queries.",
+        "Optimizes multi-core traversal evaluation by ensuring thread-safe reads of adjacency lists and neighbor pointers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic vertex insertion and hazard pointer protection for concurrent graph traversal.",
+        "correct": "bool add_vertex(AtomicGraph* g, uint64_t id) {\n    Vertex* v = new Vertex(id);\n    while (true) {\n        Vertex* head = g->head.load();\n        v->next.store(head);\n        if (g->head.compare_exchange_weak(head, v)) return true;\n    }\n}",
+        "wrong": "bool add_vertex_unsafe(Graph* g, uint64_t id) {\n    std::lock_guard<std::mutex> lock(g->mu);\n    g->vertices.push_back(new Vertex(id));\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed traversal paths with hazard pointers, leading to use-after-free race conditions.",
+        "Using coarse-grained locks on adjacency list updates which bottlenecks multi-core graph evaluation scaling."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer registration loops tightly around traversal steps to minimize memory reclamation latency.",
+        "Structure edge adjacency lists as lock-free linked lists or atomic arrays to allow fine-grained concurrent edge additions."
+      ],
+      "when_to_use": "When building high-throughput real-time recommendation systems or social network engines requiring heavy concurrent traversals and low-latency mutations.",
+      "when_not_to_use": "For mostly read-only static graphs or single-threaded workloads where simpler standard library containers and basic mutexes suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs when traversing a lock-free graph?",
+          "answer": "Hazard pointers allow a reader thread to publish a reference it is currently accessing. Memory reclamation engines check these published pointers and defer freeing any node until no active thread references it."
+        },
+        {
+          "question": "Why is lock-free vertex and edge insertion preferred over standard rw-locks in massive social graph traversal engines?",
+          "answer": "Locks introduce thread contention, convoying, and deadlocks under high write/read concurrency, whereas lock-free CAS primitives allow multiple threads to progress simultaneously without blocking."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Distributed Graph Processing Engines"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-21T23:09:06.892386+00:00",
+      "run_number": 1445
     }
   ]
 }
