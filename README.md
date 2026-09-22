@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1480** |
-| Last Updated | `2026-09-22T10:04:56.244060+00:00` |
-| Dataset Size | `1480 entries` |
+| Total Topics Learned | **1481** |
+| Last Updated | `2026-09-22T10:08:04.171698+00:00` |
+| Dataset Size | `1481 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 577 |
+| data-structures | 578 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order balancing and multi-producer multi-consumer node-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core job execution in real-time distributed computing engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link forwarding and latch-free node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index traversal and concurrent range querying in real-time in-memory database storage systems`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height linking and forward-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range querying in real-time in-memory database storage systems`
 - `Implementation of a lock-free thread-safe concurrent T-Tree using atomic node-balancing and balance-factor adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory index management and multi-core range query evaluation in real-time main-memory database storage systems`
 - `Implementation of a lock-free thread-safe concurrent Merkle Patricia Tree using atomic branch-node linking and root-hash updating CAS primitives alongside hazard pointer memory reclamation for high-throughput state-trie modifications and multi-core cryptographic proof generation in real-time blockchain execution engines`
-- `Implementation of a lock-free thread-safe concurrent BK-Tree (Burkhard-Keller Tree) using atomic distance-bucket linking and child-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell-checking evaluation in real-time text processing and natural language processing engines`
 
 <!-- STATS_END -->
 

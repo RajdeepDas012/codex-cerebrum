@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1480,
-    "last_updated": "2026-09-22T10:04:56.244060+00:00",
-    "total_topics_learned": 1480
+    "total_runs": 1481,
+    "last_updated": "2026-09-22T10:08:04.171698+00:00",
+    "total_topics_learned": 1481
   },
   "entries": [
     {
@@ -70863,6 +70863,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-22T10:04:56.244038+00:00",
       "run_number": 1480
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-order balancing and multi-producer multi-consumer node-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core job execution in real-time distributed computing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent priority queue utilizing atomic compare-and-swap (CAS) operations and hazard pointers for safe memory reclamation. It ensures high-throughput task scheduling and efficient multi-core job execution without thread contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic heap-order balancing primitives to maintain structural invariants across concurrent insertions and extractions.",
+        "Employs multi-producer multi-consumer node-CAS operations to safely modify pointer links without global mutex locks.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free unlinked heap nodes in concurrent environments.",
+        "Optimizes throughput for real-time distributed computing engines requiring ultra-low latency task scheduling."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic push operation for a lock-free priority queue using hazard pointers.",
+        "correct": "bool push(T value) {\n    Node* new_node = new Node(value);\n    while (true) {\n        Node* old_root = root.load();\n        hazard_ptrs[tid].store(old_root);\n        if (root.load() != old_root) continue;\n        new_node->next = old_root;\n        if (root.compare_exchange_weak(old_root, new_node)) {\n            hazard_ptrs[tid].store(nullptr);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool push(T value) {\n    mutex.lock();\n    nodes.push_back(value);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect shared node pointers with hazard pointers before reading, leading to use-after-free race conditions.",
+        "Neglecting the ABA problem during structural modification CAS loops, which can corrupt queue topology."
+      ],
+      "best_practices": [
+        "Keep critical sections of pointer traversal and hazard pointer registration minimal and atomic.",
+        "Batch retired nodes in thread-local retirement lists before scanning global hazard pointers to reduce overhead."
+      ],
+      "when_to_use": "Use when building high-throughput task schedulers or distributed engines where multiple threads frequently enqueue and dequeue prioritized work items under high contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity and overhead of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to locally publish pointers they are currently accessing so that other threads know not to free those memory blocks until the reading thread unpublishes them."
+        },
+        {
+          "question": "What is the primary challenge when implementing a lock-free priority queue compared to a standard queue?",
+          "answer": "Maintaining heap-order invariants across concurrent modifications requires global or semi-global structural adjustments, which are difficult to implement atomically using simple CAS primitives without inducing high contention."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Task Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T10:08:04.171676+00:00",
+      "run_number": 1481
     }
   ]
 }
