@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1506,
-    "last_updated": "2026-09-22T19:27:27.787535+00:00",
-    "total_topics_learned": 1506
+    "total_runs": 1507,
+    "last_updated": "2026-09-22T21:55:34.071808+00:00",
+    "total_topics_learned": 1507
   },
   "entries": [
     {
@@ -72095,6 +72095,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-22T19:27:27.787513+00:00",
       "run_number": 1506
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance linking and metric-space partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell-checking in real-time search engine autocomplete and natural language processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent BK-Tree (Burkhard-Keller Tree) that supports lock-free insertions and metric-space traversals for approximate string matching. It utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage node links based on edit distance without locking the entire tree.",
+      "key_points": [
+        "Leverages metric space properties (like the triangle inequality of Levenshtein distance) to prune search branches during approximate matching.",
+        "Uses atomic operations and CAS primitives to dynamically append child nodes corresponding to specific edit-distance edges under concurrent inserts.",
+        "Employs hazard pointers to guarantee safe memory reclamation of dynamically allocated tree nodes without expensive global locking.",
+        "Enables high-throughput multi-core execution for real-time applications such as spell-checking and search engine query autocomplete."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic BK-Tree node link update using CAS and hazard pointers.",
+        "correct": "struct BKNode { std::string word; std::atomic<BKNode*> children[MAX_DISTANCE]; }; bool addChild(std::atomic<BKNode*>& childSlot, BKNode* newNode) { BKNode* expected = nullptr; return childSlot.compare_exchange_strong(expected, newNode); }",
+        "wrong": "BKNode* childSlot = nullptr; void addChild(BKNode* newNode) { if (childSlot == nullptr) { childSlot = newNode; } }"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal paths with hazard pointers, leading to use-after-free bugs when concurrent threads prune or delete nodes.",
+        "Ignoring the triangle inequality optimization during multi-threaded lookups, which severely degrades approximate string search performance."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with thread-local hazard pointers prior to reading child pointers in a concurrent traversal.",
+        "Pre-calculate edit distances using optimized algorithms (like Wagner-Fischer) outside of critical section atomic updates to reduce contention."
+      ],
+      "when_to_use": "Use this structure when building high-concurrency systems requiring rapid approximate string matching, fuzzy searching, or spell-checking against a massive dynamic dictionary.",
+      "when_not_to_use": "Avoid using this for exact string lookups where standard concurrent Hash Maps or Tries provide superior $O(1)$ or $O(k)$ time complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a BK-Tree leverage metric space properties to speed up approximate string matching?",
+          "answer": "It uses the triangle inequality of edit distances to prune entire subtrees whose root distance to the query falls outside the acceptable error radius."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent BK-Tree?",
+          "answer": "Hazard pointers safely track nodes currently being accessed by reader threads, preventing them from being reclaimed or freed by concurrent mutators until traversal completes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Skip Graph",
+        "Hazard Pointer Memory Reclamation",
+        "Levenshtein Distance Metric Spaces"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T21:55:34.071751+00:00",
+      "run_number": 1507
     }
   ]
 }
