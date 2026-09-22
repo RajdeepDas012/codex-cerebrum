@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1459** |
-| Last Updated | `2026-09-22T04:18:08.246241+00:00` |
-| Dataset Size | `1459 entries` |
+| Total Topics Learned | **1460** |
+| Last Updated | `2026-09-22T04:21:18.472213+00:00` |
+| Dataset Size | `1460 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 561 |
+| data-structures | 562 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box partitioning and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial searching and multi-core nearest neighbor query evaluation in real-time geographic and robotics navigation systems`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-node linking and path-copying CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core functional data structure evaluation in real-time version-controlled analytical databases`
 - `Implementation of a lock-free thread-safe concurrent Radix-Tree (Patricia Trie) using atomic node-merging and branch-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-detection CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core schedule conflict evaluation in real-time calendar and resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box expansion and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric query evaluation in real-time geographic information systems`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer tracking and root-list consolidation CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path computation and multi-core network routing optimization in real-time graph analysis engines`
 
 <!-- STATS_END -->
 
