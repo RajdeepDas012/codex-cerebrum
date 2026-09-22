@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1460,
-    "last_updated": "2026-09-22T04:21:18.472213+00:00",
-    "total_topics_learned": 1460
+    "total_runs": 1461,
+    "last_updated": "2026-09-22T04:24:26.431627+00:00",
+    "total_topics_learned": 1461
   },
   "entries": [
     {
@@ -69917,6 +69917,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-22T04:21:18.472195+00:00",
       "run_number": 1460
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BFD (Binary Decision Diagram) using atomic node-canonicalization and unique-table hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput boolean function manipulation and multi-core formal hardware verification in real-time electronic design automation engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent Binary Decision Diagram (BDD) data structure utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput boolean function manipulation and verification across multiple CPU cores without global lock contention.",
+      "key_points": [
+        "Utilizes atomic node-canonicalization to ensure every unique boolean sub-function is represented by a single shared node instance.",
+        "Employs a lock-free unique-table hashing structure to manage parallel node insertions and lookups safely.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation of deleted or garbage-collected BDD nodes.",
+        "Facilitates highly parallel boolean operations (AND, OR, NOT) and multi-core formal hardware verification in electronic design automation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node lookup and insertion into a concurrent unique table using CAS primitives.",
+        "correct": "shared_ptr<Node> UniqueTable::lookup_or_insert(int var, Node* low, Node* high) {\n    NodeKey key{var, low, high};\n    while (true) {\n        Node* existing = table.find_atomic(key);\n        if (existing) return existing;\n        Node* new_node = new Node(var, low, high);\n        if (table.cas_insert(key, new_node)) return new_node;\n        delete new_node;\n    }\n}",
+        "wrong": "shared_ptr<Node> UniqueTable::lookup_or_insert(int var, Node* low, Node* high) {\n    mutex.lock();\n    Node* node = table[key];\n    if (!node) { node = new Node(var, low, high); table[key] = node; }\n    mutex.unlock();\n    return node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed BDD nodes with hazard pointers, leading to ABA problems and use-after-free race conditions.",
+        "Not enforcing canonical form invariants during parallel node generation, resulting in duplicate unique table entries."
+      ],
+      "best_practices": [
+        "Batch hazard pointer registrations when performing deep recursive BDD traversals to reduce atomic write overhead.",
+        "Ensure strict variable ordering across all threads to maintain the reduced ordered BDD (ROBDD) property."
+      ],
+      "when_to_use": "When building scalable electronic design automation tools requiring multi-core hardware model checking and complex boolean logic manipulation.",
+      "when_not_to_use": "In single-threaded applications or memory-constrained environments where the complexity of hazard pointers and lock-free tables outweighs parallel speedups.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent duplicate nodes in a concurrent BDD unique table without using global locks?",
+          "answer": "By using atomic Compare-And-Swap (CAS) operations for node insertion, retrying if another thread inserted an equivalent node concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free BDD garbage collector?",
+          "answer": "Hazard pointers allow threads to safely declare which nodes they are currently reading, preventing other threads from reclaiming or freeing those memory addresses prematurely."
+        }
+      ],
+      "related_topics": [
+        "Lock-free hash tables",
+        "Hazard pointer memory management",
+        "Boolean satisfiability (SAT) solvers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T04:24:26.431602+00:00",
+      "run_number": 1461
     }
   ]
 }
