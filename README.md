@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1511** |
-| Last Updated | `2026-09-22T22:08:09.071224+00:00` |
-| Dataset Size | `1511 entries` |
+| Total Topics Learned | **1512** |
+| Last Updated | `2026-09-22T22:11:18.308473+00:00` |
+| Dataset Size | `1512 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 605 |
+| data-structures | 606 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node bubbling and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority event evaluation in real-time operating system kernels and asynchronous event-driven network engines`
 - `Implementation of a lock-free thread-safe concurrent Vantage Point Tree using atomic radius-bounding and metric-space partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput high-dimensional similarity searching and multi-core metric query evaluation in real-time machine learning feature stores and nearest-neighbor vector databases`
 - `Implementation of a lock-free thread-safe concurrent Ball Tree using atomic centroid-distance bounding and hyper-sphere partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial similarity query evaluation in real-time high-dimensional vector search and recommendation engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box splitting and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial query evaluation in real-time robotics perception and point-cloud processing engines`
 - `Implementation of a lock-free thread-safe concurrent Cover Tree using atomic distance-scale anchoring and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial clustering evaluation in real-time machine learning inference and computer vision engines`
-- `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance linking and metric-space partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell-checking in real-time search engine autocomplete and natural language processing pipelines`
 
 <!-- STATS_END -->
 

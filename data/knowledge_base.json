@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1511,
-    "last_updated": "2026-09-22T22:08:09.071224+00:00",
-    "total_topics_learned": 1511
+    "total_runs": 1512,
+    "last_updated": "2026-09-22T22:11:18.308473+00:00",
+    "total_topics_learned": 1512
   },
   "entries": [
     {
@@ -72332,6 +72332,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-22T22:08:09.071205+00:00",
       "run_number": 1511
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node bubbling and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority event evaluation in real-time operating system kernels and asynchronous event-driven network engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue utilizing atomic primitives for heap operations and hazard pointers for safe memory management. It is crucial for high-throughput multi-threaded task schedulers and real-time systems requiring low latency and high concurrency.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) operations to manage heap node bubbling and index swaps without traditional locks.",
+        "Employs hazard pointers to safely reclaim memory of deleted or relocated heap nodes without incurring ABA problem issues.",
+        "Ensures high-throughput event processing and task scheduling in multi-core operating system kernels and network engines.",
+        "Addresses race conditions inherent in concurrent heap modifications where multiple threads attempt to insert or extract elements simultaneously."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based heap node swap mechanism for concurrent priority queue bubbling.",
+        "correct": "bool bubble_up(std::atomic<Node*>& parent, std::atomic<Node*>& child) {\n    Node* p = parent.load();\n    Node* c = child.load();\n    if (c->priority > p->priority) {\n        return parent.compare_exchange_weak(p, c);\n    }\n    return false;\n}",
+        "wrong": "bool bubble_up(Node* parent, Node* child) {\n    mutex.lock();\n    if (child->priority > parent->priority) {\n        std::swap(child, parent);\n    }\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs during concurrent extractions.",
+        "Using locks instead of lock-free CAS primitives, which can cause priority inversion and thread contention bottlenecks in real-time kernels."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer memory reclamation to prevent memory leaks and premature freeing under concurrent access.",
+        "Keep atomic retry loops bounded to prevent livelock conditions when multiple threads contend for the same heap indices."
+      ],
+      "when_to_use": "Use when building ultra-low latency multi-threaded task schedulers, real-time operating systems, or high-throughput event-driven network engines where lock contention degrades performance.",
+      "when_not_to_use": "Avoid when standard lock-based priority queues provide sufficient throughput, or when development complexity and debugging overhead of lock-free data structures outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic index swaps in a lock-free priority queue?",
+          "answer": "By using tagged pointers or version counters combined with atomic CAS operations to ensure that a pointer value change is detected even if the address is reused."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in lock-free real-time priority queues?",
+          "answer": "Hazard pointers provide deterministic memory reclamation without stop-the-world pauses, making them suitable for real-time operating system kernels and low-latency engines."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T22:11:18.308454+00:00",
+      "run_number": 1512
     }
   ]
 }
