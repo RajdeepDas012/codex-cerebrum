@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1518,
-    "last_updated": "2026-09-22T22:30:13.238663+00:00",
-    "total_topics_learned": 1518
+    "total_runs": 1519,
+    "last_updated": "2026-09-22T22:33:22.455602+00:00",
+    "total_topics_learned": 1519
   },
   "entries": [
     {
@@ -72664,6 +72664,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-22T22:30:13.238644+00:00",
       "run_number": 1518
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min-Mean Sketch using atomic frequency-estimation and variance-reduction CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter identification and multi-core stream analytics in real-time financial transaction monitoring and network intrusion detection engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Count-Min-Mean sketch for high-throughput frequency estimation and heavy-hitter detection under heavy concurrency. It utilizes atomic operations and hazard pointers to safely update multi-hash matrices without global locks, making it ideal for low-latency streaming applications.",
+      "key_points": [
+        "Uses multiple independent hash functions to map incoming stream elements to matrix rows.",
+        "Employs compare-and-swap (CAS) primitives for atomic frequency increments and variance reduction updates.",
+        "Integrates hazard pointers to safely manage memory reclamation during concurrent matrix resizes or thread unregistration.",
+        "Calculates estimates by aggregating minimum frequency counts with mean adjustments to mitigate overestimation errors caused by hash collisions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency updating with hazard pointers for a concurrent Count-Min-Mean sketch slot.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct SketchCell {\n    std::atomic<uint64_t> count{0};\n};\n\nclass LockFreeCMS {\n    std::vector<std::vector<SketchCell>> table;\npublic:\n    void increment(int row, int col, uint64_t val) {\n        uint64_t current = table[row][col].count.load(std::memory_order_relaxed);\n        while (!table[row][col].count.compare_exchange_weak(current, current + val, std::memory_order_release, std::memory_order_relaxed)) {}\n    }\n};",
+        "wrong": "void increment(int row, int col, uint64_t val) {\n    table[row][col].count += val; // Non-atomic read-modify-write causes race conditions and lost updates under concurrency\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments on sketch bins, resulting in lost updates and skewed frequency estimations.",
+        "Neglecting memory reclamation strategies like hazard pointers, leading to unbounded memory usage or use-after-free bugs during dynamic modifications.",
+        "Failing to handle hash collision bias adequately, leading to severe overestimation of rare stream items."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for initial loads within CAS loops and release/acquire orderings upon successful CAS execution.",
+        "Pre-allocate matrix memory and align rows to cache lines to minimize false sharing between concurrent threads.",
+        "Periodically clear or decay sketch counts using background worker threads to adapt to shifting stream distributions."
+      ],
+      "when_to_use": "Use when you need to process massive streaming datasets concurrently across multiple cores to identify heavy hitters or estimate item frequencies with strict latency guarantees.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory without any error bound, or when data volume is small enough to fit comfortably in standard lock-based hash maps.",
+      "interview_questions": [
+        {
+          "question": "How does the Count-Min-Mean sketch improve upon the standard Count-Min sketch?",
+          "answer": "The Count-Min-Mean sketch introduces a variance reduction correction step that adjusts frequency estimates by subtracting noise induced by hash collisions, yielding tighter error bounds."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free streaming data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with low overhead, avoiding the stop-the-world pauses and high latency of traditional garbage collectors in high-throughput streaming environments."
+        }
+      ],
+      "related_topics": [
+        "Count-Min Sketch",
+        "Hazard Pointers",
+        "Lock-Free Hash Maps",
+        "Stream Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T22:33:22.455583+00:00",
+      "run_number": 1519
     }
   ]
 }
