@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1473,
-    "last_updated": "2026-09-22T05:02:07.728843+00:00",
-    "total_topics_learned": 1473
+    "total_runs": 1474,
+    "last_updated": "2026-09-22T09:45:34.087171+00:00",
+    "total_topics_learned": 1474
   },
   "entries": [
     {
@@ -70533,6 +70533,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-22T05:02:07.728820+00:00",
       "run_number": 1473
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Circular Queue) using atomic head-tail pointer wrapping and multi-producer multi-consumer sequence-slot CAS primitives alongside epoch-based memory reclamation for high-throughput message passing and multi-core task pipelining in real-time trading and telemetry ingestion engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent multi-producer and multi-consumer access without traditional blocking locks by leveraging atomic sequence-slot CAS operations and pointer wrapping. It is crucial for high-performance systems where minimizing latency, avoiding thread contention, and maximizing telemetry throughput are paramount.",
+      "key_points": [
+        "Utilizes atomic head and tail pointer manipulation to manage circular buffer boundaries without locking mechanisms.",
+        "Employs sequence numbers per slot to track state and safely coordinate multiple concurrent producers and consumers.",
+        "Integrates epoch-based memory reclamation or pre-allocated contiguous arrays to prevent memory overhead and stalls.",
+        "Maximizes throughput and bounds latency for real-time task pipelining and message passing architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic sequence-slot coordination for a single-producer single-consumer ring buffer layout.",
+        "correct": "template <typename T, size_t Capacity>\nclass RingBuffer {\n    struct Node { std::atomic<size_t> sequence; T data; };\n    Node buffer[Capacity];\n    std::atomic<size_t> head{0}, tail{0};\npublic:\n    bool push(const T& item) {\n        size_t pos = tail.load(std::memory_order_relaxed);\n        for (;;) {\n            Node& node = buffer[pos % Capacity];\n            size_t seq = node.sequence.load(std::memory_order_acquire);\n            intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n            if (dif == 0) {\n                if (tail.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))\n                    { node.data = item; node.sequence.store(pos + 1, std::memory_order_release); return true; }\n            } else if (dif < 0) { return false; } \n            else { pos = tail.load(std::memory_order_relaxed); }\n        }\n    }\n};",
+        "wrong": "bool push(T item) {\n    size_t current_tail = tail++; // Non-atomic read-modify-write data race\n    buffer[current_tail % Capacity] = item;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for memory reordering by neglecting proper memory acquisition and release barriers.",
+        "Incorrectly handling buffer full and buffer empty conditions under high multi-threaded contention, leading to infinite loops or data overwrites."
+      ],
+      "best_practices": [
+        "Use pre-allocated contiguous memory arrays to avoid dynamic allocations during high-frequency enqueue and dequeue operations.",
+        "Align atomic variables to CPU cache lines to eliminate false sharing between concurrent producer and consumer threads."
+      ],
+      "when_to_use": "Use when implementing low-latency inter-thread communication, high-frequency trading engines, or real-time telemetry ingestion pipelines where blocking overhead is unacceptable.",
+      "when_not_to_use": "Avoid when data structures must dynamically resize beyond a fixed maximum capacity or when simpler, lock-based synchronization introduces negligible performance penalties.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer in a lock-free implementation?",
+          "answer": "By using individual sequence numbers associated with each slot that track the expected wrap-around generation, rather than relying solely on head and tail pointer equality."
+        },
+        {
+          "question": "Why is false sharing a major concern in multi-producer ring buffers, and how do you mitigate it?",
+          "answer": "False sharing occurs when separate threads modify independent variables residing on the same CPU cache line. It is mitigated by padding atomic head and tail pointers to align with cache line boundaries."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Queues",
+        "Memory Ordering and Barriers",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-22T09:45:34.087149+00:00",
+      "run_number": 1474
     }
   ]
 }
