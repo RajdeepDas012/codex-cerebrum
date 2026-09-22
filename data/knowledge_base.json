@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1475,
-    "last_updated": "2026-09-22T09:48:42.088898+00:00",
-    "total_topics_learned": 1475
+    "total_runs": 1476,
+    "last_updated": "2026-09-22T09:51:50.690205+00:00",
+    "total_topics_learned": 1476
   },
   "entries": [
     {
@@ -70627,6 +70627,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-22T09:48:42.088877+00:00",
       "run_number": 1475
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree (Burkhard-Keller Tree) using atomic distance-bucket linking and child-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell-checking evaluation in real-time text processing and natural language processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Burkhard-Keller (BK) tree optimized for metric spaces like Levenshtein distance. It utilizes atomic operations and hazard pointers to guarantee safe memory management and high-throughput multi-core execution during fuzzy string searches.",
+      "key_points": [
+        "Leverages metric space properties (typically Levenshtein or Hamming distance) to structure string nodes into discrete distance buckets.",
+        "Employs compare-and-swap (CAS) primitives to atomically link new distance-bucket nodes without locking the entire tree structure.",
+        "Integrates hazard pointers to track threads actively traversing nodes, preventing premature memory reclamation of deleted or reassigned tree nodes.",
+        "Maximizes multi-core throughput for real-time spell-checking and autocomplete suggestion pipelines by eliminating lock contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based insertion into a concurrent BK-Tree distance bucket",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        if (current == nullptr) {\n            if (parent->children[distance].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            // Traverse or handle collision\n            return insert_child(current, calculate_distance(current->term, new_child->term), new_child);\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    mutex.lock();\n    parent->children[distance] = new_child;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal pointers with hazard pointers, leading to use-after-free bugs when concurrent threads prune or update nodes.",
+        "Using sequential consistency everywhere, which degrades multi-core performance due to excessive memory barrier overhead."
+      ],
+      "best_practices": [
+        "Design distance computation routines to be completely lock-free and side-effect free so they can be safely retried during CAS failures.",
+        "Batch hazard pointer registrations or use thread-local caches to reduce synchronization overhead during intensive search traversals."
+      ],
+      "when_to_use": "Use this when building high-throughput, latency-critical text processing engines that require concurrent approximate string matching across multiple CPU cores.",
+      "when_not_to_use": "Avoid this for simple, single-threaded applications or datasets with strict memory constraints where standard locking or basic data structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation in a lock-free BK-Tree without causing use-after-free errors during concurrent traversals?",
+          "answer": "By using hazard pointers to publish the node a thread is currently inspecting, ensuring the reclamation mechanism defers freeing memory until no thread holds a hazard reference to it."
+        },
+        {
+          "question": "What is the primary challenge when implementing child-pointer updates in a metric tree using CAS primitives?",
+          "answer": "Handling race conditions where multiple threads attempt to insert nodes into the same distance bucket simultaneously, requiring a loop with compare_exchange operations to resolve collisions."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Vantage-Point Tree",
+        "Concurrent Metric Spaces",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T09:51:50.690184+00:00",
+      "run_number": 1476
     }
   ]
 }
