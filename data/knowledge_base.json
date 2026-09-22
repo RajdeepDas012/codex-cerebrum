@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1514,
-    "last_updated": "2026-09-22T22:17:37.106624+00:00",
-    "total_topics_learned": 1514
+    "total_runs": 1515,
+    "last_updated": "2026-09-22T22:20:46.392924+00:00",
+    "total_topics_learned": 1515
   },
   "entries": [
     {
@@ -72473,6 +72473,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-22T22:17:37.106603+00:00",
       "run_number": 1514
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list merging and node-decreasing CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core shortest path evaluation in real-time graph routing and network optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe concurrent Fibonacci Heap utilizing atomic CAS primitives for root-list merging and node-decreasing operations, paired with hazard pointers for safe memory reclamation. It enables high-throughput decrease-key updates and efficient multi-core shortest path evaluations in performance-critical graph routing engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage concurrent root-list merging and node-decreasing updates without locking overhead.",
+        "Employs hazard pointer memory reclamation to safely defer deletion and prevent memory corruption during concurrent structural transformations.",
+        "Optimizes the amortized time complexity of decrease-key operations to $O(1)$, enhancing performance for dense graph traversal algorithms like Dijkstra's.",
+        "Maintains concurrent safety across multi-core systems by avoiding global locks, significantly reducing contention in parallel network optimization tasks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-decreasing and hazard pointer protection during concurrent Fibonacci Heap operations",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct Node {\n    int key;\n    std::atomic<Node*> parent;\n    std::atomic<bool> marked;\n};\n\nbool decrease_key(std::atomic<Node*>& node_ptr, int new_key) {\n    Node* current = node_ptr.load();\n    while (current && new_key < current->key) {\n        Node* updated = new Node{new_key, current->parent.load(), current->marked.load()};\n        if (node_ptr.compare_exchange_weak(current, updated)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "void unsafe_decrease_key(Node* node, int new_key) {\n    // Missing atomic CAS and hazard pointers leads to race conditions and memory corruption in multi-threaded environments\n    node->key = new_key;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during root-list consolidation.",
+        "Relying on standard locking mechanisms instead of atomic CAS primitives, which introduces bottlenecks and thread contention.",
+        "Neglecting the cascading cut propagation logic needed to maintain structural invariants during concurrent node-decreasing updates."
+      ],
+      "best_practices": [
+        "Always wrap dynamic node traversal paths with hazard pointers before reading node pointers to guarantee thread-safe memory reclamation.",
+        "Design atomic state transitions carefully to handle ABA problems when modifying root lists and parent-child pointers.",
+        "Batch consolidation steps or offload them to auxiliary threads to prevent high atomic retry loops under heavy multi-core contention."
+      ],
+      "when_to_use": "Use when building high-performance graph routing, network optimization, or pathfinding engines that demand frequent, low-latency decrease-key operations across multiple concurrent threads.",
+      "when_not_to_use": "Avoid in lightweight applications or single-threaded environments where the high implementation complexity and pointer-overhead of lock-free Fibonacci Heaps outweigh performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption in a lock-free Fibonacci Heap?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing, blocking other threads from prematurely freeing or reclaiming those memory addresses until the operation completes."
+        },
+        {
+          "question": "Why is a Fibonacci Heap preferred over a Binary Heap for Dijkstra's algorithm in network routing?",
+          "answer": "A Fibonacci Heap provides an amortized $O(1)$ time complexity for decrease-key operations, whereas a Binary Heap requires $O(\\log N)$, yielding better theoretical performance for dense graphs."
+        }
+      ],
+      "related_topics": [
+        "Implementation of a lock-free thread-safe concurrent Binomial Heap",
+        "Hazard Pointer Memory Reclamation Patterns",
+        "Concurrent Graph Pathfinding and Dijkstra Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-22T22:20:46.392905+00:00",
+      "run_number": 1515
     }
   ]
 }
