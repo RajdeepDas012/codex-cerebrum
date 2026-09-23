@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1535,
-    "last_updated": "2026-09-23T00:54:19.350713+00:00",
-    "total_topics_learned": 1535
+    "total_runs": 1536,
+    "last_updated": "2026-09-23T00:57:27.692052+00:00",
+    "total_topics_learned": 1536
   },
   "entries": [
     {
@@ -73472,6 +73472,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T00:54:19.350691+00:00",
       "run_number": 1535
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority linking and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced search tree operations and multi-core key-value indexing in real-time distributed in-memory caching and database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent treap—a randomized binary search tree combining binary search tree properties on keys and heap properties on priorities—using lock-free synchronization and hazard pointers. It is essential for achieving high-throughput, balanced search operations across multiple CPU cores without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for lock-free node insertion, deletion, and tree rotations.",
+        "Maintains tree balance probabilistically via independent random priorities assigned to each node upon creation.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent the ABA problem during structural modifications.",
+        "Ensures both search-tree ordering invariants (keys) and heap invariants (priorities) are preserved concurrently."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based child pointer update during a treap node insertion step.",
+        "correct": "bool link_node(std::atomic<Node*>& parent_link, Node* old_node, Node* new_node) {\n    return parent_link.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_node(Node* parent_link, Node* old_node, Node* new_node) {\n    parent_link->left = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Performing multi-word structural modifications without ensuring intermediate states remain safe for concurrent readers."
+      ],
+      "best_practices": [
+        "Retire memory safely by deferring node deallocation via hazard pointer epoch or list validation checks.",
+        "Keep rotation operations localized and retry atomic primitives boundedly when concurrent modifications conflict."
+      ],
+      "when_to_use": "Use when you need a high-throughput, dynamically balanced ordered map across many threads without coarse-grained locking overhead.",
+      "when_not_to_use": "Avoid when memory footprint must be minimal or when simpler lock-based data structures suffice due to low thread contention.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain both the BST property and the heap priority property atomically during a concurrent treap insertion?",
+          "answer": "By performing standard BST insertion first using CAS, followed by a series of atomic tree rotations (left or right) via CAS to restore the heap priority invariant if the inserted node's priority is higher than its parent's."
+        },
+        {
+          "question": "Why are hazard pointers required in a lock-free concurrent treap implementation?",
+          "answer": "Hazard pointers protect threads from accessing nodes that have been concurrently unlinked and freed by another thread, preventing use-after-free errors and mitigating the ABA problem during lock-free traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Link Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Randomized Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T00:57:27.692030+00:00",
+      "run_number": 1536
     }
   ]
 }
