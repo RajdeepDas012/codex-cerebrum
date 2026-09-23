@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1573,
-    "last_updated": "2026-09-23T17:07:40.798722+00:00",
-    "total_topics_learned": 1573
+    "total_runs": 1574,
+    "last_updated": "2026-09-23T17:11:55.780103+00:00",
+    "total_topics_learned": 1574
   },
   "entries": [
     {
@@ -75268,6 +75268,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T17:07:40.798704+00:00",
       "run_number": 1573
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic bitwise-universe indexing and summary-pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput O(log log U) priority queue operations and multi-core integer sorting in real-time network routing and IP packet classification engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Van Emde Boas Tree achieves ultra-fast O(log log U) operations on integers within a bounded universe without locks by utilizing atomic CAS primitives on cluster and summary pointers. Combined with hazard pointers, it ensures safe memory reclamation under intense multi-core contention for real-time networking workloads.",
+      "key_points": [
+        "Leverages atomic bitwise-universe indexing to split universe sizes hierarchically into lower and upper square roots without blocking.",
+        "Employs compare-and-swap (CAS) primitives on summary pointers and cluster references to manage concurrent insertions and deletions safely.",
+        "Utilizes hazard pointers to protect dynamically allocated nodes from premature reclamation during concurrent modifications.",
+        "Delivers deterministic sub-logarithmic O(log log U) time complexity for priority queue operations like finding predecessors and successors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic update on a VEB tree summary pointer using CAS under a lock-free protocol",
+        "correct": "bool update_summary(std::atomic<Node*>& summary, Node* expected, Node* desired, HazardPointer& hp) {\n    hp.protect(summary);\n    return summary.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* update_summary(Node* summary, Node* desired) {\n    // Missing atomicity and hazard pointer protection, leading to race conditions and ABA issues\n    summary->next = desired;\n    return summary;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting hazard pointer protection during multi-word CAS traversals, resulting in use-after-free bugs.",
+        "Failing to handle memory alignment for universe bounds, which causes incorrect bitwise splitting of indices."
+      ],
+      "best_practices": [
+        "Always wrap node reads with hazard pointer protection before dereferencing pointers in concurrent traversals.",
+        "Use acquire-release memory ordering semantics on CAS operations to ensure proper visibility of cluster allocations across threads."
+      ],
+      "when_to_use": "Ideal for high-throughput, multi-core systems requiring rapid integer priority queue updates and bounded universes, such as IP packet routing.",
+      "when_not_to_use": "Avoid when the universe size U is arbitrarily large or unknown, as space consumption scales exponentially relative to log U.",
+      "interview_questions": [
+        {
+          "question": "How does a concurrent Van Emde Boas Tree achieve O(log log U) operations without locking?",
+          "answer": "By recursively dividing the universe into square roots using atomic summary and cluster pointers updated via CAS primitives."
+        },
+        {
+          "question": "Why are hazard pointers necessary when modifying a lock-free VEB tree?",
+          "answer": "They prevent threads from freeing memory while another concurrent thread is actively traversing or updating a cluster or summary node."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip Lists",
+        "Hazard Pointers",
+        "Lock-free Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T17:11:55.780083+00:00",
+      "run_number": 1574
     }
   ]
 }
