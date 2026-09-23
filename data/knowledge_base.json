@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1594,
-    "last_updated": "2026-09-23T23:31:02.610854+00:00",
-    "total_topics_learned": 1594
+    "total_runs": 1595,
+    "last_updated": "2026-09-23T23:34:11.603591+00:00",
+    "total_topics_learned": 1595
   },
   "entries": [
     {
@@ -76268,6 +76268,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T23:31:02.610835+00:00",
       "run_number": 1594
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-relocation CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set-membership verification in real-time distributed storage systems and network packet filtering engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Cuckoo Filter utilizing atomic bucket-kicking and fingerprint-relocation primitives alongside hazard pointers. It enables high-throughput, space-efficient approximate membership tests and deletions across multiple cores without utilizing global locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to implement lock-free concurrent bucket insertion, fingerprint kicking, and relocation.",
+        "Employs hazard pointer memory reclamation to safely manage memory and prevent ABA problems during concurrent structural modifications.",
+        "Provides support for efficient deletion of items, overcoming a traditional limitation of Bloom filters.",
+        "Achieves high space efficiency and low false positive rates suitable for high-throughput distributed caches and packet filters."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of concurrent fingerprint insertion and bucket kicking using atomic operations.",
+        "correct": "bool cuckoo_insert(std::atomic<uint32_t>* bucket, uint32_t fingerprint) {\n    for (int attempt = 0; attempt < MAX_KICKS; ++attempt) {\n        uint32_t current = bucket->load(std::memory_order_relaxed);\n        if (current == 0) {\n            if (bucket->compare_exchange_weak(current, fingerprint, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            // Kick existing fingerprint and relocate\n            if (bucket->compare_exchange_weak(current, fingerprint, std::memory_order_release, std::memory_order_relaxed)) {\n                fingerprint = current;\n                bucket = get_alternate_bucket(bucket, fingerprint);\n            }\n        }\n    }\n    return false;\n}",
+        "wrong": "bool cuckoo_insert(uint32_t* bucket, uint32_t fingerprint) {\n    // Missing atomicity and synchronization for multi-threaded access\n    if (*bucket == 0) {\n        *bucket = fingerprint;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect against the ABA problem during concurrent bucket swaps and fingerprint relocations.",
+        "Using coarse-grained locks on buckets, leading to thread contention and poor multi-core scaling.",
+        "Neglecting proper memory ordering (acquire-release semantics) when reading and writing bucket states."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to safely handle slot reallocations and resizing.",
+        "Keep fingerprints compact to fit multiple entries within a single cache line, minimizing cache misses.",
+        "Bound the maximum number of kick loops to prevent infinite loops during high filter load factors."
+      ],
+      "when_to_use": "Use when you need high-throughput, space-efficient approximate membership testing that supports concurrent insertions, deletions, and lookups across multiple CPU cores.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required, or when the dataset is extremely small and simple hash sets suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter handle insertions when both candidate buckets are full?",
+          "answer": "It performs a 'cuckoo' eviction by kicking out an existing fingerprint, placing the new fingerprint in its bucket, and relocating the kicked fingerprint to its alternate bucket recursively up to a predefined maximum threshold."
+        },
+        {
+          "question": "Why are hazard pointers required in a lock-free Cuckoo Filter implementation?",
+          "answer": "Hazard pointers protect threads from accessing memory that has been concurrently reclaimed or reallocated during structural modifications like resizing or fingerprint relocation."
+        }
+      ],
+      "related_topics": [
+        "Quotient Filter",
+        "Bloom Filter",
+        "Lock-Free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T23:34:11.603573+00:00",
+      "run_number": 1595
     }
   ]
 }
