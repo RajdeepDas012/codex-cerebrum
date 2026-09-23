@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1575,
-    "last_updated": "2026-09-23T17:16:25.242799+00:00",
-    "total_topics_learned": 1575
+    "total_runs": 1576,
+    "last_updated": "2026-09-23T17:21:21.404626+00:00",
+    "total_topics_learned": 1576
   },
   "entries": [
     {
@@ -75362,6 +75362,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T17:16:25.242781+00:00",
       "run_number": 1575
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hashing-slot CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter identification and multi-core stream frequency estimation in real-time network monitoring and traffic analysis engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch uses multiple independent hash functions and atomic Compare-And-Swap (CAS) primitives to update frequency counters across multiple threads without explicit locking. By integrating hazard pointers, it ensures safe memory reclamation for dynamic structures, enabling high-throughput frequency estimation and heavy-hitter detection in real-time streaming architectures.",
+      "key_points": [
+        "Employs multiple independent hash functions to map data items to table columns while minimizing hash collision biases.",
+        "Uses atomic operations and CAS loops on counter slots to allow multiple producer threads to increment frequencies safely without deadlocks.",
+        "Leverages hazard pointer memory management to track reader threads and safely free dynamically resized or decommissioned sketch structures.",
+        "Provides sub-linear space complexity at the cost of overestimating frequencies due to hash collisions, suitable for heavy-hitter identification."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic frequency incrementing in a Count-Min Sketch row slot using CAS loops",
+        "correct": "void increment(const std::string& key, uint32_t val) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t h = hash(i, key) % width;\n        uint64_t current = table[i][h].load(std::memory_order_relaxed);\n        while (!table[i][h].compare_exchange_weak(current, current + val, std::memory_order_release, std::memory_order_relaxed)) {\n            // Retries until successful CAS update\n        }\n    }\n}",
+        "wrong": "void increment(const std::string& key, uint32_t val) {\n    // Non-atomic read-modify-write introduces severe race conditions\n    for (size_t i = 0; i < depth; ++i) {\n        size_t h = hash(i, key) % width;\n        table[i][h] += val;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments on shared table slots, resulting in lost updates under heavy multi-threaded contention.",
+        "Failing to use appropriate memory orderings (such as acquire-release semantics), leading to stale reads of frequency values.",
+        "Neglecting hazard pointer protection when resizing or clearing rows, which can trigger use-after-free faults during concurrent queries."
+      ],
+      "best_practices": [
+        "Pair atomic CAS loops with `std::memory_order_relaxed` for load operations inside retry loops and `std::memory_order_release` for successful updates.",
+        "Tune the width and depth of the sketch according to acceptable error bounds and probability guarantees before initialization.",
+        "Utilize thread-local batching buffers to accumulate counts before submitting updates to global sketch slots, reducing atomic cache contention."
+      ],
+      "when_to_use": "When you need to stream massive volumes of events across multiple concurrent threads and estimate item frequencies or identify heavy hitters under strict memory constraints.",
+      "when_not_to_use": "When exact frequency counts are strictly required or when the input domain is small enough to fit into an exact hash map without collision trade-offs.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions in a lock-free Count-Min Sketch when multiple threads update the same slot?",
+          "answer": "Collisions are inherently accepted by the algorithm design; concurrency is managed by atomic CAS loops that ensure updates to overlapping slots are serialized at the hardware instruction level without locks."
+        },
+        {
+          "question": "Why are hazard pointers useful when implementing concurrent sketches that support dynamic resizing?",
+          "answer": "Hazard pointers allow worker threads to safely register which sketch structures or memory blocks they are currently reading, preventing other threads from prematurely reclaiming that memory until all readers have finished."
+        }
+      ],
+      "related_topics": [
+        "Lock-free HyperLogLog",
+        "Concurrent Bloom Filters",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-23T17:21:21.404607+00:00",
+      "run_number": 1576
     }
   ]
 }
