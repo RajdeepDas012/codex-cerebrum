@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1532,
-    "last_updated": "2026-09-23T00:44:52.177067+00:00",
-    "total_topics_learned": 1532
+    "total_runs": 1533,
+    "last_updated": "2026-09-23T00:48:01.256902+00:00",
+    "total_topics_learned": 1533
   },
   "entries": [
     {
@@ -73329,6 +73329,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T00:44:52.177044+00:00",
       "run_number": 1532
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and fingerprint-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput deletion-supported approximate membership querying and multi-core filtering in real-time distributed storage and caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Cuckoo Filter that supports deletions and dynamic resizing via atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput, multi-core approximate membership testing without global locks, critical for modern distributed systems.",
+      "key_points": [
+        "Utilizes atomic bucket-swapping and fingerprint-relocating CAS operations to manage concurrent insertions and evictions safely.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during lock-free structural modifications.",
+        "Supports efficient item deletion, overcoming the traditional limitations of standard Bloom filters which struggle with removal without rebuilding.",
+        "Uses alternate hash locations based on fingerprints to resolve collisions dynamically in a multi-threaded environment."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic bucket update using a CAS loop and hazard pointer protection for a concurrent Cuckoo Filter.",
+        "correct": "bool insert_fingerprint(BucketArray& table, size_t index, uint8_t fp, HazardPointer& hp) {\n    while (true) {\n        Bucket* b = hp.protect(table.get_bucket(index));\n        if (b->is_full()) return false;\n        Bucket new_b = *b;\n        new_b.insert(fp);\n        if (table.compare_exchange_weak(index, *b, new_b)) {\n            hp.clear();\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_fingerprint_unsafe(BucketArray& table, size_t index, uint8_t fp) {\n    Bucket* b = table.get_bucket(index);\n    b->insert(fp); // Non-atomic update prone to data races and lost updates\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect bucket pointers with hazard pointers before reading or modifying contents, leading to use-after-free errors.",
+        "Entering infinite cuckoo eviction loops when the filter nears capacity and concurrent threads constantly contend for the same alternative buckets."
+      ],
+      "best_practices": [
+        "Bound the maximum cuckoo displacement loop iterations to prevent thread starvation and high latency during high-load conditions.",
+        "Keep fingerprints compact (e.g., 8 to 16 bits) to maximize cache locality and fit more buckets per cache line."
+      ],
+      "when_to_use": "Use when you need high-throughput approximate membership queries with frequent item deletions and updates across many concurrent threads.",
+      "when_not_to_use": "Avoid when memory usage must be absolutely minimized to the theoretical limit where a standard Bloom filter suffices, or when deletions are entirely unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter handle deletions compared to a standard Bloom Filter?",
+          "answer": "A Cuckoo Filter stores independent fingerprints in fixed-size buckets and can simply clear a fingerprint entry upon deletion. Standard Bloom filters cannot support deletions easily because clearing a bit might affect multiple items due to hash collisions."
+        },
+        {
+          "question": "What happens during a concurrent cuckoo eviction cycle when multiple threads attempt to relocate colliding fingerprints simultaneously?",
+          "answer": "Threads use atomic compare-and-swap (CAS) operations to secure bucket ownership. If a CAS fails because another thread modified the bucket, the failing thread re-reads the state and retries its displacement path."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filter",
+        "Hazard Pointers",
+        "Concurrent Quotient Filter"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T00:48:01.256880+00:00",
+      "run_number": 1533
     }
   ]
 }
