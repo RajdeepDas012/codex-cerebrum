@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1543** |
-| Last Updated | `2026-09-23T06:06:07.663575+00:00` |
-| Dataset Size | `1543 entries` |
+| Total Topics Learned | **1544** |
+| Last Updated | `2026-09-23T06:09:16.870986+00:00` |
+| Dataset Size | `1544 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 635 |
+| data-structures | 636 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database concurrency control and transactional memory indexing engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box splitting and child-node linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point querying and multi-core spatial indexing in real-time robotic motion planning and computer graphics rendering engines`
 - `Implementation of a lock-free thread-safe concurrent Extensible Hash table using atomic directory-doubling and bucket-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic resizing and multi-core key-value lookup in real-time distributed key-value stores and in-memory caching systems`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-indexing and rank-select CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct range querying and multi-core compressed text retrieval in real-time genomic databases and text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence-class merging and multi-core connected-components evaluation in real-time social network analysis and distributed graph processing engines`
-- `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core point-in-time state evaluation in real-time financial auditing and collaborative document versioning engines`
 
 <!-- STATS_END -->
 

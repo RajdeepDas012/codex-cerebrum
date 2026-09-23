@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1543,
-    "last_updated": "2026-09-23T06:06:07.663575+00:00",
-    "total_topics_learned": 1543
+    "total_runs": 1544,
+    "last_updated": "2026-09-23T06:09:16.870986+00:00",
+    "total_topics_learned": 1544
   },
   "entries": [
     {
@@ -73851,6 +73851,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T06:06:07.663556+00:00",
       "run_number": 1543
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database concurrency control and transactional memory indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent B-Tree index structure tailored for multi-core database systems. By leveraging atomic Compare-And-Swap (CAS) primitives for structural modifications like node merging and leaf redistribution, alongside hazard pointers for safe memory management, it enables high-throughput data access without the blocking overhead of traditional locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely modify internal nodes and leaf pointers without acquiring mutual exclusion locks.",
+        "Employs hazard pointers to track active threads accessing specific B-Tree nodes, preventing premature memory reclamation and ABA-related corruption.",
+        "Handles complex structural modifications such as node merging and leaf redistribution concurrently using multi-step cooperative protocol states.",
+        "Optimizes multi-core database engines and transactional memory systems by minimizing contention hot-spots during intensive range and point queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection and atomic CAS pointer updates during a concurrent B-Tree node split or update operation.",
+        "correct": "bool update_child_ptr(std::atomic<Node*>& parent_slot, Node* expected_node, Node* new_node, HazardPointerGuard& guard) {\n    guard.protect(parent_slot);\n    if (parent_slot.load() != expected_node) return false;\n    return parent_slot.compare_exchange_strong(expected_node, new_node);\n}",
+        "wrong": "bool unsafe_update(Node* parent_slot, Node* new_node) {\n    *parent_slot = *new_node; // Missing atomic semantics, memory reclamation tracking, and thread-safe validation\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading pointers, leading to use-after-free bugs when another thread deletes the node.",
+        "Neglecting the ABA problem during structural CAS operations on node pointers, resulting in silent data corruption."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing child pointers or performing validation checks on shared B-Tree nodes.",
+        "Batch retired nodes into thread-local epoch-based or hazard-pointer-managed reclamation lists to amortize synchronization overhead.",
+        "Design split and merge protocols to be cooperative, allowing stalled threads to help complete pending structural modifications."
+      ],
+      "when_to_use": "Use when building high-performance in-memory database systems, transactional memory engines, or multi-threaded key-value stores requiring extreme read/write concurrency without lock bottlenecks.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low core counts where standard mutex-backed or latch-crabbing B-Trees offer simpler code maintenance and lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node updates in a lock-free B-Tree?",
+          "answer": "By using tagged pointers (combining a node memory address with an incremented version counter) or by leveraging hazard pointers combined with epoch-based validation."
+        },
+        {
+          "question": "Why are standard mutex locks inefficient for high-throughput database index engines on many-core processors?",
+          "answer": "Mutex locks introduce thread contention, context switching overhead, and convoy phenomena where threads queue up, destroying scaling benefits on systems with high core counts."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Transactional Memory and Optimistic Concurrency Control"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T06:09:16.870967+00:00",
+      "run_number": 1544
     }
   ]
 }
