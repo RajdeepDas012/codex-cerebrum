@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1561,
-    "last_updated": "2026-09-23T11:41:52.872646+00:00",
-    "total_topics_learned": 1561
+    "total_runs": 1562,
+    "last_updated": "2026-09-23T11:45:57.191782+00:00",
+    "total_topics_learned": 1562
   },
   "entries": [
     {
@@ -74700,6 +74700,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T11:41:52.872625+00:00",
       "run_number": 1561
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer linking and tower-height CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core range querying in real-time distributed in-memory databases and caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip List using atomic Compare-And-Swap (CAS) primitives for pointer linking and tower generation, paired with hazard pointers to ensure safe memory reclamation. It enables high-throughput ordered key-value operations and parallel range scans without global locks, making it ideal for high-performance multi-core distributed caches.",
+      "key_points": [
+        "Utilizes atomic forward-pointer linking via CAS primitives to dynamically splice nodes into multiple probabilistic height levels without blocking readers.",
+        "Employs randomized tower-height generation algorithms thread-safely to maintain expected O(log n) search and insertion time complexity.",
+        "Integrates hazard pointers to track active reader references and safely reclaim memory of deleted nodes without premature deallocation or use-after-free bugs.",
+        "Supports lock-free multi-core range queries by traversing lower-level forward pointers concurrently alongside active insertions and deletions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based forward linking for skip list node insertion",
+        "correct": "bool insert(Node* new_node, int level) {\n    Node* pred = find_predecessor(new_node->key);\n    while (true) {\n        Node* succ = pred->next[level].load();\n        new_node->next[level].store(succ);\n        if (pred->next[level].compare_exchange_strong(succ, new_node)) return true;\n    }\n}",
+        "wrong": "bool insert_wrong(Node* new_node, int level) {\n    mutex.lock();\n    new_node->next[level] = pred->next[level];\n    pred->next[level] = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to atomically validate that predecessor nodes have not been logically or physically unlinked before executing a forward pointer CAS.",
+        "Neglecting hazard pointer protection during multi-level traversals, leading to memory corruption when another thread concurrently frees a deleted node."
+      ],
+      "best_practices": [
+        "Mark nodes with a logically deleted flag on higher levels before performing physical pointer unlinking across all tower levels.",
+        "Batch hazard pointer retirements or use thread-local epoch-based reclamation queues to minimize synchronization overhead during high-contention writes."
+      ],
+      "when_to_use": "Use when you need high-throughput ordered key-value indexing and concurrent range queries under heavy multi-threaded write contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple scenarios where standard synchronized maps or lock-based balanced trees introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating forward pointers via CAS in a lock-free skip list?",
+          "answer": "By using tagged pointers that combine the memory address with a version counter, or by leveraging epoch-based memory management/hazard pointers where retired nodes are never immediately reused."
+        },
+        {
+          "question": "Why are hazard pointers necessary for lock-free skip lists compared to garbage-collected languages?",
+          "answer": "In manually managed languages like C++, hazard pointers explicitly register which nodes a thread is currently reading, preventing other threads from freeing those nodes prematurely while avoiding heavy global locks."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Bounded MPSC Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Balanced Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T11:45:57.191760+00:00",
+      "run_number": 1562
     }
   ]
 }
