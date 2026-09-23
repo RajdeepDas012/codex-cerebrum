@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1591,
-    "last_updated": "2026-09-23T20:42:44.875918+00:00",
-    "total_topics_learned": 1591
+    "total_runs": 1592,
+    "last_updated": "2026-09-23T20:45:53.182562+00:00",
+    "total_topics_learned": 1592
   },
   "entries": [
     {
@@ -76125,6 +76125,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T20:42:44.875897+00:00",
       "run_number": 1591
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core task scheduling and event-driven asynchronous execution in real-time operating systems and game engine task graphs",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent priority queue utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables safe, high-throughput task prioritization and extraction across multiple execution threads without lock contention, crucial for modern real-time systems.",
+      "key_points": [
+        "Uses atomic heap-node-swapping and index-tracking to maintain heap invariants concurrently.",
+        "Employs hazard pointers for safe, lock-free memory reclamation without ABA problem vulnerabilities.",
+        "Minimizes thread contention in multi-core task schedulers and event-driven game loops.",
+        "Requires careful ordering and back-off strategies to handle heavy concurrent insertion and deletion bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of an atomic node insertion using a CAS loop.",
+        "correct": "bool push(Node* newNode) {\n    while (true) {\n        Node* oldTop = atomic_top.load();\n        newNode->next = oldTop;\n        if (atomic_top.compare_exchange_weak(oldTop, newNode)) return true;\n    }\n}",
+        "wrong": "bool push(Node* newNode) {\n    Node* oldTop = atomic_top.load();\n    newNode->next = oldTop;\n    atomic_top.store(newNode); // Not thread-safe, race condition on updates\n}"
+      },
+      "common_mistakes": [
+        "Ignoring the ABA problem when performing atomic pointer swaps.",
+        "Failing to register hazard pointers before reading shared heap nodes, leading to use-after-free bugs.",
+        "Over-contending on the root node during high-frequency parallel insertions."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer-based memory management to safely reclaim detached nodes.",
+        "Use fine-grained locking or randomized skiplists if strict binary heap ordering creates insurmountable CAS retry storms.",
+        "Profile cache line bouncing under high core counts to optimize node layout."
+      ],
+      "when_to_use": "When implementing high-performance task schedulers, real-time operating system dispatchers, or game engine task graphs requiring massive parallel event processing.",
+      "when_not_to_use": "For simple single-threaded applications or workloads where standard mutex-protected priority queues provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free priority queue with CAS?",
+          "answer": "By using tagged pointers (combining the pointer with a monotonically increasing version counter) or leveraging hazard pointers / epoch-based reclamation."
+        },
+        {
+          "question": "Why is maintaining a strict binary heap lock-free notoriously difficult under high concurrency?",
+          "answer": "Because operations at the root (extraction) and structural adjustments at the bottom create severe contention and high CAS retry rates across all participating threads."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Task Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T20:45:53.182540+00:00",
+      "run_number": 1592
     }
   ]
 }
