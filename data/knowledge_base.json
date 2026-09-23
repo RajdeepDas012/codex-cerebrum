@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1599,
-    "last_updated": "2026-09-23T23:46:47.094691+00:00",
-    "total_topics_learned": 1599
+    "total_runs": 1600,
+    "last_updated": "2026-09-23T23:49:56.647805+00:00",
+    "total_topics_learned": 1600
   },
   "entries": [
     {
@@ -76505,6 +76505,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T23:46:47.094673+00:00",
       "run_number": 1599
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and cache-aligned memory-fencing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer event streaming and multi-core IPC messaging in real-time asynchronous logging and telemetry data pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates multiple producers and consumers concurrently without mutual exclusion locks by utilizing atomic pointer updates and memory barriers. It is crucial for high-throughput, low-latency telemetry pipelines and inter-process communication where traditional locks introduce unacceptable scheduling overhead.",
+      "key_points": [
+        "Uses atomic operations (CAS) to safely manage head and tail index transitions across threads.",
+        "Employs cache-line alignment (false sharing mitigation) to prevent processors from invalidating each other's cache lines during heavy multi-core contention.",
+        "Leverages memory barriers and sequential consistency models to guarantee visibility of data written into the buffer slots.",
+        "Integrates hazard pointers or epoch-based reclamation to manage dynamic node states safely in advanced memory-mapped variants."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement and cache-aligned memory management for a multi-producer ring buffer.",
+        "correct": "#include <atomic>\n#include <new>\n\ntemplate <typename T, size_t Capacity>\nclass LockFreeRingBuffer {\n    struct alignas(64) Node {\n        std::atomic<bool> busy{false};\n        T data;\n    };\n    Node buffer[Capacity];\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\npublic:\n    bool push(const T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        while (true) {\n            size_t next_tail = (current_tail + 1) % Capacity;\n            if (next_tail == head.load(std::memory_order_acquire)) return false; // Full\n            if (tail.compare_exchange_weak(current_tail, next_tail, std::memory_order_release, std::memory_order_relaxed)) {\n                buffer[current_tail].data = item;\n                buffer[current_tail].busy.store(true, std::memory_order_release);\n                return true;\n            }\n        }\n    }\n};",
+        "wrong": "class UnsafeBuffer {\n    size_t head = 0, tail = 0;\n    int buffer[1024];\npublic:\n    void push(int val) {\n        buffer[tail++] = val; // Non-atomic updates cause race conditions and data corruption across threads.\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to implement cache-line padding, leading to severe performance degradation via false sharing.",
+        "Using incorrect memory ordering constraints (e.g., relaxed semantics where acquire-release or sequentially consistent ordering is required)."
+      ],
+      "best_practices": [
+        "Always pad atomic indices to match the native CPU cache line size (typically 64 bytes).",
+        "Use powers-of-two for buffer capacities to replace expensive modulo operations with fast bitwise masking."
+      ],
+      "when_to_use": "When implementing low-latency message passing, lockless queues, or high-throughput telemetry pipelines between known producer and consumer threads.",
+      "when_not_to_use": "When the queue size must dynamically expand without bounds or when simpler lock-based queues provide sufficient throughput with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer in a lock-free multi-producer implementation?",
+          "answer": "By keeping one slot permanently empty or by using generation counters combined with sequence numbers stored alongside each buffer slot."
+        },
+        {
+          "question": "What is false sharing and how does cache alignment mitigate it in concurrent ring buffers?",
+          "answer": "False sharing occurs when independent threads modify variables residing on the same cache line. Cache-line alignment forces variables onto separate lines, preventing hardware cache invalidation storms."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Queue",
+        "Memory Barriers and Sequential Consistency",
+        "False Sharing and CPU Cache Architecture"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T23:49:56.647785+00:00",
+      "run_number": 1600
     }
   ]
 }
