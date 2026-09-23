@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1596,
-    "last_updated": "2026-09-23T23:37:20.158641+00:00",
-    "total_topics_learned": 1596
+    "total_runs": 1597,
+    "last_updated": "2026-09-23T23:40:29.661666+00:00",
+    "total_topics_learned": 1597
   },
   "entries": [
     {
@@ -76364,6 +76364,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-23T23:37:20.158621+00:00",
       "run_number": 1596
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value mapping and multi-core immutable data structural sharing in real-time functional programming runtimes and distributed state management engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Hash Array Mapped Trie (HAMT) combines the structural sharing of functional tries with fine-grained atomic operations, enabling high-performance concurrent key-value lookups and updates without global locking. By utilizing Compare-And-Swap (CAS) primitives and hazard pointers, threads can safely navigate, expand, and modify sparse node arrays concurrently.",
+      "key_points": [
+        "Uses a hash function to map keys into a wide-branching tree structure, minimizing tree depth and collision rates.",
+        "Employs atomic node-expansion and bitmapped sparse arrays to save memory and avoid storing empty child pointers.",
+        "Utilizes hazard pointers to prevent premature memory reclamation of unlinked internal nodes during concurrent writes.",
+        "Supports persistent-like structural sharing, allowing safe multi-core concurrent reads and writes with minimal contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using CAS for lock-free HAMT branch insertion",
+        "correct": "bool insert_child(std::atomic<Node*>& slot, Node* expected, Node* newNode) {\n    return slot.compare_exchange_strong(expected, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_child(Node*& slot, Node* newNode) {\n    slot = newNode;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing, leading to use-after-free bugs when another thread reclaims them.",
+        "Not using appropriate memory ordering barriers (acquire-release) with atomic operations, resulting in stale visibility of sparse bitmap states."
+      ],
+      "best_practices": [
+        "Keep bitmap calculations and bit-shifting logic optimized to quickly determine child node presence and index offsets.",
+        "Batch hazard pointer registrations and retirements to minimize thread synchronization overhead in high-throughput loops."
+      ],
+      "when_to_use": "Use when building concurrent caches, functional language runtimes, or distributed state systems requiring high-throughput thread-safe associative mapping with structural sharing.",
+      "when_not_to_use": "Avoid in simple applications or single-threaded contexts where standard maps or basic mutex-backed hash tables offer simpler debugging and lower memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a Hash Array Mapped Trie (HAMT) handle sparse child nodes efficiently without wasting memory on null pointers?",
+          "answer": "It uses a bitmap associated with each node where each bit corresponds to the presence of a child, and an array containing only the non-null children, using popcount operations to calculate exact array offsets."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free HAMT?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently reading, preventing other threads from prematurely freeing or recycling those nodes via memory reclamation routines during concurrent structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Persistent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T23:40:29.661647+00:00",
+      "run_number": 1597
     }
   ]
 }

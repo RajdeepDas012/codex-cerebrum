@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1596** |
-| Last Updated | `2026-09-23T23:37:20.158641+00:00` |
-| Dataset Size | `1596 entries` |
+| Total Topics Learned | **1597** |
+| Last Updated | `2026-09-23T23:40:29.661666+00:00` |
+| Dataset Size | `1597 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 683 |
+| data-structures | 684 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value mapping and multi-core immutable data structural sharing in real-time functional programming runtimes and distributed state management engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time in-memory databases and concurrent caching engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-relocation CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set-membership verification in real-time distributed storage systems and network packet filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and quotient-clustering CAS primitives alongside hazard pointer memory reclamation for high-throughput compact approximate membership querying and multi-core set-membership verification in real-time distributed caching and network security engines`
 - `Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy ingestion and multi-core key-value storage in real-time distributed databases and high-performance logging engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core task scheduling and event-driven asynchronous execution in real-time operating systems and game engine task graphs`
 
 <!-- STATS_END -->
 
