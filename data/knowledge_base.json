@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1574,
-    "last_updated": "2026-09-23T17:11:55.780103+00:00",
-    "total_topics_learned": 1574
+    "total_runs": 1575,
+    "last_updated": "2026-09-23T17:16:25.242799+00:00",
+    "total_topics_learned": 1575
   },
   "entries": [
     {
@@ -75315,6 +75315,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T17:11:55.780083+00:00",
       "run_number": 1574
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-bounding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range-minima and orthogonal range querying in real-time geographic spatial databases and CAD geometry processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Priority Search Tree combines heap-ordered priorities with binary search tree coordinate structures, utilizing atomic CAS operations and hazard pointers to support high-throughput orthogonal range and range-minima queries without locks. This architecture is vital for multi-core spatial databases and CAD geometry engines processing concurrent point clouds and bounding boxes.",
+      "key_points": [
+        "Merges a binary search tree ordered by coordinate keys with a heap ordered by priority values for efficient spatial indexing.",
+        "Uses atomic coordinate-bounding and node-splitting primitives via Compare-And-Swap (CAS) to safely handle concurrent structural modifications.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely reclaim nodes deleted concurrently by other threads.",
+        "Delivers high-throughput orthogonal range querying and range-minima searches across multi-core architectures without blocking contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-splitting and hazard pointer protection during concurrent Priority Search Tree insertions.",
+        "correct": "bool insert(Node*& root, int x, int y, int priority) {\n    Node* newNode = new Node(x, y, priority);\n    while (true) {\n        HazardGuard guard;\n        Node* curr = guard.protect(root);\n        if (!curr) {\n            if (atomic_compare_exchange_strong(&root, &curr, newNode)) return true;\n        } else if (x < curr->x) {\n            if (atomic_compare_exchange_strong(&curr->left, &curr->left, newNode)) return true;\n        } else {\n            if (atomic_compare_exchange_strong(&curr->right, &curr->right, newNode)) return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node*& root, int x, int y, int priority) {\n    mutex.lock();\n    // Unsafe non-atomic tree insertion without memory protection\n    Node* newNode = new Node(x, y, priority);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs when another thread deletes a node.",
+        "Incorrectly ordering coordinate-bounding checks during concurrent node splits, resulting in violated tree invariants."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer traversals in hazard pointer guards prior to reading child or sibling pointers.",
+        "Design node-splitting operations to be idempotent so failed CAS attempts can be safely retried without data corruption."
+      ],
+      "when_to_use": "Use this structure when building high-throughput real-time geographic spatial databases or CAD systems requiring lock-free concurrent orthogonal range and range-minima searches.",
+      "when_not_to_use": "Avoid this for simple single-threaded applications or low-concurrency systems where standard locking overhead is negligible and implementation complexity is a concern.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node insertions and splits in a concurrent Priority Search Tree?",
+          "answer": "By using hazard pointers or tagged pointers (version counters combined with pointers) in CAS operations to ensure that a pointer value has not changed state even if its numerical address remains the same."
+        },
+        {
+          "question": "Why is a Priority Search Tree preferred over a standard B-Tree for orthogonal range-minima queries?",
+          "answer": "A Priority Search Tree natively combines heap-ordered priorities with coordinate search keys, enabling optimal $O(\\log n + k)$ reporting time for orthogonal range-minima queries where standard B-Trees require multi-dimensional traversal overhead."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Lock-Free Interval Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T17:16:25.242781+00:00",
+      "run_number": 1575
     }
   ]
 }
