@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1566,
-    "last_updated": "2026-09-23T11:58:43.470198+00:00",
-    "total_topics_learned": 1566
+    "total_runs": 1567,
+    "last_updated": "2026-09-23T16:36:17.875832+00:00",
+    "total_topics_learned": 1567
   },
   "entries": [
     {
@@ -74937,6 +74937,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T11:58:43.470176+00:00",
       "run_number": 1566
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic sequence-wrapping and multi-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer message passing and multi-core IPC streaming in real-time trading platforms and high-frequency messaging engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent ring buffer utilizes atomic sequence-wrapping and multi-slot-claiming compare-and-swap (CAS) primitives to safely manage circular buffer indices across multiple threads without explicit locking. By coupling this with hazard pointers or sequence numbers, it eliminates lock contention, ensuring ultra-low latency and high-throughput message passing for real-time inter-process communication (IPC) and high-frequency financial trading engines.",
+      "key_points": [
+        "Employs atomic sequence-wrapping to track head and tail progress safely across wrapping boundaries without race conditions.",
+        "Utilizes multi-slot-claiming CAS primitives to allow concurrent threads to reserve batches of contiguous slots efficiently.",
+        "Integrates hazard pointer memory reclamation (or sequence-based validation) to guarantee thread-safe dynamic buffer resizing and node lifecycle management.",
+        "Minimizes cache-line bouncing through false-sharing mitigation strategies like cache padding between producer and consumer pointers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic sequence-based slot claiming mechanism for a lock-free ring buffer.",
+        "correct": "bool claim_slot(std::atomic<size_t>& tail, size_t capacity, size_t& current_tail) {\n    current_tail = tail.load(std::memory_order_relaxed);\n    while (!tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n        // retries upon contention\n    }\n    return true;\n}",
+        "wrong": "bool claim_slot(size_t& tail) {\n    size_t temp = tail;\n    tail++; // Non-atomic read-modify-write introduces severe race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to apply appropriate memory ordering semantics (e.g., using sequentially consistent operations everywhere, hurting performance).",
+        "Ignoring false sharing where producer and consumer sequence counters reside on the same CPU cache line."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail pointers to distinct cache line boundaries (typically 64 bytes) to prevent cache thrashing.",
+        "Use acquire-release memory semantics to ensure proper visibility of ring buffer payload data written prior to sequence updates."
+      ],
+      "when_to_use": "Use when building ultra-low latency inter-thread or inter-process communication pipelines, such as real-time market data ingestion and high-frequency execution engines.",
+      "when_not_to_use": "Avoid when data payloads vary wildly in size, requiring dynamic allocation rather than fixed pre-allocated circular blocks, or when blocking queues with minimal contention are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a fast producer from overwriting unconsumed data in a lock-free ring buffer?",
+          "answer": "By maintaining an atomic sequence or read/write cursor that checks if the distance between the producer and consumer equals the buffer capacity before allowing a slot claim."
+        },
+        {
+          "question": "Why is cache-line padding critical when implementing multi-producer ring buffers?",
+          "answer": "It prevents false sharing, which occurs when distinct CPU cores repeatedly invalidate each other's cache lines because frequently updated variables share the same memory block."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free LMAX Disruptor Pattern",
+        "Memory Barriers and CPU Caching",
+        "Hazard Pointers for Lock-Free Reclamation"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-09-23T16:36:17.875813+00:00",
+      "run_number": 1567
     }
   ]
 }
