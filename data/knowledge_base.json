@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1588,
-    "last_updated": "2026-09-23T20:33:17.146503+00:00",
-    "total_topics_learned": 1588
+    "total_runs": 1589,
+    "last_updated": "2026-09-23T20:36:27.262718+00:00",
+    "total_topics_learned": 1589
   },
   "entries": [
     {
@@ -75983,6 +75983,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T20:33:17.146480+00:00",
       "run_number": 1588
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-allocation and refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics and physics simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Bounding Volume Hierarchy (BVH) without traditional locks, utilizing atomic operations and hazard pointers. It enables multiple threads to simultaneously traverse, update, and refit spatial hierarchies for real-time ray tracing and collision detection.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free node allocation and bottom-up refitting of bounding volumes.",
+        "Employs hazard pointer memory reclamation to safely manage retired nodes without garbage collection or global locks.",
+        "Ensures high throughput for multi-core ray tracing by eliminating thread contention during parallel tree traversal and intersection testing.",
+        "Balances spatial partitioning trees efficiently across concurrent modifications in dynamic physics simulation loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node refitting via CAS in a concurrent BVH node structure",
+        "correct": "bool refit_node(std::atomic<BoundingBox*>& node_box, const BoundingBox& new_bounds) {\n    BoundingBox current = node_box.load();\n    BoundingBox expanded = current.merge(new_bounds);\n    while (!node_box.compare_exchange_weak(current, expanded)) {\n        expanded = current.merge(new_bounds);\n    }\n    return true;\n}",
+        "wrong": "bool refit_node(BoundingBox& node_box, const BoundingBox& new_bounds) {\n    node_box = node_box.merge(new_bounds); // Non-atomic update prone to race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs during structural tree rotations.",
+        "Using blocking synchronization primitives inside tight ray-tracing kernels instead of lock-free atomics, severely limiting multi-core scaling."
+      ],
+      "best_practices": [
+        "Align node structures to cache lines to minimize false sharing across concurrent CPU cores during traversal.",
+        "Batch atomic refitting operations where possible to reduce CAS retry contention in heavily loaded scenes."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or physics engines requiring high-frequency dynamic geometry updates across numerous CPU threads.",
+      "when_not_to_use": "Avoid in static scenes where a simple read-only optimized BVH built sequentially once is sufficient, or in environments lacking robust memory management support.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation races in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to atomically announce which nodes they are currently accessing, ensuring that retired nodes are only freed after no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is refitting preferred over full tree reconstruction in dynamic concurrent BVHs?",
+          "answer": "Refitting updates bounding boxes bottom-up using fast atomic CAS operations, avoiding the high computational overhead of rebuilding the entire tree structure from scratch."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Trees",
+        "Hazard Pointer Memory Management",
+        "Parallel Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-23T20:36:27.262695+00:00",
+      "run_number": 1589
     }
   ]
 }
