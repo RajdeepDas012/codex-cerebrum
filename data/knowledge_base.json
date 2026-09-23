@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1584,
-    "last_updated": "2026-09-23T20:20:39.462913+00:00",
-    "total_topics_learned": 1584
+    "total_runs": 1585,
+    "last_updated": "2026-09-23T20:23:49.602116+00:00",
+    "total_topics_learned": 1585
   },
   "entries": [
     {
@@ -75793,6 +75793,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T20:20:39.462890+00:00",
       "run_number": 1584
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial bounding-box querying and multi-core geometric indexing in real-time geographic information systems (GIS) and spatial databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent R-Tree spatial index using atomic Compare-And-Swap (CAS) operations for bounding box updates and node splits, protected by hazard pointers to safely manage memory reclamation. It enables high-throughput multi-core spatial queries and insertions without traditional mutex bottlenecks, vital for real-time geographic information systems.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS for concurrent bounding-box merging and node splitting without coarse-grained locking.",
+        "Employs hazard pointers to safely track thread references to spatial nodes and prevent premature memory deallocation during concurrent access.",
+        "Maintains hierarchical Minimum Bounding Rectangles (MBRs) to prune search spaces efficiently across multiple threads.",
+        "Addresses structural modification operations (SMOs) to handle tree balance and spatial overlap adjustments safely under high concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node access during concurrent traversal using hazard pointers in an R-Tree",
+        "correct": "Node* hazard_ptr = acquire_hazard_pointer(&node_ptr);\nif (node_ptr != hazard_ptr) { /* retry traversal */ }\nBoundingBox box = hazard_ptr->get_mbr();\nrelease_hazard_pointer(hazard_ptr);",
+        "wrong": "Node* node = node_ptr;\n// Another thread frees node here\nBoundingBox box = node->get_mbr(); // Undefined behavior / Use-After-Free"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to race conditions and use-after-free bugs during structural modifications.",
+        "Attempting to perform node splits and bounding-box updates with non-atomic compound operations, resulting in inconsistent spatial index states."
+      ],
+      "best_practices": [
+        "Always validate node pointers against hazard records after acquisition to ensure the node has not been unlinked or deleted by a concurrent split or deletion.",
+        "Keep critical sections inside lock-free loops as short as possible by performing complex geometric computations locally before applying CAS updates."
+      ],
+      "when_to_use": "Use this when building high-performance, low-latency spatial databases or real-time GIS engines that require heavy multi-threaded read/write workloads on spatial data.",
+      "when_not_to_use": "Avoid this in single-threaded environments or simple applications where the implementation complexity of lock-free memory reclamation outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits atomically in a lock-free R-Tree without using global locks?",
+          "answer": "By using atomic CAS operations to swap the parent's child pointer or reference to the newly split nodes, ensuring failed CAS attempts retry the operation with updated state."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent spatial indices like an R-Tree?",
+          "answer": "Hazard pointers protect threads from accessing nodes that are concurrently deleted or restructured during node splits, preventing use-after-free errors safely without heavy locking."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B-link Trees",
+        "Hazard Pointers and Memory Reclamation",
+        "Spatial Indexing and Minimum Bounding Rectangles"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-23T20:23:49.602095+00:00",
+      "run_number": 1585
     }
   ]
 }
