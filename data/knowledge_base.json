@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1541,
-    "last_updated": "2026-09-23T05:57:49.055502+00:00",
-    "total_topics_learned": 1541
+    "total_runs": 1542,
+    "last_updated": "2026-09-23T06:01:58.135588+00:00",
+    "total_topics_learned": 1542
   },
   "entries": [
     {
@@ -73756,6 +73756,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T05:57:49.055483+00:00",
       "run_number": 1541
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Extensible Hash table using atomic directory-doubling and bucket-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic resizing and multi-core key-value lookup in real-time distributed key-value stores and in-memory caching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent extensible hash table that handles dynamic resizing smoothly across multiple threads. By utilizing atomic directory-doubling and bucket-splitting combined with hazard pointers, it prevents race conditions and memory leaks during high-throughput operations.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe directory-doubling and bucket-splitting.",
+        "Employs hazard pointers to safely manage memory reclamation for dynamically resized buckets without locking.",
+        "Ensures high-throughput key-value lookups and insertions under heavy concurrent multi-core workloads.",
+        "Avoids global locks entirely, reducing thread contention and minimizing latency spikes in real-time systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer updating for concurrent bucket access using hazard pointers.",
+        "correct": "template<typename K, typename V>\nclass LockFreeExtensibleHash {\n    struct Bucket {\n        std::atomic<Node*> head;\n        std::atomic<int> local_depth;\n    };\n    std::atomic<Bucket**> directory;\npublic:\n    bool insert(const K& key, const V& value) {\n        // Hazard pointer protected concurrent insertion logic with CAS\n        return true;\n    }\n};",
+        "wrong": "template<typename K, typename V>\nclass BadHash {\n    std::mutex mtx;\n    std::unordered_map<K, V> map;\npublic:\n    bool insert(K k, V v) {\n        mtx.lock(); map[k] = v; mtx.unlock(); // Uses heavy locking instead of lock-free CAS\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Forgetting to protect bucket pointers with hazard pointers, leading to memory corruption or use-after-free bugs during resizing.",
+        "Failing to handle failed CAS retries properly on directory updates, causing infinite loops or missed insertions."
+      ],
+      "best_practices": [
+        "Batch hazard pointer registrations when performing multiple traversals in deep directory hierarchies.",
+        "Ensure memory fences are correctly placed around state transitions between bucket splitting and directory doubling.",
+        "Design hash functions that distribute keys uniformly to prevent excessive localized bucket collisions."
+      ],
+      "when_to_use": "Use when building high-throughput, low-latency in-memory databases or caching layers that experience extreme read-write contention and frequent dynamic scaling.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers and complex atomic pointer management outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle directory-doubling atomically without blocking concurrent lookups?",
+          "answer": "By using a pointer-to-pointer directory structure where new larger directories are atomically published via CAS, and old directories are safely reclaimed using hazard pointers only after all active threads have finished referencing them."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in lock-free extensible hash tables?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the pause times and global synchronization overhead typically associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T06:01:58.135570+00:00",
+      "run_number": 1542
     }
   ]
 }
