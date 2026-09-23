@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1592** |
-| Last Updated | `2026-09-23T20:45:53.182562+00:00` |
-| Dataset Size | `1592 entries` |
+| Total Topics Learned | **1593** |
+| Last Updated | `2026-09-23T20:49:02.243288+00:00` |
+| Dataset Size | `1593 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,8 +25,8 @@
 | system-design | 83 |
 | stocks-markets | 71 |
 | algorithms | 50 |
+| databases | 27 |
 | probability-math | 27 |
-| databases | 26 |
 | security | 14 |
 | machine-learning | 11 |
 | networking | 11 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy ingestion and multi-core key-value storage in real-time distributed databases and high-performance logging engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core task scheduling and event-driven asynchronous execution in real-time operating systems and game engine task graphs`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-extension and suffix-link-redirection CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis and bioinformatics data processing engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-pointing and bit-shifting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing lookups and multi-core prefix searching in real-time software-defined networking and packet classification engines`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-allocation and refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics and physics simulation engines`
-- `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-hyperplane-splitting and coordinate-axis-cycling CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest-neighbor searching and multi-core spatial point querying in real-time robotics path planning and computer vision point cloud processing engines`
 
 <!-- STATS_END -->
 

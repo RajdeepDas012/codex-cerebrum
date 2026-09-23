@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1592,
-    "last_updated": "2026-09-23T20:45:53.182562+00:00",
-    "total_topics_learned": 1592
+    "total_runs": 1593,
+    "last_updated": "2026-09-23T20:49:02.243288+00:00",
+    "total_topics_learned": 1593
   },
   "entries": [
     {
@@ -76174,6 +76174,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T20:45:53.182540+00:00",
       "run_number": 1592
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy ingestion and multi-core key-value storage in real-time distributed databases and high-performance logging engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An LSM-Tree optimizes write-heavy workloads by buffering writes in an in-memory memtable before flushing them sequentially into immutable Sorted String Tables (SSTables) on disk. Utilizing atomic Compare-And-Swap (CAS) operations for memtable swapping and hazard pointers for memory reclamation allows lock-free concurrent access across multiple cores without traditional blocking locks.",
+      "key_points": [
+        "Memtables act as the mutable write buffer, typically backed by concurrent skip lists to maintain ordered keys in memory.",
+        "Atomic CAS primitives are used to safely swap active memtables with immutable ones when size thresholds are reached without blocking incoming writes.",
+        "Hazard pointers protect reader threads from accessing memory reclaimed or freed during background SSTable compaction and garbage collection phases.",
+        "Background compaction processes merge multiple sorted SSTables to reduce read amplification and purge obsolete or deleted tombstone records."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based memtable swap mechanism for a concurrent LSM-Tree write path",
+        "correct": "bool LSMTree::insert(const std::string& key, const std::string& value) {\n    while (true) {\n        MemTable* current = active_memtable.load(std::memory_order_acquire);\n        if (current->size() >= MAX_MEMTABLE_SIZE) {\n            MemTable* new_memtable = new MemTable();\n            if (active_memtable.compare_exchange_strong(current, new_memtable, std::memory_order_release, std::memory_order_relaxed)) {\n                immutable_memtables.push_back(current);\n                trigger_compaction_thread();\n            }\n            continue;\n        }\n        if (current->put(key, value)) return true;\n    }\n}",
+        "wrong": "bool LSMTree::insert(const std::string& key, const std::string& value) {\n    mutex.lock();\n    if (active_memtable->size() >= MAX_MEMTABLE_SIZE) {\n        immutable_memtables.push_back(active_memtable);\n        active_memtable = new MemTable();\n    }\n    active_memtable->put(key, value);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect obsolete memtable nodes with hazard pointers before reclamation, leading to use-after-free bugs during concurrent reads.",
+        "Triggering synchronous compaction directly on the write thread execution path, causing severe latency spikes and write stalls."
+      ],
+      "best_practices": [
+        "Employ epoch-based memory reclamation or hazard pointers to track reader thread state safely during lock-free memtable swaps.",
+        "Batch disk I/O operations and write-ahead logs (WAL) asynchronously to maximize ingestion throughput."
+      ],
+      "when_to_use": "Use when designing high-throughput write-intensive storage engines, time-series databases, or distributed logging frameworks where write performance outweighs immediate read-update consistency.",
+      "when_not_to_use": "Avoid when workloads are heavily read-bound with frequent random updates, as LSM-Trees suffer from read amplification due to checking multiple SSTables.",
+      "interview_questions": [
+        {
+          "question": "How does an atomic CAS-based memtable swap prevent race conditions during high-throughput concurrent writes?",
+          "answer": "It ensures that only one thread successfully transitions the pointer of the full memtable to an immutable state while initializing a new active buffer, avoiding mutex contention."
+        },
+        {
+          "question": "Why are hazard pointers required when reclaiming memory in a concurrent lock-free LSM-Tree?",
+          "answer": "They prevent reader threads from attempting to access memory belonging to memtables or SSTable index nodes that have been concurrently deleted or compacted by background threads."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip Lists",
+        "Hazard Pointers and Memory Reclamation",
+        "SSTable Compaction Strategies"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-23T20:49:02.243267+00:00",
+      "run_number": 1593
     }
   ]
 }
