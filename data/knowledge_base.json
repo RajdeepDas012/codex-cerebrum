@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1555,
-    "last_updated": "2026-09-23T11:22:43.569565+00:00",
-    "total_topics_learned": 1555
+    "total_runs": 1556,
+    "last_updated": "2026-09-23T11:25:56.764341+00:00",
+    "total_topics_learned": 1556
   },
   "entries": [
     {
@@ -74417,6 +74417,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T11:22:43.569543+00:00",
       "run_number": 1555
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Linear Hash table using atomic bucket-splitting and directory-expansion CAS primitives alongside hazard pointer memory reclamation for high-throughput incremental resizing and multi-core key-value lookup in real-time distributed in-memory caching and database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Linear Hash table enables scalable key-value storage by incrementally resizing buckets via atomic primitives rather than rehashing the entire table at once. Utilizing hazard pointers ensures safe memory reclamation, eliminating locking overhead for high-throughput multi-core workloads in distributed systems.",
+      "key_points": [
+        "Employs incremental bucket splitting to avoid massive latency spikes typical of standard hash table reallocations.",
+        "Utilizes atomic Compare-And-Swap (CAS) operations for bucket-splitting and directory-expansion phases.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of dynamically resized bucket nodes.",
+        "Maximizes multi-core throughput by allowing concurrent lookups, insertions, and split operations without global locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic bucket pointer swap during a linear hash expansion step.",
+        "correct": "std::atomic<Bucket*> buckets;\nvoid split_bucket(size_t old_index, size_t new_index) {\n    Bucket* target = buckets.load(std::memory_order_acquire);\n    // Perform atomic pointer update using CAS\n    while(!buckets.compare_exchange_weak(target, updated_buckets)) { }\n}",
+        "wrong": "Bucket* target = buckets;\n// Missing atomic load/CAS leads to race conditions and corrupted pointer state\nbuckets = updated_buckets;"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed bucket nodes with hazard pointers, leading to use-after-free bugs during concurrent resizing.",
+        "Neglecting to update the split pointer monotonically, causing out-of-bounds index lookups during incremental growth."
+      ],
+      "best_practices": [
+        "Design hash table states to transition smoothly through immutable node structures where possible.",
+        "Keep hazard pointer reservation scopes as tight as possible to minimize thread contention and overhead."
+      ],
+      "when_to_use": "Ideal for high-throughput, latency-sensitive in-memory caches and databases requiring continuous ingestion without global stop-the-world resizing pauses.",
+      "when_not_to_use": "Avoid in memory-constrained environments where hazard pointers and extra directory overhead introduce prohibitive memory consumption.",
+      "interview_questions": [
+        {
+          "question": "How does Linear Hashing avoid the performance degradation of a standard global resize operation?",
+          "answer": "It grows incrementally by splitting one bucket at a time based on a split pointer, spreading out the migration cost over many operations."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Linear Hash table?",
+          "answer": "They safely track pointers currently accessed by worker threads so that memory reclaimed during bucket splitting or node deletion is not freed prematurely."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip List",
+        "Concurrent Cuckoo Hashing",
+        "Hazard Pointers Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T11:25:56.764320+00:00",
+      "run_number": 1556
     }
   ]
 }
