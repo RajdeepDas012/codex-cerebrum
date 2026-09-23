@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1602,
-    "last_updated": "2026-09-23T23:56:14.016227+00:00",
-    "total_topics_learned": 1602
+    "total_runs": 1603,
+    "last_updated": "2026-09-23T23:59:22.522867+00:00",
+    "total_topics_learned": 1603
   },
   "entries": [
     {
@@ -76647,6 +76647,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T23:56:14.016210+00:00",
       "run_number": 1602
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core index management in real-time enterprise database storage and high-frequency transaction processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree coordinates multiple threads modifying multi-way search tree nodes without blocking locks by leveraging Compare-And-Swap (CAS) operations for node splits and structural merges. Hazard pointers ensure safe memory reclamation by tracking thread access to nodes, preventing premature deallocation during concurrent traversal and structural updates.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS to handle multi-way node-splitting and structural-merging without locking mechanisms.",
+        "Employs hazard pointers to protect shared nodes from being freed while other threads are traversing or modifying them.",
+        "Maximizes throughput and avoids priority inversion and convoy effects in high-concurrency enterprise database indexing.",
+        "Maintains multi-way search tree balance and high branching factors concurrently across multiple processor cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safely acquiring a hazard pointer for a B-Tree node before traversing child pointers.",
+        "correct": "Node* current = load_hazard_pointer(&root_ptr, thread_id);\nwhile (current && !try_split_node(current)) {\n    current = navigate_to_child(current, key, thread_id);\n}\nrelease_hazard_pointer(thread_id);",
+        "wrong": "Node* current = root_ptr.load();\nif (current->is_full()) {\n    split_node(current);\n}\n// Risk of node deletion and use-after-free by another thread here"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate child pointers with hazard pointers during structural modifications, leading to use-after-free bugs.",
+        "Deadlocking or live-locking during simultaneous node splits and merges due to improper backoff strategies and coordination."
+      ],
+      "best_practices": [
+        "Always register accessed B-Tree nodes into thread-local hazard pointer slots before dereferencing child links.",
+        "Implement exponential backoff and localized retry loops when CAS operations fail due to high contention on root or internal nodes.",
+        "Batch memory deallocations via deferred retirement lists once no active hazard pointers reference the targeted node structures."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory database engines or multi-core key-value stores requiring extreme read-write concurrency and strict latency SLAs for range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free atomics and hazard pointer management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors during lock-free B-Tree node splitting?",
+          "answer": "Hazard pointers allow threads to announce which node they are currently reading. When a node is split or removed, its memory cannot be immediately freed; instead, it is deferred until no thread has a hazard pointer pointing to it, preventing use-after-free and ensuring safe access."
+        },
+        {
+          "question": "What is the primary challenge when performing structural merges in a lock-free B-Tree, and how is it addressed?",
+          "answer": "The main challenge is coordinating concurrent updates across parent, left, and right sibling nodes atomically. This is typically addressed by marking nodes as logically deleted or frozen via CAS before executing structural adjustments."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T23:59:22.522848+00:00",
+      "run_number": 1603
     }
   ]
 }
