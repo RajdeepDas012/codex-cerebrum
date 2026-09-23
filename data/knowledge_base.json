@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1570,
-    "last_updated": "2026-09-23T16:51:19.544891+00:00",
-    "total_topics_learned": 1570
+    "total_runs": 1571,
+    "last_updated": "2026-09-23T16:57:25.540017+00:00",
+    "total_topics_learned": 1571
   },
   "entries": [
     {
@@ -75126,6 +75126,54 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-23T16:51:19.544873+00:00",
       "run_number": 1570
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded SPSC Queue using atomic sequence-number tracking and cache-line padding CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer messaging and multi-core IPC streaming in real-time low-latency financial trading platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free bounded Single-Producer Single-Consumer (SPSC) queue uses atomic sequence numbers and cache-line padding to eliminate lock contention and false sharing between threads. It enables ultra-low-latency inter-thread and inter-process communication essential for high-frequency financial messaging systems.",
+      "key_points": [
+        "Leverages atomic sequence-number tracking to coordinate producer and consumer positions without heavy mutex locks.",
+        "Applies explicit cache-line padding to prevent false sharing by ensuring producer and consumer indexes reside on separate cache lines.",
+        "Employs hazard pointer memory reclamation patterns to safely manage dynamic buffer nodes or descriptor states in lock-free streams.",
+        "Guarantees bounded memory utilization and predictable, bounded execution times required for strict real-time guarantees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe execution of atomic head/tail increments with cache-line separation in a lock-free SPSC queue.",
+        "correct": "template <typename T, size_t Capacity>\nclass SPSCCircularQueue {\n    alignas(64) std::atomic<size_t> head_{0};\n    alignas(64) std::atomic<size_t> tail_{0};\n    T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        size_t const head = head_.load(std::memory_order_relaxed);\n        size_t const tail = tail_.load(std::memory_order_acquire);\n        if (tail - head >= Capacity) return false;\n        buffer_[tail % Capacity] = item;\n        tail_.store(tail + 1, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "template <typename T, size_t Capacity>\nclass BadQueue {\n    std::size_t head_ = 0;\n    std::size_t tail_ = 0;\n    T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        buffer_[tail_ % Capacity] = item;\n        tail_++;\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use explicit cache-line padding, leading to performance-degrading false sharing between the producer and consumer cores.",
+        "Applying incorrect memory ordering constraints (e.g., using relaxed stores where release-acquire semantics are strictly required)."
+      ],
+      "best_practices": [
+        "Always separate producer and consumer atomic variables onto distinct cache lines using alignment attributes.",
+        "Utilize acquire-release memory semantics to ensure proper visibility of queue elements across thread boundaries.",
+        "Design queue capacities as powers of two to allow fast bitwise modulo operations over division instructions."
+      ],
+      "when_to_use": "When you have a strict single-producer and single-consumer thread topology demanding deterministic, microsecond-level message passing performance.",
+      "when_not_to_use": "When multiple threads can write to or read from the queue concurrently, in which case an MPMC queue or lock-based structure is required.",
+      "interview_questions": [
+        {
+          "question": "Why is cache-line padding critical for performance in an SPSC queue?",
+          "answer": "It prevents false sharing, which occurs when two threads modify independent variables residing on the same CPU cache line, causing costly cache invalidation traffic."
+        },
+        {
+          "question": "What memory orderings are necessary for safely publishing an item in an SPSC queue?",
+          "answer": "A release store on the tail (or sequence) index by the producer, and an acquire load of that index by the consumer to synchronize data writes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free MPMC Queue",
+        "Memory Ordering Semantics",
+        "False Sharing Mitigation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T16:57:25.540000+00:00",
+      "run_number": 1571
     }
   ]
 }
