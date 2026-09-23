@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1552,
-    "last_updated": "2026-09-23T11:13:01.562397+00:00",
-    "total_topics_learned": 1552
+    "total_runs": 1553,
+    "last_updated": "2026-09-23T11:16:25.027040+00:00",
+    "total_topics_learned": 1553
   },
   "entries": [
     {
@@ -74275,6 +74275,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T11:13:01.562376+00:00",
       "run_number": 1552
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skew Heap using atomic root-merging and self-adjusting heap-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing priority queue operations and multi-core task scheduling in real-time distributed execution and simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent skew heap, which leverages atomic compare-and-swap (CAS) operations and hazard pointers to achieve thread-safe, self-adjusting priority queue merges without locks. It is critical for high-throughput multi-core task schedulers and simulation engines requiring minimal synchronization overhead.",
+      "key_points": [
+        "Utilizes atomic root-merging and self-adjusting heap-swapping CAS primitives to mutate tree links safely under high contention.",
+        "Employs hazard pointers for safe memory reclamation, preventing ABA problems and use-after-free race conditions during structural modification.",
+        "Provides amortized logarithmic performance without explicit structural balancing fields like null-path lengths.",
+        "Enables lock-free progress guarantees, ensuring that system-wide throughput does not drop due to stalled or preempted threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node swapping primitive for concurrent skew heap merging.",
+        "correct": "bool cas_swap_children(Node* parent, Node* expected_left, Node* expected_right, Node* new_left, Node* new_right) {\n    // Atomic pointer update for children swapping during merge\n    return parent->left.compare_exchange_weak(expected_left, new_left) &&\n           parent->right.compare_exchange_weak(expected_right, new_right);\n}",
+        "wrong": "bool unsafe_swap(Node* parent) {\n    Node* temp = parent->left;\n    parent->left = parent->right;\n    parent->right = temp;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to memory corruption if another thread frees a node during a merge.",
+        "Assuming lock-free algorithms are always faster than fine-grained locking under low thread counts due to high CAS retry overhead."
+      ],
+      "best_practices": [
+        "Always wrap dynamic node allocations and deletions in a robust hazard pointer domain or epoch-based reclamation scheme.",
+        "Design retry loops with exponential backoff or yielding mechanisms to mitigate CPU cache-line bouncing under extreme multi-core contention."
+      ],
+      "when_to_use": "Use when building high-performance multi-threaded task schedulers, event-driven simulation engines, or distributed priority queues requiring high concurrency and non-blocking guarantees.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where strict deterministic latency bounds are preferred over raw throughput, as lock-free retry loops can cause unpredictable tail latency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node modifications in a lock-free skew heap?",
+          "answer": "Hazard pointers protect nodes currently being accessed by a thread from being reclaimed or freed by another thread, ensuring that memory addresses remain valid during CAS validation steps."
+        },
+        {
+          "question": "Why is the self-adjusting property of a skew heap challenging to implement in a lock-free concurrent environment?",
+          "answer": "Because structural changes (like swapping left and right subtrees on every access) require multiple interdependent atomic operations, making it difficult to maintain invariants without explicit locks or complex multi-word CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Leftist Heap",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Binomial Heap"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T11:16:25.027019+00:00",
+      "run_number": 1553
     }
   ]
 }
