@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1601,
-    "last_updated": "2026-09-23T23:53:05.316151+00:00",
-    "total_topics_learned": 1601
+    "total_runs": 1602,
+    "last_updated": "2026-09-23T23:56:14.016227+00:00",
+    "total_topics_learned": 1602
   },
   "entries": [
     {
@@ -76599,6 +76599,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T23:53:05.316131+00:00",
       "run_number": 1601
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core set-membership verification in real-time distributed caching and security proxy engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter uses atomic bitwise operations and compare-and-swap (CAS) primitives to allow multiple threads to safely insert elements and query approximate membership without locking overhead. This approach maximizes throughput in multi-core distributed caches and security proxies where high contention on shared filter states is common.",
+      "key_points": [
+        "Utilizes atomic bit-setting across backing word arrays to enable concurrent insertions without mutex bottlenecks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or underlying node allocations without blocked readers.",
+        "Performs multiple independent hash calculations (e.g., via MurmurHash or CityHash) to map keys to bit indices atomically.",
+        "Guarantees zero false negatives while bounded false positives scale deterministically with bit array size and hash function count."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit setting using fetch_or for lock-free thread-safe filter updates.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> table;\n    size_t num_bits;\npublic:\n    explicit ConcurrentBloomFilter(size_t bits) : num_bits(bits), table((bits + 63) / 64) {}\n    \n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        table[word_idx].fetch_or(1ULL << bit_offset, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\n\nclass UnsafeBloomFilter {\n    std::vector<uint64_t> table;\npublic:\n    void add(size_t bit_index) {\n        // Race condition: concurrent writes without synchronization corrupt data\n        table[bit_index / 64] |= (1ULL << (bit_index % 64));\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write sequences (like read-then-write) which leads to lost updates during concurrent insertions.",
+        "Neglecting memory ordering semantics, resulting in stale reads of bit vectors across different CPU cores."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic bit-setting operations where strict sequential consistency is not required for independent bit updates.",
+        "Pre-allocate the entire bit array capacity to avoid costly runtime reallocation and synchronization overheads.",
+        "Choose independent, fast hash functions with good avalanche properties to minimize false positive clustering."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching systems, web crawlers, or security proxies requiring ultra-fast set membership tests across multiple threads.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required, or when elements must be frequently deleted from the set (standard Bloom filters do not support deletion).",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions into a Bloom filter without using locks?",
+          "answer": "By using atomic bitwise instructions (such as fetch_or) on underlying word arrays via compare-and-swap (CAS) or atomic primitives to update bits lock-free."
+        },
+        {
+          "question": "Why can't standard Bloom filters support item deletion?",
+          "answer": "Clearing bits for a deleted item can accidentally unset bits that were shared by other inserted items, introducing false negatives."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-Free Skip List",
+        "Atomic Bitmaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T23:56:14.016210+00:00",
+      "run_number": 1602
     }
   ]
 }
