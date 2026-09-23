@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1567,
-    "last_updated": "2026-09-23T16:36:17.875832+00:00",
-    "total_topics_learned": 1567
+    "total_runs": 1568,
+    "last_updated": "2026-09-23T16:41:06.769071+00:00",
+    "total_topics_learned": 1568
   },
   "entries": [
     {
@@ -74984,6 +74984,54 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-23T16:36:17.875813+00:00",
       "run_number": 1567
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-endpoint-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core interval overlapping evaluation in real-time CPU scheduling and memory allocation management engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure enables multiple concurrent threads to insert, delete, and query overlapping time or memory intervals without acquiring global locks. By utilizing atomic primitives and hazard pointers, it ensures robust memory safety and high-throughput execution in multi-core environments.",
+      "key_points": [
+        "Leverages atomic endpoint-updating and max-endpoint-tracking Compare-And-Swap (CAS) primitives for lock-free node modifications.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation and prevent the ABA problem during concurrent tree rebalancing and mutations.",
+        "Optimizes overlapping range querying by maintaining augmented interval boundaries efficiently across multi-threaded operations.",
+        "Ensures high-throughput performance for modern multi-core workloads such as real-time CPU scheduling and memory mapping."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node access via hazard pointers during concurrent interval tree traversal",
+        "correct": "HazardPointer hp;\nNode* current = hp.protect(root.load());\nwhile (current != nullptr) {\n    if (overlaps(current->interval, target)) return current;\n    current = hp.protect(current->next.load());\n}",
+        "wrong": "Node* current = root.load();\n// Missing hazard pointer protection allows another thread to free 'current' here\nif (overlaps(current->interval, target)) return current;"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer fields, leading to use-after-free vulnerabilities.",
+        "Neglecting to properly update max-endpoint metadata atomically, which corrupts the invariant required for correct overlapping queries."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing any node pointer in a lock-free structure.",
+        "Ensure max-endpoint propagation updates are atomic and propagate correctly up the ancestor chain during insertions.",
+        "Batch retired nodes safely before executing memory recycling to minimize synchronization overhead."
+      ],
+      "when_to_use": "Use when high-concurrency overlapping range queries are required in memory-constrained environments or real-time schedulers where blocking locks introduce unacceptable latency.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency, where traditional lock-based interval trees offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free interval tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, preventing other threads from prematurely freeing those memory blocks until all readers have unlinked them."
+        },
+        {
+          "question": "Why is max-endpoint-tracking critical for interval trees, and how is it updated concurrently?",
+          "answer": "It allows search algorithms to prune subtrees that cannot possibly overlap the query range. In a concurrent setting, it requires atomic operations to propagate changes upward without violating linearizability."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Segment Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T16:41:06.769053+00:00",
+      "run_number": 1568
     }
   ]
 }
