@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1524,
-    "last_updated": "2026-09-23T00:19:42.466327+00:00",
-    "total_topics_learned": 1524
+    "total_runs": 1525,
+    "last_updated": "2026-09-23T00:22:50.775056+00:00",
+    "total_topics_learned": 1525
   },
   "entries": [
     {
@@ -72951,6 +72951,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-23T00:19:42.466307+00:00",
       "run_number": 1524
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core time-interval evaluation in real-time calendar scheduling and event-driven monitoring engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Interval Tree leveraging atomic Compare-And-Swap (CAS) primitives for endpoint adjustments and max-subtree bound updates. It utilizes hazard pointers to safely manage memory reclamation in high-throughput multi-threaded overlapping range query applications.",
+      "key_points": [
+        "Uses atomic operations to update interval endpoints and maintain max-bounding values without traditional coarse-grained locks.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes currently accessed by concurrent threads.",
+        "Facilitates efficient multi-core overlap evaluation for real-time calendar scheduling and monitoring workflows.",
+        "Addresses lock-free contention challenges during structural tree modifications and rebalancings."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based updating of interval node max-bounds using hazard pointers",
+        "correct": "#include <atomic>\n#include <algorithm>\n\nstruct Node {\n    int low, high, max_high;\n    std::atomic<Node*> left{nullptr}, right{nullptr};\n};\n\nvoid update_max_bound(std::atomic<int>& max_val, int new_val) {\n    int current = max_val.load();\n    while (new_val > current && !max_val.compare_exchange_weak(current, new_val)) {\n        // Retry until CAS succeeds\n    }\n}",
+        "wrong": "void update_max_bound(std::atomic<int>& max_val, int new_val) {\n    if (new_val > max_val.load()) {\n        max_val.store(new_val); // Non-atomic check-then-act causes race conditions\n    }\n}"
+      },
+      "common_mistakes": [
+        "Performing non-atomic read-modify-write sequences on interval bounds, introducing race conditions.",
+        "Reclaiming dynamic memory without hazard pointers, resulting in use-after-free bugs during concurrent traversals."
+      ],
+      "best_practices": [
+        "Protect every shared node pointer traversal with thread-local hazard pointers before dereferencing fields.",
+        "Design tree traversal algorithms to tolerate stale max-bounding values during concurrent node insertions."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform high-throughput overlapping range queries and time-interval insertions concurrently.",
+      "when_not_to_use": "Avoid when single-threaded performance or straightforward transactional locking suffices without concurrency bottlenecks.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in lock-free interval trees?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, ensuring that retired nodes are only freed after no thread references them."
+        },
+        {
+          "question": "Why is updating the max-bounding value atomically critical during concurrent insertions in an interval tree?",
+          "answer": "It ensures that concurrent range queries can accurately determine whether a subtree might contain an overlapping interval without missing newly added nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Segment Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-23T00:22:50.775035+00:00",
+      "run_number": 1525
     }
   ]
 }
