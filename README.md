@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1633** |
-| Last Updated | `2026-09-24T10:16:41.305459+00:00` |
-| Dataset Size | `1633 entries` |
+| Total Topics Learned | **1634** |
+| Last Updated | `2026-09-24T10:19:51.547255+00:00` |
+| Dataset Size | `1634 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 715 |
+| data-structures | 716 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and skew-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task dispatching in real-time operating system kernels and asynchronous event-driven execution runtimes`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core duplicate filtering in real-time distributed caching and web crawler engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and structural-path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable map lookups and multi-core shared-state management in real-time functional programming runtimes and concurrent distributed data structures`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index scans in real-time main-memory database management systems`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput interval queries and multi-core dynamic range aggregation in real-time financial trading analytics and high-frequency market data processing engines`
-- `Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic pivot-selecting and metric-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest neighbor searching and multi-core high-dimensional similarity indexing in real-time multimedia retrieval and computer vision matching engines`
 
 <!-- STATS_END -->
 
