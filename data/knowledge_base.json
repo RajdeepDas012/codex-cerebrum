@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1664,
-    "last_updated": "2026-09-24T22:24:56.510823+00:00",
-    "total_topics_learned": 1664
+    "total_runs": 1665,
+    "last_updated": "2026-09-24T22:28:04.942691+00:00",
+    "total_topics_learned": 1665
   },
   "entries": [
     {
@@ -79584,6 +79584,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T22:24:56.510805+00:00",
       "run_number": 1664
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic distance-partitioning and radius-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest-neighbor searching and multi-core similarity querying in real-time computer vision feature matching and recommendation engine systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Vantage-Point Tree that utilizes atomic primitives and hazard pointers to support lock-free metric space nearest-neighbor searches. It enables safe multi-core similarity querying without traditional lock bottlenecks, making it essential for high-performance recommendation and vision systems.",
+      "key_points": [
+        "Utilizes atomic distance-partitioning and radius-bounding CAS operations to manage metric space boundaries concurrently.",
+        "Employs hazard pointer memory reclamation to securely free tree nodes without incurring locking overhead or memory leaks.",
+        "Facilitates high-throughput nearest-neighbor searching across non-Euclidean and complex metric spaces on multi-core processors.",
+        "Ensures thread safety during dynamic node insertions and concurrent spatial queries in high-performance environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion and hazard pointer protection in a lock-free Vantage-Point Tree.",
+        "correct": "void* vp_tree_lookup(VPTree* tree, Point* target) {\n    HazardPointerGuard g;\n    Node* current = g.protect(&tree->root);\n    while (current != nullptr) {\n        double dist = distance(current->vp, target);\n        if (dist <= current->radius) {\n            current = g.protect(&current->left);\n        } else {\n            current = g.protect(&current->right);\n        }\n    }\n    return current ? current->data : nullptr;\n}",
+        "wrong": "Node* current = tree->root;\nwhile (current != nullptr) {\n    // Missing hazard pointer protection leads to use-after-free if another thread deletes current\n    if (distance(current->vp, target) <= current->radius)\n        current = current->left;\n    else\n        current = current->right;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal pointers with hazard pointers, leading to race conditions and use-after-free bugs during concurrent node deletions.",
+        "Applying rigid Euclidean bounding assumptions to non-metric distance functions, which violates the underlying mathematical properties of Vantage-Point trees."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers with the thread-local hazard pointer domain before reading child references.",
+        "Batch metric distance calculations where possible to minimize cache misses and CPU pipeline stalls during deep tree traversals."
+      ],
+      "when_to_use": "Use when you need high-throughput, lock-free nearest-neighbor searches in complex metric spaces across multiple concurrent threads.",
+      "when_not_to_use": "Avoid when data is purely low-dimensional Euclidean space where simpler structures like R-trees or KD-trees suffice, or when single-threaded simplicity is preferred.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free Vantage-Point Tree during concurrent modifications?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that concurrent reclamation mechanisms know not to free those memory nodes until no thread holds a reference to them."
+        },
+        {
+          "question": "Why is a Vantage-Point tree preferred over a standard KD-tree for generic metric spaces?",
+          "answer": "Vantage-Point trees partition space using distance from a chosen vantage point relative to a median radius, making them effective for arbitrary metric spaces where dimensions are not orthogonal or Euclidean."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Metric Space Nearest-Neighbor Searching",
+        "Lock-Free Concurrent Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T22:28:04.942668+00:00",
+      "run_number": 1665
     }
   ]
 }
