@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1620,
-    "last_updated": "2026-09-24T04:46:35.592938+00:00",
-    "total_topics_learned": 1620
+    "total_runs": 1621,
+    "last_updated": "2026-09-24T04:49:44.240669+00:00",
+    "total_topics_learned": 1621
   },
   "entries": [
     {
@@ -77502,6 +77502,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T04:46:35.592919+00:00",
       "run_number": 1620
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-splitting and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking (SDN) and telecommunication switching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Radix Tree enables lock-free, multi-core optimized prefix searches and IP routing table lookups. By leveraging atomic compare-and-swap (CAS) primitives for prefix-splitting and node-merging alongside hazard pointers, it ensures safe memory reclamation and high throughput in real-time networking systems without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic prefix-splitting and node-merging CAS operations to modify tree structures safely across concurrent threads.",
+        "Employs hazard pointers for deterministic, lock-free memory reclamation of deleted tree nodes without blocking other readers or writers.",
+        "Optimizes memory layout and traversal paths for high-throughput longest-prefix matching required in software-defined networking (SDN).",
+        "Avoids global mutexes or read-write locks, completely eliminating lock convoy and priority inversion bottlenecks on multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic CAS node update for a lock-free radix tree branch insertion.",
+        "correct": "bool update_child(std::atomic<RadixNode*>& slot, RadixNode* expected, RadixNode* desired) {\n    return slot.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "RadixNode* update_child(std::atomic<RadixNode*>& slot, RadixNode* desired) {\n    RadixNode* expected = slot.load();\n    slot.store(desired);\n    return expected;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free race conditions during structural modifications.",
+        "Using weak memory orderings inappropriately when publishing new subtrees, causing reader threads to observe partially constructed nodes."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any node accessed during tree traversal before reading its child pointers or key prefixes.",
+        "Ensure memory reclamation routines defer actual node destruction until no active hazard pointers reference the targeted memory block."
+      ],
+      "when_to_use": "Use when building high-performance packet processing, routing table lookups, or routing engines where multiple threads perform concurrent inserts, deletes, and longest-prefix searches.",
+      "when_not_to_use": "Avoid when keys are dense, uniform integers or arbitrary objects without hierarchical prefix structures, where standard lock-free hash maps or B+ trees would be simpler and more space-efficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow a thread to register its intent to read a specific node globally. Before freeing any node, the deleter scans all active hazard pointers to ensure no thread is currently reading it, safely deferring reclamation."
+        },
+        {
+          "question": "Why are atomic CAS primitives insufficient on their own without memory reclamation schemes in dynamic radix trees?",
+          "answer": "While CAS ensures safe pointer updates, it does not manage memory lifetimes. Without a reclamation scheme like hazard pointers or epoch-based GC, concurrent deletions would immediately free memory while other threads are traversing through those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Longest Prefix Match Algorithms in SDN"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T04:49:44.240648+00:00",
+      "run_number": 1621
     }
   ]
 }
