@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1623,
-    "last_updated": "2026-09-24T04:56:01.184084+00:00",
-    "total_topics_learned": 1623
+    "total_runs": 1624,
+    "last_updated": "2026-09-24T09:48:16.808244+00:00",
+    "total_topics_learned": 1624
   },
   "entries": [
     {
@@ -77644,6 +77644,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-24T04:56:01.184063+00:00",
       "run_number": 1623
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and batched-enqueue-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread synchronization in real-time asynchronous execution runtimes and parallel task-stealing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent priority queue utilizing atomic heap-node promotions and hazard pointers. It enables high-throughput task scheduling and efficient multi-core thread synchronization without deadlocks or traditional locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for heap node promotion and batched enqueues to minimize synchronization overhead across cores.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic node allocations without risking ABA problems or use-after-free faults.",
+        "Ensures lock-free progress guarantees, allowing at least one thread to make progress globally regardless of thread contention.",
+        "Optimized for real-time asynchronous execution runtimes and parallel task-stealing engines where low latency and high concurrency are paramount."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe publication and hazard pointer protection of a concurrent priority queue node during atomic promotion.",
+        "correct": "template<typename T>\nvoid hazard_pointer_enqueue(ConcurrentPriorityQueue<T>& q, T val) {\n    Node<T>* new_node = new Node<T>(val);\n    while (!q.try_atomic_push(new_node)) {\n        // Retry via CAS loop on heap tail/root\n    }\n}",
+        "wrong": "template<typename T>\nvoid unsafe_enqueue(ConcurrentPriorityQueue<T>& q, T val) {\n    // Mutating shared heap nodes without hazard pointers or CAS leads to race conditions and corruption\n    q.root = new Node<T>(val);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversing pointers with hazard pointers, leading to premature memory reclamation and use-after-free bugs.",
+        "Neglecting the ABA problem during node promotion CAS operations, which can silently corrupt the underlying heap structure."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in local hazard pointer lists before reading or traversing child pointers in the concurrent heap.",
+        "Implement exponential backoff or randomized retry strategies within CAS loops to mitigate high cache-line contention under massive core counts."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous runtimes, task-stealing schedulers, or real-time event engines that demand minimal latency under heavy multi-core contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free primitives and hazard pointer management outweighs the throughput benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory addresses until all references are dropped."
+        },
+        {
+          "question": "What are the trade-offs between using a lock-free priority queue versus a traditional mutex-locked binary heap?",
+          "answer": "Lock-free priority queues provide superior scalability and avoid convoying/deadlocks under high contention, but they introduce higher algorithmic complexity, memory reclamation overhead, and potential retry loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointer Memory Management",
+        "Work-Stealing Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T09:48:16.808221+00:00",
+      "run_number": 1624
     }
   ]
 }
