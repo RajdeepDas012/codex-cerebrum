@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1650** |
-| Last Updated | `2026-09-24T19:13:51.806658+00:00` |
-| Dataset Size | `1650 entries` |
+| Total Topics Learned | **1651** |
+| Last Updated | `2026-09-24T19:17:00.373910+00:00` |
+| Dataset Size | `1651 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 729 |
+| data-structures | 730 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-splitting and sibling-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core point queries in real-time in-memory database engines and concurrent storage systems`
 - `Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic leaf-partitioning and multi-dimensional-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial-temporal querying and multi-core point-cloud indexing in real-time geospatial database systems and autonomous vehicle sensor fusion engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) data structure using atomic path-compression and rank-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component analysis and multi-core equivalence relation tracking in real-time graph processing and network clustering engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core online statistical tracking in real-time streaming analytics and compression algorithm engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range searching in real-time geographic information systems (GIS) and location-based service engines`
-- `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical interval querying and multi-core functional state tracking in real-time time-series databases and concurrent version-control storage engines`
 
 <!-- STATS_END -->
 
