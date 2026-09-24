@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1630,
-    "last_updated": "2026-09-24T10:07:14.464945+00:00",
-    "total_topics_learned": 1630
+    "total_runs": 1631,
+    "last_updated": "2026-09-24T10:10:22.857621+00:00",
+    "total_topics_learned": 1631
   },
   "entries": [
     {
@@ -77973,6 +77973,56 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-24T10:07:14.464923+00:00",
       "run_number": 1630
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index scans in real-time main-memory database management systems",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Bx-Tree index structure tailored for multi-core main-memory database systems. By leveraging atomic primitives like leaf-merging and range-locking combined with hazard pointers, it enables scalable, high-throughput index scans and updates without the bottlenecks of traditional coarse-grained locking.",
+      "key_points": [
+        "Utilizes atomic leaf-merging and range-locking CAS primitives to modify tree structures without global locks.",
+        "Employs hazard pointer memory reclamation to safely free nodes concurrently accessed by multiple threads without memory leaks or premature deallocation.",
+        "Optimizes multi-core index scans for main-memory database systems, reducing cache contention and synchronization overhead.",
+        "Balances tree node occupancy dynamically under heavy concurrent insert, delete, and scan workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe traversal and atomic node-linking pattern using hazard pointers in a concurrent Bx-Tree.",
+        "correct": "Node* hazard_ptr = acquire_hazard_pointer(&root_node);\nwhile (!atomic_compare_exchange_weak(&node->next, &expected, new_node)) {\n    // Retry logic with updated expected pointer\n}\nrelease_hazard_pointer(hazard_ptr);",
+        "wrong": "delete node; // Freeing memory immediately without checking active hazard pointers from other threads"
+      },
+      "common_mistakes": [
+        "Failing to protect node access with hazard pointers leading to use-after-free bugs during concurrent leaf-merging.",
+        "Using blocking mutexes within fine-grained traversal paths, destroying lock-free progress guarantees.",
+        "Ignoring ABA problems on pointer-swapping CAS operations for child pointers."
+      ],
+      "best_practices": [
+        "Always register active thread references in a global hazard pointer domain prior to traversing mutable index nodes.",
+        "Keep atomic sections short and minimize retry loops under high contention to avoid starvation.",
+        "Batch memory reclamation requests to amortize the overhead of hazard pointer scans."
+      ],
+      "when_to_use": "Use when building high-performance, in-memory databases requiring massive concurrency for read-heavy and range-scan-intensive workloads across many CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded applications, disk-based database systems where I/O dominates, or systems where simpler lock-based B-Trees provide adequate throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers publish which nodes a thread is currently reading, preventing other threads from recycling or freeing those memory addresses until all hazard pointers pointing to them are cleared."
+        },
+        {
+          "question": "Why are lock-free Bx-Trees preferred over traditional latch-crabbing B-Trees in high-core-count main-memory databases?",
+          "answer": "Lock-free Bx-Trees avoid convoy effects, deadlocks, and thread suspension overhead associated with latch-crabbing, resulting in superior scaling and latency characteristics on multi-core hardware."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointers",
+        "main-memory indexing",
+        "multi-version concurrency control"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-24T10:10:22.857596+00:00",
+      "run_number": 1631
     }
   ]
 }
