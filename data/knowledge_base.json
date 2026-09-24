@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1651,
-    "last_updated": "2026-09-24T19:17:00.373910+00:00",
-    "total_topics_learned": 1651
+    "total_runs": 1652,
+    "last_updated": "2026-09-24T19:20:08.974675+00:00",
+    "total_topics_learned": 1652
   },
   "entries": [
     {
@@ -78970,6 +78970,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-24T19:17:00.373891+00:00",
       "run_number": 1651
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time network packet processing and telecom gateway engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Radix Tree optimized for high-performance IP routing and prefix matching. By leveraging atomic child-node allocations, path compression, and hazard pointers, it ensures safe memory reclamation and ultra-low latency across multiple cores without utilizing blocking locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free child node insertion and path compression updates.",
+        "Employs hazard pointers to safely manage node memory reclamation under high concurrency without explicit garbage collection blocks.",
+        "Optimizes memory layout and traversal paths specifically for variable-length prefix lookups found in IP routing tables.",
+        "Ensures linearizability of tree mutations such that concurrent updates and lookups remain consistent."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node insertion step using CAS for a concurrent Radix Tree edge pointer.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t key_chunk, RadixNode* new_node) {\n    return parent->children[key_chunk].compare_exchange_strong(nullptr, new_node);\n}",
+        "wrong": "RadixNode* child = parent->children[key_chunk];\nif (child == nullptr) {\n    parent->children[key_chunk] = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed Radix nodes with hazard pointers, leading to use-after-free bugs during concurrent tree traversal.",
+        "Incorrectly handling path compression splits under high contention where multiple threads try to mutate the same compressed edge."
+      ],
+      "best_practices": [
+        "Always pin hazard pointers before reading node pointers to guarantee they are not reclaimed mid-traversal.",
+        "Batch node retirements to reduce the frequency of atomic operations in the hazard pointer cleanup registry."
+      ],
+      "when_to_use": "Use when building high-throughput network routers, packet inspection systems, or telecom gateways requiring lock-free IP prefix routing.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with low concurrency where standard blocking tries or hash maps provide simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free conditions in a lock-free Radix Tree during concurrent node splitting?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing so that reclaiming threads know not to free or reuse those memory blocks until all hazard references are cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing path compression atomically using CAS operations?",
+          "answer": "The challenge lies in ensuring that if two threads attempt to modify or split the same compressed edge simultaneously, one succeeds and the other safely retries with the newly updated state without corrupting the prefix."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent B+ Tree",
+        "Hazard Pointers Memory Management",
+        "Lock-free Trie for IP Routing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T19:20:08.974656+00:00",
+      "run_number": 1652
     }
   ]
 }
