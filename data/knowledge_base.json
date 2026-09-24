@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1631,
-    "last_updated": "2026-09-24T10:10:22.857621+00:00",
-    "total_topics_learned": 1631
+    "total_runs": 1632,
+    "last_updated": "2026-09-24T10:13:31.357221+00:00",
+    "total_topics_learned": 1632
   },
   "entries": [
     {
@@ -78023,6 +78023,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-24T10:10:22.857596+00:00",
       "run_number": 1631
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and structural-path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable map lookups and multi-core shared-state management in real-time functional programming runtimes and concurrent distributed data structures",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Hash Array Mapped Trie (HAMT) is a specialized prefix tree that maps hash codes to values using broad branching factors, compressed via bitmapped sparse nodes. Implementing it in a lock-free manner with hazard pointers ensures safe multi-core memory reclamation and high-throughput map lookups without global locks.",
+      "key_points": [
+        "Uses atomic node-expansion and structural-path-compressing Compare-And-Swap (CAS) primitives to safely update sparse child arrays without locking.",
+        "Employs bitmap indexing within internal nodes to compress memory overhead, mapping hash key bits directly to existing child pointers.",
+        "Integrates hazard pointers for safe memory reclamation, preventing race conditions when old trie nodes are unlinked and freed.",
+        "Provides near O(1) time complexity for insertions, deletions, and lookups while supporting concurrent shared-state updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion into a lock-free HAMT node using hazard pointers for safe memory management.",
+        "correct": "bool insert(std::atomic<Node*>& root, K key, V value) {\n    uint32_t hash = compute_hash(key);\n    while (true) {\n        HazardPointerGuard hg;\n        Node* current = hg.protect(root);\n        // Attempt atomic expansion via CAS\n        if (try_insert_at_node(current, hash, key, value)) return true;\n    }\n}",
+        "wrong": "bool insert(Node* root, K key, V value) {\n    // Missing hazard protection and atomic loop leads to data races and use-after-free\n    root->children[compute_hash(key) & 31] = new Node(key, value);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed trie nodes with hazard pointers, leading to premature memory reclamation and use-after-free bugs.",
+        "Ignoring ABA problems when swapping child pointers during structural path compression and node expansion."
+      ],
+      "best_practices": [
+        "Keep bitmap operations and bit manipulation helpers highly optimized and inline to reduce traversal overhead.",
+        "Batch hazard pointer retirements to amortize synchronization costs across multiple thread execution cycles."
+      ],
+      "when_to_use": "Use when building high-performance functional data structures, concurrent key-value stores, or state management engines requiring lock-free map semantics.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly constrained and simple sorted arrays or standard locks suffice due to low concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do sparse nodes in a HAMT avoid wasting memory for broad branching factors?",
+          "answer": "They use a bitmask where each set bit corresponds to the presence of a child pointer, allowing the underlying array to store only active children."
+        },
+        {
+          "question": "Why are hazard pointers necessary when updating a lock-free HAMT?",
+          "answer": "They prevent worker threads from accessing trie nodes that have been concurrently unlinked and freed by another thread during structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Persistent Data Structures and Structural Sharing",
+        "Cache-Conscious Trie Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T10:13:31.357202+00:00",
+      "run_number": 1632
     }
   ]
 }

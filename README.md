@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1631** |
-| Last Updated | `2026-09-24T10:10:22.857621+00:00` |
-| Dataset Size | `1631 entries` |
+| Total Topics Learned | **1632** |
+| Last Updated | `2026-09-24T10:13:31.357221+00:00` |
+| Dataset Size | `1632 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 713 |
+| data-structures | 714 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and structural-path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable map lookups and multi-core shared-state management in real-time functional programming runtimes and concurrent distributed data structures`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index scans in real-time main-memory database management systems`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput interval queries and multi-core dynamic range aggregation in real-time financial trading analytics and high-frequency market data processing engines`
 - `Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic pivot-selecting and metric-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest neighbor searching and multi-core high-dimensional similarity indexing in real-time multimedia retrieval and computer vision matching engines`
 - `Implementation of a lock-free thread-safe concurrent k-d Tree using atomic bounding-hyperplane-splitting and axis-cycling CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial point indexing in real-time computer graphics ray tracing and robotics path planning engines`
-- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core sorted range iteration in real-time in-memory databases and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 
