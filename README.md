@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1637** |
-| Last Updated | `2026-09-24T10:29:16.669087+00:00` |
-| Dataset Size | `1637 entries` |
+| Total Topics Learned | **1638** |
+| Last Updated | `2026-09-24T10:32:25.335088+00:00` |
+| Dataset Size | `1638 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | crypto-blockchain | 104 |
 | system-design | 83 |
 | stocks-markets | 71 |
-| algorithms | 52 |
+| algorithms | 53 |
 | databases | 28 |
 | probability-math | 27 |
 | security | 15 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) synchronization mechanism using atomic grace-period-detecting and deferred-reclamation CAS primitives alongside epoch-based memory management for high-throughput read-mostly data structures and multi-core synchronization in real-time Linux kernel subsystems and high-performance networking runtimes`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced search tree operations and multi-core dynamic priority lookup in real-time in-memory databases and concurrent map implementations`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core schedule overlap resolution in real-time calendar management and resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core genomic sequence alignment in real-time bioinformatics analysis and text processing engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and skew-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task dispatching in real-time operating system kernels and asynchronous event-driven execution runtimes`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core duplicate filtering in real-time distributed caching and web crawler engines`
 
 <!-- STATS_END -->
 
