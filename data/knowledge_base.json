@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1640,
-    "last_updated": "2026-09-24T14:56:11.910720+00:00",
-    "total_topics_learned": 1640
+    "total_runs": 1641,
+    "last_updated": "2026-09-24T15:08:34.183490+00:00",
+    "total_topics_learned": 1641
   },
   "entries": [
     {
@@ -78446,6 +78446,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T14:56:11.910680+00:00",
       "run_number": 1640
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-allocation and bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial collision detection and multi-core object tracking in real-time massively multiplayer online (MMO) gaming and physics simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent spatial index grid divides 2D or 3D space into discrete cells using atomic primitives for cell allocation and bounding box tracking, ensuring safe multi-threaded updates. By leveraging hazard pointers, it enables high-throughput object insertion, movement, and collision detection without thread contention or blocking locks.",
+      "key_points": [
+        "Utilizes atomic cell-allocation and bounding-box-updating CAS operations to manage spatial partitions without mutexes.",
+        "Employs hazard pointers to safely defer memory reclamation of moving objects and dynamic grid cells.",
+        "Optimizes spatial queries and collision detection for multi-core processors in high-density simulation environments.",
+        "Reduces thread synchronization overhead by decentralizing updates across localized grid buckets."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic cell allocation and hazard pointer protection for moving objects in a spatial grid.",
+        "correct": "bool update_object_cell(SpatialGrid* grid, GameObject* obj, Cell* new_cell, HazardPointerManager* hpm) {\n    HazardPointer* hp = hpm->acquire();\n    while (true) {\n        Cell* old_cell = hp->protect(obj->current_cell);\n        if (old_cell == new_cell) { hpm->release(hp); return true; }\n        if (atomic_compare_exchange_weak(&obj->current_cell, &old_cell, new_cell)) {\n            grid->migrate_object(obj, old_cell, new_cell);\n            hpm->release(hp);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_object_cell(SpatialGrid* grid, GameObject* obj, Cell* new_cell) {\n    // Missing synchronization and memory reclamation causes race conditions and use-after-free\n    obj->current_cell = new_cell;\n    grid->migrate_object(obj);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect objects with hazard pointers during cell migration, leading to use-after-free vulnerabilities.",
+        "Using global locks on grid buckets instead of fine-grained atomic operations, resulting in thread contention bottlenecks.",
+        "Ignoring the ABA problem when updating bounding boxes or cell pointers via CAS primitives."
+      ],
+      "best_practices": [
+        "Keep hazard pointer protection windows as short as possible to prevent memory reclamation stalls.",
+        "Design grid dimensions carefully to balance overhead against collision check granularity.",
+        "Use thread-local caches for hazard pointers to reduce acquisition contention."
+      ],
+      "when_to_use": "Use when building high-frequency physics engines, real-time strategy games, or MMO servers requiring massive concurrent object movement and collision checks.",
+      "when_not_to_use": "Avoid when the environment has sparse or static objects where simpler spatial trees or single-threaded spatial partitioning structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors when an object moves between grid cells concurrently?",
+          "answer": "Hazard pointers explicitly mark objects currently being accessed by a thread so that concurrent reclamation threads know not to free or reuse their memory until the reference is dropped."
+        },
+        {
+          "question": "Why is a lock-free spatial grid preferred over a fine-grained locked grid in massive multiplayer online (MMO) physics simulations?",
+          "answer": "Lock-free grids eliminate lock contention, convoying, and priority inversion overhead, allowing thousands of worker threads to update adjacent spatial cells simultaneously without blocking."
+        }
+      ],
+      "related_topics": [
+        "lock-free interval trees",
+        "hazard pointer memory reclamation",
+        "spatial partitioning algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-24T15:08:34.183471+00:00",
+      "run_number": 1641
     }
   ]
 }
