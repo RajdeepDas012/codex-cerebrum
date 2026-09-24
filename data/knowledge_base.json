@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1626,
-    "last_updated": "2026-09-24T09:54:34.664850+00:00",
-    "total_topics_learned": 1626
+    "total_runs": 1627,
+    "last_updated": "2026-09-24T09:57:45.013082+00:00",
+    "total_topics_learned": 1627
   },
   "entries": [
     {
@@ -77785,6 +77785,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T09:54:34.664829+00:00",
       "run_number": 1626
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core sorted range iteration in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Skip List is a probabilistic data structure that maintains a hierarchy of linked lists allowing fast search, insertion, and deletion. Utilizing atomic pointer-splicing and hazard pointers enables lock-free multi-core execution essential for high-performance in-memory databases.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) operations for lock-free multi-threaded insertions and deletions.",
+        "Employs hazard pointers to safely manage node memory reclamation without garbage collection overhead.",
+        "Maintains multiple forward pointers per node across probabilistic height levels for O(log n) search performance.",
+        "Ensures linearizable ordered range queries and sorted key-value access under heavy thread contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer splicing via CAS during concurrent node insertion in a skip list level.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level].store(curr, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(curr, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    pred->next[level] = newNode;\n    newNode->next[level] = curr;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically deleted using a marked reference bit before physically splicing them out.",
+        "Reclaiming memory of deleted nodes immediately without protecting them via hazard pointers, causing use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Always validate that predecessor and successor pointers have not changed concurrently before executing the CAS pointer splice.",
+        "Integrate hazard pointers or epoch-based reclamation to safely defer destruction of removed tower levels."
+      ],
+      "when_to_use": "When implementing high-throughput in-memory key-value stores that require frequent ordered range scans and heavy multi-threaded write concurrency.",
+      "when_not_to_use": "In single-threaded applications where a standard std::map or traditional linked list provides lower overhead and simpler implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing CAS operations on skip list pointers?",
+          "answer": "By combining a version stamp or a logical deletion bit directly into the pointer address, or by utilizing hazard pointers that prevent object reuse while a thread holds a reference."
+        },
+        {
+          "question": "Why is logical deletion required before physical deletion in a lock-free skip list?",
+          "answer": "Logical deletion marks a node as removed by setting a bit in its pointer, preventing other threads from inserting new nodes after it while concurrent clean-up operations execute the physical pointer splicing."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Linked List",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-09-24T09:57:45.013057+00:00",
+      "run_number": 1627
     }
   ]
 }
