@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1657,
-    "last_updated": "2026-09-24T19:36:11.631500+00:00",
-    "total_topics_learned": 1657
+    "total_runs": 1658,
+    "last_updated": "2026-09-24T19:39:20.471875+00:00",
+    "total_topics_learned": 1658
   },
   "entries": [
     {
@@ -79255,6 +79255,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T19:36:11.631481+00:00",
       "run_number": 1657
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and string-extension CAS primitives alongside hazard pointer memory reclamation for high-throughput substring matching and multi-core text indexing in real-time string processing and information retrieval engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Suffix Automaton data structure using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables multi-core systems to perform real-time string indexing and sub-linear substring searches without locks or deadlocks.",
+      "key_points": [
+        "Utilizes atomic state transitions and string extensions to safely modify graph nodes across multiple threads without locks.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free bugs when dynamically adding states and clone nodes during concurrent string insertions.",
+        "Achieves linear construction time and optimal space complexity while remaining thread-safe for high-throughput pattern matching.",
+        "Manages complex directed acyclic word graph (DAWG) pointer modifications using atomic pointer-cas primitives to preserve topological invariants."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state-transition linking during concurrent automaton extension.",
+        "correct": "bool link_transition(State* current, char c, State* next) {\n    return current->transitions[c].compare_exchange_strong(nullptr, next);\n}",
+        "wrong": "bool link_transition(State* current, char c, State* next) {\n    if (current->transitions[c] == nullptr) {\n        current->transitions[c] = next;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect newly allocated clone nodes with hazard pointers, leading to premature memory reclamation by concurrent threads.",
+        "Using non-atomic reads for suffix link traversals, resulting in race conditions when structural links are updated mid-traversal."
+      ],
+      "best_practices": [
+        "Retain hazard pointer protection across multi-step node traversal operations until all dependent pointer dereferences are complete.",
+        "Design fallback retry loops for CAS operations when concurrent worker threads attempt to extend overlapping suffix paths simultaneously."
+      ],
+      "when_to_use": "When building real-time information retrieval systems, genomic sequence analyzers, or text search engines requiring high-throughput, multi-threaded substring querying.",
+      "when_not_to_use": "In single-threaded applications or environments with minimal text-query concurrency, where the overhead of atomic operations and hazard pointers degrades performance.",
+      "interview_questions": [
+        {
+          "question": "How do you safely handle memory reclamation of cloned states in a lock-free suffix automaton without blocking reader threads?",
+          "answer": "By utilizing hazard pointers to register active references to nodes before traversing their transitions or suffix links, delaying reclamation until no thread holds a hazard pointer to the target node."
+        },
+        {
+          "question": "What is the primary synchronization challenge when two concurrent threads attempt to extend the suffix automaton with the same character simultaneously?",
+          "answer": "Race conditions on updating state transitions and suffix links, which must be resolved using atomic CAS operations and retry loops to maintain the structural integrity of the underlying directed acyclic word graph."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Directed Acyclic Word Graphs"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T19:39:20.471855+00:00",
+      "run_number": 1658
     }
   ]
 }
