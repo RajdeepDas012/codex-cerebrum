@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1615,
-    "last_updated": "2026-09-24T04:30:09.363102+00:00",
-    "total_topics_learned": 1615
+    "total_runs": 1616,
+    "last_updated": "2026-09-24T04:33:20.624748+00:00",
+    "total_topics_learned": 1616
   },
   "entries": [
     {
@@ -77264,6 +77264,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T04:30:09.363081+00:00",
       "run_number": 1615
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range querying in real-time geographic information systems (GIS) and location-based services engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent R-Tree design that leverages atomic Compare-And-Swap (CAS) operations for bounding box updates and node splits, paired with hazard pointers for safe memory management. It enables high-throughput multi-core spatial indexing and ultra-fast geometric range queries for real-time location-based workloads.",
+      "key_points": [
+        "Utilizes atomic primitives to safely expand bounding boxes and handle node splits concurrently without global locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes deleted during spatial rebalancing.",
+        "Maximizes parallel multi-core performance for geometric range querying and spatial point-location workloads.",
+        "Ensures thread safety during concurrent insertions that traverse and modify overlapping tree hierarchies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bounding-box updates using a CAS loop in a concurrent spatial index node.",
+        "correct": "bool expand_mbr(std::atomic<BoundingBox*>& current_mbr, BoundingBox* new_box) {\n    while (true) {\n        BoundingBox* old_box = current_mbr.load();\n        BoundingBox* merged = old_box->union_with(new_box);\n        if (current_mbr.compare_exchange_weak(old_box, merged)) {\n            return true;\n        }\n        delete merged;\n    }\n}",
+        "wrong": "BoundingBox* box = current_mbr.load();\nbox->expand(new_box); // Non-atomic update causes severe race conditions and corrupted spatial indices."
+      },
+      "common_mistakes": [
+        "Failing to protect tree node traversal pointers with hazard pointers, leading to use-after-free bugs during concurrent node splits.",
+        "Using coarse-grained mutexes during node splits, which serializes tree modification and destroys multi-core scalability."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointers before reading their internal child pointers or bounding boxes.",
+        "Keep atomic sections small and retry CAS loops efficiently to minimize contention during heavy spatial write concurrency."
+      ],
+      "when_to_use": "Ideal for high-concurrency real-time spatial databases, GPS tracking platforms, and geographic information systems requiring massive multi-core read/write throughput.",
+      "when_not_to_use": "Avoid when datasets are entirely static (where read-optimized packed R-Trees are superior) or in single-threaded embedded environments where lock-free overhead is unjustified.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during a concurrent node split in a lock-free R-Tree?",
+          "answer": "By using atomic CAS operations to swap old child pointers with newly allocated split nodes and retrying if another thread modifies the parent concurrently."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free spatial indexes?",
+          "answer": "Hazard pointers avoid atomic read-modify-write overhead on every pointer traversal, significantly reducing cache contention on multi-core architectures."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "spatial indexing",
+        "hazard pointers",
+        "concurrent algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T04:33:20.624728+00:00",
+      "run_number": 1616
     }
   ]
 }
