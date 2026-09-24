@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1643,
-    "last_updated": "2026-09-24T15:26:49.053586+00:00",
-    "total_topics_learned": 1643
+    "total_runs": 1644,
+    "last_updated": "2026-09-24T15:44:43.120450+00:00",
+    "total_topics_learned": 1644
   },
   "entries": [
     {
@@ -78590,6 +78590,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T15:26:49.053568+00:00",
       "run_number": 1643
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-node-extracting CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core graph algorithm execution in real-time network routing and combinatorial optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent Fibonacci Heap that leverages atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput decrease-key operations and minimum-node extraction, which are critical for multi-core graph algorithms like Dijkstra's shortest path in real-time routing engines.",
+      "key_points": [
+        "Utilizes atomic root-list-splicing and minimum-node-extracting CAS primitives to eliminate coarse-grained locking bottlenecks.",
+        "Employs hazard pointer memory reclamation to safely manage node destruction and prevent memory leaks without blocking concurrent threads.",
+        "Supports amortized $O(1)$ insert and decrease-key operations concurrently across multiple cores.",
+        "Optimized for real-time combinatorial optimization and network routing engines requiring frequent priority updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe root-list splicing using atomic compare-and-swap (CAS).",
+        "correct": "void insert_node(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head = root_list.load(std::memory_order_relaxed);\n    do {\n        new_node->right = old_head;\n    } while (!root_list.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_node(Node*& root_list, Node* new_node) {\n    // Missing atomicity and synchronization leads to race conditions\n    new_node->right = root_list;\n    root_list = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free race conditions during concurrent minimum extraction.",
+        "Using sequential memory consistency models where acquire-release semantics are required for pointer adjustments."
+      ],
+      "best_practices": [
+        "Protect shared pointer accesses with local thread hazard pointer arrays before traversing node links.",
+        "Batch root-list consolidations where possible to minimize CAS contention during high-frequency parallel extractions."
+      ],
+      "when_to_use": "Use when implementing high-concurrency graph algorithms (such as multi-threaded Dijkstra or Prim's algorithms) where decrease-key operations are frequent and latency must be minimized.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments with low concurrency, where the overhead of hazard pointers and atomic CAS operations outweighs theoretical asymptotic advantages.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races during concurrent node extraction in a lock-free heap?",
+          "answer": "Hazard pointers allow a thread to atomically announce which nodes it is currently accessing. Other threads cannot free or reuse these announced nodes until the referencing thread clears its hazard pointer, preventing premature memory reclamation and safe pointer traversal."
+        },
+        {
+          "question": "Why are standard mutex-based Fibonacci Heaps inefficient for multi-core graph routing engines?",
+          "answer": "Mutexes introduce global serialization points and thread contention, severely limiting scalability. Lock-free heaps using CAS primitives allow multiple threads to concurrently modify independent parts of the data structure, significantly increasing throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip graphs",
+        "Hazard pointer memory management",
+        "Concurrent priority queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T15:44:43.120433+00:00",
+      "run_number": 1644
     }
   ]
 }
