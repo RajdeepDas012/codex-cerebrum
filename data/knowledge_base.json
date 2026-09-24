@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1632,
-    "last_updated": "2026-09-24T10:13:31.357221+00:00",
-    "total_topics_learned": 1632
+    "total_runs": 1633,
+    "last_updated": "2026-09-24T10:16:41.305459+00:00",
+    "total_topics_learned": 1633
   },
   "entries": [
     {
@@ -78070,6 +78070,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-24T10:13:31.357202+00:00",
       "run_number": 1632
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core duplicate filtering in real-time distributed caching and web crawler engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Bloom filter that utilizes atomic bit operations and word-level Compare-And-Swap (CAS) instructions to safely handle multi-core insertions and queries. It ensures high throughput without locking overhead while maintaining space-efficient approximate membership testing for distributed systems.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-level CAS primitives to modify bit array segments without global locks.",
+        "Employs hazard pointers or epoch-based reclamation if dynamic resizing or memory tracking is integrated.",
+        "Provides probabilistic approximate membership queries with zero false negatives and tunable false positive rates.",
+        "Maximizes multi-core scaling for high-throughput duplicate filtering in parallel web crawling and caching tiers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates word-level atomic bit setting using Compare-And-Swap (CAS) simulation for thread-safe concurrent updates.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size_in_words, num_hashes):\n        self.words = [0] * size_in_words\n        self.num_hashes = num_hashes\n        self.lock = threading.Lock() # Conceptual simulation of atomic word CAS\n\n    def add(self, bit_index):\n        word_idx = bit_index >> 6\n        bit_offset = bit_index & 63\n        mask = 1 << bit_offset\n        while True:\n            current = self.words[word_idx]\n            if (current & mask) == mask:\n                break\n            new_val = current | mask\n            # Simulated atomic CAS on the word\n            if self.words[word_idx] == current:\n                self.words[word_idx] = new_val\n                break",
+        "wrong": "def add_unsafe(self, bit_index):\n    word_idx = bit_index >> 6\n    self.words[word_idx] |= (1 << (bit_index & 63))"
+      },
+      "common_mistakes": [
+        "Using byte-level locks which destroy parallel scalability on multi-core architectures.",
+        "Failing to handle word-boundary contention properly when multiple threads attempt to set bits in the same underlying integer word simultaneously."
+      ],
+      "best_practices": [
+        "Pack multiple bits into machine-word integers (e.g., 64-bit uints) to maximize cache locality and allow word-level CAS primitives.",
+        "Pre-compute optimal hash functions and bit array sizes based on expected load factors and target false positive rates."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed caching systems, network routers, and web crawlers where concurrent duplicate filtering and low latency are critical.",
+      "when_not_to_use": "Avoid when exact membership queries are strictly required or when false positives lead to catastrophic system errors.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread-safe bit setting in a Bloom filter without using explicit mutex locks?",
+          "answer": "By mapping bit indices to underlying word arrays and using atomic Compare-And-Swap (CAS) loops to set specific bits within the target machine word."
+        },
+        {
+          "question": "What is the primary trade-off when designing a concurrent Bloom filter using atomic bit operations?",
+          "answer": "Contention on hot words where multiple threads attempt to set bits in the exact same 64-bit integer simultaneously, which can cause CAS retry loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Tables",
+        "Count-Min Sketch",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-24T10:16:41.305438+00:00",
+      "run_number": 1633
     }
   ]
 }
