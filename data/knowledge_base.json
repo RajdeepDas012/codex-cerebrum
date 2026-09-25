@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1690,
-    "last_updated": "2026-09-25T01:44:03.351254+00:00",
-    "total_topics_learned": 1690
+    "total_runs": 1691,
+    "last_updated": "2026-09-25T01:47:12.185422+00:00",
+    "total_topics_learned": 1691
   },
   "entries": [
     {
@@ -80817,6 +80817,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T01:44:03.351234+00:00",
       "run_number": 1690
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocation and key-migration CAS primitives alongside hazard pointer memory reclamation for high-throughput O(1) expected lookup operations and multi-core concurrent key-value storage in real-time in-memory caching systems and high-frequency trading execution runtimes",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Cuckoo Hash Table utilizes multiple hash functions and hash table arrays to guarantee O(1) expected worst-case lookup time while safely handling concurrent mutations via atomic compare-and-swap (CAS) operations. By pairing atomic bucket relocation and key migration with hazard pointer memory management, multiple threads can concurrently insert, delete, and look up keys without global locks or catastrophic race conditions.",
+      "key_points": [
+        "Employs two or more independent hash functions to map keys across multiple tables or buckets to resolve collisions.",
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely manage bucket relocation and key displacement loops during concurrent inserts.",
+        "Integrates hazard pointer memory reclamation to prevent premature deallocation of displaced buckets or migrated node structures while readers access them.",
+        "Ensures high-throughput O(1) expected lookup performance by reading directly from fixed candidate positions without traversal chains."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic bucket insertion step utilizing CAS for concurrent Cuckoo hashing updates.",
+        "correct": "bool insert_atomic(std::atomic<Node*>& bucket, Node* expected, Node* new_node) {\n    return bucket.compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_naive(Node** bucket, Node* new_node) {\n    if (*bucket == nullptr) {\n        *bucket = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for infinite eviction loops (cuckoo cycles) when the load factor becomes too high under concurrent insertions.",
+        "Neglecting hazard pointer protection during multi-step key migration, leading to use-after-free bugs when concurrent readers access relocating entries."
+      ],
+      "best_practices": [
+        "Trigger table resizing or re-hashing proactively when the load factor exceeds 50% to minimize the probability of extended cuckoo eviction paths.",
+        "Pair every pointer read of a table bucket with a corresponding hazard pointer acquisition to guarantee safe thread-local reclamation."
+      ],
+      "when_to_use": "Ideal for read-heavy or write-heavy in-memory caching systems and low-latency financial execution pipelines requiring predictable O(1) lookups under high core concurrency.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when keys undergo frequent batch updates that could trigger cascading cuckoo displacement storms.",
+      "interview_questions": [
+        {
+          "question": "How do you resolve cuckoo cycles in a lock-free environment without blocking other threads?",
+          "answer": "When an insertion chain exceeds a threshold or encounters a cycle, the operation can trigger a cooperative table resize or rehash, migrating entries safely using atomic CAS states."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a concurrent Cuckoo Hash Table?",
+          "answer": "Hazard pointers prevent other threads from freeing or overwriting bucket memory while a reader or migrator is actively examining or displacing a key-value pair."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Quotient Filters"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T01:47:12.185402+00:00",
+      "run_number": 1691
     }
   ]
 }
