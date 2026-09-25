@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1695,
-    "last_updated": "2026-09-25T01:59:47.212399+00:00",
-    "total_topics_learned": 1695
+    "total_runs": 1696,
+    "last_updated": "2026-09-25T02:02:55.660489+00:00",
+    "total_topics_learned": 1696
   },
   "entries": [
     {
@@ -81054,6 +81054,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-25T01:59:47.212380+00:00",
       "run_number": 1695
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-wrapping and cursor-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread messaging and multi-core event sourcing in real-time financial trading systems and low-latency telemetry pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer utilizing atomic sequence tracking and the Disruptor pattern achieves ultra-low latency inter-thread communication by eliminating locking overhead and reducing cache contention. It relies on circular pre-allocated memory slots and sequence barriers to coordinate producers and consumers safely.",
+      "key_points": [
+        "Employs atomic sequence cursors to manage head and tail pointers without locks or mutexes.",
+        "Utilizes cache-line padding to prevent false sharing between concurrent producer and consumer threads.",
+        "Implements sequence-wrapping mechanics to reuse pre-allocated slots infinitely in a circular buffer structure.",
+        "Integrates hazard pointer memory reclamation models or sequential slot ownership to coordinate safe concurrent reads and writes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic sequence advancement and publishing in a lock-free ring buffer slot",
+        "correct": "std::atomic<int64_t> cursor{0};\nvoid publish(int64_t next_sequence, const Data& item) {\n    buffer[next_sequence & mask] = item;\n    cursor.store(next_sequence, std::memory_order_release);\n}",
+        "wrong": "int64_t cursor = 0;\nvoid publish(const Data& item) {\n    mutex.lock();\n    buffer[cursor++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to pad sequence variables, leading to severe performance degradation via CPU cache-line bouncing (false sharing).",
+        "Using sequential consistency (std::memory_order_seq_cst) everywhere instead of optimized acquire-release semantics."
+      ],
+      "best_practices": [
+        "Align sequence counters and critical structures to cache line boundaries (e.g., 64 bytes).",
+        "Use relaxed memory ordering for non-dependent loads and acquire-release semantics for cross-thread synchronization.",
+        "Pre-allocate all event slots during initialization to completely eliminate dynamic memory allocation latency during runtime execution."
+      ],
+      "when_to_use": "Ideal for ultra-low latency, high-throughput inter-thread messaging systems, event-sourcing engines, and financial exchange order routers.",
+      "when_not_to_use": "Avoid when dealing with unpredictable message bursts that easily exceed buffer capacity, or when simple thread-safe blocking queues with low contention suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Ring Buffer using the Disruptor pattern avoid lock contention between producers and consumers?",
+          "answer": "It uses atomic sequence cursors and memory barriers instead of mutual exclusion locks, paired with pre-allocated circular buffers and cache-line padding."
+        },
+        {
+          "question": "What is false sharing in the context of a multi-producer ring buffer, and how is it mitigated?",
+          "answer": "False sharing occurs when separate threads modify independent variables residing on the same CPU cache line. It is mitigated by applying cache-line padding (e.g., alignas(64)) to isolate sequence numbers."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Queue",
+        "False Sharing and CPU Caches",
+        "Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-25T02:02:55.660470+00:00",
+      "run_number": 1696
     }
   ]
 }
