@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1739,
-    "last_updated": "2026-09-25T19:06:49.290705+00:00",
-    "total_topics_learned": 1739
+    "total_runs": 1740,
+    "last_updated": "2026-09-25T19:10:16.704964+00:00",
+    "total_topics_learned": 1740
   },
   "entries": [
     {
@@ -83142,6 +83142,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T19:06:49.290648+00:00",
       "run_number": 1739
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric querying in real-time geographic information systems and location-based ride-sharing dispatch engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent R-Tree optimized for spatial indexing. By leveraging atomic Compare-And-Swap (CAS) operations for node updates and hazard pointers for safe memory management, it enables high-throughput multi-core geometric queries without thread contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage bounding-box adjustments and node splits without explicit locking.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes reclaimed during concurrent structural modifications.",
+        "Enables high-throughput multi-core spatial indexing crucial for real-time location-based ride-sharing dispatch and geographic information systems.",
+        "Balances tree node populations concurrently while maintaining tight minimum bounding rectangles (MBRs) for efficient range and nearest-neighbor searches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bounding box extension and hazard pointer registration for a concurrent R-Tree node update.",
+        "correct": "bool update_mbr(RTreeNode* node, const BoundingBox& new_box, HazardPointer& hp) {\n    while (true) {\n        hp.protect(node);\n        if (node->is_obsolete()) { hp.clear(); return false; }\n        BoundingBox current = node->mbr.load(std::memory_order_relaxed);\n        BoundingBox expanded = current.merge(new_box);\n        if (node->mbr.compare_exchange_weak(current, expanded, std::memory_order_release, std::memory_order_relaxed)) {\n            hp.clear();\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_mbr(RTreeNode* node, const BoundingBox& new_box) {\n    // Missing hazard pointer protection and proper CAS loop leads to data races and memory corruption\n    node->mbr = node->mbr.merge(new_box);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading pointers inside lock-free tree traversal routines, leading to use-after-free bugs.",
+        "Neglecting the ABA problem during node-splitting operations where a node's state is modified and restored between atomic reads and writes."
+      ],
+      "best_practices": [
+        "Keep critical sections inside atomic retry loops as short as possible to minimize CAS collision overhead under heavy multi-core contention.",
+        "Implement robust epoch-based or hazard-pointer-based reclamation deferral to safely deallocate split nodes without premature destruction."
+      ],
+      "when_to_use": "Use when building high-throughput spatial databases, real-time geographic information systems, or concurrent dispatch engines requiring heavy parallel geometric queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard mutex-protected R-Trees provide sufficient performance with significantly less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory corruption during concurrent R-Tree node splitting?",
+          "answer": "Hazard pointers allow threads to temporarily declare a pointer as 'active' before traversing or modifying a node, ensuring that concurrent reclamation routines defer freeing that node's memory until no thread references it."
+        },
+        {
+          "question": "Why is standard fine-grained locking less optimal than a lock-free design for high-throughput spatial indexing?",
+          "answer": "Fine-grained locking can cause convoying, thread blocking, and high contention overhead during massive parallel updates and node splits, whereas lock-free designs using CAS allow threads to make progress independently."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounding Volume Hierarchy",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T19:10:16.704946+00:00",
+      "run_number": 1740
     }
   ]
 }
