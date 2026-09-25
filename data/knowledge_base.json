@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1729,
-    "last_updated": "2026-09-25T18:32:28.802296+00:00",
-    "total_topics_learned": 1729
+    "total_runs": 1730,
+    "last_updated": "2026-09-25T18:36:06.395276+00:00",
+    "total_topics_learned": 1730
   },
   "entries": [
     {
@@ -82667,6 +82667,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T18:32:28.802279+00:00",
       "run_number": 1729
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-swapping and tower-height-establishing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Skip List utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput ordered key-value operations and efficient multi-core range scans without traditional lock contention.",
+      "key_points": [
+        "Uses atomic forward-pointer-swapping CAS operations to insert and delete nodes across multiple probabilistic height levels.",
+        "Establishes tower heights atomically using concurrent pseudo-random number generators or bit-manipulation techniques.",
+        "Employs hazard pointer memory reclamation to safely defer node deallocation until all concurrent reader threads have finished traversing.",
+        "Provides logarithmic search performance while maintaining lock-free progress guarantees for multiple interacting threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward pointer swapping using CAS for node insertion in a lock-free skip list level.",
+        "correct": "bool insert_level(Node* pred, Node* succ, Node* newNode, int level) {\n    newNode->next[level].store(succ, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(succ, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level(Node* pred, Node* succ, Node* newNode, int level) {\n    pred->next[level] = newNode;\n    newNode->next[level] = succ;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to mark nodes as logically deleted before attempting physical pointer removal, leading to race conditions during concurrent insertions.",
+        "Failing to protect traversed node pointers with hazard pointers, resulting in use-after-free vulnerabilities during aggressive memory reclamation."
+      ],
+      "best_practices": [
+        "Always validate that the predecessor and successor pointers have not changed during traversal before issuing the insertion CAS.",
+        "Keep hazard pointer reservation arrays tightly bound to thread-local storage to minimize thread synchronization overhead."
+      ],
+      "when_to_use": "Use when you need high-throughput ordered key-value storage, frequent range queries, and low contention across multiple concurrent cores without coarse-grained locking.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of probabilistic heights, forward pointers, and hazard management outweighs lock-free benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node deletion in a lock-free skip list without causing premature memory deallocation?",
+          "answer": "Nodes are first logically marked as deleted by setting a flag on their forward pointers, then physically unlinked via CAS, and finally reclaimed using hazard pointers once no threads hold references to them."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free skip lists?",
+          "answer": "Hazard pointers avoid the heavy cache-line contention and atomic RMW overhead associated with global or shared reference counters on every pointer read."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-25T18:36:06.395258+00:00",
+      "run_number": 1730
     }
   ]
 }
