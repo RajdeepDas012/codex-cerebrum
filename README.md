@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1717** |
-| Last Updated | `2026-09-25T13:48:58.933628+00:00` |
-| Dataset Size | `1717 entries` |
+| Total Topics Learned | **1718** |
+| Last Updated | `2026-09-25T13:52:34.639323+00:00` |
+| Dataset Size | `1718 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | crypto-blockchain | 106 |
 | system-design | 83 |
 | stocks-markets | 71 |
-| algorithms | 57 |
+| algorithms | 58 |
 | databases | 28 |
 | probability-math | 27 |
 | security | 15 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent SimHash index using atomic bit-distance-calculating and locality-sensitive-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput near-duplicate document detection and multi-core similarity searching in real-time web crawling and distributed plagiarism detection engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core distributed routing in real-time peer-to-peer overlay networks and cloud storage directory services`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate extreme-quantile estimation and multi-core percentile calculation in real-time latency monitoring platforms and cloud performance telemetry pipelines`
 - `Implementation of a lock-free thread-safe concurrent Spatial Hashing grid using atomic cell-bucketing and coordinate-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core neighbor searching in real-time game physics engines and particle simulation systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and max-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core pattern matching in real-time text analysis and DNA sequence alignment engines`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management in real-time transactional databases and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 

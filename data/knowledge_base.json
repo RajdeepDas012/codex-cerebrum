@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1717,
-    "last_updated": "2026-09-25T13:48:58.933628+00:00",
-    "total_topics_learned": 1717
+    "total_runs": 1718,
+    "last_updated": "2026-09-25T13:52:34.639323+00:00",
+    "total_topics_learned": 1718
   },
   "entries": [
     {
@@ -82095,6 +82095,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-25T13:48:58.933608+00:00",
       "run_number": 1717
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SimHash index using atomic bit-distance-calculating and locality-sensitive-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput near-duplicate document detection and multi-core similarity searching in real-time web crawling and distributed plagiarism detection engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent SimHash indexing algorithm designed to compute and query locality-sensitive fingerprints across multi-core systems. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it achieves high-throughput near-duplicate detection without global locking overheads.",
+      "key_points": [
+        "Utilizes SimHash vector generation to map high-dimensional text features into compact locality-sensitive bit fingerprints.",
+        "Employs atomic bit-distance calculations and block-partitioned multi-probe indexing tables to resolve queries concurrently.",
+        "Integrates hazard pointers to guarantee safe memory reclamation for dynamically modified index buckets under intense multi-threaded contention.",
+        "Maximizes throughput in distributed crawling and plagiarism pipelines by eliminating lock convoys during parallel updates and similarity checks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node updates and hazard pointer protection during parallel SimHash index insertion.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct SimHashNode {\n    uint64_t fingerprint;\n    std::atomic<SimHashNode*> next;\n};\n\nclass LockFreeSimHashIndex {\n    std::atomic<SimHashNode*> head;\npublic:\n    void insert(uint64_t fp) {\n        SimHashNode* newNode = new SimHashNode{fp, head.load()};\n        while (!head.compare_exchange_weak(newNode->next, newNode));\n    }\n};",
+        "wrong": "#include <mutex>\nclass UnsafeIndex {\n    std::mutex mtx;\n    // Using heavy locks instead of atomic CAS primitives defeats lock-free throughput goals.\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when performing CAS operations on shared index bucket pointers.",
+        "Neglecting proper hazard pointer registration, leading to premature memory deallocation and segmentation faults under heavy parallel load."
+      ],
+      "best_practices": [
+        "Partition the SimHash bit-space into smaller chunks (e.g., 16-bit blocks) to bound the search space for Hamming distance queries.",
+        "Batch hazard pointer unlinking operations to reduce thread-local synchronization overhead."
+      ],
+      "when_to_use": "Ideal for real-time web scrapers, continuous content moderation systems, and distributed search engines requiring ultra-low latency near-duplicate detection.",
+      "when_not_to_use": "Inappropriate for exact substring matching or applications where strict metric space properties (like triangle inequality) are mandatory.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when updating lock-free buckets in a concurrent hash index?",
+          "answer": "By using tagged pointers or double-word CAS operations (DCAS) that incorporate a modification counter alongside the memory address."
+        },
+        {
+          "question": "Why use SimHash instead of cryptographic hashes like SHA-256 for near-duplicate detection?",
+          "answer": "Cryptographic hashes produce completely different outputs for minor input changes, whereas SimHash is locality-sensitive, meaning similar inputs yield small Hamming distances."
+        }
+      ],
+      "related_topics": [
+        "Locality-Sensitive Hashing (LSH)",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T13:52:34.639295+00:00",
+      "run_number": 1718
     }
   ]
 }
