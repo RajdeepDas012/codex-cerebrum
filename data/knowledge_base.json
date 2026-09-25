@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1716,
-    "last_updated": "2026-09-25T13:45:22.625657+00:00",
-    "total_topics_learned": 1716
+    "total_runs": 1717,
+    "last_updated": "2026-09-25T13:48:58.933628+00:00",
+    "total_topics_learned": 1717
   },
   "entries": [
     {
@@ -82047,6 +82047,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-25T13:45:22.625635+00:00",
       "run_number": 1716
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core distributed routing in real-time peer-to-peer overlay networks and cloud storage directory services",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip Graph combines the probabilistic multi-level indexing of skip lists with the decentralized graph topology of peer-to-peer networks. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe, high-throughput multi-core node insertions, lookups, and membership routing without global locking overhead.",
+      "key_points": [
+        "Utilizes atomic pointer-routing and membership-vector-updating CAS primitives to safely modify multi-level skip links across threads.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes actively traversed by concurrent reader or writer threads.",
+        "Maintains logarithmic search performance comparable to distributed hash tables while supporting complex range queries and decentralized routing.",
+        "Avoids locking bottlenecks by breaking structural updates down into fine-grained, independent atomic steps."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual atomic pointer routing and hazard pointer protection during Skip Graph traversal.",
+        "correct": "class HazardPointer:\n    def __init__(self):\n        self.protected_node = None\n\nclass SkipGraphNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.forward = [None] * 4\n        self.membership = 0\n\ndef safe_traverse(head, target_key, hp):\n    curr = head\n    for level in range(3, -1, -1):\n        hp.protected_node = curr\n        while curr.forward[level] and curr.forward[level].key < target_key:\n            next_node = curr.forward[level]\n            hp.protected_node = next_node\n            curr = next_node\n    return curr",
+        "wrong": "def unsafe_traverse(head, target_key):\n    curr = head\n    for level in range(3, -1, -1):\n        while curr.forward[level] and curr.forward[level].key < target_key:\n            curr = curr.forward[level] # Vulnerable to race conditions if nodes are concurrently unlinked and freed\n    return curr"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading forward pointers, leading to use-after-free bugs during concurrent node removal.",
+        "Attempting to update multi-level membership vectors in a single non-atomic step rather than applying incremental, CAS-safe transitions."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection on any node reference before traversing its out-links in a multi-threaded environment.",
+        "Design state transitions to be idempotent so that failed CAS operations can safely retry without corrupting the skip graph hierarchy."
+      ],
+      "when_to_use": "Use when building high-throughput distributed directory services or multi-core concurrent indexing systems that require efficient range queries and decentralized routing under heavy contention.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when a simple single-threaded data structure or coarse-grained locked tree suffices due to low concurrency requirements.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent traversals of a lock-free Skip Graph?",
+          "answer": "Hazard pointers allow a thread to register a node it is currently accessing so that concurrent reclamation threads know not to free or reuse that memory until the hazard pointer is cleared."
+        },
+        {
+          "question": "What is the primary advantage of using membership vectors in a Skip Graph compared to standard skip lists?",
+          "answer": "Membership vectors allow nodes to participate in multiple logical rings at each level based on identifiers or hashing functions, facilitating decentralized routing and distributed peer-to-peer overlay capabilities."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Distributed Hash Tables",
+        "Concurrent Graph Structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-25T13:48:58.933608+00:00",
+      "run_number": 1717
     }
   ]
 }
