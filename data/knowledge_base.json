@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1737,
-    "last_updated": "2026-09-25T18:59:53.801539+00:00",
-    "total_topics_learned": 1737
+    "total_runs": 1738,
+    "last_updated": "2026-09-25T19:03:26.996254+00:00",
+    "total_topics_learned": 1738
   },
   "entries": [
     {
@@ -83047,6 +83047,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T18:59:53.801520+00:00",
       "run_number": 1737
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-splitting and surface-area-heuristic-optimizing CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics rendering and physics simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Bounding Volume Hierarchy designed for real-time ray tracing and collision detection. It utilizes atomic node splitting, surface area heuristic (SAH) optimization, and hazard pointers to ensure safe memory reclamation under heavy multi-core contention.",
+      "key_points": [
+        "Employs lock-free atomic Compare-And-Swap (CAS) primitives for concurrent BVH node updates and structural modifications.",
+        "Integrates Surface Area Heuristic (SAH) calculations to optimize spatial hierarchy partitions dynamically.",
+        "Utilizes hazard pointers to safely manage node memory reclamation without blocking concurrent reader threads.",
+        "Enables high-throughput ray traversal and collision checks across multiple CPU cores simultaneously."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection during concurrent BVH tree traversal",
+        "correct": "void* traverse_safe(std::atomic<Node*>& root, HazardPointer& hp) {\n    Node* node;\n    do {\n        node = root.load(std::atomic_memory_order_acquire);\n        hp.protect(node);\n    } while (node != root.load(std::atomic_memory_order_relaxed));\n    return node;\n}",
+        "wrong": "void* traverse_unsafe(std::atomic<Node*>& root) {\n    return root.load(); // Risk of use-after-free if another thread deletes the node\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to publish hazard pointers prior to reading node pointers, leading to race conditions and use-after-free bugs.",
+        "Over-optimizing SAH metrics on every single insertion instead of batching or using approximate bounding volumes."
+      ],
+      "best_practices": [
+        "Batch atomic updates to minimize CAS retry contention in deep hierarchy modification loops.",
+        "Align BVH nodes to cache lines to reduce false sharing across worker threads."
+      ],
+      "when_to_use": "Use this when building high-performance ray tracers, real-time physics engines, or spatial databases requiring massive concurrent queries and dynamic updates.",
+      "when_not_to_use": "Avoid when working with static scenes where a simple pre-built, read-only BVH would suffice, or in single-threaded applications.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to announce which nodes they are currently accessing, preventing the memory reclamation subsystem from freeing those nodes until all readers have unlinked them."
+        },
+        {
+          "question": "Why is the Surface Area Heuristic (SAH) critical for ray tracing performance in a BVH?",
+          "answer": "SAH minimizes the mathematical probability of a ray intersecting a bounding box, optimizing the traversal cost function and significantly speeding up intersection tests."
+        }
+      ],
+      "related_topics": [
+        "Priority Search Tree",
+        "Interval Tree",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T19:03:26.996236+00:00",
+      "run_number": 1738
     }
   ]
 }
