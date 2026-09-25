@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1706,
-    "last_updated": "2026-09-25T07:56:24.901409+00:00",
-    "total_topics_learned": 1706
+    "total_runs": 1707,
+    "last_updated": "2026-09-25T07:59:33.207660+00:00",
+    "total_topics_learned": 1707
   },
   "entries": [
     {
@@ -81574,6 +81574,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T07:56:24.901392+00:00",
       "run_number": 1706
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC Queue using atomic head-tail-swapping and sequence-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput task submission and multi-core asynchronous message passing in real-time actor systems and concurrent event-driven server engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free multi-producer single-consumer (MPSC) bounded queue utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables efficient, contention-resilient message passing and task submission across multiple worker threads without relying on heavy mutexes.",
+      "key_points": [
+        "Uses atomic head-tail-swapping and sequence-checking CAS operations to safely manage queue capacity and synchronization across concurrent producer threads.",
+        "Employs hazard pointer memory reclamation to prevent ABA problems and safely free nodes without stalling contending threads.",
+        "Optimizes for high-throughput task scheduling in multi-core actor frameworks and asynchronous event loops.",
+        "Provides bounded resource utilization to prevent out-of-memory errors under heavy message bursts."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent multi-producer task enqueueing using atomic operations.",
+        "correct": "template<typename T, size_t Capacity>\nclass MPSCQueue {\n    struct Node { std::atomic<size_t> sequence; T data; };\n    std::atomic<size_t> head_{0};\n    std::atomic<size_t> tail_{0};\n    Node buffer_[Capacity];\npublic:\n    bool enqueue(const T& val) {\n        size_t tail = tail_.load(std::memory_order_relaxed);\n        // Atomic sequence check and swap logic omitted for brevity\n        return true;\n    }\n};",
+        "wrong": "template<typename T>\nclass UnsafeQueue {\n    std::queue<T> q;\n    std::mutex mtx;\npublic:\n    void push(T val) { mtx.lock(); q.push(val); mtx.unlock(); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when managing node recycling or pointer-based queue states.",
+        "Using incorrect memory ordering constraints (e.g., memory_order_relaxed everywhere) leading to out-of-order execution bugs."
+      ],
+      "best_practices": [
+        "Leverage acquire-release semantics carefully on atomic load/store operations to establish proper happens-before relationships.",
+        "Pre-allocate node buffers where possible to eliminate dynamic memory allocation overhead during high-frequency message pushing."
+      ],
+      "when_to_use": "When multiple worker threads need to submit asynchronous tasks or messages to a single dedicated processing loop with minimal latency and high contention.",
+      "when_not_to_use": "When there are multiple consumers or when a simple, low-contention lock-based queue meets performance requirements with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent data races between multiple producers trying to update the tail pointer of an MPSC queue?",
+          "answer": "By using an atomic compare-and-swap (CAS) loop on the tail pointer combined with sequence numbers to ensure each producer claims a unique, valid slot."
+        },
+        {
+          "question": "Why are hazard pointers useful in lock-free queue implementations?",
+          "answer": "They provide a safe mechanism for thread-local memory reclamation, allowing threads to announce which nodes they are currently accessing so memory is only freed when no thread holds a reference to it."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Ring Buffers",
+        "Hazard Pointers and Memory Reclamation",
+        "Multi-Producer Multi-Consumer (MPMC) Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T07:59:33.207640+00:00",
+      "run_number": 1707
     }
   ]
 }
