@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1696,
-    "last_updated": "2026-09-25T02:02:55.660489+00:00",
-    "total_topics_learned": 1696
+    "total_runs": 1697,
+    "last_updated": "2026-09-25T07:28:08.914498+00:00",
+    "total_topics_learned": 1697
   },
   "entries": [
     {
@@ -81102,6 +81102,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-25T02:02:55.660470+00:00",
       "run_number": 1696
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix-Tree (Patricia Trie) using atomic edge-splitting and compression-path CAS primitives alongside hazard pointer memory reclamation for high-throughput IP address routing and multi-core prefix lookup in real-time software-defined networking and telecommunication switching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent Radix-Tree (Patricia Trie) optimized for multi-core systems. It utilizes atomic edge-splitting and path-compression CAS primitives combined with hazard pointers to ensure safe memory reclamation during high-speed prefix lookups and routing table updates.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) operations for thread-safe edge-splitting and path-compression updates without global locks.",
+        "Utilizes hazard pointers to prevent premature memory deallocation of nodes concurrently accessed by multiple router worker threads.",
+        "Maximizes search throughput for longest-prefix matching operations required in high-speed software-defined networking (SDN) datapaths.",
+        "Minimizes tree depth via path compression, reducing cache misses during intensive IP routing table lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of a lock-free atomic node replacement and edge-splitting pattern using a simulated CAS loop.",
+        "correct": "class RadixNode:\n    def __init__(self, prefix, children=None):\n        self.prefix = prefix\n        self.children = children or {}\n        self.version = 0\n\ndef cas_update_edge(node, key, new_child, expected_version):\n    # Simulated atomic update using version check\n    if node.version == expected_version:\n        node.children[key] = new_child\n        node.version += 1\n        return True\n    return False",
+        "wrong": "def unsafe_update_edge(node, key, new_child):\n    # Direct modification without concurrency control or version checking\n    node.children[key] = new_child"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted compressed nodes with hazard pointers, leading to use-after-free bugs in concurrent reader threads.",
+        "Incorrectly handling edge-splitting synchronization races when multiple threads try to insert conflicting prefixes simultaneously."
+      ],
+      "best_practices": [
+        "Protect node traversal pointers using thread-local hazard pointer domains before reading node children or child bit-maps.",
+        "Batch memory reclamation of old unlinked trie nodes to reduce synchronization overhead in high-frequency update loops."
+      ],
+      "when_to_use": "Use when building high-throughput packet routers, IP lookup engines, or concurrent routing tables that demand lock-free scaling across numerous CPU cores.",
+      "when_not_to_use": "Avoid when keys are completely random with no shared prefixes, or when memory constraints strictly prohibit the overhead of hazard pointers and node pointer structures.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Radix tree when a path-compression split removes an interior node?",
+          "answer": "You use hazard pointers to register the node as currently being accessed by reader threads, deferring actual memory deallocation via epoch-based reclamation or hazard pointer lists until no threads reference it."
+        },
+        {
+          "question": "What is the primary synchronization challenge when two threads simultaneously perform an edge-split on the same parent node in a lock-free Patricia Trie?",
+          "answer": "The challenge is ensuring that only one thread successfully modifies the child pointer via CAS while the other thread detects the version change, re-reads the updated tree state, and retries its operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Trie Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T07:28:08.914476+00:00",
+      "run_number": 1697
     }
   ]
 }
