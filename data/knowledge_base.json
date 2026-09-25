@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1714,
-    "last_updated": "2026-09-25T13:38:22.019825+00:00",
-    "total_topics_learned": 1714
+    "total_runs": 1715,
+    "last_updated": "2026-09-25T13:41:30.913060+00:00",
+    "total_topics_learned": 1715
   },
   "entries": [
     {
@@ -81953,6 +81953,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T13:38:22.019801+00:00",
       "run_number": 1714
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hashing grid using atomic cell-bucketing and coordinate-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core neighbor searching in real-time game physics engines and particle simulation systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent spatial hashing grid that uses atomic Compare-And-Swap (CAS) primitives and hazard pointers to manage dynamic object cells safely across multiple threads without locks. It enables high-performance spatial partitioning crucial for real-time physics simulations and multi-agent systems.",
+      "key_points": [
+        "Maps continuous 2D/3D coordinates to discrete grid bucket keys using hash functions.",
+        "Utilizes atomic cell-bucketing and CAS primitives to manage insertions and deletions concurrently.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during node unlinking.",
+        "Maximizes multi-core throughput for broad-phase collision detection and radius neighbor searches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion into a spatial hash grid bucket using CAS primitives.",
+        "correct": "bool insert_particle(std::atomic<Node*>& bucket_head, Node* new_node) {\n    Node* old_head = bucket_head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = old_head;\n    } while (!bucket_head.compare_exchange_weak(old_head, new_node,\n        std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool insert_particle(Node*& bucket_head, Node* new_node) {\n    // Missing atomicity causes data races and lost updates under concurrency\n    new_node->next = bucket_head;\n    bucket_head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted bucket nodes with hazard pointers, leading to premature memory reclamation and use-after-free crashes.",
+        "Using overly narrow hash functions that produce excessive collisions, degrading performance from O(1) to O(N)."
+      ],
+      "best_practices": [
+        "Design hash functions that distribute particle coordinates evenly across prime-sized grid buckets.",
+        "Integrate hazard pointers or epoch-based reclamation to cleanly manage node lifecycles under high thread contention."
+      ],
+      "when_to_use": "Use when you need high-throughput, lock-free spatial partitioning for real-time physics engines, particle simulations, or multi-agent pathfinding on multi-core hardware.",
+      "when_not_to_use": "Avoid when data density is extremely sparse over a massive coordinate space, or when a simple single-threaded spatial structure suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free spatial hash grid without relying on garbage collection?",
+          "answer": "By using hazard pointers or epoch-based reclamation to track thread references to nodes before freeing memory unlinked via CAS."
+        },
+        {
+          "question": "What is the primary performance bottleneck when implementing lock-free spatial hashing, and how do you mitigate it?",
+          "answer": "High contention on popular grid cell buckets. This is mitigated by choosing optimal hash table sizes, fine-grained bucket locking or CAS, and reducing coordinate lookup overhead."
+        }
+      ],
+      "related_topics": [
+        "lock-free B-Tree",
+        "concurrent disjoint set",
+        "hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T13:41:30.913040+00:00",
+      "run_number": 1715
     }
   ]
 }
