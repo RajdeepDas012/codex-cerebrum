@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1675,
-    "last_updated": "2026-09-25T01:08:26.252379+00:00",
-    "total_topics_learned": 1675
+    "total_runs": 1676,
+    "last_updated": "2026-09-25T01:11:34.682481+00:00",
+    "total_topics_learned": 1676
   },
   "entries": [
     {
@@ -80106,6 +80106,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T01:08:26.252362+00:00",
       "run_number": 1675
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core graph algorithm execution in real-time network routing protocols and concurrent shortest-path computation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Fibonacci Heap leverages atomic root-list splicing and minimum-pointer updates via Compare-And-Swap (CAS) operations, combined with hazard pointers for safe memory reclamation. It enables high-throughput decrease-key operations and multi-core graph algorithms like Dijkstra's shortest path without locking overhead.",
+      "key_points": [
+        "Utilizes atomic root-list splicing to permit concurrent insertions and melds without blocking other threads.",
+        "Employs atomic minimum-pointer updating CAS primitives to maintain global minimum tracking safely across multiple cores.",
+        "Integrates hazard pointers to manage memory safely and prevent ABA problems during node extraction and structural modifications.",
+        "Delivers amortized $O(1)$ time complexity for insertions and decrease-key operations, maximizing throughput for real-time network routing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-list splicing and minimum pointer updates using CAS primitives.",
+        "correct": "void insert_node(std::atomic<Node*>& root_list, std::atomic<Node*>& min_ptr, Node* new_node) {\n    Node* old_root = root_list.load(std::memory_order_relaxed);\n    do {\n        new_node->right = old_root;\n    } while (!root_list.compare_exchange_weak(old_root, new_node, std::memory_order_release, std::memory_order_relaxed));\n    \n    Node* current_min = min_ptr.load(std::memory_order_relaxed);\n    while (current_min == nullptr || new_node->key < current_min->key) {\n        if (min_ptr.compare_exchange_weak(current_min, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            break;\n        }\n    }\n}",
+        "wrong": "void insert_node(Node*& root_list, Node*& min_ptr, Node* new_node) {\n    // Missing atomics and CAS loops can lead to race conditions and lost updates in multi-threaded environments.\n    new_node->right = root_list;\n    root_list = new_node;\n    if (min_ptr == nullptr || new_node->key < min_ptr->key) {\n        min_ptr = new_node;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes with hazard pointers, leading to use-after-free errors during concurrent garbage collection.",
+        "Neglecting memory ordering constraints (using sequentially consistent everywhere instead of targeted acquire-release), which degrades multi-core cache performance."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to safely manage memory in lock-free dynamic structures.",
+        "Carefully bound the degree of nodes and apply lazy consolidation strategies to minimize contention on the global minimum pointer."
+      ],
+      "when_to_use": "Use when implementing high-throughput concurrent priority queue applications like parallel shortest-path algorithms where decrease-key operations occur frequently.",
+      "when_not_to_use": "Avoid when memory footprint must remain strictly minimal or when target hardware lacks robust hardware-supported atomic primitives.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Fibonacci Heap during concurrent extractions?",
+          "answer": "By using hazard pointers to register threads' intent to access specific nodes, preventing premature deallocation until no thread holds a reference to them."
+        },
+        {
+          "question": "What is the primary synchronization challenge when updating the global minimum pointer in a concurrent Fibonacci Heap?",
+          "answer": "Race conditions where multiple threads insert smaller elements concurrently, requiring a CAS retry loop to successfully update the minimum reference."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Priority Queues",
+        "Concurrent Graph Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T01:11:34.682459+00:00",
+      "run_number": 1676
     }
   ]
 }
