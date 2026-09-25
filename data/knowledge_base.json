@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1730,
-    "last_updated": "2026-09-25T18:36:06.395276+00:00",
-    "total_topics_learned": 1730
+    "total_runs": 1731,
+    "last_updated": "2026-09-25T18:39:42.917661+00:00",
+    "total_topics_learned": 1731
   },
   "entries": [
     {
@@ -82714,6 +82714,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-25T18:36:06.395258+00:00",
       "run_number": 1730
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-appending CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell checking in real-time autocomplete recommendation engines and natural language processing pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Burkhard-Keller (BK) Tree enables lock-free approximate string matching by organizing strings based on metric space properties like Levenshtein distance. Utilizing compare-and-swap (CAS) primitives and hazard pointers, it allows multi-core applications to safely insert and query string metrics without thread contention or memory corruption.",
+      "key_points": [
+        "Uses metric space properties (typically Levenshtein distance) to partition strings into subtrees for efficient approximate querying.",
+        "Employs atomic operations and compare-and-swap (CAS) loops to append child nodes and update branch pointers safely across multiple threads.",
+        "Integrates hazard pointers to track active reader threads, preventing premature memory deallocation of nodes during structural modifications.",
+        "Enables high-throughput fuzzy string matching ideal for parallelized autocomplete and spell-checking pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node appending in a lock-free BK-Tree using compare-and-swap primitives.",
+        "correct": "bool append_child(Node* parent, int distance, Node* new_child) {\n    Node* expected = parent->children[distance].load(std::memory_order_acquire);\n    while (true) {\n        new_child->next = expected;\n        if (parent->children[distance].compare_exchange_weak(expected, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool append_child(Node* parent, int distance, Node* new_child) {\n    parent->children[distance] = new_child; // Non-atomic update causes race conditions and data corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal paths with hazard pointers, leading to use-after-free bugs when another thread restructures the tree.",
+        "Using blocking synchronization primitives inside traversal loops, which completely defeats the latency benefits of lock-free design."
+      ],
+      "best_practices": [
+        "Pair every lock-free node allocation and pointer swapping sequence with rigorous hazard pointer registration and deferred reclamation protocols.",
+        "Optimize distance calculation functions outside of critical atomic sections to minimize the duration of CAS retry loops."
+      ],
+      "when_to_use": "Use when building high-concurrency systems requiring real-time fuzzy text matching, spell-checking, or autocomplete features across multiple processor cores.",
+      "when_not_to_use": "Avoid when exact string matching is required or when the workload consists mostly of heavy structural mutations rather than read-heavy fuzzy queries.",
+      "interview_questions": [
+        {
+          "question": "How do you safely reclaim memory of deleted nodes in a lock-free BK-Tree without causing use-after-free errors?",
+          "answer": "By using hazard pointers that threads publish before reading a node pointer, ensuring memory is only reclaimed after no active hazard pointers reference it."
+        },
+        {
+          "question": "Why is structural modification of a metric tree particularly challenging in a lock-free environment compared to a flat list?",
+          "answer": "Because child pointers are indexed by dynamic edit distances, requiring atomic CAS loops to handle concurrent insertions into the exact same distance bucket safely."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointers and Memory Reclamation",
+        "Levenshtein Distance Metrics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T18:39:42.917642+00:00",
+      "run_number": 1731
     }
   ]
 }
