@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1755,
-    "last_updated": "2026-09-25T22:49:15.884582+00:00",
-    "total_topics_learned": 1755
+    "total_runs": 1756,
+    "last_updated": "2026-09-25T22:52:24.209937+00:00",
+    "total_topics_learned": 1756
   },
   "entries": [
     {
@@ -83901,6 +83901,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T22:49:15.884560+00:00",
       "run_number": 1755
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic min-node-merging and pass-two-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core task scheduling in real-time operating system kernels and asynchronous event-driven execution loops",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Pairing Heap utilizing atomic compare-and-swap (CAS) operations for min-node-merging and pass-two-linking tree updates. It ensures safe memory reclamation via hazard pointers, enabling high-performance multi-core task prioritization without global mutex bottlenecks.",
+      "key_points": [
+        "Utilizes atomic min-node-merging and pass-two-linking CAS primitives to restructure the heap layout safely across multiple threads without locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely deallocate nodes that have been concurrently extracted or restructured.",
+        "Achieves high-throughput priority queue management suitable for multi-core OS schedulers and asynchronous event-driven event loops.",
+        "Minimizes contention overhead compared to coarse-grained locking heaps, scaling efficiently as core counts increase."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node linking operation using CAS for a concurrent pairing heap structure.",
+        "correct": "bool linkNodes(std::atomic<Node*>& root, Node* newNode) {\n    Node* current = root.load();\n    do {\n        newNode->nextSibling = current;\n    } while (!root.compare_exchange_weak(current, newNode));\n    return true;\n}",
+        "wrong": "bool linkNodes(std::atomic<Node*>& root, Node* newNode) {\n    newNode->nextSibling = root.load();\n    root.store(newNode);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed heap nodes with hazard pointers, leading to use-after-free bugs during root extraction.",
+        "Incorrectly handling the multi-pass merging phase in pairing heaps, causing broken structural links under heavy concurrent insertions."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers with the thread-local hazard pointer domain before reading child or sibling references.",
+        "Keep critical sections inside lock-free loops minimal to reduce CAS retry contention during high-frequency task scheduling."
+      ],
+      "when_to_use": "Use when implementing low-latency priority queues, real-time operating system task schedulers, or high-throughput event loops requiring multi-core synchronization.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free CAS and hazard pointers outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during node extraction in a lock-free priority queue?",
+          "answer": "Hazard pointers publish a thread's intent to access a specific node, blocking other threads from immediately reclaiming its memory via free() until the reference is safely released."
+        },
+        {
+          "question": "Why is a pairing heap often favored over a binary heap for concurrent lock-free implementations?",
+          "answer": "Pairing heaps offer simpler structural restructuring primitives like meld and pass-two linking, which map more naturally to fine-grained atomic CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binary Heaps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T22:52:24.209915+00:00",
+      "run_number": 1756
     }
   ]
 }
