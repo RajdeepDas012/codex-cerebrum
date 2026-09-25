@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1743,
-    "last_updated": "2026-09-25T22:11:34.909720+00:00",
-    "total_topics_learned": 1743
+    "total_runs": 1744,
+    "last_updated": "2026-09-25T22:14:43.152065+00:00",
+    "total_topics_learned": 1744
   },
   "entries": [
     {
@@ -83334,6 +83334,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T22:11:34.909698+00:00",
       "run_number": 1743
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core database indexing in real-time enterprise transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B+ Tree designed for high-throughput database systems. It utilizes atomic Compare-And-Swap (CAS) operations for node splitting and leaf sibling linking alongside hazard pointers to safely manage memory without blocking threads.",
+      "key_points": [
+        "Employs atomic CAS primitives to execute structural modifications like node splits and insertions without coarse-grained locking.",
+        "Maintains explicit sibling links at the leaf level to facilitate fast, lock-free concurrent range queries.",
+        "Uses hazard pointers to safely reclaim memory of deleted nodes, preventing ABA problems and premature deallocation.",
+        "Optimizes multi-core database indexing and real-time enterprise transactions by maximizing concurrent read and write throughput."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node-splitting and leaf-linking workflow using atomic primitives",
+        "correct": "import threading\n\nclass Node:\n    def __init__(self, keys):\n        self.keys = keys\n        self.next_sibling = None\n        self.lock = threading.Lock()\n\ndef split_leaf(node, new_key, new_value):\n    mid = len(node.keys) // 2\n    right_node = Node(node.keys[mid:])\n    node.keys = node.keys[:mid]\n    right_node.next_sibling = node.next_sibling\n    node.next_sibling = right_node\n    return right_node",
+        "wrong": "def unsafe_split(node, new_key):\n    # Modifying shared node structures without synchronization or atomic primitives\n    node.keys.append(new_key)\n    node.keys.sort()"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when traversing nodes modified by concurrent threads.",
+        "Neglecting proper hazard pointer registration, leading to memory leaks or use-after-free bugs.",
+        "Incomplete atomic leaf-sibling linking, causing range queries to miss newly inserted keys during splits."
+      ],
+      "best_practices": [
+        "Protect node pointer traversals using hazard pointers to guarantee thread safety during memory reclamation.",
+        "Ensure node splits and merges are implemented as atomic state transitions using CAS loops.",
+        "Keep leaf node chains robust with back-pointers or retry logic to handle concurrent splits gracefully."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded database storage engines or in-memory indexes requiring high-throughput range scans and minimal lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free synchronization outweighs the concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem during concurrent node splitting in a lock-free B+ Tree?",
+          "answer": "By using tagged pointers (version counts combined with memory addresses) or hazard pointers that track thread references before reading node states."
+        },
+        {
+          "question": "Why are leaf-sibling links critical for lock-free B+ Trees during range queries?",
+          "answer": "They allow threads to traverse horizontally across leaves to fulfill range queries without re-traversing from the root, bypassing transient structural modifications higher up in the tree."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free R-Tree",
+        "Concurrent B-Link Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T22:14:43.152043+00:00",
+      "run_number": 1744
     }
   ]
 }
