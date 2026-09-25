@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1697,
-    "last_updated": "2026-09-25T07:28:08.914498+00:00",
-    "total_topics_learned": 1697
+    "total_runs": 1698,
+    "last_updated": "2026-09-25T07:31:18.242414+00:00",
+    "total_topics_learned": 1698
   },
   "entries": [
     {
@@ -81149,6 +81149,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T07:28:08.914476+00:00",
       "run_number": 1697
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and bucket-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core real-time traffic monitoring in distributed network telemetry engines and log analytics pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Count-Min Sketch tailored for high-throughput concurrent environments. By leveraging atomic frequency-incrementing CAS primitives and epoch-based memory management, it enables multi-core systems to estimate stream element frequencies accurately without incurring lock contention.",
+      "key_points": [
+        "Utilizes independent hash functions mapped to rows of counter arrays to probabilistically track item frequencies with bounded overestimation errors.",
+        "Employs atomic fetch-and-add or compare-and-swap (CAS) operations to update cell counters concurrently across multiple threads without global locks.",
+        "Integrates epoch-based memory reclamation to safely manage memory layouts during dynamic resizing or matrix reallocations.",
+        "Optimized for real-time streaming architectures where throughput and low-latency ingestion outweigh absolute precision requirements."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a simplified concurrent atomic frequency increment on a sketch bucket matrix using a thread-safe approach.",
+        "correct": "import threading\nfrom concurrent.futures import ThreadPoolExecutor\n\nclass ConcurrentCMS:\n    def __init__(self, depth, width):\n        self.depth = depth\n        self.width = width\n        self.matrix = [[0] * width for _ in range(depth)]\n        self.locks = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n\n    def add(self, item):\n        for i in range(self.depth):\n            col = hash((item, i)) % self.width\n            with self.locks[i][col]:\n                self.matrix[i][col] += 1",
+        "wrong": "class UnsafeCMS:\n    def __init__(self, depth, width):\n        self.matrix = [[0] * width for _ in range(depth)]\n\n    def add(self, item):\n        for i in range(self.depth):\n            col = hash((item, i)) % self.width\n            self.matrix[i][col] += 1  # Race condition on shared counters"
+      },
+      "common_mistakes": [
+        "Using coarse-grained locks around the entire sketch matrix, drastically bottlenecking multi-core ingestion rates.",
+        "Failing to handle hash collisions properly, leading to severe frequency overestimation for heavy hitters.",
+        "Neglecting memory visibility guarantees when reading frequencies concurrently while update threads are writing."
+      ],
+      "best_practices": [
+        "Use fine-grained bucket-level synchronization or true lock-free atomic CAS primitives on individual counter cells.",
+        "Select statistically independent hash functions to minimize the impact of worst-case collision cascades.",
+        "Pair epoch-based reclamation with memory barriers to ensure safe reclamation of underlying counter structures."
+      ],
+      "when_to_use": "Use when tracking frequencies of high-velocity streaming data across multiple concurrent threads where exact counts are secondary to speed and memory efficiency.",
+      "when_not_to_use": "Avoid when exact, deterministic frequency counts are required or when the dataset fits comfortably into exact-counting hash maps without memory pressure.",
+      "interview_questions": [
+        {
+          "question": "How does a Count-Min Sketch handle hash collisions, and what is the trade-off of increasing matrix width versus depth?",
+          "answer": "Collisions always result in overestimation since counters aggregate frequencies of multiple keys. Increasing width reduces the collision probability per row, lowering the estimation error bound, while increasing depth decreases the probability of a high error occurring across all hash functions, improving confidence bounds."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in lock-free streaming sketches?",
+          "answer": "Epoch-based reclamation avoids the high cache-coherency overhead and atomic instruction contention associated with updating global reference counts on every single frequency increment or query operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent HyperLogLog",
+        "Epoch-based memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T07:31:18.242395+00:00",
+      "run_number": 1698
     }
   ]
 }
