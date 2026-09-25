@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1667,
-    "last_updated": "2026-09-25T00:43:20.642270+00:00",
-    "total_topics_learned": 1667
+    "total_runs": 1668,
+    "last_updated": "2026-09-25T00:46:28.095416+00:00",
+    "total_topics_learned": 1668
   },
   "entries": [
     {
@@ -79725,6 +79725,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T00:43:20.642247+00:00",
       "run_number": 1667
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput meldable priority queue operations and multi-core task scheduling in real-time operating system kernels and asynchronous compute runtimes",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent lock-free Pairing Heap optimized for multi-core architectures using atomic CAS primitives and hazard pointers. It enables high-throughput meldable priority queue operations without mutex contention, making it ideal for real-time task schedulers.",
+      "key_points": [
+        "Utilizes atomic root-linking to safely combine pairing heap nodes under multi-threaded contention.",
+        "Employs multi-pass-merging strategies via compare-and-swap loops to maintain tree structure stability without locks.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation and prevent the ABA problem during concurrent node removal.",
+        "Provides efficient meld, insert, and delete-min operations suitable for low-latency real-time operating system task management."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion into a lock-free pairing heap structure using hazard pointers.",
+        "correct": "void insert(Node*& root, Node* newNode) {\n    Node* oldRoot;\n    do {\n        oldRoot = atomic_load(&root);\n        newNode->child = oldRoot;\n    } while (!atomic_compare_exchange_weak(&root, &oldRoot, newNode));\n}",
+        "wrong": "void insert(Node*& root, Node* newNode) {\n    newNode->child = root;\n    root = newNode; // Non-atomic update leading to race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs when another thread unlinks nodes.",
+        "Using weak CAS loops incorrectly without reloading the expected value on failure, causing infinite spinning or missed updates."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing node pointers in concurrent traversal paths.",
+        "Keep critical sections within lock-free primitives minimal to maximize thread throughput on multi-core systems."
+      ],
+      "when_to_use": "Use when implementing high-frequency priority queues or task schedulers in multi-threaded real-time systems where lock contention severely bottlenecks performance.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simpler blocking data structures provide lower overhead and easier debugging.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node removal in a lock-free heap?",
+          "answer": "Hazard pointers explicitly register which nodes a thread is currently accessing, preventing memory reclaimers from freeing and recycling those nodes until all referencing threads have released them."
+        },
+        {
+          "question": "Why is a multi-pass-merging strategy challenging to implement in a lock-free environment?",
+          "answer": "Because multiple threads may concurrently attempt to restructure and merge subtrees, requiring intricate atomic CAS loops to ensure structural invariants are preserved without deadlocks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Leftist Heap",
+        "Real-Time OS Task Scheduling"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T00:46:28.095397+00:00",
+      "run_number": 1668
     }
   ]
 }
