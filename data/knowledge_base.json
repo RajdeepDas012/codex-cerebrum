@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1669,
-    "last_updated": "2026-09-25T00:49:35.959370+00:00",
-    "total_topics_learned": 1669
+    "total_runs": 1670,
+    "last_updated": "2026-09-25T00:52:44.721170+00:00",
+    "total_topics_learned": 1670
   },
   "entries": [
     {
@@ -79819,6 +79819,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-25T00:49:35.959351+00:00",
       "run_number": 1669
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and slot-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core real-time traffic monitoring in distributed network telemetry engines and log analytics pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free Count-Min Sketch designed for high-throughput stream processing across multiple CPU cores. By leveraging atomic compare-and-swap (CAS) operations and hazard pointers, it ensures safe concurrent frequency updates and memory reclamation without lock contention.",
+      "key_points": [
+        "Utilizes independent hash functions to map incoming stream elements to multiple counter arrays.",
+        "Employs atomic frequency-incrementing and slot-updating CAS primitives to handle simultaneous multi-threaded updates safely.",
+        "Integrates hazard pointers to manage safe memory reclamation and prevent use-after-free bugs during dynamic resizing or node transitions.",
+        "Enables real-time heavy-hitter identification and traffic monitoring with bounded space complexity and minimal latency overhead."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent counter updates using atomic simulation via threading locks.",
+        "correct": "import threading\n\nclass ConcurrentCMS:\n    def __init__(self, depth, width):\n        self.depth = depth\n        self.width = width\n        self.table = [[0] * width for _ in range(depth)]\n        self.locks = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n\n    def add(self, item):\n        for i in range(self.depth):\n            j = hash((item, i)) % self.width\n            with self.locks[i][j]:\n                self.table[i][j] += 1",
+        "wrong": "class UnsafeCMS:\n    def __init__(self, depth, width):\n        self.table = [[0] * width for _ in range(depth)]\n\n    def add(self, item):\n        for i in range(self.depth):\n            j = hash((item, i)) % self.width\n            self.table[i][j] += 1"
+      },
+      "common_mistakes": [
+        "Failing to handle hash collisions properly, leading to overestimation bias that is not accounted for in heavy-hitter detection.",
+        "Using coarse-grained locking instead of atomic CAS primitives, which creates bottlenecks under heavy multi-core data ingestion streams."
+      ],
+      "best_practices": [
+        "Choose matrix dimensions (depth and width) carefully to balance memory footprint against acceptable error bounds and confidence levels.",
+        "Pair atomic slot updates with hazard pointers if structural modifications or dynamic memory expansions are supported.",
+        "Batch increments locally per thread before applying them to the global sketch if absolute real-time accuracy can be slightly traded for massive throughput gains."
+      ],
+      "when_to_use": "Use this structure when processing massive, high-velocity data streams across multiple concurrent threads where exact frequency tracking is memory-prohibitive, but approximate counts for heavy hitters are required.",
+      "when_not_to_use": "Avoid this when exact, lossless frequency counts are mandatory, or when the data volume is small enough to fit comfortably into standard exact-lookup hash maps.",
+      "interview_questions": [
+        {
+          "question": "How does a Count-Min Sketch handle memory-efficient frequency estimation compared to a standard hash map?",
+          "answer": "It trades exact accuracy for space efficiency by using a fixed 2D array of counters and multiple hash functions, resulting in bounded overestimation error while requiring a fraction of the memory."
+        },
+        {
+          "question": "Why are lock-free CAS primitives preferred over mutexes in high-throughput streaming architectures?",
+          "answer": "Mutexes introduce thread blocking, context switching, and contention overhead under heavy loads, whereas lock-free CAS primitives allow threads to progress concurrently without sleeping."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-25T00:52:44.721147+00:00",
+      "run_number": 1670
     }
   ]
 }
