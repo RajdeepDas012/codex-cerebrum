@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1784,
-    "last_updated": "2026-09-26T08:01:19.071236+00:00",
-    "total_topics_learned": 1784
+    "total_runs": 1785,
+    "last_updated": "2026-09-26T08:04:27.137438+00:00",
+    "total_topics_learned": 1785
   },
   "entries": [
     {
@@ -85275,6 +85275,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T08:01:19.071218+00:00",
       "run_number": 1784
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time bioinformatics sequence analysis engines and distributed text indexing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Suffix Tree coordinates multiple threads performing concurrent pattern searches and dynamic tree expansions using atomic CAS primitives for node splitting and suffix link adjustments. By utilizing hazard pointers, it ensures safe memory reclamation for nodes that are detached during structural updates, eliminating the need for global locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for node-splitting and adding children without mutual exclusion locks.",
+        "Maintains internal suffix links atomically to allow rapid traversal during multi-pattern string matching operations.",
+        "Employs hazard pointer memory management to securely defer the reclamation of nodes removed during concurrent structural rotations.",
+        "Achieves high-throughput parallel string querying ideal for intensive genome sequencing and distributed text retrieval platforms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-splitting operation using CAS primitives for a concurrent Suffix Tree",
+        "correct": "bool split_node(Node* parent, Edge* edge, const string& sub, Node* new_child, HazardPointerList& hp_list) {\n    Node* current_dest = hp_list.protect(1, edge->destination);\n    if (edge->destination != current_dest) return false;\n    \n    Node* split_node = new Node();\n    split_node->add_child(new_child);\n    split_node->add_child(current_dest);\n    \n    return atomic_compare_exchange_strong(&edge->destination, &current_dest, split_node);\n}",
+        "wrong": "bool split_node(Node* parent, Edge* edge, const string& sub, Node* new_child) {\n    // Missing hazard pointer protection and atomic verification leading to race conditions and memory corruption\n    Node* split_node = new Node();\n    edge->destination = split_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs during concurrent node splits.",
+        "Updating suffix links non-atomically, which results in broken traversal paths for other threads executing parallel searches."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection on parent and child nodes prior to evaluating traversal paths or executing CAS loops.",
+        "Batch retired nodes safely in thread-local garbage collection lists to minimize the synchronization overhead of memory reclamation."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent, high-throughput substring searches and dynamic text indexing over massive datasets such as genomic sequences.",
+      "when_not_to_use": "Avoid in single-threaded environments or small strings where the overhead of hazard pointers and atomic CAS loops drastically outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Suffix Tree when nodes are detached during concurrent splits?",
+          "answer": "By using hazard pointers to mark active nodes currently accessed by threads, ensuring they are only freed after no thread maintains a reference to them."
+        },
+        {
+          "question": "What is the primary synchronization challenge when updating suffix links concurrently?",
+          "answer": "Ensuring that atomic CAS operations successfully resolve race conditions where two threads attempt to split the same edge or update the same suffix link simultaneously."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Suffix Array",
+        "Hazard Pointers Memory Management",
+        "Concurrent Directed Acyclic Word Graphs (DAWG)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T08:04:27.137419+00:00",
+      "run_number": 1785
     }
   ]
 }
