@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1773,
-    "last_updated": "2026-09-26T07:26:48.948143+00:00",
-    "total_topics_learned": 1773
+    "total_runs": 1774,
+    "last_updated": "2026-09-26T07:29:57.150611+00:00",
+    "total_topics_learned": 1774
   },
   "entries": [
     {
@@ -84756,6 +84756,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-09-26T07:26:48.948125+00:00",
       "run_number": 1773
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and clone-node-redirecting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core pattern matching in real-time text mining engines and genomic sequence alignment systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Suffix Automaton represents all distinct substrings of a string in a directed acyclic word graph (DAWG) structure with linear space and time complexity. By utilizing atomic Compare-And-Swap (CAS) operations for state transitions and node cloning alongside hazard pointers, it enables lock-free multi-core text indexing and accelerated genomic sequence alignment.",
+      "key_points": [
+        "Constructs a directed acyclic word graph (DAWG) representing all substrings of input texts lock-free.",
+        "Uses atomic state-transition-linking to safely append characters and extend the automaton across threads.",
+        "Employs clone-node-redirecting CAS primitives to handle structural splits without locks or race conditions.",
+        "Integrates hazard pointers for secure memory reclamation of states and transition tables in high-throughput pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual atomic transition linking and hazard pointer protection pattern for suffix automaton states.",
+        "correct": "void safe_add_transition(State* state, char c, State* next, HazardPointerRegistry& hp) {\n    HazardGuard guard = hp.protect(state);\n    while (!state->transitions[c].compare_exchange_weak(nullptr, next)) {\n        if (state->transitions[c].load() == next) break;\n    }\n}",
+        "wrong": "void unsafe_add_transition(State* state, char c, State* next) {\n    if (state->transitions[c] == nullptr) {\n        state->transitions[c] = next;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate clone states with hazard pointers leading to use-after-free bugs during concurrent traversals.",
+        "Using non-atomic assignments when updating transition links and suffix links in the automaton DAG."
+      ],
+      "best_practices": [
+        "Ensure memory ordering constraints (acquire-release semantics) are properly specified for all CAS operations on transition tables.",
+        "Batch hazard pointer updates or utilize epoch-based reclamation where appropriate to reduce synchronization overhead."
+      ],
+      "when_to_use": "Use when multiple threads need to concurrently query, build, and search massive string corpora or genomic sequences in real-time.",
+      "when_not_to_use": "Avoid in single-threaded environments or small static text analysis where standard sequential suffix automata or suffix arrays suffice with less overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node cloning atomically in a concurrent Suffix Automaton without introducing race conditions?",
+          "answer": "By creating the cloned state, copying transitions, atomically redirecting suffix links using CAS, and ensuring reader threads are protected via hazard pointers before unlinking old paths."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Suffix Automaton?",
+          "answer": "They prevent threads from accessing memory belonging to states or clone nodes that have been concurrently detached or garbage-collected during dynamic updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Tree",
+        "Concurrent Directed Acyclic Word Graphs",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T07:29:57.150591+00:00",
+      "run_number": 1774
     }
   ]
 }
