@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1760,
-    "last_updated": "2026-09-26T01:31:20.271514+00:00",
-    "total_topics_learned": 1760
+    "total_runs": 1761,
+    "last_updated": "2026-09-26T01:34:31.360251+00:00",
+    "total_topics_learned": 1761
   },
   "entries": [
     {
@@ -84138,6 +84138,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T01:31:20.271496+00:00",
       "run_number": 1760
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-allocating and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core concurrent range scanning in real-time in-memory database indexing and distributed key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip List organizes data in multi-layered linked lists using atomic compare-and-swap (CAS) primitives for pointer splicing and tower height allocation. It enables high-throughput ordered key-value lookups and concurrent range queries across multiple cores without utilizing blocking mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic tower-height allocation to probabilistically determine node levels without global locks.",
+        "Employs forward-pointer-splicing via CAS operations to insert or logically delete nodes safely across threads.",
+        "Integrates hazard pointer memory reclamation to prevent ABA problems and safely free unlinked nodes.",
+        "Provides efficient O(log n) expected time complexity for search, insertion, and deletion operations in concurrent environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer splicing for skip list node insertion using CAS operations.",
+        "correct": "bool insert(Node* new_node) {\n    while (true) {\n        Node* preds[MAX_LEVEL];\n        Node* succs[MAX_LEVEL];\n        if (find(new_node->key, preds, succs)) return false;\n        for (int l = 0; l <= new_node->top_level; ++l) {\n            new_node->forward[l].store(succs[l], std::memory_order_relaxed);\n        }\n        if (preds[0]->forward[0].compare_exchange_weak(succs[0], new_node, std::memory_order_release)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_bad(Node* new_node) {\n    // Missing validation loop and failing to handle concurrent updates to bottom-level successors\n    preds[0]->forward[0] = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to logically mark nodes as deleted before physically unlinking them, leading to lost updates.",
+        "Forgetting to protect traversed pointers with hazard pointers, resulting in use-after-free bugs during memory reclamation."
+      ],
+      "best_practices": [
+        "Always perform physical unlinking of nodes across all tower levels from top to bottom.",
+        "Use appropriate memory ordering semantics (acquire-release) on atomic operations to ensure visibility of pointer arrays."
+      ],
+      "when_to_use": "When building in-memory databases or distributed key-value stores that require frequent ordered range scans and high-concurrency inserts.",
+      "when_not_to_use": "When memory overhead is tightly constrained or when workloads are strictly single-threaded, where simpler structures like standard linked lists or arrays suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions between concurrent insertions and deletions in a lock-free skip list?",
+          "answer": "By using a two-step deletion process (logical mark via a bitwise flag on the pointer followed by physical unlinking using CAS) and hazard pointers to safely manage memory."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard garbage collection in real-time lock-free skip lists?",
+          "answer": "Hazard pointers provide bounded, deterministic memory reclamation without the unpredictable pause times introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent hash map",
+        "hazard pointer memory management",
+        "lock-free B-link tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T01:34:31.360232+00:00",
+      "run_number": 1761
     }
   ]
 }
