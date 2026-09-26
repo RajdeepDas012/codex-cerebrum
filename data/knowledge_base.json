@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1762,
-    "last_updated": "2026-09-26T01:37:40.589837+00:00",
-    "total_topics_learned": 1762
+    "total_runs": 1763,
+    "last_updated": "2026-09-26T01:40:49.290472+00:00",
+    "total_topics_learned": 1763
   },
   "entries": [
     {
@@ -84234,6 +84234,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T01:37:40.589819+00:00",
       "run_number": 1762
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell-checking in real-time search engine query suggestion systems and genomic error-correction platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free, thread-safe Burkhard-Keller Tree (BK-Tree) tailored for high-throughput metric space operations. By utilizing atomic compare-and-swap (CAS) primitives and hazard pointer memory reclamation, multiple threads can concurrently insert and search strings based on Levenshtein distance without locking bottlenecks.",
+      "key_points": [
+        "Leverages atomic edit-distance-partitioning to determine child branch mappings without global locks.",
+        "Employs atomic child-pointer-linking CAS operations to safely append new nodes to distance-indexed subtrees.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs during concurrent traversals and node insertions.",
+        "Optimizes multi-core spell-checking and genomic sequence error correction through lock-free metric space pruning."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic insertion of a child node into a BK-Tree using CAS primitives.",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        if (current == nullptr) {\n            if (parent->children[distance].compare_exchange_strong(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            return false; // Handled down the tree\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    if (parent->children[distance] == nullptr) {\n        parent->children[distance] = new_child; // Non-atomic update prone to race conditions\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed parent child-lists with hazard pointers, leading to premature node deallocation.",
+        "Using sequential locking inside fine-grained metric traversal routines, which defeats the performance gains of lock-free primitives."
+      ],
+      "best_practices": [
+        "Ensure memory order semantics (acquire-release) are correctly paired with atomic CAS instructions to guarantee visibility of newly attached tree paths.",
+        "Batch hazard pointer unlinking operations to reduce synchronization overhead in high-frequency string matching loops."
+      ],
+      "when_to_use": "Use when building high-throughput search engine query suggestions or real-time genomic correction pipelines that experience intense concurrent metric-space lookups and insertions.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where exact string matching (e.g., standard Hash Maps) eliminates the need for metric space pruning.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions into the same distance slot of a BK-Tree node without locks?",
+          "answer": "By using a compare-and-swap (CAS) loop on the specific distance child pointer. If the CAS fails because another thread inserted first, the algorithm re-reads the pointer and delegates the traversal down the existing subtree."
+        },
+        {
+          "question": "Why are hazard pointers necessary when traversing a lock-free BK-Tree?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while another thread is reading their contents or child pointers during concurrent search and insertion operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Approximate String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T01:40:49.290453+00:00",
+      "run_number": 1763
     }
   ]
 }
