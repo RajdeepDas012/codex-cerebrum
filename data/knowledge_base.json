@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1782,
-    "last_updated": "2026-09-26T07:55:02.121194+00:00",
-    "total_topics_learned": 1782
+    "total_runs": 1783,
+    "last_updated": "2026-09-26T07:58:10.154796+00:00",
+    "total_topics_learned": 1783
   },
   "entries": [
     {
@@ -85179,6 +85179,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T07:55:02.121176+00:00",
       "run_number": 1782
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic weight-balancing and subtree-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized balanced searching and multi-core dynamic ordering in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Scapegoat Tree that maintains balance through partial subtree rebuilds rather than complex node rotations. It utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to ensure thread safety and safe memory reclamation during high-throughput multi-core operations.",
+      "key_points": [
+        "Uses atomic operations to execute weight-balancing checks and trigger structural subtree rebuilding without global locks.",
+        "Employs hazard pointers to track active thread references to nodes, preventing premature deallocation during concurrent rebalancing.",
+        "Achieves amortized logarithmic search and update times while operating in a heavily multi-threaded environment.",
+        "Eliminates the need for explicit rotation operations by completely flattening and perfectly rebalancing unbalanced subtrees when weight invariants are violated."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node replacement using CAS for structural updates in a concurrent tree.",
+        "correct": "bool update_child(std::atomic<Node*>& parent_ptr, Node* expected, Node* desired) {\n    return parent_ptr.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* current = parent_ptr;\nif (current == expected) {\n    parent_ptr = desired;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during the subtree flattening phase, leading to use-after-free race conditions.",
+        "Attempting to perform fine-grained rebalancing rotations instead of bulk subtree rebuilding, which complicates lock-free protocols."
+      ],
+      "best_practices": [
+        "Isolate subtree rebuilding operations into local thread memory before swapping the root pointer atomically.",
+        "Batch hazard pointer retirements to minimize the overhead of memory reclamation under high concurrency."
+      ],
+      "when_to_use": "Ideal for read-heavy or balanced transactional storage engines where occasional bulk subtree restructuring is preferred over complex locking protocols.",
+      "when_not_to_use": "Avoid when strict real-time deterministic latency bounds for writes are required, as a scapegoat rebuild operation can introduce latency spikes.",
+      "interview_questions": [
+        {
+          "question": "How does a Scapegoat Tree avoid the need for complex multi-node locking or rotations during balancing?",
+          "answer": "It relies on weight invariants to detect imbalance and responds by completely flattening and perfectly rebuilding the unbalanced subtree, which simplifies structural modification logic."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free tree structures with subtree rebuilding?",
+          "answer": "Hazard pointers prevent other threads from accessing a node that is currently being unlinked and scheduled for deletion during a structural rebuild."
+        }
+      ],
+      "related_topics": [
+        "lock-free B-Trees",
+        "hazard pointer memory management",
+        "amortized data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T07:58:10.154769+00:00",
+      "run_number": 1783
     }
   ]
 }
