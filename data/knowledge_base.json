@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1839,
-    "last_updated": "2026-09-26T22:57:15.424403+00:00",
-    "total_topics_learned": 1839
+    "total_runs": 1840,
+    "last_updated": "2026-09-26T23:00:24.505702+00:00",
+    "total_topics_learned": 1840
   },
   "entries": [
     {
@@ -87883,6 +87883,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T22:57:15.424383+00:00",
       "run_number": 1839
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized-optimal mergeable priority queue operations and multi-core task scheduling in real-time graph algorithm engines and concurrent network routing simulators",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Fibonacci Heap where multiple threads can insert elements, merge heaps, and extract the minimum element simultaneously without traditional mutex bottlenecks. By leveraging atomic compare-and-swap (CAS) operations for root-list-splicing and min-pointer-updating combined with hazard pointers, the structure ensures safe memory reclamation and scalable multi-core performance for complex priority-driven workloads.",
+      "key_points": [
+        "Utilizes atomic root-list-splicing CAS primitives to enable threads to append new nodes or merged root lists without global locking.",
+        "Employs atomic min-pointer-updating to track and update the global minimum reference across concurrent insertions and extractions.",
+        "Integrates hazard pointers for safe memory reclamation, preventing use-after-free bugs during asynchronous node deletion and structural consolidation.",
+        "Achieves high-throughput amortized-optimal mergeable priority queue operations suitable for multi-core graph algorithms and network routing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion into the concurrent Fibonacci heap root list using atomic CAS operations.",
+        "correct": "void insert(Node* new_node) {\n    Node* old_head = root_list_head.load(std::memory_order_relaxed);\n    do {\n        new_node->right = old_head;\n    } while (!root_list_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    update_min_pointer(new_node);\n}",
+        "wrong": "void insert(Node* new_node) {\n    mutex.lock();\n    new_node->right = root_list_head;\n    root_list_head = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to race conditions and memory corruption during concurrent consolidation.",
+        "Neglecting the ABA problem on pointer-based atomic updates within the root list and min-pointer tracking."
+      ],
+      "best_practices": [
+        "Protect read operations on shared nodes using hazard pointer registration before traversing child or sibling pointers.",
+        "Minimize CAS retry loops by employing local batching or backoff strategies when high contention occurs on the global minimum pointer."
+      ],
+      "when_to_use": "Use when building highly concurrent systems such as real-time graph algorithm engines or network simulators that demand frequent mergeable priority queue operations across multiple cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of atomic primitives, memory barriers, and hazard pointer management outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to update the global minimum pointer in a lock-free Fibonacci heap?",
+          "answer": "By using a compare-and-swap (CAS) loop that checks if the current minimum node is still valid and has a key greater than the newly inserted node's key before updating."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Fibonacci heap?",
+          "answer": "Hazard pointers protect nodes slated for deletion during consolidation or extraction from being prematurely reclaimed by the memory allocator while other threads are still traversing their pointers."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Binomial Heap",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T23:00:24.505683+00:00",
+      "run_number": 1840
     }
   ]
 }
