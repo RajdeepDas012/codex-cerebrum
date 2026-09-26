@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1798,
-    "last_updated": "2026-09-26T13:30:01.431955+00:00",
-    "total_topics_learned": 1798
+    "total_runs": 1799,
+    "last_updated": "2026-09-26T13:33:09.852082+00:00",
+    "total_topics_learned": 1799
   },
   "entries": [
     {
@@ -85936,6 +85936,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T13:30:01.431934+00:00",
       "run_number": 1798
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-splicing and hash-bucket-relinking CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hot-key tracking in real-time web application caching layers and distributed key-value stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Least Recently Used (LRU) cache. By combining atomic Compare-And-Swap (CAS) primitives for node splicing and hash bucket linking with hazard pointer memory reclamation, it enables high-throughput cache eviction and hot-key tracking without locking overhead.",
+      "key_points": [
+        "Uses atomic CAS operations to manipulate hash buckets and doubly-linked list pointers safely under concurrent access.",
+        "Employs hazard pointers to defer memory reclamation of evicted or unlinked cache nodes until no threads are actively referencing them.",
+        "Maintains lock-free progress guarantees, preventing thread contention bottlenecks common in mutex-backed caching layers.",
+        "Balances eviction precision and multi-core scalability for high-throughput distributed key-value stores and web application caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of reading and updating a lock-free node pointer using hazard pointers and CAS.",
+        "correct": "void* ptr = hazard_pointer_protect(&node->next); while(!atomic_compare_exchange_weak(&node->next, &ptr, new_node));",
+        "wrong": "node->next = new_node; // Missing synchronization, leads to race conditions and memory corruption."
+      },
+      "common_mistakes": [
+        "Forgetting to register thread-local hazard pointers prior to reading shared pointer nodes, leading to premature memory free and segmentation faults.",
+        "Failing to handle ABA problems during hash-bucket-relinking and node-splicing CAS loops."
+      ],
+      "best_practices": [
+        "Always pair hazard pointer registration and clearing logic within strict RAII scopes or try-finally blocks.",
+        "Use tagged pointers or version counters alongside raw memory addresses to prevent the ABA problem in lock-free lists."
+      ],
+      "when_to_use": "Use when building high-performance in-memory key-value stores or web caching layers that experience extreme read/write contention and require predictable latency.",
+      "when_not_to_use": "Avoid when simple fine-grained locking or sharded mutex architectures provide sufficient throughput with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free LRU cache?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently inspecting. Memory reclaimers check these announcements and defer freeing unlinked nodes until no active threads hold a hazard pointer to them."
+        },
+        {
+          "question": "Why is standard mutex locking a bottleneck in high-throughput multi-core LRU caches?",
+          "answer": "Mutexes force threads to contend for a global or bucket-level lock, causing context switches, scheduling latency, and severely limiting scalability as the core count increases."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent LFU Cache",
+        "Hazard Pointer Memory Management",
+        "Lock-free Hash Maps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-26T13:33:09.852062+00:00",
+      "run_number": 1799
     }
   ]
 }
