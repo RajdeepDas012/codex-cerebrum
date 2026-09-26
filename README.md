@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1822** |
-| Last Updated | `2026-09-26T20:02:21.978034+00:00` |
-| Dataset Size | `1822 entries` |
+| Total Topics Learned | **1823** |
+| Last Updated | `2026-09-26T20:05:45.286549+00:00` |
+| Dataset Size | `1823 entries` |
 
 ## 📂 Categories Learned
 
@@ -24,7 +24,7 @@
 | crypto-blockchain | 109 |
 | system-design | 83 |
 | stocks-markets | 71 |
-| algorithms | 65 |
+| algorithms | 66 |
 | databases | 30 |
 | probability-math | 27 |
 | security | 16 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile estimation and multi-core streaming telemetry aggregation in real-time observability platforms and distributed performance monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and slot-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter detection and multi-core frequency estimation in real-time network traffic monitoring systems and distributed stream analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct range frequency querying and multi-core compressed text indexing in real-time genomic data platforms and concurrent bioinformatics search engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic pointer-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed node searching and multi-core dictionary management in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate filtering in real-time distributed database query engines and concurrent web crawler caching layers`
-- `Implementation of a lock-free thread-safe concurrent Radix Trie using atomic leaf-splitting and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent Linux kernel packet filtering engines`
 
 <!-- STATS_END -->
 
