@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1832,
-    "last_updated": "2026-09-26T22:35:14.863488+00:00",
-    "total_topics_learned": 1832
+    "total_runs": 1833,
+    "last_updated": "2026-09-26T22:38:23.346648+00:00",
+    "total_topics_learned": 1833
   },
   "entries": [
     {
@@ -87550,6 +87550,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T22:35:14.863468+00:00",
       "run_number": 1832
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Circular Buffer (Ring Buffer) using atomic head-tail-advancing and wrap-around-managing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core stream buffering in real-time audio processing pipelines and concurrent high-frequency trading market data ingestion engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free circular buffer that utilizes atomic operations for head and tail index management and hazard pointers to safely handle concurrent reads and writes. It is essential for low-latency, high-throughput inter-thread communication without the overhead of traditional mutex locks.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) primitives to safely advance head and tail pointers across multiple producer and consumer threads.",
+        "Implements wrap-around logic using modulo arithmetic on bounded array capacities to maintain constant memory usage.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of shared buffer slots during concurrent access.",
+        "Eliminates kernel-level context switching and lock contention, maximizing throughput in latency-critical pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement and safe slot reservation using a CAS loop.",
+        "correct": "bool push(const T& item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    size_t current_head = head.load(std::memory_order_acquire);\n    if ((current_tail + 1) % Capacity == current_head) return false; // Full\n    if (tail.compare_exchange_strong(current_tail, (current_tail + 1) % Capacity, std::memory_order_release)) {\n        buffer[current_tail] = item;\n        return true;\n    }\n    return false;\n}",
+        "wrong": "bool push(const T& item) {\n    buffer[tail] = item;\n    tail = (tail + 1) % Capacity; // Non-atomic read-modify-write causes data races\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use correct memory ordering semantics (acquire-release), leading to stale reads of buffer contents.",
+        "Ignoring the ABA problem during index updates when concurrent threads wrap around the buffer multiple times."
+      ],
+      "best_practices": [
+        "Design buffer capacities to be powers of two to replace expensive modulo divisions with fast bitwise masking operations.",
+        "Align atomic index variables to CPU cache line boundaries to eliminate false sharing between producer and consumer threads."
+      ],
+      "when_to_use": "When implementing low-latency inter-thread message queues, real-time audio sample streaming, or high-frequency trading market data ingestion engines.",
+      "when_not_to_use": "When the queue size must dynamically expand beyond a fixed capacity or when simpler, lock-based synchronization introduces negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating head and tail pointers in a lock-free ring buffer?",
+          "answer": "By combining a version counter or sequence stamp with the index using a double-word CAS (DCAS) or by utilizing monotonically increasing 64-bit indices that only wrap around after an astronomically large number of operations."
+        },
+        {
+          "question": "Why is memory ordering critical when implementing a concurrent ring buffer?",
+          "answer": "Because producer threads must ensure that data is fully written to the buffer slot *before* the tail pointer update becomes visible to consumer threads, which requires release-acquire semantics."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Queue",
+        "Hazard Pointers",
+        "Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T22:38:23.346627+00:00",
+      "run_number": 1833
     }
   ]
 }
