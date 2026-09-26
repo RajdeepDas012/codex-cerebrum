@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1789,
-    "last_updated": "2026-09-26T12:59:30.876938+00:00",
-    "total_topics_learned": 1789
+    "total_runs": 1790,
+    "last_updated": "2026-09-26T13:02:47.013905+00:00",
+    "total_topics_learned": 1790
   },
   "entries": [
     {
@@ -85513,6 +85513,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T12:59:30.876918+00:00",
       "run_number": 1789
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-compressing and child-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent Linux kernel routing tables",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent radix tree utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput, safe concurrent IP address lookups and prefix updates without explicit mutex locks, making it ideal for software-defined networking (SDN) and modern kernel routing engines.",
+      "key_points": [
+        "Utilizes atomic prefix-compressing and child-node-splicing CAS operations for lock-free modifications.",
+        "Employs hazard pointers to guarantee safe memory reclamation in concurrent environments without blocking readers.",
+        "Optimized for variable-length bit-string lookups critical in high-speed IP routing table matching.",
+        "Minimizes thread contention and avoids priority inversion common in lock-based tree architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node child-splicing via CAS for lock-free radix tree insertion.",
+        "correct": "bool insert_child(RadixNode* parent, RadixNode* new_child, uint8_t key_chunk) {\n    while (true) {\n        RadixNode* current = parent->children[key_chunk].load(std::memory_order_acquire);\n        new_child->next = current;\n        if (parent->children[key_chunk].compare_exchange_weak(current, new_child,\n            std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(RadixNode* parent, RadixNode* new_child, uint8_t key_chunk) {\n    parent->children[key_chunk] = new_child; // Non-atomic update leading to data races\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free race conditions during concurrent node splitting.",
+        "Using weak CAS loops without proper memory ordering guarantees, causing stale reads on multiprocessor systems."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing any child pointers during traversal.",
+        "Utilize appropriate memory barriers (acquire-release semantics) for synchronization between writers and readers."
+      ],
+      "when_to_use": "Use when building ultra-low latency IP routing tables, network packet classifiers, or high-concurrency prefix-matching systems requiring maximum throughput across multiple CPU cores.",
+      "when_not_to_use": "Avoid when keys are dense, completely random, or fixed-length integers where a simpler lock-free hash map or concurrent B+Tree would provide easier implementation and better cache locality.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free radix tree?",
+          "answer": "Hazard pointers allow a thread to atomically register a pointer it is currently reading. Memory reclaimers check these registers and defer freeing nodes until no thread holds a hazard pointer to them, safely avoiding premature deallocation."
+        },
+        {
+          "question": "Why is atomic prefix compression challenging in a lock-free setting?",
+          "answer": "Prefix compression requires changing the structure of parent and child nodes simultaneously. In a lock-free design, this requires breaking down updates into smaller atomic CAS steps and handling intermediate transient states safely."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Suffix Tree",
+        "Lock-free B+Tree",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T13:02:47.013885+00:00",
+      "run_number": 1790
     }
   ]
 }
