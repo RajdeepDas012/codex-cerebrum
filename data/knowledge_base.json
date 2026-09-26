@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1817,
-    "last_updated": "2026-09-26T19:44:19.310393+00:00",
-    "total_topics_learned": 1817
+    "total_runs": 1818,
+    "last_updated": "2026-09-26T19:47:32.573557+00:00",
+    "total_topics_learned": 1818
   },
   "entries": [
     {
@@ -86836,6 +86836,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T19:44:19.310375+00:00",
       "run_number": 1817
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Trie using atomic leaf-splitting and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent Linux kernel packet filtering engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Trie enables high-throughput IP routing table lookups and longest-prefix matching by utilizing atomic Compare-And-Swap (CAS) primitives for leaf-splitting and path-compression. Combined with hazard pointers, it ensures safe memory reclamation without blocking concurrent threads in multi-core packet filtering engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely manipulate node pointers and handle concurrent insertions and deletions without locking.",
+        "Implements path-compression to collapse single-child nodes, reducing memory overhead and tree depth for faster bitwise prefix matching.",
+        "Employs hazard pointers to track active thread access to nodes, preventing premature deallocation and mitigating the ABA problem during concurrent updates.",
+        "Optimized for real-time software-defined networking (SDN) switches and Linux kernel networking stacks where low latency and high core scalability are critical."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-pointer update via CAS during concurrent insertion into a Radix Trie",
+        "correct": "bool insert_child(RadixNode* parent, RadixNode* new_node, uint8_t bit) {\n    RadixNode* expected = parent->children[bit].load(std::memory_order_acquire);\n    while (true) {\n        if (expected != nullptr) return false; // Child already exists\n        new_node->next.store(expected, std::memory_order_relaxed);\n        if (parent->children[bit].compare_exchange_weak(expected, new_node,\n                std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(RadixNode* parent, RadixNode* new_node, uint8_t bit) {\n    // Missing lock-free loop and atomic CAS check; vulnerable to race conditions\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes with hazard pointers or epoch-based reclamation, leading to use-after-free bugs when concurrent readers access deleted subpaths.",
+        "Neglecting the ABA problem during pointer modifications, which can corrupt the trie structure when nodes are recycled."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any trie nodes traversed during read operations before reading their child pointers.",
+        "Keep path-compression logic idempotent to ensure that overlapping modifications by concurrent writer threads converge safely."
+      ],
+      "when_to_use": "Use when building high-performance networking equipment, routers, or packet filters that require frequent concurrent IP prefix lookups and minimal lock contention across many CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with infrequent updates where standard synchronized hash maps or simpler lock-based tries offer lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in a lock-free Radix Trie?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing before reading them. When a writer thread deletes a node, it places it in a deferred-deletion list until no thread holds a hazard pointer referencing that node."
+        },
+        {
+          "question": "Why is path-compression critical for concurrent Radix Tries used in IP routing?",
+          "answer": "Path-compression collapses nodes with single child choices into a single node storing a bit string, which minimizes memory usage and reduces the number of pointer traversals and CAS operations needed for longest-prefix matching."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Tree",
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T19:47:32.573539+00:00",
+      "run_number": 1818
     }
   ]
 }
