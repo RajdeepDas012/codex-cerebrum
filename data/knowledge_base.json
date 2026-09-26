@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1823,
-    "last_updated": "2026-09-26T20:05:45.286549+00:00",
-    "total_topics_learned": 1823
+    "total_runs": 1824,
+    "last_updated": "2026-09-26T20:09:00.325076+00:00",
+    "total_topics_learned": 1824
   },
   "entries": [
     {
@@ -87120,6 +87120,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T20:05:45.286531+00:00",
       "run_number": 1823
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-appending CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell checking in real-time search engine query suggestion systems and concurrent bioinformatics spelling correction engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Burkhard-Keller (BK) tree using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput fuzzy string searching and approximate matching across multiple cores without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic primitives to manage tree modifications and child-node appending safely across concurrent threads.",
+        "Employs hazard pointers to guarantee safe memory reclamation of deleted or replaced tree nodes without memory leaks.",
+        "Organizes metric space data based on edit distances (e.g., Levenshtein distance) for efficient multi-core traversal and query pruning.",
+        "Eliminates deadlocks and lock contention by avoiding traditional mutexes during insertions and fuzzy searches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic pointer updates for appending child nodes in a lock-free BK-tree structure.",
+        "correct": "bool append_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current_child = parent->children[distance].load(std::memory_order_acquire);\n        new_child->next.store(current_child, std::memory_order_relaxed);\n        if (parent->children[distance].compare_exchange_weak(current_child, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool append_child_wrong(Node* parent, int distance, Node* new_child) {\n    // Missing a loop for CAS retry leads to lost updates under high concurrency\n    Node* current_child = parent->children[distance].load();\n    new_child->next = current_child;\n    return parent->children[distance].compare_exchange_strong(current_child, new_child);\n}"
+      },
+      "common_mistakes": [
+        "Failing to use a retry loop around CAS operations, leading to dropped node insertions under high thread contention.",
+        "Neglecting hazard pointer protection during tree traversals, resulting in use-after-free bugs when concurrent threads prune nodes.",
+        "Applying incorrect memory ordering semantics (e.g., relaxed ordering where acquire-release synchronization is required)."
+      ],
+      "best_practices": [
+        "Always wrap CAS operations in a proper retry loop (compare_exchange_weak) to handle failed updates gracefully.",
+        "Protect all shared node access with hazard pointers to ensure safe retirement and reclamation cycles.",
+        "Keep edit distance calculations lightweight and perform them outside of critical atomic write paths whenever possible."
+      ],
+      "when_to_use": "Use this structure when building high-performance, multi-threaded spell checkers, search engine query recommenders, or genomic sequence matchers that require frequent concurrent fuzzy string searches.",
+      "when_not_to_use": "Avoid this implementation for single-threaded applications or low-throughput systems where simple mutex-locked BK-trees or standard trie structures provide sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions into the same parent distance slot in a lock-free BK-Tree?",
+          "answer": "By using a compare-and-swap (CAS) loop combined with a linked list or pointer redirection strategy where new children are atomically prepended or appended to the distance bucket."
+        },
+        {
+          "question": "Why are hazard pointers necessary when traversing a lock-free BK-Tree?",
+          "answer": "Hazard pointers protect threads from accessing nodes that might be concurrently unlinked and freed by another thread, preventing use-after-free memory corruption."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Splay Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Metric Spaces and Edit Distance Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T20:09:00.325057+00:00",
+      "run_number": 1824
     }
   ]
 }
