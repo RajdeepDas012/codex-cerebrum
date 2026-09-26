@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1790,
-    "last_updated": "2026-09-26T13:02:47.013905+00:00",
-    "total_topics_learned": 1790
+    "total_runs": 1791,
+    "last_updated": "2026-09-26T13:06:18.173424+00:00",
+    "total_topics_learned": 1791
   },
   "entries": [
     {
@@ -85560,6 +85560,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T13:02:47.013885+00:00",
       "run_number": 1790
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core real-time telemetry tracking in distributed network traffic monitoring and large-scale data stream analytics engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Count-Min Sketch data structure for probabilistic frequency estimation of data streams. It uses atomic compare-and-swap primitives to update hash buckets across multiple rows without locks, ensuring safe reclamation via hazard pointers.",
+      "key_points": [
+        "Utilizes independent hash functions to map incoming stream elements to specific bucket counters across a 2D matrix.",
+        "Applies atomic CAS primitives (fetch-add or compare-and-swap) to update frequency counts safely under high multi-threaded contention.",
+        "Employs hazard pointer memory management to coordinate safe reclamation and dynamic resizing of internal counter arrays without blocking readers.",
+        "Provides sub-linear space complexity for heavy-hitter identification and real-time frequency queries in large-scale data stream processing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic frequency increments across multiple hash rows for a concurrent Count-Min Sketch.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCountMinSketch {\n    int rows, cols;\n    std::vector<std::vector<std::atomic<uint64_t>>> table;\npublic:\n    ConcurrentCountMinSketch(int r, int c) : rows(r), cols(c), table(r, std::vector<std::atomic<uint64_t>>(c)) {}\n    void increment(const std::string& item) {\n        for (int i = 0; i < rows; ++i) {\n            size_t h = hash(item, i) % cols;\n            table[i][h].fetch_add(1, std::memory_order_relaxed);\n        }\n    }\n    uint64_t estimate(const std::string& item) const {\n        uint64_t min_val = -1;\n        for (int i = 0; i < rows; ++i) {\n            size_t h = hash(item, i) % cols;\n            min_val = std::min(min_val, table[i][h].load(std::memory_order_relaxed));\n        }\n        return min_val;\n    }\n};",
+        "wrong": "class UnsafeSketch {\n    std::vector<std::vector<uint64_t>> table;\n    void increment(const std::string& item) {\n        // Missing synchronization leads to lost updates under multi-threaded load\n        table[0][hash(item) % cols]++;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using weaker memory orderings where synchronization between distinct rows or metadata is required, leading to stale reads.",
+        "Neglecting proper hazard pointer registration during dynamic table scaling or structure teardown, resulting in use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for individual counter increments where sequential consistency across rows is not mandatory.",
+        "Pre-allocate matrix rows to mitigate memory fragmentation and cache line bouncing during high-frequency concurrent writes."
+      ],
+      "when_to_use": "Use when you need to track item frequencies or identify heavy hitters in high-throughput streaming environments with extreme concurrent writer threads.",
+      "when_not_to_use": "Avoid when exact frequency counts are strictly required or when memory constraints do not tolerate probabilistic over-estimation errors.",
+      "interview_questions": [
+        {
+          "question": "How do you guarantee thread safety without locks when multiple threads update the same hash bucket simultaneously?",
+          "answer": "By utilizing atomic instructions like fetch_add or compare-and-swap (CAS) loops, which execute hardware-level atomic modifications on the counter variables."
+        },
+        {
+          "question": "Why can memory orderings be relaxed for the counter increments in a Count-Min Sketch?",
+          "answer": "Because individual cell increments are independent probabilistic estimations, and strict causal ordering between unrelated row updates is not required for correctness."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "Lock-Free Hash Maps",
+        "HyperLogLog Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T13:06:18.173405+00:00",
+      "run_number": 1791
     }
   ]
 }
