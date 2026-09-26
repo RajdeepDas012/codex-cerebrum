@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1836,
-    "last_updated": "2026-09-26T22:47:49.137309+00:00",
-    "total_topics_learned": 1836
+    "total_runs": 1837,
+    "last_updated": "2026-09-26T22:50:58.237792+00:00",
+    "total_topics_learned": 1837
   },
   "entries": [
     {
@@ -87739,6 +87739,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T22:47:49.137288+00:00",
       "run_number": 1836
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-merging and binomial-tree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core priority scheduling in real-time operating system kernels and concurrent discrete event simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent binomial heap, leveraging atomic compare-and-swap (CAS) primitives for thread-safe root list restructuring and binomial tree combining. It utilizes hazard pointers to safely manage memory reclamation without locks, achieving high-throughput mergeable priority queue operations across multiple cores.",
+      "key_points": [
+        "Utilizes atomic root-list merging to allow concurrent threads to combine multiple heaps efficiently without global lock contention.",
+        "Employs binomial-tree-linking CAS primitives to safely merge trees of equal degree during insertions and unions.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and ensure safe node deallocation under heavy concurrent access.",
+        "Provides O(log n) efficiency for core priority queue operations like insert, find-min, extract-min, and union in multi-threaded environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node linking using atomic compare-and-swap and hazard pointers for a binomial heap.",
+        "correct": "bool link_binomial_trees(std::atomic<Node*>& root_slot, Node* new_tree, HazardPointerRegistry& hp) {\n    HazardGuard guard(hp, new_tree);\n    Node* current = root_slot.load(std::memory_order_acquire);\n    while (true) {\n        new_tree->sibling = current;\n        if (root_slot.compare_exchange_weak(current, new_tree, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "Node* link_binomial_trees(Node* root, Node* new_tree) {\n    // Missing atomics, memory barriers, and hazard pointers leading to race conditions\n    new_tree->sibling = root;\n    return new_tree;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes accessed during concurrent root traversal with hazard pointers, leading to use-after-free bugs.",
+        "Using weak CAS without a proper retry loop when updating shared root pointers during tree merging.",
+        "Neglecting memory ordering constraints, which can cause inconsistent view states of binomial trees across threads."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing any shared node pointers in concurrent traversal loops.",
+        "Keep critical sections inside lock-free loops as minimal as possible to reduce CAS retry contention under high core counts.",
+        "Batch retired nodes safely and defer reclamation until no active hazard pointers reference them."
+      ],
+      "when_to_use": "Use when you need high-throughput priority queue merging operations (meld/union) across multiple threads without lock contention, such as in real-time schedulers or discrete event simulators.",
+      "when_not_to_use": "Avoid when standard single-threaded data structures suffice or when lock-based synchronization overhead is lower than atomic contention overhead on low-core machines.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives facilitate lock-free union operations in a concurrent binomial heap?",
+          "answer": "CAS primitives allow threads to atomically update root pointers and link binomial trees of equal degree without blocking, retrying upon failure until the update succeeds."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free binomial heap?",
+          "answer": "Hazard pointers prevent other threads from freeing a node while it is actively being traversed or manipulated by a concurrent operation, avoiding use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Priority Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Disjoint-Set Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-26T22:50:58.237775+00:00",
+      "run_number": 1837
     }
   ]
 }
