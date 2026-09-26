@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1837,
-    "last_updated": "2026-09-26T22:50:58.237792+00:00",
-    "total_topics_learned": 1837
+    "total_runs": 1838,
+    "last_updated": "2026-09-26T22:54:06.640230+00:00",
+    "total_topics_learned": 1838
   },
   "entries": [
     {
@@ -87788,6 +87788,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-26T22:50:58.237775+00:00",
       "run_number": 1837
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core connected component computation in real-time network topology analysis and concurrent image segmentation algorithms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking Disjoint Set (Union-Find) data structure utilizing lock-free Compare-And-Swap operations for concurrent union and find operations. It incorporates hazard pointers to safely manage node lifetimes and memory reclamation under high thread contention.",
+      "key_points": [
+        "Utilizes atomic pointers and compare-and-swap (CAS) primitives to implement lock-free find operations with path compression.",
+        "Employs rank-based or size-based union heuristics adapted to atomic primitives to keep tree depths shallow.",
+        "Integrates hazard pointers to prevent premature memory deallocation of nodes undergoing concurrent structural modifications.",
+        "Ensures linearizability across multi-core architectures for high-throughput equivalence class queries and dynamic connectivity updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic update pattern for updating parent pointers during lock-free path compression in a Disjoint Set.",
+        "correct": "bool compressPath(Node* node, Node* expectedParent, Node* newParent) {\n    return std::atomic_compare_exchange_weak(&(node->parent), &expectedParent, newParent);\n}",
+        "wrong": "bool compressPath(Node* node, Node* newParent) {\n    node->parent = newParent;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs when concurrent threads modify parent links.",
+        "Applying non-atomic updates during path compression which destroys thread safety and causes lost updates."
+      ],
+      "best_practices": [
+        "Protect all referenced nodes in the traversal path with hazard pointers before reading their parent pointers.",
+        "Use weak CAS in a retry loop when attempting to update parents for path compression or rank unions to handle contention efficiently.",
+        "Batch retired nodes safely for asynchronous reclamation via hazard pointer epoch tracking."
+      ],
+      "when_to_use": "When multiple threads concurrently perform equivalence queries and set unions on a massive shared graph or disjoint partition structure.",
+      "when_not_to_use": "In single-threaded environments or coarse-grained execution models where standard sequential Union-Find with path compression offers superior performance and simpler code.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating parent pointers atomically in a lock-free Disjoint Set?",
+          "answer": "By integrating version counters into the pointer or by using hazard pointers to guarantee that nodes cannot be recycled and reused while a thread is actively referencing them."
+        },
+        {
+          "question": "Why is strict lock-free path compression difficult to implement in Union-Find?",
+          "answer": "Because multiple threads may simultaneously attempt to redirect parent pointers of the same nodes to different intermediate roots, requiring careful CAS loops to resolve conflicts without deadlocks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Algorithms and CAS Primitives",
+        "Concurrent Graph Processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T22:54:06.640212+00:00",
+      "run_number": 1838
     }
   ]
 }
