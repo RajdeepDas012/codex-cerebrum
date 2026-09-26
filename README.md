@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1840** |
-| Last Updated | `2026-09-26T23:00:24.505702+00:00` |
-| Dataset Size | `1840 entries` |
+| Total Topics Learned | **1841** |
+| Last Updated | `2026-09-26T23:03:32.737351+00:00` |
+| Dataset Size | `1841 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 897 |
+| data-structures | 898 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized-optimal mergeable priority queue operations and multi-core task scheduling in real-time graph algorithm engines and concurrent network routing simulators`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and doubling-step-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput genome sequencing alignment and multi-core pattern matching in real-time bioinformatics search pipelines and concurrent text analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core connected component computation in real-time network topology analysis and concurrent image segmentation algorithms`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-merging and binomial-tree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core priority scheduling in real-time operating system kernels and concurrent discrete event simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic bounding-box-merging and tree-refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection querying and multi-core spatial acceleration in real-time computer graphics ray tracing engines and concurrent physics simulation platforms`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1840,
-    "last_updated": "2026-09-26T23:00:24.505702+00:00",
-    "total_topics_learned": 1840
+    "total_runs": 1841,
+    "last_updated": "2026-09-26T23:03:32.737351+00:00",
+    "total_topics_learned": 1841
   },
   "entries": [
     {
@@ -87930,6 +87930,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T23:00:24.505683+00:00",
       "run_number": 1840
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent pairing heap provides lock-free mergeable priority queue operations by leveraging atomic root-linking and multi-pass merging combined with hazard pointers for safe memory management. It is essential for high-throughput multi-core scheduling and discrete event simulation engines where thread contention must be minimized without sacrificing asymptotic performance.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe root linking and subheap merging.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted nodes in a lock-free environment.",
+        "Supports high-throughput merge operations which are crucial for real-time operating system task schedulers.",
+        "Avoids locking overheads, ensuring progress guarantees under high thread concurrency and contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free node insertion into a concurrent pairing heap using atomic CAS loops.",
+        "correct": "void insert(std::atomic<Node*>& root, Node* newNode) {\n    Node* oldRoot;\n    do {\n        oldRoot = root.load(std::memory_order_relaxed);\n        newNode->next_sibling = oldRoot;\n    } while (!root.compare_exchange_weak(oldRoot, newNode, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert(std::atomic<Node*>& root, Node* newNode) {\n    Node* oldRoot = root.load();\n    newNode->next_sibling = oldRoot;\n    root.store(newNode);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during extraction.",
+        "Using sequential consistency everywhere instead of relaxing memory orders where appropriate, hurting performance."
+      ],
+      "best_practices": [
+        "Always validate hazard pointer protection before dereferencing node pointers in concurrent paths.",
+        "Use appropriate memory barriers (acquire-release semantics) around CAS loops to guarantee visibility of heap structures."
+      ],
+      "when_to_use": "Use when you need high-throughput mergeable priority queue operations across multiple threads with strict lock-free requirements.",
+      "when_not_to_use": "Avoid when standard single-threaded data structures suffice or when simple mutex locking overhead is acceptable for your workload.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in lock-free heap structures?",
+          "answer": "Hazard pointers allow threads to locally register pointers they are currently accessing, preventing other threads from freeing those memory locations until no thread holds a hazard reference to them."
+        },
+        {
+          "question": "Why is atomic root-linking preferred over global locking in concurrent priority queues?",
+          "answer": "Atomic root-linking eliminates bottlenecks caused by global locks, enabling multiple threads to execute insertions and merges concurrently without blocking."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Fibonacci Heap",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T23:03:32.737333+00:00",
+      "run_number": 1841
     }
   ]
 }
