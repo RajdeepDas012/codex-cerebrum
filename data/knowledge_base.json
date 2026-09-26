@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1757,
-    "last_updated": "2026-09-26T01:21:53.717632+00:00",
-    "total_topics_learned": 1757
+    "total_runs": 1758,
+    "last_updated": "2026-09-26T01:25:02.889209+00:00",
+    "total_topics_learned": 1758
   },
   "entries": [
     {
@@ -83995,6 +83995,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T01:21:53.717612+00:00",
       "run_number": 1757
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core priority scheduling in real-time task management systems and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent Binomial Heap that leverages atomic CAS primitives for binomial tree linking and root list updates, coupled with hazard pointers for safe memory management. It enables high-throughput priority queue operations and efficient heap merging across multiple cores without locking overhead.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to manage concurrent updates to the root list of binomial trees.",
+        "Employs binomial-tree-linking logic to combine trees of equal degree efficiently during insertions and merges.",
+        "Integrates hazard pointers to track thread-local accessed nodes, ensuring safe memory reclamation without ABA hazards.",
+        "Delivers high-throughput mergeable heap functionality suited for multi-core job execution engines and task schedulers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic linking of binomial trees via CAS in a concurrent environment.",
+        "correct": "std::shared_ptr<Node> link_trees(std::shared_ptr<Node> t1, std::shared_ptr<Node> t2) {\n    if (t1->key > t2->key) std::swap(t1, t2);\n    // Atomically attach t2 as a child of t1\n    Node* expected = t1->child.load();\n    do {\n        t2->sibling = expected;\n    } while (!t1->child.compare_exchange_weak(expected, t2.get()));\n    t1->degree++;\n    return t1;\n}",
+        "wrong": "std::shared_ptr<Node> link_trees(std::shared_ptr<Node> t1, std::shared_ptr<Node> t2) {\n    if (t1->key > t2->key) std::swap(t1, t2);\n    t2->sibling = t1->child;\n    t1->child = t2.get(); // Non-atomic assignment causes race conditions\n    t1->degree++;\n    return t1;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle ABA problems when updating root list pointers with standard CAS operations.",
+        "Neglecting hazard pointer protection on child and sibling pointers during concurrent tree traversal and merging.",
+        "Ignoring memory leaks caused by immediate node deallocation while other threads hold references in the root list."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to safely defer deletion of nodes removed from the root list.",
+        "Keep atomic transactions on root lists small and retry-bounded to minimize contention under heavy thread load.",
+        "Ensure strict degree ordering or resolve conflicts deterministically when multiple threads attempt concurrent root-list merges."
+      ],
+      "when_to_use": "Use when building high-throughput real-time schedulers or concurrent systems that require efficient priority queue merging across multiple threads.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where standard sequential heaps or locks introduce less overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating the root list of a lock-free binomial heap using CAS?",
+          "answer": "By pairing pointers with monotonically increasing version tags or sequence counters within a double-word CAS (DCAS) or 128-bit atomic operation."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent mergeable heaps?",
+          "answer": "Hazard pointers prevent a thread from freeing a node while another concurrent thread is traversing its child or sibling pointers during a lookup or merge operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Pairing Heap",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-26T01:25:02.889190+00:00",
+      "run_number": 1758
     }
   ]
 }
