@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1841,
-    "last_updated": "2026-09-26T23:03:32.737351+00:00",
-    "total_topics_learned": 1841
+    "total_runs": 1842,
+    "last_updated": "2026-09-26T23:06:41.470386+00:00",
+    "total_topics_learned": 1842
   },
   "entries": [
     {
@@ -87977,6 +87977,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T23:03:32.737333+00:00",
       "run_number": 1841
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scs (Skew Heap) using atomic root-swapping and null-path-reorienting CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free, thread-safe concurrent Skew Heap utilizing atomic Compare-And-Swap (CAS) primitives for root manipulation and structural reorientation. It integrates hazard pointers to ensure safe memory reclamation, enabling high-performance mergeable priority queue operations across multiple cores for real-time operating systems.",
+      "key_points": [
+        "Utilizes atomic root-swapping and reorienting CAS operations to guarantee lock-free progress without heavy global locking.",
+        "Employs hazard pointers to track thread access to nodes, preventing premature deallocation and ensuring safe memory reclamation.",
+        "Provides efficient meld (merge) operations required for advanced priority queue semantics in concurrent environments.",
+        "Minimizes structural overhead by avoiding explicit height or rank fields, relying purely on self-adjusting tree properties."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe hazard pointer protection pattern during a concurrent skew heap node read.",
+        "correct": "Node* hazard_protect(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (ptr != node_ptr.load(std::memory_order_relaxed));\n    return ptr;\n}",
+        "wrong": "Node* unsafe_read(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(); // Lacks hazard protection, risking use-after-free\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to re-check atomic pointers after acquiring hazard protection, leading to race conditions where the node is freed mid-operation.",
+        "Failing to handle ABA problems when performing CAS updates on node pointers in highly contended multi-core environments."
+      ],
+      "best_practices": [
+        "Always validate hazard pointers with a retry loop to ensure the protected node was not concurrently unlinked and freed.",
+        "Keep critical sections short when performing atomic root-swaps to maximize throughput across multiple scheduler threads."
+      ],
+      "when_to_use": "Use this structure when high-throughput priority queue merging is required across multiple threads in real-time kernels or simulation engines without lock contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or scenarios where strict deterministic worst-case bounds are favored over amortized lock-free performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free skew heap?",
+          "answer": "Hazard pointers publish which nodes a thread is currently accessing, allowing the memory reclamation system to defer freeing those nodes until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is the null-path-reorienting or root-swapping pattern necessary for concurrent skew heaps?",
+          "answer": "It allows threads to atomically transition references and merge subtrees without acquiring a global lock, thereby maintaining lock-free progress guarantees."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Mergeable Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T23:06:41.470366+00:00",
+      "run_number": 1842
     }
   ]
 }
