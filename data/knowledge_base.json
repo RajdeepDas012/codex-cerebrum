@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1804,
-    "last_updated": "2026-09-26T17:05:40.416584+00:00",
-    "total_topics_learned": 1804
+    "total_runs": 1805,
+    "last_updated": "2026-09-26T17:08:48.939192+00:00",
+    "total_topics_learned": 1805
   },
   "entries": [
     {
@@ -86220,6 +86220,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T17:05:40.416562+00:00",
       "run_number": 1804
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components analysis and multi-core equivalence relation tracking in real-time network topology discovery systems and concurrent compiler type inference engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Disjoint Set data structure using atomic operations and hazard pointers. It enables high-throughput multi-core execution of equivalence queries and union operations without global locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe parent-pointer updates and path compression.",
+        "Employs rank-combining strategies to keep trees shallow and minimize contention during concurrent union operations.",
+        "Integrates hazard pointer memory reclamation to safely manage node lifecycles without blocking reader threads.",
+        "Critical for scaling real-time network topology discovery and concurrent compiler type inference across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node finding with path compression using CAS primitives in a lock-free Union-Find data structure.",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release);\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic, unsafe for concurrent threads\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during path compression, leading to ABA problems or use-after-free bugs.",
+        "Using blocking synchronization primitives inside union-find routines, defeating the purpose of lock-free design."
+      ],
+      "best_practices": [
+        "Always use acquire-release memory semantics on atomic pointer reads and writes to ensure visibility across threads.",
+        "Bound the depth of pointer compression steps per iteration to prevent infinite loops under high thread contention."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform parallel disjoint-set operations on shared graphs and low latency is critical.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple batch algorithms where standard sequential Union-Find with path compression suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem during concurrent path compression in a lock-free Union-Find data structure?",
+          "answer": "By using hazard pointers to protect referenced nodes from reclamation and utilizing tagged pointers or version counters in CAS operations."
+        },
+        {
+          "question": "Why is rank-combining preferred over size-based weighting in concurrent union operations?",
+          "answer": "Rank changes less frequently than exact subtree sizes during concurrent compressions, reducing the frequency of failed CAS retries."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Data Structures",
+        "Concurrent Graph Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T17:08:48.939170+00:00",
+      "run_number": 1805
     }
   ]
 }
