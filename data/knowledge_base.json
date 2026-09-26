@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1816,
-    "last_updated": "2026-09-26T17:43:24.293798+00:00",
-    "total_topics_learned": 1816
+    "total_runs": 1817,
+    "last_updated": "2026-09-26T19:44:19.310393+00:00",
+    "total_topics_learned": 1817
   },
   "entries": [
     {
@@ -86787,6 +86787,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T17:43:24.293777+00:00",
       "run_number": 1816
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed database indexing and multi-core high-concurrency key-value storage in real-time enterprise storage systems and high-performance relational database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-tree provides scalable, high-throughput multi-core index operations without blocking threads, using compare-and-swap (CAS) primitives for atomic node splits and merges. Hazard pointers are integrated to safely manage memory reclamation in dynamic, concurrent tree topologies.",
+      "key_points": [
+        "Uses atomic node-splitting and structural-merging CAS operations to safely modify tree depth and node capacity without global locks.",
+        "Employs hazard pointers to protect shared nodes from premature memory deallocation while threads traverse or mutate the structure.",
+        "Maximizes cache locality and minimizes contention compared to coarse-grained locking, ideal for multi-core key-value storage engines.",
+        "Requires careful ordering of atomic pointer updates to prevent lost updates or inconsistent child references during concurrent operations."
+      ],
+      "code_example": {
+        "language": "C++",
+        "description": "Demonstrates the pattern of protecting a node access with hazard pointers during a lock-free traversal.",
+        "correct": "Node* hazard_ptr = nullptr;\nwhile (true) {\n    hazard_ptr = current.load(std::memory_order_acquire);\n    hazard_pointers[thread_id].store(hazard_ptr);\n    if (current.load(std::memory_order_acquire) == hazard_ptr) break;\n}\n// Safe to read hazard_ptr",
+        "wrong": "Node* node = current.load();\n// Another thread can delete node here before we read its contents\nint val = node->key;"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory barriers (acquire-release semantics) when publishing or reading node pointers.",
+        "Reclaiming node memory without checking pending hazard pointers across all active threads, leading to use-after-free bugs.",
+        "Incomplete atomic state transitions during node splits, causing readers to observe partially constructed subtrees."
+      ],
+      "best_practices": [
+        "Always protect shared nodes with hazard pointers before dereferencing pointers in a lock-free structure.",
+        "Batch retired nodes in thread-local deferred reclamation lists to amortize the overhead of checking hazard pointer arrays.",
+        "Design immutable node copies or explicit operational descriptors for complex multi-step transformations like B-tree splits."
+      ],
+      "when_to_use": "When building high-performance storage engines, in-memory databases, or multi-core indexing layers where read and write contention is extremely high.",
+      "when_not_to_use": "In low-concurrency environments or embedded systems where simpler fine-grained locking or single-threaded structures provide sufficient performance with far less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem during atomic pointer updates in a lock-free B-tree node split?",
+          "answer": "By using tagged pointers or version counters combined with CAS, ensuring that if a pointer value changes and reverts, the version increment invalidates stale assumptions."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in high-throughput lock-free structures?",
+          "answer": "Standard reference counting introduces severe cache-line contention due to constant atomic increments and decrements on shared counters, whereas hazard pointers use thread-local announcement arrays that minimize cross-core synchronization overhead."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Concurrent lock-free hash maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T19:44:19.310375+00:00",
+      "run_number": 1817
     }
   ]
 }
