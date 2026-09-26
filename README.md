@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1845** |
-| Last Updated | `2026-09-26T23:16:06.565905+00:00` |
-| Dataset Size | `1845 entries` |
+| Total Topics Learned | **1846** |
+| Last Updated | `2026-09-26T23:19:15.571503+00:00` |
+| Dataset Size | `1846 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 902 |
+| data-structures | 903 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate deletion in real-time distributed key-value stores and concurrent caching eviction layers`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic double-linked-list-relinking and hash-bucket-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-memory eviction and multi-core high-frequency data retrieval in real-time in-memory caching layers and distributed database execution engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and node-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core high-frequency data ingestion in real-time caching layers and distributed database execution engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-descriptor-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate elimination in real-time distributed storage systems and high-performance caching layers`
 - `Implementation of a lock-free thread-safe concurrent Scs (Skew Heap) using atomic root-swapping and null-path-reorienting CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines`
 
 <!-- STATS_END -->
 
