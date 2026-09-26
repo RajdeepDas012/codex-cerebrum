@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1795,
-    "last_updated": "2026-09-26T13:20:32.653524+00:00",
-    "total_topics_learned": 1795
+    "total_runs": 1796,
+    "last_updated": "2026-09-26T13:23:41.779894+00:00",
+    "total_topics_learned": 1796
   },
   "entries": [
     {
@@ -85795,6 +85795,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T13:20:32.653505+00:00",
       "run_number": 1795
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-node-splicing and hash-bucket-relinking CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hot-key tracking in real-time web application caching layers and distributed key-value stores",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free Least Frequently Used (LFU) cache designed for multi-threaded environments. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures high throughput and memory safety without relying on traditional locking mechanisms.",
+      "key_points": [
+        "Utilizes atomic frequency-node-splicing CAS primitives to safely adjust access frequencies without global mutexes.",
+        "Employs hash-bucket-relinking mechanisms for concurrent key lookup and entry migration across frequency lists.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs during high-concurrency eviction and node updates.",
+        "Maximizes multi-core performance for hot-key tracking and cache eviction management in distributed storage systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic pointer updates for concurrent LFU frequency increments using hazard pointers.",
+        "correct": "bool increment_frequency(HazardPointer& hp, std::atomic<Node*>& node_ptr) {\n    Node* current;\n    do {\n        current = node_ptr.load();\n        hp.protect(current);\n        if (node_ptr.load() != current) continue;\n        Node* next_node = current->next;\n    } while (!node_ptr.compare_exchange_weak(current, next_node));\n    hp.clear();\n    return true;\n}",
+        "wrong": "bool increment_frequency(Node* node_ptr) {\n    node_ptr->frequency++; // Unsafe non-atomic read-modify-write in a concurrent environment\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing frequency doubly-linked lists, leading to race conditions and segmentation faults.",
+        "Using coarse-grained locks on frequency buckets which creates heavy contention bottlenecks under high-throughput workloads."
+      ],
+      "best_practices": [
+        "Always bind thread-local hazard pointer records to active execution threads prior to inspecting shared cache entries.",
+        "Keep atomic operations scoped tightly around pointer adjustments to minimize CAS retry contention loops."
+      ],
+      "when_to_use": "Use when building ultra-low-latency web application caches or distributed key-value stores requiring high concurrency, strict frequency-based eviction, and zero lock contention.",
+      "when_not_to_use": "Avoid in low-concurrency applications or resource-constrained embedded systems where simpler mutex-backed caches provide sufficient performance with significantly less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free LFU cache?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing so that reclaiming threads know not to free those memory addresses until all hazards are cleared."
+        },
+        {
+          "question": "What is the primary challenge when updating frequency lists concurrently in an LFU cache, and how do CAS primitives solve it?",
+          "answer": "The challenge is simultaneously updating the hash index and the frequency list pointers; atomic CAS primitives allow updating these pointers conditionally only if they haven't changed since they were read."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-free Concurrent Skip Lists",
+        "Concurrent Hash Table Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T13:23:41.779874+00:00",
+      "run_number": 1796
     }
   ]
 }
