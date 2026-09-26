@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1806,
-    "last_updated": "2026-09-26T17:11:57.418451+00:00",
-    "total_topics_learned": 1806
+    "total_runs": 1807,
+    "last_updated": "2026-09-26T17:15:06.615466+00:00",
+    "total_topics_learned": 1807
   },
   "entries": [
     {
@@ -86314,6 +86314,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T17:11:57.418428+00:00",
       "run_number": 1806
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic sequence searching and multi-core full-text indexing in real-time bioinformatics analysis pipelines and concurrent document search engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent suffix array utilizing atomic index-sorting and rank-transforming Compare-And-Swap (CAS) primitives. It leverages hazard pointers for safe memory management, enabling high-throughput pattern matching and full-text searching across multi-core systems without blocking.",
+      "key_points": [
+        "Utilizes atomic index-sorting and rank-transforming CAS operations to update suffix arrays safely across multiple threads without explicit locks.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of shared text structures and index vectors during concurrent reads and writes.",
+        "Enables high-throughput genomic sequence alignment and real-time document search by distributing suffix sorting workloads across multiple CPU cores.",
+        "Balances cache locality and contention overhead by managing synchronization granularity at the bucket or rank transformation level."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic rank transformation and hazard pointer protection during concurrent suffix array updates.",
+        "correct": "void updateSuffixRank(std::atomic<int>& rank_slot, int expected_rank, int new_rank, HazardPointer& hp, Node* ptr) {\n    hp.protect(0, ptr);\n    while (!rank_slot.compare_exchange_weak(expected_rank, new_rank)) {\n        if (ptr->isStale()) break;\n    }\n    hp.clear(0);\n}",
+        "wrong": "void updateSuffixRank(int& rank_slot, int new_rank, Node* ptr) {\n    // Missing atomicity and hazard pointer protection leads to race conditions and use-after-free\n    rank_slot = new_rank;\n    delete ptr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically reallocated index arrays with hazard pointers, leading to use-after-free vulnerabilities under high concurrency.",
+        "Using overly broad CAS loops that cause excessive thread contention and lock convoy effects during rank transformation phases."
+      ],
+      "best_practices": [
+        "Design atomic rank-transformation loops with exponential backoff or fine-grained collision domains to minimize CAS failure rates.",
+        "Integrate robust hazard pointer epochs to safely defer the reclamation of old suffix index tables until all concurrent readers have completed."
+      ],
+      "when_to_use": "Use when building real-time bioinformatics search pipelines or distributed document retrieval engines requiring massive concurrent query throughput on static or streaming texts.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free primitives and hazard pointer management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do atomic rank-transforming CAS operations prevent race conditions when multiple threads concurrently sort suffixes?",
+          "answer": "They ensure that updates to the suffix index or rank array happen conditionally based on expected values, retrying automatically if another thread modifies the slot first, thereby eliminating mutex overhead."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in a concurrent suffix array implementation?",
+          "answer": "Hazard pointers offer low-overhead, lock-free memory reclamation that avoids the atomic reference-counting bottleneck and unpredictable latency pauses associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Suffix Trees",
+        "Concurrent Burrows-Wheeler Transform",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T17:15:06.615444+00:00",
+      "run_number": 1807
     }
   ]
 }
