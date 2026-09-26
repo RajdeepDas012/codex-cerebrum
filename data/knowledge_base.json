@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1785,
-    "last_updated": "2026-09-26T08:04:27.137438+00:00",
-    "total_topics_learned": 1785
+    "total_runs": 1786,
+    "last_updated": "2026-09-26T08:07:35.653625+00:00",
+    "total_topics_learned": 1786
   },
   "entries": [
     {
@@ -85322,6 +85322,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T08:04:27.137419+00:00",
       "run_number": 1785
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+Tree using atomic leaf-sibling-linking and root-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index traversal in real-time transactional database systems and concurrent file storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent B+Tree utilizing atomic leaf-sibling-linking and root-pointer-swinging Compare-And-Swap (CAS) primitives to ensure safe multi-threaded updates. Combined with hazard pointers for memory reclamation, it delivers high-throughput range scans and index traversal for demanding transactional systems.",
+      "key_points": [
+        "Utilizes atomic CAS primitives for safe concurrent root-pointer-swinging and node modifications.",
+        "Maintains explicit leaf-sibling-links to allow non-blocking, highly efficient range scans without locking the entire tree.",
+        "Employs hazard pointers to securely manage memory reclamation, preventing use-after-free bugs in a lock-free structure.",
+        "Ensures high-throughput index traversal, making it ideal for multi-core transactional databases and file storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion concept for a concurrent B+Tree leaf node.",
+        "correct": "bool insert_key(Node* leaf, int key, Value val) {\n    while (true) {\n        Snapshot old_snap = leaf->snapshot.load();\n        if (old_snap.is_full()) { return split_and_insert(leaf, key, val); }\n        Snapshot new_snap = old_snap.inserted(key, val);\n        if (leaf->snapshot.compare_exchange_weak(old_snap, new_snap)) { return true; }\n    }\n}",
+        "wrong": "bool insert_key(Node* leaf, int key, Value val) {\n    mutex.lock();\n    leaf->keys.push_back(key);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely reclaim or defer memory deallocation, leading to severe ABA problems and memory leaks.",
+        "Neglecting to properly update leaf-sibling links prior to structural tree changes, causing lost range scan segments."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory management before implementing complex lock-free node splits.",
+        "Ensure read operations protect accessed nodes using thread-local hazard records to prevent concurrent destruction."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, storage engines, or real-time analytical platforms requiring extreme read-write concurrency and fast range scans.",
+      "when_not_to_use": "Avoid when standard fine-grained locking or single-threaded implementations offer sufficient performance, as lock-free B+Trees add immense code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+Tree where nodes are frequently split and deleted?",
+          "answer": "Hazard pointers or epoch-based memory reclamation (EBMR) are used to track which threads are actively reading specific nodes, deferring actual memory deallocation until no threads hold references to them."
+        },
+        {
+          "question": "Why are leaf-sibling links critical for lock-free B+Tree range scans?",
+          "answer": "They allow threads to traverse horizontally across leaf nodes sequentially without needing to re-traverse from the root during structural modifications or splits."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Tries",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-free Cuckoo Filters"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T08:07:35.653606+00:00",
+      "run_number": 1786
     }
   ]
 }
