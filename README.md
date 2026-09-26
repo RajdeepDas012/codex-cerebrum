@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1833** |
-| Last Updated | `2026-09-26T22:38:23.346648+00:00` |
-| Dataset Size | `1833 entries` |
+| Total Topics Learned | **1834** |
+| Last Updated | `2026-09-26T22:41:31.536666+00:00` |
+| Dataset Size | `1834 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 891 |
+| data-structures | 892 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core thread scheduling in real-time asynchronous execution engines and concurrent task dispatching frameworks`
 - `Implementation of a lock-free thread-safe concurrent Circular Buffer (Ring Buffer) using atomic head-tail-advancing and wrap-around-managing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core stream buffering in real-time audio processing pipelines and concurrent high-frequency trading market data ingestion engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent database indexing and multi-core high-concurrency key-value storage in real-time enterprise storage systems and high-performance relational database engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency tracking and multi-core prefix query computation in real-time streaming analytics platforms and concurrent database aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent VEB (Van Emde Boas) Tree using atomic summary-pointer-updating and cluster-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded universe integer searching and multi-core predecessor-successor querying in real-time IP routing table lookup engines and concurrent high-frequency trading order books`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-propagating and node-relinking CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core state synchronization in real-time blockchain validation nodes and distributed ledger consistency engines`
 
 <!-- STATS_END -->
 
