@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1803,
-    "last_updated": "2026-09-26T17:02:31.329210+00:00",
-    "total_topics_learned": 1803
+    "total_runs": 1804,
+    "last_updated": "2026-09-26T17:05:40.416584+00:00",
+    "total_topics_learned": 1804
   },
   "entries": [
     {
@@ -86171,6 +86171,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-26T17:02:31.329189+00:00",
       "run_number": 1803
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range querying in real-time geographic information systems and spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent spatial index structure using compare-and-swap (CAS) primitives and hazard pointers. It ensures safe, lock-free multidimensional bounding box insertions and range searches across multiple CPU cores without global locks.",
+      "key_points": [
+        "Utilizes atomic bounding-box-adjusting and node-splitting CAS primitives for concurrent tree modifications",
+        "Implements hazard pointers for safe memory reclamation of dynamically split spatial nodes",
+        "Enables high-throughput spatial indexing and parallel geometric range queries for multi-core systems",
+        "Prevents race conditions in real-time geographic information systems and spatial database engines"
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation in a lock-free R-Tree",
+        "correct": "bool split_node(std::atomic<Node*>& parent, Node* old_node, Node* new_child) {\n    Node* current = parent.load();\n    // Construct new expanded bounding box and apply CAS\n    return parent.compare_exchange_weak(current, updated_node);\n}",
+        "wrong": "Node* current = parent.load();\n// Mutating old_node without synchronization or checking current state\nold_node->insert(new_child);\nparent.store(old_node);"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted spatial nodes with hazard pointers, leading to use-after-free bugs",
+        "Relying on coarse-grained global locks during node splits, reducing multi-core concurrency",
+        "Ignoring the ABA problem when updating child pointer references via CAS primitives"
+      ],
+      "best_practices": [
+        "Keep critical sections inside atomic loops as short as possible to minimize CAS retry contention",
+        "Pair every dynamic node allocation and splitting action with robust hazard pointer domain tracking",
+        "Ensure bounding box expansion logic is idempotent to handle failed concurrent CAS attempts gracefully"
+      ],
+      "when_to_use": "Use when building high-performance spatial databases, real-time GIS platforms, or location-based services requiring intense multi-threaded geometric range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard lock-based spatial indices provide sufficient throughput without added implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits atomically in a lock-free R-Tree without blocking concurrent readers?",
+          "answer": "By using CAS primitives to swap out parent pointers to the newly split child nodes atomically, combined with hazard pointers to keep old nodes valid for active readers until they finish traversal."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent spatial indices like an R-Tree?",
+          "answer": "They solve the safe memory reclamation problem, ensuring that threads reading or traversing spatial bounding boxes are not abruptly deallocated by other threads executing concurrent node splits or deletions."
+        }
+      ],
+      "related_topics": [
+        "lock-free LRU Cache",
+        "hazard pointer memory reclamation",
+        "spatial indexing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T17:05:40.416562+00:00",
+      "run_number": 1804
     }
   ]
 }
