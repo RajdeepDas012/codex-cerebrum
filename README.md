@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1793** |
-| Last Updated | `2026-09-26T13:13:17.709461+00:00` |
-| Dataset Size | `1793 entries` |
+| Total Topics Learned | **1794** |
+| Last Updated | `2026-09-26T13:17:23.637221+00:00` |
+| Dataset Size | `1794 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 858 |
+| data-structures | 859 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-allocating and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set searching and multi-core concurrent map indexing in real-time distributed in-memory caches and high-concurrency transactional database engines`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic hyperplane-splitting and coordinate-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial point indexing in real-time robotics perception systems and distributed point cloud processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing acceleration and multi-core collision detection in real-time computer graphics rendering engines and physics simulation systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core real-time telemetry tracking in distributed network traffic monitoring and large-scale data stream analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-compressing and child-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent Linux kernel routing tables`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjusting-path CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core localized searching in real-time in-memory databases and concurrent caching layers`
 
 <!-- STATS_END -->
 
