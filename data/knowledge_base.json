@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1835,
-    "last_updated": "2026-09-26T22:44:40.331105+00:00",
-    "total_topics_learned": 1835
+    "total_runs": 1836,
+    "last_updated": "2026-09-26T22:47:49.137309+00:00",
+    "total_topics_learned": 1836
   },
   "entries": [
     {
@@ -87691,6 +87691,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T22:44:40.331088+00:00",
       "run_number": 1835
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic bounding-box-merging and tree-refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection querying and multi-core spatial acceleration in real-time computer graphics ray tracing engines and concurrent physics simulation platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) enables multi-core spatial acceleration for ray tracing and collision detection without global locks. It relies on atomic compare-and-swap (CAS) primitives for dynamic updates and hazard pointers to safely manage memory reclamation in high-throughput rendering and physics pipelines.",
+      "key_points": [
+        "Utilizes atomic bounding-box-merging and tree-refitting CAS primitives to allow concurrent node modifications without blocking reader threads.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of tree nodes actively traversed by concurrent worker threads.",
+        "Accelerates real-time ray-triangle intersection queries and dynamic physics simulations across multiple CPU cores simultaneously.",
+        "Maintains lock-free progress guarantees, avoiding thread starvation and deadlock conditions common in coarse-grained locking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bounding box node update for a concurrent BVH tree.",
+        "correct": "bool update_bvh_node(std::atomic<BBox*>& node_ptr, BBox* old_box, BBox* new_box) {\n    return node_ptr.compare_exchange_weak(old_box, new_box, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "BBox* current = node_ptr.load();\nif (current == old_box) {\n    node_ptr.store(new_box);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal nodes with hazard pointers, leading to use-after-free bugs during concurrent tree refitting.",
+        "Using sequential consistency everywhere, introducing unnecessary memory barrier overhead that degrades multi-core scaling performance."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for all parent and child nodes prior to evaluating ray intersections or executing refitting sweeps.",
+        "Batch tree refitting updates where possible to minimize CAS contention across dense worker thread pools.",
+        "Use relaxed memory orderings for non-dependent loads and reserve acquire-release semantics specifically for pointer modifications."
+      ],
+      "when_to_use": "Use when building real-time ray tracing engines or interactive physics simulations requiring high-frequency spatial queries and frequent dynamic geometry modifications across many CPU cores.",
+      "when_not_to_use": "Avoid in static scenes where a read-only BVH constructed once can be trivially shared via simple pointers, or in single-threaded environments where atomic overhead is unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent updates in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading, ensuring that a node slated for deletion or replacement via CAS is only freed after no active thread holds a reference to it."
+        },
+        {
+          "question": "Why is compare-and-swap (CAS) preferred over mutex locks in high-throughput ray tracing spatial accelerators?",
+          "answer": "CAS allows optimistic concurrency control, enabling multiple threads to query or traverse different branches simultaneously without serializing execution behind a shared global lock."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Hazard Pointers and Memory Management",
+        "Lock-Free Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-26T22:47:49.137288+00:00",
+      "run_number": 1836
     }
   ]
 }
