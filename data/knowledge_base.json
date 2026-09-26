@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1771,
-    "last_updated": "2026-09-26T02:06:52.472317+00:00",
-    "total_topics_learned": 1771
+    "total_runs": 1772,
+    "last_updated": "2026-09-26T07:23:40.451054+00:00",
+    "total_topics_learned": 1772
   },
   "entries": [
     {
@@ -84660,6 +84660,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-26T02:06:52.472299+00:00",
       "run_number": 1771
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core schedule overlap evaluation in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Interval Tree using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables safe multi-core interval tracking and temporal range queries without blocking threads, crucial for modern real-time scheduling applications.",
+      "key_points": [
+        "Utilizes atomic overlap-detecting and endpoint-updating CAS operations to safely modify node boundaries without global locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe-guard memory from premature deallocation during concurrent access.",
+        "Optimizes multi-core schedule overlap evaluation, allowing massive throughput in resource allocation engines.",
+        "Maintains internal structural invariants through fine-grained atomic state transitions rather than coarse-grained synchronization."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic pointer updates for interval insertions using CAS primitives.",
+        "correct": "bool insert_interval(std::atomic<Node*>& root, Interval val) {\n    Node* newNode = new Node(val);\n    while (true) {\n        Node* current = root.load();\n        newNode->left = current;\n        if (root.compare_exchange_weak(current, newNode)) return true;\n    }\n}",
+        "wrong": "bool insert_interval(Node*& root, Interval val) {\n    Node* newNode = new Node(val);\n    newNode->left = root;\n    root = newNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect read operations with hazard pointers, leading to use-after-free vulnerabilities during concurrent node deletion or splitting.",
+        "Failing to handle the ABA problem during concurrent endpoint updates on tree nodes."
+      ],
+      "best_practices": [
+        "Always register active pointers in a thread-local hazard pointer domain before traversing tree nodes.",
+        "Keep atomic retry loops compact and bounded to minimize CPU cache contention under high contention rates."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent, low-latency modifications and querying of overlapping temporal intervals or ranges without locking bottlenecks.",
+      "when_not_to_use": "Avoid when data structures are mostly accessed by a single thread or when standard coarse-grained locking provides sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free Interval Tree?",
+          "answer": "Hazard pointers allow threads to publish which memory nodes they are currently accessing, ensuring that a reclaimer thread delays physical memory deallocation until no active reader holds a reference to that node."
+        },
+        {
+          "question": "Why are standard non-atomic updates insufficient for managing interval endpoints in high-concurrency environments?",
+          "answer": "Standard non-atomic updates suffer from race conditions where interleaved reads and writes lead to lost updates, corrupted max-endpoint invariants, and inconsistent query results."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Lock-Free Bw-Tree",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-26T07:23:40.451035+00:00",
+      "run_number": 1772
     }
   ]
 }
