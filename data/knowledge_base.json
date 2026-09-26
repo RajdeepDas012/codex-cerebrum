@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1777,
-    "last_updated": "2026-09-26T07:39:21.672180+00:00",
-    "total_topics_learned": 1777
+    "total_runs": 1778,
+    "last_updated": "2026-09-26T07:42:29.698500+00:00",
+    "total_topics_learned": 1778
   },
   "entries": [
     {
@@ -84944,6 +84944,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-26T07:39:21.672163+00:00",
       "run_number": 1777
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-based key-value indexing and multi-core database range querying in real-time transactional storage engines and concurrent file system implementations",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B-Tree utilizing atomic compare-and-swap (CAS) primitives for node splitting and structural merging. Hazard pointers are employed for safe memory reclamation, enabling high-throughput multi-core index operations without traditional latch coupling bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage concurrent node splits and structural merges without coarse-grained locking.",
+        "Employs hazard pointers to protect nodes currently accessed by reader threads, safely deferring memory deallocation until no threads reference them.",
+        "Maintains balanced tree invariants dynamically under heavy multi-threaded insert, delete, and range query workloads.",
+        "Eliminates latch crabbing and deadlock vulnerabilities common in traditional lock-based B-Tree implementations."
+      ],
+      "code_example": {
+        "language": "pseudo-code",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers during a concurrent tree traversal",
+        "correct": "void* acquire_node_safely(atomic_ptr* target_node, hazard_pointer_record* hp) {\n    while (true) {\n        void* node = atomic_load(target_node);\n        hazard_pointer_set(hp, node);\n        if (atomic_load(target_node) == node) {\n            return node;\n        }\n    }\n}",
+        "wrong": "void* unsafe_acquire(atomic_ptr* target_node) {\n    return atomic_load(target_node); // Node could be freed and reused before dereferencing\n}"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before validating pointer stability, leading to use-after-free race conditions.",
+        "Neglecting the ABA problem during structural modification descriptor CAS operations on child pointers."
+      ],
+      "best_practices": [
+        "Always wrap memory reclamation in a thread-local deferred retirement list processed via hazard pointer scan cycles.",
+        "Use multi-word CAS or explicit descriptor nodes to make complex operations like node splits and merges atomic."
+      ],
+      "when_to_use": "High-concurrency database indexing systems where range queries and write-heavy workloads demand lock-free horizontal scalability.",
+      "when_not_to_use": "Single-threaded or low-concurrency environments where the complexity of lock-free primitives and hazard management outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, blocking the memory allocator from recycling those nodes until no thread holds a hazard pointer referencing them."
+        },
+        {
+          "question": "What is the primary challenge when performing an atomic node split in a lock-free B-Tree, and how is it resolved?",
+          "answer": "The challenge is updating the parent pointer and child pointers simultaneously. This is resolved using cooperation descriptors or multi-step CAS operations where other threads can help complete an unfinished split."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Management",
+        "Lock-free Concurrent Skip Lists",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-26T07:42:29.698478+00:00",
+      "run_number": 1778
     }
   ]
 }
