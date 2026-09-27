@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1910** |
-| Last Updated | `2026-09-27T22:07:30.250120+00:00` |
-| Dataset Size | `1910 entries` |
+| Total Topics Learned | **1911** |
+| Last Updated | `2026-09-27T22:10:41.428424+00:00` |
+| Dataset Size | `1911 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 953 |
+| data-structures | 954 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and prefix-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core string prefix matching in real-time software-defined networking switches and concurrent cloud packet classification engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence relation querying and multi-core connected components analysis in real-time social network graph processing and concurrent compiler type inference engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-ranking and doubling-algorithm CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core deletion-supported set filtering in real-time distributed caching layers and concurrent network security packet inspection systems`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority management in real-time operating system kernels and concurrent event-driven processing engines`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic node-splitting and leaf-sibling-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index lookups in real-time relational database storage engines and concurrent in-memory key-value stores`
 
 <!-- STATS_END -->
 

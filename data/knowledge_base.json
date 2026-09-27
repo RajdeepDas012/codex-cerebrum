@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1910,
-    "last_updated": "2026-09-27T22:07:30.250120+00:00",
-    "total_topics_learned": 1910
+    "total_runs": 1911,
+    "last_updated": "2026-09-27T22:10:41.428424+00:00",
+    "total_topics_learned": 1911
   },
   "entries": [
     {
@@ -91237,6 +91237,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-09-27T22:07:30.250096+00:00",
       "run_number": 1910
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and prefix-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core string prefix matching in real-time software-defined networking switches and concurrent cloud packet classification engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree enables high-throughput, thread-safe prefix lookups and insertions using atomic operations like compare-and-swap (CAS) combined with hazard pointers for safe memory reclamation. It avoids global locking bottlenecks, making it ideal for multi-core packet classification and IP routing engines.",
+      "key_points": [
+        "Uses atomic child-pointer-swapping and prefix-node-splitting CAS primitives to manage structural modifications without mutex locks.",
+        "Employs hazard pointers to safely track and reclaim memory reclaimed during dynamic node creation and prefix splitting.",
+        "Optimizes memory layout and search paths for variable-length bit strings or IP network prefixes.",
+        "Ensures linearizability across concurrent insertions, deletions, and longest-prefix-match queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer swapping for adding a child node in a lock-free radix tree structure.",
+        "correct": "bool RadixNode::compare_exchange_child(char c, RadixNode* expected, RadixNode* desired) {\n    return children[c].compare_exchange_strong(expected, desired, std::memory_order_acq_rel);\n}",
+        "wrong": "bool RadixNode::unsafe_add_child(char c, RadixNode* desired) {\n    children[c] = desired;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child nodes with hazard pointers before traversing, leading to use-after-free bugs.",
+        "Improper memory ordering constraints during atomic child pointer updates, causing stale visibility across threads."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers with the thread-local hazard pointer manager before reading child nodes.",
+        "Design prefix-splitting routines to be idempotent or retry-safe under high contention CAS loops."
+      ],
+      "when_to_use": "High-concurrency systems requiring frequent prefix searches and updates, such as software-defined networking (SDN) routing tables.",
+      "when_not_to_use": "Single-threaded applications or low-throughput environments where standard locked trees offer simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free radix tree where nodes are dynamically split?",
+          "answer": "By utilizing hazard pointers to ensure that reader threads safely register nodes they are currently visiting, deferring physical deallocation until no active hazard pointers reference the target node."
+        },
+        {
+          "question": "What is the primary synchronization challenge when performing concurrent prefix-node-splitting using CAS?",
+          "answer": "Ensuring that concurrent writer threads attempting to modify or split the same parent node coordinate correctly via atomic CAS retries so that no inserted child pointers are lost."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Cuckoo Filter",
+        "Lock-Free B+ Tree"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-27T22:10:41.428403+00:00",
+      "run_number": 1911
     }
   ]
 }
