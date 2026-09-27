@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1860,
-    "last_updated": "2026-09-27T01:55:58.880758+00:00",
-    "total_topics_learned": 1860
+    "total_runs": 1861,
+    "last_updated": "2026-09-27T01:59:07.029393+00:00",
+    "total_topics_learned": 1861
   },
   "entries": [
     {
@@ -88872,6 +88872,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T01:55:58.880734+00:00",
       "run_number": 1860
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and self-balancing-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput recently-accessed-frequency searching and multi-core self-adjusting dictionary management in real-time in-memory caching systems and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Splay Tree leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-performance self-adjusting dictionary operations where frequently accessed elements migrate closer to the root without locking the entire structure.",
+      "key_points": [
+        "Utilizes atomic root-splaying and rotation primitives to restructure the tree without blocking concurrent threads.",
+        "Employs hazard pointers to safely manage memory reclamation for nodes unlinked or rearranged during splay operations.",
+        "Optimizes search performance for skewed access patterns by moving recently queried nodes toward the top asynchronously.",
+        "Ensures thread safety across multi-core systems by avoiding coarse-grained locks during restructuring phases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual atomic root-splaying operation via CAS in a concurrent context.",
+        "correct": "bool splay_rotate(std::atomic<Node*>& root, Node* parent, Node* child) {\n    Node* expected = parent;\n    return root.compare_exchange_strong(expected, child);\n}",
+        "wrong": "Node* splay_rotate(Node* parent, Node* child) {\n    parent->left = child->right; // Non-atomic update leading to data races\n    return child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, causing use-after-free bugs during concurrent rotations.",
+        "Attempting to perform multi-node structural modifications in a single CAS operation instead of step-by-step validation."
+      ],
+      "best_practices": [
+        "Retire nodes through a deferred hazard pointer reclamation queue after unlinking them during splay restructuring.",
+        "Break down complex multi-parent rotation sequences into smaller, atomic, validate-and-retry sub-steps."
+      ],
+      "when_to_use": "Use when workloads exhibit high temporal locality with skewed access patterns and require non-blocking, multi-threaded dictionary searches and updates.",
+      "when_not_to_use": "Avoid in uniform random access patterns where splaying overhead outweighs its benefits, or when strict worst-case latency bounds are mandatory over amortized performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when concurrent threads are modifying pointers during a splay rotation?",
+          "answer": "By acquiring hazard pointers for all nodes involved in the rotation path before executing CAS instructions to ensure they are not freed prematurely."
+        },
+        {
+          "question": "Why is implementing a lock-free splay tree significantly harder than a lock-free stack or queue?",
+          "answer": "Because splay trees require structural modifications across multiple parent-child pointers simultaneously, which cannot be atomically changed in a single CAS instruction."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free AVL Trees",
+        "Concurrent Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T01:59:07.029369+00:00",
+      "run_number": 1861
     }
   ]
 }
