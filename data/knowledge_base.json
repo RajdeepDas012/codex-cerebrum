@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1871,
-    "last_updated": "2026-09-27T08:22:49.559008+00:00",
-    "total_topics_learned": 1871
+    "total_runs": 1872,
+    "last_updated": "2026-09-27T08:25:57.582992+00:00",
+    "total_topics_learned": 1872
   },
   "entries": [
     {
@@ -89390,6 +89390,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T08:22:49.558987+00:00",
       "run_number": 1871
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-merging and binomial-tree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Binomial Heap leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput, thread-safe mergeable priority queue operations without mutex contention, which is essential for multi-core real-time schedulers and event simulators.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for root-merging and binomial-tree-linking to manage structural changes without locks.",
+        "Employs hazard pointers for safe memory reclamation, preventing use-after-free hazards under concurrent modifications.",
+        "Optimizes mergeable priority queue operations (union, insert, extract-min) for parallel execution paths.",
+        "Ensures thread-safe task scheduling and event dispatching in multi-core operating systems and simulation frameworks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe root list merging using atomic CAS operations and hazard pointers.",
+        "correct": "bool link_binomial_trees(std::atomic<Node*>& root_ptr, Node* new_root) {\n    Node* old_root = root_ptr.load();\n    do {\n        new_root->next = old_root;\n    } while (!root_ptr.compare_exchange_weak(old_root, new_root));\n    return true;\n}",
+        "wrong": "bool link_binomial_trees(Node*& root_ptr, Node* new_root) {\n    mutex.lock();\n    new_root->next = root_ptr;\n    root_ptr = new_root;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register nodes with hazard pointers before traversing shared pointer links, leading to race conditions and memory corruption.",
+        "Using strong CAS loops incorrectly without updating expected values on failure, causing infinite spin loops under high thread contention."
+      ],
+      "best_practices": [
+        "Always wrap dynamic node access in hazard pointer protection domains to safely defer reclamation until concurrent readers finish.",
+        "Minimize critical sections in atomic update loops by keeping pointer re-linking logic concise and side-effect free."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform merge, insert, and extract-min operations on priority queues under high contention without blocking.",
+      "when_not_to_use": "Avoid when standard single-threaded performance or simple mutex-locked structures suffice due to low concurrency requirements and overhead constraints.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free binomial heap?",
+          "answer": "Hazard pointers track which threads are actively reading specific nodes, deferring memory deallocation until no thread holds a hazard pointer referencing that node."
+        },
+        {
+          "question": "What is the primary advantage of a binomial heap over a binary heap in concurrent environments?",
+          "answer": "Binomial heaps support efficient O(log n) merge operations of two heaps, making them superior for scenarios requiring frequent queue merging and parallel task pooling."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T08:25:57.582974+00:00",
+      "run_number": 1872
     }
   ]
 }
