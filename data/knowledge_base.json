@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1913,
-    "last_updated": "2026-09-27T22:16:57.538572+00:00",
-    "total_topics_learned": 1913
+    "total_runs": 1914,
+    "last_updated": "2026-09-27T22:20:06.300486+00:00",
+    "total_topics_learned": 1914
   },
   "entries": [
     {
@@ -91378,6 +91378,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T22:16:57.538552+00:00",
       "run_number": 1913
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversing and state-transition-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary scanning in real-time intrusion detection systems and concurrent log analysis engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent string-matching automaton that allows multiple threads to simultaneously traverse states, update transitions, and scan text streams for dictionaries of patterns without lock contention. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it delivers exceptional throughput and safety in high-concurrency environments.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to construct and mutate state transitions and failure links safely across multiple threads.",
+        "Employs hazard pointers to defer memory reclamation of deleted tree nodes or states, preventing ABA problems and use-after-free race conditions.",
+        "Enables simultaneous multi-pattern dictionary matching across multiple CPU cores, making it ideal for high-throughput stream processing.",
+        "Requires careful ordering of memory fences to ensure that state-transition pointers and failure links are visible correctly before dependent reads occur."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic pointer update for an Aho-Corasick state transition.",
+        "correct": "bool update_transition(State* current, char c, State* next, HazardPointer& hp) {\n    while (true) {\n        State* old_next = current->transitions[c].load(std::memory_order_acquire);\n        hp.protect(old_next);\n        if (current->transitions[c].load(std::memory_order_relaxed) != old_next) continue;\n        if (old_next != nullptr) break; // Transition already exists\n        if (current->transitions[c].compare_exchange_weak(old_next, next, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool update_transition(State* current, char c, State* next) {\n    // Non-atomic modification leading to data races\n    if (current->transitions[c] == nullptr) {\n        current->transitions[c] = next;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect read nodes with hazard pointers before traversing failure links, resulting in use-after-free bugs.",
+        "Using incorrect memory ordering constraints (e.g., relaxed instead of acquire/release), causing stale transition reads."
+      ],
+      "best_practices": [
+        "Always wrap node access patterns in hazard pointer protection blocks prior to reading child transitions or failure links.",
+        "Batch retired node deletions using thread-local reclamation lists to minimize atomic overhead in high-frequency loops."
+      ],
+      "when_to_use": "When you need to scan massive text streams against thousands of static patterns concurrently across multiple threads with strict latency requirements.",
+      "when_not_to_use": "When the pattern dictionary updates constantly or when the concurrent throughput requirements can be easily satisfied by simpler thread-per-file partitioning.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating state transitions atomically in a concurrent Aho-Corasick automaton?",
+          "answer": "By using hazard pointers to protect nodes currently under traversal, or by incorporating version tags into tagged pointer CAS operations."
+        },
+        {
+          "question": "Why are failure links particularly difficult to implement in a lock-free structure?",
+          "answer": "Because failure links form a directed graph that can be updated concurrently while reader threads are traversing them, requiring careful atomic updates and safe memory reclamation to avoid dangling pointers."
+        }
+      ],
+      "related_topics": [
+        "lock-free radix tree",
+        "hazard pointer memory reclamation",
+        "concurrent string matching algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T22:20:06.300464+00:00",
+      "run_number": 1914
     }
   ]
 }
