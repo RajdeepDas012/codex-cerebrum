@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1909,
-    "last_updated": "2026-09-27T22:04:00.421073+00:00",
-    "total_topics_learned": 1909
+    "total_runs": 1910,
+    "last_updated": "2026-09-27T22:07:30.250120+00:00",
+    "total_topics_learned": 1910
   },
   "entries": [
     {
@@ -91190,6 +91190,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T22:04:00.421051+00:00",
       "run_number": 1909
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence relation querying and multi-core connected components analysis in real-time social network graph processing and concurrent compiler type inference engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Disjoint-Set data structure using atomic Compare-And-Swap (CAS) operations for union and find routines. It integrates atomic path-compression and rank-balancing with hazard pointer memory management to achieve high-throughput parallel execution without global locks.",
+      "key_points": [
+        "Utilizes atomic parent pointers and ranks to allow concurrent reads and updates across multiple threads.",
+        "Implements lock-free path-compression using CAS to flatten tree structures during find operations safely.",
+        "Employs rank-balancing combined with retry loops on CAS failures to handle structural conflicts deterministically.",
+        "Integrates hazard pointers to safely manage node memory reclamation and prevent use-after-free bugs during concurrent traversals."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic Find operation with lock-free path compression using CAS primitives.",
+        "correct": "struct Node { std::atomic<Node*> parent; std::atomic<int> rank; };\nNode* find(Node* node, HazardPointerList& hp_list) {\n    Node* curr = node;\n    while (true) {\n        Node* p = hp_list.protect(curr->parent);\n        if (p == curr) return curr;\n        Node* pp = hp_list.protect(p->parent);\n        // Attempt path compression via CAS\n        curr->parent.compare_exchange_weak(p, pp);\n        curr = p;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic, prone to data races and broken chains\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during pointer traversal, leading to memory corruption if another thread frees the node.",
+        "Attempting path-compression with standard assignments instead of atomic CAS, resulting in lost updates and infinite loops."
+      ],
+      "best_practices": [
+        "Always re-read and validate atomic pointers within a loop until the CAS operation successfully applies the structural modification.",
+        "Combine rank updates with parent pointer adjustments carefully to ensure that tree heights remain bounded under heavy thread contention."
+      ],
+      "when_to_use": "Use this data structure when multiple threads must simultaneously perform find and union operations on massive graphs or sets, such as in parallel connected components algorithms or type unification engines.",
+      "when_not_to_use": "Avoid this complex implementation in single-threaded contexts or low-concurrency environments where standard pointer-based Disjoint-Sets with simple path compression offer superior performance with negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing lock-free pointer updates during path compression?",
+          "answer": "By using hazard pointers to protect nodes currently involved in a traversal, or by packing a version counter alongside the pointer into a double-word atomic CAS structure."
+        },
+        {
+          "question": "Why is rank-balancing more difficult to implement lock-free compared to standard sequential Union-Find?",
+          "answer": "Because concurrent union operations can attempt to modify the roots and ranks of overlapping trees simultaneously, requiring fine-grained CAS loops to resolve contention without locking."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Graph Processing Algorithms",
+        "Concurrent Type Inference Systems"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-09-27T22:07:30.250096+00:00",
+      "run_number": 1910
     }
   ]
 }
