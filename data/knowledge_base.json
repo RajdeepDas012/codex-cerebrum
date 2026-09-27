@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1917,
-    "last_updated": "2026-09-27T22:29:30.469419+00:00",
-    "total_topics_learned": 1917
+    "total_runs": 1918,
+    "last_updated": "2026-09-27T22:32:38.782965+00:00",
+    "total_topics_learned": 1918
   },
   "entries": [
     {
@@ -91568,6 +91568,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T22:29:30.469398+00:00",
       "run_number": 1917
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time in-memory key-value stores and concurrent database indexing systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) primitives and tower-height-scaling to maintain probabilistic logarithmic search performance without global locks. By incorporating hazard pointers for memory reclamation, it safely manages concurrent node insertions, deletions, and multi-core range scans without incurring the heavy contention overhead of traditional locking mechanisms.",
+      "key_points": [
+        "Uses atomic forward-pointer splicing to link new nodes into multiple height levels lock-free.",
+        "Employs hazard pointers to defer the reclamation of deleted nodes until active threads safely finish reading them.",
+        "Implements atomic tower height scaling and mark bits on forward pointers to coordinate concurrent logical and physical deletions.",
+        "Delivers expected O(log n) time complexity for search, insertion, and deletion operations across multi-core systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS and hazard pointers for safe memory management.",
+        "correct": "bool insert(const Key& key, const Value& val) {\n    Node* preds[MAX_LEVEL];\n    Node* succs[MAX_LEVEL];\n    while (true) {\n        if (find(key, preds, succs)) return false;\n        Node* newNode = new Node(key, val, randomHeight());\n        if (preds[0]->casNext(0, succs[0], newNode)) {\n            // Splice remaining levels...\n            return true;\n        }\n        delete newNode;\n    }\n}",
+        "wrong": "bool insert(const Key& key, const Value& val) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Using a mutex lock defeats the lock-free design and degrades multi-core throughput\n    return head->insertUnsafe(key, val);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to mark nodes as deleted before physically unlinking them, leading to race conditions during concurrent scans.",
+        "Reclaiming deleted node memory immediately without hazard pointers or epoch-based reclamation, causing use-after-free crashes."
+      ],
+      "best_practices": [
+        "Always validate that predecessor and successor pointers have not changed via intermediate modifications before executing a CAS insertion.",
+        "Ensure hazard pointer protection windows are kept as short as possible to minimize memory reclamation latency."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory key-value stores or database indexes that require frequent concurrent ordered range queries and low-latency updates.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when workloads consist entirely of single-threaded operations where simple lock-based structures have lower constant overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions and deletions targeting the same node height level in a lock-free skip list?",
+          "answer": "By using mark bits on forward pointers to logically flag deleted nodes and executing atomic CAS operations to splice them out physically."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing nodes in a lock-free skip list?",
+          "answer": "Hazard pointers prevent other threads from accessing a node's memory via stale pointers after it has been logically and physically removed by a concurrent thread."
+        }
+      ],
+      "related_topics": [
+        "lock-free Bw-Tree",
+        "hazard pointer memory reclamation",
+        "concurrent priority queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-27T22:32:38.782945+00:00",
+      "run_number": 1918
     }
   ]
 }
