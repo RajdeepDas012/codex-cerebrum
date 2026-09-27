@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1851,
-    "last_updated": "2026-09-27T01:27:40.184186+00:00",
-    "total_topics_learned": 1851
+    "total_runs": 1852,
+    "last_updated": "2026-09-27T01:30:48.655198+00:00",
+    "total_topics_learned": 1852
   },
   "entries": [
     {
@@ -88447,6 +88447,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T01:27:40.184164+00:00",
       "run_number": 1851
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and node-promotion CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency-based eviction and multi-core high-frequency data retrieval in real-time in-memory caching layers and distributed database execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and concurrency control mechanisms required to build a lock-free Least Frequently Used (LFU) cache. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures high throughput, safe memory reclamation, and consistent frequency-based eviction across multiple concurrent cores without coarse-grained locking.",
+      "key_points": [
+        "Utilizes atomic operations like CAS to modify frequency lists and promote cache nodes without blocking threads.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent use-after-free bugs during concurrent node eviction and restructuring.",
+        "Maintains multiple doubly-linked frequency buckets linked atomically to track usage counts efficiently.",
+        "Optimizes multi-core read and write throughput by avoiding global locks on the cache lookup path."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node promotion and frequency list splicing using a CAS loop.",
+        "correct": "bool promote_node(Node* node, FrequencyList* old_list, FrequencyList* new_list) {\n    Node* head = new_list->head.load(std::memory_order_relaxed);\n    do {\n        node->next = head;\n    } while (!new_list->head.compare_exchange_weak(head, node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool promote_node(Node* node, FrequencyList* old_list, FrequencyList* new_list) {\n    std::lock_guard<std::mutex> lock(global_cache_mutex);\n    old_list->remove(node);\n    new_list->add(node);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect memory reclamation with hazard pointers, leading to race conditions where evicted nodes are freed while another thread accesses them.",
+        "Using heavy global locks for frequency bucket updates, which severely limits multi-core scalability."
+      ],
+      "best_practices": [
+        "Stagger hazard pointer acquisition before dereferencing any shared node pointers in concurrent lookup paths.",
+        "Keep atomic retry loops compact to minimize contention overhead during high-frequency node promotions."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory caching layers on multi-core systems where read and write contention for frequency-based eviction policies is a major bottleneck.",
+      "when_not_to_use": "Avoid when simple thread-safe wrappers (like a mutex-protected std::unordered_map) suffice due to low concurrency requirements or simpler cache eviction policies like FIFO.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when atomically updating node pointers in a lock-free LFU cache?",
+          "answer": "By using tagged pointers (version counters combined with memory addresses) or hazard pointers combined with epoch-based reclamation to ensure nodes are not recycled mid-operation."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-performance concurrent LFU caches?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the pause times or memory overhead typically associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-data-structures",
+        "concurrent-hash-map",
+        "memory-reclamation-algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T01:30:48.655175+00:00",
+      "run_number": 1852
     }
   ]
 }
