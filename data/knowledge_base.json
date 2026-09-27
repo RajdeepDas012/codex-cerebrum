@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1883,
-    "last_updated": "2026-09-27T14:13:51.367498+00:00",
-    "total_topics_learned": 1883
+    "total_runs": 1884,
+    "last_updated": "2026-09-27T14:17:11.334329+00:00",
+    "total_topics_learned": 1884
   },
   "entries": [
     {
@@ -89960,6 +89960,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T14:13:51.367479+00:00",
       "run_number": 1883
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-matrix-updating and hash-bucket-incrementing CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core approximate event tracking in real-time network traffic analysis pipelines and concurrent telemetry monitoring systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Count-Min Sketch data structure, utilizing atomic operations for frequency updates and hash bucket management. It ensures safe memory reclamation via hazard pointers, enabling high-throughput approximate stream frequency estimation in multi-core environments.",
+      "key_points": [
+        "Employs lock-free atomic Compare-And-Swap (CAS) primitives for concurrent frequency-matrix-updating and hash-bucket-incrementing.",
+        "Utilizes hazard pointers to safely manage and reclaim memory in a multi-threaded data stream processing context.",
+        "Provides probabilistic frequency estimation with bounded relative error for heavy-hitter stream mining.",
+        "Eliminates global lock contention to maximize throughput across multi-core telemetry pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency increments on the Count-Min Sketch matrix using CAS operations.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCountMinSketch {\n    std::vector<std::vector<std::atomic<uint32_t>>> table;\n    size_t depth, width;\npublic:\n    void increment(const char* key) {\n        for (size_t i = 0; i < depth; ++i) {\n            size_t col = hash(key, i) % width;\n            uint32_t current = table[i][col].load(std::memory_order_relaxed);\n            while (!table[i][col].compare_exchange_weak(current, current + 1,\n                std::memory_order_release, std::memory_order_relaxed)) {}\n        }\n    }\n};",
+        "wrong": "#include <vector>\nclass UnsafeCMS {\n    std::vector<std::vector<uint32_t>> table;\n    void increment(const char* key) {\n        // Race condition: non-atomic read-modify-write on shared table cells\n        table[0][hash(key) % width]++;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic increments on shared frequency counters, leading to lost updates under multi-threaded concurrency.",
+        "Failing to use relaxed memory orders appropriately where synchronization is unneeded, reducing overall throughput."
+      ],
+      "best_practices": [
+        "Apply appropriate memory ordering constraints (e.g., acquire-release semantics) around CAS loops to balance visibility and performance.",
+        "Integrate hazard pointers or epoch-based reclamation if dynamic resizing or structural updates are permitted."
+      ],
+      "when_to_use": "When processing high-velocity data streams across multiple CPU cores to track item frequencies and identify heavy hitters without the locking overhead of exact frequency tables.",
+      "when_not_to_use": "When exact frequency counts are strictly required or when memory footprint constraints prohibit fixed-size probabilistic arrays.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions and concurrent updates without locks in a Count-Min Sketch?",
+          "answer": "By mapping items through multiple independent hash functions to different rows and updating each bucket atomically using a CAS loop."
+        },
+        {
+          "question": "Why use hazard pointers in a concurrent streaming data structure?",
+          "answer": "Hazard pointers allow threads to safely announce which memory nodes they are currently accessing, preventing premature reclamation by other concurrent threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent HyperLogLog",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T14:17:11.334310+00:00",
+      "run_number": 1884
     }
   ]
 }
