@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1879,
-    "last_updated": "2026-09-27T13:58:46.953943+00:00",
-    "total_topics_learned": 1879
+    "total_runs": 1880,
+    "last_updated": "2026-09-27T14:02:04.378881+00:00",
+    "total_topics_learned": 1880
   },
   "entries": [
     {
@@ -89772,6 +89772,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T13:58:46.953926+00:00",
       "run_number": 1879
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-splitting and bit-stride-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a concurrent, lock-free radix tree tailored for high-throughput prefix matching and networking lookups. By leveraging atomic node splitting, bit-stride indexing, and hazard pointers, multiple threads can concurrently search, insert, and delete keys without mutual exclusion bottlenecks.",
+      "key_points": [
+        "Utilizes atomic node-splitting to handle concurrent structural modifications without acquiring global or node-level locks.",
+        "Employs bit-stride indexing to traverse compressed paths efficiently based on key prefixes.",
+        "Integrates hazard pointer memory reclamation to prevent premature deallocation of nodes actively traversed by other threads.",
+        "Achieves high-throughput IP routing table lookups and concurrent string/prefix matching in multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split pattern during concurrent insertion in a lock-free radix tree node.",
+        "correct": "bool insert_child(std::atomic<Node*>& slot, Node* new_node) {\n    Node* expected = slot.load(std::memory_order_acquire);\n    new_node->next = expected;\n    return slot.compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = slot.load();\nif (current == nullptr) {\n    slot.store(new_node); // Non-atomic check-then-act prone to race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to ABA problems or use-after-free bugs.",
+        "Over-allocating memory during node splitting without reusing node blocks, causing high garbage collection or allocator overhead."
+      ],
+      "best_practices": [
+        "Always wrap node reads in hazard pointer protection domains before dereferencing child pointers in lock-free traversals.",
+        "Keep bit-stride sizes balanced to optimize cache line utilization while minimizing tree depth."
+      ],
+      "when_to_use": "Use when building high-performance networking routers, concurrent databases requiring prefix-based range scans, or routing tables with heavy multi-threaded read/write workloads.",
+      "when_not_to_use": "Avoid when keys are densely packed with random distributions where a concurrent lock-free hash map offers simpler implementation and better O(1) performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent insertions that target the same internal node prefix in a lock-free radix tree?",
+          "answer": "By using atomic compare-and-swap (CAS) loops to update child pointer arrays or node-splitting descriptors, retrying on contention until the operation succeeds."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free tree reclamation?",
+          "answer": "Hazard pointers avoid the massive cache contention and atomic read-modify-write bottlenecks on a single reference count variable associated with shared nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash maps",
+        "Hazard pointer memory management",
+        "Prefix trees and Patricia tries"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-27T14:02:04.378862+00:00",
+      "run_number": 1880
     }
   ]
 }
