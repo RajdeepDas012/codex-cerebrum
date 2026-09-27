@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1848,
-    "last_updated": "2026-09-27T01:18:13.216654+00:00",
-    "total_topics_learned": 1848
+    "total_runs": 1849,
+    "last_updated": "2026-09-27T01:21:22.370267+00:00",
+    "total_topics_learned": 1849
   },
   "entries": [
     {
@@ -88306,6 +88306,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T01:18:13.216632+00:00",
       "run_number": 1848
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and prefix-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput string-keyed lookups and multi-core IP routing table management in real-time network packet inspection engines and concurrent DNS resolution caches",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent radix tree optimized for string keys and prefix-based routing. It leverages atomic Compare-And-Swap (CAS) operations for node allocation and path compression alongside hazard pointers to prevent memory reclamation races under heavy multi-threaded access.",
+      "key_points": [
+        "Utilizes atomic child-node allocation and prefix compression to minimize memory footprint and lock contention across threads.",
+        "Employs hazard pointer domains to safely defer reclamation of split or compressed nodes until all concurrent traversal threads have detached.",
+        "Ensures linearizable insertions and lookups for variable-length string keys without blocking critical paths.",
+        "Improves multi-core scalability for workloads requiring intensive prefix matching, such as IP routing tables and DNS caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node reading and CAS insertion for a lock-free radix tree child pointer.",
+        "correct": "bool insert_child(RadixNode* parent, const std::string& prefix, Value* val) {\n    HazardPointerGuard hg;\n    while (true) {\n        RadixNode* current_child = hg.protect(parent->child.load());\n        if (matches_prefix(current_child, prefix)) {\n            return update_existing(current_child, prefix, val);\n        }\n        RadixNode* new_node = allocate_node(prefix, val);\n        new_node->next.store(current_child);\n        if (parent->child.compare_exchange_weak(current_child, new_node)) {\n            return true;\n        }\n        free_node(new_node);\n    }\n}",
+        "wrong": "bool insert_child_unsafe(RadixNode* parent, const std::string& prefix, Value* val) {\n    // Missing hazard pointer protection and improper CAS retry logic leads to ABA problems and use-after-free\n    if (parent->child == nullptr) {\n        parent->child = new RadixNode(prefix, val);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, resulting in use-after-free bugs during node splitting or deletion.",
+        "Incorrectly handling edge cases where multiple threads attempt to compress or split the same prefix path simultaneously."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers in the thread-local hazard pointer record before dereferencing child pointers.",
+        "Keep atomic sections small and retry CAS loops efficiently using exponential backoff or thread yield primitives under high contention."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive string lookup structures like IP routing tables or DNS caches that experience heavy concurrent multi-core access.",
+      "when_not_to_use": "Avoid when keys are strictly fixed-size integers where simpler concurrent hash maps or lock-free arrays provide better cache locality and lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free radix tree?",
+          "answer": "Hazard pointers allow a thread to announce which node it is currently inspecting. When another thread wants to delete or unlink a node, it scans the active hazard pointer records and defers actual memory deallocation until no thread holds a reference to that node."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free prefix compression (node merging/splitting)?",
+          "answer": "Ensuring atomic transition of the pointer from the parent to the newly compressed/split subtree structure without letting concurrent readers miss intermediate states or access half-initialized nodes."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Tries",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T01:21:22.370245+00:00",
+      "run_number": 1849
     }
   ]
 }
