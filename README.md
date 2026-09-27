@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1877** |
-| Last Updated | `2026-09-27T13:45:50.679700+00:00` |
-| Dataset Size | `1877 entries` |
+| Total Topics Learned | **1878** |
+| Last Updated | `2026-09-27T13:51:15.551808+00:00` |
+| Dataset Size | `1878 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 928 |
+| data-structures | 929 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced dictionary searches and multi-core dynamic set operations in real-time in-memory databases and concurrent stream processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient item deletion support and multi-core duplicate detection in real-time distributed storage systems and concurrent caching networks`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list-splicing and hash-map-bucket-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core data retrieval in real-time in-memory storage engines and concurrent web application server caching layers`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core asynchronous event dispatching in real-time execution engines and concurrent job processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate elimination in real-time distributed key-value stores and concurrent caching eviction layers`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-merging and multi-pass-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent discrete event simulation engines`
 
 <!-- STATS_END -->
 
