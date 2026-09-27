@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1902,
-    "last_updated": "2026-09-27T18:43:34.552315+00:00",
-    "total_topics_learned": 1902
+    "total_runs": 1903,
+    "last_updated": "2026-09-27T18:46:43.275525+00:00",
+    "total_topics_learned": 1903
   },
   "entries": [
     {
@@ -90859,6 +90859,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T18:43:34.552293+00:00",
       "run_number": 1902
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and minimum-frequency-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core data retrieval in real-time in-memory database storage engines and concurrent web application content delivery networks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free LFU cache that utilizes atomic Compare-And-Swap (CAS) operations and hazard pointers. It enables high-throughput, thread-safe cache eviction and frequency updates without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic frequency-list-splicing CAS primitives to safely adjust node tiers under heavy concurrent contention.",
+        "Maintains a global minimum frequency tracker using lock-free atomic variables to guarantee $O(1)$ eviction candidate discovery.",
+        "Employs hazard pointer memory reclamation to safely free evicted cache nodes without risking use-after-free race conditions.",
+        "Achieves high-throughput concurrent data retrieval suitable for modern multi-core in-memory database engines and CDNs."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic update pattern for tracking minimum frequency in a lock-free LFU cache.",
+        "correct": "void update_min_freq(std::atomic<int>& min_freq, int new_freq) {\n    int current = min_freq.load();\n    while (new_freq < current && !min_freq.compare_exchange_weak(current, new_freq)) {\n        // Retry loop for lock-free update\n    }\n}",
+        "wrong": "void update_min_freq(std::atomic<int>& min_freq, int new_freq) {\n    if (new_freq < min_freq.load()) {\n        min_freq.store(new_freq); // Non-atomic check-then-act creates a race condition\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic check-then-act patterns when updating the minimum frequency pointer, leading to missed evictions.",
+        "Failing to protect freed nodes with hazard pointers, causing memory corruption in multi-threaded readers.",
+        "Over-relying on global locks for frequency list adjustments, destroying multi-core scalability."
+      ],
+      "best_practices": [
+        "Design frequency lists as lock-free doubly linked structures to allow localized CAS modifications.",
+        "Batch hazard pointer retirement lists to reduce overhead and improve cache locality during reclamation.",
+        "Profile contention hotspots on the minimum frequency tracker and consider segmented approaches if contention is excessive."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput, multi-threaded in-memory databases or CDNs where cache eviction frequency metrics must be updated concurrently without blocking read/write paths.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free programming and hazard pointers introduces unnecessary overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain an accurate O(1) minimum frequency pointer in a lock-free LFU cache without global locks?",
+          "answer": "By using atomic compare-and-swap (CAS) loops to optimistically update the minimum frequency when a new item is inserted with frequency 1, or when an item's frequency drops/rises and requires re-evaluating the lowest active bucket."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent node eviction in an LFU cache?",
+          "answer": "Hazard pointers prevent other threads from reading a cache node while it is being unlinked and reclaimed, avoiding use-after-free bugs in a lock-free memory management model."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip Graph",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent LRU Cache Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T18:46:43.275505+00:00",
+      "run_number": 1903
     }
   ]
 }
