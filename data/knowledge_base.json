@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1916,
-    "last_updated": "2026-09-27T22:26:22.413954+00:00",
-    "total_topics_learned": 1916
+    "total_runs": 1917,
+    "last_updated": "2026-09-27T22:29:30.469419+00:00",
+    "total_topics_learned": 1917
   },
   "entries": [
     {
@@ -91521,6 +91521,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T22:26:22.413933+00:00",
       "run_number": 1916
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box-partitioning and node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point searching and multi-core spatial nearest-neighbor querying in real-time computer graphics ray tracing engines and concurrent geospatial indexing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent KD-Tree enables multiple threads to perform high-throughput spatial searches, insertions, and nearest-neighbor queries simultaneously without global locks. By combining atomic primitives (CAS) for node linking and bounding-box partitioning with hazard pointers for safe memory management, it prevents race conditions and eliminates thread contention in multi-core applications.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free node insertion and tree restructuring.",
+        "Employs hazard pointers to safely manage memory reclamation in dynamic multi-threaded pointer-based trees.",
+        "Organizes multi-dimensional spatial data by recursively partitioning space using alternating axis-aligned bounding boxes.",
+        "Maximizes query throughput for multi-core processors in ray tracers and spatial indexing databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS during parallel insertion in a concurrent KD-Tree",
+        "correct": "bool insert_node(std::atomic<Node*>& current, Node* newNode) {\n    while (true) {\n        Node* expected = current.load(std::memory_order_acquire);\n        if (expected == nullptr) {\n            if (current.compare_exchange_strong(expected, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            // Traverse left or right based on spatial coordinates\n            break;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool insert_node(Node*& current, Node* newNode) {\n    mutex.lock();\n    if (current == nullptr) current = newNode;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted child nodes with hazard pointers, leading to ABA problems and use-after-free bugs.",
+        "Using coarse-grained locks during tree rebalancing operations, which bottlenecks multi-core concurrency."
+      ],
+      "best_practices": [
+        "Isolate thread-local memory retirement lists and batch hazard pointer scans to minimize memory fence overhead.",
+        "Pre-allocate node pools to reduce dynamic memory allocation contention under high thread concurrency."
+      ],
+      "when_to_use": "Use when high-throughput multi-dimensional point searches or nearest-neighbor queries must execute concurrently across multiple CPU cores with minimal latency.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with high write-frequency and frequent structural rebalancing, where simpler lock-based trees or linear scans are easier to maintain.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node updates in a lock-free KD-Tree?",
+          "answer": "Hazard pointers allow a thread to atomically register a pointer it is currently accessing, preventing other threads from reclaiming or freeing that memory until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is structural modification (like rebalancing) particularly difficult to implement in a lock-free KD-Tree?",
+          "answer": "Because multiple atomic pointers across different branches must be updated simultaneously, requiring complex multi-word CAS protocols or epoch-based deferred destruction to avoid inconsistent tree states."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free R-Trees",
+        "Spatial Indexing and Nearest-Neighbor Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T22:29:30.469398+00:00",
+      "run_number": 1917
     }
   ]
 }
