@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1907,
-    "last_updated": "2026-09-27T21:57:33.486252+00:00",
-    "total_topics_learned": 1907
+    "total_runs": 1908,
+    "last_updated": "2026-09-27T22:00:52.320493+00:00",
+    "total_topics_learned": 1908
   },
   "entries": [
     {
@@ -91096,6 +91096,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T21:57:33.486232+00:00",
       "run_number": 1907
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core deletion-supported set filtering in real-time distributed caching layers and concurrent network security packet inspection systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Cuckoo Filter supporting concurrent insertions, lookups, and deletions without explicit locks. It uses atomic Compare-And-Swap (CAS) primitives for fingerprint displacement (bucket-kicking) and hazard pointers to ensure safe memory reclamation under high multi-core contention.",
+      "key_points": [
+        "Cuckoo filters use fingerprints and two alternate bucket locations based on hashing, offering better space efficiency and explicit deletion support compared to Bloom filters.",
+        "Lock-free concurrency is achieved by applying atomic CAS primitives to swap fingerprints and displace existing entries during bucket collisions (bucket-kicking).",
+        "Hazard pointers protect concurrently accessed bucket nodes from premature deallocation or reallocation by competing threads during structural reorganization.",
+        "Atomic fingerprint swapping prevents race conditions where dual-inserting threads might overwrite or corrupt concurrent relocation paths."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping and bucket-kicking via CAS for lock-free cuckoo filter insertion.",
+        "correct": "bool CuckooFilter::insert(const std::string& item) {\n    uint32_t fp = compute_fingerprint(item);\n    size_t i1 = hash1(item);\n    size_t i2 = i1 ^ hash_fp(fp);\n    \n    for (int count = 0; count < MAX_KICKS; ++count) {\n        if (try_insert_bucket(i1, &fp)) return true;\n        if (try_insert_bucket(i2, &fp)) return true;\n        // Kick out existing fingerprint and swap\n        size_t target = (rand() % 2 == 0) ? i1 : i2;\n        fp = swap_random_slot(target, fp);\n        i1 = target;\n        i2 = i1 ^ hash_fp(fp);\n    }\n    return false;\n}",
+        "wrong": "bool CuckooFilter::insert(const std::string& item) {\n    std::lock_guard<std::mutex> lock(mtx); // Violates lock-free design using mutexes\n    // ... non-atomic mutations ...\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect displaced buckets with hazard pointers, leading to use-after-free bugs when concurrent threads inspect or modify bucket slots.",
+        "Assuming standard read-modify-write sequences are thread-safe without enforcing strict memory ordering constraints around CAS operations."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics on atomic operations to ensure proper synchronization of fingerprint visibility across cores.",
+        "Bound the maximum number of bucket-kicks during insertion to prevent infinite loops when the filter approaches capacity limits."
+      ],
+      "when_to_use": "Use when you need high-throughput, space-efficient approximate membership testing with dynamic item deletions across multiple concurrent threads in distributed systems.",
+      "when_not_to_use": "Avoid when memory usage is completely unrestricted or when exact membership checking without false positives is strictly required.",
+      "interview_questions": [
+        {
+          "question": "How do Cuckoo filters handle hash collisions during concurrent multi-threaded insertions without locks?",
+          "answer": "They use atomic CAS primitives to perform bucket-kicking, swapping the incoming fingerprint with an existing one and pushing the displaced fingerprint to its alternate bucket location."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Cuckoo Filter?",
+          "answer": "Hazard pointers allow threads to safely register the memory nodes they are currently reading or modifying, preventing other threads from reclaiming or mutating those nodes concurrently."
+        }
+      ],
+      "related_topics": [
+        "Quotient Filter",
+        "Bloom Filter",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T22:00:52.320471+00:00",
+      "run_number": 1908
     }
   ]
 }
