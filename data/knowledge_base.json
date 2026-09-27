@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1867,
-    "last_updated": "2026-09-27T08:10:03.144266+00:00",
-    "total_topics_learned": 1867
+    "total_runs": 1868,
+    "last_updated": "2026-09-27T08:13:24.798257+00:00",
+    "total_topics_learned": 1868
   },
   "entries": [
     {
@@ -89201,6 +89201,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T08:10:03.144248+00:00",
       "run_number": 1867
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core spell-checking in real-time auto-correct engines and concurrent dictionary suggestion systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent Burkhard-Keller Tree (BK-Tree) tailored for metric spaces under Levenshtein distance. By leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointer-based memory reclamation, multiple threads can concurrently insert and query fuzzy string matches without thread contention or blocking locks.",
+      "key_points": [
+        "Utilizes atomic CAS operations to safely append child nodes corresponding to specific integer edit distances without locks.",
+        "Employs hazard pointers to guarantee safe memory reclamation and prevent the ABA problem during concurrent node modifications.",
+        "Organizes metric space data based on discrete distance functions like Levenshtein distance, optimizing multi-core spell-checking and auto-correct throughput.",
+        "Maintains thread-safe traversal paths through dynamic child-node mapping arrays updated via atomic reference installations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern for atomic node linking via CAS in a concurrent metric tree.",
+        "correct": "bool link_child(Node* parent, int distance, Node* new_child) {\n    return parent->children[distance].compare_exchange_strong(new_child->null_ptr, new_child);\n}",
+        "wrong": "Node* current = parent->children[distance];\nif (current == nullptr) {\n    parent->children[distance] = new_child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed node pointers with hazard pointers, leading to use-after-free bugs when another thread prunes or modifies the subtree.",
+        "Assuming metric space properties (like the triangle inequality) remain valid under asynchronous concurrent rebalancing or insertions without strict validation."
+      ],
+      "best_practices": [
+        "Register thread-local hazard pointer records before starting any read or write traversal on the BK-Tree.",
+        "Pre-calculate edit distances outside critical atomic sections to minimize the duration of CAS retry loops."
+      ],
+      "when_to_use": "Ideal for high-concurrency systems requiring rapid fuzzy matching, spelling corrections, or similarity lookups across multiple CPU cores.",
+      "when_not_to_use": "Avoid when datasets are static and single-threaded lookup performance or exact-match hash tables are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to insert children at the same edit-distance key in a lock-free BK-Tree?",
+          "answer": "By using a Compare-And-Swap (CAS) loop on the specific child pointer slot to ensure only one thread successfully installs its node while others retry or traverse further."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing nodes in a concurrent tree structure?",
+          "answer": "Hazard pointers protect active reader threads by marking nodes currently in use, preventing the memory allocator from reclaiming them until all references are dropped."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointer memory management",
+        "Levenshtein distance metric spaces"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-27T08:13:24.798238+00:00",
+      "run_number": 1868
     }
   ]
 }
