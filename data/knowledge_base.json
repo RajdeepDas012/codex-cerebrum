@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1868,
-    "last_updated": "2026-09-27T08:13:24.798257+00:00",
-    "total_topics_learned": 1868
+    "total_runs": 1869,
+    "last_updated": "2026-09-27T08:16:33.011940+00:00",
+    "total_topics_learned": 1869
   },
   "entries": [
     {
@@ -89248,6 +89248,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-27T08:13:24.798238+00:00",
       "run_number": 1868
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redistributing CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed database indexing and multi-core sequential access in real-time relational storage systems and concurrent file system metadata managers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent B-Tree data structure that relies on non-blocking synchronization primitives rather than global locks. By using atomic Compare-And-Swap (CAS) operations for node merging and leaf redistribution alongside hazard pointers, it ensures safe memory reclamation and maximized throughput under heavy multi-threaded workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe node modification without traditional lock overhead.",
+        "Implements node-merging and leaf-redistributing algorithms atomically to maintain structural balance during concurrency.",
+        "Applies hazard pointers to track active reader and writer nodes, preventing premature memory deallocation and use-after-free bugs.",
+        "Optimizes multi-core sequential access and range queries for real-time relational databases and high-performance file system metadata managers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers in a lock-free B-Tree environment",
+        "correct": "Node* acquire_node(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load();\n        hp.protect(ptr);\n    } while (node_ptr.load() != ptr);\n    return ptr;\n}",
+        "wrong": "Node* acquire_node(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(); // Lacks hazard protection, risking concurrent deletion\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to race conditions and memory corruption.",
+        "Attempting complex multi-node structural modifications in a single CAS operation instead of breaking them down into logical, incremental steps."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are thread-local and cleared immediately after a traversal or operation completes.",
+        "Design tree nodes with version stamps or flags to help threads detect and help complete ongoing concurrent splits or merges."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive database engines or file systems requiring massive concurrent read and write access on multi-core hardware.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or environments where standard mutex-locked trees provide sufficient performance without the immense complexity of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in lock-free trees?",
+          "answer": "Hazard pointers allow threads to explicitly announce which memory addresses they are currently accessing, preventing other threads from recycling or freeing those nodes until all active references are dropped."
+        },
+        {
+          "question": "Why is structural modification (like merging or splitting) difficult in a lock-free B-Tree?",
+          "answer": "Because multiple threads may attempt to modify overlapping parts of the tree simultaneously; therefore, operations must be broken down into atomic sub-steps where nodes transition through transient states until finalized."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free R-Tree Spatial Indexing",
+        "Concurrent B+ Tree Optimizations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T08:16:33.011919+00:00",
+      "run_number": 1869
     }
   ]
 }
