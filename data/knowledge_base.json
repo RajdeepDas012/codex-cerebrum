@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1882,
-    "last_updated": "2026-09-27T14:10:38.736923+00:00",
-    "total_topics_learned": 1882
+    "total_runs": 1883,
+    "last_updated": "2026-09-27T14:13:51.367498+00:00",
+    "total_topics_learned": 1883
   },
   "entries": [
     {
@@ -89913,6 +89913,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-27T14:10:38.736904+00:00",
       "run_number": 1882
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-allocation and axis-aligned-bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection testing and multi-core spatial partitioning in real-time ray tracing renderers and concurrent game physics collision engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) organizes geometric objects in a spatial hierarchy using atomic primitives and hazard pointers, enabling high-performance multi-core ray tracing and collision detection. It eliminates locking overhead by utilizing compare-and-swap (CAS) operations for node updates and safe memory management.",
+      "key_points": [
+        "Utilizes atomic node-allocation and axis-aligned-bounding-box (AABB) updating via CAS primitives for lock-free modifications.",
+        "Employs hazard pointers to safely manage memory reclamation without blocking concurrent reader and writer threads.",
+        "Enables high-throughput ray-triangle intersection queries and dynamic spatial partitioning across multiple CPU cores.",
+        "Balances structural depth and parallel update latency to maintain optimal bounding volume traversal performance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bounding box updates using CAS for concurrent BVH modifications.",
+        "correct": "bool updateAABB(std::atomic<AABB*>& nodePtr, const AABB& newBox) {\n    AABB* oldBox = nodePtr.load();\n    AABB* combined = new AABB(*oldBox);\n    combined->merge(newBox);\n    return nodePtr.compare_exchange_weak(oldBox, combined);\n}",
+        "wrong": "AABB* box = nodePtr.load();\nbox->merge(newBox); // Non-atomic modification leads to race conditions and corrupted bounds."
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers during tree traversal, leading to use-after-free bugs when concurrent threads mutate node pointers.",
+        "Performing non-atomic updates to bounding boxes during parallel spatial insertions."
+      ],
+      "best_practices": [
+        "Retire memory nodes safely using hazard pointer epoch-based reclamation to prevent premature deallocation.",
+        "Minimize CAS retry loops by batching bounding box expansions where possible."
+      ],
+      "when_to_use": "Use when building real-time ray tracers, GPU-to-CPU hybrid geometry pipelines, or high-performance concurrent game physics engines requiring frequent dynamic object movement.",
+      "when_not_to_use": "Avoid in single-threaded applications or static scenes where simpler, standard recursive BVH construction builders offer better baseline performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent BVH tree traversal and node mutation?",
+          "answer": "Hazard pointers allow threads to declare which nodes they are currently accessing, blocking other threads from prematurely freeing or recycling those memory nodes until traversal is complete."
+        },
+        {
+          "question": "Why is standard locking inefficient for dynamic Bounding Volume Hierarchies in real-time ray tracing?",
+          "answer": "Global or fine-grained locks introduce high contention and serialization overhead during frequent ray intersection queries and fast-paced object updates across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Radix Trees",
+        "Concurrent Spatial Partitioning Grids",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-27T14:13:51.367479+00:00",
+      "run_number": 1883
     }
   ]
 }
