@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1880,
-    "last_updated": "2026-09-27T14:02:04.378881+00:00",
-    "total_topics_learned": 1880
+    "total_runs": 1881,
+    "last_updated": "2026-09-27T14:07:30.904254+00:00",
+    "total_topics_learned": 1881
   },
   "entries": [
     {
@@ -89819,6 +89819,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-27T14:02:04.378862+00:00",
       "run_number": 1880
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate filtering in real-time distributed caching layers and concurrent web crawler URL frontier systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Bloom Filter that leverages atomic bit-vector operations and Compare-And-Swap (CAS) primitives. By integrating hazard pointer memory reclamation, it guarantees safe multi-core memory management and high-throughput probabilistic membership checks without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic bit-vector setting via fetch_or operations to safely update shared filter state across multiple threads.",
+        "Employs hazard pointers to safely manage dynamic resizing or underlying memory blocks without thread blocking.",
+        "Guarantees zero false negatives with bounded, tunable false positive rates for rapid membership testing.",
+        "Optimizes concurrent web crawler URL frontiers and distributed cache layers by eliminating mutex bottlenecks during duplicate checks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting in a concurrent Bloom filter vector using fetch_or.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    ConcurrentBloomFilter(size_t size) : bits((size + 63) / 64) {}\n    \n    void add(size_t hash_val) {\n        size_t idx = hash_val / 64;\n        size_t bit = hash_val % 64;\n        uint64_t mask = 1ULL << bit;\n        bits[idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class UnsafeBloomFilter {\n    std::vector<uint64_t> bits;\npublic:\n    void add(size_t hash_val) {\n        size_t idx = hash_val / 64;\n        size_t bit = hash_val % 64;\n        bits[idx] |= (1ULL << bit); // Race condition on non-atomic read-modify-write\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operations on shared words, leading to lost updates when concurrent threads modify adjacent bits within the same 64-bit integer.",
+        "Failing to account for memory reordering by relying on default sequential consistency where weaker memory orders (relaxed/acquire-release) would suffice or vice versa."
+      ],
+      "best_practices": [
+        "Use std::atomic<uint64_t> arrays with fetch_or and std::memory_order_relaxed for high-performance concurrent bit updates.",
+        "Integrate hazard pointers or epoch-based reclamation if the Bloom filter supports dynamic resizing or reconstruction under heavy workloads."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching layers, web crawler URL frontiers, or database query optimizers requiring lock-free multi-threaded set membership testing.",
+      "when_not_to_use": "Avoid when exact set membership is mandatory without any tolerance for false positives, or when data items must be frequently deleted without rebuilding the filter.",
+      "interview_questions": [
+        {
+          "question": "Why is a standard integer bitwise OR operation insufficient for concurrent Bloom filters in multi-threaded environments?",
+          "answer": "Standard bitwise OR involves a read-modify-write cycle that is not atomic, causing concurrent writes to overlapping 64-bit words to overwrite and lose updates."
+        },
+        {
+          "question": "How do hazard pointers assist in maintaining a concurrent data structure like a Bloom filter?",
+          "answer": "Hazard pointers protect nodes or memory blocks from being reclaimed by the garbage collector while another thread is actively reading or modifying them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filters",
+        "Hazard Pointer Memory Management",
+        "Concurrent Bit-Vector Architectures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-27T14:07:30.904234+00:00",
+      "run_number": 1881
     }
   ]
 }
