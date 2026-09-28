@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1922,
-    "last_updated": "2026-09-28T00:32:27.361306+00:00",
-    "total_topics_learned": 1922
+    "total_runs": 1923,
+    "last_updated": "2026-09-28T00:35:36.170571+00:00",
+    "total_topics_learned": 1923
   },
   "entries": [
     {
@@ -91804,6 +91804,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-28T00:32:27.361287+00:00",
       "run_number": 1922
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocation and key-migration CAS primitives alongside hazard pointer memory reclamation for high-throughput O(1) expected lookup operations and multi-core dynamic resizing in real-time in-memory caching layers and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Cuckoo Hash Table utilizes multiple hash functions and hash tables to resolve collisions by displacing existing keys, enabling O(1) expected lookup performance. By leveraging atomic bucket-relocation and key-migration Compare-And-Swap (CAS) primitives combined with hazard pointers, threads can safely execute lookups, insertions, and table resizing concurrently without locks or thread blocking.",
+      "key_points": [
+        "Employs multiple independent hash functions mapping keys to alternative candidate buckets across dual or multi-table layouts.",
+        "Resolves collision evictions by recursively displacing existing keys ('cuckoo hashing') via atomic CAS primitives.",
+        "Utilizes hazard pointers to safely track and reclaim memory for dynamically migrated buckets during concurrent resizes.",
+        "Provides high-throughput, wait-free read operations and lock-free writes with bounded expected constant-time complexity."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of atomic bucket assignment and hazard pointer protection during multi-threaded Cuckoo hashing updates.",
+        "correct": "class HazardPointer:\n    def __init__(self):\n        self.hp = None\n    def protect(self, ptr):\n        self.hp = ptr\n        return ptr\n\nclass LockFreeCuckooTable:\n    def __init__(self, capacity):\n        self.table1 = [None] * capacity\n        self.table2 = [None] * capacity\n\n    def atomic_relocate(self, bucket_idx, old_key, new_key):\n        # Conceptual CAS representation for bucket relocation\n        if self.table1[bucket_idx] == old_key:\n            self.table1[bucket_idx] = new_key\n            return True\n        return False",
+        "wrong": "class UnsafeCuckooTable:\n    def __init__(self):\n        self.table = {}\n    def insert(self, k, v):\n        # Missing locks, atomic primitives, and thread safety checks\n        self.table[k] = v"
+      },
+      "common_mistakes": [
+        "Failing to protect displaced keys with hazard pointers during cuckoo eviction loops, causing use-after-free race conditions.",
+        "Ignoring infinite displacement cycles during insertion, which can lock up threads if a cycle detection limit or dynamic resize trigger is missing."
+      ],
+      "best_practices": [
+        "Implement cycle detection (e.g., a maximum displacement depth counter) during insertions to trigger a background table resize before infinite loops occur.",
+        "Pair every dynamic table expansion and key migration phase with robust epoch-based or hazard pointer memory reclamation mechanisms."
+      ],
+      "when_to_use": "Ideal for high-concurrency in-memory caching layers, read-heavy workloads demanding strict O(1) bounds, and low-latency storage engines requiring lock-free scaling.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained, or when write workloads frequently trigger costly multi-table resizing cascades.",
+      "interview_questions": [
+        {
+          "question": "How does cuckoo hashing handle collision resolution, and why does it make concurrent lock-free implementation complex?",
+          "answer": "Cuckoo hashing uses multiple hash functions to place keys in alternative buckets, evicting any key already occupying the target bucket. Concurrency is complex because evicting and migrating keys requires multi-step atomic updates across buckets to prevent race conditions during updates."
+        },
+        {
+          "question": "What role do hazard pointers play in a lock-free Cuckoo Hash Table during dynamic resizing?",
+          "answer": "Hazard pointers allow threads to locally register pointers they are currently reading, ensuring that background resizing threads do not prematurely free or reclaim old bucket memory while concurrent lookups or migrations are still accessing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-28T00:35:36.170550+00:00",
+      "run_number": 1923
     }
   ]
 }
