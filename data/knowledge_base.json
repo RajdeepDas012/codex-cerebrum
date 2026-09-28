@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1942,
-    "last_updated": "2026-09-28T06:52:18.181654+00:00",
-    "total_topics_learned": 1942
+    "total_runs": 1943,
+    "last_updated": "2026-09-28T06:55:58.778768+00:00",
+    "total_topics_learned": 1943
   },
   "entries": [
     {
@@ -92756,6 +92756,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-28T06:52:18.181639+00:00",
       "run_number": 1942
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate elimination in real-time web crawler URL filtering and concurrent distributed cache routing layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This module covers the design and implementation of a lock-free, thread-safe concurrent Bloom filter using atomic bitwise operations and CAS loops. It enables high-throughput approximate membership tests without global locks, making it ideal for multi-core distributed caches and web crawlers.",
+      "key_points": [
+        "Utilizes atomic word-masking and Compare-And-Swap (CAS) operations to set bits concurrently without mutual exclusion locks.",
+        "Employs hazard pointers or epoch-based reclamation safely if resizing or dynamic tracking is introduced to the underlying filter array.",
+        "Maximizes throughput for multi-core URL duplicate filtering and pre-cache admission checks by avoiding thread contention.",
+        "Maintains probabilistic properties with tunable false positive rates via optimal hash function sizing and bit array allocation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic bit-setting using fetch_or on an array of atomic integers.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\n    size_t num_bits;\npublic:\n    ConcurrentBloomFilter(size_t size) : num_bits(size), bits((size + 63) / 64) {}\n    \n    void insert(size_t hash_val) {\n        size_t idx = (hash_val % num_bits) / 64;\n        uint64_t mask = 1ULL << (hash_val % 64);\n        bits[idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n    \n    bool query(size_t hash_val) const {\n        size_t idx = (hash_val % num_bits) / 64;\n        uint64_t mask = 1ULL << (hash_val % 64);\n        return (bits[idx].load(std::memory_order_relaxed) & mask) != 0;\n    }\n};",
+        "wrong": "class UnsafeBloomFilter {\n    std::vector<uint64_t> bits;\npublic:\n    void insert(size_t hash_val) {\n        size_t idx = (hash_val % num_bits) / 64;\n        bits[idx] |= (1ULL << (hash_val % 64)); // Data race without atomics!\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use atomic operations for bit modifications, leading to lost updates during concurrent insertions.",
+        "Using overly strict memory ordering (e.g., sequentially consistent) when relaxed operations suffice for independent bit manipulations."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic bit updates and queries where absolute synchronization across different hash words is not required.",
+        "Size the bit array and choose the number of hash functions optimally based on expected insertion volume and acceptable false positive rate."
+      ],
+      "when_to_use": "When multiple concurrent threads need to rapidly verify approximate set membership or filter out duplicate elements without lock contention bottlenecks.",
+      "when_not_to_use": "When absolute zero false positives are required or when elements must be reliably deleted from the filter.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread-safe bit setting in a Bloom filter without using mutexes?",
+          "answer": "By treating the bit array as a collection of atomic words and using atomic fetch_or operations with bitmasks."
+        },
+        {
+          "question": "Why is memory ordering less critical for individual bit insertions in a concurrent Bloom filter?",
+          "answer": "Because exact synchronization across separate words or hash indices is not required; missing an update temporarily only slightly alters the probabilistic false positive rate."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-free Hash Maps",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-28T06:55:58.778752+00:00",
+      "run_number": 1943
     }
   ]
 }
