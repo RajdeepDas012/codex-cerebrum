@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1963** |
-| Last Updated | `2026-09-28T22:27:55.057730+00:00` |
-| Dataset Size | `1963 entries` |
+| Total Topics Learned | **1964** |
+| Last Updated | `2026-09-28T22:31:03.851959+00:00` |
+| Dataset Size | `1964 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 994 |
+| data-structures | 995 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 115 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-query-updating and lazy-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput interval calculation and multi-core range mutation in real-time financial trading order books and concurrent analytical database query engines`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-manipulating CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct data structure queries and multi-core rank-select operations in real-time text compression engines and concurrent bioinformatics sequence analysis systems`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core dynamic priority indexing in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic rotation-balancing and pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting binary search tree operations and multi-core frequent access optimization in real-time in-memory caching layers and concurrent database index engines`
 - `Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) graph using atomic layer-linking and neighbor-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor searches and multi-core vector index querying in real-time embedding retrieval engines and concurrent semantic search databases`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent location-based services engines`
 
 <!-- STATS_END -->
 
