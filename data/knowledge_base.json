@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1956,
-    "last_updated": "2026-09-28T22:01:47.904411+00:00",
-    "total_topics_learned": 1956
+    "total_runs": 1957,
+    "last_updated": "2026-09-28T22:07:28.617731+00:00",
+    "total_topics_learned": 1957
   },
   "entries": [
     {
@@ -93418,6 +93418,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-28T22:01:47.904391+00:00",
       "run_number": 1956
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput range overlapping queries and multi-core schedule time-slot management in real-time calendar applications and concurrent event-driven scheduling engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Interval Tree, designed to manage dynamic intervals across multiple execution threads without standard lock contention. By leveraging atomic compare-and-swap (CAS) operations for node updates and hazard pointers for safe memory reclamation, it enables scalable, high-throughput interval overlaps and scheduling queries.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free insertion and structural modifications of interval nodes.",
+        "Maintains max-endpoints in subtrees to efficiently prune non-overlapping branches during concurrent range queries.",
+        "Employs hazard pointers to safely manage node retirements and prevent use-after-free races in concurrent readers/writers.",
+        "Balances contention bottlenecks by decoupling traversal states from destructive updates via localized node versioning."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic pointer updates for inserting a new interval node using CAS.",
+        "correct": "bool insert_interval(std::atomic<Node*>& root, Node* new_node) {\n    while (true) {\n        Node* current = root.load(std::memory_order_acquire);\n        if (!current) {\n            if (root.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            // Navigate and attempt atomic child update\n            break;\n        }\n    }\n    return false;\n}",
+        "wrong": "Node* current = root;\nif (current == nullptr) {\n    root = new_node; // Non-atomic assignment causes race conditions in multithreaded environments\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to memory corruption or segmentation faults when another thread is reading the node.",
+        "Ignoring the cascading updates required for max-endpoint fields in parent nodes during asynchronous interval insertions."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing child pointers in a lock-free tree structure.",
+        "Batch memory reclamation tasks to reduce the overhead of atomic thread-local hazard pointer scans."
+      ],
+      "when_to_use": "Use when building high-throughput scheduling engines, real-time calendars, or event-driven overlap detection systems requiring heavy concurrent reads and writes.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency environments where standard locking mechanisms provide simpler implementation and acceptable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates in a lock-free Interval Tree?",
+          "answer": "By using tagged pointers (combining the memory address with a monotonically increasing version counter) or leveraging hazard pointers that track active node references."
+        },
+        {
+          "question": "Why are standard tree balancing rotations difficult to implement in a lock-free data structure?",
+          "answer": "Because rotations require simultaneous modification of multiple parent, child, and sibling pointers across the tree, which cannot be atomic without multi-word CAS (MCAS) or heavy synchronization."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Red-Black and AVL Trees",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-28T22:07:28.617708+00:00",
+      "run_number": 1957
     }
   ]
 }
