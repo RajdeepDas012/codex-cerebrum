@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **1961** |
-| Last Updated | `2026-09-28T22:21:35.806744+00:00` |
-| Dataset Size | `1961 entries` |
+| Total Topics Learned | **1962** |
+| Last Updated | `2026-09-28T22:24:46.420129+00:00` |
+| Dataset Size | `1962 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 992 |
+| data-structures | 993 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 115 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core dynamic priority indexing in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic rotation-balancing and pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting binary search tree operations and multi-core frequent access optimization in real-time in-memory caching layers and concurrent database index engines`
 - `Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) graph using atomic layer-linking and neighbor-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor searches and multi-core vector index querying in real-time embedding retrieval engines and concurrent semantic search databases`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent location-based services engines`
 - `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint-swapping and coefficient-matrix-solving CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core dynamic resizing in real-time distributed storage systems and concurrent network packet filtering engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput range overlapping queries and multi-core schedule time-slot management in real-time calendar applications and concurrent event-driven scheduling engines`
 
 <!-- STATS_END -->
 
