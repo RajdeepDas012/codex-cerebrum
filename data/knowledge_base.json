@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1964,
-    "last_updated": "2026-09-28T22:31:03.851959+00:00",
-    "total_topics_learned": 1964
+    "total_runs": 1965,
+    "last_updated": "2026-09-28T22:34:25.059324+00:00",
+    "total_topics_learned": 1965
   },
   "entries": [
     {
@@ -93797,6 +93797,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-28T22:31:03.851939+00:00",
       "run_number": 1964
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-wrapping and cursor-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread messaging and multi-core event processing in real-time low-latency financial trading platforms and concurrent asynchronous logging systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer utilizing the Disruptor pattern provides ultra-high-throughput, low-latency inter-thread messaging by employing circular array allocation and atomic sequence-wrapping cursors. It eliminates traditional locking overhead and context switching, making it critical for real-time financial trading systems.",
+      "key_points": [
+        "Uses pre-allocated circular array memory slots to eliminate garbage collection pressure and dynamic allocation overhead during high-frequency message passing.",
+        "Employs atomic cursor-advancing and sequence-wrapping CAS primitives to coordinate producers and consumers safely across multiple CPU cores without mutexes.",
+        "Implements hazard pointer memory reclamation to ensure safe concurrent access and disposal of messages or state metadata in unbounded scaling architectures.",
+        "Leverages cache-line padding to prevent false sharing between independent producer and consumer threads operating on adjacent memory addresses."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic cursor reservation and sequence wrapping in a lock-free ring buffer structure.",
+        "correct": "import threading\nfrom atomicwrites import *\n\nclass RingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.cursor = threading.local()\n        self.write_sequence = 0\n    # Atomic sequence-wrapping logic goes here",
+        "wrong": "class UnsafeRingBuffer:\n    def __init__(self, capacity):\n        self.buffer = [None] * capacity\n        self.head = 0\n    def push(self, item):\n        self.buffer[self.head] = item\n        self.head = (self.head + 1) % self.capacity  # Not thread-safe without CAS"
+      },
+      "common_mistakes": [
+        "Failing to implement cache-line padding (padding bytes between sequence variables), leading to severe CPU cache contention and false sharing.",
+        "Incorrectly managing wrap-around boundaries when producers outpace slow consumers, causing data overwrites before it is processed."
+      ],
+      "best_practices": [
+        "Ensure buffer capacities are powers of two to optimize modulo index wrapping using fast bitwise masking operations.",
+        "Utilize appropriate memory ordering semantics (acquire-release or sequentially consistent) matching your target concurrency platform to avoid instruction reordering bugs."
+      ],
+      "when_to_use": "Ideal for ultra-low latency event-driven systems, financial order books, and high-volume asynchronous logging pipelines.",
+      "when_not_to_use": "Avoid when dealing with infrequent messages, simple thread-pools with standard blocking queues, or where dynamic unbounded scaling is required.",
+      "interview_questions": [
+        {
+          "question": "How does the Disruptor pattern differ from a traditional blocking queue?",
+          "answer": "The Disruptor uses a pre-allocated ring buffer and atomic sequence cursors with CAS primitives to eliminate locks, thread context switches, and queue-node allocations, yielding significantly higher throughput and lower latency."
+        },
+        {
+          "question": "Why is power-of-two capacity important for ring buffers?",
+          "answer": "It allows the system to replace expensive modulo arithmetic divisions with fast bitwise AND operations (index & (capacity - 1)) during cursor wrapping."
+        }
+      ],
+      "related_topics": [
+        "Lock-free queues",
+        "False sharing and CPU cache optimization",
+        "Hazard pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-28T22:34:25.059304+00:00",
+      "run_number": 1965
     }
   ]
 }
