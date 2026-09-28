@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1925,
-    "last_updated": "2026-09-28T00:41:52.732400+00:00",
-    "total_topics_learned": 1925
+    "total_runs": 1926,
+    "last_updated": "2026-09-28T00:45:00.942520+00:00",
+    "total_topics_learned": 1926
   },
   "entries": [
     {
@@ -91947,6 +91947,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-28T00:41:52.732379+00:00",
       "run_number": 1925
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range overlapping queries and multi-core interval scheduling in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Interval Tree that supports lock-free interval insertion, deletion, and overlap queries using Compare-And-Swap (CAS) primitives and hazard pointers. It is crucial for high-concurrency systems requiring real-time tracking of time ranges or overlapping spatial intervals without global locks.",
+      "key_points": [
+        "Utilizes atomic endpoint-updating and overlap-detecting CAS primitives to modify interval node boundaries safely across threads.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent the ABA problem during concurrent node modifications.",
+        "Maintains max-endpoint metadata at each node to efficiently prune search paths during concurrent overlapping range queries.",
+        "Guarantees progress lock-free properties, ensuring high throughput for multi-core interval scheduling and calendar management."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of checking interval overlaps and updating max endpoints atomically using threading primitives.",
+        "correct": "import threading\n\nclass IntervalNode:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n        self.max_high = high\n        self.lock = threading.Lock()\n\n    def overlaps(self, low, high):\n        return self.low <= high and low <= self.high",
+        "wrong": "class IntervalNode:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n    # Missing max_high tracking and thread safety leads to race conditions during tree traversals"
+      },
+      "common_mistakes": [
+        "Failing to update parent max-endpoint fields atomically when inserting new nodes, leading to missed overlapping queries.",
+        "Neglecting hazard pointer protection on child pointers during tree traversal, resulting in use-after-free errors when another thread deletes a node."
+      ],
+      "best_practices": [
+        "Ensure max-endpoint values propagate properly up the tree during concurrent insertions using bounded retry loops with CAS.",
+        "Retire nodes via hazard pointers only after unlinking them safely from all parent and child references."
+      ],
+      "when_to_use": "Use when multiple threads frequently query, insert, and delete overlapping time ranges or numerical intervals under heavy contention.",
+      "when_not_to_use": "Avoid when intervals are static and workloads are read-only, as simpler immutable structures or sorted arrays provide better performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the propagation of the max-endpoint value in a lock-free interval tree when concurrent insertions happen?",
+          "answer": "By using a retroactive CAS loop that recalculates and updates the max-end value of ancestor nodes if the newly inserted node's high value exceeds the current maximum."
+        },
+        {
+          "question": "Why are hazard pointers necessary when traversing a lock-free interval tree?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory allocator while a thread is currently reading their pointers to traverse down or check overlaps."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Segment Tree",
+        "Lock-free Red-Black Tree",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-28T00:45:00.942499+00:00",
+      "run_number": 1926
     }
   ]
 }
