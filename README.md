@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2015** |
-| Last Updated | `2026-09-29T20:45:55.866909+00:00` |
-| Dataset Size | `2015 entries` |
+| Total Topics Learned | **2016** |
+| Last Updated | `2026-09-29T20:49:04.161716+00:00` |
+| Dataset Size | `2016 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1040 |
+| data-structures | 1041 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 116 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and sibling-pointer-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index updates in real-time relational databases and concurrent transactional key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversal and state-transition CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary lookups in real-time intrusion detection systems and concurrent network content filtering engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count aggregation in real-time stream processing engines and concurrent analytics databases`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-slicing and child-node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking packet processing systems and concurrent network telemetry engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index lookups in real-time relational databases and concurrent key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core concurrent map traversals in real-time in-memory databases and concurrent caching layers`
 
 <!-- STATS_END -->
 
