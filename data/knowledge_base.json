@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1973,
-    "last_updated": "2026-09-29T02:00:11.633965+00:00",
-    "total_topics_learned": 1973
+    "total_runs": 1974,
+    "last_updated": "2026-09-29T02:03:20.253100+00:00",
+    "total_topics_learned": 1974
   },
   "entries": [
     {
@@ -94224,6 +94224,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T02:00:11.633955+00:00",
       "run_number": 1973
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitset-updating and hash-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership checking and multi-core element filtering in real-time distributed caching layers and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter leverages atomic bit-manipulation operations (like fetch-or) and hazard pointers to safely and simultaneously set and check bits across multiple threads without lock contention. This design maximizes throughput for high-velocity approximate membership queries in performance-critical distributed systems and caching layers.",
+      "key_points": [
+        "Uses atomic bitset-updating primitives (such as atomic fetch_or) to set bit indices without locking overhead.",
+        "Employs hash-combining techniques (like double hashing or MurmurHash variants) to derive multiple independent bit positions from a single key.",
+        "Utilizes hazard pointers to safely manage underlying dynamic memory structures and ensure thread-safe reclamation during concurrent resizing or reconfiguration.",
+        "Provides O(k) time complexity for both insertion and membership checking, where k is the number of hash functions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting in a concurrent Bloom filter bitset.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<size_t>> bitset;\npublic:\n    explicit ConcurrentBloomFilter(size_t size) : bitset((size + 63) / 64) {\n        for (auto& val : bitset) val.store(0, std::memory_order_relaxed);\n    }\n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        size_t mask = 1ULL << bit_offset;\n        bitset[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\n\nclass UnsafeBloomFilter {\n    std::vector<size_t> bitset;\npublic:\n    void add(size_t bit_index) {\n        // Race condition: non-atomic read-modify-write on shared memory\n        bitset[bit_index / 64] |= (1ULL << (bit_index % 64));\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use memory ordering constraints correctly, leading to stale reads of bitset states across threads.",
+        "Using coarse-grained mutexes around the entire bit array, which defeats the purpose of lock-free concurrency and introduces bottlenecks."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for setting individual bits where strict synchronization between distinct bit indices is not required.",
+        "Precompute optimal bitset sizes and hash function counts based on expected capacity and maximum tolerable false positive rates."
+      ],
+      "when_to_use": "When multiple threads need to rapidly insert keys and check for approximate membership in a shared data structure without acquiring locks.",
+      "when_not_to_use": "When 100% accuracy is mandatory, or when items must be frequently deleted from the set without rebuilding the entire structure.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom Filter without using mutual exclusion locks?",
+          "answer": "By utilizing atomic bitwise operations (like atomic fetch-or) on words within the bitset and ensuring lock-free memory management."
+        },
+        {
+          "question": "Why can standard Bloom filters not support item deletion easily, and how does concurrency compound this issue?",
+          "answer": "Standard filters cannot delete items because clearing a bit might unset a bit shared by another item, and doing so concurrently with atomic updates introduces severe race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T02:03:20.253090+00:00",
+      "run_number": 1974
     }
   ]
 }
