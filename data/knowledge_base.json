@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2009,
-    "last_updated": "2026-09-29T16:15:14.118500+00:00",
-    "total_topics_learned": 2009
+    "total_runs": 2010,
+    "last_updated": "2026-09-29T16:18:24.898261+00:00",
+    "total_topics_learned": 2010
   },
   "entries": [
     {
@@ -95933,6 +95933,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T16:15:14.118478+00:00",
       "run_number": 2009
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core dynamic deletion in real-time distributed key-value storage systems and concurrent caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Cuckoo Filter is a space-efficient probabilistic data structure that supports dynamic insertions and deletions while outperforming traditional Bloom filters in space utilization. By combining atomic bucket-kicking and fingerprint-swapping CAS primitives with hazard pointers, it enables high-throughput multi-core execution without global locks.",
+      "key_points": [
+        "Uses fingerprints stored in alternative hash-mapped buckets to achieve space efficiency and support deletions.",
+        "Employs compare-and-swap (CAS) operations for atomic bucket updates and fingerprint swapping during cuckoo displacement kicks.",
+        "Utilizes hazard pointers to safely manage memory reclamation of dynamically resized or reorganized filter buckets without blocking reader threads.",
+        "Guarantees thread-safe approximate membership querying suitable for high-concurrency caching layers and distributed storage."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic fingerprint swap using CAS primitives for concurrent cuckoo filter insertion",
+        "correct": "bool atomic_insert(std::atomic<uint32_t>& bucket, uint16_t new_fp) {\n    uint32_t current = bucket.load(std::memory_order_relaxed);\n    // Atomic swap simulation using CAS loop\n    while (true) {\n        uint32_t updated = (current >> 16) | (static_cast<uint32_t>(new_fp) << 16);\n        if (bucket.compare_exchange_weak(current, updated, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool unsafe_insert(uint32_t& bucket, uint16_t new_fp) {\n    bucket = (bucket >> 16) | (static_cast<uint32_t>(new_fp) << 16);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect displaced bucket entries with hazard pointers, leading to use-after-free bugs during concurrent resizes.",
+        "Deadlocking or creating infinite displacement loops when a cuckoo path cycle occurs without a maximum displacement depth limit."
+      ],
+      "best_practices": [
+        "Set a strict upper bound on displacement loops (e.g., 500 kicks) to trigger filter expansion or re-hashing gracefully.",
+        "Pair every memory-reclaiming operation with properly scoped hazard pointer acquisitions to ensure thread safety."
+      ],
+      "when_to_use": "Use when you need space-efficient approximate membership testing that requires frequent dynamic deletions and high-concurrency access.",
+      "when_not_to_use": "Avoid when items cannot tolerate any false positives or when insertions are rare compared to static workloads where simpler filters suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter support deletions compared to a standard Bloom Filter?",
+          "answer": "A Cuckoo Filter stores localized fingerprints in specific buckets linked by alternative hash locations, allowing individual fingerprints to be explicitly found and cleared without affecting other entries."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent Cuckoo Filter?",
+          "answer": "Hazard pointers prevent other threads from freeing or modifying bucket memory while a thread is actively traversing or displacing fingerprints through atomic operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Bloom Filter",
+        "Hazard Pointer Memory Management",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T16:18:24.898241+00:00",
+      "run_number": 2010
     }
   ]
 }
