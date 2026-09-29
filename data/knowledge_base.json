@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2003,
-    "last_updated": "2026-09-29T15:54:39.977569+00:00",
-    "total_topics_learned": 2003
+    "total_runs": 2004,
+    "last_updated": "2026-09-29T15:58:14.490906+00:00",
+    "total_topics_learned": 2004
   },
   "entries": [
     {
@@ -95651,6 +95651,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T15:54:39.977546+00:00",
       "run_number": 2003
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC (Multi-Producer Single-Consumer) Ring Buffer using atomic head-tail-advancing and sequence-stamping CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core telemetry ingestion in real-time financial market data feeds and concurrent event-driven streaming engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free bounded MPSC ring buffer enables high-throughput, thread-safe communication where multiple producer threads push messages concurrently to a single consumer thread without heavy mutex locks. By leveraging atomic head-tail-advancing, sequence stamping, and hazard pointer memory management, it eliminates contention bottlenecks, ensuring low-latency data flow ideal for real-time streaming and telemetry ingestion.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to coordinate multi-producer write positioning without locking.",
+        "Employs sequence stamps or ticket locks to prevent concurrent producers from overwriting unread slots in a fixed-size buffer.",
+        "Separates memory management using hazard pointers or epoch-based reclamation to safely recycle shared node states.",
+        "Optimizes cache line usage to prevent false sharing between independent producer threads and the single consumer thread."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of atomic head-tail state management for a bounded MPSC queue.",
+        "correct": "import threading\nclass MPSCRingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.head = 0\n        self.tail = 0\n        self.lock = threading.Lock() # Conceptual placeholder for atomic slot reservation",
+        "wrong": "class UnsafeRingBuffer:\n    def __init__(self, capacity):\n        self.buffer = [None] * capacity\n        self.tail = 0\n    def push(self, val):\n        self.buffer[self.tail % len(self.buffer)] = val\n        self.tail += 1 # Non-atomic increment causes race conditions among multiple producers"
+      },
+      "common_mistakes": [
+        "Failing to handle buffer full conditions when multiple fast producers outpace a single slow consumer.",
+        "Introducing false sharing by placing producer sequence counters and consumer indexes on the same CPU cache line."
+      ],
+      "best_practices": [
+        "Pad atomic variables and index pointers to align with CPU cache line sizes (typically 64 bytes).",
+        "Use acquire-release memory ordering semantics on atomic operations to ensure correct visibility of published data items."
+      ],
+      "when_to_use": "When multiple worker threads must stream telemetry or events into a single aggregation thread with minimal latency overhead.",
+      "when_not_to_use": "When you have multiple consumers, which requires an SPMC, MPMC, or work-stealing architecture instead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple producer threads from writing to the same slot in a bounded ring buffer without using locks?",
+          "answer": "By utilizing an atomic fetch-and-add operation to reserve a unique sequence ticket or index combined with a sequence-stamping array that indicates whether a slot is ready to be written or read."
+        },
+        {
+          "question": "Why is false sharing particularly damaging to the performance of an MPSC ring buffer?",
+          "answer": "Because multiple independent producer threads frequently update tail pointers or slot states that reside on the same CPU cache line, causing continuous cache invalidation and high interconnect traffic."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Multi-Producer Multi-Consumer (MPMC) Ring Buffer",
+        "Hazard Pointers and Memory Reclamation",
+        "Cache Line Padding and False Sharing Mitigation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T15:58:14.490883+00:00",
+      "run_number": 2004
     }
   ]
 }
