@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1997,
-    "last_updated": "2026-09-29T15:35:38.501959+00:00",
-    "total_topics_learned": 1997
+    "total_runs": 1998,
+    "last_updated": "2026-09-29T15:38:48.319173+00:00",
+    "total_topics_learned": 1998
   },
   "entries": [
     {
@@ -95365,6 +95365,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T15:35:38.501937+00:00",
       "run_number": 1997
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-degree-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core task scheduling in real-time operating system task dispatchers and concurrent discrete-event simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Binomial Heap that supports efficient mergeable priority queue operations across multiple cores. By employing atomic compare-and-swap (CAS) primitives for structural modifications like tree linking and root swapping, alongside hazard pointers for safe memory management, it enables high-throughput task scheduling without lock contention.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to manage root lists and binomially structured trees lock-free.",
+        "Implements hazard pointers to safely reclaim memory of deleted nodes or merged binomial trees without use-after-free races.",
+        "Optimizes mergeable heap capabilities, allowing fast combination of multiple priority queues in logarithmic time.",
+        "Targets multi-core real-time task dispatchers and discrete-event simulation engines requiring low latency and high concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic linking of two binomial trees of the same degree using a CAS loop.",
+        "correct": "bool linkTrees(std::atomic<Node*>& rootA, Node* treeB) {\n    Node* a = rootA.load();\n    if (a->degree != treeB->degree) return false;\n    treeB->parent = a;\n    treeB->sibling = a->child;\n    return a->child.compare_exchange_weak(treeB->sibling, treeB);\n}",
+        "wrong": "Node* a = rootA.load();\ntreeB->parent = a;\ntreeB->sibling = a->child;\na->child = treeB; // Missing CAS, causing data races in multi-threaded environments"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer chains, leading to ABA problems or use-after-free bugs.",
+        "Attempting to link binomial trees of differing degrees during heap union operations."
+      ],
+      "best_practices": [
+        "Always validate node degrees and active status under a hazard pointer guard before attempting atomic pointer updates.",
+        "Batch memory recycling tasks using hazard pointer retirement lists to minimize thread synchronization overhead."
+      ],
+      "when_to_use": "Use when you need a concurrent priority queue that frequently merges independent heaps and requires strict lock-free scalability under high thread contention.",
+      "when_not_to_use": "Avoid when standard point-updates or single-threaded workloads suffice, as the overhead of hazard pointers and CAS retry loops outweighs the concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic root-list updates in a lock-free Binomial Heap?",
+          "answer": "By pairing pointers with monotonically increasing version tags or sequence counters within the atomic word, or by utilizing hazard pointers to ensure nodes are not recycled while threads hold references."
+        },
+        {
+          "question": "What is the time complexity of merging two concurrent binomial heaps containing n elements using atomic linking?",
+          "answer": "O(log n) time complexity, as it involves combining root lists of logarithmic size with respect to the total number of elements."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heap",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-09-29T15:38:48.319152+00:00",
+      "run_number": 1998
     }
   ]
 }
