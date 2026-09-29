@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2025** |
-| Last Updated | `2026-09-29T21:17:32.451193+00:00` |
-| Dataset Size | `2025 entries` |
+| Total Topics Learned | **2026** |
+| Last Updated | `2026-09-29T21:20:41.380665+00:00` |
+| Dataset Size | `2026 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1049 |
+| data-structures | 1050 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 117 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and self-balancing-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed node promotion and multi-core self-adjusting search tree operations in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range scans and multi-core index updates in real-time transactional databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-hyperplane-partitioning and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial querying in real-time point cloud processing systems and concurrent robotics motion planning engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system job dispatchers and concurrent discrete-event simulation frameworks`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput time-interval querying and multi-core scheduling conflict detection in real-time calendar management systems and concurrent interval-based database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent location-based services databases`
 
 <!-- STATS_END -->
 
