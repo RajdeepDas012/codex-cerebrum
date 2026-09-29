@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2016,
-    "last_updated": "2026-09-29T20:49:04.161716+00:00",
-    "total_topics_learned": 2016
+    "total_runs": 2017,
+    "last_updated": "2026-09-29T20:52:13.365361+00:00",
+    "total_topics_learned": 2017
   },
   "entries": [
     {
@@ -96264,6 +96264,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T20:49:04.161697+00:00",
       "run_number": 2016
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFUCache using atomic frequency-incrementing and eviction-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitters caching and multi-core access-pattern optimization in real-time content delivery networks and concurrent web application server caches",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and implementation of a lock-free Least Frequently Used (LFU) cache designed for multi-core environments. It uses atomic Compare-And-Swap (CAS) primitives for frequency tracking and node eviction alongside hazard pointers to prevent race conditions during memory reclamation.",
+      "key_points": [
+        "Utilizes atomic frequency-incrementing CAS operations to safely update item access counts without global locks.",
+        "Employs eviction-pointer-updating CAS primitives to manage structural changes in frequency lists during heavy contention.",
+        "Integrates hazard pointers to safely defer memory reclamation of evicted nodes until concurrent readers finish accessing them.",
+        "Optimizes throughput for multi-core access patterns in content delivery networks and high-load web server caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency updating via CAS within a lock-free cache node structure.",
+        "correct": "bool increment_frequency(std::atomic<uint32_t>& freq_counter) {\n    uint32_t current = freq_counter.load(std::memory_order_relaxed);\n    while (!freq_counter.compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed)) {}\n    return true;\n}",
+        "wrong": "uint32_t increment_frequency(std::atomic<uint32_t>& freq_counter) {\n    uint32_t current = freq_counter.load();\n    freq_counter.store(current + 1);\n    return current + 1;\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write sequences which introduce race conditions and lost updates under high concurrency.",
+        "Forgetting to protect node deletion with hazard pointers, leading to use-after-free bugs when concurrent threads access evicted keys."
+      ],
+      "best_practices": [
+        "Pair every memory allocation with explicit hazard pointer registration before publishing pointers to shared lookup tables.",
+        "Leverage acquire-release memory ordering semantics on atomic operations to ensure proper visibility of cache values across CPU cores."
+      ],
+      "when_to_use": "Use when building high-throughput caching layers where access frequency dictates eviction policies and thread contention is severe.",
+      "when_not_to_use": "Avoid when simple thread-safe wrappers around standard library containers or coarse-grained mutexes provide sufficient performance for low-concurrency applications.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating frequency counters and eviction pointers in a lock-free LFU cache?",
+          "answer": "By using tagged pointers (combining a version count or sequence number with the memory address) or hazard pointers combined with epoch-based reclamation."
+        },
+        {
+          "question": "Why are traditional mutexes suboptimal for high-throughput LFU caches in multi-core web servers?",
+          "answer": "Mutexes cause thread blocking and high context-switch overhead under contention, whereas lock-free CAS primitives allow threads to make progress concurrently without kernel intervention."
+        }
+      ],
+      "related_topics": [
+        "Lock-free LRU Cache",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T20:52:13.365343+00:00",
+      "run_number": 2017
     }
   ]
 }
