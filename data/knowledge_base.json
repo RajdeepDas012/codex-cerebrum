@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2007,
-    "last_updated": "2026-09-29T16:08:27.915509+00:00",
-    "total_topics_learned": 2007
+    "total_runs": 2008,
+    "last_updated": "2026-09-29T16:11:51.193102+00:00",
+    "total_topics_learned": 2008
   },
   "entries": [
     {
@@ -95839,6 +95839,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T16:08:27.915489+00:00",
       "run_number": 2007
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core telemetry tracking in real-time network traffic monitors and concurrent log aggregation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch uses atomic primitives and hazard pointers to safely estimate item frequencies across multiple threads without locking. It matters because it enables high-throughput telemetry tracking and heavy-hitter detection under heavy contention.",
+      "key_points": [
+        "Utilizes multi-hash-updating CAS operations to map incoming stream elements to multiple matrix rows atomically.",
+        "Employs hazard pointer memory reclamation to ensure safe node deallocation in concurrent stream environments.",
+        "Maintains bounded memory usage while providing probabilistic frequency upper bounds for data streams.",
+        "Avoids global mutex locks, preventing thread starvation and improving scalability on multi-core processors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic frequency incrementing across multiple hash rows using CAS loops.",
+        "correct": "void increment(const std::string& item) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t h = hash(i, item) % width;\n        uint64_t current = table[i][h].load(std::memory_order_relaxed);\n        while (!table[i][h].compare_exchange_weak(current, current + 1, std::memory_order_relaxed));\n    }\n}",
+        "wrong": "void increment(const std::string& item) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t h = hash(i, item) % width;\n        table[i][h]++; // Non-atomic increment causes data races under concurrent threads\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments on sketch cells, leading to lost updates under high thread contention.",
+        "Forgetting to handle memory reclamation correctly when resizing or clearing underlying sketch tables."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic increments inside inner loops where strict synchronization between rows is not required.",
+        "Size the sketch width and depth appropriately to balance memory consumption and collision probability."
+      ],
+      "when_to_use": "Use when you need to track item frequencies or identify heavy hitters in high-throughput data streams across multiple concurrent threads.",
+      "when_not_to_use": "Do not use when exact frequency counts are mandatory or when the alphabet size is small enough to fit an exact frequency map.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to multiple hash locations in a Count-Min Sketch without deadlocks?",
+          "answer": "By using lock-free atomic Compare-And-Swap (CAS) loops independently for each hash index row."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation necessary for concurrent probabilistic data structures?",
+          "answer": "It safely defers the deallocation of dynamically managed memory until all concurrent reader and writer threads have unlinked their references."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "Lock-free Hash Maps",
+        "Heavy-Hitter Stream Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T16:11:51.193079+00:00",
+      "run_number": 2008
     }
   ]
 }
