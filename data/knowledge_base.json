@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1970,
-    "last_updated": "2026-09-29T01:50:47.683169+00:00",
-    "total_topics_learned": 1970
+    "total_runs": 1971,
+    "last_updated": "2026-09-29T01:53:55.536722+00:00",
+    "total_topics_learned": 1971
   },
   "entries": [
     {
@@ -94083,6 +94083,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T01:50:47.683147+00:00",
       "run_number": 1970
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core job dispatching in real-time operating system kernels and concurrent asynchronous execution frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue utilizing atomic compare-and-swap (CAS) operations for heap node manipulation and hazard pointers for safe memory management. It is crucial for building scalable multi-core task schedulers and operating system dispatchers that require minimal contention and deterministic performance.",
+      "key_points": [
+        "Leverages atomic heap-node-swapping and index-tracking CAS primitives to maintain heap invariants without traditional global locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic node allocations and prevent ABA problems during concurrent insertions and extractions.",
+        "Ensures high throughput and bounded latency for multi-core job dispatching in asynchronous execution pipelines.",
+        "Mitigates thread contention by decentralizing heap access and coordinating via fine-grained atomic state transitions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic node swapping using a CAS loop for priority queue restructuring.",
+        "correct": "bool swap_nodes(std::atomic<Node*>& parent, std::atomic<Node*>& child, Node* expected_parent, Node* expected_child) {\n    Node* current_p = expected_parent;\n    return parent.compare_exchange_weak(current_p, expected_child);\n}",
+        "wrong": "bool swap_nodes(Node* parent, Node* child) {\n    // Non-atomic read-modify-write vulnerable to race conditions\n    Node* temp = parent;\n    parent = child;\n    child = temp;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent heap index tracking and node re-anchoring.",
+        "Improper hazard pointer registration order, leading to premature memory reclamation and segmentation faults."
+      ],
+      "best_practices": [
+        "Protect all transient node references with thread-local hazard pointers before traversing concurrent heap branches.",
+        "Keep critical sections inside lock-free retry loops as concise as possible to maximize multi-core execution throughput."
+      ],
+      "when_to_use": "Use when building high-throughput real-time schedulers or multi-threaded asynchronous task engines where thread contention on a shared priority queue creates a bottleneck.",
+      "when_not_to_use": "Avoid in simpler applications where standard mutex-backed priority queues provide sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing to a globally visible list, signaling memory reclaimers to defer freeing those specific nodes until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the primary challenge when implementing a lock-free heap compared to a lock-free stack or queue?",
+          "answer": "Maintaining global structural invariants like completeness and ordering via local CAS operations is difficult because structural modifications often require updating multiple nodes simultaneously across distant levels of the tree."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management algorithms",
+        "Concurrent work-stealing schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T01:53:55.536711+00:00",
+      "run_number": 1971
     }
   ]
 }
