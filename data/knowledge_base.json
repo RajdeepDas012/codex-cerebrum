@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1980,
-    "last_updated": "2026-09-29T02:22:10.933815+00:00",
-    "total_topics_learned": 1980
+    "total_runs": 1981,
+    "last_updated": "2026-09-29T02:25:19.612865+00:00",
+    "total_topics_learned": 1981
   },
   "entries": [
     {
@@ -94559,6 +94559,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T02:22:10.933804+00:00",
       "run_number": 1980
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Min-Max Heap using atomic dual-level-swapping and boundary-comparing CAS primitives alongside hazard pointer memory reclamation for high-throughput double-ended priority queue operations and multi-core scheduling in real-time load balancers and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Min-Max Heap that supports efficient double-ended priority queue operations across multiple cores. By utilizing atomic dual-level-swapping and boundary-comparing compare-and-swap (CAS) primitives alongside hazard pointers, it prevents race conditions and memory leaks without relying on coarse-grained locks.",
+      "key_points": [
+        "Min-Max heaps maintain elements such that nodes at even levels represent local minima and odd levels represent local maxima.",
+        "Atomic dual-level-swapping ensures consistency when elements shift across alternating min and max tiers during concurrent insertions or deletions.",
+        "Boundary-comparing CAS primitives validate parent-child and grandparent-grandchild invariants without blocking concurrent readers or writers.",
+        "Hazard pointer memory reclamation safely manages node deallocation in dynamic multi-core environments without garbage collection overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of atomic node updating using hazard pointers for safe concurrent access.",
+        "correct": "template<typename T>\nvoid update_heap_node(AtomicNode<T>* node, T new_val, HazardPointer<T>& hp) {\n    HPGuard guard(hp, node);\n    T old_val = node->value;\n    while (!node->value.compare_exchange_weak(old_val, new_val)) {\n        guard.protect(node);\n        old_val = node->value;\n    }\n}",
+        "wrong": "template<typename T>\nvoid update_heap_node_unsafe(Node<T>* node, T new_val) {\n    // Missing synchronization and hazard protection causes race conditions\n    node->value = new_val;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer links, leading to use-after-free bugs.",
+        "Ignoring the alternating invariant checks between min and max levels, which corrupts the double-ended heap property."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before reading dynamically relocated nodes in a lock-free structure.",
+        "Keep atomic operation retry loops bounded and use backoff strategies to reduce cache line contention under heavy multi-core load."
+      ],
+      "when_to_use": "Use when you need high-throughput double-ended priority queue operations with minimal latency across numerous concurrent threads.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly constrained or when a simple single-threaded lock-based priority queue provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How does a Min-Max heap differ from a standard binary heap in terms of structure?",
+          "answer": "A Min-Max heap alternates levels where even levels store values smaller than their descendants (min levels) and odd levels store values larger than their descendants (max levels), allowing efficient access to both minimum and maximum elements."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing lock-free data structures?",
+          "answer": "Hazard pointers provide a safe mechanism for memory reclamation in lock-free algorithms by declaring which nodes a thread is currently accessing, preventing other threads from freeing those nodes prematurely."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Concurrent Priority Queues",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T02:25:19.612855+00:00",
+      "run_number": 1981
     }
   ]
 }
