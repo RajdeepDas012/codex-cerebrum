@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1976,
-    "last_updated": "2026-09-29T02:09:35.984526+00:00",
-    "total_topics_learned": 1976
+    "total_runs": 1977,
+    "last_updated": "2026-09-29T02:12:44.523754+00:00",
+    "total_topics_learned": 1977
   },
   "entries": [
     {
@@ -94367,6 +94367,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T02:09:35.984517+00:00",
       "run_number": 1976
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and bucket-salting CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core telemetry tracking in real-time network traffic monitoring systems and concurrent database query planning engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch enables high-throughput, multi-threaded frequency estimation of streaming data without thread blocking. By leveraging atomic compare-and-swap (CAS) operations for bucket increments and hazard pointers for memory management, it achieves scalable sub-linear space tracking for heavy hitters in real-time systems.",
+      "key_points": [
+        "Utilizes independent hash functions combined with salt values to map stream elements into a 2D matrix of frequency counters.",
+        "Employs atomic frequency-incrementing CAS primitives to safely update counters concurrently across multiple threads without lock contention.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation and prevent premature deallocation during concurrent reads and writes.",
+        "Provides a probabilistic frequency upper bound guarantee with configurable error tolerance and confidence parameters."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic increments of sketch counters using CAS loops.",
+        "correct": "void increment(const std::string& item) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t index = hash(item, seeds[i]) % width;\n        uint64_t current = table[i][index].load(std::memory_order_relaxed);\n        while (!table[i][index].compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed));\n    }\n}",
+        "wrong": "void increment(const std::string& item) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t index = hash(item, seeds[i]) % width;\n        table[i][index]++; // Non-atomic increment causing race conditions\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic counter increments which lead to lost updates under high concurrency.",
+        "Failing to use proper memory ordering models with CAS primitives, causing visibility issues across cores.",
+        "Neglecting memory reclamation safeguards, leading to memory leaks or use-after-free bugs when resetting or resizing the sketch."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for load operations inside the CAS retry loop and release-acquire semantics upon successful CAS completion.",
+        "Choose independent, fast hash functions (like MurmurHash or CityHash) with distinct salt seeds to minimize hash collisions.",
+        "Size the width and depth parameters appropriately based on acceptable error bounds and memory constraints."
+      ],
+      "when_to_use": "Use when you need to estimate item frequencies or track heavy hitters in high-throughput streaming environments with extreme multi-core concurrency where locks would bottleneck performance.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory without probabilistic over-estimation, or when data volume is small enough to fit into exact hash maps without memory pressure.",
+      "interview_questions": [
+        {
+          "question": "How do you guarantee thread safety in a Count-Min Sketch without using heavy mutex locks?",
+          "answer": "By utilizing atomic operations like compare-and-swap (CAS) on individual bucket counters and managing memory safely via hazard pointers or epoch-based reclamation."
+        },
+        {
+          "question": "Why might a concurrent Count-Min Sketch over-estimate frequencies, and how does concurrency affect this error?",
+          "answer": "It over-estimates due to hash collisions mapping distinct items to the same buckets. Concurrency itself doesn't increase algorithmic error bounds, but race conditions can cause lost updates if atomic primitives are not used correctly."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filter",
+        "HyperLogLog",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-29T02:12:44.523744+00:00",
+      "run_number": 1977
     }
   ]
 }
