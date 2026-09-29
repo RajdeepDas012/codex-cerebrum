@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1969,
-    "last_updated": "2026-09-29T01:47:32.126685+00:00",
-    "total_topics_learned": 1969
+    "total_runs": 1970,
+    "last_updated": "2026-09-29T01:50:47.683169+00:00",
+    "total_topics_learned": 1970
   },
   "entries": [
     {
@@ -94036,6 +94036,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T01:47:32.126665+00:00",
       "run_number": 1969
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hash Grid using atomic bucket-indexing and coordinate-quantization CAS primitives alongside hazard pointer memory reclamation for high-throughput broad-phase collision detection and multi-core particle simulation in real-time physics engines and concurrent computer graphics rendering pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free spatial hash grid maps continuous multi-dimensional coordinates to discrete grid buckets using atomic operations and hazard pointers, enabling scalable broad-phase collision detection without lock contention. It is vital for high-performance physics simulations and real-time graphics where thousands of dynamic objects must be queried concurrently across multiple cores.",
+      "key_points": [
+        "Utilizes coordinate quantization to map continuous floating-point positions into discrete 2D or 3D integer cell indices.",
+        "Employs atomic bucket-indexing (using Compare-And-Swap primitives) to insert objects into linked lists within hash buckets safely without global locks.",
+        "Integrates hazard pointers to safely manage memory reclamation of dynamically allocated node structures under concurrent insertions and deletions.",
+        "Achieves high throughput in broad-phase collision detection by narrowing down the collision space before expensive narrow-phase checks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion into a spatial hash grid bucket using CAS primitives.",
+        "correct": "void insertObject(std::atomic<Node*>& bucketHead, int objectId, HazardPointerManager& hpm) {\n    Node* newNode = new Node(objectId);\n    Node* oldHead;\n    do {\n        oldHead = bucketHead.load(std::memory_order_relaxed);\n        newNode->next = oldHead;\n    } while (!bucketHead.compare_exchange_weak(oldHead, newNode, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insertObject(std::atomic<Node*>& bucketHead, int objectId) {\n    Node* oldHead = bucketHead.load();\n    Node* newNode = new Node(objectId, oldHead);\n    bucketHead.store(newNode);\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory barriers correctly with CAS operations, leading to stale node next-pointers visible to competing threads.",
+        "Neglecting safe memory reclamation (like hazard pointers or epoch-based reclamation), which causes memory leaks or use-after-free bugs when nodes are removed."
+      ],
+      "best_practices": [
+        "Choose a grid cell size that matches the maximum bounding radius of simulated objects to minimize multi-cell overlap overhead.",
+        "Use thread-local storage or fine-grained bucket locks/CAS domains to reduce cache-line bouncing on heavily populated grid cells."
+      ],
+      "when_to_use": "Use when building real-time physics engines, particle systems, or massively multiplayer game servers requiring high-throughput, lock-free spatial indexing across multiple CPU cores.",
+      "when_not_to_use": "Avoid when the object distribution is extremely sparse or uniformly massive relative to a fixed grid size, as it can cause excessive hash collisions and memory waste.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions in a lock-free spatial hash grid without using traditional mutex locks?",
+          "answer": "By using a lock-free singly linked list per bucket, where new entries are prepended using atomic Compare-And-Swap (CAS) loops."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent spatial data structures?",
+          "answer": "Hazard pointers prevent other threads from freeing memory out from underneath a reader or modifier thread traversing the bucket's node chain asynchronously."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Quotient Filter",
+        "Hazard Pointer Memory Reclamation",
+        "Broad-Phase Collision Detection Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T01:50:47.683147+00:00",
+      "run_number": 1970
     }
   ]
 }
