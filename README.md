@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2011** |
-| Last Updated | `2026-09-29T16:21:34.419188+00:00` |
-| Dataset Size | `2011 entries` |
+| Total Topics Learned | **2012** |
+| Last Updated | `2026-09-29T20:36:29.652300+00:00` |
+| Dataset Size | `2012 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1037 |
+| data-structures | 1038 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 116 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index lookups in real-time relational databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core concurrent map traversals in real-time in-memory databases and concurrent caching layers`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core dynamic deletion in real-time distributed key-value storage systems and concurrent caching layers`
 - `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint-calculating and coefficient-solving CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core static set querying in real-time distributed key-value storage systems and concurrent URL filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core telemetry tracking in real-time network traffic monitors and concurrent log aggregation engines`
-- `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic pattern matching and multi-core substring search in real-time bioinformatics analysis pipelines and concurrent text processing engines`
 
 <!-- STATS_END -->
 
