@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2023,
-    "last_updated": "2026-09-29T21:11:14.215711+00:00",
-    "total_topics_learned": 2023
+    "total_runs": 2024,
+    "last_updated": "2026-09-29T21:14:23.815075+00:00",
+    "total_topics_learned": 2024
   },
   "entries": [
     {
@@ -96594,6 +96594,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-29T21:11:14.215693+00:00",
       "run_number": 2023
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-hyperplane-partitioning and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial querying in real-time point cloud processing systems and concurrent robotics motion planning engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a lock-free concurrent K-d Tree designed for high-throughput multi-dimensional point indexing. By leveraging atomic primitives and hazard pointers, it ensures safe memory management and lock-free node updates under intense multi-core contention.",
+      "key_points": [
+        "Utilizes atomic bounding-hyperplane-partitioning for safe structural tree splits.",
+        "Employs child-pointer-swinging via Compare-And-Swap (CAS) to update links without global locking.",
+        "Integrates hazard pointer memory reclamation to prevent ABA problems and safely free unlinked nodes.",
+        "Optimized for multi-dimensional nearest neighbor searches and real-time robotics motion planning."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer swapping during concurrent node insertion in a K-d Tree.",
+        "correct": "bool insert_child(std::atomic<Node*>& parent_link, Node* new_node) {\n    Node* expected = nullptr;\n    while (!parent_link.compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        if (expected != nullptr) return false; // Handled by splitting logic\n    }\n    return true;\n}",
+        "wrong": "Node* current = parent_link.load();\nif (current == nullptr) {\n    parent_link.store(new_node); // Non-atomic check-then-act race condition\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed traversal paths with hazard pointers, leading to use-after-free bugs.",
+        "Using locks for rebalancing operations, which defeats the lock-free throughput guarantees."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for all ancestor and sibling nodes before attempting child pointer updates.",
+        "Keep partitioning logic stateless where possible to minimize cache contention across cores."
+      ],
+      "when_to_use": "When building real-time robotics perception or point cloud processing pipelines requiring massive concurrent multi-dimensional range searches.",
+      "when_not_to_use": "In low-concurrency applications where simple synchronized data structures provide better baseline performance and lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads simultaneously insert points that require splitting the same leaf node in a lock-free K-d Tree?",
+          "answer": "By using atomic CAS primitives on the parent pointer and validating the tree depth/hyperplane boundaries before swinging the child pointer."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a concurrent lock-free K-d Tree instead of traditional garbage collection?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the pause times or overhead of tracing garbage collectors, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T21:14:23.815057+00:00",
+      "run_number": 2024
     }
   ]
 }
