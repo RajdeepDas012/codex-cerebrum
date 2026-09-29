@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2020,
-    "last_updated": "2026-09-29T21:01:40.090893+00:00",
-    "total_topics_learned": 2020
+    "total_runs": 2021,
+    "last_updated": "2026-09-29T21:04:56.990247+00:00",
+    "total_topics_learned": 2021
   },
   "entries": [
     {
@@ -96453,6 +96453,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-29T21:01:40.090873+00:00",
       "run_number": 2020
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent location-based services databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent spatial data structure that organizes multi-dimensional geometries using bounding boxes without lock contention. It uses atomic CAS operations for node modifications and hazard pointers to safely manage memory reclamation during high-throughput parallel spatial lookups.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free insertion, bounding-box adjustment, and node splitting.",
+        "Employs hazard pointers to safely defer memory reclamation of nodes deleted or split during concurrent traversals.",
+        "Optimizes multi-core execution for spatial geometric range queries and point-in-polygon checks.",
+        "Prevents race conditions during simultaneous spatial updates from multiple worker threads without relying on global mutexes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection of an R-Tree node during concurrent bounding-box updates",
+        "correct": "HazardPointer hp;\nNode* node = hp.protect(global_root);\nBox new_box = compute_expanded_box(node->box, item);\nwhile (!node->box.compare_exchange_weak(node->box, new_box)) {\n    // retry with updated expectations\n}\nhp.clear();",
+        "wrong": "Node* node = global_root;\nnode->box = compute_expanded_box(node->box, item); // Unsafe without hazard pointers or locks, prone to use-after-free"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to use-after-free bugs when nodes are split or deleted.",
+        "Using coarse-grained locks on subtrees which bottlenecks concurrent spatial insertions and high-frequency range queries."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard-pointer-based memory management before releasing structural R-Tree nodes back to the allocator.",
+        "Keep atomic bounding-box recalculations concise to minimize CAS retry contention under heavy multi-core write loads."
+      ],
+      "when_to_use": "Use when building high-throughput real-time geographic information systems or location-based services requiring low-latency concurrent spatial indexing.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with simple point data where standard R-Trees or grid-based indexes provide lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node splitting in a lock-free R-Tree?",
+          "answer": "Hazard pointers allow threads to register active nodes they are traversing so that concurrent writer threads deleting or splitting those nodes know to defer actual memory deallocation until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the primary challenge when performing atomic updates on bounding boxes in an R-Tree?",
+          "answer": "The main challenge is that bounding-box expansion often requires cascading updates up to the root, which can cause high CAS retry loops and severe contention among concurrent writer threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointer Memory Management",
+        "Spatial Indexing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T21:04:56.990197+00:00",
+      "run_number": 2021
     }
   ]
 }
