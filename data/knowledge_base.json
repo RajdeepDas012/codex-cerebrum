@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 1981,
-    "last_updated": "2026-09-29T02:25:19.612865+00:00",
-    "total_topics_learned": 1981
+    "total_runs": 1982,
+    "last_updated": "2026-09-29T08:13:03.341499+00:00",
+    "total_topics_learned": 1982
   },
   "entries": [
     {
@@ -94606,6 +94606,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-29T02:25:19.612855+00:00",
       "run_number": 1981
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core string prefix searching in real-time software-defined networking switches and concurrent network core routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Radix Tree is an optimized compact prefix tree that enables lock-free string lookups and insertion operations across multiple cores. By utilizing atomic child-pointer swapping and prefix-compression CAS primitives together with hazard pointers, it guarantees safe memory reclamation and high-throughput execution for network packet routing engines.",
+      "key_points": [
+        "Employs atomic child-pointer swapping and prefix-compression CAS operations to mutate tree topology safely without coarse-grained locking.",
+        "Utilizes hazard pointers to manage memory reclamation, preventing use-after-free bugs when concurrent threads delete or split compressed nodes.",
+        "Compresses single-child internal nodes to minimize tree depth, drastically reducing cache misses during long-prefix IP address lookups.",
+        "Achieves lock-free progression, ensuring that high-frequency concurrent writes and reads do not suffer from priority inversion or thread starvation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic child pointer update using compare-and-swap on a radix tree node",
+        "correct": "bool update_child(RadixNode* parent, char key_char, RadixNode* old_child, RadixNode* new_child) {\n    return parent->children[key_char].compare_exchange_strong(old_child, new_child);\n}",
+        "wrong": "RadixNode* update_child(RadixNode* parent, char key_char, RadixNode* new_child) {\n    parent->children[key_char] = new_child; // Non-atomic write causes data races\n    return parent->children[key_char];\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to memory corruption when another thread compresses or deletes the node.",
+        "Neglecting ABA problems during complex prefix splits and multi-step atomic pointer updates."
+      ],
+      "best_practices": [
+        "Always pin nodes using hazard pointers before reading child pointers during traversal.",
+        "Implement thorough memory pooling for node allocations to reduce OS-level allocator overhead under heavy concurrent workloads."
+      ],
+      "when_to_use": "Ideal for high-performance network routing tables, IP subnet lookups, and multi-core string dictionary matching where read throughput and concurrent updates are critical.",
+      "when_not_to_use": "Avoid when keys are short, completely random, and lack shared prefixes, as standard lock-free hash maps will provide better memory density and simpler implementation.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when multiple threads concurrently split or compress nodes in a lock-free Radix Tree?",
+          "answer": "By using tagged pointers or version counters combined with CAS, or by ensuring that hazard pointers and node epoch tracking prevent unsafe reuse of memory addresses."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free radix trees?",
+          "answer": "Hazard pointers avoid the heavy cache contention and atomic write overhead on shared reference counters that occur when multiple reader threads access the same root or high-traffic internal nodes simultaneously."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-29T08:13:03.341478+00:00",
+      "run_number": 1982
     }
   ]
 }
