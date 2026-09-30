@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2067,
-    "last_updated": "2026-09-30T14:04:01.842775+00:00",
-    "total_topics_learned": 2067
+    "total_runs": 2068,
+    "last_updated": "2026-09-30T14:07:48.871445+00:00",
+    "total_topics_learned": 2068
   },
   "entries": [
     {
@@ -98677,6 +98677,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T14:04:01.842752+00:00",
       "run_number": 2067
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-bubbling and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core thread scheduling in real-time asynchronous execution engines and concurrent task dispatching frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue by utilizing atomic compare-and-swap (CAS) operations for node bubbling and index swapping within a heap structure. It integrates hazard pointers to safely manage dynamic memory reclamation across multiple threads without blocking, ensuring optimal performance in high-throughput scheduling environments.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to perform lock-free node insertions and extractions.",
+        "Implements heap-node-bubbling and index-swapping strategies safely across concurrent threads.",
+        "Employs hazard pointers to prevent the ABA problem and guarantee safe memory reclamation for nodes pending deletion.",
+        "Optimized for high-throughput task prioritization and multi-core thread scheduling in real-time execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual atomic hazard pointer guard setup for safe concurrent node access.",
+        "correct": "template <typename T>\nvoid safe_dereference(std::atomic<Node<T>*>& node_ptr, HazardPointer<T>& hp) {\n    Node<T>* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n}",
+        "wrong": "template <typename T>\nNode<T>* unsafe_dereference(std::atomic<Node<T>*>& node_ptr) {\n    return node_ptr.load(std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer reads with hazard pointers, leading to use-after-free vulnerabilities when concurrent threads free extracted heap nodes.",
+        "Neglecting memory order constraints, which can cause inconsistent view of heap indices and broken ordering invariants."
+      ],
+      "best_practices": [
+        "Always use acquire-release semantics when loading and storing atomic node references in the priority queue.",
+        "Batch retired nodes locally per thread before scanning global hazard pointer records to reduce synchronization overhead."
+      ],
+      "when_to_use": "Use this when building low-latency task schedulers or asynchronous execution engines where lock contention on a shared priority queue severely limits multi-core scalability.",
+      "when_not_to_use": "Avoid this in single-threaded environments or systems with low concurrency where standard mutex-backed heaps provide simpler and more maintainable implementations.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation issues in a lock-free priority queue?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, preventing other threads from prematurely freeing those nodes until no hazard pointers reference them."
+        },
+        {
+          "question": "What is the primary challenge when implementing concurrent heap-node-bubbling using CAS?",
+          "answer": "The primary challenge is handling concurrent modifications where multiple threads try to bubble nodes up or down simultaneously, requiring careful validation of parent-child relationships before swapping indices."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Patterns"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T14:07:48.871422+00:00",
+      "run_number": 2068
     }
   ]
 }
