@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2042,
-    "last_updated": "2026-09-30T06:30:14.795015+00:00",
-    "total_topics_learned": 2042
+    "total_runs": 2043,
+    "last_updated": "2026-09-30T06:33:26.532838+00:00",
+    "total_topics_learned": 2043
   },
   "entries": [
     {
@@ -97497,6 +97497,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T06:30:14.794995+00:00",
       "run_number": 2042
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and wrap-around-handling CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core circular buffer messaging in real-time logging frameworks and concurrent telemetry ingestion engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer utilizes atomic head-tail advancement and wrap-around CAS operations to enable high-throughput, contention-free inter-thread communication. By combining circular buffer mechanics with safe memory reclamation like hazard pointers, it prevents race conditions and memory leaks during multi-core telemetry streaming and real-time event ingestion.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives to safely update read and write pointers without locking.",
+        "Handles circular buffer wrap-around conditions gracefully using modular arithmetic or masked indices.",
+        "Integrates hazard pointer memory reclamation to ensure safe node disposal without premature deallocation or use-after-free bugs.",
+        "Maximizes inter-thread messaging throughput and minimizes latency variance in multi-core logging and telemetry engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free ring buffer slot reservation using atomic head advancement.",
+        "correct": "bool enqueue(T item) {\n  size_t current_tail = tail.load(std::memory_order_relaxed);\n  while (true) {\n    size_t current_head = head.load(std::memory_order_acquire);\n    if (current_tail - current_head >= CAPACITY) return false; // Buffer full\n    if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n      buffer[current_tail % CAPACITY].item = item;\n      buffer[current_tail % CAPACITY].sequence.store(current_tail + 1, std::memory_order_release);\n      return true;\n    }\n  }\n}",
+        "wrong": "bool enqueue(T item) {\n  mutex.lock();\n  buffer[tail++] = item;\n  mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for ABA problems or stale pointer values during rapid wrap-around cycles.",
+        "Using incorrect memory ordering constraints (e.g., sequentially consistent when relaxed or acquire-release suffices), which degrades hardware pipeline performance."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail counters to separate cache lines, eliminating false sharing between producer and consumer cores.",
+        "Pair concurrent data structures with robust hazard pointer or epoch-based reclamation frameworks to guarantee safety."
+      ],
+      "when_to_use": "Ideal for single-producer single-consumer or multi-producer multi-consumer high-frequency streaming contexts where strict low-latency guarantees and lock-free progress are required.",
+      "when_not_to_use": "Avoid when memory footprint must remain minimal and dynamically resizable queues or unbounded structures are preferred over fixed-size buffers.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed data in a lock-free ring buffer?",
+          "answer": "By tracking both the head (consumer) and tail (producer) pointers atomically and checking that the distance between them does not exceed the total buffer capacity before issuing a CAS."
+        },
+        {
+          "question": "Why is cache-line padding essential for head and tail variables in a multi-threaded ring buffer?",
+          "answer": "Padding ensures that frequently modified pointers reside on distinct cache lines, preventing cache thrashing (false sharing) caused by multiple cores invalidating each other's CPU caches."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Queue",
+        "Hazard Pointers",
+        "False Sharing and Cache Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T06:33:26.532818+00:00",
+      "run_number": 2043
     }
   ]
 }
