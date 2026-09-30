@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2036,
-    "last_updated": "2026-09-30T00:44:28.026326+00:00",
-    "total_topics_learned": 2036
+    "total_runs": 2037,
+    "last_updated": "2026-09-30T00:47:37.395836+00:00",
+    "total_topics_learned": 2037
   },
   "entries": [
     {
@@ -97213,6 +97213,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T00:44:28.026304+00:00",
       "run_number": 2036
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and parent-child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread pool workload balancing in real-time asynchronous execution engines and concurrent job dispatching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent priority queue utilizing atomic operations like Compare-And-Swap (CAS) for heap adjustments and hazard pointers to safely manage dynamic memory reclamation without blocking. It is crucial for building low-latency, highly concurrent scheduling systems that handle prioritized tasks across multiple CPU cores.",
+      "key_points": [
+        "Utilizes atomic heap-node-promoting and parent-child-pointer-swinging CAS primitives to modify shared heap topology without locking.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and ensure safe node deallocation in multi-threaded environments.",
+        "Maintains lock-free progress guarantees, ensuring that at least some thread makes progress even under heavy contention.",
+        "Optimized for high-throughput task scheduling and workload balancing in real-time asynchronous execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node promotion via CAS for a lock-free heap structure",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int priority;\n    std::atomic<Node*> parent;\n};\n\nbool promoteNode(std::atomic<Node*>& targetParent, Node* expected, Node* desired) {\n    return targetParent.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* current = targetParent.load();\nif (current->priority < desired->priority) {\n    targetParent.store(desired); // Non-atomic check-then-act race condition\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes against the ABA problem during concurrent heap structural modifications.",
+        "Neglecting proper memory reclamation, leading to severe memory leaks or segmentation faults when nodes are unlinked by competing threads.",
+        "Using blocking synchronization primitives inside lock-free pathways, degrading progress guarantees to lock-based or worse."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory management to safely track thread references to nodes before reclaiming memory.",
+        "Keep atomic operation retry loops bounded and use appropriate memory ordering constraints (e.g., acquire-release semantics).",
+        "Design tree structures to minimize contention hot-spots at the root node during concurrent insertions and extractions."
+      ],
+      "when_to_use": "Use when building high-frequency asynchronous execution engines or real-time thread pool schedulers where task priority strictly dictates execution order across many concurrent worker threads.",
+      "when_not_to_use": "Avoid in simpler, single-threaded applications or systems where lock-based standard priority queues provide sufficient throughput with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to promote nodes in a lock-free priority queue simultaneously?",
+          "answer": "By using atomic Compare-And-Swap (CAS) primitives on parent-child pointers, ensuring only one thread succeeds in swinging the pointer while the other retries."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation necessary in a lock-free priority queue implementation?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing other threads from prematurely freeing or reusing those memory locations while concurrent updates occur."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointers and memory management",
+        "Concurrent thread pool work-stealing queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T00:47:37.395813+00:00",
+      "run_number": 2037
     }
   ]
 }

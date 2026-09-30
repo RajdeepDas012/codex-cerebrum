@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2036** |
-| Last Updated | `2026-09-30T00:44:28.026326+00:00` |
-| Dataset Size | `2036 entries` |
+| Total Topics Learned | **2037** |
+| Last Updated | `2026-09-30T00:47:37.395836+00:00` |
+| Dataset Size | `2037 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1060 |
+| data-structures | 1061 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 117 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and parent-child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread pool workload balancing in real-time asynchronous execution engines and concurrent job dispatching systems`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core duplicate detection in real-time distributed crawler systems and concurrent database query optimization engines`
 - `Implementation of a lock-free thread-safe concurrent MPMC (Multi-Producer Multi-Consumer) Bounded Queue using atomic sequence-number-stamping and head-tail-pointer-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput inter-thread task dispatching and multi-core asynchronous event processing in real-time server messaging frameworks and concurrent job scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent SPSC (Single-Producer Single-Consumer) Ring Buffer using atomic memory-ordering fences and cache-line-padding CAS primitives alongside epoch-based memory reclamation for high-throughput inter-core network packet ring processing and multi-core high-frequency trading messaging engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core dynamic merging in real-time distributed storage systems and concurrent caching layers`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core randomized set operations in real-time in-memory databases and concurrent map indexing engines`
 
 <!-- STATS_END -->
 
