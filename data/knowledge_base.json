@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2045,
-    "last_updated": "2026-09-30T06:39:44.518656+00:00",
-    "total_topics_learned": 2045
+    "total_runs": 2046,
+    "last_updated": "2026-09-30T06:42:53.578570+00:00",
+    "total_topics_learned": 2046
   },
   "entries": [
     {
@@ -97638,6 +97638,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T06:39:44.518637+00:00",
       "run_number": 2045
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Stack using atomic top-pointer-incrementing and node-recycling CAS primitives alongside hazard pointer memory reclamation for high-throughput thread-safe resource pooling and multi-core memory reuse in real-time asynchronous execution engines and concurrent task allocation frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free bounded stack using atomic compare-and-swap (CAS) operations and hazard pointers for safe memory reclamation. It ensures high-throughput LIFO operations while preventing the ABA problem and dynamic memory allocation overhead through node recycling.",
+      "key_points": [
+        "Utilizes atomic top-pointer primitives to coordinate push and pop operations across multiple threads without locks.",
+        "Employs a node-recycling strategy or free list to cap dynamic memory overhead and bound capacity in resource pooling scenarios.",
+        "Integrates hazard pointers to safely defer memory reclamation of popped nodes until all concurrent threads are finished reading them.",
+        "Prevents thread contention bottlenecks common in mutex-backed stacks, making it ideal for high-performance task schedulers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free stack push operation using atomic compare-and-swap.",
+        "correct": "bool push(Node* new_node) {\n    Node* old_top;\n    do {\n        old_top = top.load(std::memory_order_relaxed);\n        new_node->next = old_top;\n    } while (!top.compare_exchange_weak(old_top, new_node,\n                                       std::memory_order_release,\n                                       std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool push(Node* new_node) {\n    Node* old_top = top;\n    new_node->next = old_top;\n    top = new_node; // Non-atomic update causes severe race conditions and data corruption\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Falling victim to the ABA problem where a node is popped, freed, and re-allocated, causing a CAS to succeed incorrectly.",
+        "Failing to properly protect shared pointer reads with hazard pointers, leading to use-after-free race conditions during high contention."
+      ],
+      "best_practices": [
+        "Always pair atomic pointer updates with acquire-release memory ordering guarantees to ensure visibility across CPU cores.",
+        "Implement an epoch-based or hazard-pointer-based reclamation mechanism to safely clean up nodes recycled by concurrent pop operations."
+      ],
+      "when_to_use": "Use when you need extreme throughput for LIFO operations under heavy multi-core contention, such as in asynchronous execution engines or object pooling.",
+      "when_not_to_use": "Avoid when your memory footprint must remain strictly minimal without pre-allocated node pools, or when a simple mutex-backed stack provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How does a lock-free stack avoid using traditional mutexes?",
+          "answer": "It uses atomic Compare-And-Swap (CAS) primitives to attempt updating the stack's top pointer, retrying in a loop if another thread modifies it concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free stack in languages without garbage collection?",
+          "answer": "Hazard pointers prevent other threads from freeing a node's memory while a thread is actively traversing or reading pointers inside that node, avoiding use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free ring buffer",
+        "ABA problem",
+        "atomic compare-and-swap"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T06:42:53.578550+00:00",
+      "run_number": 2046
     }
   ]
 }
