@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2041,
-    "last_updated": "2026-09-30T01:00:31.141465+00:00",
-    "total_topics_learned": 2041
+    "total_runs": 2042,
+    "last_updated": "2026-09-30T06:30:14.795015+00:00",
+    "total_topics_learned": 2042
   },
   "entries": [
     {
@@ -97450,6 +97450,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T01:00:31.141443+00:00",
       "run_number": 2041
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core sorted range queries in real-time in-memory databases and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic Compare-And-Swap (CAS) operations to manage multi-level forward pointers and node insertions without blocking threads. This architecture enables high-throughput sorted range queries and ordered set operations essential for scalable in-memory storage engines.",
+      "key_points": [
+        "Uses atomic tower-height-scaling and forward-pointer-splicing via CAS to link nodes at multiple probabilistic levels.",
+        "Employs hazard pointer memory reclamation to safely free retired nodes without triggering ABA problems or use-after-free race conditions.",
+        "Facilitates lock-free sorted traversals and range queries, minimizing thread contention across multi-core processors.",
+        "Maintains probabilistic logarithmic search times ($O(\\log n)$) comparable to balanced trees while supporting fully concurrent modifications."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual forward pointer splicing pattern using atomic CAS logic for a skip list node.",
+        "correct": "class Node:\n    def __init__(self, key, value, height):\n        self.key = key\n        self.value = value\n        self.forward = [None] * height\n        self.marked = False\n\ndef CAS_splice(node, level, expected_next, new_next):\n    # Atomic pointer swap representation\n    if node.forward[level] == expected_next:\n        node.forward[level] = new_next\n        return True\n    return False",
+        "wrong": "def unsafe_splice(node, level, new_next):\n    # Non-atomic update prone to race conditions and lost updates\n    node.forward[level] = new_next"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically as deleted before attempting physical pointer removal, leading to inconsistent structural states.",
+        "Neglecting proper memory reclamation (such as hazard pointers), resulting in severe memory leaks or segmentation faults."
+      ],
+      "best_practices": [
+        "Implement two-phase deletion where nodes are first logically marked (e.g., via a marked bit in the pointer) before unlinking them physically.",
+        "Use thread-local hazard pointer records to protect nodes currently being accessed by reader threads during modification operations."
+      ],
+      "when_to_use": "Ideal for high-throughput concurrent in-memory databases and key-value stores requiring frequent ordered range scans and low contention inserts.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly minimized or when workloads are strictly single-threaded, as simpler data structures incur less overhead.",
+      "interview_questions": [
+        {
+          "question": "Why is logical deletion required before physical unlinking in a lock-free skip list?",
+          "answer": "Logical deletion prevents other threads from inserting new nodes immediately after a node that is concurrently being unlinked from a lower tower level, preserving structural integrity."
+        },
+        {
+          "question": "How do hazard pointers prevent memory corruption in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to globally publish references to nodes they are currently accessing, ensuring memory reclaimers do not free those nodes until no thread holds a hazard pointer to them."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-algorithms",
+        "concurrent-data-structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T06:30:14.794995+00:00",
+      "run_number": 2042
     }
   ]
 }
