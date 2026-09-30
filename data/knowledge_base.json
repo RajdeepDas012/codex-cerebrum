@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2034,
-    "last_updated": "2026-09-30T00:38:09.841590+00:00",
-    "total_topics_learned": 2034
+    "total_runs": 2035,
+    "last_updated": "2026-09-30T00:41:19.175665+00:00",
+    "total_topics_learned": 2035
   },
   "entries": [
     {
@@ -97119,6 +97119,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-09-30T00:38:09.841568+00:00",
       "run_number": 2034
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent MPMC (Multi-Producer Multi-Consumer) Bounded Queue using atomic sequence-number-stamping and head-tail-pointer-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput inter-thread task dispatching and multi-core asynchronous event processing in real-time server messaging frameworks and concurrent job scheduling engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An MPMC bounded queue allows multiple producer and consumer threads to safely exchange data concurrently without traditional locking mechanisms. By leveraging atomic sequence numbers per cell and CAS-driven head/tail pointer advancements, it prevents contention bottlenecks and achieves high-throughput task dispatching in multi-core systems.",
+      "key_points": [
+        "Utilizes a fixed-size circular buffer array backed by atomic cell structures with sequence numbers.",
+        "Producers claim slots by checking if the cell sequence matches the expected write turn using atomic operations.",
+        "Consumers dequeue items by verifying cell sequence stamps match the expected read turn before advancing tail pointers.",
+        "Employs epoch-based memory reclamation or bounded buffer array strategies to avoid dynamic allocations under high contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free MPMC bounded queue node cell structure using atomic sequence stamping.",
+        "correct": "struct Cell { std::atomic<size_t> sequence; T data; };",
+        "wrong": "struct Cell { size_t sequence; T data; }; // Missing atomicity leads to race conditions on sequence checking"
+      },
+      "common_mistakes": [
+        "Failing to handle full-buffer and empty-buffer conditions correctly under heavy race conditions.",
+        "Using weaker memory orderings on sequence loads and stores, resulting in stale visibility across cores."
+      ],
+      "best_practices": [
+        "Align atomic head and tail pointers to distinct cache lines to completely prevent false sharing between producer and consumer threads.",
+        "Use acquire-release memory semantics for synchronization across thread boundaries on cell sequence checks."
+      ],
+      "when_to_use": "When multiple worker threads need to push and pull tasks continuously with low latency in bounded work-stealing schedulers or messaging queues.",
+      "when_not_to_use": "When the queue size cannot be bounded in advance or memory footprint must dynamically scale up and down.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed items in a lock-free MPMC bounded queue?",
+          "answer": "By using atomic sequence numbers per cell that track the number of times the cell has been wrapped around, ensuring a producer only writes when the sequence equals its expected turn."
+        },
+        {
+          "question": "Why are head and tail pointers prone to false sharing in high-throughput MPMC queues, and how do you fix it?",
+          "answer": "Because threads on separate cores frequently invalidate each other's L1/L2 cache lines when modifying adjacent variables; this is fixed by padding the pointers to separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free SPSC Ring Buffer",
+        "Hazard Pointer Memory Reclamation",
+        "Work-Stealing Task Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T00:41:19.175642+00:00",
+      "run_number": 2035
     }
   ]
 }
