@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2072,
-    "last_updated": "2026-09-30T19:00:43.811699+00:00",
-    "total_topics_learned": 2072
+    "total_runs": 2073,
+    "last_updated": "2026-09-30T19:03:52.526869+00:00",
+    "total_topics_learned": 2073
   },
   "entries": [
     {
@@ -98913,6 +98913,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T19:00:43.811679+00:00",
       "run_number": 2072
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-level-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value storage and multi-core concurrent map operations in real-time in-memory database engines and concurrent key-value caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip List achieves high-throughput ordered data management by combining probabilistic multi-level towers with atomic Compare-And-Swap (CAS) operations for pointer splicing. It avoids coarse-grained locking bottlenecks, enabling scalable concurrent insertions, deletions, and range queries across multi-core systems.",
+      "key_points": [
+        "Uses probabilistic multi-level towers to achieve O(log n) expected time complexity for search, insertion, and deletion operations.",
+        "Employs atomic forward-pointer-splicing CAS primitives to safely modify multi-level next-pointers without acquiring global or node-level locks.",
+        "Integrates hazard pointer memory reclamation to safely free retired nodes only after all concurrent reader threads have unlinked references.",
+        "Handles tower-level cascading updates cleanly to maintain structural consistency across concurrent modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward-pointer-splicing using CAS in a concurrent skip list node structure.",
+        "correct": "bool CAS_Next(Node* expected, Node* desired) {\n    return next.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = next;\nnext = desired; // Not atomic, leads to race conditions and corrupted pointers."
+      },
+      "common_mistakes": [
+        "Failing to protect node traversal with hazard pointers, leading to use-after-free bugs when another thread deletes a node.",
+        "Neglecting logical deletion flags (mark bits) on forward pointers, causing half-inserted or deleted nodes to corrupt skip list layers."
+      ],
+      "best_practices": [
+        "Use marked pointers (e.g., setting the lowest bit of a pointer via CAS) to logically unlink nodes before physically removing them from all levels.",
+        "Periodically scan and clean up retired nodes using thread-local hazard pointer records to bound memory usage without introducing blocking stalls."
+      ],
+      "when_to_use": "Use when building high-throughput ordered maps, caches, or in-memory databases requiring lock-free scalability under heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid when memory overhead per node (due to multiple forward pointers and hazard tracking) is prohibitive, or when simple single-threaded performance is sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a thread from freeing a skip list node while another thread is concurrently traversing through it?",
+          "answer": "By protecting the node reference using hazard pointers, which register active pointers before access and defer physical deallocation until no thread holds a hazard reference to the node."
+        },
+        {
+          "question": "Why are marked pointers (or logical deletion bits) necessary in lock-free skip lists?",
+          "answer": "Marked pointers allow threads to atomically flag a node as deleted on all its tower levels, preventing other threads from inserting new nodes immediately after a half-removed node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Priority Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-free concurrent Tries"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T19:03:52.526845+00:00",
+      "run_number": 2073
     }
   ]
 }
