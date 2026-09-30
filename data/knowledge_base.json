@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2039,
-    "last_updated": "2026-09-30T00:53:55.680318+00:00",
-    "total_topics_learned": 2039
+    "total_runs": 2040,
+    "last_updated": "2026-09-30T00:57:20.503434+00:00",
+    "total_topics_learned": 2040
   },
   "entries": [
     {
@@ -97356,6 +97356,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T00:53:55.680296+00:00",
       "run_number": 2039
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent Hash Map using atomic bucket-resizing and node-chain-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core dynamic rehashing in real-time distributed caching systems and concurrent in-memory database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent hash map enables multiple threads to execute insertions, deletions, and lookups simultaneously without global locks. By leveraging atomic bucket-resizing, node-chain-splicing CAS operations, and hazard pointers, it ensures robust thread safety, eliminates thread contention bottlenecks, and avoids memory reclamation race conditions.",
+      "key_points": [
+        "Utilizes compare-and-swap (CAS) primitives for atomic node-chain-splicing and bucket pointer updates.",
+        "Implements hazard pointers to safely defer memory deallocation of deleted hash map nodes until active readers finish access.",
+        "Performs incremental or bucket-by-bucket atomic resizing to prevent lock-step migration pauses across multiple threads.",
+        "Ensures high-throughput scaling across multiple CPU cores for distributed caching and in-memory transactional databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion into a lock-free bucket chain using CAS loops and hazard pointers.",
+        "correct": "bool insert(K key, V val) {\n    Node* newNode = new Node(key, val);\n    size_t idx = hash(key) % capacity;\n    while (true) {\n        Node* head = buckets[idx].load(std::memory_order_acquire);\n        newNode->next = head;\n        if (buckets[idx].compare_exchange_weak(head, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(K key, V val) {\n    Node* newNode = new Node(key, val);\n    size_t idx = hash(key) % capacity;\n    // Missing CAS loop leads to lost updates under multi-threaded contention\n    buckets[idx].store(newNode);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free bugs during dynamic rehashing.",
+        "Using naive global locking internally, which completely negates the performance benefits of lock-free data structures."
+      ],
+      "best_practices": [
+        "Employ acquire-release memory ordering semantics on atomic pointer reads and writes to guarantee correct visibility across threads.",
+        "Design resizing logic to be incremental so single threads do not block the entire hash map during a massive rehash phase."
+      ],
+      "when_to_use": "Use when building low-latency, multi-threaded distributed caches, session stores, or real-time stream processing keyspaces requiring extreme concurrent read-write scaling.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard synchronized maps or mutex-protected structures provide sufficient performance with significantly less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free hash map?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading so that other threads deleting those nodes know to defer actual memory deallocation until no active reader holds a reference to them."
+        },
+        {
+          "question": "Why is incremental resizing preferred over blocking global rehashing in concurrent hash maps?",
+          "answer": "Incremental resizing spreads the cost of migrating keys across multiple operations and threads, preventing latency spikes and thread stalls that occur when locking the entire table to rehash at once."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-free Bounded Queues",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T00:57:20.503410+00:00",
+      "run_number": 2040
     }
   ]
 }
