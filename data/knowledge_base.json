@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2077,
-    "last_updated": "2026-09-30T19:16:46.286940+00:00",
-    "total_topics_learned": 2077
+    "total_runs": 2078,
+    "last_updated": "2026-09-30T19:20:33.597415+00:00",
+    "total_topics_learned": 2078
   },
   "entries": [
     {
@@ -99150,6 +99150,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T19:16:46.286920+00:00",
       "run_number": 2077
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic head-tail-advancing and wrap-around-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core producer-consumer streaming in real-time financial market data feeds and concurrent telemetry ingestion platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance circular queue using atomic compare-and-swap (CAS) operations to manage head and tail pointers without locks. It ensures safe multi-producer and multi-consumer data streaming with minimal contention and zero memory allocation overhead in critical paths.",
+      "key_points": [
+        "Utilizes atomic head-tail-advancing CAS primitives to coordinate concurrent producers and consumers without blocking mutexes.",
+        "Employs wrap-around-slot-claiming mechanisms to map logical sequence numbers to physical array indices safely.",
+        "Integrates hazard pointer memory reclamation to manage node states and prevent memory reuse race conditions.",
+        "Achieves zero-copy inter-thread messaging ideal for high-throughput financial tick feeds and telemetry pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot reservation and state transition in a lock-free ring buffer",
+        "correct": "bool claim_slot(std::atomic<size_t>& tail, size_t capacity, size_t& ticket) {\n    ticket = tail.load(std::memory_order_relaxed);\n    while (!tail.compare_exchange_weak(ticket, ticket + 1, std::memory_order_release, std::memory_order_relaxed)) {\n        // retries until successful slot claim\n    }\n    return true;\n}",
+        "wrong": "bool claim_slot_bad(size_t& tail) {\n    size_t ticket = tail;\n    tail++; // Non-atomic increment causes severe race conditions under multi-threading\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments or relaxed memory ordering where acquire-release semantics are mandatory for payload visibility.",
+        "Failing to handle buffer wrap-around properly, leading to index out-of-bounds errors or sequence number overflows."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail pointers to distinct cache lines to prevent false sharing across multi-core processors.",
+        "Use power-of-two buffer capacities to enable fast bitwise masking instead of expensive modulo operations.",
+        "Combine sequence state tags with buffer slots to easily distinguish between empty, writing, written, and reading states."
+      ],
+      "when_to_use": "Use when you need fixed-capacity, ultra-low latency, thread-safe communication channels between producer and consumer threads without kernel-level synchronization overhead.",
+      "when_not_to_use": "Avoid when the data stream volume is highly unpredictable and requires dynamic resizing, or when the message payload sizes vary drastically.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a fast producer from overwriting unconsumed data in a lock-free ring buffer?",
+          "answer": "By using sequence numbers per slot combined with bounded tracking of the consumer's slowest active position, ensuring the producer blocks or fails the CAS if the buffer is full."
+        },
+        {
+          "question": "Why is cache-line padding critical for concurrent ring buffers shared across multiple cores?",
+          "answer": "It prevents false sharing, which occurs when the head and tail pointers reside on the same CPU cache line, causing constant cache invalidation traffic between core caches."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded Stack",
+        "Memory Barriers and Memory Ordering",
+        "Hazard Pointers and Epoch-Based Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T19:20:33.597394+00:00",
+      "run_number": 2078
     }
   ]
 }
