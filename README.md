@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2048** |
-| Last Updated | `2026-09-30T06:49:10.926417+00:00` |
-| Dataset Size | `2048 entries` |
+| Total Topics Learned | **2049** |
+| Last Updated | `2026-09-30T06:52:21.605342+00:00` |
+| Dataset Size | `2049 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1071 |
+| data-structures | 1072 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 117 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Deque using atomic bidirectional-pointer-swinging and tail-head-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput double-ended work-stealing and multi-core task scheduling in real-time asynchronous execution frameworks and concurrent thread pool engines`
 - `Implementation of a lock-free thread-safe concurrent Vector Clock using atomic version-vector-incrementing and causality-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed event ordering and multi-core conflict resolution in real-time collaborative editing systems and concurrent distributed state stores`
 - `Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-wrapping and enqueue-dequeue-cascading CAS primitives alongside epoch-based memory reclamation for high-throughput task queuing and multi-core work-stealing execution in real-time asynchronous server frameworks and concurrent thread pool runtime environments`
 - `Implementation of a lock-free thread-safe concurrent Bounded Stack using atomic top-pointer-incrementing and node-recycling CAS primitives alongside hazard pointer memory reclamation for high-throughput thread-safe resource pooling and multi-core memory reuse in real-time asynchronous execution engines and concurrent task allocation frameworks`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core stream aggregation in real-time big data analytics engines and concurrent telemetry monitoring systems`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-wise-routing and node-branch-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent router forwarding engines`
 
 <!-- STATS_END -->
 

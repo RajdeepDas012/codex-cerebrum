@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2048,
-    "last_updated": "2026-09-30T06:49:10.926417+00:00",
-    "total_topics_learned": 2048
+    "total_runs": 2049,
+    "last_updated": "2026-09-30T06:52:21.605342+00:00",
+    "total_topics_learned": 2049
   },
   "entries": [
     {
@@ -97780,6 +97780,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T06:49:10.926399+00:00",
       "run_number": 2048
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Deque using atomic bidirectional-pointer-swinging and tail-head-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput double-ended work-stealing and multi-core task scheduling in real-time asynchronous execution frameworks and concurrent thread pool engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent data structure that allows elements with priorities to be inserted and extracted from both ends without blocking. It uses atomic CAS operations and hazard pointers to safely manage concurrent double-ended queue modifications and memory reclamation across multiple CPU cores.",
+      "key_points": [
+        "Utilizes atomic bidirectional-pointer-swinging and tail-head-stealing CAS primitives to manage multi-core thread access.",
+        "Implements hazard pointer memory reclamation to securely free nodes without inducing the ABA problem or memory leaks.",
+        "Enables high-throughput double-ended work-stealing for advanced asynchronous execution frameworks and task schedulers.",
+        "Maintains priority constraints concurrently across distributed worker threads without traditional locking mechanisms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic push operation on a lock-free concurrent priority deque node using hazard pointers.",
+        "correct": "bool push_front(Node* new_node) {\n    while (true) {\n        Node* old_head = head.load(std::memory_order_relaxed);\n        hazard_pointers.protect(0, old_head);\n        if (head.load() != old_head) continue;\n        new_node->next = old_head;\n        if (head.compare_exchange_weak(old_head, new_node)) {\n            hazard_pointers.clear(0);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool push_front(Node* new_node) {\n    Node* old_head = head.load();\n    new_node->next = old_head;\n    head.store(new_node); // Missing CAS loop and hazard pointer protection, leading to race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading shared pointers, creating vulnerabilities for use-after-free bugs.",
+        "Using non-atomic checks followed by atomic operations, which breaks atomicity and introduces race conditions.",
+        "Ignoring the ABA problem when performing CAS operations on pointer fields."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer reads with hazard pointer protection blocks before traversing node structures.",
+        "Use weak CAS operations inside loops to handle spurious failures efficiently on multi-core architectures.",
+        "Batch memory retirement calls to minimize the overhead of hazard pointer scans."
+      ],
+      "when_to_use": "When building high-performance work-stealing thread pools, real-time task schedulers, or asynchronous execution engines that require low-latency priority operations from multiple threads.",
+      "when_not_to_use": "In single-threaded applications or systems with low concurrency where standard mutex-protected priority queues offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation issues in lock-free concurrent data structures?",
+          "answer": "Hazard pointers allow threads to publish pointers to nodes they are currently accessing, ensuring that concurrent collection mechanisms do not free those memory addresses until no thread references them."
+        },
+        {
+          "question": "What is the primary challenge when implementing a lock-free double-ended priority queue compared to a single-ended stack?",
+          "answer": "Contention and coordination at both ends of the structure (head and tail) where concurrent threads might attempt to steal or modify overlapping nodes, requiring complex atomic pointer swinging."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded Queue",
+        "Hazard Pointer Memory Management",
+        "Work-Stealing Task Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T06:52:21.605323+00:00",
+      "run_number": 2049
     }
   ]
 }
