@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2033,
-    "last_updated": "2026-09-30T00:34:57.770320+00:00",
-    "total_topics_learned": 2033
+    "total_runs": 2034,
+    "last_updated": "2026-09-30T00:38:09.841590+00:00",
+    "total_topics_learned": 2034
   },
   "entries": [
     {
@@ -97071,6 +97071,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T00:34:57.770298+00:00",
       "run_number": 2033
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SPSC (Single-Producer Single-Consumer) Ring Buffer using atomic memory-ordering fences and cache-line-padding CAS primitives alongside epoch-based memory reclamation for high-throughput inter-core network packet ring processing and multi-core high-frequency trading messaging engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An SPSC Ring Buffer is a bounded FIFO data structure optimized for absolute minimal synchronization overhead between exactly one producer and one consumer thread. By leveraging atomic load/store operations with sequential consistency or acquire-release semantics alongside cache-line padding, it eliminates mutex contention and false sharing, making it ideal for low-latency messaging.",
+      "key_points": [
+        "Utilizes a fixed-size contiguous array wrapped by atomic head and tail indices to achieve O(1) time complexity for both enqueue and dequeue operations.",
+        "Eliminates locks and condition variables, relying entirely on memory-ordering fences and atomic primitives to coordinate between the producer and consumer.",
+        "Employs cache-line padding (typically 64 bytes) to prevent false sharing by ensuring head and tail variables reside on separate CPU cache lines.",
+        "Achieves lock-free and wait-free guarantees in practice for single threads since writes to the head index are owned exclusively by the producer and reads by the consumer."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe SPSC ring buffer utilizing atomic operations and acquire-release memory ordering.",
+        "correct": "template <typename T, size_t Capacity>\nclass SPSCRingBuffer {\n    struct Node {\n        T data;\n    };\n    Node buffer[Capacity + 1];\n    alignas(64) std::atomic<size_t> head{0};\n    alignas(64) std::atomic<size_t> tail{0};\npublic:\n    bool push(const T& item) {\n        size_t current_head = head.load(std::memory_order_relaxed);\n        size_t current_tail = tail.load(std::memory_order_acquire);\n        if ((current_head + 1) % (Capacity + 1) == current_tail) return false;\n        buffer[current_head].data = item;\n        head.store((current_head + 1) % (Capacity + 1), std::memory_order_release);\n        return true;\n    }\n    bool pop(T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if (current_tail == current_head) return false;\n        item = buffer[current_tail].data;\n        tail.store((current_tail + 1) % (Capacity + 1), std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "template <typename T, size_t Capacity>\nclass BadSPSCRingBuffer {\n    std::atomic<size_t> head{0}, tail{0}; // Missing cache-line padding leading to false sharing\n    T buffer[Capacity];\npublic:\n    bool push(const T& item) {\n        head.store(head.load() + 1); // Missing acquire-release memory ordering guarantees\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use explicit memory ordering (e.g., relying on sequential consistency everywhere or omitting acquire-release semantics), which can cause instruction reordering by the CPU or compiler.",
+        "Placing the producer's write index and consumer's read index on the same cache line, triggering severe performance degradation via cache bouncing (false sharing)."
+      ],
+      "best_practices": [
+        "Use std::memory_order_acquire when reading shared indices to ensure prior writes by the opposing thread become visible.",
+        "Use std::memory_order_release when updating shared indices to guarantee prior data modifications are flushed and visible before the index update is published.",
+        "Pad atomic variables explicitly using alignas(64) or hardware-specific cache line constants to ensure strict hardware isolation."
+      ],
+      "when_to_use": "When you have a strict single-producer and single-consumer thread architecture requiring ultra-low latency, predictable execution times, and zero mutex contention.",
+      "when_not_to_use": "When your architecture requires multiple producers or multiple consumers concurrently pushing to or popping from the same shared queue instance.",
+      "interview_questions": [
+        {
+          "question": "Why is an SPSC queue significantly faster and simpler to implement than an MPMC (Multi-Producer Multi-Consumer) queue?",
+          "answer": "Because there is only one thread modifying the head index and one thread modifying the tail index, you do not need atomic Compare-And-Swap (CAS) retry loops. Simple atomic loads and stores with acquire-release semantics are sufficient."
+        },
+        {
+          "question": "What is false sharing and how does cache-line padding prevent it in a ring buffer?",
+          "answer": "False sharing occurs when two independent variables used by different cores reside on the same 64-byte cache line, causing unnecessary cache invalidation traffic. Cache-line padding ensures head and tail variables are forced onto separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "MPMC Ring Buffer",
+        "Memory Barriers and CPU Caches",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T00:38:09.841568+00:00",
+      "run_number": 2034
     }
   ]
 }
