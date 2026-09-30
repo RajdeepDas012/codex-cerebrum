@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2079,
-    "last_updated": "2026-09-30T19:23:57.930067+00:00",
-    "total_topics_learned": 2079
+    "total_runs": 2080,
+    "last_updated": "2026-09-30T19:27:06.811506+00:00",
+    "total_topics_learned": 2080
   },
   "entries": [
     {
@@ -99245,6 +99245,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T19:23:57.930046+00:00",
       "run_number": 2079
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-enqueue-dequeue and sequence-number-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer message passing and multi-core task scheduling in real-time asynchronous processing pipelines and concurrent event-driven architectures",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, lock-free concurrent bounded queue using atomic sequence tracking and compare-and-swap (CAS) operations. It ensures safe multi-producer multi-consumer (MPMC) synchronization without blocking, utilizing hazard pointers for safe memory management.",
+      "key_points": [
+        "Utilizes atomic head and tail index pointers to coordinate concurrent pushes and pops without locks.",
+        "Employs sequence numbers per cell in the ring-buffer array to verify slot availability and prevent data races.",
+        "Uses hazard pointers to safely defer memory reclamation and prevent ABA problems without heavy mutex contention.",
+        "Designed for MPMC (multi-producer multi-consumer) workloads like asynchronous processing pipelines and task schedulers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic sequence checking logic for enqueueing in a lock-free bounded queue.",
+        "correct": "bool enqueue(T const& data) {\n    cell_t* cell;\n    size_t pos = tail_.load(std::memory_order_relaxed);\n    for (;;) {\n        cell = &buffer_[pos & mask_];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n        if (dif == 0) {\n            if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed)) break;\n        } else if (dif < 0) {\n            return false; // Queue is full\n        } else {\n            pos = tail_.load(std::memory_order_relaxed);\n        }\n    }\n    cell->data = data;\n    cell->sequence.store(pos + 1, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool bad_enqueue(T const& data) {\n    // Missing sequence number tracking and weak CAS retry loop, leading to data races.\n    size_t pos = tail_;\n    buffer_[pos] = data;\n    tail_++;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting memory ordering semantics (using relaxed ordering where acquire-release or sequentially consistent is required).",
+        "Failing to handle the wrap-around case properly when queue indices exceed buffer capacity.",
+        "Ignoring the ABA problem or improper hazard pointer registration leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Align atomic variables to cache line boundaries (e.g., using `alignas(64)`) to avoid false sharing across CPU cores.",
+        "Use power-of-two buffer sizes to optimize modulo operations using simple bitwise masking (`pos & mask_`).",
+        "Thoroughly test concurrent lock-free structures under heavy thread contention using dynamic analysis tools like ThreadSanitizer."
+      ],
+      "when_to_use": "When you need ultra-low latency, non-blocking message passing or task distribution across multiple threads in real-time systems.",
+      "when_not_to_use": "When thread contention is extremely low, or when an unbounded queue with dynamic memory allocation is strictly required by application constraints.",
+      "interview_questions": [
+        {
+          "question": "How do sequence numbers prevent race conditions in a lock-free bounded MPMC queue?",
+          "answer": "Sequence numbers track the generational state of each slot in the ring buffer, allowing threads to verify whether a slot has been consumed or produced before attempting a CAS operation."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard reference counting in lock-free queues?",
+          "answer": "Hazard pointers avoid atomic read-modify-write overhead on every shared pointer access by allowing threads to publish their intentions safely without global locks or lock contention."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Ring Buffer",
+        "Hazard Pointer Memory Reclamation",
+        "Multi-Producer Multi-Consumer Synchronization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-09-30T19:27:06.811484+00:00",
+      "run_number": 2080
     }
   ]
 }
