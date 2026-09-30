@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2076,
-    "last_updated": "2026-09-30T19:13:27.464115+00:00",
-    "total_topics_learned": 2076
+    "total_runs": 2077,
+    "last_updated": "2026-09-30T19:16:46.286940+00:00",
+    "total_topics_learned": 2077
   },
   "entries": [
     {
@@ -99103,6 +99103,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-09-30T19:13:27.464094+00:00",
       "run_number": 2076
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Stack using atomic top-pointer-incrementing and node-push-pop CAS primitives alongside hazard pointer memory reclamation for high-throughput LIFO task execution and multi-core resource pooling in real-time asynchronous execution runtimes and concurrent thread management engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This data structure provides a lock-free, thread-safe implementation of a bounded stack utilizing Compare-And-Swap (CAS) primitives and hazard pointers. It guarantees safe concurrent Last-In-First-Out (LIFO) operations and memory reclamation without blocking threads, making it ideal for high-throughput multi-core runtimes.",
+      "key_points": [
+        "Uses atomic top-pointer-incrementing and node-push-pop CAS primitives to avoid traditional lock contention.",
+        "Incorporates hazard pointer memory reclamation to securely free nodes without running into the ABA problem or use-after-free bugs.",
+        "Imposes a strict capacity bound to prevent excessive memory consumption in resource-constrained environments.",
+        "Designed specifically for high-throughput LIFO task scheduling and multi-core resource pooling."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free push operation using atomic CAS primitives and hazard pointers.",
+        "correct": "bool push(T* item) {\n  Node* new_node = new Node(item);\n  Node* old_top;\n  do {\n    old_top = top.load(std::memory_order_relaxed);\n    if (is_full(old_top)) { delete new_node; return false; }\n    new_node->next = old_top;\n  } while (!top.compare_exchange_weak(old_top, new_node, std::memory_order_release, std::memory_order_relaxed));\n  return true;\n}",
+        "wrong": "bool push(T* item) {\n  mutex.lock();\n  stack.push(item);\n  mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to address the ABA problem, which can corrupt stack state during concurrent pushes and pops.",
+        "Neglecting safe memory reclamation, leading to severe memory leaks or segmentation faults when nodes are reclaimed while other threads still reference them."
+      ],
+      "best_practices": [
+        "Utilize hazard pointers or epoch-based memory management to safely track thread references before deallocating popped nodes.",
+        "Employ acquire-release memory ordering semantics carefully to ensure proper visibility of node contents across multiple cores."
+      ],
+      "when_to_use": "Use when building high-performance asynchronous execution runtimes, thread pools, or resource allocators where lock contention severely degrades latency and throughput.",
+      "when_not_to_use": "Avoid when memory usage patterns are unpredictable, as a fixed capacity bound might drop items or require complex dynamic resizing logic.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem in a lock-free concurrent stack?",
+          "answer": "You can prevent the ABA problem by using tagged pointers (combining the node pointer with a monotonically increasing version counter) or by using safe memory reclamation schemes like hazard pointers that prevent nodes from being recycled while another thread holds a reference."
+        },
+        {
+          "question": "Why is hazard pointer reclamation preferred over standard garbage collection in real-time lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times and overhead associated with tracing garbage collectors, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent queue",
+        "hazard pointer memory management",
+        "ABA problem mitigation strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-09-30T19:16:46.286920+00:00",
+      "run_number": 2077
     }
   ]
 }
