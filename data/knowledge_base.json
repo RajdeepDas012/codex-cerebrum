@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2115,
-    "last_updated": "2026-10-01T05:56:35.723353+00:00",
-    "total_topics_learned": 2115
+    "total_runs": 2116,
+    "last_updated": "2026-10-01T06:00:26.904616+00:00",
+    "total_topics_learned": 2116
   },
   "entries": [
     {
@@ -100956,6 +100956,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-01T05:56:35.723333+00:00",
       "run_number": 2115
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic doubly-linked-list-reordering and hash-map-bucket-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput recency-based eviction and multi-core cache-hit optimization in real-time in-memory database storage engines and concurrent web application caching tiers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Least Recently Used (LRU) cache, utilizing atomic Compare-And-Swap (CAS) primitives to manage doubly-linked list reordering and hash map bucket linking safely. By integrating hazard pointers, it prevents premature memory reclamation issues under intense multi-threaded read and write workloads, maximizing throughput in real-time storage systems.",
+      "key_points": [
+        "Combines lock-free hash map lookup with concurrent atomic doubly-linked list restructuring for $O(1)$ operations.",
+        "Employs hazard pointers to safely defer memory deallocation of evicted or repositioned nodes without blocking concurrent threads.",
+        "Uses CAS primitives to update head, tail, and next/prev pointers securely during high-frequency recency promotions.",
+        "Handles race conditions where multiple threads attempt to access, update, or evict the same cache entry simultaneously."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic CAS loop pattern used to update node pointers in a lock-free doubly linked list for LRU recency promotion.",
+        "correct": "bool promote_node(Node* head, Node* target) {\n    Node* old_head;\n    do {\n        old_head = head->next.load();\n        target->next.store(old_head);\n    } while (!head->next.compare_exchange_weak(old_head, target));\n    return true;\n}",
+        "wrong": "bool promote_node_unsafe(Node* head, Node* target) {\n    target->next = head->next;\n    head->next = target;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, resulting in use-after-free bugs when another thread evicts the entry.",
+        "Using naive lock-free list adjustments that lead to the ABA problem without pointer tagging or epoch-based/hazard pointer reclamation."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with thread-local hazard pointers prior to reading their pointer fields or payloads.",
+        "Keep critical CAS loops short and bounded to prevent excessive retry overhead under high thread contention.",
+        "Decouple the hash map bucket structural updates from the doubly linked list recency modifications using consistent transactional ordering."
+      ],
+      "when_to_use": "Use when building ultra-low-latency in-memory data storage engines, multi-threaded web caching layers, or database buffer pools requiring maximum concurrency and minimal lock contention.",
+      "when_not_to_use": "Avoid when standard coarse-grained locking or sharded mutex-protected caches provide sufficient throughput, or when hardware platforms lack robust double-word CAS primitives.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing CAS operations on node pointers in a concurrent LRU cache?",
+          "answer": "You can prevent the ABA problem by using pointer-tagging (combining a version count with the memory address) or by utilizing hazard pointers and epoch-based reclamation schemes that ensure nodes aren't recycled while a thread holds a reference."
+        },
+        {
+          "question": "Why is traditional mutex locking suboptimal for high-throughput LRU caches, and how does a lock-free approach solve it?",
+          "answer": "Traditional locks cause thread serialization and convoying on hot items like the head and tail pointers of the LRU list. Lock-free approaches use atomic CAS primitives to allow optimistic concurrent updates with retries, eliminating blocking and reducing overall latency."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Hash Maps",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-01T06:00:26.904597+00:00",
+      "run_number": 2116
     }
   ]
 }
