@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2127,
-    "last_updated": "2026-10-01T13:25:44.287261+00:00",
-    "total_topics_learned": 2127
+    "total_runs": 2128,
+    "last_updated": "2026-10-01T13:28:52.991899+00:00",
+    "total_topics_learned": 2128
   },
   "entries": [
     {
@@ -101527,6 +101527,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-01T13:25:44.287243+00:00",
       "run_number": 2127
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-bucket-linking and boundary-crossing CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D object localization and multi-core collision detection in real-time game server spatial partitioning engines and concurrent physics simulation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent spatial index grid, utilizing atomic cell-bucket linking and boundary-crossing Compare-And-Swap (CAS) primitives paired with hazard pointers. It enables high-throughput multi-threaded 2D object localization and real-time collision detection without global locks, eliminating thread contention in physics and game server loops.",
+      "key_points": [
+        "Uses discrete spatial grid cells mapped via atomic cell-bucket pointers to manage object distribution.",
+        "Employs atomic CAS primitives for non-blocking object insertion, removal, and boundary-crossing transitions between cells.",
+        "Integrates hazard pointers to safely reclaim memory of deleted grid bucket nodes without race conditions.",
+        "Maximizes multi-core throughput for concurrent physics simulations and real-time game server spatial partitioning."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic cell-bucket linking using a CAS loop for lock-free insertion.",
+        "correct": "bool insert_object(GridCell* cell, GameObject* obj) {\n    BucketNode* old_head;\n    auto* new_node = new BucketNode(obj);\n    do {\n        old_head = cell->head.load(std::memory_order_relaxed);\n        new_node->next = old_head;\n    } while (!cell->head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool insert_object(GridCell* cell, GameObject* obj) {\n    // Mutex locking instead of lock-free CAS\n    std::lock_guard<std::mutex> lock(cell->mtx);\n    cell->objects.push_back(obj);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed bucket nodes with hazard pointers, leading to ABA problems or use-after-free crashes.",
+        "Using expensive global locks on grid cells, which introduces bottlenecks during high-frequency boundary crossings."
+      ],
+      "best_practices": [
+        "Protect read operations on grid bucket traversals by registering pointers with thread-local hazard pointer records.",
+        "Tune grid cell dimensions relative to object velocity to minimize the frequency of costly boundary-crossing updates."
+      ],
+      "when_to_use": "Use when building high-performance real-time multiplayer game servers or concurrent physics engines requiring low-latency spatial partitioning across multiple CPU cores.",
+      "when_not_to_use": "Avoid when dealing with highly sparse or dynamically clustering datasets where a hierarchical spatial structure like a BVH or R-Tree is more efficient.",
+      "interview_questions": [
+        {
+          "question": "How do you handle objects moving across cell boundaries in a lock-free spatial grid?",
+          "answer": "By using atomic CAS operations to simultaneously remove the object from the source cell's bucket list and insert it into the target cell's bucket list, ensuring consistent intermediate states."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free spatial indexes?",
+          "answer": "Hazard pointers avoid the atomic RMW overhead and cache-line bouncing associated with shared reference counters during high-frequency node traversals."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Quadtrees",
+        "Concurrent Bounding Volume Hierarchies",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-01T13:28:52.991879+00:00",
+      "run_number": 2128
     }
   ]
 }
