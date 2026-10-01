@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2128,
-    "last_updated": "2026-10-01T13:28:52.991899+00:00",
-    "total_topics_learned": 2128
+    "total_runs": 2129,
+    "last_updated": "2026-10-01T13:32:02.504508+00:00",
+    "total_topics_learned": 2129
   },
   "entries": [
     {
@@ -101574,6 +101574,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-01T13:28:52.991879+00:00",
       "run_number": 2128
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolution CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core duplicate elimination in real-time distributed caching systems and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter uses atomic bit-array operations and Compare-And-Swap (CAS) primitives to allow multiple threads to insert items and query membership simultaneously without lock contention. By leveraging hazard pointers or epoch-based memory reclamation, it ensures safe scaling and high-throughput data processing in multi-threaded caching and query optimization layers.",
+      "key_points": [
+        "Employs atomic bit-array updates (such as atomic bitwise OR or CAS loops) to handle concurrent bit setting without blocking.",
+        "Utilizes independent hash functions (e.g., MurmurHash or CityHash) to map keys to multiple bit indices with minimal collision probability.",
+        "Eliminates global lock bottlenecks, allowing linear scaling across multiple CPU cores for read-heavy and write-heavy workloads.",
+        "Integrates hazard pointers or memory reclamation schemes to manage dynamic resising or pointer-based auxiliary metadata safely."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a conceptual lock-free bit setting simulation using atomic CAS loops.",
+        "correct": "import threading\n\nclass LockFreeBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bits = [threading.Lock() for _ in range(size)] # Conceptual representation of atomic indices\n        self.array = [0] * size\n\n    def add(self, index):\n        while True:\n            current = self.array[index]\n            if current == 1:\n                break\n            # Simulated atomic CAS operation\n            if self._cas(index, current, 1):\n                break\n\n    def _cas(self, index, expected, desired):\n        # Simulated CAS implementation for educational demonstration\n        if self.array[index] == expected:\n            self.array[index] = desired\n            return True\n        return False",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.array = [0] * size\n\n    def add(self, index):\n        # Race condition: non-atomic check-then-set leads to lost updates\n        if self.array[index] == 0:\n            self.array[index] = 1"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations on shared integers representing bit arrays, leading to lost updates.",
+        "Failing to account for cache line bouncing (false sharing) when multiple threads modify adjacent bits within the same cache line simultaneously."
+      ],
+      "best_practices": [
+        "Pad atomic bit segments or structure words to align with CPU cache line boundaries to minimize false sharing under high concurrency.",
+        "Use hardware-accelerated atomic bit instructions (like atomic test-and-set or bitwise fetch-or) provided by modern CPU architectures."
+      ],
+      "when_to_use": "Use when you need ultra-fast, lock-free approximate membership testing across hundreds of concurrent threads in real-time distributed caches or database query engines.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory (false positives are unacceptable) or when the workload is single-threaded, where overhead of lock-free mechanisms is unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent modifications to the same underlying word or byte in a lock-free Bloom filter bit array?",
+          "answer": "By using atomic bitwise instructions (such as atomic fetch-or) or CAS loops that repeatedly read the word, apply the bit mask, and attempt to swap it back until successful."
+        },
+        {
+          "question": "What is the primary performance challenge of a lock-free Bloom filter on multi-core systems?",
+          "answer": "False sharing, where multiple cores continuously invalidate each other's cache lines because they are updating bits residing in the same cache line."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Tables",
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-01T13:32:02.504490+00:00",
+      "run_number": 2129
     }
   ]
 }
