@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2153,
-    "last_updated": "2026-10-01T23:23:32.269539+00:00",
-    "total_topics_learned": 2153
+    "total_runs": 2154,
+    "last_updated": "2026-10-01T23:26:44.162970+00:00",
+    "total_topics_learned": 2154
   },
   "entries": [
     {
@@ -102756,6 +102756,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-01T23:23:32.269520+00:00",
       "run_number": 2153
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-node-linking and path-copying CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range queries and multi-core snapshot isolation in real-time functional data processing engines and concurrent time-travel database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent persistent segment tree utilizing atomic version-node linking, path-copying compare-and-swap (CAS) primitives, and hazard pointers. It enables high-throughput historical range queries and consistent multi-core snapshot isolation without global locks, critical for advanced time-travel databases.",
+      "key_points": [
+        "Uses atomic path-copying and version-node-linking CAS primitives to construct new historical roots without mutating existing immutable nodes.",
+        "Employs hazard pointer memory reclamation to safely manage memory across concurrent threads reading or updating historical versions.",
+        "Guarantees lock-free progress guarantees, allowing multiple threads to perform range queries and updates simultaneously without blocking.",
+        "Supports multi-core snapshot isolation for functional data processing engines and high-performance temporal databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic version root update using CAS for a persistent segment tree node.",
+        "correct": "bool linkNewVersion(std::atomic<Node*>& root_ptr, Node* old_root, Node* new_root) {\n    return root_ptr.compare_exchange_weak(old_root, new_root, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* linkNewVersion(std::atomic<Node*>& root_ptr, Node* new_root) {\n    Node* old = root_ptr.load();\n    root_ptr.store(new_root);\n    return old;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate path-copied nodes with hazard pointers, leading to premature memory reclamation and use-after-free bugs.",
+        "Using blocking synchronization or global mutexes during node allocation and path-copying, breaking the lock-free property."
+      ],
+      "best_practices": [
+        "Retain hazard pointers for all accessed nodes along the traversal path until the CAS operation successfully links the new root version.",
+        "Leverage memory reclamation epochs or garbage collection schemes compatible with hazard pointers to clean up orphaned historical nodes."
+      ],
+      "when_to_use": "Use when building real-time time-travel databases or concurrent functional systems requiring high-throughput historical range queries and strict snapshot isolation.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with minimal concurrency where standard pointer assignment and simple persistent structures have lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you ensure thread safety during the path-copying phase of a persistent segment tree without using locks?",
+          "answer": "By creating local copies of modified nodes, updating their child pointers, and using a CAS loop to atomically swing the version root pointer to the new root."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a concurrent persistent data structure using memory reclamation?",
+          "answer": "Hazard pointers protect nodes currently being traversed by reader threads from being reclaimed by concurrent writers until the read operation completes."
+        }
+      ],
+      "related_topics": [
+        "lock-free Bx-Tree",
+        "persistent data structures",
+        "hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-01T23:26:44.162950+00:00",
+      "run_number": 2154
     }
   ]
 }
