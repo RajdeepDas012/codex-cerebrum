@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2130,
-    "last_updated": "2026-10-01T13:35:12.576475+00:00",
-    "total_topics_learned": 2130
+    "total_runs": 2131,
+    "last_updated": "2026-10-01T13:38:21.198300+00:00",
+    "total_topics_learned": 2131
   },
   "entries": [
     {
@@ -101668,6 +101668,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-01T13:35:12.576456+00:00",
       "run_number": 2130
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-interpolation CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile estimation and multi-core stream data summarization in real-time latency monitoring systems and concurrent telemetry aggregation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent T-Digest data structure combines atomic centroid-merging and quantile-interpolation primitives with hazard pointers to enable high-throughput, lock-free percentile estimation. It allows multiple threads to safely aggregate and summarize streaming data without lock contention, maintaining high accuracy at the extreme tails of the distribution.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage centroid arrays and updates without locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic centroid reallocation during concurrent merges.",
+        "Provides high-resolution accuracy particularly at the extreme tails (p99, p99.9) of unbounded streaming datasets.",
+        "Enables safe multi-core stream data summarization for real-time latency tracking and telemetry systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free thread-safe centroid insertion using atomic CAS primitives.",
+        "correct": "bool add_centroid(std::atomic<Centroid*>& head, double mean, double weight) {\n    Centroid* old_head = head.load();\n    Centroid* new_node = new Centroid(mean, weight);\n    do {\n        new_node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_node));\n    return true;\n}",
+        "wrong": "bool add_centroid(Centroid* head, double mean, double weight) {\n    mutex.lock();\n    head->next = new Centroid(mean, weight);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed centroid nodes with hazard pointers, leading to ABA problems or use-after-free faults during concurrent merges.",
+        "Using global locks for compression and merging phases, which completely defeats the lock-free throughput advantages.",
+        "Inaccurate quantile interpolation when centroids overlap or have severely unscaled weights."
+      ],
+      "best_practices": [
+        "Integrate a robust hazard pointer registry to safely defer reclamation of old centroid nodes until all traversing reader threads have detached.",
+        "Batch incoming data into thread-local buffers before performing atomic merge operations to reduce CAS retry contention.",
+        "Tune the compression factor parameter carefully to balance memory footprint against tail-quantile accuracy."
+      ],
+      "when_to_use": "When building high-throughput real-time telemetry systems, APM tools, or distributed log aggregators that require low-latency, highly accurate percentile calculations over continuous concurrent streams.",
+      "when_not_to_use": "When dealing with small static datasets where standard sorting or exact percentile arrays are sufficient and simpler to maintain.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption during concurrent centroid merges in a lock-free T-Digest?",
+          "answer": "Hazard pointers allow threads to register which nodes they are currently accessing. When a thread removes or merges a centroid, it defers the memory deallocation until no other active hazard pointer references that specific node."
+        },
+        {
+          "question": "Why are standard sorted arrays or histograms inadequate for concurrent real-time stream data summarization compared to a T-Digest?",
+          "answer": "Standard sorted arrays require expensive global sorting or massive memory footprints to maintain precision across high-volume streams, whereas T-Digests compress data into centroids dynamically while maintaining high accuracy at extreme tail percentiles."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Streaming Quantile Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-01T13:38:21.198282+00:00",
+      "run_number": 2131
     }
   ]
 }
