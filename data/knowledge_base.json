@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2218,
-    "last_updated": "2026-10-02T23:27:58.631180+00:00",
-    "total_topics_learned": 2218
+    "total_runs": 2219,
+    "last_updated": "2026-10-02T23:31:06.756700+00:00",
+    "total_topics_learned": 2219
   },
   "entries": [
     {
@@ -105841,6 +105841,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-02T23:27:58.631159+00:00",
       "run_number": 2218
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-merging and minimum-node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path computations and multi-core priority management in real-time network routing engines and concurrent graph processing frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Fibonacci Heap using atomic CAS operations and hazard pointers. It enables high-throughput priority management and graph routing by allowing multiple threads to modify and query the heap structure without traditional locking overhead.",
+      "key_points": [
+        "Utilizes atomic root-list-merging and minimum-node-updating CAS primitives to ensure thread-safe structure modifications without global locks.",
+        "Employs hazard pointers for safe memory reclamation, preventing use-after-free bugs in dynamic concurrent node deletions.",
+        "Optimizes decrease-key and extract-min operations for high-throughput multi-core graph algorithms like parallel Dijkstra's.",
+        "Balances amortized complexity benefits with the high overhead of atomic synchronization in pointer-heavy tree structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using compare_exchange_strong for root list modifications",
+        "correct": "bool link_roots(std::atomic<Node*>& root_head, Node* new_node) {\n    Node* old_head = root_head.load(std::memory_order_relaxed);\n    do {\n        new_node->right = old_head;\n    } while (!root_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool link_roots(Node*& root_head, Node* new_node) {\n    new_node->right = root_head;\n    root_head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers during node extraction, resulting in race conditions where freed memory is accessed by concurrent threads.",
+        "Overlooking ABA problems during atomic pointer updates on shared root and child lists."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for non-dependent reads and acquire-release semantics specifically around pointer CAS boundaries.",
+        "Batch hazard pointer retirements to minimize thread synchronization overhead during intense garbage collection phases."
+      ],
+      "when_to_use": "Use when implementing high-performance concurrent graph routing engines or parallel shortest path algorithms requiring frequent priority updates across many threads.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with low concurrency where the complexity and memory overhead of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating root lists in a lock-free Fibonacci Heap?",
+          "answer": "By using tagged pointers (version counts combined with memory addresses) or hazard pointers that ensure state changes are detected during atomic CAS operations."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free graph data structures?",
+          "answer": "Hazard pointers avoid the massive cache contention and atomic read-modify-write bottlenecks caused by frequent global reference count updates across multiple threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free priority queues",
+        "Hazard pointer memory management",
+        "Concurrent graph processing frameworks"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T23:31:06.756677+00:00",
+      "run_number": 2219
     }
   ]
 }
