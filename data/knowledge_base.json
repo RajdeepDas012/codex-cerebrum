@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2208,
-    "last_updated": "2026-10-02T22:55:53.318038+00:00",
-    "total_topics_learned": 2208
+    "total_runs": 2209,
+    "last_updated": "2026-10-02T22:59:02.168010+00:00",
+    "total_topics_learned": 2209
   },
   "entries": [
     {
@@ -105368,6 +105368,56 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-02T22:55:53.318015+00:00",
       "run_number": 2208
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput genome alignment and multi-core pattern searching in real-time bioinformatics analysis pipelines and concurrent text indexing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free thread-safe Suffix Array that leverages atomic index-sorting and LCP-array-constructing Compare-And-Swap (CAS) primitives. It utilizes hazard pointers for safe memory reclamation, enabling high-throughput genome alignment and multi-core pattern matching under heavy concurrency.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to coordinate multi-threaded updates during suffix index sorting and LCP array construction.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic memory allocation and deallocation without locking overhead.",
+        "Delivers high-throughput pattern searching and genome alignment for real-time bioinformatics pipelines and text databases.",
+        "Ensures thread-safe concurrent reads and writes, minimizing contention and avoiding deadlocks in multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based updates and hazard pointer protection for concurrent suffix array entries",
+        "correct": "template <typename T>\nvoid update_suffix_entry(std::atomic<T*>& slot, T* new_val, HazardPointerRegistry& hp) {\n    T* old_val;\n    do {\n        old_val = slot.load(std::memory_order_relaxed);\n        hp.protect(0, old_val);\n    } while (!slot.compare_exchange_weak(old_val, new_val, std::memory_order_release, std::memory_order_relaxed));\n    if (old_val) hp.retire(old_val);\n}",
+        "wrong": "template <typename T>\nvoid update_suffix_entry(std::atomic<T*>& slot, T* new_val) {\n    // Missing hazard pointer protection and manual synchronization can lead to ABA problems and use-after-free\n    delete slot.load();\n    slot.store(new_val);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed suffix pointers with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting the ABA problem during atomic index-sorting and LCP construction CAS operations.",
+        "Using overly restrictive global locks instead of fine-grained atomic operations, degrading multi-core scalability."
+      ],
+      "best_practices": [
+        "Integrate a robust hazard pointer or epoch-based reclamation scheme for safe memory management.",
+        "Keep critical sections inside lock-free loops extremely short to maximize throughput.",
+        "Thoroughly test concurrent sort and LCP routines under high thread contention and varied input sizes."
+      ],
+      "when_to_use": "Use when you need extreme read and write concurrency over massive text strings or genomic datasets where lock-based synchronization causes severe performance bottlenecks.",
+      "when_not_to_use": "Avoid when data is primarily read-only after a single-threaded build phase, or when simpler lock-based or single-threaded suffix arrays satisfy throughput requirements with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in lock-free data structures like a concurrent Suffix Array?",
+          "answer": "Hazard pointers allow threads to atomically register which nodes they are currently accessing, ensuring that memory reclaimers defer freeing those nodes until no thread holds a reference to them."
+        },
+        {
+          "question": "Why can standard locking mechanisms become a bottleneck when constructing or updating a concurrent Suffix Array in real-time bioinformatics?",
+          "answer": "Locks cause thread contention, context switching overhead, and potential deadlocks, whereas lock-free CAS-based updates allow multiple threads to make progress concurrently without blocking."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free data structures",
+        "suffix trees",
+        "bioinformatics algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T22:59:02.167988+00:00",
+      "run_number": 2209
     }
   ]
 }
