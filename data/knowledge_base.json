@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2178,
-    "last_updated": "2026-10-02T12:17:48.218423+00:00",
-    "total_topics_learned": 2178
+    "total_runs": 2179,
+    "last_updated": "2026-10-02T12:21:00.925237+00:00",
+    "total_topics_learned": 2179
   },
   "entries": [
     {
@@ -103939,6 +103939,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-02T12:17:48.218403+00:00",
       "run_number": 2178
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic refit-propagating and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing acceleration and multi-core collision queries in real-time computer graphics engines and concurrent game simulation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) enables high-throughput spatial indexing and ray tracing acceleration across multiple CPU cores without lock contention. By leveraging atomic refit-propagating and node-swapping Compare-And-Swap (CAS) operations alongside hazard pointers, it ensures safe memory reclamation and consistent tree updates during simultaneous queries and dynamic geometry modifications.",
+      "key_points": [
+        "Utilizes atomic refit propagation to update bounding volumes up the hierarchy without global locks.",
+        "Employs node-swapping CAS primitives to safely restructure subtrees or insert new primitives concurrently.",
+        "Integrates hazard pointers to track active references and prevent premature memory deallocation during concurrent access.",
+        "Optimizes real-time ray tracing and collision detection pipelines by maximizing multi-core CPU utilization."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node swapping in a concurrent BVH using atomic CAS and hazard pointers.",
+        "correct": "bool updateChild(std::atomic<BVHNode*>& parentPtr, BVHNode* oldNode, BVHNode* newNode, HazardPointerList& hpList, ThreadState& state) {\n    hpList.protect(state, 0, oldNode);\n    if (parentPtr.load() != oldNode) return false;\n    return parentPtr.compare_exchange_strong(oldNode, newNode);\n}",
+        "wrong": "bool updateChildWrong(BVHNode*& parentPtr, BVHNode* oldNode, BVHNode* newNode) {\n    // Missing atomics and hazard pointers leads to race conditions and use-after-free\n    if (parentPtr == oldNode) {\n        parentPtr = newNode;\n        delete oldNode;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Reclaiming memory of deleted nodes immediately without checking active hazard pointers from other threads.",
+        "Failing to properly handle ABA problems during atomic node swapping and restructuring.",
+        "Propagating bounding volume updates inefficiently, causing excessive contention at root nodes."
+      ],
+      "best_practices": [
+        "Always register node references with hazard pointers before traversing or modifying pointers in concurrent threads.",
+        "Keep critical sections inside atomic loops as short as possible by performing heavy geometric calculations prior to CAS operations.",
+        "Batch tree refitting updates when possible to reduce cache invalidation traffic across multiple cores."
+      ],
+      "when_to_use": "Use when building high-performance real-time ray tracers, physics engines, or geographic applications that require frequent dynamic updates and intense multi-threaded spatial queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with static geometry where simpler, lock-based or static acceleration structures provide lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing. When a node is unlinked during a tree modification, it is placed in a deferred retirement list and only physically deleted when no thread holds an active hazard pointer referencing it."
+        },
+        {
+          "question": "What is the primary challenge of maintaining a hierarchical acceleration structure like a BVH lock-free?",
+          "answer": "The main challenge is propagating structural changes (such as splits, collapses, and refits) up and down the tree atomically without locking entire branches, which can easily introduce deadlocks, race conditions, or high cache contention."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Octree",
+        "Concurrent R-Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Spatial Hashing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T12:21:00.925218+00:00",
+      "run_number": 2179
     }
   ]
 }
