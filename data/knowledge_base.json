@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2167,
-    "last_updated": "2026-10-02T05:21:49.029173+00:00",
-    "total_topics_learned": 2167
+    "total_runs": 2168,
+    "last_updated": "2026-10-02T05:25:17.575928+00:00",
+    "total_topics_learned": 2168
   },
   "entries": [
     {
@@ -103417,6 +103417,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-02T05:21:49.029155+00:00",
       "run_number": 2167
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent telecom packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a concurrent, lock-free radix tree tailored for high-speed IP routing. By combining atomic edge-splitting and prefix-compression with hazard pointer memory management, it enables multi-core processors to perform simultaneous longest-prefix matches without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe node allocation and edge modification without traditional mutex locks.",
+        "Employs prefix-compression and edge-splitting techniques to reduce tree depth and memory footprints for sparse string or IP address keys.",
+        "Integrates hazard pointers to safely defer memory reclamation of deleted nodes, preventing ABA problems and use-after-free bugs in concurrent readers.",
+        "Optimized for high-throughput packet forwarding engines and software-defined networking (SDN) routing table lookups under heavy multi-core contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node traversal using hazard pointers to protect against premature memory reclamation during atomic edge updates.",
+        "correct": "Node* traverse_safe(HazardPointerList& hp_list, std::atomic<Node*>& root, const Key& key) {\n    Node* current;\n    do {\n        current = root.load(std::memory_order_acquire);\n        hp_list.protect(0, current);\n    } while (current != root.load(std::memory_order_relaxed));\n    return find_prefix(current, key);\n}",
+        "wrong": "Node* traverse_unsafe(std::atomic<Node*>& root, const Key& key) {\n    Node* current = root.load();\n    // Another thread might free 'current' right here before we read its children\n    return current->find_child(key);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to race conditions where another thread frees a node mid-traversal.",
+        "Improper handling of edge-splitting states, causing split-brain scenarios where concurrent lookups miss newly introduced intermediate nodes."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing atomic node pointers during lock-free traversals.",
+        "Batch retired node deletions to minimize the overhead of global memory reclamation cycles.",
+        "Keep critical CAS loops tight and retry-bounded to ensure lock-free progress guarantees under extreme core contention."
+      ],
+      "when_to_use": "Use when building high-performance networking equipment, IP routing tables, or telecom packet routers requiring ultra-low latency concurrent longest-prefix lookups.",
+      "when_not_to_use": "Avoid when keys are dense, completely random, or lack shared prefixes, as standard hash maps or alternative search trees will provide simpler implementations and better memory efficiency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation race conditions in a lock-free radix tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that deleting threads know to defer actual memory freeing until no reader references those nodes."
+        },
+        {
+          "question": "What concurrency challenge arises during atomic edge-splitting in a radix tree, and how is it resolved?",
+          "answer": "Concurrent traversals might read a stale edge pointer before the split completes. This is resolved by structuring CAS operations so that old edges point atomically to the new intermediate split-node before adding sub-branches."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filter",
+        "Concurrent Merkle DAG",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T05:25:17.575910+00:00",
+      "run_number": 2168
     }
   ]
 }
