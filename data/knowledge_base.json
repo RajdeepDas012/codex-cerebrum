@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2209,
-    "last_updated": "2026-10-02T22:59:02.168010+00:00",
-    "total_topics_learned": 2209
+    "total_runs": 2210,
+    "last_updated": "2026-10-02T23:02:10.762680+00:00",
+    "total_topics_learned": 2210
   },
   "entries": [
     {
@@ -105418,6 +105418,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-02T22:59:02.167988+00:00",
       "run_number": 2209
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed range scans and multi-core point lookups in real-time relational database management systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent B+ Tree optimized for modern multi-core processors. By utilizing atomic compare-and-swap (CAS) primitives for leaf-node linking and split propagation, combined with hazard pointers for safe memory reclamation, it guarantees high-throughput point lookups and indexed range scans without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely update internal routing nodes and leaf connections without mutexes.",
+        "Employs hazard pointers to track thread-accessed nodes, safely deferring memory reclamation to prevent use-after-free race conditions during concurrent splits.",
+        "Implements atomic leaf-node-linking ensuring that iterators can perform continuous, lock-free range scans even while other threads mutate the tree structure.",
+        "Manages split propagation bottom-up or via cooperative restructuring to handle node overflows gracefully under heavy multi-threaded write loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic leaf node linking using a CAS loop for lock-free node insertion.",
+        "correct": "bool link_leaves(std::atomic<Node*>& current_next, Node* new_node, Node* target_next) {\n    return current_next.compare_exchange_weak(target_next, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current_next = leaf->next;\nleaf->next = new_node; // Non-atomic write causes race conditions and broken chains"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to memory corruption when another thread concurrently deletes or splits a node.",
+        "Using sequential memory consistency models where weaker memory ordering (acquire-release) is required, degrading throughput or introducing synchronization bugs."
+      ],
+      "best_practices": [
+        "Always pin nodes using hazard pointers before reading child pointers or sibling links during concurrent tree traversals.",
+        "Employ fine-grained backoff strategies during failed CAS operations to reduce cache line bouncing under extreme core contention."
+      ],
+      "when_to_use": "Ideal for high-throughput in-memory databases and storage engines requiring sustained concurrent read and write performance with minimal latency jitter.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide simpler, more maintainable code without performance bottlenecks.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors in a lock-free B+ Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing. Before a thread reclaims or frees a node, it scans the active hazard pointer list to ensure no other thread holds a reference to that node, safely deferring deletion until it is no longer in use."
+        },
+        {
+          "question": "Why is leaf-node-linking critical for lock-free B+ Tree range scans?",
+          "answer": "Leaf-node-linking provides a singly or doubly linked list across all leaf nodes. This allows reader threads to perform forward or backward range scans efficiently using atomic pointer reads without needing to re-traverse the entire tree from the root for each subsequent key."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T23:02:10.762659+00:00",
+      "run_number": 2210
     }
   ]
 }
