@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2174,
-    "last_updated": "2026-10-02T05:46:00.312084+00:00",
-    "total_topics_learned": 2174
+    "total_runs": 2175,
+    "last_updated": "2026-10-02T05:49:10.533230+00:00",
+    "total_topics_learned": 2175
   },
   "entries": [
     {
@@ -103751,6 +103751,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-02T05:46:00.312063+00:00",
       "run_number": 2174
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-splicing and rank-select-query CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct data representation and multi-core compressed text indexing in real-time genome sequencing platforms and concurrent bioinformatics query engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Wavelet Tree utilizes atomic operations like compare-and-swap (CAS) to manipulate internal succinct bitmaps and bit-vectors dynamically without locking. Combined with hazard pointers for safe memory reclamation, it enables high-throughput multi-core rank-select queries for compressed string analysis in parallel environments.",
+      "key_points": [
+        "Uses atomic bitmap-splicing and rank-select-query CAS primitives to manage tree nodes concurrently.",
+        "Employs hazard pointers to track and safely reclaim memory of dynamically split or reorganized tree nodes.",
+        "Provides succinct data representation, drastically reducing memory footprint while enabling fast alphabet frequency lookups.",
+        "Optimized for multi-core bioinformatics pipelines and compressed text indexing without thread contention bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node traversal and rank-select execution using atomic pointers and hazard protection.",
+        "correct": "void* traverse_wavelet_node(HazardPointerRegistry& registry, std::atomic<WaveletNode*>& root, char target) {\n    HazardPointer* hp = registry.acquire();\n    WaveletNode* node;\n    do {\n        node = root.load(std::memory_order_acquire);\n        hp->set(node);\n    } while (node != root.load(std::memory_order_relaxed));\n    // Perform rank-select query using atomic bitmap primitives\n    registry.release(hp);\n    return node;\n}",
+        "wrong": "void* unsafe_traverse(std::atomic<WaveletNode*>& root) {\n    WaveletNode* node = root.load();\n    // If another thread deletes node here, use-after-free occurs\n    return node->left_child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate tree structural changes with proper memory barriers, leading to stale rank-select bitmap reads.",
+        "Improper hazard pointer lifecycle management resulting in memory leaks or premature node deallocation during active traversal."
+      ],
+      "best_practices": [
+        "Always register active nodes with a thread-local hazard pointer before executing rank and select bit manipulations.",
+        "Ensure memory reclamation blocks until all concurrent reader threads have dropped their references to spliced bitmap nodes."
+      ],
+      "when_to_use": "When building high-throughput bioinformatics tools or compressed text indices that require frequent parallel rank-select queries on massive datasets.",
+      "when_not_to_use": "When working with small datasets where the overhead of lock-free atomics and hazard pointer tracking outweighs multi-core performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers ensure safe memory reclamation in a lock-free Wavelet Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing other threads from freeing those nodes until all referencing threads have un-published them."
+        },
+        {
+          "question": "Why are standard mutexes inefficient for concurrent Wavelet Tree updates?",
+          "answer": "Mutexes cause thread contention and context-switch overhead, whereas atomic CAS primitives allow fine-grained, non-blocking bitmap modifications and node splicing."
+        }
+      ],
+      "related_topics": [
+        "Succinct Data Structures",
+        "Hazard Pointers",
+        "Lock-Free Concurrent Programming"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T05:49:10.533212+00:00",
+      "run_number": 2175
     }
   ]
 }
