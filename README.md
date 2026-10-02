@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2171** |
-| Last Updated | `2026-10-02T05:35:05.308426+00:00` |
-| Dataset Size | `2171 entries` |
+| Total Topics Learned | **2172** |
+| Last Updated | `2026-10-02T05:38:15.017351+00:00` |
+| Dataset Size | `2172 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1177 |
+| data-structures | 1178 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 121 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-modification-operation (SMO) CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management in real-time relational database systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-bit-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count aggregation in real-time web analytics platforms and concurrent big data streaming engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core concurrent map operations in real-time in-memory database engines and concurrent distributed key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cascading and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core asynchronous message dispatching in real-time microservice orchestration frameworks and concurrent event-driven server engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent telecom packet forwarding engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle DAG using atomic hash-pointer-linking and node-deduplication CAS primitives alongside hazard pointer memory reclamation for high-throughput content-addressable storage and multi-core cryptographic provenance verification in real-time distributed version control systems and concurrent content delivery networks`
 
 <!-- STATS_END -->
 
