@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2197,
-    "last_updated": "2026-10-02T18:34:34.751111+00:00",
-    "total_topics_learned": 2197
+    "total_runs": 2198,
+    "last_updated": "2026-10-02T18:37:44.387826+00:00",
+    "total_topics_learned": 2198
   },
   "entries": [
     {
@@ -104845,6 +104845,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-02T18:34:34.751049+00:00",
       "run_number": 2197
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-linking and peer-routing-table-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized node lookups and multi-core distributed routing in real-time peer-to-peer overlay networks and concurrent decentralized storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a lock-free, thread-safe concurrent Skip Graph that utilizes atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management. It enables high-throughput, multi-core distributed routing and decentralized node lookups without traditional lock contention.",
+      "key_points": [
+        "Uses atomic pointer-linking and peer-routing-table-updating CAS primitives to modify skip graph levels without global locks.",
+        "Employs hazard pointer memory reclamation to safely free retired nodes and routing entries amidst concurrent access.",
+        "Maintains multiple levels of skip graph structures to guarantee logarithmic search and routing performance across threads.",
+        "Optimized for real-time peer-to-peer overlay networks and concurrent decentralized storage systems requiring high read-write concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS and safe memory protection using hazard pointers in a concurrent skip graph environment.",
+        "correct": "bool link_peer_atomic(Node* head, Node* newNode, int level) {\n    while (true) {\n        Node* succ = head->forward[level].load(std::memory_order_acquire);\n        newNode->forward[level].store(succ, std::memory_order_relaxed);\n        if (head->forward[level].compare_exchange_weak(succ, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool link_peer_unsafe(Node* head, Node* newNode, int level) {\n    Node* succ = head->forward[level];\n    newNode->forward[level] = succ;\n    head->forward[level] = newNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed routing nodes with hazard pointers, leading to use-after-free bugs.",
+        "Using sequential consistency everywhere, which degrades multi-core performance compared to acquire-release semantics."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to traversing through volatile pointer levels in the skip graph.",
+        "Ensure memory reclamation reclamation routines are decoupled from node mutation paths to minimize latency spikes."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized systems, lock-free distributed routing tables, or concurrent peer-to-peer overlays requiring strict thread safety and low latency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free CAS loops and hazard pointer management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent updates in a lock-free Skip Graph?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory addresses until the read operation completes."
+        },
+        {
+          "question": "Why is compare-and-swap (CAS) insufficient on its own without memory ordering constraints in concurrent data structures?",
+          "answer": "Without explicit memory order semantics (like acquire-release), CPU reordering or cache visibility issues can cause threads to observe partially updated routing tables or stale pointer links."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Distributed Hash Tables (DHT) and Overlay Networks"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T18:37:44.387807+00:00",
+      "run_number": 2198
     }
   ]
 }
