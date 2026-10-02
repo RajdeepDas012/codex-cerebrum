@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2199,
-    "last_updated": "2026-10-02T18:40:52.845567+00:00",
-    "total_topics_learned": 2199
+    "total_runs": 2200,
+    "last_updated": "2026-10-02T18:44:02.022285+00:00",
+    "total_topics_learned": 2200
   },
   "entries": [
     {
@@ -104940,6 +104940,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-02T18:40:52.845548+00:00",
       "run_number": 2199
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core job dispatching in real-time operating system kernels and concurrent asynchronous execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent priority queue leveraging atomic heap node swapping, index tracking via Compare-And-Swap (CAS), and hazard pointers for safe memory management. It is essential for eliminating lock contention in high-performance task schedulers and multi-core job dispatchers.",
+      "key_points": [
+        "Utilizes atomic heap-node-swapping and index-tracking CAS operations to maintain heap invariants without coarse-grained locking.",
+        "Employs hazard pointers to track threads accessing specific queue nodes, preventing premature reclamation and ABA problems.",
+        "Ensures high-throughput execution for parallel thread pools, real-time operating systems, and asynchronous runtimes.",
+        "Requires careful handling of transient states where parent-child heap properties are temporarily inverted during concurrent insertions and extractions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of atomic heap node swapping and hazard pointer protection during concurrent priority queue operations",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazards = {}\n    def protect(self, thread_id, node):\n        self.hazards[thread_id] = node\n\nclass ConcurrentPriorityQueue:\n    def __init__(self):\n        self.heap = []\n        self.hp = HazardPointerManager()\n    \n    def atomic_swap_up(self, index, thread_id):\n        self.hp.protect(thread_id, self.heap[index])\n        # Perform CAS-based tree adjustment\n        pass",
+        "wrong": "class UnsafeQueue:\n    def __init__(self):\n        self.heap = []\n    def push(self, val):\n        self.heap.append(val) # Non-atomic mutation leading to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during index-tracking CAS operations on heap nodes.",
+        "Releasing memory of evicted nodes while other concurrent threads still hold references, leading to segmentation faults."
+      ],
+      "best_practices": [
+        "Pair every atomic heap structural modification with explicit hazard pointer registration and unregistration phases.",
+        "Design fallback mechanisms or backoff strategies for failed CAS loops to minimize CPU cache line bouncing under heavy contention."
+      ],
+      "when_to_use": "Use when building low-latency task schedulers, real-time event loops, or asynchronous execution engines where lock-based priority queues cause severe thread contention.",
+      "when_not_to_use": "Avoid in simpler applications or single-threaded contexts where standard blocking queues or straightforward collections provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads simultaneously attempt to extract the minimum element from a lock-free priority heap?",
+          "answer": "By using a Compare-And-Swap (CAS) primitive to atomically update the root pointer or index tracker, ensuring only one thread successfully swaps the target node with the last leaf before re-heapifying."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free concurrent data structures?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation without the pause times or overhead associated with tracing garbage collectors, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-02T18:44:02.022266+00:00",
+      "run_number": 2200
     }
   ]
 }
