@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2228,
-    "last_updated": "2026-10-03T02:08:29.345973+00:00",
-    "total_topics_learned": 2228
+    "total_runs": 2229,
+    "last_updated": "2026-10-03T02:11:38.140652+00:00",
+    "total_topics_learned": 2229
   },
   "entries": [
     {
@@ -106312,6 +106312,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T02:08:29.345952+00:00",
       "run_number": 2228
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Y-Fast Trie using atomic leaf-bucketing and doubly-linked-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput integer indexing and multi-core predecessor-successor lookups in real-time IP routing engines and concurrent high-frequency trading order books",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Y-Fast Trie combines an X-Fast Trie for logarithmic routing with a collection of small B-trees or sorted lists (buckets) to achieve $O(\\log \\log W)$ search time while reducing space complexity and memory overhead. Utilizing atomic leaf-bucketing, doubly-linked-list-splicing CAS primitives, and hazard pointers ensures safe lock-free memory reclamation under high-contention multi-core environments.",
+      "key_points": [
+        "Stores elements in representative buckets managed by an outer X-Fast Trie structure to bound bucket sizes between $\\frac{1}{2}\\log W$ and $2\\log W$.",
+        "Uses atomic leaf-bucketing and doubly-linked-list-splicing CAS operations to safely insert, split, and merge local bucket elements without global locks.",
+        "Employs hazard pointers to track active thread references to Trie nodes and list elements, safely delaying deallocation until no thread holds a reference.",
+        "Provides optimal $O(\\log \\log W)$ predecessor and successor queries making it ideal for high-throughput IP routing tables and order books."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of atomic doubly-linked-list splicing via CAS for concurrent bucket adjustments.",
+        "correct": "bool splice_node_cas(Node* expected_prev, Node* new_node, Node* expected_next) {\n    new_node->next = expected_next;\n    new_node->prev = expected_prev;\n    return expected_prev->next.compare_exchange_strong(expected_next, new_node);\n}",
+        "wrong": "bool splice_node_naive(Node* prev, Node* new_node, Node* next) {\n    prev->next = new_node; // Non-atomic update prone to data races and broken links\n    new_node->prev = prev;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointers during split and merge operations with hazard pointers, leading to use-after-free race conditions.",
+        "Neglecting to rebalance buckets when size thresholds are violated, degrading performance toward linear time complexity."
+      ],
+      "best_practices": [
+        "Protect all traversal paths and node references using thread-local hazard pointer records before inspecting memory contents.",
+        "Keep bucket sizes strictly bounded relative to the word size $W$ to preserve the asymptotic bounds of the X-Fast Trie spine.",
+        "Batch memory reclamation requests to minimize atomic overhead in high-frequency concurrent workloads."
+      ],
+      "when_to_use": "Use when you need extreme-throughput predecessor/successor queries over integer keys with heavy concurrent multi-core access, such as in network routers or financial order books.",
+      "when_not_to_use": "Avoid when memory usage must be strictly minimized, or when simple concurrent hash maps or standard lock-based skip lists suffice due to simpler implementation and debugging.",
+      "interview_questions": [
+        {
+          "question": "How does a Y-Fast Trie improve upon an X-Fast Trie in terms of memory consumption?",
+          "answer": "An X-Fast Trie stores every single element in its leaf doubly linked list and hash tables, resulting in high pointer overhead. A Y-Fast Trie groups elements into buckets of size $\\Theta(\\log W)$ and only stores bucket representatives in the X-Fast Trie, reducing space complexity from $O(n \\log W)$ to $O(n)$."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Y-Fast Trie?",
+          "answer": "Hazard pointers prevent the ABA problem and use-after-free vulnerabilities by allowing threads to register pointers they are currently reading, ensuring that memory reclamation routines do not free nodes while other threads are traversing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free X-Fast Trie",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-03T02:11:38.140630+00:00",
+      "run_number": 2229
     }
   ]
 }
