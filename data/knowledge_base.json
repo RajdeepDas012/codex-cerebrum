@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2235,
-    "last_updated": "2026-10-03T02:30:28.396828+00:00",
-    "total_topics_learned": 2235
+    "total_runs": 2236,
+    "last_updated": "2026-10-03T02:33:36.552999+00:00",
+    "total_topics_learned": 2236
   },
   "entries": [
     {
@@ -106644,6 +106644,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T02:30:28.396808+00:00",
       "run_number": 2235
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-swapping and delta-chain-consolidation CAS primitives alongside hazard pointer memory reclamation for high-throughput latch-free page updates and multi-core point lookups in real-time in-memory database engines and concurrent storage management systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bw-Tree is a latch-free, lock-free variant of the B-Tree designed for high-throughput in-memory databases. It utilizes a mapping table and delta records attached to pages, allowing threads to update pages using compare-and-swap (CAS) operations without acquiring latches.",
+      "key_points": [
+        "Employs a logical-to-physical mapping table updated via atomic CAS primitives to redirect page references without locking.",
+        "Uses delta chains to record individual insertions, updates, and deletions instead of modifying pages in place.",
+        "Applies consolidation processes to merge long delta chains into clean, contiguous base pages to bound lookup latency.",
+        "Integrates hazard pointer memory reclamation to safely free old mapping table entries and consolidated pages under heavy concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic mapping table updates for Bw-Tree page modification via CAS",
+        "correct": "bool update_mapping(std::atomic<Page*>& mapping_entry, Page* old_page, Page* new_delta_page) {\n    return mapping_entry.compare_exchange_strong(old_page, new_delta_page);\n}",
+        "wrong": "bool update_mapping(Page*& mapping_entry, Page* old_page, Page* new_delta_page) {\n    mapping_entry = new_delta_page;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to bound delta chain lengths, leading to performance degradation during point lookups.",
+        "Reclaiming old page memory prematurely without tracking active hazard pointers, causing use-after-free vulnerabilities."
+      ],
+      "best_practices": [
+        "Trigger background consolidation tasks when a page's delta chain exceeds a predefined length threshold.",
+        "Ensure memory barriers are correctly utilized when publishing new delta nodes to guarantee visibility across multiple cores."
+      ],
+      "when_to_use": "Use when building high-throughput, in-memory database engines requiring massive concurrency and low-latency point lookups without latch contention.",
+      "when_not_to_use": "Avoid in systems with limited memory or where simple disk-backed standard B+ trees with coarse-grained locking suffice.",
+      "interview_questions": [
+        {
+          "question": "How does the Bw-Tree avoid latch contention during page updates?",
+          "answer": "It avoids latches by using an indirection mapping table and appending updates as delta records, updating pointers atomically via CAS."
+        },
+        {
+          "question": "What is the purpose of the consolidation process in a Bw-Tree?",
+          "answer": "Consolidation merges the chain of delta records into a new base page to prevent read performance from degrading due to long traversal chains."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointers",
+        "Concurrent B+ Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T02:33:36.552979+00:00",
+      "run_number": 2236
     }
   ]
 }

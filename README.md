@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2235** |
-| Last Updated | `2026-10-03T02:30:28.396828+00:00` |
-| Dataset Size | `2235 entries` |
+| Total Topics Learned | **2236** |
+| Last Updated | `2026-10-03T02:33:36.552999+00:00` |
+| Dataset Size | `2236 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1235 |
+| data-structures | 1236 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 123 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-swapping and delta-chain-consolidation CAS primitives alongside hazard pointer memory reclamation for high-throughput latch-free page updates and multi-core point lookups in real-time in-memory database engines and concurrent storage management systems`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system task dispatchers and concurrent parallel job execution engines`
 - `Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic bucket-partitioning and multidimensional-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial-temporal point indexing and multi-core nearest neighbor querying in real-time geospatial database systems and concurrent location intelligence engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system task dispatchers and concurrent parallel job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time in-memory databases and concurrent distributed key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and leftist-tree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queues and multi-core task scheduling in real-time operating system kernels and concurrent parallel job execution frameworks`
 
 <!-- STATS_END -->
 
