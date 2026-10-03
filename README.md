@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2264** |
-| Last Updated | `2026-10-03T13:50:34.897234+00:00` |
-| Dataset Size | `2264 entries` |
+| Total Topics Learned | **2265** |
+| Last Updated | `2026-10-03T13:53:44.454015+00:00` |
+| Dataset Size | `2265 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1259 |
+| data-structures | 1260 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 124 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-box-splitting and dimension-alternating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial range querying in real-time robotics motion planning systems and concurrent point cloud processing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core indexed key-value lookups in real-time transactional database systems and concurrent distributed storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value map operations and multi-core range query scanning in real-time in-memory database engines and concurrent transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic path-merging and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system task dispatchers and concurrent parallel job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation and bit-stride-navigation CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time telecommunication network switches and concurrent distributed packet forwarding engines`
-- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput interval aggregation and multi-core range query processing in real-time financial analytics engines and concurrent distributed computation monitoring systems`
 
 <!-- STATS_END -->
 
