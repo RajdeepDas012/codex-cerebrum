@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2261,
-    "last_updated": "2026-10-03T13:41:07.003423+00:00",
-    "total_topics_learned": 2261
+    "total_runs": 2262,
+    "last_updated": "2026-10-03T13:44:15.861557+00:00",
+    "total_topics_learned": 2262
   },
   "entries": [
     {
@@ -107884,6 +107884,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T13:41:07.003402+00:00",
       "run_number": 2261
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic path-merging and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system task dispatchers and concurrent parallel job execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Leftist Heap that guarantees logarithmic merging times while allowing multiple threads to manipulate priority queues without locks. By employing atomic compare-and-swap (CAS) primitives for path adjustments and hazard pointers for safe memory reclamation, it prevents race conditions and memory leaks under heavy multi-core contention.",
+      "key_points": [
+        "Utilizes atomic path-merging to execute structural adjustments across right-leaning spines safely under multi-threaded contention.",
+        "Updates null-path-lengths (NPL) atomically to preserve the leftist property without acquiring global structural locks.",
+        "Integrates hazard pointers to safely defer memory deallocation of nodes removed or restructured during concurrent operations.",
+        "Achieves high-throughput mergeable priority queue operations ideal for real-time task dispatchers and parallel job execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual atomic node merge pattern using a CAS loop for thread-safe leftist heap operations",
+        "correct": "bool try_merge_nodes(std::atomic<Node*>& dest, Node* expected, Node* desired) {\n    return dest.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* try_merge_nodes(Node* dest, Node* desired) {\n    // Non-atomic read-modify-write prone to race conditions in multithreaded environments\n    Node* temp = dest;\n    dest = desired;\n    return temp;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or restructured nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Neglecting to update the null-path-length (NPL) atomically, which destroys the leftist imbalance guarantees.",
+        "Using blocking synchronization primitives inside fine-grained concurrent paths, causing priority inversion."
+      ],
+      "best_practices": [
+        "Always validate node versions or epoch counters alongside CAS operations to avoid the ABA problem during deep tree merges.",
+        "Keep critical sections inside hazard pointer acquisition scopes as short as possible to maximize multi-core concurrency.",
+        "Implement exponential backoff strategies within atomic retry loops to minimize cache-line bouncing under high contention."
+      ],
+      "when_to_use": "Use this structure when building high-performance real-time task dispatchers or parallel job execution engines that require frequent merging of priority queues across multiple threads.",
+      "when_not_to_use": "Avoid this for simple single-threaded applications or workloads where standard binary heaps or mutex-protected priority queues provide sufficient throughput with far lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property in a lock-free environment where multiple threads are merging heaps simultaneously?",
+          "answer": "By using atomic CAS operations to update child pointers and null-path-lengths (NPL) conditionally, paired with validation loops that retry if another thread modifies the spine concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a concurrent leftist heap instead of immediate garbage collection?",
+          "answer": "Hazard pointers allow threads to safely register nodes they are currently accessing so that concurrent merging or extraction threads do not free those memory addresses, preventing use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free priority queues",
+        "Hazard pointer memory management",
+        "Concurrent skew heaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T13:44:15.861538+00:00",
+      "run_number": 2262
     }
   ]
 }
