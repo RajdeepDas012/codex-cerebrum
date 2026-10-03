@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2238,
-    "last_updated": "2026-10-03T07:55:11.771480+00:00",
-    "total_topics_learned": 2238
+    "total_runs": 2239,
+    "last_updated": "2026-10-03T07:58:19.518398+00:00",
+    "total_topics_learned": 2239
   },
   "entries": [
     {
@@ -106787,6 +106787,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T07:55:11.771461+00:00",
       "run_number": 2238
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and double-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core real-time caching layer filtering in concurrent distributed storage systems and high-traffic web applications",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter enables high-throughput probabilistic membership checks across multiple threads without lock contention. By leveraging atomic bit-setting operations and double-hashing, it ensures safe simultaneous updates to the underlying bit array.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for thread-safe bit manipulation in a shared bit array.",
+        "Implements double-hashing to generate multiple independent hash positions efficiently without heavy computational overhead.",
+        "Employs hazard pointer memory reclamation to securely manage dynamically resized structures or associated metadata nodes.",
+        "Provides constant-time O(k) performance for both insertion and membership queries, where k is the number of hash functions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit-setting using fetch_or for a concurrent Bloom filter bit vector",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    ConcurrentBloomFilter(size_t size) : bits((size + 63) / 64) {}\n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        uint64_t mask = 1ULL << bit_offset;\n        bits[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class UnsafeBloomFilter {\n    std::vector<uint64_t> bits;\npublic:\n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        bits[word_idx] |= (1ULL << (bit_index % 64)); // Data race without atomic operations\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared words, leading to lost updates of bit flags.",
+        "Failing to account for false positive rates when sizing the bit array under high concurrent write loads."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for non-synchronizing bit flags where total instruction ordering is not required for correctness.",
+        "Pre-allocate the entire bit array to avoid dynamic memory resizing overhead during peak throughput windows."
+      ],
+      "when_to_use": "Use when you need high-throughput probabilistic set membership tests across multiple concurrent threads with zero lock contention.",
+      "when_not_to_use": "Avoid when false positives are completely unacceptable or when elements must be frequently deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom Filter without using heavy mutual exclusion locks?",
+          "answer": "By utilizing atomic bitwise operations like fetch_or or atomic CAS primitives on sub-words or words within the bit array."
+        },
+        {
+          "question": "Why is deletion notoriously difficult to implement in a standard or concurrent Bloom Filter?",
+          "answer": "Because clearing a bit might inadvertently remove another element that mapped to the same bit position due to hash collisions."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Concurrent Cuckoo Filter",
+        "Lock-Free Skip List"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-03T07:58:19.518377+00:00",
+      "run_number": 2239
     }
   ]
 }
