@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2258** |
-| Last Updated | `2026-10-03T13:31:39.643232+00:00` |
-| Dataset Size | `2258 entries` |
+| Total Topics Learned | **2259** |
+| Last Updated | `2026-10-03T13:34:48.672032+00:00` |
+| Dataset Size | `2259 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1253 |
+| data-structures | 1254 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 124 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient set membership testing and multi-core real-time cache filtering in concurrent distributed storage systems and high-throughput network firewalls`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic universe-splitting and summary-bit-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-integer priority queue operations and multi-core successor lookups in real-time operating system task schedulers and concurrent high-frequency routing engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput quotient-remainder probabilistic set membership testing and multi-core dynamic clustering in real-time database query optimization layers and concurrent distributed storage caching systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-probing CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate frequency queries and multi-core stream data analysis in real-time network traffic monitoring systems and concurrent log processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Scs-Tree using atomic node-merging and leaf-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core pattern matching in real-time genomic data processing pipelines and concurrent text search engines`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjusting-access CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core localized searching in real-time in-memory database systems and concurrent operational tracking engines`
 
 <!-- STATS_END -->
 
