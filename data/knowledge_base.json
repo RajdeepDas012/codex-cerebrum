@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2254,
-    "last_updated": "2026-10-03T13:19:00.566373+00:00",
-    "total_topics_learned": 2254
+    "total_runs": 2255,
+    "last_updated": "2026-10-03T13:22:09.126351+00:00",
+    "total_topics_learned": 2255
   },
   "entries": [
     {
@@ -107549,6 +107549,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-03T13:19:00.566353+00:00",
       "run_number": 2254
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scs-Tree using atomic node-merging and leaf-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core pattern matching in real-time genomic data processing pipelines and concurrent text search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent suffix/substring tree (Scs-Tree) that utilizes compare-and-swap (CAS) primitives for atomic node-merging and leaf-splitting operations. By integrating hazard pointers, it ensures safe memory reclamation without blocking concurrent reader and writer threads, making it ideal for high-throughput string manipulation workloads.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) operations to handle concurrent leaf-splitting and node-merging safely.",
+        "Employs hazard pointers to track active references, preventing premature memory deallocation by concurrent threads.",
+        "Optimized for high-throughput substring indexing and rapid pattern matching in multi-core environments.",
+        "Eliminates traditional lock contention, ensuring progress and high scalability in real-time genomic pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting with hazard pointer protection in a concurrent tree node.",
+        "correct": "bool splitLeafNode(std::atomic<Node*>& target, Node* oldNode, Node* newNode, HazardPointer& hp) {\n    hp.protect(target);\n    if (target.load() != oldNode) return false;\n    return target.compare_exchange_strong(oldNode, newNode);\n}",
+        "wrong": "bool splitLeafNode(std::atomic<Node*>& target, Node* oldNode, Node* newNode) {\n    return target.compare_exchange_strong(oldNode, newNode); // Missing hazard pointer protection leads to ABA problems and use-after-free\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to publish hazard pointers before reading node references, leading to race conditions and use-after-free bugs.",
+        "Failing to handle the ABA problem during structural modifications like leaf-splitting or node-merging.",
+        "Over-allocating hazard pointers per thread, degrading cache performance."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer dereferences with thread-local hazard pointer acquisition.",
+        "Use version counters or tagged pointers alongside CAS primitives to mitigate the ABA problem.",
+        "Batch retired nodes for reclamation to reduce synchronization overhead across worker threads."
+      ],
+      "when_to_use": "Use when building high-performance text search engines or genomic analysis pipelines that require concurrent, lock-free substring indexing across numerous threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of hazard pointers and atomic primitives outweighs the concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free Scs-Tree?",
+          "answer": "Hazard pointers allow threads to atomically publish a reference to a node they are currently accessing, informing memory reclamation mechanisms (like epoch-based reclamation or hazard lists) not to free that node until the reference is cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic node-merging in a concurrent tree structure?",
+          "answer": "Ensuring atomicity across multiple pointer updates and preventing structural inconsistencies or race conditions where concurrent threads attempt to split or traverse the same merging nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Suffix Trees and Pattern Matching"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T13:22:09.126331+00:00",
+      "run_number": 2255
     }
   ]
 }
