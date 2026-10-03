@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2257,
-    "last_updated": "2026-10-03T13:28:27.306665+00:00",
-    "total_topics_learned": 2257
+    "total_runs": 2258,
+    "last_updated": "2026-10-03T13:31:39.643232+00:00",
+    "total_topics_learned": 2258
   },
   "entries": [
     {
@@ -107692,6 +107692,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T13:28:27.306645+00:00",
       "run_number": 2257
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic universe-splitting and summary-bit-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-integer priority queue operations and multi-core successor lookups in real-time operating system task schedulers and concurrent high-frequency routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Van Emde Boas (vEB) tree that supports $O(\\log \\log U)$ bounded-integer priority queue operations without locks. By using atomic compare-and-swap (CAS) primitives for universe-splitting and summary-bit updates alongside hazard pointers for safe memory reclamation, multi-core systems can scale high-frequency routing and OS task scheduling efficiently.",
+      "key_points": [
+        "Achieves sub-logarithmic time complexity $O(\\log \\log U)$ for operations like successor, predecessor, insert, and delete on a bounded universe size $U$.",
+        "Uses atomic universe-splitting and summary-bit-tracking CAS primitives to avoid coarse-grained locking bottlenecks across threads.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic node allocations and deallocations in a lock-free context.",
+        "Optimized for high-throughput multi-core real-time operating system task schedulers and concurrent high-frequency packet routing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic update logic for a vEB summary bit using CAS primitives",
+        "correct": "bool update_summary(std::atomic<uint64_t>& summary, int cluster_id) {\n    uint64_t old_val, new_val;\n    do {\n        old_val = summary.load(std::memory_order_relaxed);\n        new_val = old_val | (1ULL << cluster_id);\n    } while (!summary.compare_exchange_weak(old_val, new_val, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool update_summary(uint64_t& summary, int cluster_id) {\n    summary |= (1ULL << cluster_id);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory barriers correctly with atomic operations, leading to stale summary bit states visible to concurrent threads.",
+        "Neglecting hazard pointer protection during recursive sub-universe traversals, resulting in use-after-free bugs when another thread deletes a cluster."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for non-dependent loads and release-acquire semantics for CAS operations on summary bits and cluster pointers.",
+        "Pre-allocate memory pools for vEB nodes when universe size $U$ is fixed to minimize dynamic allocation overhead under heavy concurrent workloads."
+      ],
+      "when_to_use": "Use this structure when dealing with fixed, bounded integer keys where operations must execute in $O(\\log \\log U)$ time across many concurrent threads, such as packet routing tables or real-time OS schedulers.",
+      "when_not_to_use": "Avoid when the universe size $U$ is extremely large or unbounded (as space consumption becomes $O(U)$), or when general-purpose string/comparable keys are required instead of integers.",
+      "interview_questions": [
+        {
+          "question": "How does the vEB tree achieve $O(\\log \\log U)$ time complexity for successor queries?",
+          "answer": "It divides the universe of size $U$ into $\\sqrt{U}$ clusters of size $\\sqrt{U}$, maintaining a summary structure that tracks which clusters contain active elements, thereby reducing the search space size recursively by a square root at each level."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free vEB tree?",
+          "answer": "Hazard pointers safely track nodes currently being accessed by reader or modifier threads, preventing them from being reclaimed or freed by concurrent deletion threads until traversal completes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Priority Queues",
+        "Hazard Pointers and Memory Management",
+        "Van Emde Boas Trees",
+        "Concurrent Bitmaps and Atomic CAS Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T13:31:39.643210+00:00",
+      "run_number": 2258
     }
   ]
 }
