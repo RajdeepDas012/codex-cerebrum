@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2295,
-    "last_updated": "2026-10-03T21:32:58.294345+00:00",
-    "total_topics_learned": 2295
+    "total_runs": 2296,
+    "last_updated": "2026-10-03T21:36:06.358450+00:00",
+    "total_topics_learned": 2296
   },
   "entries": [
     {
@@ -109495,6 +109495,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T21:32:58.294324+00:00",
       "run_number": 2295
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-modification-operation (SMO) CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent database indexing and multi-core range scans in real-time transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree uses atomic compare-and-swap (CAS) primitives and structural modification operations (SMOs) to handle node splits and merges without blocking threads. This architecture is vital for high-throughput transactional databases running on multi-core hardware, as it minimizes contention during intensive range queries and updates.",
+      "key_points": [
+        "Utilizes atomic node-splitting and SMO CAS primitives to guarantee safe concurrent tree structural transformations.",
+        "Employs hazard pointer memory reclamation to securely free deleted or split nodes without causing race conditions or ABA issues.",
+        "Maintains high-throughput concurrent database indexing and efficient multi-core range scans without coarse-grained locking bottlenecks.",
+        "Requires careful coordination between search paths and ongoing structural modifications to prevent reader-writer anomalies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation using a CAS loop in a lock-free B-Tree node context.",
+        "correct": "bool try_split_node(BTreeNode* node, int key, void* value) {\n    NodeState expected = node->state.load();\n    if (expected.is_frozen) return false;\n    NodeState desired = prepare_split(expected, key, value);\n    return node->state.compare_exchange_weak(expected, desired);\n}",
+        "wrong": "bool try_split_node(BTreeNode* node, int key, void* value) {\n    node->lock(); // Using a mutex violates lock-free guarantees\n    node->insert(key, value);\n    node->unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle interrupted or half-completed structural modification operations (SMOs) left behind by delayed threads.",
+        "Reclaiming memory of deleted nodes prematurely before all concurrent reader threads have released their hazard pointers."
+      ],
+      "best_practices": [
+        "Design SMOs to be idempotent so that stalled threads can safely help complete operations initiated by others.",
+        "Establish clear epoch-based or hazard pointer-based garbage collection protocols to track node lifetimes safely across multi-core accesses."
+      ],
+      "when_to_use": "Ideal for high-performance in-memory transactional database engines and multi-threaded key-value stores requiring high read/write concurrency and fast range scans.",
+      "when_not_to_use": "Avoid in single-threaded environments, resource-constrained embedded systems, or applications where the complexity of lock-free primitives outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do structural modification operations (SMOs) prevent race conditions during concurrent node splits in a lock-free B-Tree?",
+          "answer": "SMOs use atomic CAS primitives to transition node states (such as marking a node as 'frozen' or 'splitting'), forcing concurrent threads to help complete the operation or retry their traversal safely."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a lock-free B-Tree?",
+          "answer": "Hazard pointers protect threads from accessing memory that has been concurrently freed or reallocated during node splits and deletions, effectively eliminating use-after-free bugs without requiring heavy locks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip-Lists",
+        "Concurrent Database Indexing and Range Scans"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T21:36:06.358430+00:00",
+      "run_number": 2296
     }
   ]
 }
