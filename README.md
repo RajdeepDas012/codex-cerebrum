@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2299** |
-| Last Updated | `2026-10-03T23:47:29.588978+00:00` |
-| Dataset Size | `2299 entries` |
+| Total Topics Learned | **2300** |
+| Last Updated | `2026-10-03T23:50:38.406184+00:00` |
+| Dataset Size | `2300 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1292 |
+| data-structures | 1293 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 125 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-overflow-split CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems (GIS) and concurrent location-based services engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct element counting in real-time web analytics platforms and concurrent distributed stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and surface-area-heuristic-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing acceleration and multi-core collision detection in real-time computer graphics rendering engines and concurrent physics simulation pipelines`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box-partitioning and plane-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial searching and multi-core nearest-neighbor querying in real-time robotics perception systems and concurrent computer graphics ray tracing engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-modification-operation (SMO) CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent database indexing and multi-core range scans in real-time transactional storage engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-height-CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core range queries in real-time in-memory database engines and concurrent distributed key-value storage systems`
 
 <!-- STATS_END -->
 

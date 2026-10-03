@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2299,
-    "last_updated": "2026-10-03T23:47:29.588978+00:00",
-    "total_topics_learned": 2299
+    "total_runs": 2300,
+    "last_updated": "2026-10-03T23:50:38.406184+00:00",
+    "total_topics_learned": 2300
   },
   "entries": [
     {
@@ -109683,6 +109683,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-03T23:47:29.588959+00:00",
       "run_number": 2299
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-overflow-split CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems (GIS) and concurrent location-based services engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent R-Tree uses atomic compare-and-swap (CAS) primitives for bounding-box merging and node-overflow splitting alongside hazard pointers for safe memory management. It enables high-throughput multi-dimensional spatial indexing and multi-core range queries without explicit locks, making it ideal for high-concurrency geographic information systems and location-based services.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to perform concurrent structural updates like bounding-box adjustments and node splits without blocking threads.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted or split spatial nodes until all reading threads have safely detached.",
+        "Optimizes multi-dimensional spatial indexing and parallel range searches across multiple CPU cores for high-frequency location data.",
+        "Manages overlapping minimum bounding rectangles (MBRs) dynamically under heavy write and query contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting and hazard pointer protection during an R-Tree concurrent insertion.",
+        "correct": "bool insert_spatial_node(RTreeNode* root, const BoundingBox& box, void* data, HazardPointerRegistry& hp_reg) {\n    HazardPointer* hp = hp_reg.acquire();\n    while (true) {\n        RTreeNode* current = hp->protect(root);\n        if (current->is_leaf() && !current->is_full()) {\n            if (atomic_compare_exchange_weak(&current->data_box, &old_box, new_box)) {\n                hp_reg.release(hp);\n                return true;\n            }\n        } else {\n            split_overflow_node(current, hp_reg);\n        }\n    }\n}",
+        "wrong": "bool insert_spatial_node(RTreeNode* root, const BoundingBox& box) {\n    // Mutex locking entire R-Tree structure causes severe bottlenecks under concurrent loads\n    std::lock_guard<std::mutex> lock(tree_mutex);\n    root->insert(box);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs during asynchronous node splits.",
+        "Using naive locking mechanisms inside fine-grained spatial traversal loops, which degrades multi-core performance.",
+        "Neglecting ABA problem mitigation when performing CAS operations on node pointers and bounding box metadata."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to manage node deletions safely in a lock-free hierarchy.",
+        "Keep atomic operation granularity as fine as possible, targeting individual bounding boxes and child array pointers rather than entire subtrees.",
+        "Implement backoff strategies on high-contention node splits to prevent excessive CPU cache invalidation."
+      ],
+      "when_to_use": "Use when building high-throughput real-time geographic information systems (GIS) or location-based services requiring concurrent multi-dimensional spatial indexing and range queries across many CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded applications, simple low-frequency spatial datasets, or systems where memory overhead of hazard pointers and lock-free retry loops outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node-overflow splits in a lock-free R-Tree without locking the entire subtree?",
+          "answer": "By using atomic CAS operations to swap old node references with newly split child nodes, combined with hazard pointers to ensure threads traversing the old node safely complete before memory reclamation."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-performance concurrent spatial indexes?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without stop-the-world pauses, which is critical for real-time spatial query engines and GIS pipelines."
+        }
+      ],
+      "related_topics": [
+        "Concurrent K-d Tree",
+        "Lock-free B-Tree",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-03T23:50:38.406165+00:00",
+      "run_number": 2300
     }
   ]
 }
