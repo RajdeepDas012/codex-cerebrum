@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2303,
-    "last_updated": "2026-10-04T00:00:02.494354+00:00",
-    "total_topics_learned": 2303
+    "total_runs": 2304,
+    "last_updated": "2026-10-04T00:03:10.766742+00:00",
+    "total_topics_learned": 2304
   },
   "entries": [
     {
@@ -109878,6 +109878,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T00:00:02.494333+00:00",
       "run_number": 2303
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) using atomic path-compression and union-by-rank CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core connected components analysis in real-time social network friend suggestion engines and concurrent image segmentation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Disjoint-Set data structure utilizing atomic Compare-And-Swap (CAS) operations for path compression and union-by-rank. It integrates hazard pointers to safely manage memory reclamation in high-throughput multi-threaded environments like social network analysis and image processing.",
+      "key_points": [
+        "Leverages atomic CAS primitives to execute thread-safe find and union operations without global locks.",
+        "Implements atomic path compression to flatten tree structures and minimize lookup latency under high contention.",
+        "Applies union-by-rank heuristics atomically to keep trees balanced and bounded in depth during parallel updates.",
+        "Utilizes hazard pointers to prevent premature memory deallocation and avoid ABA problems during concurrent node modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free atomic find operation with path compression using CAS primitives.",
+        "correct": "struct Node { std::atomic<int> parent; std::atomic<int> rank; };\nint find(std::vector<Node>& nodes, int i) {\n    int root = i;\n    while (nodes[root].parent.load() != root) {\n        root = nodes[root].parent.load();\n    }\n    int curr = i;\n    while (curr != root) {\n        int next = nodes[curr].parent.load();\n        nodes[curr].parent.compare_exchange_strong(next, root);\n        curr = next;\n    }\n    return root;\n}",
+        "wrong": "int find(std::vector<Node>& nodes, int i) {\n    if (nodes[i].parent == i) return i;\n    return nodes[i].parent = find(nodes, nodes[i].parent);\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent updates to node parents or ranks.",
+        "Neglecting safe memory reclamation strategies, leading to memory leaks or use-after-free bugs when nodes are reorganized."
+      ],
+      "best_practices": [
+        "Employ hazard pointers or epoch-based memory reclamation to safely manage dynamic node allocations.",
+        "Use bounded retry loops with backoff strategies when CAS operations fail due to high contention."
+      ],
+      "when_to_use": "Use when multiple threads concurrently query and update disjoint sets under high-throughput requirements, such as in real-time network analysis or parallel graph algorithms.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency environments where standard pointer-based Union-Find with locks introduces less overhead and complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic updates on parent pointers in a lock-free Disjoint-Set?",
+          "answer": "By pairing pointer references with version counters or sequence numbers in a double-word CAS (DCAS) or by utilizing hazard pointers to ensure nodes are not concurrently modified or freed."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard garbage collection in high-throughput lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory management with low latency overhead, avoiding the unpredictable pause times associated with traditional tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Tables",
+        "Hazard Pointers and Memory Reclamation",
+        "Parallel Connected Components Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T00:03:10.766722+00:00",
+      "run_number": 2304
     }
   ]
 }
