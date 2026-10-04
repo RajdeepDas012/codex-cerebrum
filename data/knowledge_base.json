@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2363,
-    "last_updated": "2026-10-04T21:26:53.250326+00:00",
-    "total_topics_learned": 2363
+    "total_runs": 2364,
+    "last_updated": "2026-10-04T21:30:02.579457+00:00",
+    "total_topics_learned": 2364
   },
   "entries": [
     {
@@ -112718,6 +112718,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-04T21:26:53.250306+00:00",
       "run_number": 2363
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Spline using atomic spline-segment-updating and error-bound-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput learned index lookups and multi-core point navigation in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Spline combines learned index structures with radix routing to achieve ultra-fast key-value lookups under heavy multi-threaded contention. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and seamless concurrent updates without traditional locking overhead.",
+      "key_points": [
+        "Utilizes atomic spline-segment-updating CAS operations to safely modify predictive linear regression models across threads.",
+        "Enforces strict error-bound-checking mechanisms to fall back to exact searches when learned predictions exceed predefined tolerances.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free bugs during concurrent node splitting and replacement.",
+        "Delivers high-throughput point navigation ideal for modern in-memory databases and multi-core key-value storage systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual lock-free update and hazard pointer protected lookup for a radix spline node segment.",
+        "correct": "bool update_spline_segment(std::atomic<SplineNode*>& root, const Key& key, const Address& addr) {\n    HazardPointer hp;\n    while (true) {\n        SplineNode* current = hp.protect(root);\n        if (!current) return false;\n        if (current->fits_error_bound(key)) {\n            if (current->try_atomic_insert(key, addr)) return true;\n        } else {\n            SplineNode* new_node = current->split_and_insert(key, addr);\n            if (root.compare_exchange_weak(current, new_node)) {\n                hp.retire(current);\n                return true;\n            }\n            delete new_node;\n        }\n    }\n}",
+        "wrong": "bool update_spline_segment_unsafe(SplineNode* root, Key key, Address addr) {\n    std::lock_guard<std::mutex> lock(global_mutex);\n    root->insert(key, addr);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly protect shared spline pointers with hazard pointers prior to validation, leading to race conditions and memory corruption.",
+        "Ignoring error-bound drift during concurrent insertions, which results in incorrect point navigation and missing keys."
+      ],
+      "best_practices": [
+        "Keep hazard pointer acquisition scopes as narrow as possible to minimize memory reclamation latency.",
+        "Bound the maximum error tolerance dynamically based on distribution shifts to optimize lookup performance."
+      ],
+      "when_to_use": "Use this structure when building high-performance, read-heavy in-memory databases and key-value stores that require sub-nanosecond point lookups under massive multi-core concurrency.",
+      "when_not_to_use": "Avoid in memory-constrained environments or workloads dominated by frequent, unpredictable writes where learned index maintenance overhead outweighs traversal speedups.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers ensure safe memory reclamation in a lock-free Radix Spline during node splits?",
+          "answer": "Hazard pointers allow threads to announce which nodes they are currently accessing so that retiring threads know safely when a node is no longer referenced before freeing it."
+        },
+        {
+          "question": "Why is error-bound checking critical in learned indexes like Radix Splines?",
+          "answer": "Error-bound checking ensures that predictive linear models do not skip target keys due to local data variance, guaranteeing correctness by bounding the search space for exact lookups."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip-Lists",
+        "Learned Indexes",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T21:30:02.579438+00:00",
+      "run_number": 2364
     }
   ]
 }
