@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2316** |
-| Last Updated | `2026-10-04T05:32:42.319731+00:00` |
-| Dataset Size | `2316 entries` |
+| Total Topics Learned | **2317** |
+| Last Updated | `2026-10-04T05:35:50.282681+00:00` |
+| Dataset Size | `2317 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1306 |
+| data-structures | 1307 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 126 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cascading and fine-grained-enqueue CAS primitives alongside hazard pointer memory reclamation for high-throughput task dispatching and multi-core thread synchronization in real-time job execution engines and concurrent distributed computing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Link-Cut Tree using atomic path-splicing and preferred-child-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic tree operations and multi-core network flow optimization in real-time communication network routing engines and concurrent graph algorithm execution systems`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-ranking CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct data structure querying and multi-core compressed text indexing in real-time genome sequencing platforms and concurrent bioinformatics search engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick Automaton using atomic failure-link-pointing and state-transition-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary searching in real-time intrusion detection systems and concurrent network content filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and boundary-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core schedule conflict detection in real-time calendar management systems and concurrent resource allocation engines`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core shortest path computation in real-time graph routing engines and concurrent network optimization systems`
 
 <!-- STATS_END -->
 
