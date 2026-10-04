@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2351,
-    "last_updated": "2026-10-04T17:52:36.831415+00:00",
-    "total_topics_learned": 2351
+    "total_runs": 2352,
+    "last_updated": "2026-10-04T17:55:45.101821+00:00",
+    "total_topics_learned": 2352
   },
   "entries": [
     {
@@ -112150,6 +112150,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T17:52:36.831396+00:00",
       "run_number": 2351
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint-swapping and kick-out-eviction CAS primitives alongside hazard pointer memory reclamation for high-throughput delete-supported approximate membership testing and multi-core duplicate elimination in real-time distributed storage engines and concurrent database indexing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Cuckoo Filter using compare-and-swap (CAS) primitives and hazard pointers. It enables delete-supported approximate membership testing with high multi-core throughput, crucial for real-time storage engines and database indexing.",
+      "key_points": [
+        "Utilizes atomic bucket-fingerprint swapping and kick-out eviction loops via CAS primitives for safe concurrent modifications.",
+        "Employs hazard pointer memory reclamation to securely free or reallocate buckets without global locks.",
+        "Supports insertions, deletions, and lookups concurrently without deadlocks or thread starvation under high contention.",
+        "Provides space-efficient approximate membership querying with support for fingerprint deletions, unlike standard Bloom filters."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping using compare_exchange_weak in a lock-free Cuckoo filter bucket.",
+        "correct": "bool swap_fingerprint(std::atomic<uint32_t>& bucket, uint32_t expected_fp, uint32_t new_fp) {\n    return bucket.compare_exchange_weak(expected_fp, new_fp, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool swap_fingerprint(uint32_t& bucket, uint32_t expected_fp, uint32_t new_fp) {\n    // Non-atomic read-modify-write vulnerable to race conditions\n    if (bucket == expected_fp) { bucket = new_fp; return true; }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to bound the kick-out eviction chain length, leading to potential infinite loops when the filter approaches capacity.",
+        "Improper memory ordering during atomic bucket updates, causing visibility issues across threads."
+      ],
+      "best_practices": [
+        "Always set a maximum displacement threshold for kick-out evictions to trigger filter resizing or structural re-allocation gracefully.",
+        "Integrate hazard pointers correctly before reading pointer-based bucket structures to prevent ABA problems and premature memory freeing."
+      ],
+      "when_to_use": "Use when you need high-throughput approximate membership queries with dynamic deletion support across multiple threads without locking overhead.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained and standard Bloom filters (which lack deletion support) suffice, or when single-threaded simplicity is preferred.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter handle race conditions during a simultaneous insert and eviction kick-out cycle?",
+          "answer": "It uses fine-grained atomic Compare-And-Swap (CAS) operations on individual buckets and retries the displacement path if another thread modifies the target bucket concurrently."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in lock-free Cuckoo filters?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without stop-the-world pauses, making them ideal for high-throughput real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Quotient Filter",
+        "Hazard Pointer Memory Management",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T17:55:45.101807+00:00",
+      "run_number": 2352
     }
   ]
 }
