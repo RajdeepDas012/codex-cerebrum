@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2367,
-    "last_updated": "2026-10-04T21:39:28.955378+00:00",
-    "total_topics_learned": 2367
+    "total_runs": 2368,
+    "last_updated": "2026-10-04T21:42:37.894453+00:00",
+    "total_topics_learned": 2368
   },
   "entries": [
     {
@@ -112912,6 +112912,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-04T21:39:28.955361+00:00",
       "run_number": 2367
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent network packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of an ultra-high-throughput, lock-free concurrent Radix Tree optimized for modern multi-core network packet forwarding engines. It utilizes atomic compare-and-swap (CAS) primitives for thread-safe prefix compression and node splitting, paired with hazard pointers to guarantee safe memory reclamation without lock contention.",
+      "key_points": [
+        "Applies atomic CAS primitives to handle dynamic prefix-compression and node-splitting concurrently without global locks.",
+        "Utilizes hazard pointers to securely track and reclaim memory reclaimed during concurrent structure modifications.",
+        "Delivers deterministic, low-latency IP routing table lookups suitable for multi-core software-defined networking switches.",
+        "Optimizes memory footprint by compacting common bit-prefixes into single tree nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using compare_exchange_strong for lock-free prefix insertion.",
+        "correct": "bool insert_prefix(Node*& root, uint32_t prefix, int length) {\n    Node* current = root;\n    // Atomic CAS loop for lock-free node insertion\n    while (!current->child.compare_exchange_weak(expected, new_node)) {\n        // Retry logic\n    }\n    return true;\n}",
+        "wrong": "bool insert_prefix(Node* root, uint32_t prefix, int length) {\n    mutex.lock();\n    // Using locks defeats the lock-free concurrent objective\n    root->addChild(prefix, length);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Neglecting the ABA problem during atomic pointer updates on shared tree nodes.",
+        "Failing to protect traversal paths with hazard pointers, leading to use-after-free bugs during concurrent node splitting."
+      ],
+      "best_practices": [
+        "Always protect shared node references using hazard pointer scopes prior to traversing child pointers.",
+        "Keep atomic operations granular to minimize cache-line bouncing across multiple CPU cores."
+      ],
+      "when_to_use": "Ideal for high-frequency IP routing tables, software-defined networking switches, and concurrent network engines requiring lock-free lookups.",
+      "when_not_to_use": "Avoid when memory overhead of hazard pointers and explicit bit-wise prefix manipulation outweighs raw throughput benefits for small datasets.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free Radix Tree during concurrent node splitting?",
+          "answer": "Threads register nodes they are currently accessing into thread-local hazard pointer slots, preventing the memory reclamation subsystem from freeing those nodes until all readers have unlinked them."
+        },
+        {
+          "question": "Why use a Radix Tree instead of a standard Hash Map for IP routing table lookups?",
+          "answer": "A Radix Tree natively supports longest-prefix matching, which is required for routing network packets based on subnet masks, whereas a standard hash map only supports exact key matching."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Radix Splines",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T21:42:37.894434+00:00",
+      "run_number": 2368
     }
   ]
 }
