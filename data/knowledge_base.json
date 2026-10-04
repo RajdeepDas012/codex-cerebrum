@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2318,
-    "last_updated": "2026-10-04T05:38:58.650056+00:00",
-    "total_topics_learned": 2318
+    "total_runs": 2319,
+    "last_updated": "2026-10-04T05:42:06.506763+00:00",
+    "total_topics_learned": 2319
   },
   "entries": [
     {
@@ -110590,6 +110590,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T05:38:58.650036+00:00",
       "run_number": 2318
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic semi-splaying and self-balancing rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key retrieval and multi-core localized access optimization in real-time in-memory caching layers and concurrent distributed memory management systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Splay Tree using atomic compare-and-swap (CAS) operations and hazard pointers for memory safety. It enables high-throughput, thread-safe access and automatic restructuring of frequently queried keys toward the root without global locking.",
+      "key_points": [
+        "Utilizes atomic semi-splaying and self-balancing rotation CAS primitives to modify tree topology without blocking threads.",
+        "Employs hazard pointer memory reclamation to safely manage deleted or re-linked nodes in a lock-free environment.",
+        "Optimizes for locality of reference by bringing frequently accessed items closer to the root under high multi-core contention.",
+        "Prevents structural deadlocks and race conditions through fine-grained pointer validation during concurrent rotations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer loading using hazard pointers in a concurrent tree traversal.",
+        "correct": "Node* hazard_load(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (ptr != node_ptr.load(std::memory_order_relaxed));\n    return ptr;\n}",
+        "wrong": "Node* hazard_load(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate rotation nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Attempting full multi-step top-down splaying in a single atomic transaction, which causes excessive CAS validation failures."
+      ],
+      "best_practices": [
+        "Use semi-splaying or localized rotations to reduce CAS retry loops under high core counts.",
+        "Integrate hazard pointers strictly before dereferencing child pointers during concurrent structural modifications."
+      ],
+      "when_to_use": "Use when workloads exhibit strong temporal locality where recently accessed elements are accessed again frequently, and thread contention requires lock-free scaling.",
+      "when_not_to_use": "Avoid when access patterns are uniformly random, as splay operations add unnecessary overhead without improving search locality.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems during lock-free tree rotations in a concurrent Splay Tree?",
+          "answer": "By pairing node pointers with version counters or utilizing hazard pointers combined with epoch-based reclamation to ensure nodes are not recycled prematurely."
+        },
+        {
+          "question": "Why is full multi-node splaying difficult to implement completely lock-free, and how is it mitigated?",
+          "answer": "Simultaneously modifying multiple parent-child pointers across distant tree levels via CAS fails frequently under high contention; semi-splaying or localized single/double rotations are used instead to limit atomic scope."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Link-Cut Trees",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Self-Balancing Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T05:42:06.506743+00:00",
+      "run_number": 2319
     }
   ]
 }
