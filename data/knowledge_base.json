@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2356,
-    "last_updated": "2026-10-04T18:09:24.594881+00:00",
-    "total_topics_learned": 2356
+    "total_runs": 2357,
+    "last_updated": "2026-10-04T21:08:00.725242+00:00",
+    "total_topics_learned": 2357
   },
   "entries": [
     {
@@ -112385,6 +112385,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T18:09:24.594860+00:00",
       "run_number": 2356
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-splicing and tower-height-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core concurrent range scanning in real-time in-memory database engines and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip-List optimized for multi-core environments. It relies on atomic compare-and-swap (CAS) primitives for forward pointer updates and tower height modifications, paired with hazard pointers for safe memory reclamation during high-throughput ordered lookups and range scans.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-splicing CAS operations to safely link and unlink nodes across multiple tower levels without global locks.",
+        "Employs tower-height-updating logic to dynamically manage probabilistic multi-level node hierarchies under concurrent writer threads.",
+        "Integrates hazard pointers to track thread-local active node references, safely deferring memory deallocation until no threads access deleted nodes.",
+        "Enables high-throughput ordered key-value operations and scalable concurrent range scanning ideal for in-memory databases."
+      ],
+      "code_example": {
+        "language": "pseudo",
+        "description": "Demonstrates atomic forward pointer CAS splicing for inserting a node into a lock-free skip-list level.",
+        "correct": "while True:\n    pred, succ = find_predecessor_and_successor(key)\n    new_node.next[level] = succ\n    if pred.next[level].compare_and_set(succ, new_node): break",
+        "wrong": "pred.next[level] = new_node\nnew_node.next[level] = succ"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically deleted using a marked reference bit before physically splicing them out via CAS.",
+        "Releasing memory immediately upon unlinking without hazard pointers or epoch-based reclamation, leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Always separate logical deletion (setting a deletion bit in the pointer) from physical deletion (updating forward pointers via CAS).",
+        "Use thread-local hazard pointer arrays to protect nodes being traversed during concurrent reads and writes.",
+        "Keep random level generation thread-safe and bounded to prevent excessive memory consumption and tall, sparse towers."
+      ],
+      "when_to_use": "When implementing high-concurrency in-memory indexes or key-value stores that require frequent ordered range scans and low-latency lookups.",
+      "when_not_to_use": "When working in single-threaded environments or systems with constrained memory where simpler synchronized structures or standard hash maps suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating forward pointers in a lock-free skip-list?",
+          "answer": "By using tagged pointers or hazard pointers that combine a memory address with a monotonically increasing version counter or deletion mark bit checked atomically via CAS."
+        },
+        {
+          "question": "Why is logical deletion necessary before physical deletion in a concurrent lock-free skip-list?",
+          "answer": "Logical deletion marks the node as removed to other concurrent threads so they can help bypass it or avoid inserting new nodes after it, preventing race conditions during pointer splicing."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip-Graph",
+        "Hazard Pointer Memory Management",
+        "Lock-free Leftist Heap"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-04T21:08:00.725223+00:00",
+      "run_number": 2357
     }
   ]
 }
