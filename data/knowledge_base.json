@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2331,
-    "last_updated": "2026-10-04T12:19:50.985538+00:00",
-    "total_topics_learned": 2331
+    "total_runs": 2332,
+    "last_updated": "2026-10-04T12:22:59.863613+00:00",
+    "total_topics_learned": 2332
   },
   "entries": [
     {
@@ -111202,6 +111202,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T12:19:50.985520+00:00",
       "run_number": 2331
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-partitioning and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and multi-core nearest neighbor searching in real-time robotic collision avoidance systems and concurrent point cloud processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free K-D Tree tailored for multi-core environments. By combining atomic Compare-And-Swap (CAS) operations for node splitting and point insertion with hazard pointer memory management, it enables high-throughput multi-dimensional spatial queries without traditional mutex bottlenecks.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free node-splitting and bounding-partitioning during tree growth.",
+        "Employs hazard pointers to safely manage node memory reclamation and prevent use-after-free bugs in concurrent environments.",
+        "Optimizes multi-core nearest neighbor searches and spatial range queries for high-frequency robotic and point cloud workloads.",
+        "Avoids global locks entirely, reducing thread contention and minimizing tail latencies in real-time systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer updates for inserting points into a lock-free K-D tree node.",
+        "correct": "bool insert_point(std::atomic<Node*>& root, Point p, int depth) {\n    Node* curr = hazard_protect(root);\n    while (true) {\n        if (!curr) {\n            Node* new_node = new Node(p);\n            if (root.compare_exchange_weak(curr, new_node)) return true;\n            delete new_node;\n            curr = hazard_protect(root);\n            continue;\n        }\n        // Traverse and insert using atomic CAS on child pointers\n    }\n}",
+        "wrong": "bool insert_point(Node* root, Point p) {\n    mutex.lock();\n    // Unsafe non-atomic traversal and naive pointer assignment\n    root->child = new Node(p);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Using coarse-grained locks during tree rebalancing or splitting, which negates the performance benefits of lock-free concurrency."
+      ],
+      "best_practices": [
+        "Retire nodes safely through a deferred reclamation mechanism once hazard pointers confirm no threads reference them.",
+        "Keep atomic comparison loops tight and leverage weak CAS with backoff strategies to reduce bus contention on high-core processors."
+      ],
+      "when_to_use": "Use when dealing with high-frequency, multi-dimensional spatial queries across numerous concurrent threads where lock contention severely degrades performance.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained embedded devices where the overhead of hazard pointers and atomic synchronization outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free K-D Tree?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that concurrent deallocation routines know to defer freeing those memory addresses until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is lock-free multi-dimensional spatial indexing more complex than standard binary search trees?",
+          "answer": "Spatial indexing structures like K-D Trees alternate partitioning axes at different depths and frequently require complex node-splitting and bounding-box adjustments that must be atomized atomically across multiple pointer fields."
+        }
+      ],
+      "related_topics": [
+        "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-free Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T12:22:59.863596+00:00",
+      "run_number": 2332
     }
   ]
 }
