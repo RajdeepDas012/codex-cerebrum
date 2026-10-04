@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2322,
-    "last_updated": "2026-10-04T05:51:33.189443+00:00",
-    "total_topics_learned": 2322
+    "total_runs": 2323,
+    "last_updated": "2026-10-04T05:54:41.912682+00:00",
+    "total_topics_learned": 2323
   },
   "entries": [
     {
@@ -110778,6 +110778,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T05:51:33.189423+00:00",
       "run_number": 2322
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic Levenshtein-distance-calculating and metric-space-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell checking in real-time search auto-complete engines and concurrent bioinformatics mutation analysis systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Burkhard-Keller Tree (BK-Tree) specialized for metric spaces using edit distances like Levenshtein distance. It uses atomic CAS operations for node insertions and metric-space partitioning, combined with hazard pointers to ensure safe memory reclamation under multi-threaded contention.",
+      "key_points": [
+        "Leverages metric space properties (specifically the triangle inequality) to bound search spaces during approximate string matching.",
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely add child nodes to metric tree branches without global locking.",
+        "Employs hazard pointers to track threads accessing specific tree nodes, preventing premature deallocation during concurrent structural modifications.",
+        "Enables high-throughput multi-core operations suitable for real-time search auto-completion and genomic mutation analyses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe hazard pointer registration for lock-free BK-Tree traversal and node access.",
+        "correct": "void* traverse_bk_tree(HazardPointerManager& hpm, std::atomic<Node*>& root, const std::string& query) {\n    HazardPointer* hp = hpm.acquire();\n    Node* current;\n    do {\n        current = root.load(std::memory_order_acquire);\n        hpm.protect(hp, current);\n    } while (current != root.load(std::memory_order_relaxed));\n    // Perform metric space search distance evaluation safely\n    hpm.release(hp);\n    return current;\n}",
+        "wrong": "void* traverse_bk_tree_unsafe(std::atomic<Node*>& root, const std::string& query) {\n    Node* current = root.load();\n    // Another thread might free 'current' right here before it is read\n    return current->child_map[1];\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs.",
+        "Ignoring the triangle inequality optimization during concurrent range queries, degrading traversal performance."
+      ],
+      "best_practices": [
+        "Always re-verify root and child pointers after setting hazard pointers to handle race conditions during concurrent insertions.",
+        "Batch retired nodes in thread-local storage before invoking memory reclamation routines to reduce CAS contention."
+      ],
+      "when_to_use": "Use when building high-throughput systems requiring real-time fuzzy string matching, spell checking, or sequence alignment across multiple concurrent threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where exact matching with hash maps or standard search trees suffices.",
+      "interview_questions": [
+        {
+          "question": "How does a BK-Tree utilize the triangle inequality to accelerate approximate string matching?",
+          "answer": "By computing the distance $d$ between a query string and a node, it restricts subsequent recursive searches to child branches whose edge weights fall within the range $[d - k, d + k]$, where $k$ is the maximum allowable error threshold."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in lock-free metric trees?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with low overhead, avoiding the performance stalls of stop-the-world garbage collectors and the atomic reference-counting contention bottlenecks of shared smart pointers."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Graphs",
+        "Concurrent Cuckoo Filters",
+        "Lock-free Splay Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T05:54:41.912662+00:00",
+      "run_number": 2323
     }
   ]
 }
