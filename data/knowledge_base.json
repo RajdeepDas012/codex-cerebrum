@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2312,
-    "last_updated": "2026-10-04T05:20:07.569695+00:00",
-    "total_topics_learned": 2312
+    "total_runs": 2313,
+    "last_updated": "2026-10-04T05:23:16.604486+00:00",
+    "total_topics_learned": 2313
   },
   "entries": [
     {
@@ -110304,6 +110304,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T05:20:07.569674+00:00",
       "run_number": 2312
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and boundary-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core schedule conflict detection in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent data structure that enables lock-free manipulation and querying of interval collections using atomic primitives and hazard pointers. It is crucial for high-performance multi-core systems requiring real-time schedule conflict detection and temporal range overlapping operations without thread contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for safe, lock-free node-overlapping adjustments and boundary-updating operations.",
+        "Employs hazard pointer memory reclamation to securely manage dynamically changing interval nodes without incurring garbage collection pauses.",
+        "Facilitates high-throughput temporal range overlapping queries across multiple concurrent execution cores.",
+        "Optimized for real-time calendar management systems and concurrent resource allocation engines requiring lock-free scheduling guarantees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic boundary updates on an interval tree node using compare_exchange_weak.",
+        "correct": "bool update_boundary(std::atomic<int>& max_end, int new_end) {\n    int current = max_end.load();\n    while (new_end > current) {\n        if (max_end.compare_exchange_weak(current, new_end)) return true;\n    }\n    return false;\n}",
+        "wrong": "int update_boundary(std::atomic<int>& max_end, int new_end) {\n    // Missing a loop for CAS retry leads to lost updates under high contention\n    int current = max_end.load();\n    if (new_end > current) {\n        max_end.compare_exchange_strong(current, new_end);\n    }\n    return max_end;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting the ABA problem during concurrent node rotations or boundary adjustments.",
+        "Failing to safely retire memory blocks using hazard pointers, leading to use-after-free vulnerabilities.",
+        "Using blocking synchronization primitives inside fine-grained interval tree update paths."
+      ],
+      "best_practices": [
+        "Always pair lock-free modifications with robust hazard pointer protection zones to safely manage thread lifecycles.",
+        "Design tree rotation and balancing routines to be retry-resilient under high multi-core contention.",
+        "Thoroughly test concurrent range query correctness against race conditions involving overlapping interval deletions."
+      ],
+      "when_to_use": "Use when building high-frequency real-time scheduling systems, interval-based temporal databases, or concurrent resource allocation engines that demand lock-free scaling.",
+      "when_not_to_use": "Avoid when standard coarse-grained locking meets performance requirements or when working in environments lacking atomic primitive support.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives ensure thread-safety during boundary-updating operations in a lock-free Interval Tree?",
+          "answer": "They allow threads to attempt updating node boundaries optimistically; if another thread modified the boundary concurrently, the CAS fails, prompting a retry with the latest value without blocking."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in concurrent interval tree implementations?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without stop-the-world garbage collection pauses, making them ideal for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Segment Trees",
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T05:23:16.604469+00:00",
+      "run_number": 2313
     }
   ]
 }
