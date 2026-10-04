@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2348,
-    "last_updated": "2026-10-04T17:43:12.021634+00:00",
-    "total_topics_learned": 2348
+    "total_runs": 2349,
+    "last_updated": "2026-10-04T17:46:20.710375+00:00",
+    "total_topics_learned": 2349
   },
   "entries": [
     {
@@ -112009,6 +112009,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T17:43:12.021622+00:00",
       "run_number": 2348
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cascading and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task scheduling and multi-core thread synchronization in real-time job execution engines and concurrent distributed task processing systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free priority queue using atomic operations like heap-node-cascading and pointer-swapping CAS primitives, combined with hazard pointers to guarantee safe memory reclamation. It enables high-throughput task scheduling and synchronization across multiple CPU cores without thread contention bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage concurrent insertions and extractions without locks.",
+        "Employs heap-node-cascading and pointer-swapping techniques to maintain heap ordering guarantees under multi-threaded contention.",
+        "Integrates hazard pointers to safely track and reclaim memory without suffering from the ABA problem or premature deallocation.",
+        "Maximizes throughput and minimizes latency in multi-core job execution engines and real-time distributed task dispatchers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protected node acquisition during concurrent priority queue operations.",
+        "correct": "template<typename T>\nclass LockFreePriorityQueue {\n    std::atomic<Node<T>*> root;\npublic:\n    bool enqueue(T val) {\n        Node<T>* new_node = new Node<T>(val);\n        Node<T>* old_root;\n        do {\n            old_root = root.load();\n            new_node->next = old_root;\n        } while (!root.compare_exchange_weak(old_root, new_node));\n        return true;\n    }\n};",
+        "wrong": "template<typename T>\nclass LockFreePriorityQueue {\n    Node<T>* root;\npublic:\n    void enqueue(T val) {\n        // Unsynchronized non-atomic modification causes race conditions\n        Node<T>* new_node = new Node<T>(val);\n        new_node->next = root;\n        root = new_node;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when performing CAS operations on shared heap nodes.",
+        "Neglecting proper memory reclamation strategies, leading to severe memory leaks or segmentation faults from freeing active nodes."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory management to safely defer deletion of nodes accessed by concurrent threads.",
+        "Design atomic state transitions to handle failed CAS attempts gracefully via retry loops."
+      ],
+      "when_to_use": "Use when building low-latency, multi-threaded task schedulers, real-time event engines, or high-throughput distributed messaging layers requiring strict priority ordering under heavy contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where simpler lock-based priority queues provide better maintainability and performance without atomic overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free priority queue?",
+          "answer": "By using tagged pointers (combining a pointer with a monotonically increasing version counter) or by leveraging hazard pointers/epoch-based reclamation schemes."
+        },
+        {
+          "question": "Why are traditional mutex-based priority queues inefficient in high-throughput multi-core systems?",
+          "answer": "Mutexes cause thread blocking, context switching overhead, and lock contention bottlenecks, whereas lock-free queues allow threads to make progress concurrently using atomic instructions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers and memory reclamation",
+        "Concurrent skip lists and heaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T17:46:20.710364+00:00",
+      "run_number": 2349
     }
   ]
 }
