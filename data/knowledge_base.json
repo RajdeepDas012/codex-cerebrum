@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2332,
-    "last_updated": "2026-10-04T12:22:59.863613+00:00",
-    "total_topics_learned": 2332
+    "total_runs": 2333,
+    "last_updated": "2026-10-04T12:26:08.832827+00:00",
+    "total_topics_learned": 2333
   },
   "entries": [
     {
@@ -111249,6 +111249,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T12:22:59.863596+00:00",
       "run_number": 2332
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic child-pointer-swapping and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range searches and multi-core index maintenance in real-time in-memory databases and concurrent storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B-Tree index using atomic child-pointer-swapping and node-merging Compare-And-Swap (CAS) primitives combined with hazard pointers for safe memory reclamation. It enables high-throughput range searches and safe concurrent multi-core node updates without traditional pessimistic locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic child-pointer-swapping CAS operations to safely insert keys and update node routing paths without locking.",
+        "Implements atomic node-merging and splitting strategies to maintain balanced tree height under intense multi-threaded workloads.",
+        "Employs hazard pointer memory management to securely defer node reclamation until all concurrent readers finish traversing the path.",
+        "Guarantees linearizability and high throughput for concurrent range queries and point lookups in high-performance memory engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual skeleton of an atomic CAS child-pointer swap and hazard pointer protection during node traversal.",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazard_pointers = {}\n    def protect(self, thread_id, node):\n        self.hazard_pointers[thread_id] = node\n\nclass ConcurrentBTreeNode:\n    def __init__(self, keys, children):\n        self.keys = keys\n        self.children = children\n\ndef atomic_swap_child(parent, index, old_child, new_child):\n    # Simulated atomic CAS on child pointer\n    if parent.children[index] == old_child:\n        parent.children[index] = new_child\n        return True\n    return False",
+        "wrong": "def unsafe_swap_child(parent, index, new_child):\n    # Missing atomic CAS check leads to race conditions and dangling pointers\n    parent.children[index] = new_child"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, resulting in premature memory deallocation and use-after-free bugs.",
+        "Neglecting the ABA problem during child-pointer-swapping CAS operations on nodes being concurrently split or merged."
+      ],
+      "best_practices": [
+        "Always register active nodes with hazard pointers before traversing deep into child nodes in multi-threaded environments.",
+        "Batch retired node deletions and reclaim memory only when no hazard pointers reference the targeted memory blocks.",
+        "Ensure node-merging operations are idempotent or properly retry-safe when contending threads attempt concurrent structural modifications."
+      ],
+      "when_to_use": "Use when building high-performance, real-time in-memory databases or concurrent storage systems that demand maximum throughput for multi-core range searches and indexing without lock contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where memory overhead of hazard pointers and implementation complexity outweigh concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors when deleting nodes in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to publish pointers to nodes they are currently accessing. Deletion routines unlink the node first but defer actual memory reclamation until no hazard pointers reference that node, ensuring safe asynchronous cleanup."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic node-merging in a lock-free B-Tree compared to a lock-based tree?",
+          "answer": "The primary challenge is coordinating structural changes atomically across multiple parent and child pointers without holding mutual exclusion locks, requiring careful use of retry loops, status flags, and CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Core Concurrency Control in Databases"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-04T12:26:08.832806+00:00",
+      "run_number": 2333
     }
   ]
 }
