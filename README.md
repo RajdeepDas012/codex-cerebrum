@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2343** |
-| Last Updated | `2026-10-04T17:27:07.575682+00:00` |
-| Dataset Size | `2343 entries` |
+| Total Topics Learned | **2344** |
+| Last Updated | `2026-10-04T17:30:32.510911+00:00` |
+| Dataset Size | `2344 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1331 |
+| data-structures | 1332 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 127 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced indexing and multi-core priority-ordered key-value storage in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-degree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra shortest path execution and multi-core network optimization in real-time routing engines and concurrent graph processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and union-by-rank CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component analysis and multi-core dynamic graph connectivity in real-time social network analysis engines and concurrent distributed clustering systems`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic prefix-sum-updating and tree-index-traversing CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core stream statistic computation in real-time analytics engines and concurrent data stream processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent T-Tree using atomic balance-restoring and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory range queries and multi-core index management in real-time relational database engines and concurrent storage systems`
-- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and min-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput priority scheduling and multi-core task queue management in real-time operating systems and concurrent job execution engines`
 
 <!-- STATS_END -->
 
