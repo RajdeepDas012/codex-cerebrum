@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2328,
-    "last_updated": "2026-10-04T12:10:01.779971+00:00",
-    "total_topics_learned": 2328
+    "total_runs": 2329,
+    "last_updated": "2026-10-04T12:13:34.540721+00:00",
+    "total_topics_learned": 2329
   },
   "entries": [
     {
@@ -111061,6 +111061,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-04T12:10:01.779951+00:00",
       "run_number": 2328
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent AVL Tree using atomic node-balancing and path-copying CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core version-controlled immutable indexing in real-time financial ledger systems and concurrent collaborative version control engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent persistent AVL tree allows multiple threads to perform updates and historical range queries simultaneously without traditional locks by utilizing path-copying, atomic CAS primitives, and hazard pointers. This ensures strict balance properties and immutability across different tree versions, which is critical for high-throughput financial ledgers and real-time version-controlled systems.",
+      "key_points": [
+        "Utilizes path-copying and atomic CAS primitives to achieve lock-free thread safety during node insertion, deletion, and rotation balancing.",
+        "Employs hazard pointers for safe memory reclamation of unlinked historical nodes, preventing use-after-free bugs without blocking readers.",
+        "Maintains structural invariants and height-balance constraints of AVL trees across multiple immutable snapshots simultaneously.",
+        "Enables high-throughput historical range queries and multi-core version-controlled data indexing without lock contention bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root updating using a CAS loop during path-copying persistent AVL tree insertions",
+        "correct": "bool insertVersion(std::atomic<Node*>& root, int key) {\n    Node* oldRoot;\n    Node* newRoot;\n    do {\n        oldRoot = hazardPointerProtect(root);\n        newRoot = persistentInsertAndBalance(oldRoot, key);\n    } while (!root.compare_exchange_weak(oldRoot, newRoot));\n    return true;\n}",
+        "wrong": "Node* insertVersion(Node* root, int key) {\n    // Missing atomic CAS loop and hazard pointers leading to race conditions and memory corruption\n    root = persistentInsertAndBalance(root, key);\n    return root;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate path-copied nodes with hazard pointers, leading to premature memory reclamation and race conditions.",
+        "Using blocking synchronization primitives like mutexes instead of atomic CAS loops for updating tree roots and balance pointers."
+      ],
+      "best_practices": [
+        "Retire replaced path-copied nodes to hazard pointer epoch-based reclamation lists to ensure safe asynchronous memory freeing.",
+        "Keep path-copying granularity minimal to reduce allocation overhead and optimize cache locality during deep tree rotations."
+      ],
+      "when_to_use": "Use when you need high-throughput historical snapshot isolation, multi-version concurrency control, and lock-free thread safety for ordered data.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of path-copying allocations and hazard pointer management outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How does path-copying combined with CAS enable lock-free persistence in an AVL tree?",
+          "answer": "Path-copying creates new nodes along the modification path rather than mutating existing ones in place. CAS is then used to atomically swap the root pointer to the newly created subtree version, allowing concurrent readers to continue accessing older immutable versions safely."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free persistent data structure?",
+          "answer": "Hazard pointers protect nodes that are currently being traversed by concurrent threads from being prematurely freed or recycled back to the memory allocator, preventing use-after-free vulnerabilities."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip-Lists",
+        "Persistent Red-Black Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-04T12:13:34.540701+00:00",
+      "run_number": 2329
     }
   ]
 }
