@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2380,
-    "last_updated": "2026-10-05T01:02:49.755149+00:00",
-    "total_topics_learned": 2380
+    "total_runs": 2381,
+    "last_updated": "2026-10-05T01:05:58.563594+00:00",
+    "total_topics_learned": 2381
   },
   "entries": [
     {
@@ -113528,6 +113528,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T01:02:49.755126+00:00",
       "run_number": 2380
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating systems and concurrent graph algorithm engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent Fibonacci Heap that utilizes atomic compare-and-swap (CAS) operations and hazard pointers to achieve lock-free thread safety. It enables high-throughput, non-blocking priority queue operations like rapid melding and amortized O(1) insertions for multi-core real-time scheduling frameworks.",
+      "key_points": [
+        "Uses atomic root-list-splicing via CAS primitives to achieve lock-free merging of independent heaps.",
+        "Employs atomic min-pointer-updating to allow concurrent threads to track and update the global minimum node safely.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free nodes deleted during consolidation phases.",
+        "Delivers high-throughput mergeable priority queue operations suitable for multi-core task schedulers and advanced graph algorithms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-list splicing for lock-free heap merging using CAS operations.",
+        "correct": "void insert_node(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head;\n    do {\n        old_head = root_list.load(std::memory_order_relaxed);\n        new_node->right = old_head;\n    } while (!root_list.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_node(Node*& root_list, Node* new_node) {\n    // Missing atomics and CAS loop leads to race conditions and lost updates under concurrency\n    new_node->right = root_list;\n    root_list = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed root nodes with hazard pointers, leading to use-after-free bugs during extraction.",
+        "Neglecting the ABA problem during atomic updates of the global minimum pointer or root list pointers."
+      ],
+      "best_practices": [
+        "Protect all transient node references with thread-local hazard pointers before traversing pointer links.",
+        "Use appropriate memory ordering semantics (acquire-release) to guarantee visibility of node properties across threads."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent, high-throughput priority queue operations with frequent merging (melts) and amortized optimal insertions, such as in distributed graph algorithms or real-time schedulers.",
+      "when_not_to_use": "Avoid when standard single-threaded Fibonacci heaps or simpler lock-based mutex heaps suffice, as the high pointer-overhead and synchronization complexity outweigh benefits for low-concurrency workloads.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic updates on the root list of a concurrent Fibonacci Heap?",
+          "answer": "By using tagged pointers (combining a node pointer with a monotonically increasing version counter) or by leveraging hazard pointers combined with epoch-based validation."
+        },
+        {
+          "question": "Why is memory reclamation particularly challenging in a lock-free Fibonacci Heap compared to traditional locking implementations?",
+          "answer": "Because nodes can be concurrently unlinked, merged, or destroyed by multiple threads during consolidation and extraction phases without holding exclusive locks, requiring hazard pointers to safely defer deallocation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heap",
+        "Hazard Pointers and Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T01:05:58.563575+00:00",
+      "run_number": 2381
     }
   ]
 }
