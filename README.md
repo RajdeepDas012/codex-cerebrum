@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2384** |
-| Last Updated | `2026-10-05T01:16:07.414460+00:00` |
-| Dataset Size | `2384 entries` |
+| Total Topics Learned | **2385** |
+| Last Updated | `2026-10-05T01:19:47.159281+00:00` |
+| Dataset Size | `2385 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1368 |
+| data-structures | 1369 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 128 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cascading and fine-grained-enqueue CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread-pool job management in real-time game simulation servers and concurrent asynchronous task processing engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and fingerprint-relocation CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate elimination in real-time distributed storage engines and concurrent database caching layers`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and remainder-storing CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate elimination in real-time distributed storage engines and concurrent database caching layers`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-splaying and zig-zig-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting key-value lookups and multi-core frequent access optimization in real-time in-memory caching layers and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating systems and concurrent graph algorithm engines`
-- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic pointer-linking and tree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating systems and concurrent job execution engines`
 
 <!-- STATS_END -->
 
