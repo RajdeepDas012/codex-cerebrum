@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2392,
-    "last_updated": "2026-10-05T06:59:50.330372+00:00",
-    "total_topics_learned": 2392
+    "total_runs": 2393,
+    "last_updated": "2026-10-05T07:05:05.834756+00:00",
+    "total_topics_learned": 2393
   },
   "entries": [
     {
@@ -114093,6 +114093,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T06:59:50.330355+00:00",
       "run_number": 2392
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent RCU (Read-Copy Update) Hash Map using atomic pointer-swapping and memory-barrier-synchronization primitives alongside epoch-based memory reclamation for high-throughput concurrent lookups and multi-core thread synchronization in real-time in-memory databases and high-frequency trading systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An RCU Hash Map enables lock-free read operations by allowing readers to access data structures concurrently without acquiring locks, while writers publish updates by creating modified copies and atomically swapping pointers. Epoch-based memory reclamation safely defers the deallocation of old nodes until all concurrent reader threads have exited their read-side critical sections.",
+      "key_points": [
+        "Readers execute with near-zero overhead by bypassing locking and synchronization barriers during lookup operations.",
+        "Writers allocate a modified copy of the target node, apply changes, and perform an atomic pointer swap to make the new version visible.",
+        "Epoch-based reclamation tracks thread participation to determine when old versions of data can be safely reclaimed without race conditions.",
+        "Memory barriers enforce strict ordering constraints on multi-core hardware to ensure visibility of pointer updates across CPU caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic pointer swap for inserting into an RCU-protected hash bucket list.",
+        "correct": "Node* new_node = new Node(key, val);\nNode* old_head;\ndo {\n    old_head = bucket->head.load(std::memory_order_relaxed);\n    new_node->next = old_head;\n} while (!bucket->head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));",
+        "wrong": "Node* new_node = new Node(key, val);\nbucket->head = new_node; // Missing atomic operation, memory barriers, and version linkage"
+      },
+      "common_mistakes": [
+        "Failing to issue appropriate memory barriers, causing readers to observe partially constructed write states on weak memory architectures.",
+        "Reclaiming detached memory nodes prematurely before all concurrent reader threads have exited the active epoch."
+      ],
+      "best_practices": [
+        "Use acquire-release semantics consistently for pointer loads and stores to guarantee visibility across processor cores.",
+        "Batch retired memory allocations into epoch-specific cleanup lists to amortize the overhead of safe reclamation."
+      ],
+      "when_to_use": "Ideal for read-heavy workloads where lookup latency must remain minimal and uncontended across numerous concurrent threads.",
+      "when_not_to_use": "Avoid in write-heavy scenarios where frequent copying overhead and epoch synchronization contention degrade throughput.",
+      "interview_questions": [
+        {
+          "question": "How does Read-Copy Update achieve lock-free reads without atomic counters per reader in high-throughput systems?",
+          "answer": "Readers operate entirely lock-free by relying on immutable data structures and memory barriers, requiring only that they register their entry and exit from read-side critical sections."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over reference counting in high-concurrency RCU maps?",
+          "answer": "Epoch-based reclamation avoids the severe cache-coagulation and contention overhead associated with frequent atomic increments and decrements of reference counts on shared nodes."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Tables",
+        "Memory Barriers and Consistency Models"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T07:05:05.834738+00:00",
+      "run_number": 2393
     }
   ]
 }
