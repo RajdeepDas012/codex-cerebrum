@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2412** |
-| Last Updated | `2026-10-05T16:17:36.034749+00:00` |
-| Dataset Size | `2412 entries` |
+| Total Topics Learned | **2413** |
+| Last Updated | `2026-10-05T16:20:45.787701+00:00` |
+| Dataset Size | `2413 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1390 |
+| data-structures | 1391 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 129 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjusting access-path CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core localized searching in real-time network packet classifiers and concurrent in-memory database index layers`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and min-val-pooling CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core traffic monitoring in real-time network flow analysis engines and concurrent distributed telemetry systems`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time job dispatching systems and concurrent event processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core randomized key-value management in real-time in-memory caching layers and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis engines and concurrent text mining systems`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitset-updating and hash-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate filtering in real-time web crawlers and concurrent database caching engines`
 
 <!-- STATS_END -->
 
