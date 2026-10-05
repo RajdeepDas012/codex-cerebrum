@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2376,
-    "last_updated": "2026-10-05T00:50:14.673191+00:00",
-    "total_topics_learned": 2376
+    "total_runs": 2377,
+    "last_updated": "2026-10-05T00:53:23.542789+00:00",
+    "total_topics_learned": 2377
   },
   "entries": [
     {
@@ -113340,6 +113340,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T00:50:14.673172+00:00",
       "run_number": 2376
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core duplicate filtering in real-time distributed web crawling engines and concurrent database query optimization pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-throughput, thread-safe Bloom filter without traditional locks by leveraging atomic bitwise operations and compare-and-swap (CAS) primitives. It enables concurrent probabilistic membership checks across multiple cores while avoiding race conditions and thread contention.",
+      "key_points": [
+        "Utilizes atomic bit manipulation to set and read bits across shared memory without global locks.",
+        "Employs multiple independent hash functions (e.g., MurmurHash variants) to map elements to bit array indices.",
+        "Implements hazard pointers or epoch-based reclamation to manage safe dynamic resizing or memory tracking if underlying structures scale.",
+        "Guarantees zero false negatives with a bounded probability of false positives depending on bit array size and hash count."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit-setting in a shared bit array using fetch_or.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\n    size_t num_bits;\npublic:\n    ConcurrentBloomFilter(size_t size) : num_bits(size), bits((size + 63) / 64) {}\n    \n    void insert(size_t hash_val) {\n        size_t idx = (hash_val % num_bits) / 64;\n        size_t bit = hash_val % 64;\n        uint64_t mask = (1ULL << bit);\n        bits[idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "void insert(size_t hash_val) {\n    size_t idx = hash_val % num_bits;\n    // Non-atomic read-modify-write race condition\n    standard_array[idx] = 1;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory barrier relaxations appropriately, leading to unnecessary synchronization overhead or visibility issues.",
+        "Assuming false positives can be completely eliminated instead of probabilistically minimized."
+      ],
+      "best_practices": [
+        "Use atomic fetch_or instructions for setting bits instead of locking mutexes to maximize multi-core throughput.",
+        "Pre-calculate optimal bit array size and hash function count based on expected insertion volume and acceptable false positive rates."
+      ],
+      "when_to_use": "Use when high-frequency concurrent membership testing is required across multi-threaded applications where false positives are tolerable and memory efficiency is paramount.",
+      "when_not_to_use": "Do not use when absolute accuracy (zero false positives) is required or when elements must be reliably deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom Filter without using mutual exclusion locks?",
+          "answer": "By using atomic bitwise operations such as atomic fetch_or or compare-and-swap (CAS) primitives on shared word-sized integer blocks."
+        },
+        {
+          "question": "Why is standard deletion not supported in a basic Bloom filter?",
+          "answer": "Because multiple elements can hash to and set the same bit, clearing a bit could inadvertently remove the existence confirmation of another active element."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Cuckoo Filters",
+        "Concurrent Count-Min Sketch",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-05T00:53:23.542769+00:00",
+      "run_number": 2377
     }
   ]
 }
