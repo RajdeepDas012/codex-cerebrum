@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2418,
-    "last_updated": "2026-10-05T22:29:41.056660+00:00",
-    "total_topics_learned": 2418
+    "total_runs": 2419,
+    "last_updated": "2026-10-05T22:32:49.646960+00:00",
+    "total_topics_learned": 2419
   },
   "entries": [
     {
@@ -115325,6 +115325,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-05T22:29:41.056650+00:00",
       "run_number": 2418
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-linking and min-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent event-driven simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent binomial heap, utilizing atomic compare-and-swap (CAS) operations for thread-safe root-linking and min-node-swapping. It leverages hazard pointers to safely manage memory reclamation in dynamic, multi-threaded priority queue systems without relying on coarse-grained locks.",
+      "key_points": [
+        "Utilizes atomic root-linking CAS primitives to combine binomial trees of identical orders without mutual exclusion locks.",
+        "Applies min-node-swapping mechanisms to preserve heap order invariants across concurrent insertions and deletions.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of reclaimed nodes under heavy concurrency.",
+        "Supports high-throughput mergeable priority queue workloads essential for scalable task schedulers in multi-core operating systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-linking via CAS and hazard pointer protection in a concurrent binomial heap.",
+        "correct": "bool linkRoots(std::atomic<Node*>& rootPtr, Node* oldRoot, Node* newRoot, HazardPointerGuard& hp) {\n    hp.protect(rootPtr);\n    return rootPtr.compare_exchange_weak(oldRoot, newRoot, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool linkRoots(Node*& rootPtr, Node* oldRoot, Node* newRoot) {\n    // Missing atomicity and hazard pointer protection leading to race conditions and memory corruption\n    if (rootPtr == oldRoot) {\n        rootPtr = newRoot;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer links, resulting in use-after-free bugs during concurrent deletions.",
+        "Using weak memory orderings inappropriately during root pointer updates, breaking visibility guarantees across threads."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer reference to any shared node before reading its child or sibling pointers.",
+        "Batch retired nodes in thread-local storage before invoking the hazard pointer reclamation pipeline to reduce synchronization overhead."
+      ],
+      "when_to_use": "Use this structure when multiple worker threads frequently merge priority queues and schedule tasks concurrently with strict latency requirements.",
+      "when_not_to_use": "Avoid this in single-threaded environments or simple applications where the overhead of lock-free CAS loops and hazard pointer management outweighs the throughput benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation issues in a lock-free binomial heap?",
+          "answer": "Hazard pointers publish pointers to nodes currently being accessed by a thread so that concurrent reclamation threads know not to free those memory addresses until the reference is dropped."
+        },
+        {
+          "question": "What is the primary challenge when performing atomic root-linking in a lock-free binomial heap?",
+          "answer": "Ensuring that structural modifications to tree degrees and root lists do not conflict with concurrent insertions or extractions, requiring careful CAS loops and back-off strategies."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queue Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T22:32:49.646949+00:00",
+      "run_number": 2419
     }
   ]
 }
