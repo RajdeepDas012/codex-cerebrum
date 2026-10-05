@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2401,
-    "last_updated": "2026-10-05T07:30:16.033795+00:00",
-    "total_topics_learned": 2401
+    "total_runs": 2402,
+    "last_updated": "2026-10-05T15:46:00.499631+00:00",
+    "total_topics_learned": 2402
   },
   "entries": [
     {
@@ -114518,6 +114518,54 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-05T07:30:16.033776+00:00",
       "run_number": 2401
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and peer-level-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer searching and multi-core distributed hash table routing in real-time cloud storage clustering and concurrent decentralized application frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-Graph uses atomic routing-pointer updates and peer-level linking CAS primitives to support high-throughput, distributed search queries and membership management without global locks. By leveraging hazard pointers for memory reclamation, it ensures safe multi-threaded traversals and modifications without triggering race conditions or use-after-free anomalies in dynamic decentralized environments.",
+      "key_points": [
+        "Utilizes atomic routing-pointer-updating and peer-level-linking compare-and-swap (CAS) primitives to manage multi-level forward pointers across logarithmic skip-graph heights.",
+        "Employs hazard pointer memory reclamation to protect nodes actively being traversed or mutated by concurrent threads from premature deallocation.",
+        "Ensures lock-free progress guarantees, eliminating thread starvation, deadlocks, and priority inversion common in coarse-grained locking.",
+        "Optimizes decentralized peer-to-peer searching and multi-core distributed hash table routing for cloud storage clustering."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion using atomic CAS operations and hazard pointer protection in a skip-graph level.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct SkipNode {\n    int key;\n    std::atomic<SkipNode*> next[4];\n};\n\nbool insert_node(std::atomic<SkipNode*>& head, SkipNode* new_node) {\n    SkipNode* current = head.load(std::memory_order_relaxed);\n    while (true) {\n        new_node->next[0].store(current, std::memory_order_relaxed);\n        if (head.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_node_wrong(SkipNode*& head, SkipNode* new_node) {\n    new_node->next[0] = head;\n    head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed pointers with hazard pointers, leading to catastrophic use-after-free bugs during node deletions.",
+        "Using weak memory ordering semantics where sequentially consistent or acquire-release barriers are required to visibility-synchronize multi-level pointer updates."
+      ],
+      "best_practices": [
+        "Protect every shared pointer dereference with a thread-local hazard pointer record prior to traversal.",
+        "Batch retired nodes for reclamation only after confirming no active thread holds a hazard reference to them.",
+        "Keep CAS retry loops tight and use backoff strategies under extreme thread contention to mitigate CPU cache-line bouncing."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized systems, multi-core distributed hash tables, or peer-to-peer overlays requiring lock-free concurrent range queries and membership maintenance.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency environments where standard locked skip-graphs or simpler arrays provide lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletions in a lock-free skip-graph?",
+          "answer": "Hazard pointers allow a reading thread to publish a reference to a node it is actively inspecting, signaling garbage collection mechanisms to defer deallocation of that node until no thread maintains a hazard pointer pointing to it."
+        },
+        {
+          "question": "Why are multi-level atomic CAS primitives necessary when updating routing pointers in a concurrent skip-graph?",
+          "answer": "They ensure that updates across multiple levels of the skip-graph structure are atomic or consistently observable, preventing threads from traversing half-linked or corrupted paths during concurrent structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Safe Memory Reclamation",
+        "Lock-Free B+ Trees",
+        "Distributed Hash Table Routing"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-05T15:46:00.499612+00:00",
+      "run_number": 2402
     }
   ]
 }
