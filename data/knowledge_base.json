@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2413,
-    "last_updated": "2026-10-05T16:20:45.787701+00:00",
-    "total_topics_learned": 2413
+    "total_runs": 2414,
+    "last_updated": "2026-10-05T16:23:56.202778+00:00",
+    "total_topics_learned": 2414
   },
   "entries": [
     {
@@ -115089,6 +115089,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T16:20:45.787682+00:00",
       "run_number": 2413
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and wrap-around-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core packet buffering in real-time high-frequency trading execution gateways and concurrent asynchronous logging systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer provides a bounded, circular data structure allowing multiple producers and consumers to pass messages concurrently without blocking locks. By utilizing atomic compare-and-swap (CAS) primitives for head and tail pointer manipulation and hazard pointers for safe memory management, it achieves extreme throughput and ultra-low latency.",
+      "key_points": [
+        "Employs atomic head and tail pointer updates using CAS operations to avoid kernel-level thread blocking and mutex overhead.",
+        "Uses a fixed-size pre-allocated array layout with wrap-around index calculation for optimal cache locality and zero dynamic allocation during operation.",
+        "Integrates hazard pointers or epoch-based memory reclamation to safely manage node references and prevent ABA problems in concurrent multi-producer/multi-consumer (MPMC) scenarios.",
+        "Ensures high-frequency data streaming suitability by reducing contention and maintaining strict FIFO ordering within cache lines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot claiming via CAS on indices for a concurrent ring buffer.",
+        "correct": "bool enqueue(T item) {\n  size_t current_tail = tail.load(std::memory_order_relaxed);\n  while (!tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n    // Retry CAS until successful\n  }\n  buffer[current_tail % CAPACITY] = item;\n  return true;\n}",
+        "wrong": "bool enqueue(T item) {\n  mutex.lock();\n  buffer[tail++] = item;\n  mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when updating head and tail pointers concurrently, leading to data corruption.",
+        "Neglecting memory barriers (acquire-release semantics), which can cause reordering issues on weak memory models like ARM."
+      ],
+      "best_practices": [
+        "Align head and tail pointers to cache line boundaries (e.g., 64 bytes) to eliminate false sharing between concurrent producer and consumer threads.",
+        "Use power-of-two buffer capacities to allow fast bitwise masking instead of slow modulo arithmetic during wrap-around calculations."
+      ],
+      "when_to_use": "Use this structure when building high-frequency trading pipelines, real-time audio processing, or asynchronous logging systems where latency must be minimized and threads cannot afford to block.",
+      "when_not_to_use": "Avoid using a fixed-size ring buffer when data volume is completely unpredictable and unbounded, as it can drop messages or block when full if not managed dynamically.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free ring buffer index tracker?",
+          "answer": "By pairing the index with a monotonically increasing version number or stamp within a single atomic word (using double-word CAS or tagged pointers) so that state reuses are detected."
+        },
+        {
+          "question": "Why is power-of-two sizing preferred for ring buffer capacity in high-performance computing?",
+          "answer": "It allows replacing expensive division-based modulo operations with fast bitwise AND operations (`index & (capacity - 1)`), significantly accelerating index wrapping."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Compare-And-Swap (CAS) Primitives",
+        "Lock-Free Queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-05T16:23:56.202759+00:00",
+      "run_number": 2414
     }
   ]
 }
