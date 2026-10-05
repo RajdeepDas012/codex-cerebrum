@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2386,
-    "last_updated": "2026-10-05T01:23:12.656804+00:00",
-    "total_topics_learned": 2386
+    "total_runs": 2387,
+    "last_updated": "2026-10-05T06:44:05.000149+00:00",
+    "total_topics_learned": 2387
   },
   "entries": [
     {
@@ -113810,6 +113810,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T01:23:12.656784+00:00",
       "run_number": 2386
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core collision detection in real-time computer graphics rendering engines and concurrent physics simulation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Bounding Volume Hierarchy utilizing atomic primitives and hazard pointers. It enables multi-core systems to perform high-throughput ray-primitive intersection queries and spatial collision checks safely without global mutex bottlenecks.",
+      "key_points": [
+        "Utilizes atomic node-refitting and bounding-box-merging Compare-And-Swap (CAS) operations to update spatial hierarchies dynamically.",
+        "Employs hazard pointer memory reclamation to securely free nodes during structural tree modifications without crashing concurrent readers.",
+        "Maximizes thread throughput for spatial queries in real-time ray tracing and complex multi-body physics simulations.",
+        "Eliminates coarse-grained locking overhead, allowing multiple threads to traverse and modify sub-trees simultaneously."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-refitting routine using CAS for a concurrent BVH node bounding box update.",
+        "correct": "bool update_bounds_cas(std::atomic<BoundingBox*>& node_box, BoundingBox* expected, BoundingBox* desired) {\n    return node_box.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "BoundingBox* current = node_box.load();\ncurrent->min = new_min;\nnode_box.store(current); // Non-atomic and not thread-safe, vulnerable to race conditions."
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversals with hazard pointers, leading to use-after-free bugs when another thread restructures the tree.",
+        "Using sequential consistency everywhere, which heavily degrades performance on multi-core architectures due to memory barrier overhead."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers prior to reading child pointers during BVH traversal to ensure safe memory reclamation.",
+        "Use fine-grained local bounds updates before attempting a root-ward atomic CAS propagation."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or physics simulation engines requiring high-frequency, multi-threaded spatial queries and dynamic object insertions.",
+      "when_not_to_use": "Avoid in single-threaded environments or static scenes where simpler, pre-built, non-atomic BVH structures incur zero synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free errors when a thread modifies the BVH topology while another thread is traversing it?",
+          "answer": "By implementing hazard pointers that mark currently accessed nodes as protected before dereferencing pointers during traversal."
+        },
+        {
+          "question": "Why is structural modification of a concurrent BVH more complex than updating leaf bounding boxes?",
+          "answer": "Structural modifications involve global re-balancing, node insertion, or deletion which require cascading atomic CAS operations across multiple parent and child links."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Interval Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Spatial Partitioning Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T06:44:05.000130+00:00",
+      "run_number": 2387
     }
   ]
 }
