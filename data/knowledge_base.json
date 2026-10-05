@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2371,
-    "last_updated": "2026-10-04T21:52:04.001085+00:00",
-    "total_topics_learned": 2371
+    "total_runs": 2372,
+    "last_updated": "2026-10-05T00:37:35.535123+00:00",
+    "total_topics_learned": 2372
   },
   "entries": [
     {
@@ -113100,6 +113100,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-04T21:52:04.001065+00:00",
       "run_number": 2371
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocating and child-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput string key-value storage and multi-core prefix searching in real-time routing engines and concurrent in-memory database lookup tables",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Trie (Prefix Tree) that supports multi-core string key-value storage and prefix searches without traditional locks. It leverages atomic Compare-And-Swap (CAS) operations for node allocation and child linking, combined with hazard pointers to safely manage memory reclamation under high thread contention.",
+      "key_points": [
+        "Utilizes atomic node-allocating and child-linking CAS primitives to enable lock-free insertion and traversal across multiple threads.",
+        "Employs hazard pointers to protect nodes currently being traversed or modified from premature memory deallocation and ABA problems.",
+        "Achieves high-throughput string key-value storage and prefix lookups suitable for real-time routing engines and concurrent database tables.",
+        "Eliminates lock contention bottlenecks, drastically scaling read and write operations on multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child linking via CAS in a concurrent Trie node",
+        "correct": "bool link_child(std::atomic<Node*>& slot, Node* expected, Node* desired) {\n    return slot.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* link_child(Node* slot, Node* desired) {\n    Node* old = slot;\n    slot = desired;\n    return old;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs when another thread deletes a node.",
+        "Ignoring the ABA problem during child pointer updates, which can corrupt the Trie structure under high contention."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any node accessed during traversal before reading its child pointers.",
+        "Batch retired memory nodes and reclaim them only after all active threads have released their hazard pointers.",
+        "Minimize CAS retry loops by optimizing node granularity and reducing pointer indirection depth where possible."
+      ],
+      "when_to_use": "Use when building high-throughput systems like routing tables, IP prefix matchers, or in-memory databases requiring massive concurrent read/write scaling on string keys.",
+      "when_not_to_use": "Avoid when memory overhead from hazard pointers is prohibitive or when simple mutex-based locking provides sufficient performance for low-concurrency applications.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating child pointers in a lock-free Trie?",
+          "answer": "By using tagged pointers (combining the memory address with a monotonically increasing version count) or hazard pointers to ensure nodes are not modified or recycled unexpectedly."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or manual deletion in lock-free Tries?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the pause times or overhead of tracing garbage collectors, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Radix Trees",
+        "Compare-And-Swap (CAS) Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T00:37:35.535104+00:00",
+      "run_number": 2372
     }
   ]
 }
