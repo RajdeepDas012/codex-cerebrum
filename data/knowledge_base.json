@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2409,
-    "last_updated": "2026-10-05T16:08:04.399905+00:00",
-    "total_topics_learned": 2409
+    "total_runs": 2410,
+    "last_updated": "2026-10-05T16:11:18.096921+00:00",
+    "total_topics_learned": 2410
   },
   "entries": [
     {
@@ -114899,6 +114899,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T16:08:04.399886+00:00",
       "run_number": 2409
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core randomized key-value management in real-time in-memory caching layers and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a concurrent lock-free Treap—a randomized binary search tree that maintains probabilistic balance via dynamically assigned priorities. It utilizes atomic Compare-And-Swap (CAS) primitives for rotations and priority balancing alongside hazard pointers to ensure memory safety without locks.",
+      "key_points": [
+        "Combines binary search tree properties with heap properties based on randomly assigned node priorities.",
+        "Employs atomic CAS primitives to perform safe node insertions, deletions, and tree rotations without global locks.",
+        "Uses hazard pointers to manage dynamic node reclamation safely and prevent the ABA problem during concurrent structure updates.",
+        "Provides high-throughput probabilistic balance, avoiding the severe performance degradation seen in unbalanced concurrent search trees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of CAS-based node insertion with hazard pointer protection in a lock-free Treap.",
+        "correct": "void* hazard_ptr = acquire_hazard_pointer(&global_hp_slot, node);\nwhile (!atomic_compare_exchange_weak(&node->next, &expected, new_node)) {\n    // retry CAS loop\n}",
+        "wrong": "delete node; // Unsafe memory reclamation leading to use-after-free in concurrent contexts."
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed pointers with hazard pointers, leading to premature memory deallocation and segmentation faults.",
+        "Neglecting the ABA problem during CAS operations on tree pointers, which can corrupt the treap topology.",
+        "Generating predictable or static node priorities instead of true cryptographic-grade random values, resulting in degenerate linear trees."
+      ],
+      "best_practices": [
+        "Always register threads and publish hazard pointers before traversing nodes shared across multi-core writers.",
+        "Keep atomic rotation routines atomic and granular to minimize CAS collision retry loops.",
+        "Batch retired nodes safely in thread-local deferred reclamation lists to amortize memory deallocation overhead."
+      ],
+      "when_to_use": "Use a lock-free concurrent Treap when you need high-throughput ordered key-value access under heavy contention where explicit locking would cause thread serialization.",
+      "when_not_to_use": "Avoid in systems with strict memory footprint constraints where hazard pointer overhead and random priority storage overhead are prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when executing tree rotations via CAS in a concurrent Treap?",
+          "answer": "By utilizing tagged pointers or hazard pointers that incorporate version counts into the atomic reference, ensuring that a node's address being reused is accurately detected."
+        },
+        {
+          "question": "Why use a Treap instead of an AVL tree or Red-Black tree in a lock-free multi-core environment?",
+          "answer": "Treaps rely on randomized priorities rather than strict global rebalancing constraints, making localized atomic tree rotations significantly simpler and more scalable under high concurrency."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointers and Epoch-based Reclamation",
+        "Concurrent Balanced Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T16:11:18.096901+00:00",
+      "run_number": 2410
     }
   ]
 }
