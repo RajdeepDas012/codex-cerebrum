@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2373** |
-| Last Updated | `2026-10-05T00:40:45.457665+00:00` |
-| Dataset Size | `2373 entries` |
+| Total Topics Learned | **2374** |
+| Last Updated | `2026-10-05T00:43:56.534485+00:00` |
+| Dataset Size | `2374 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1357 |
+| data-structures | 1358 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 128 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and range-frequency-query CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency tracking and multi-core stream statistic computation in real-time online leaderboards and concurrent streaming analytics engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-modification-operation (SMO) descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent indexing and multi-core point-range querying in real-time transactional database systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocating and child-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput string key-value storage and multi-core prefix searching in real-time routing engines and concurrent in-memory database lookup tables`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box-splitting and dimension-alternating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core spatial point indexing in real-time geographic information systems and concurrent robotics motion planning engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent page navigation and multi-core index management in real-time relational database engines and concurrent storage systems`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core state validation in real-time blockchain transaction processing engines and concurrent distributed ledger systems`
 
 <!-- STATS_END -->
 
