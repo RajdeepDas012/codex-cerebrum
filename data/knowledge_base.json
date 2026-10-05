@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2407,
-    "last_updated": "2026-10-05T16:01:45.190824+00:00",
-    "total_topics_learned": 2407
+    "total_runs": 2408,
+    "last_updated": "2026-10-05T16:04:54.536306+00:00",
+    "total_topics_learned": 2408
   },
   "entries": [
     {
@@ -114802,6 +114802,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T16:01:45.190804+00:00",
       "run_number": 2407
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitset-updating and hash-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate filtering in real-time web crawlers and concurrent database caching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Bloom Filter that leverages atomic bitset operations and compare-and-swap (CAS) primitives to handle concurrent insertions and queries safely without locks. Hazard pointers are utilized for safe memory management, ensuring extremely high throughput and low latency in multi-core distributed systems, web crawlers, and caching layers.",
+      "key_points": [
+        "Uses atomic bitwise operations (like fetch_or) and CAS primitives to set filter bits concurrently without mutual exclusion locks.",
+        "Employs multiple hash functions combined via techniques like Kirsch-Mitzenmacher to compute distinct bit positions for any given key.",
+        "Utilizes hazard pointers to safely manage dynamic resizing or memory reclamation if the underlying bit array architecture changes under load.",
+        "Delivers high-throughput approximate membership queries, trading a small false-positive rate for exceptional space and concurrency efficiency."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent bitset updates using atomic operations for a lock-free structure",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bitset = [0] * ((size + 63) // 64)\n        self.lock = None # Simulated lock-free via atomic primitives in real systems\n    \n    def add_bit(self, index):\n        word_idx = index // 64\n        bit_idx = index % 64\n        # In C++ / lower-level languages, this would be an atomic fetch_or\n        self.bitset[word_idx] |= (1 << bit_idx)",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.bitset = [0] * size\n    def add(self, index):\n        # Non-atomic read-modify-write prone to race conditions under multi-threading\n        self.bitset[index] = 1"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations on shared bit arrays, leading to lost updates during parallel insertions.",
+        "Failing to handle hash collisions or choosing poor hash functions that cluster bits and drastically inflate the false positive rate.",
+        "Neglecting safe memory reclamation strategies when dynamically expanding the filter bit array size."
+      ],
+      "best_practices": [
+        "Leverage hardware-accelerated atomic bitwise instructions (e.g., GCC's __atomic_fetch_or) to maximize multi-core ingestion speeds.",
+        "Pre-allocate the optimal bit array size based on expected item count and target false-positive probability to avoid costly resizing.",
+        "Use robust cryptographic or non-cryptographic hash algorithms (like MurmurHash or CityHash) combined efficiently to generate independent bit indices."
+      ],
+      "when_to_use": "Use a concurrent lock-free Bloom filter when you need to perform high-frequency duplicate checking, membership testing, or pre-filtering across multiple threads without lock contention bottlenecks.",
+      "when_not_to_use": "Avoid when exact membership querying is strictly required, when items must be safely deletable without rebuilding the filter, or when the data volume is too small to justify the overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread safety in a Bloom filter without using heavy mutex locks?",
+          "answer": "By using atomic bitset updates (such as atomic bitwise OR operations) combined with Compare-And-Swap (CAS) loops where necessary for structural metadata updates."
+        },
+        {
+          "question": "What is the role of hazard pointers in a concurrent data structure like a lock-free Bloom filter?",
+          "answer": "Hazard pointers provide a safe memory reclamation scheme that prevents threads from freeing or modifying memory blocks (such as a resized bit array) while other concurrent threads are actively reading or writing to them."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "distributed caching engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T16:04:54.536286+00:00",
+      "run_number": 2408
     }
   ]
 }
