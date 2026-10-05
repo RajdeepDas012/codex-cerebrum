@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2403,
-    "last_updated": "2026-10-05T15:49:09.768963+00:00",
-    "total_topics_learned": 2403
+    "total_runs": 2404,
+    "last_updated": "2026-10-05T15:52:18.492772+00:00",
+    "total_topics_learned": 2404
   },
   "entries": [
     {
@@ -114614,6 +114614,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T15:49:09.768943+00:00",
       "run_number": 2403
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput genome sequencing and multi-core exact string matching in real-time bioinformatics analysis pipelines and concurrent text search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Suffix Array optimized for parallel string processing and exact matching. It utilizes atomic index-sorting and LCP-array-constructing compare-and-swap (CAS) primitives combined with hazard pointers to ensure safe memory reclamation under heavy multi-core contention.",
+      "key_points": [
+        "Employs lock-free synchronization using atomic CAS primitives to avoid thread blocking during parallel index sorting and manipulation.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation for shared suffix arrays and auxiliary LCP arrays without blocking.",
+        "Accelerates high-throughput genomic data parsing and bioinformatics pipelines by enabling safe concurrent exact string matching across multiple cores.",
+        "Maintains data consistency through atomic updates to suffix pointers and longest common prefix (LCP) table intervals."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protected memory access during concurrent suffix array lookups",
+        "correct": "void* safe_lookup(HazardPointer& hp, std::atomic<SuffixNode*>& node_ptr) {\n    void* ptr;\n    do {\n        ptr = hp.protect(node_ptr);\n    } while (node_ptr.load() != ptr);\n    return ptr;\n}",
+        "wrong": "void* unsafe_lookup(std::atomic<SuffixNode*>& node_ptr) {\n    return node_ptr.load(); // Risk of use-after-free if another thread frees it concurrently\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect shared node references with hazard pointers prior to reading, leading to severe use-after-free race conditions.",
+        "Over-reliance on heavy OS mutexes instead of fine-grained atomic CAS loops for LCP construction, degrading parallel scalability."
+      ],
+      "best_practices": [
+        "Always clear and retire hazard pointers promptly after completing read or write traversals of the suffix and LCP arrays.",
+        "Profile CAS retry loops under high thread contention to minimize CPU cache line bouncing."
+      ],
+      "when_to_use": "Use when building high-performance bioinformatics pipelines or multi-threaded text search engines that demand lock-free concurrency for large-scale string datasets.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple scripts where the overhead of hazard pointers and atomic primitives outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in a lock-free concurrent Suffix Array?",
+          "answer": "Hazard pointers allow threads to explicitly announce which shared nodes they are currently accessing, preventing other threads from freeing those memory locations until the pointers are unprotected."
+        },
+        {
+          "question": "Why are atomic CAS primitives critical during parallel LCP array construction?",
+          "answer": "They allow multiple threads to safely update interval bounds and prefix lengths without acquiring global locks, maximizing throughput on multi-core architectures."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Parallel String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T15:52:18.492753+00:00",
+      "run_number": 2404
     }
   ]
 }
