@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2374,
-    "last_updated": "2026-10-05T00:43:56.534485+00:00",
-    "total_topics_learned": 2374
+    "total_runs": 2375,
+    "last_updated": "2026-10-05T00:47:05.651099+00:00",
+    "total_topics_learned": 2375
   },
   "entries": [
     {
@@ -113244,6 +113244,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-05T00:43:56.534463+00:00",
       "run_number": 2374
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core concurrent key-value indexing in real-time in-memory database engines and concurrent caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural blueprint for designing a lock-free concurrent Treap data structure using atomic compare-and-swap (CAS) primitives and randomized priorities. It ensures thread-safe, high-throughput probabilistic balancing and safe memory reclamation via hazard pointers for modern multi-core in-memory database systems.",
+      "key_points": [
+        "Combines binary search tree order properties on keys with heap order properties on randomly assigned priorities for probabilistic balancing.",
+        "Utilizes atomic Compare-And-Swap (CAS) operations to perform thread-safe node insertions, deletions, and structural rotations without blocking.",
+        "Employs hazard pointers to safely track and reclaim memory freed during concurrent structural modifications without race conditions.",
+        "Maintains high concurrency and minimizes contention by avoiding global locks during tree traversals and localized rotation-splicing updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion attempt for a concurrent Treap structure",
+        "correct": "bool insert(Node*& root, int key, int priority) {\n    Node* newNode = new Node(key, priority);\n    while (true) {\n        Node* current = atomic_load(&root);\n        // Perform BST insertion and rotation logic using CAS\n        if (atomic_compare_exchange_weak(&root, &current, newNode)) return true;\n    }\n}",
+        "wrong": "bool insert(Node*& root, int key, int priority) {\n    // Mutex locking defeats the lock-free design pattern\n    std::lock_guard<std::mutex> lock(mtx);\n    root = insertRecursive(root, key, priority);\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely manage memory reclamation, leading to the ABA problem or use-after-free bugs during concurrent node rotations.",
+        "Relying on coarse-grained locking instead of fine-grained atomic CAS operations for rotation-splicing primitives."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory management to safely defer the deletion of nodes removed via concurrent rotations.",
+        "Generate pseudo-random priorities using thread-local random number generators to minimize contention across concurrent threads."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory indexes or caching layers that require probabilistic balancing and heavy concurrent access without lock contention.",
+      "when_not_to_use": "Avoid when deterministic worst-case balance guarantees are strictly required or when single-threaded simplicity is preferred over multi-core throughput.",
+      "interview_questions": [
+        {
+          "question": "How do randomized priorities help maintain balance in a lock-free Treap without global synchronization?",
+          "answer": "Randomized priorities satisfy the heap property independently of key insertion order, allowing structural rotations to be localized and safely executed via atomic CAS primitives."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free tree rotations and node deletions?",
+          "answer": "Hazard pointers protect threads from accessing memory nodes that are concurrently unlinked and freed by another thread during rotation-splicing operations, preventing use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "lock-free B-Tree",
+        "hazard pointer memory reclamation",
+        "lock-free Skip List"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T00:47:05.651077+00:00",
+      "run_number": 2375
     }
   ]
 }
