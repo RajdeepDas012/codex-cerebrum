@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2414,
-    "last_updated": "2026-10-05T16:23:56.202778+00:00",
-    "total_topics_learned": 2414
+    "total_runs": 2415,
+    "last_updated": "2026-10-05T16:27:05.571327+00:00",
+    "total_topics_learned": 2415
   },
   "entries": [
     {
@@ -115136,6 +115136,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-05T16:23:56.202759+00:00",
       "run_number": 2414
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bitset-clearing and segment-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core cryptographic key pre-computation in real-time cybersecurity systems and concurrent mathematical modeling engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Sieve of Eratosthenes that utilizes atomic bit-manipulation primitives and segment-bounding techniques to generate primes across multiple cores without locks. It guarantees thread safety and high performance by managing shared bitsets atomically and protecting dynamic memory structures with hazard pointers.",
+      "key_points": [
+        "Uses atomic bitset-clearing CAS operations to mark composite numbers without race conditions.",
+        "Employs segment-bounding to divide large prime-finding ranges into cache-friendly chunks for concurrent worker threads.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamically allocated segmentation blocks under concurrent access.",
+        "Maximizes throughput for multi-core cryptographic key pre-computation and large-scale mathematical simulations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit-clearing for marking composite numbers in a shared bitset.",
+        "correct": "void mark_composite(std::atomic<uint64_t>* bitset, size_t index) {\n    size_t word_idx = index / 64;\n    uint64_t bit_mask = 1ULL << (index % 64);\n    uint64_t old_val = bitset[word_idx].load(std::memory_order_relaxed);\n    while ((old_val & bit_mask) && !bitset[word_idx].compare_exchange_weak(old_val, old_val & ~bit_mask, std::memory_order_release, std::memory_order_relaxed)) {}\n}",
+        "wrong": "void mark_composite(uint64_t* bitset, size_t index) {\n    bitset[index / 64] &= ~(1ULL << (index % 64)); // Non-atomic read-modify-write causes lost updates across threads\n}"
+      },
+      "common_mistakes": [
+        "Failing to use atomic bitwise operations, leading to race conditions and lost updates when multiple threads strike out the same multiple.",
+        "Neglecting cache alignment for shared bitset words, causing false sharing and severe performance degradation across CPU cores."
+      ],
+      "best_practices": [
+        "Partition the sieve search space into localized segments that fit completely within CPU L1/L2 caches to maximize memory bandwidth.",
+        "Utilize atomic memory orderings carefully, relying on relaxed loads where strict synchronization is unnecessary for performance."
+      ],
+      "when_to_use": "When you need to generate exceptionally large sets of prime numbers rapidly across multi-core systems for cryptographic applications or numerical simulations.",
+      "when_not_to_use": "For small-scale prime generation where the overhead of lock-free atomics, hazard pointers, and thread synchronization outweighs sequential execution speed.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple threads from redundantly processing and clearing the same composite bit in a lock-free sieve?",
+          "answer": "By using compare-and-swap (CAS) loops on the target bit word so that only the thread that successfully transitions the bit from set to cleared performs subsequent dependent steps."
+        },
+        {
+          "question": "Why is segmented sieve architecture preferred when scaling the Sieve of Eratosthenes to multiple concurrent threads?",
+          "answer": "Segmentation limits the memory footprint required for active calculation, fitting chunks into CPU cache and allowing independent worker threads to process distinct ranges with minimal synchronization overhead."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash tables",
+        "Hazard pointer memory management",
+        "Atomic bit manipulation and fetch-and-op primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-05T16:27:05.571306+00:00",
+      "run_number": 2415
     }
   ]
 }
