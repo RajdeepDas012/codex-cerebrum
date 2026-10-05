@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2408,
-    "last_updated": "2026-10-05T16:04:54.536306+00:00",
-    "total_topics_learned": 2408
+    "total_runs": 2409,
+    "last_updated": "2026-10-05T16:08:04.399905+00:00",
+    "total_topics_learned": 2409
   },
   "entries": [
     {
@@ -114851,6 +114851,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-05T16:04:54.536286+00:00",
       "run_number": 2408
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis engines and concurrent text mining systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Suffix Tree enables multiple threads to perform simultaneous substring insertions and queries without explicit blocking locks by leveraging atomic Compare-And-Swap (CAS) operations. This architecture utilizes hazard pointers to safely manage dynamic memory reclamation, preventing race conditions and memory leaks during high-throughput parallel genomic analysis and text mining.",
+      "key_points": [
+        "Uses atomic CAS primitives for lock-free node linking and suffix-link updates to ensure thread safety.",
+        "Employs hazard pointers to track threads accessing specific tree nodes, preventing premature memory deallocation.",
+        "Maximizes throughput on multi-core systems by eliminating lock contention during deep tree traversal and modification.",
+        "Facilitates real-time substring searching and exact pattern matching for large-scale genomic sequences and document corpuses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS and hazard pointer protection for concurrent Suffix Tree operations",
+        "correct": "bool link_node(Node* parent, Node* child, char c) {\n    HazardPointerGuard guard(child);\n    while (true) {\n        Node* current = parent->children[c].load();\n        if (current != nullptr) return false; // Already linked\n        if (parent->children[c].compare_exchange_weak(current, child)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool link_node_wrong(Node* parent, Node* child, char c) {\n    if (parent->children[c] == nullptr) {\n        parent->children[c] = child; // Non-atomic update causing race conditions\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect newly allocated tree nodes with hazard pointers before making them visible to other threads, resulting in use-after-free bugs.",
+        "Using non-atomic assignments for updating suffix links during concurrent node insertions, leading to broken traversal paths."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer reference to any shared node before dereferencing its child pointers or suffix links.",
+        "Batch retired nodes into a local thread thread-safe epoch or hazard list to reduce atomic overhead during memory reclamation.",
+        "Design tree traversal loops to gracefully handle intermediate states where concurrent splits or insertions are partially complete."
+      ],
+      "when_to_use": "Use when building multi-threaded bioinformatics pipelines or concurrent search engines that require frequent, low-latency substring queries and dynamic updates on massive string datasets.",
+      "when_not_to_use": "Avoid when memory usage is tightly constrained, as Suffix Trees have high memory overhead, or when workloads are strictly single-threaded where standard algorithms are simpler and faster.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Suffix Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing. Before a thread reclaims or frees a deleted node, it scans all active hazard pointers to ensure no other thread holds a reference to that node, safely deferring deletion until it is no longer in use."
+        },
+        {
+          "question": "Why is standard lock-based synchronization inefficient for parallel Suffix Tree insertions?",
+          "answer": "Standard locks cause thread contention and serialization, especially near the root and upper levels of the tree where many insertions traverse the same initial nodes, drastically reducing multi-core scalability."
+        }
+      ],
+      "related_topics": [
+        "Suffix Array",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-05T16:08:04.399886+00:00",
+      "run_number": 2409
     }
   ]
 }
