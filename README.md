@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2410** |
-| Last Updated | `2026-10-05T16:11:18.096921+00:00` |
-| Dataset Size | `2410 entries` |
+| Total Topics Learned | **2411** |
+| Last Updated | `2026-10-05T16:14:26.649248+00:00` |
+| Dataset Size | `2411 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1389 |
+| data-structures | 1390 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 129 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time job dispatching systems and concurrent event processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core randomized key-value management in real-time in-memory caching layers and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis engines and concurrent text mining systems`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitset-updating and hash-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate filtering in real-time web crawlers and concurrent database caching engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic parent-pointer-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class finding and multi-core connected component analysis in real-time social network graph processing systems and concurrent compiler type inference engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic branch-hashing and root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core data integrity auditing in real-time distributed file systems and concurrent block storage validation engines`
 
 <!-- STATS_END -->
 
