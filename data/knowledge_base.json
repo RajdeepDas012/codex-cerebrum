@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2464,
-    "last_updated": "2026-10-06T16:47:24.462348+00:00",
-    "total_topics_learned": 2464
+    "total_runs": 2465,
+    "last_updated": "2026-10-06T16:51:54.607603+00:00",
+    "total_topics_learned": 2465
   },
   "entries": [
     {
@@ -117516,6 +117516,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T16:47:24.462326+00:00",
       "run_number": 2464
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-Lookup Trie using atomic child-pointer-linking and prefix-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core flow table lookup in real-time software-defined networking switches and concurrent high-speed firewall routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom-Lookup Trie integrates embedded Bloom filters into trie nodes using atomic child-pointer-linking and prefix-masking CAS primitives to accelerate prefix matching and packet classification. By utilizing hazard pointer memory reclamation, it ensures safe, lock-free node retirement and recycling under intense multi-core network traffic conditions without risking the ABA problem or memory leaks.",
+      "key_points": [
+        "Combines trie traversal with embedded Bloom filters for fast negative lookups before descending deeper into the tree structure.",
+        "Employs atomic compare-and-swap (CAS) operations for thread-safe child pointer linking and prefix masking modifications.",
+        "Utilizes hazard pointers to safely manage dynamic memory reclamation of trie nodes in lock-free concurrent environments.",
+        "Optimized for high-throughput packet classification and flow table lookups in multi-core software-defined networking switches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS and hazard pointer protection for lock-free trie traversal",
+        "correct": "bool link_child(Node* parent, int index, Node* new_child, HazardPointerList& hp_list, ThreadState* state) {\n    Node* expected = nullptr;\n    while (!parent->children[index].compare_exchange_weak(expected, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n        if (expected != nullptr) return false; // Already populated\n    }\n    return true;\n}",
+        "wrong": "bool link_child(Node* parent, int index, Node* new_child) {\n    if (parent->children[index] == nullptr) {\n        parent->children[index] = new_child; // Non-atomic write causes race conditions\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed trie nodes with hazard pointers, leading to use-after-free bugs when another thread unlinks the node.",
+        "Neglecting proper memory ordering semantics during atomic CAS operations, causing visibility issues across different CPU cores in high-throughput network forwarders."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer reference to a target trie node before reading its internal Bloom filter or child pointers.",
+        "Combine memory reclamation epochs with hazard pointer retirement lists to bound peak memory usage during aggressive flow table updates."
+      ],
+      "when_to_use": "Use this structure when building high-performance network routing engines, software-defined networking switches, or concurrent firewalls that demand extremely low latency and high concurrency for IP prefix matching and flow classification.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-throughput scenarios where the overhead of hazard pointers and complex atomic CAS logic outweighs the performance benefits of lock-free parallelism.",
+      "interview_questions": [
+        {
+          "question": "How do embedded Bloom filters improve trie traversal performance in multi-core packet classification?",
+          "answer": "They allow threads to quickly determine if a given prefix or flow signature definitely does not exist in a subtree, avoiding costly memory accesses down deep branch paths."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection or reference counting in lock-free tries?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation without the pause times of managed garbage collectors or the severe multi-core cache contention scaling bottlenecks of atomic reference counting."
+        }
+      ],
+      "related_topics": [
+        "Radix Tree",
+        "Lock-free Data Structures",
+        "Hazard Pointers",
+        "Software-Defined Networking Flow Tables"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-06T16:51:54.607578+00:00",
+      "run_number": 2465
     }
   ]
 }
