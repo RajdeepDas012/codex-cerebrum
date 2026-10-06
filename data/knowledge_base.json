@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2435,
-    "last_updated": "2026-10-06T02:58:53.688637+00:00",
-    "total_topics_learned": 2435
+    "total_runs": 2436,
+    "last_updated": "2026-10-06T03:02:03.080971+00:00",
+    "total_topics_learned": 2436
   },
   "entries": [
     {
@@ -116138,6 +116138,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T02:58:53.688618+00:00",
       "run_number": 2435
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Read-Copy Update (RCU) mechanism using atomic epoch-advancing and deferred-free-callback-queuing CAS primitives alongside hazard pointer memory reclamation for high-throughput read-mostly synchronization and multi-core reference tracking in real-time operating system kernel modules and concurrent in-memory configuration stores",
+      "category": "best-practices",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A scoped Read-Copy Update (RCU) mechanism enables lock-free read-mostly operations by allowing readers to access data structures without synchronization while writers safely defer memory reclamation until all concurrent readers have completed their read-side critical sections. It matters because it eliminates reader-side contention completely, making it ideal for high-throughput multi-core synchronization.",
+      "key_points": [
+        "Utilizes atomic epoch-advancing and deferred-free-callback-queuing CAS primitives to track active reader scopes.",
+        "Combines hazard pointer memory reclamation to ensure safe deferred deletion of old object versions.",
+        "Provides wait-free performance for read operations with zero locking overhead or cache-line bouncing on read paths.",
+        "Manages grace periods dynamically to reclaim memory only after all pre-existing readers have exited their scopes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent read scope entry and deferred write reclamation using an RCU pattern.",
+        "correct": "void reader_task(RCUMain& rcu, DataStore& store) {\n    auto scope = rcu.read_lock();\n    const auto* data = store.get_pointer();\n    use(data->value);\n}\n\nvoid writer_task(RCUMain& rcu, DataStore& store, NewData* new_data) {\n    Data* old_data = store.exchange_pointer(new_data);\n    rcu.call_rcu([old_data]() { delete old_data; });\n}",
+        "wrong": "void unsafe_writer_task(DataStore& store, NewData* new_data) {\n    Data* old_data = store.exchange_pointer(new_data);\n    delete old_data;\n}"
+      },
+      "common_mistakes": [
+        "Blocking or performing long-running operations inside a read-side critical section, which stalls grace period progression and memory reclamation.",
+        "Failing to safely queue reclamation callbacks, leading to premature memory deallocation while concurrent readers are still dereferencing pointers."
+      ],
+      "best_practices": [
+        "Keep read-side critical sections as brief as possible to accelerate global epoch advancement and reclamation.",
+        "Use thread-local storage for epoch counters to minimize inter-core cache-line invalidation during read scope acquisition.",
+        "Batch deferred reclamation callbacks to reduce overhead and improve cache locality during memory cleanup phases."
+      ],
+      "when_to_use": "Ideal for scenarios with high read-to-write ratios, such as routing tables, configuration stores, and kernel pointer lists where read performance must scale linearly across cores.",
+      "when_not_to_use": "Avoid when write operations are frequent or when read critical sections must perform blocking I/O or acquire traditional locks, as this stalls the grace period.",
+      "interview_questions": [
+        {
+          "question": "How does an RCU mechanism achieve zero synchronization overhead on the read path?",
+          "answer": "Readers register their presence using lightweight local state (like epoch entry or hazard pointers) without atomic writes to shared synchronization variables, avoiding cache invalidation."
+        },
+        {
+          "question": "What is a grace period in RCU, and why is it critical for memory reclamation?",
+          "answer": "A grace period is the time interval during which all pre-existing readers complete their read-side critical sections, ensuring no thread holds a reference to the old data before it is freed."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-06T03:02:03.080953+00:00",
+      "run_number": 2436
     }
   ]
 }
