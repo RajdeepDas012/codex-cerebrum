@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2451,
-    "last_updated": "2026-10-06T10:11:28.473816+00:00",
-    "total_topics_learned": 2451
+    "total_runs": 2452,
+    "last_updated": "2026-10-06T10:14:37.891155+00:00",
+    "total_topics_learned": 2452
   },
   "entries": [
     {
@@ -116900,6 +116900,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T10:11:28.473794+00:00",
       "run_number": 2451
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-height-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value storage and multi-core concurrent range scanning in real-time in-memory database engines and concurrent key-value caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-List combines probabilistic balancing with atomic primitives (CAS) and hazard pointers to deliver high-throughput ordered data access across multiple threads without lock contention. It enables efficient concurrent inserts, deletes, and range queries critical for real-time in-memory storage engines.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-linking via Compare-And-Swap (CAS) to safely splice new nodes into multiple height levels without locks.",
+        "Employs tower-height-cascading algorithms to probabilistically determine node levels while managing multi-threaded consistency.",
+        "Integrates hazard pointers to safely defer memory reclamation of deleted nodes until active threads finish traversing them.",
+        "Supports concurrent range scans by maintaining ordered linked lists at the base level, allowing lock-free reads over continuous key ranges."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of updating forward pointers safely using atomic CAS and hazard pointers in a skip-list.",
+        "correct": "bool insert(Node* new_node) {\n    HazardPointerGuard hg;\n    while (true) {\n        Node* pred = find_predecessor(new_node->key);\n        Node* succ = pred->forward[0].load();\n        new_node->forward[0].store(succ);\n        if (pred->forward[0].compare_exchange_weak(succ, new_node)) {\n            break;\n        }\n    }\n    return true;\n}",
+        "wrong": "bool insert(Node* new_node) {\n    Node* pred = find_predecessor(new_node->key);\n    new_node->forward[0] = pred->forward[0];\n    pred->forward[0] = new_node; // Missing atomic CAS and memory protection, causing data races\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversal pointers with hazard pointers, leading to use-after-free errors when another thread unlinks a node.",
+        "Failing to handle partially inserted nodes (towers built bottom-up vs top-down) which can result in missing search paths."
+      ],
+      "best_practices": [
+        "Always pin nodes using hazard pointers before reading their forward pointers during traversal.",
+        "Ensure memory reclamation strictly follows deferred deletion queues to avoid race conditions with concurrent readers."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases or caching layers requiring frequent concurrent writes, ordered iteration, and minimal latency overhead from thread contention.",
+      "when_not_to_use": "Avoid in low-memory environments where skip-list pointer overhead is prohibitive, or when simple single-threaded locks suffice due to low concurrency requirements.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free bugs when another thread deletes a node in a lock-free skip-list?",
+          "answer": "By using hazard pointers to register nodes currently being accessed by a thread, ensuring the memory allocator does not reclaim them until all references are dropped."
+        },
+        {
+          "question": "Why is CAS (Compare-And-Swap) insufficient on its own for multi-level insertions in a skip-list?",
+          "answer": "Because updating multiple pointers across different tower levels cannot be done atomically in a single hardware instruction, requiring careful ordering (typically bottom-up) and logical deletion flags."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Linked Lists",
+        "Concurrent B-Trees and Range Queries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-06T10:14:37.891133+00:00",
+      "run_number": 2452
     }
   ]
 }
