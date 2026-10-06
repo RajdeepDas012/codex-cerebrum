@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2454,
-    "last_updated": "2026-10-06T10:20:55.585296+00:00",
-    "total_topics_learned": 2454
+    "total_runs": 2455,
+    "last_updated": "2026-10-06T10:24:06.178085+00:00",
+    "total_topics_learned": 2455
   },
   "entries": [
     {
@@ -117041,6 +117041,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T10:20:55.585271+00:00",
       "run_number": 2454
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-coordination-descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core record scanning in real-time in-memory relational databases and concurrent transactional key-value stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B+ Tree uses atomic Compare-And-Swap (CAS) primitives and coordination descriptors to manage structural modifications like node splits without blocking threads. This architecture is vital for high-throughput in-memory databases and transactional systems requiring low-latency parallel range queries.",
+      "key_points": [
+        "Utilizes split-coordination descriptors to safely guide operations through intermediate, non-linearizable tree states during node splitting.",
+        "Employs atomic leaf-sibling-linking to enable seamless forward and backward traversals during concurrent range scans without global locks.",
+        "Integrates hazard pointers for safe memory reclamation, preventing use-after-free bugs when concurrent threads delete or split nodes.",
+        "Achieves high horizontal scalability across multi-core architectures by removing mutual exclusion bottlenecks on internal tree nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node access and hazard pointer protection during a concurrent B+ Tree leaf traversal.",
+        "correct": "Node* traverse_leaf(HazardPointerManager& hpm, std::atomic<Node*>& root) {\n    HazardPointer hp = hpm.acquire();\n    while (true) {\n        Node* curr = hpm.protect(hp, root);\n        if (!curr->is_internal()) return curr;\n        root = curr->find_next_child(key);\n    }\n}",
+        "wrong": "Node* curr = root.load();\nif (!curr->is_internal()) return curr; // Unprotected load leads to use-after-free if another thread deletes/splits this node"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate split-coordination descriptors with hazard pointers, leading to premature memory deallocation.",
+        "Modifying internal node pointers before successfully updating the corresponding leaf sibling links, causing range queries to miss keys."
+      ],
+      "best_practices": [
+        "Always publish thread access using hazard pointers before reading node pointers that may be modified concurrently.",
+        "Keep split-coordination descriptors immutable once created, ensuring thread-safe state inspection and helper-driven completion."
+      ],
+      "when_to_use": "Use when building high-performance in-memory relational databases or transactional key-value stores that demand heavy multi-core read-write concurrency and fast range scans.",
+      "when_not_to_use": "Avoid in low-resource embedded environments or simple single-threaded applications where the complexity of lock-free primitives and hazard pointers introduces unwarranted overhead.",
+      "interview_questions": [
+        {
+          "question": "How do split-coordination descriptors help maintain consistency in a lock-free B+ Tree?",
+          "answer": "They store the explicit state of an ongoing structural modification, allowing helping threads to complete the operation if the originating thread stalls, thus maintaining linearization."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free tree implementations?",
+          "answer": "Hazard pointers avoid atomic read-modify-write contention on shared reference counters, which severely degrades multi-core cache-coherency performance under high contention."
+        }
+      ],
+      "related_topics": [
+        "hazard pointer memory reclamation",
+        "lock-free skip-list",
+        "lock-free concurrent tries"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-06T10:24:06.178062+00:00",
+      "run_number": 2455
     }
   ]
 }
