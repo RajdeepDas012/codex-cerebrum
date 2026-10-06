@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2463,
-    "last_updated": "2026-10-06T16:44:14.929129+00:00",
-    "total_topics_learned": 2463
+    "total_runs": 2464,
+    "last_updated": "2026-10-06T16:47:24.462348+00:00",
+    "total_topics_learned": 2464
   },
   "entries": [
     {
@@ -117466,6 +117466,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T16:44:14.929109+00:00",
       "run_number": 2463
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and metric-space-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spelling correction in real-time search engines and concurrent autocomplete suggestion systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent BK-Tree leverages atomic compare-and-swap (CAS) primitives and metric-space partitioning based on Levenshtein distance to enable thread-safe fuzzy string matching and spelling correction without global locks. It uses hazard pointers for safe memory reclamation, ensuring high throughput across multiple CPU cores for real-time search engines and autocomplete pipelines.",
+      "key_points": [
+        "Utilizes metric-space properties, specifically the triangle inequality of edit distances, to partition child nodes concurrently.",
+        "Employs atomic CAS operations to insert new child nodes into parent metric buckets without blocking reader threads.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs when threads traverse and mutate tree branches simultaneously.",
+        "Facilitates high-throughput multi-core spelling correction and fuzzy string retrieval for low-latency search and autocomplete engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the core concept of metric-space branching based on edit distance for BK-Tree node insertion.",
+        "correct": "class BKNode:\n    def __init__(self, word):\n        self.word = word\n        self.children = {}\n    def add(self, word, dist_func):\n        curr = self\n        while True:\n            d = dist_func(curr.word, word)\n            if d == 0: return\n            if d in curr.children:\n                curr = curr.children[d]\n            else:\n                curr.children[d] = BKNode(word)\n                break",
+        "wrong": "def unsafe_add(root, word, dist_func):\n    # Modifying shared child pointers without synchronization or atomic CAS\n    d = dist_func(root.word, word)\n    root.children[d] = BKNode(word)"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal nodes with hazard pointers, leading to race conditions and memory corruption during concurrent node deletions or splits.",
+        "Assuming edit distance calculations are thread-safe without ensuring immutable node string storage.",
+        "Using coarse-grained locking on the root or major subtrees, which creates serialization bottlenecks under heavy multi-core query loads."
+      ],
+      "best_practices": [
+        "Always wrap node pointer reads in hazard pointers to guarantee safe deferred memory reclamation in lock-free structures.",
+        "Cache computed edit distances where appropriate, but ensure thread-safe memoization to avoid redundant computations.",
+        "Keep metric distance evaluation functions pure and side-effect-free to ensure predictable execution in multi-threaded environments."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded search engines, spell checkers, or autocomplete systems that require frequent concurrent fuzzy string matches against a dynamic dictionary.",
+      "when_not_to_use": "Avoid when exact string matching is sufficient (where hash maps or tries perform better) or when single-threaded simplicity is preferred over maximum core utilization.",
+      "interview_questions": [
+        {
+          "question": "How does a BK-Tree utilize the triangle inequality of metric spaces during concurrent searches?",
+          "answer": "It restricts the search radius around a query string, allowing threads to prune entire subtrees where the distance between the current node and the target falls outside the desired threshold minus-to-plus range."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free BK-Tree?",
+          "answer": "Hazard pointers allow reader threads to safely declare which nodes they are currently accessing, preventing other concurrent threads from reclaiming or freeing those node memories until the read operation completes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Radix Tree",
+        "Hazard Pointer Memory Management",
+        "Levenshtein Distance Metric Spaces",
+        "Concurrent Graph and Tree Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-06T16:47:24.462326+00:00",
+      "run_number": 2464
     }
   ]
 }
