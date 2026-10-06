@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2481,
-    "last_updated": "2026-10-06T21:44:03.187693+00:00",
-    "total_topics_learned": 2481
+    "total_runs": 2482,
+    "last_updated": "2026-10-06T21:47:11.803799+00:00",
+    "total_topics_learned": 2482
   },
   "entries": [
     {
@@ -118322,6 +118322,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T21:44:03.187672+00:00",
       "run_number": 2481
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic cell-incrementing and frequency-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitter detection and multi-core stream frequency queries in real-time network traffic monitoring systems and concurrent telemetry ingestion pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Count-Min Sketch utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput, multi-core frequency estimations and heavy hitter detection in real-time data streams without thread contention bottlenecks.",
+      "key_points": [
+        "Utilizes multi-hash matrix structures with atomic cell increments to handle high-velocity data streams concurrently.",
+        "Employs atomic CAS primitives to safely update frequency cells across multiple threads without locking.",
+        "Integrates hazard pointers to manage safe memory reclamation and prevent use-after-free bugs during dynamic sketch resizing or cleanup.",
+        "Provides probabilistic frequency upper-bound estimates suitable for heavy hitter identification in real-time telemetry."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic cell incrementing in a Count-Min Sketch using CAS loops.",
+        "correct": "void increment(const string& item, int rows, int cols, atomic<uint32_t>** table, HashFunc* hashes) {\n    for(int i = 0; i < rows; ++i) {\n        uint32_t idx = hashes[i](item) % cols;\n        uint32_t old_val = table[i][idx].load(memory_order_relaxed);\n        while(!table[i][idx].compare_exchange_weak(old_val, old_val + 1, memory_order_release, memory_order_relaxed));\n    }\n}",
+        "wrong": "void increment(const string& item, int rows, int cols, uint32_t** table, HashFunc* hashes) {\n    for(int i = 0; i < rows; ++i) {\n        uint32_t idx = hashes[i](item) % cols;\n        table[i][idx]++; // Non-atomic increment causing race conditions\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic increments on sketch cells, leading to lost updates under high concurrency.",
+        "Failing to use relaxed memory ordering optimizations where strict synchronization is unnecessary, degrading throughput."
+      ],
+      "best_practices": [
+        "Use atomic operations with appropriate memory orderings (e.g., acquire-release) to balance performance and synchronization correctness.",
+        "Choose independent hash functions with uniform distribution to minimize collision rates across the sketch matrix."
+      ],
+      "when_to_use": "Use when processing extremely high-throughput data streams across multiple CPU cores where exact frequency counts are secondary to fast probabilistic estimations.",
+      "when_not_to_use": "Avoid when exact, error-free frequency counting is strictly required or when memory constraints prohibit maintaining multi-hash matrices.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when multiple threads increment the same cell in a Count-Min Sketch?",
+          "answer": "By using atomic Compare-And-Swap (CAS) loops to safely update the cell value without blocking."
+        },
+        {
+          "question": "Why are hazard pointers useful in concurrent probabilistic data structures?",
+          "answer": "They provide a lock-free mechanism to safely track and reclaim memory nodes currently accessed by other threads."
+        }
+      ],
+      "related_topics": [
+        "Count-Min Sketch",
+        "Lock-Free Data Structures",
+        "Hazard Pointers",
+        "Stream Processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-06T21:47:11.803780+00:00",
+      "run_number": 2482
     }
   ]
 }
