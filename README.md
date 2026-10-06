@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2442** |
-| Last Updated | `2026-10-06T03:23:01.255786+00:00` |
-| Dataset Size | `2442 entries` |
+| Total Topics Learned | **2443** |
+| Last Updated | `2026-10-06T03:26:25.260942+00:00` |
+| Dataset Size | `2443 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1411 |
+| data-structures | 1412 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 131 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and priority-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Levenberg-Marquardt optimizer using atomic Jacobian-updating and damping-factor-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput non-linear curve fitting and multi-core parameter estimation in real-time robotics calibration systems and concurrent computer vision sensor fusion engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core randomized priority sorting in real-time in-memory databases and concurrent probabilistic map structures`
 - `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node-updating and cryptographic-hash-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput state verification and multi-core account indexing in real-time blockchain execution environments and concurrent distributed ledger state storage engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core duplicate filtering in real-time distributed caching layers and concurrent web crawler deduplication engines`
-- `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring querying and multi-core pattern matching in real-time genome sequencing pipelines and concurrent text search engines`
 
 <!-- STATS_END -->
 
