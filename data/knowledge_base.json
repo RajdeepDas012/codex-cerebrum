@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2438,
-    "last_updated": "2026-10-06T03:08:44.552828+00:00",
-    "total_topics_learned": 2438
+    "total_runs": 2439,
+    "last_updated": "2026-10-06T03:11:54.018473+00:00",
+    "total_topics_learned": 2439
   },
   "entries": [
     {
@@ -116282,6 +116282,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-06T03:08:44.552810+00:00",
       "run_number": 2438
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core duplicate filtering in real-time distributed caching layers and concurrent web crawler deduplication engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Bloom filter leveraging atomic bit manipulation and compare-and-swap (CAS) primitives to achieve high-throughput probabilistic set membership queries across multiple cores. It ensures high performance without locks while avoiding race conditions during concurrent bit-vector updates.",
+      "key_points": [
+        "Utilizes atomic bit-array setting operations to safely update shared filter state across multiple threads without lock contention.",
+        "Employs multiple independent hash functions to map elements to multiple bit positions in a shared vector.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamic resizing or underlying buffer reallocation.",
+        "Provides probabilistic guarantees for set membership, allowing false positives while guaranteeing zero false negatives."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates conceptual atomic bit manipulation via atomic OR operations on an array of integers.",
+        "correct": "import ctypes\n\ndef atomic_set_bit(bit_array, index):\n    word_idx = index // 64\n    bit_idx = index % 64\n    mask = 1 << bit_idx\n    # Conceptual atomic fetch-and-or\n    while True:\n        current = bit_array[word_idx]\n        new_val = current | mask\n        if current == new_val:\n            break\n        if compare_and_swap(bit_array, word_idx, current, new_val):\n            break",
+        "wrong": "def unsafe_set_bit(bit_array, index):\n    word_idx = index // 64\n    bit_idx = index % 64\n    bit_array[word_idx] |= (1 << bit_idx)  # Not thread-safe due to read-modify-write race"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on bit arrays, leading to lost updates from concurrent threads.",
+        "Failing to account for false positive rate growth when the number of inserted elements exceeds the designated capacity.",
+        "Neglecting proper memory ordering primitives (such as acquire-release semantics) when publishing bit changes across threads."
+      ],
+      "best_practices": [
+        "Size the bit array and select the optimal number of hash functions based on the expected maximum element count and acceptable false positive rate.",
+        "Use cache-aligned memory allocations for large atomic word arrays to minimize false sharing across multi-core processors.",
+        "Leverage hardware-accelerated hashing algorithms (like MurmurHash or CityHash) to maximize query throughput."
+      ],
+      "when_to_use": "Use when you need high-throughput, multi-threaded probabilistic set membership checks where false positives are acceptable, such as in distributed caching layers or web crawlers.",
+      "when_not_to_use": "Do not use when absolute zero false positives are required, or when elements must be reliably deleted from the set without clearing the entire filter.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent bit updates in a lock-free Bloom filter without using mutexes?",
+          "answer": "By using atomic bitwise-OR operations or compare-and-swap (CAS) loops on the underlying words of the bit array."
+        },
+        {
+          "question": "Why can't standard items be easily deleted from a traditional Bloom filter?",
+          "answer": "Because multiple elements can map to the same bit position, clearing a bit for one element might incorrectly remove a membership proof for another element."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Tables",
+        "Count-Min Sketch",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-06T03:11:54.018453+00:00",
+      "run_number": 2439
     }
   ]
 }
