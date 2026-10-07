@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2497,
-    "last_updated": "2026-10-07T01:36:17.329390+00:00",
-    "total_topics_learned": 2497
+    "total_runs": 2498,
+    "last_updated": "2026-10-07T01:39:26.154271+00:00",
+    "total_topics_learned": 2498
   },
   "entries": [
     {
@@ -119082,6 +119082,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-07T01:36:17.329371+00:00",
       "run_number": 2497
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core spell-checking in real-time text processing pipelines and concurrent dictionary lookup engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Burkhard-Keller Tree (BK-Tree) metric tree optimized for approximate string matching. It utilizes atomic compare-and-swap (CAS) primitives for edit-distance partitioning and hazard pointers for safe memory management, eliminating lock contention in multi-core text processing systems.",
+      "key_points": [
+        "Metric tree structure tailored for discrete distance metrics like Levenshtein distance for fuzzy matching.",
+        "Lock-free synchronization via atomic CAS loops for inserting nodes into dynamic child edge lists without blocking.",
+        "Hazard pointer-based memory reclamation preventing use-after-free bugs during concurrent node modifications and traversals.",
+        "Elimination of global locks to scale throughput linearly across multiple cores in real-time spelling correction pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer update using CAS during BK-Tree node insertion.",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        new_child->next.store(current, std::memory_order_relaxed);\n        if (parent->children[distance].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child_wrong(Node* parent, int distance, Node* new_child) {\n    std::lock_guard<std::mutex> lock(parent->mu);\n    new_child->next = parent->children[distance];\n    parent->children[distance] = new_child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers during distance evaluations, leading to race conditions if another thread frees the node.",
+        "Using blocking synchronization primitives inside traversal loops, which degrades the lock-free throughput guarantee."
+      ],
+      "best_practices": [
+        "Isolate memory retirement using hazard pointer epochs to safely defer deletion until all concurrent readers finish tree traversal.",
+        "Cache computed edit distances where appropriate to reduce redundant CPU cycles during deep recursive tree traversals."
+      ],
+      "when_to_use": "When building high-throughput, multi-threaded text engines or spell checkers requiring low-latency fuzzy dictionary lookups without lock contention.",
+      "when_not_to_use": "For exact-match string queries where standard hash tables or concurrent tries provide superior asymptotic time complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node insertions in a lock-free BK-Tree without dropping concurrent updates to the same distance bucket?",
+          "answer": "By using a compare-and-swap (CAS) loop that prepends the new node to a linked list of children at that specific distance index."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free metric tree instead of simple reference counting?",
+          "answer": "Hazard pointers prevent ABA problems and allow readers to safely announce their access to a node without incurring atomic write overhead on every read traversal."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "Levenshtein distance",
+        "metric trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T01:39:26.154252+00:00",
+      "run_number": 2498
     }
   ]
 }
