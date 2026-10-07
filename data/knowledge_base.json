@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2524,
-    "last_updated": "2026-10-07T16:21:48.555467+00:00",
-    "total_topics_learned": 2524
+    "total_runs": 2525,
+    "last_updated": "2026-10-07T16:24:57.563604+00:00",
+    "total_topics_learned": 2525
   },
   "entries": [
     {
@@ -120367,6 +120367,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-07T16:21:48.555455+00:00",
       "run_number": 2524
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-link Tree using atomic node-splitting and right-link-traversing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index searches and concurrent database storage engine point lookups",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B-link Tree that utilizes atomic operations for node splitting and right-link traversal. It uses hazard pointers to manage memory safely without locks, ensuring high-throughput operations on multi-core database engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe structural modifications without traditional locks.",
+        "Employs right-links at each tree level to allow concurrent traversals to bypass incomplete node splits.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation and mitigation of the ABA problem.",
+        "Optimized for high-throughput multi-core database engines requiring concurrent point lookups and range scans."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-splitting and hazard pointer protection during a concurrent B-link Tree insert operation.",
+        "correct": "void* ptr = hazard_pointers.protect(0, &node->child);\nif (atomic_compare_exchange_weak(&node->child, &ptr, new_child)) {\n    hazard_pointers.release(0);\n}",
+        "wrong": "node->child = new_child; // Unprotected non-atomic assignment leading to race conditions and use-after-free."
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs.",
+        "Neglecting right-link traversal fallbacks when encountering nodes that are currently being split by another thread."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing or dereferencing shared mutable tree nodes.",
+        "Keep atomic operations granular and bundle state flags (like split indicators) directly into metadata words to minimize CAS retries."
+      ],
+      "when_to_use": "High-concurrency database storage engines and in-memory indexing systems handling intense multi-threaded read and write workloads.",
+      "when_not_to_use": "Single-threaded applications or environments where simpler lock-based mutexes or read-write locks provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How does the presence of right-links in a B-link tree facilitate lock-free concurrent searches?",
+          "answer": "Right-links allow reader threads that encounter a node currently undergoing a split to safely traverse horizontally to the newly created sibling node rather than failing or waiting for a lock."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing lock-free data structures like the B-link Tree?",
+          "answer": "Hazard pointers prevent other threads from reclaiming or freeing memory of a node while a thread is actively traversing or modifying pointers referencing that node, thereby eliminating use-after-free vulnerabilities."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointer memory management",
+        "B-Tree index concurrency control"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T16:24:57.563585+00:00",
+      "run_number": 2525
     }
   ]
 }
