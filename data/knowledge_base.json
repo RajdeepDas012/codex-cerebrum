@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2501,
-    "last_updated": "2026-10-07T01:48:53.876603+00:00",
-    "total_topics_learned": 2501
+    "total_runs": 2502,
+    "last_updated": "2026-10-07T01:52:03.064172+00:00",
+    "total_topics_learned": 2502
   },
   "entries": [
     {
@@ -119271,6 +119271,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-07T01:48:53.876585+00:00",
       "run_number": 2501
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-version concurrency control and multi-core index scans in real-time enterprise database systems and concurrent transactional memory engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced topic covers the design of a concurrent Bx-Tree index structure leveraging atomic leaf-merging and fine-grained range-locking CAS primitives paired with hazard pointers. It guarantees safe, lock-free memory reclamation and high-throughput multi-version concurrency control across multiple CPU cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for node updates and leaf-merging without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage retired index nodes without use-after-free race conditions.",
+        "Implements range-locking and optimistic latch-free protocols to accelerate concurrent multi-core index scans.",
+        "Designed for multi-version concurrency control (MVCC) environments requiring high transactional throughput."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic hazard pointer registration block protecting a concurrent Bx-Tree leaf node traversal.",
+        "correct": "HazardPointer hp;\nNode* current = hazard_pointer_protect(&hp, &root);\nwhile (current && !is_leaf(current)) {\n    current = navigate_node(current, search_key);\n    current = hazard_pointer_protect(&hp, &current);\n}",
+        "wrong": "Node* current = root.load();\nwhile (current && !is_leaf(current)) {\n    current = navigate_node(current, search_key); // Unprotected access risks use-after-free by concurrent threads\n}"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before reading child pointers, leading to memory corruption during concurrent structural modifications.",
+        "Over-contending on root nodes by using naive global CAS loops instead of localized range-locking and back-off strategies."
+      ],
+      "best_practices": [
+        "Always clear and retire hazard pointers in a timely manner within thread-local reclamation epochs.",
+        "Combine optimistic read validation with retry loops rather than heavy pessimistic locking to maximize multi-core throughput."
+      ],
+      "when_to_use": "When building enterprise-grade database engines or transactional memory systems requiring low-latency, highly concurrent multi-core index scans.",
+      "when_not_to_use": "In single-threaded applications or lightweight embedded systems where the overhead of hazard pointers and atomic primitives outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, preventing the memory allocator from recycling those nodes until no thread holds a hazard pointer referencing them."
+        },
+        {
+          "question": "Why are standard mutex-based B-Trees insufficient for modern real-time enterprise database systems?",
+          "answer": "Mutex-based trees suffer from lock contention, convoying, and thread blocking under high concurrency, whereas lock-free designs maintain forward progress and high multi-core throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Link Trees",
+        "Hazard Pointer Memory Management",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T01:52:03.064153+00:00",
+      "run_number": 2502
     }
   ]
 }
