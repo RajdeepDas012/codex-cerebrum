@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2540** |
-| Last Updated | `2026-10-07T22:10:39.037754+00:00` |
-| Dataset Size | `2540 entries` |
+| Total Topics Learned | **2541** |
+| Last Updated | `2026-10-07T22:13:48.587333+00:00` |
+| Dataset Size | `2541 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | data-structures | 1499 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
-| crypto-blockchain | 134 |
+| crypto-blockchain | 135 |
 | algorithms | 123 |
 | market-analysis | 114 |
 | system-design | 83 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Patricia Tree using atomic branch-node-updating and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic state verification and multi-core key-value proof generation in real-time blockchain execution engines and concurrent distributed state storage systems`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and peer-level-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core peer discovery in real-time distributed hash tables and concurrent peer-to-peer overlay networks`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-searching CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core overlapping time-slot scheduling in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency tracking and multi-core online statistical aggregation in real-time stream processing platforms and concurrent analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical interval querying and multi-core versioned state mutation in real-time functional data processing engines and concurrent time-travel database systems`
-- `Implementation of a lock-free thread-safe concurrent Scoped Reference using atomic generation-checking and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput memory safety management and multi-core resource tracking in real-time safe systems programming and concurrent systems software architectures`
 
 <!-- STATS_END -->
 
