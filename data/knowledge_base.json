@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2504,
-    "last_updated": "2026-10-07T01:58:20.792538+00:00",
-    "total_topics_learned": 2504
+    "total_runs": 2505,
+    "last_updated": "2026-10-07T02:01:29.592668+00:00",
+    "total_topics_learned": 2505
   },
   "entries": [
     {
@@ -119413,6 +119413,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-07T01:58:20.792519+00:00",
       "run_number": 2504
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system job dispatchers and concurrent discrete-event simulation frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Binomial Heap, utilizing atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management. It enables high-throughput mergeable priority queue operations across multiple CPU cores without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Uses atomic binomial-tree-linking to combine trees of equal degree lock-free during structural modifications.",
+        "Employs root-list-merging CAS primitives to safely splice root lists from multiple concurrent insert or union operations.",
+        "Integrates hazard pointers to prevent premature memory reclamation of nodes being concurrently accessed or unlinked.",
+        "Optimizes multi-core task scheduling and discrete-event simulations by eliminating lock contention on priority queue merges."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root list updating via CAS for a concurrent binomial heap node insertion",
+        "correct": "bool insert_root(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head = root_list.load(std::memory_order_relaxed);\n    do {\n        new_node->sibling = old_head;\n    } while (!root_list.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "Node* old_head = root_list;\nroot_list = new_node;\nnew_node->sibling = old_head;"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or unlinked nodes with hazard pointers, leading to ABA problems or use-after-free bugs.",
+        "Using sequential consistency everywhere instead of carefully tuned acquire-release semantics, degrading multi-core performance."
+      ],
+      "best_practices": [
+        "Design tree structures with immutable or safely versioned node headers to simplify CAS validation steps.",
+        "Batch hazard pointer retire operations to reduce atomic overhead during heavy concurrent delete-min workloads."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform merge (union) operations alongside priority inserts and extracts under heavy concurrency.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple binary heaps or standard mutex-backed priority queues provide sufficient throughput with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing CAS operations on root pointers in a concurrent binomial heap?",
+          "answer": "By using tagged pointers (combining a node pointer with a monotonically increasing version counter) or by leveraging hazard pointers that pin the node reference before validating its state."
+        },
+        {
+          "question": "Why are binomial heaps preferred over binary heaps for certain concurrent merge-heavy workflows?",
+          "answer": "Binomial heaps support efficient O(log n) merging of two heaps by consolidating binomial trees of equal degrees, whereas binary heaps require O(n) time to merge unstructured arrays."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Priority Queue",
+        "Hazard Pointers memory reclamation",
+        "Lock-free atomic root-list merging"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T02:01:29.592650+00:00",
+      "run_number": 2505
     }
   ]
 }
