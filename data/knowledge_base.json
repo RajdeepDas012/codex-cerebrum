@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2544,
-    "last_updated": "2026-10-07T22:23:20.815879+00:00",
-    "total_topics_learned": 2544
+    "total_runs": 2545,
+    "last_updated": "2026-10-07T22:26:30.230660+00:00",
+    "total_topics_learned": 2545
   },
   "entries": [
     {
@@ -121314,6 +121314,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-07T22:23:20.815856+00:00",
       "run_number": 2544
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy using atomic node-splitting and triangle-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing acceleration and multi-core geometric collision detection in real-time rendering engines and concurrent physics simulation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bounding Volume Hierarchy (BVH) that leverages atomic Compare-And-Swap (CAS) operations for node splitting and triangle updates. By integrating hazard pointers, it ensures safe memory reclamation, enabling multi-core ray tracers and physics pipelines to dynamically adapt spatial trees without deadlocks.",
+      "key_points": [
+        "Utilizes atomic node-splitting and triangle-pointer-updating CAS primitives to allow concurrent tree mutations without global locks.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes accessed by concurrent reader threads.",
+        "Accelerates high-throughput ray tracing by optimizing spatial partitioning queries across multiple CPU cores.",
+        "Supports real-time geometric collision detection in concurrent physics simulation pipelines under heavy update contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node-splitting via atomic CAS operations and hazard pointer protection.",
+        "correct": "bool updateBVHNode(std::atomic<BVHNode*>& parentPtr, BVHNode* oldNode, BVHNode* newNode, HazardPointerRegistry& hp) {\n    HazardGuard guard = hp.protect(oldNode);\n    return parentPtr.compare_exchange_weak(oldNode, newNode);\n}",
+        "wrong": "bool updateBVHNode(BVHNode** parentPtr, BVHNode* oldNode, BVHNode* newNode) {\n    // Missing atomic operations and hazard pointer protection leading to ABA problems and use-after-free\n    *parentPtr = newNode;\n    delete oldNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed spatial nodes with hazard pointers, resulting in use-after-free bugs during dynamic tree restructuring.",
+        "Neglecting the ABA problem when performing atomic pointer updates on shared bounding volume nodes."
+      ],
+      "best_practices": [
+        "Always wrap pointer reads destined for concurrent traversal in hazard pointer protection scopes.",
+        "Defer node reclamation using epoch-based or hazard-pointer-driven garbage collection until no active threads reference the pruned geometry."
+      ],
+      "when_to_use": "Use when building real-time ray tracing renderers or multi-threaded physics engines that require high-frequency dynamic geometry updates and minimal synchronization overhead.",
+      "when_not_to_use": "Avoid in static scenes where a read-optimized, non-concurrent BVH can be built once and traversed without modification.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent updates to a Bounding Volume Hierarchy?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently reading, ensuring that garbage collection or node recycling routines delay freeing those memory addresses until no thread holds an active hazard pointer to them."
+        },
+        {
+          "question": "What synchronization challenge arises when multiple threads simultaneously attempt to split leaf nodes in a lock-free BVH?",
+          "answer": "Threads may encounter race conditions where two processes attempt to replace the same parent pointer simultaneously; this is resolved using atomic CAS primitives to ensure only one thread successfully installs the new subtree while others retry."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip-Graph",
+        "hazard pointer memory reclamation",
+        "concurrent spatial partitioning structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T22:26:30.230639+00:00",
+      "run_number": 2545
     }
   ]
 }
