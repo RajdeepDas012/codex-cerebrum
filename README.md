@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2512** |
-| Last Updated | `2026-10-07T08:41:27.460985+00:00` |
-| Dataset Size | `2512 entries` |
+| Total Topics Learned | **2513** |
+| Last Updated | `2026-10-07T08:44:37.116339+00:00` |
+| Dataset Size | `2513 entries` |
 
 ## 📂 Categories Learned
 
@@ -21,7 +21,7 @@
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 133 |
-| algorithms | 118 |
+| algorithms | 119 |
 | market-analysis | 114 |
 | system-design | 83 |
 | stocks-markets | 71 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Count-Sketch using atomic hash-bucket-updating and median-of-means-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core heavy hitter detection in real-time stream processing systems and concurrent telemetry analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core full-text indexing in real-time document search engines and concurrent genomic analysis pipelines`
 - `Implementation of a lock-free thread-safe concurrent VEB (Van Emde Boas) tree using atomic summary-pointer-updating and cluster-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded universe integer operations and multi-core predecessor-successor lookups in real-time packet scheduling engines and concurrent high-frequency trading platforms`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core amortized Dijkstra pathfinding in real-time network routing engines and concurrent graph processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core dynamic set maintenance in real-time in-memory databases and concurrent key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and weight-biased-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time operating system job dispatchers and concurrent discrete-event simulation engines`
 
 <!-- STATS_END -->
 
