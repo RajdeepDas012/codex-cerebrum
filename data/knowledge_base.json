@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2511,
-    "last_updated": "2026-10-07T08:38:18.538806+00:00",
-    "total_topics_learned": 2511
+    "total_runs": 2512,
+    "last_updated": "2026-10-07T08:41:27.460985+00:00",
+    "total_topics_learned": 2512
   },
   "entries": [
     {
@@ -119742,6 +119742,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-07T08:38:18.538784+00:00",
       "run_number": 2511
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core full-text indexing in real-time document search engines and concurrent genomic analysis pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent Suffix Array leveraging atomic primitives like Compare-And-Swap (CAS) and hazard pointers for memory reclamation. It enables high-throughput substring queries and full-text indexing across multiple threads without lock contention. This is critical for real-time search platforms and high-speed genomic sequence alignment pipelines.",
+      "key_points": [
+        "Utilizes atomic index-sorting and rank-cascading CAS primitives to safely modify suffix ranks across threads.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during concurrent array restructuring.",
+        "Achieves high-throughput substring searches via lock-free binary search over the dynamically maintained suffix array.",
+        "Optimized for multi-core architectures in real-time document search engines and genomic sequencing pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of concurrent suffix referencing using atomic pointers and hazard protection.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentSuffixArray {\n    std::atomic<int>* ranks;\n    size_t size;\npublic:\n    ConcurrentSuffixArray(size_t n) : size(n) {\n        ranks = new std::atomic<int>[n];\n    }\n    ~ConcurrentSuffixArray() { delete[] ranks; }\n    void updateRank(size_t idx, int new_rank) {\n        int current = ranks[idx].load();\n        while (!ranks[idx].compare_exchange_weak(current, new_rank));\n    }\n};",
+        "wrong": "class UnsafeSuffixArray {\n    int* ranks;\npublic:\n    void updateRank(size_t idx, int new_rank) {\n        ranks[idx] = new_rank; // Non-atomic write causes data races\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically reallocated suffix rank arrays with hazard pointers, leading to premature memory deallocation.",
+        "Using blocking synchronization primitives (like mutexes) within high-frequency query paths, defeating the lock-free design."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer domain before executing concurrent search or update operations.",
+        "Batch rank-cascading updates where possible to minimize CAS retry contention under heavy multi-core load."
+      ],
+      "when_to_use": "Use when building high-throughput real-time text search systems or genomic alignment engines requiring concurrent read-heavy and write-heavy access to text indices.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide sufficient performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free suffix array?",
+          "answer": "Hazard pointers allow threads to atomically announce which nodes or indices they are currently accessing, ensuring that no other thread can reclaim or free that memory until the referencing thread drops its hazard pointer."
+        },
+        {
+          "question": "Why are standard mutex-based approaches insufficient for high-throughput genomic pipeline indexing?",
+          "answer": "Mutexes introduce thread contention, context-switching overhead, and potential deadlocks under high concurrency, whereas lock-free CAS primitives allow threads to make progress independently."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Concurrent Suffix Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-07T08:41:27.460963+00:00",
+      "run_number": 2512
     }
   ]
 }
