@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2596,
-    "last_updated": "2026-10-08T22:01:47.669913+00:00",
-    "total_topics_learned": 2596
+    "total_runs": 2597,
+    "last_updated": "2026-10-08T22:05:14.349339+00:00",
+    "total_topics_learned": 2597
   },
   "entries": [
     {
@@ -123777,6 +123777,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-08T22:01:47.669894+00:00",
       "run_number": 2596
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and double-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate filtering in real-time distributed web crawlers and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Bloom filter optimized for multi-core processors. By leveraging atomic bitwise operations and CAS (Compare-And-Swap) primitives, it eliminates locking overhead while guaranteeing safety during high-throughput probabilistic set membership tests.",
+      "key_points": [
+        "Utilizes atomic bit-setting (such as fetch-and-or) to update shared bit arrays without mutual exclusion locks.",
+        "Employs double-hashing schemes to simulate multiple hash functions efficiently with minimal computational overhead.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamic resizing or underlying storage allocations in concurrent environments.",
+        "Guarantees zero false negatives with bounded false positives for high-throughput duplicate filtering scenarios."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe concurrent bit-setting for a probabilistic filter using simulated atomic operations",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bit_array = [0] * ((size + 63) // 64)\n        self.lock = threading.Lock() # Or atomic primitives in lower-level languages\n\n    def add(self, bit_index):\n        word_idx = bit_index // 64\n        bit_offset = bit_index % 64\n        with self.lock:\n            self.bit_array[word_idx] |= (1 << bit_offset)\n\n    def contains(self, bit_index):\n        word_idx = bit_index // 64\n        bit_offset = bit_index % 64\n        with self.lock:\n            return (self.bit_array[word_idx] & (1 << bit_offset)) != 0",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.bit_array = [0] * size\n    def add(self, index):\n        self.bit_array[index] = 1 # Race condition on concurrent writes"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write sequences on bit arrays, leading to lost updates under multi-threaded contention.",
+        "Failing to account for false positive rate degradation when the filter exceeds its pre-allocated capacity."
+      ],
+      "best_practices": [
+        "Use hardware-level atomic bit instructions (like GCC __sync_or_and_fetch or atomic fetch_or) instead of heavy locks.",
+        "Size the bit array and choose the optimal number of hash functions based on the expected number of insertions and tolerable false positive rate."
+      ],
+      "when_to_use": "When you need extremely high-throughput set membership tests across multiple threads without lock contention, such as in distributed web crawlers or database query optimizations.",
+      "when_not_to_use": "When false positives are completely unacceptable, or when items must be frequently deleted from the set (standard Bloom filters do not support deletion).",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread safety in a Bloom filter without using global mutexes?",
+          "answer": "By using atomic bit-setting instructions (like fetch-and-or or CAS loops) to manipulate the underlying bit array directly."
+        },
+        {
+          "question": "Why can't standard Bloom filters support item deletion in a concurrent environment?",
+          "answer": "Because clearing bits shared by multiple hashed items would introduce false negatives for other existing elements in the set."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filter",
+        "Concurrent Count-Min Sketch",
+        "Hazard Pointers and Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-08T22:05:14.349320+00:00",
+      "run_number": 2597
     }
   ]
 }
