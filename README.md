@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2594** |
-| Last Updated | `2026-10-08T21:55:29.881391+00:00` |
-| Dataset Size | `2594 entries` |
+| Total Topics Learned | **2595** |
+| Last Updated | `2026-10-08T21:58:38.813796+00:00` |
+| Dataset Size | `2595 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1548 |
+| data-structures | 1549 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 136 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversal and latch-free-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent searching and multi-core index maintenance in real-time in-memory databases and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Octree using atomic voxel-subdividing and bounding-cube-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial partitioning and multi-core collision detection in real-time game physics engines and concurrent computer graphics rendering pipelines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane-splitting and leaf-node-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point searching and multi-core spatial nearest-neighbor queries in real-time geographic recommendation systems and concurrent robotics motion planning engines`
 - `Implementation of a lock-free thread-safe concurrent Cover Tree using atomic distance-scaling and hierarchical-node-inserting CAS primitives alongside hazard pointer memory reclamation for high-throughput nearest-neighbor queries and multi-core metric space indexing in real-time machine learning inference engines and concurrent high-dimensional vector search pipelines`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range indexing and multi-core time-series data storage in real-time financial monitoring systems and concurrent logging pipelines`
-- `Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocation and key-migration CAS primitives alongside hazard pointer memory reclamation for high-throughput conflict-free lookups and multi-core collision resolution in real-time distributed key-value stores and concurrent caching platforms`
 
 <!-- STATS_END -->
 
