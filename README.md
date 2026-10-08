@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2564** |
-| Last Updated | `2026-10-08T08:41:06.376276+00:00` |
-| Dataset Size | `2564 entries` |
+| Total Topics Learned | **2565** |
+| Last Updated | `2026-10-08T08:44:15.808834+00:00` |
+| Dataset Size | `2565 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1520 |
+| data-structures | 1521 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 135 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread pool management in real-time asynchronous execution engines and concurrent task dispatching pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and leaf-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core index management in real-time database engines and concurrent storage systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core genomic sequence alignment in real-time bioinformatics toolkits and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic node-splitting and axis-bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput nearest-neighbor searching and multi-core spatial point indexing in real-time robotics perception systems and concurrent location-based service engines`
 - `Implementation of a lock-free thread-safe concurrent Spatial Hash Grid using atomic bucket-pointer-linking and cell-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput broad-phase collision detection and multi-core particle simulation in real-time physics engines and concurrent game development pipelines`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-optimization CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core access-pattern skew adaptation in real-time in-memory databases and concurrent search platforms`
 
 <!-- STATS_END -->
 
