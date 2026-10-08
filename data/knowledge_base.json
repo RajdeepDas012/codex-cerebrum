@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2558,
-    "last_updated": "2026-10-08T02:10:03.531351+00:00",
-    "total_topics_learned": 2558
+    "total_runs": 2559,
+    "last_updated": "2026-10-08T02:13:12.315754+00:00",
+    "total_topics_learned": 2559
   },
   "entries": [
     {
@@ -121979,6 +121979,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-08T02:10:03.531332+00:00",
       "run_number": 2558
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate detection in real-time distributed caching systems and concurrent database query optimization pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Bloom Filter utilizing atomic bit-operations and hazard pointers. It enables high-throughput, thread-safe probabilistic set membership queries and duplicate tracking across multiple CPU cores without lock contention.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-masking CAS primitives to modify shared filter memory safely across concurrent threads.",
+        "Avoids global locks, preventing thread starvation and reducing latency under heavy write and read workloads.",
+        "Employs hazard pointer memory reclamation to securely manage concurrent memory accesses and prevent premature deallocation.",
+        "Provides space-efficient probabilistic set membership testing ideal for real-time distributed caching and query optimization pipelines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic word-masking and bit-setting simulation for a concurrent Bloom Filter bit array",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bit_array = [0] * ((size + 63) // 64)\n        self.lock = threading.Lock() # Conceptual substitute for atomic CAS in managed runtimes\n\n    def add(self, bit_index):\n        word_idx = bit_index // 64\n        bit_offset = bit_index % 64\n        mask = 1 << bit_offset\n        # In native systems, use atomic fetch_or/CAS on the word\n        with self.lock:\n            self.bit_array[word_idx] |= mask",
+        "wrong": "def add(self, bit_index):\n    # Non-atomic read-modify-write prone to race conditions and lost updates\n    word_idx = bit_index // 64\n    bit_offset = bit_index % 64\n    self.bit_array[word_idx] |= (1 << bit_offset)"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write cycles that lead to lost updates when multiple threads set bits in the same underlying word.",
+        "Neglecting memory reclamation strategies, causing memory leaks or unsafe pointer dereferencing when resizing or reallocating filter structures."
+      ],
+      "best_practices": [
+        "Align bit-array words to cache line boundaries to minimize false sharing across multi-core processor sockets.",
+        "Leverage hardware-accelerated atomic bit-manipulation instructions (e.g., BTS on x86) where available to optimize CAS overhead."
+      ],
+      "when_to_use": "When building high-throughput distributed caching layers or query engines requiring fast, lock-free set membership checks across numerous concurrent threads.",
+      "when_not_to_use": "When absolute zero false positives are required, or when memory constraints are negligible and exact sets using hash maps are preferred.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to set different bits within the same underlying machine word simultaneously in a lock-free Bloom Filter?",
+          "answer": "By using atomic compare-and-swap (CAS) loops or atomic bitwise-OR operations (fetch_and_or) that update the word atomically without locking."
+        },
+        {
+          "question": "Why are hazard pointers useful when managing dynamic resizing or node reclamation in concurrent data structures?",
+          "answer": "Hazard pointers allow threads to safely declare which memory nodes they are currently accessing, ensuring memory is only reclaimed after all reader threads have released their references."
+        }
+      ],
+      "related_topics": [
+        "Lock-free HyperLogLog",
+        "Hazard Pointer Memory Management",
+        "Concurrent Caching Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-08T02:13:12.315735+00:00",
+      "run_number": 2559
     }
   ]
 }
