@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2576,
-    "last_updated": "2026-10-08T09:19:33.593148+00:00",
-    "total_topics_learned": 2576
+    "total_runs": 2577,
+    "last_updated": "2026-10-08T09:22:43.020172+00:00",
+    "total_topics_learned": 2577
   },
   "entries": [
     {
@@ -122829,6 +122829,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-08T09:19:33.593100+00:00",
       "run_number": 2576
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-splicing and tower-height-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value mapping and multi-core concurrent searching in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip-list utilizes atomic compare-and-swap (CAS) primitives for forward-pointer splicing and tower-height updates, allowing multiple threads to search, insert, and delete elements simultaneously without lock contention. Combined with hazard pointers for safe memory reclamation, it delivers exceptional high-throughput performance for ordered key-value mappings in multi-core in-memory databases.",
+      "key_points": [
+        "Employs atomic forward-pointer splicing to insert and delete tower levels safely without global locks.",
+        "Utilizes hazard pointers to prevent the ABA problem and guarantee safe memory reclamation of deleted nodes.",
+        "Maintains probabilistic logarithmic search paths ($O(\\log n)$) across multiple concurrently modifying threads.",
+        "Supports lock-free ordered iteration and range queries across multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS and hazard pointer protection in a lock-free skip-list.",
+        "correct": "bool insert(K key, V val) { Node* preds[MAX_LEVEL]; Node* succs[MAX_LEVEL]; while (true) { if (find(key, preds, succs)) return false; int height = random_level(); Node* new_node = new Node(key, val, height); for (int i = 0; i < height; ++i) { new_node->next[i].store(succs[i], std::memory_order_relaxed); } if (preds[0]->next[0].compare_exchange_strong(succs[0], new_node)) return true; delete new_node; } }",
+        "wrong": "bool insert(K key, V val) { mutex.lock(); node_list.add(key, val); mutex.unlock(); }"
+      },
+      "common_mistakes": [
+        "Forgetting to protect traversed nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Failing to handle the ABA problem when updating forward pointers via weak or unaligned CAS operations."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer manager before traversing or modifying the skip-list.",
+        "Use appropriate memory ordering (e.g., Acquire-Release semantics) for pointer loads and atomic CAS stores."
+      ],
+      "when_to_use": "Ideal for high-concurrency in-memory databases and key-value storage engines requiring ordered data traversal and frequent multi-threaded insertions.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or memory-constrained embedded systems where pointer overhead and hazard pointer complexity outweigh throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in a lock-free skip-list?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing other threads from freeing those nodes until no hazard pointers point to them."
+        },
+        {
+          "question": "What is the primary challenge when performing concurrent insertions and deletions at the same level in a lock-free skip-list?",
+          "answer": "Ensuring that pointer updates across multiple tower heights happen atomically or in a safe logical deletion sequence (often via marked pointers) to prevent lost updates or disjointed traversals."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Safe Memory Reclamation",
+        "Lock-Free Concurrent Hash Maps",
+        "Lock-Free B-Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-08T09:22:43.020153+00:00",
+      "run_number": 2577
     }
   ]
 }
