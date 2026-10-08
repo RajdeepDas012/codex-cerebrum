@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2598,
-    "last_updated": "2026-10-08T22:08:23.004895+00:00",
-    "total_topics_learned": 2598
+    "total_runs": 2599,
+    "last_updated": "2026-10-08T22:11:33.421820+00:00",
+    "total_topics_learned": 2599
   },
   "entries": [
     {
@@ -123872,6 +123872,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-08T22:08:23.004875+00:00",
       "run_number": 2598
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-merging and degree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time asynchronous execution engines and concurrent graph algorithm workloads",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Binomial Heap leveraging atomic root-list merging, degree linking via Compare-And-Swap (CAS), and hazard pointers for safe memory management. It is essential for achieving high-throughput, thread-safe mergeable priority queue operations in multi-core asynchronous task schedulers and parallel graph frameworks.",
+      "key_points": [
+        "Utilizes atomic root-list merging to allow multiple threads to combine heap structures without global locking bottlenecks.",
+        "Employs degree-linking CAS primitives to safely combine binomial trees of matching orders under concurrent modifications.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free nodes reclaimed during concurrent tree restructuring.",
+        "Provides efficient O(log n) mergeable priority queue operations suited for dynamic task distribution in multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free root-list integration via atomic compare-and-swap on pointers.",
+        "correct": "bool link_binomial_roots(std::atomic<Node*>& head, Node* new_root) {\n    Node* old_head = head.load();\n    do {\n        new_root->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_root));\n    return true;\n}",
+        "wrong": "Node* link_binomial_roots(std::atomic<Node*>& head, Node* new_root) {\n    new_root->next = head.load();\n    head.store(new_root); // Not thread-safe, race condition on head pointer update\n    return new_root;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or restructured binomial tree nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Ignoring the ABA problem when performing CAS operations on root-list pointers during concurrent merges."
+      ],
+      "best_practices": [
+        "Always wrap node traversal and access in hazard pointer protection blocks to ensure thread-safe memory reclamation.",
+        "Batch root-list updates using localized thread-local buffers before committing structural changes atomically to the shared heap."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to frequently merge priority queues and schedule tasks with high contention.",
+      "when_not_to_use": "Avoid when single-threaded performance is paramount or when a standard binary heap suffices without merge requirements.",
+      "interview_questions": [
+        {
+          "question": "How do atomic root-list merging and degree-linking CAS primitives prevent race conditions in a concurrent Binomial Heap?",
+          "answer": "They use atomic Compare-And-Swap loops to ensure that pointer updates to the root list and child trees succeed only if no other thread has modified them concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Binomial Heap?",
+          "answer": "Hazard pointers safely track nodes currently being accessed by threads, preventing memory reclaimers from freeing nodes mid-traversal or during re-linking steps."
+        }
+      ],
+      "related_topics": [
+        "lock-free priority queues",
+        "hazard pointer memory management",
+        "atomic root-list merging"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-08T22:11:33.421798+00:00",
+      "run_number": 2599
     }
   ]
 }
