@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2563** |
-| Last Updated | `2026-10-08T02:25:48.395761+00:00` |
-| Dataset Size | `2563 entries` |
+| Total Topics Learned | **2564** |
+| Last Updated | `2026-10-08T08:41:06.376276+00:00` |
+| Dataset Size | `2564 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1519 |
+| data-structures | 1520 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 135 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and leaf-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core index management in real-time database engines and concurrent storage systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core genomic sequence alignment in real-time bioinformatics toolkits and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic node-splitting and axis-bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput nearest-neighbor searching and multi-core spatial point indexing in real-time robotics perception systems and concurrent location-based service engines`
 - `Implementation of a lock-free thread-safe concurrent Spatial Hash Grid using atomic bucket-pointer-linking and cell-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput broad-phase collision detection and multi-core particle simulation in real-time physics engines and concurrent game development pipelines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-optimization CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core access-pattern skew adaptation in real-time in-memory databases and concurrent search platforms`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate detection in real-time distributed caching systems and concurrent database query optimization pipelines`
 
 <!-- STATS_END -->
 
