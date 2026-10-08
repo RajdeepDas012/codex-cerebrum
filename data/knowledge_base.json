@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2557,
-    "last_updated": "2026-10-08T02:06:52.971902+00:00",
-    "total_topics_learned": 2557
+    "total_runs": 2558,
+    "last_updated": "2026-10-08T02:10:03.531351+00:00",
+    "total_topics_learned": 2558
   },
   "entries": [
     {
@@ -121930,6 +121930,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-08T02:06:52.971886+00:00",
       "run_number": 2557
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic double-linked-list-splicing and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cache replacement and multi-core eviction management in real-time distributed storage systems and concurrent in-memory caching platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, non-blocking Least Recently Used (LRU) cache. By using atomic Compare-And-Swap (CAS) operations for list splicing and hash updates alongside hazard pointers, it prevents deadlocks and lock contention in multi-threaded caching architectures.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for managing lock-free hash bucket entries and doubly linked list pointer updates.",
+        "Employs hazard pointers to safely defer memory reclamation of evicted cache nodes without stalling concurrent reader threads.",
+        "Eliminates global lock bottlenecks, allowing high-throughput parallel cache lookups, insertions, and evictions.",
+        "Balances memory limits and cache hit ratios deterministically under high-concurrency workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates for lock-free LRU node access tracking.",
+        "correct": "bool update_mru(std::atomic<Node*>& head, Node* node) {\n    Node* old_head;\n    do {\n        old_head = head.load(std::memory_order_relaxed);\n        node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool update_mru(Node*& head, Node* node) {\n    std::lock_guard<std::mutex> lock(mtx);\n    node->next = head;\n    head = node;\n}"
+      },
+      "common_mistakes": [
+        "Reclaiming memory of evicted nodes immediately while other threads might still hold pointers to them.",
+        "Failing to handle the ABA problem during concurrent linked list pointer modifications.",
+        "Using heavy synchronization primitives like mutexes inside the critical path of cache lookups."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to safely manage node lifecycles.",
+        "Keep critical CAS retry loops concise to minimize CPU cycle wastage under heavy contention.",
+        "Partition hash buckets or use fine-grained structures to lower atomic instruction collision rates."
+      ],
+      "when_to_use": "Ideal for high-throughput in-memory caching layers and distributed storage systems experiencing intense multi-core contention where traditional lock-based LRU caches bottleneck performance.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where standard mutex-protected caches offer simpler code maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating pointers in a lock-free LRU cache doubly linked list?",
+          "answer": "By using tagged pointers (combining a memory address with a monotonically increasing version counter) within the CAS operation, ensuring that if a node's pointer is modified and restored, the version change is detected."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free memory reclamation for caches?",
+          "answer": "Hazard pointers avoid the massive atomic read-modify-write contention overhead on shared reference counters that occurs across multiple cores during high-frequency cache lookups."
+        }
+      ],
+      "related_topics": [
+        "Lock-free LFU Cache",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-08T02:10:03.531332+00:00",
+      "run_number": 2558
     }
   ]
 }
