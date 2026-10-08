@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2565,
-    "last_updated": "2026-10-08T08:44:15.808834+00:00",
-    "total_topics_learned": 2565
+    "total_runs": 2566,
+    "last_updated": "2026-10-08T08:47:25.365010+00:00",
+    "total_topics_learned": 2566
   },
   "entries": [
     {
@@ -122308,6 +122308,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-08T08:44:15.808814+00:00",
       "run_number": 2565
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-Lookup Table using atomic register-masking and bitwise-folding CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate key-value mapping and multi-core stream signature lookup in real-time network intrusion detection systems and concurrent packet inspection engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent Bloom-Lookup Table leveraging atomic register-masking and bit-folding Compare-And-Swap (CAS) primitives paired with hazard pointers. It enables high-throughput approximate membership queries and multi-core packet signature inspections safely without lock contention.",
+      "key_points": [
+        "Utilizes atomic operations like CAS for thread-safe bit vector modifications without locks.",
+        "Employs register masking and bitwise folding to efficiently map arbitrary keys to compact bit positions.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation under high concurrency.",
+        "Designed specifically for high-throughput environments like network intrusion detection systems and packet inspection."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-setting via CAS loops for a lock-free bloom filter segment",
+        "correct": "bool set_bit_atomic(std::atomic<uint64_t>& word, uint8_t bit_index) {\n    uint64_t old_val = word.load(std::memory_order_relaxed);\n    uint64_t new_val;\n    do {\n        if ((old_val & (1ULL << bit_index)) != 0) return false; // already set\n        new_val = old_val | (1ULL << bit_index);\n    } while (!word.compare_exchange_weak(old_val, new_val, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool set_bit_unsafe(uint64_t& word, uint8_t bit_index) {\n    word |= (1ULL << bit_index); // Race condition without atomic CAS\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operations which lead to lost updates under multi-threaded writes.",
+        "Failing to properly shield deleted or resized nodes using hazard pointers, causing memory corruption."
+      ],
+      "best_practices": [
+        "Keep bit-vector segments aligned to cache lines to prevent false sharing across CPU cores.",
+        "Use relaxed memory ordering for read-heavy operations where strict synchronization is unnecessary."
+      ],
+      "when_to_use": "Use when high-throughput multi-core stream inspection requires rapid approximate set membership checks without blocking threads.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required or when dynamic deletion of individual keys without rebuilding is mandatory.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent bit updates in a shared vector without using mutexes?",
+          "answer": "By using atomic compare-and-swap (CAS) loops to read, compute, and attempt to write back the modified word safely."
+        },
+        {
+          "question": "Why are hazard pointers useful in lock-free concurrent data structures?",
+          "answer": "They prevent threads from freeing memory while other threads are actively dereferencing pointers to that memory."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-hash-tables",
+        "atomic-primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-08T08:47:25.364989+00:00",
+      "run_number": 2566
     }
   ]
 }
