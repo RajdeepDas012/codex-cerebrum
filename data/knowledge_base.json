@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2637,
-    "last_updated": "2026-10-09T09:27:38.777492+00:00",
-    "total_topics_learned": 2637
+    "total_runs": 2638,
+    "last_updated": "2026-10-09T09:30:48.200771+00:00",
+    "total_topics_learned": 2638
   },
   "entries": [
     {
@@ -125718,6 +125718,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-09T09:27:38.777474+00:00",
       "run_number": 2637
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core approximate frequency queries in real-time network traffic monitoring engines and concurrent big data stream analytics platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Count-Min Sketch is a probabilistic data structure that uses multiple hash functions and a 2D array of counters to estimate item frequencies in massive data streams concurrently. By utilizing atomic compare-and-swap (CAS) operations and hazard pointers, it achieves high throughput across multiple cores without locking overhead.",
+      "key_points": [
+        "Employs a 2D matrix of counters where rows correspond to independent hash functions.",
+        "Uses atomic fetch-add or CAS operations to safely increment counters across multiple worker threads.",
+        "Provides sub-linear space complexity while bounding the overestimation error for frequency queries.",
+        "Avoids lock contention and deadlocks completely through non-blocking synchronization primitives."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency incrementing using CAS loops in a multithreaded Count-Min Sketch.",
+        "correct": "void increment(const std::string& item, int d, int w, std::atomic<uint64_t>** table, HashFunction* hash_funcs) {\n    for (int i = 0; i < d; ++i) {\n        size_t idx = hash_funcs[i](item) % w;\n        uint64_t current = table[i][idx].load(std::memory_order_relaxed);\n        while (!table[i][idx].compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed));\n    }\n}",
+        "wrong": "void increment(const std::string& item, int d, int w, uint64_t** table, HashFunction* hash_funcs) {\n    for (int i = 0; i < d; ++i) {\n        size_t idx = hash_funcs[i](item) % w;\n        table[i][idx]++; // Non-atomic write causes race conditions and lost updates\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic counter increments which lead to lost updates under multi-threaded contention.",
+        "Failing to use appropriate memory ordering (such as acquire-release semantics) resulting in stale reads during approximate frequency queries."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for atomic loads during queries where absolute real-time consistency across rows is secondary to performance.",
+        "Size the sketch dimensions (depth and width) based on acceptable error bounds and failure probabilities prior to concurrency tuning."
+      ],
+      "when_to_use": "Use when processing extremely high-throughput data streams across multiple CPU cores where exact frequency counting is memory-prohibitive and approximate bounds are acceptable.",
+      "when_not_to_use": "Do not use when absolute zero-error frequency tracking is required or when the stream size is small enough to fit exact hash maps comfortably in memory.",
+      "interview_questions": [
+        {
+          "question": "Why might a lock-free Count-Min Sketch overestimate item frequencies, and how does concurrency affect this error?",
+          "answer": "It overestimates due to hash collisions where different items map to the same counter bucket. Concurrency does not alter the mathematical collision bounds, but using atomic increments ensures updates are not lost, preserving the integrity of the probabilistic bound."
+        },
+        {
+          "question": "How do you ensure thread safety when resizing or querying a lock-free Count-Min Sketch?",
+          "answer": "Queries only read atomic counters using relaxed memory orders, requiring no locks. Resizing a lock-free data structure is complex and typically avoided by pre-allocating the sketch to its maximum expected capacity."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "HyperLogLog",
+        "Lock-Free Hash Tables"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-09T09:30:48.200751+00:00",
+      "run_number": 2638
     }
   ]
 }
