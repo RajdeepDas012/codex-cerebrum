@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2664** |
-| Last Updated | `2026-10-09T22:02:48.822941+00:00` |
-| Dataset Size | `2664 entries` |
+| Total Topics Learned | **2665** |
+| Last Updated | `2026-10-09T22:05:57.118291+00:00` |
+| Dataset Size | `2665 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1611 |
+| data-structures | 1612 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 137 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core task scheduling in real-time event-driven execution frameworks and concurrent job dispatching systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-splaying and zig-zag-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core frequently-accessed-key caching in real-time in-memory databases and concurrent lookup execution engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core decrease-key processing in real-time simulation engines and concurrent task scheduling systems`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized-optimal priority queue operations and multi-core decrease-key processing in real-time graph algorithms engines and concurrent shortest-path network routing systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-based index operations and multi-core record searching in real-time embedded database engines and concurrent file system storage systems`
-- `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic sequence alignment and multi-core full-text searching in real-time bioinformatics analysis pipelines and concurrent document indexing engines`
 
 <!-- STATS_END -->
 
