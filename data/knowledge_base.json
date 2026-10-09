@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2660,
-    "last_updated": "2026-10-09T21:50:14.100780+00:00",
-    "total_topics_learned": 2660
+    "total_runs": 2661,
+    "last_updated": "2026-10-09T21:53:22.341774+00:00",
+    "total_topics_learned": 2661
   },
   "entries": [
     {
@@ -126809,6 +126809,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-09T21:50:14.100762+00:00",
       "run_number": 2660
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-based index operations and multi-core record searching in real-time embedded database engines and concurrent file system storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a non-blocking, multi-core safe B-Tree data structure. It utilizes atomic node-splitting and child-pointer updates via Compare-And-Swap (CAS) operations combined with hazard pointers to safely reclaim node memory without locks.",
+      "key_points": [
+        "Uses atomic node-splitting CAS primitives to safely expand full nodes without blocking reader threads.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe asynchronous memory deallocation.",
+        "Optimizes multi-core record searching and disk-based index performance by reducing lock contention.",
+        "Maintains structural invariants dynamically during concurrent insertions, deletions, and updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based child pointer update and hazard pointer registration for thread-safe node navigation.",
+        "correct": "bool update_child_pointer(std::atomic<Node*>& parent_slot, Node* expected_node, Node* new_node, HazardPointerGuard& guard) {\n    guard.protect(parent_slot);\n    if (parent_slot.load() != expected_node) return false;\n    return parent_slot.compare_exchange_strong(expected_node, new_node);\n}",
+        "wrong": "Node* current = parent_slot.load();\n// Missing hazard pointer protection and atomic check allows concurrent free\nparent_slot.store(new_node);\ndelete current;"
+      },
+      "common_mistakes": [
+        "Failing to register hazard pointers before reading node references, leading to use-after-free bugs.",
+        "Incorrectly handling the ABA problem during concurrent node-splitting and child-pointer updates."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing or reading shared node pointers.",
+        "Batch retired nodes in thread-local storage before invoking asynchronous memory reclamation."
+      ],
+      "when_to_use": "Use when building high-throughput embedded databases or file systems requiring scalable multi-core index operations without lock contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where the complexity of lock-free memory management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem during concurrent node splitting in a lock-free B-Tree?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives to ensure structural modifications are detected."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free B-Trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times of tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent skip list",
+        "hazard pointer memory management",
+        "lock-free B+ Tree indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-09T21:53:22.341755+00:00",
+      "run_number": 2661
     }
   ]
 }
