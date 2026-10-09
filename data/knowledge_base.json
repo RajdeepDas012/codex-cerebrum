@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2647,
-    "last_updated": "2026-10-09T16:26:02.164789+00:00",
-    "total_topics_learned": 2647
+    "total_runs": 2648,
+    "last_updated": "2026-10-09T16:29:11.345885+00:00",
+    "total_topics_learned": 2648
   },
   "entries": [
     {
@@ -126190,6 +126190,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-09T16:26:02.164771+00:00",
       "run_number": 2647
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping-updating and interval-endpoint-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range queries and multi-core schedule overlap detection in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Interval Tree that uses Compare-And-Swap (CAS) primitives and hazard pointers to safely manage dynamic intervals under high contention. It enables efficient multi-core temporal range queries and conflict detection without traditional lock overhead.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node-overlapping-updating and interval-endpoint-balancing.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe node recycling during concurrent deletions.",
+        "Optimizes multi-core schedule overlap detection for real-time calendar and resource management systems.",
+        "Maintains max-endpoint values in tree nodes to prune search spaces efficiently during concurrent range intersections."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a hazard-pointer-protected node traversal structure for a concurrent interval tree.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct IntervalNode {\n    int low, high, max_high;\n    std::atomic<IntervalNode*> left;\n    std::atomic<IntervalNode*> right;\n};\n\nclass HazardPointerManager {\npublic:\n    void protect(int thread_id, IntervalNode* node) { /* Store hazard pointer */ }\n    void clear(int thread_id) { /* Clear hazard pointer */ }\n};",
+        "wrong": "IntervalNode* unsafeDelete(IntervalNode* node) { delete node; return node->left; }"
+      },
+      "common_mistakes": [
+        "Forgetting to update the cached max_high value atomically when inserting new nodes, leading to missed overlapping intervals.",
+        "Reclaiming memory of deleted interval nodes while another thread is still traversing past them, causing segmentation faults."
+      ],
+      "best_practices": [
+        "Always wrap node reads inside hazard pointer protection scopes before traversing child pointers in a lock-free structure.",
+        "Batch retired nodes in thread-local lists and defer deletion until no active hazard pointers reference them."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping interval queries and updates concurrently, such as in meeting schedulers or dynamic resource allocators.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where simpler lock-based interval trees provide better maintainability.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the maximum high endpoint in an interval tree node concurrently?",
+          "answer": "By using a Compare-And-Swap (CAS) loop that repeatedly attempts to update the max_high field if the new value is greater than the current one."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Interval Tree?",
+          "answer": "They ensure safe memory reclamation by tracking which nodes are actively being read by threads, preventing premature deallocation of nodes currently involved in a traversal path."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "interval tree algorithms",
+        "concurrent memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-09T16:29:11.345867+00:00",
+      "run_number": 2648
     }
   ]
 }
