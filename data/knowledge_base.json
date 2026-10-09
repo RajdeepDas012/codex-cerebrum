@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2608,
-    "last_updated": "2026-10-08T22:40:10.737419+00:00",
-    "total_topics_learned": 2608
+    "total_runs": 2609,
+    "last_updated": "2026-10-09T01:54:34.865110+00:00",
+    "total_topics_learned": 2609
   },
   "entries": [
     {
@@ -124343,6 +124343,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-08T22:40:10.737398+00:00",
       "run_number": 2608
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bε-Tree using atomic buffer-merging and leaf-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput write-optimized indexing and multi-core append-heavy data ingestion in real-time LSM-storage engines and concurrent database logging systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bε-Tree is a write-optimized search tree variant that buffers updates in internal nodes and flushes them downward in batches via atomic primitives. By combining lock-free CAS operations with hazard pointers, it minimizes write amplification and lock contention across multiple cores, making it ideal for append-heavy ingestion pipelines.",
+      "key_points": [
+        "Utilizes message buffers at internal nodes to batch insertions, updates, and deletions before structural merging.",
+        "Employs compare-and-swap (CAS) primitives to safely append to buffers and split full leaf or internal nodes without global locks.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation of nodes undergoing concurrent structural splits and merges.",
+        "Provides write-optimized performance characteristics by transforming random disk or memory writes into sequential batch flushes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of a concurrent Bε-Tree node with buffer appending and atomic CAS state transitions.",
+        "correct": "import threading\nfrom concurrent.futures import ThreadPoolExecutor\n\nclass BeTreeNode:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = []\n        self.lock_free_state = 0 # Represents atomic version state\n        self._lock = threading.Lock() # Simulated atomic CAS guard for illustration\n\n    def atomic_append_buffer(self, message):\n        while True:\n            current_state = self.lock_free_state\n            if len(self.buffer) >= self.capacity:\n                return False # Needs flush/split\n            # Simulate CAS success\n            with self._lock:\n                if self.lock_free_state == current_state:\n                    self.buffer.append(message)\n                    self.lock_free_state += 1\n                    return True\n\nnode = BeTreeNode(10)\nnode.atomic_append_buffer(('INSERT', 5, 'data'))",
+        "wrong": "node.buffer.append(('INSERT', 5, 'data')) # Unsafe concurrent modification leading to race conditions and corrupted node buffers."
+      },
+      "common_mistakes": [
+        "Failing to protect buffer resizing and message flushing with proper CAS loops, causing dropped updates under high contention.",
+        "Improper hazard pointer registration order, leading to premature memory recycling of nodes currently targeted by message flush operations.",
+        "Neglecting the cascading flush overhead when internal node buffers exceed capacity thresholds."
+      ],
+      "best_practices": [
+        "Design buffer message formats to be compact and support idempotent application during crash-recovery or retry loops.",
+        "Use epoch-based reclamation or hazard pointers to track threads currently traversing or modifying specific subtrees.",
+        "Tune buffer capacity thresholds carefully to balance memory consumption and write amplification reduction."
+      ],
+      "when_to_use": "Use when building high-throughput write-heavy storage engines, LSM-tree variants, or real-time logging systems requiring massive concurrent append performance.",
+      "when_not_to_use": "Avoid in read-heavy workloads with strict point-query latency guarantees, where standard B-Trees or lock-free skip-lists provide faster direct path lookups without buffer traversal overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a Bε-Tree differ from a standard B+Tree in terms of concurrency and write performance?",
+          "answer": "Bε-Trees incorporate message buffers in internal nodes to batch updates, transforming random point updates into sequential bulk operations. This significantly reduces write amplification and lock contention compared to standard B+Trees."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node splitting in a lock-free Bε-Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing before performing operations. This blocks other threads from freeing or recycling those specific memory addresses via deferred reclamation until the protecting thread unregisters its hazard pointer."
+        }
+      ],
+      "related_topics": [
+        "Log-Structured Merge-Tree (LSM-Tree)",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-09T01:54:34.865091+00:00",
+      "run_number": 2609
     }
   ]
 }
