@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2638,
-    "last_updated": "2026-10-09T09:30:48.200771+00:00",
-    "total_topics_learned": 2638
+    "total_runs": 2639,
+    "last_updated": "2026-10-09T16:00:43.508795+00:00",
+    "total_topics_learned": 2639
   },
   "entries": [
     {
@@ -125765,6 +125765,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-09T09:30:48.200751+00:00",
       "run_number": 2638
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core range scanning in real-time in-memory databases and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent skip-list is a probabilistic data structure that maintains ordered key-value pairs across multiple linked list levels using atomic compare-and-swap (CAS) operations. It provides logarithmic search, insertion, and deletion performance while allowing lock-free multi-core range scanning, making it ideal for high-throughput in-memory databases.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-linking and node-level-splicing via CAS operations to safely modify multi-level pointers without global locks.",
+        "Employs hazard pointer memory reclamation to safely defer deallocation of unlinked nodes until all traversing threads have finished accessing them.",
+        "Provides probabilistic logarithmic time complexity (O(log n)) for search, insert, and delete operations across multiple concurrent threads.",
+        "Enables efficient multi-core range scans by traversing horizontally across the bottom-most list level without requiring expensive locking protocols."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual lock-free node insertion using atomic compare-and-swap for forward pointer linking in a skip-list.",
+        "correct": "bool CAS_Insert(Node* pred, Node* curr, Node* newNode, int level) {\n    for (int l = 0; l <= level; ++l) {\n        do {\n            newNode->next[l] = curr;\n            if (pred->next[l].compare_exchange_strong(curr, newNode)) break;\n            // Re-find predecessor and current if CAS fails\n        } while (true);\n    }\n}",
+        "wrong": "bool Bad_Insert(Node* pred, Node* curr, Node* newNode, int level) {\n    // Mutex locking instead of lock-free CAS primitives\n    std::lock_guard<std::mutex> lock(mtx);\n    newNode->next[0] = pred->next[0];\n    pred->next[0] = newNode;\n}"
+      },
+      "common_mistakes": [
+        "Failing to atomically validate that the predecessor and current nodes have not been logically or physically unlinked before executing a CAS insertion.",
+        "Neglecting safe memory reclamation strategies like hazard pointers or epoch-based garbage collection, leading to ABA problems or use-after-free crashes."
+      ],
+      "best_practices": [
+        "Mark nodes as logically deleted (e.g., setting a deletion bit on the forward pointer) before physically splicing them out of the skip-list levels.",
+        "Pin traversed nodes using hazard pointers during search and modification phases to prevent premature reclamation by competing threads."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory databases, concurrent transactional storage engines, or real-time indexing systems requiring lock-free ordered key-value operations and frequent range queries.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained, as multi-level skip-list pointer arrays consume significantly more memory than simple single-linked structures.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions between an insertion thread and a deletion thread modifying the same skip-list level?",
+          "answer": "By marking the node's forward pointer with a logical deletion bit via CAS before physically unlinking it, ensuring inserting threads detect the pending deletion and retry their updates."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a lock-free skip-list?",
+          "answer": "Hazard pointers prevent other threads from freeing memory of nodes that a thread is currently traversing or pointing to, avoiding use-after-free bugs in lock-free memory management."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Priority Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-09T16:00:43.508779+00:00",
+      "run_number": 2639
     }
   ]
 }

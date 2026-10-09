@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2638** |
-| Last Updated | `2026-10-09T09:30:48.200771+00:00` |
-| Dataset Size | `2638 entries` |
+| Total Topics Learned | **2639** |
+| Last Updated | `2026-10-09T16:00:43.508795+00:00` |
+| Dataset Size | `2639 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1588 |
+| data-structures | 1589 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 136 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core range scanning in real-time in-memory databases and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core approximate frequency queries in real-time network traffic monitoring engines and concurrent big data stream analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread-pool work-stealing in real-time asynchronous execution runtimes and concurrent job dispatching systems`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core spell-checking in real-time text correction engines and concurrent autocomplete dictionary systems`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency calculations and multi-core prefix query processing in real-time stream aggregation platforms and concurrent statistical computing engines`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput meldable priority queue operations and multi-core task scheduling in real-time operating system kernels and concurrent event-driven execution engines`
 
 <!-- STATS_END -->
 
