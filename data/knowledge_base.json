@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2661,
-    "last_updated": "2026-10-09T21:53:22.341774+00:00",
-    "total_topics_learned": 2661
+    "total_runs": 2662,
+    "last_updated": "2026-10-09T21:56:31.062091+00:00",
+    "total_topics_learned": 2662
   },
   "entries": [
     {
@@ -126856,6 +126856,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-09T21:53:22.341755+00:00",
       "run_number": 2661
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized-optimal priority queue operations and multi-core decrease-key processing in real-time graph algorithms engines and concurrent shortest-path network routing systems",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a concurrent, lock-free Fibonacci Heap. It leverages atomic Compare-And-Swap (CAS) primitives for root-list splicing and minimum pointer updates, combined with hazard pointers to ensure memory safety without locks, enabling high-throughput priority queue operations in multi-threaded environments.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free root-list manipulation and node insertion.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted or consolidated heap nodes across threads.",
+        "Maintains amortized-optimal time complexities for priority queue operations like insert and decrease-key in a concurrent setting.",
+        "Implements atomic minimum-pointer tracking to allow constant-time find-min queries across multiple concurrent cores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of a hazard-pointer protected atomic node insertion into a concurrent heap root list.",
+        "correct": "class Node:\n    def __init__(self, key):\n        self.key = key\n        self.next = None\n        self.marked = False\n\nclass ConcurrentFibonacciHeap:\n    def __init__(self):\n        self.min_node = None\n\n    def insert(self, node, hazard_mgr, thread_id):\n        while True:\n            old_min = self.min_node\n            hazard_mgr.protect(thread_id, old_min)\n            if self.min_node != old_min:\n                continue\n            node.next = old_min\n            # Atomic CAS operation on root list pointer\n            if self.cas_min_node(old_min, node):\n                hazard_mgr.clear(thread_id)\n                break",
+        "wrong": "def insert_unsafe(heap, node):\n    # Missing atomic CAS and hazard pointers leads to race conditions and memory corruption\n    node.next = heap.min_node\n    heap.min_node = node"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading pointers, resulting in use-after-free bugs during concurrent node extraction.",
+        "Using coarse-grained locks instead of fine-grained atomic CAS operations for root-list splicing and consolidation."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer manager before traversing or modifying shared heap nodes.",
+        "Keep critical sections inside retry loops as small as possible to minimize contention on atomic root and minimum pointers."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded graph engines or network routing systems requiring frequent concurrent decrease-key and extract-min operations.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free atomics and hazard pointer management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Fibonacci Heap?",
+          "answer": "Hazard pointers allow a thread to atomically declare which memory nodes it is currently accessing, preventing other threads from reclaiming or freeing those nodes until the reference is dropped."
+        },
+        {
+          "question": "Why is implementing a lock-free decrease-key operation notoriously difficult in a Fibonacci Heap?",
+          "answer": "Because it requires atomically updating parent pointers, cut flags, and cascading cuts across multiple nodes simultaneously without holding global locks, often requiring specialized multi-word CAS or cooperative helping mechanisms."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Lock-Free Priority Queues",
+        "Concurrent Graph Algorithms and Shortest Path Routing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-09T21:56:31.062073+00:00",
+      "run_number": 2662
     }
   ]
 }
