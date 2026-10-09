@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2621,
-    "last_updated": "2026-10-09T02:32:29.224072+00:00",
-    "total_topics_learned": 2621
+    "total_runs": 2622,
+    "last_updated": "2026-10-09T02:35:38.549346+00:00",
+    "total_topics_learned": 2622
   },
   "entries": [
     {
@@ -124959,6 +124959,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-09T02:32:29.224054+00:00",
       "run_number": 2621
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) graph using atomic entry-point-updating and layer-neighbor-connecting CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor searches and multi-core vector indexing in real-time neural search engines and concurrent embedding retrieval systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Hierarchical Navigable Small World (HNSW) graph for high-dimensional approximate nearest neighbor (ANN) search. By utilizing atomic compare-and-swap (CAS) operations for layer neighbor connection and entry point management alongside hazard pointers, it enables scalable, multi-core vector indexing and retrieval without explicit thread locks.",
+      "key_points": [
+        "Utilizes atomic layer-neighbor-connecting CAS primitives to dynamically update graph connectivity across multi-layered small-world structures without locking.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural link modifications in concurrent vector graphs.",
+        "Maintains concurrent global and local entry points atomically to guide high-throughput approximate nearest neighbor traversal across layers.",
+        "Balances multi-core scaling with vector distance metric evaluations, minimizing contention during high-frequency index updates and lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic link updates and hazard pointer protection during multi-threaded HNSW neighbor insertion.",
+        "correct": "void insert_neighbor_atomic(HNSWNode* node, int level, HNSWNode* neighbor, HazardPointerRegistry& hp_reg) {\n    HazardGuard guard = hp_reg.protect(neighbor);\n    while (true) {\n        auto current_neighbors = node->layers[level].neighbors.load();\n        if (contains(current_neighbors, neighbor)) break;\n        auto updated = append(current_neighbors, neighbor);\n        if (node->layers[level].neighbors.compare_exchange_weak(current_neighbors, updated)) break;\n    }\n}",
+        "wrong": "void insert_neighbor_unsafe(HNSWNode* node, int level, HNSWNode* neighbor) {\n    node->layers[level].neighbors.push_back(neighbor);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed neighbor nodes with hazard pointers, leading to use-after-free bugs when another thread prunes edges.",
+        "Using coarse-grained locks on graph layers, which severely limits throughput and scalability in high-concurrency vector search pipelines."
+      ],
+      "best_practices": [
+        "Design heuristic neighbor selection strategies that are deterministic to minimize unnecessary atomic retries during concurrent insertions.",
+        "Batch hazard pointer releases where possible to reduce memory reclamation overhead under heavy multi-threaded query loads."
+      ],
+      "when_to_use": "Use when building high-performance real-time neural search engines or vector databases that require low-latency approximate nearest neighbor search under heavy concurrent read and write workloads.",
+      "when_not_to_use": "Avoid when memory constraints are extremely tight or when exact nearest neighbor search is strictly required over small, low-dimensional datasets.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers help in a concurrent HNSW graph implementation?",
+          "answer": "Hazard pointers ensure that nodes marked for removal or edge restructuring are not reclaimed by the memory allocator until all traversing threads have finished reading them."
+        },
+        {
+          "question": "What is the primary synchronization challenge when updating neighbor lists concurrently across multiple HNSW layers?",
+          "answer": "Avoiding race conditions where simultaneous insertions or deletions invalidate local connectivity invariants, which is mitigated by using CAS loops and immutable or copy-on-write neighbor sets."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Concurrent priority queues",
+        "Approximate Nearest Neighbor (ANN) algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-09T02:35:38.549327+00:00",
+      "run_number": 2622
     }
   ]
 }
