@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2669,
-    "last_updated": "2026-10-10T01:35:52.619326+00:00",
-    "total_topics_learned": 2669
+    "total_runs": 2670,
+    "last_updated": "2026-10-10T01:39:01.603164+00:00",
+    "total_topics_learned": 2670
   },
   "entries": [
     {
@@ -127238,6 +127238,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T01:35:52.619306+00:00",
       "run_number": 2669
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-height-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core key-value searching in real-time in-memory databases and concurrent caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip-list utilizes atomic primitives such as compare-and-swap (CAS) to update forward pointers across multiple probabilistic height levels without blocking. Integrating hazard pointers guarantees safe memory reclamation, making it optimal for high-throughput in-memory key-value databases and multi-core caching architectures.",
+      "key_points": [
+        "Employs probabilistic tower-height-cascading via random number generation combined with atomic CAS for node insertion.",
+        "Uses forward-pointer-linking to allow threads to bypass logically deleted nodes before physical unlinking occurs.",
+        "Applies hazard pointer memory reclamation to prevent use-after-free bugs in dynamic, multi-threaded environments.",
+        "Provides expected logarithmic time complexity for search, insertion, and deletion operations similar to balanced trees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward-pointer linking during a concurrent skip-list node insertion.",
+        "correct": "bool insert(Node* new_node, int key) {\n    // Locate predecessors and successors, then atomically link forward pointers via CAS\n    while (true) {\n        Node* succ = preds[0]->forward[0].load();\n        new_node->forward[0].store(succ);\n        if (preds[0]->forward[0].compare_exchange_weak(succ, new_node)) break;\n    }\n    return true;\n}",
+        "wrong": "bool insert(Node* new_node, int key) {\n    // Non-atomic pointer assignment leading to race conditions\n    preds[0]->forward[0] = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle logically deleted nodes properly, leading to inconsistent search views across threads.",
+        "Neglecting memory reclamation mechanisms like hazard pointers or epoch-based garbage collection, resulting in severe memory leaks."
+      ],
+      "best_practices": [
+        "Mark nodes as logically deleted before attempting to adjust pointers to physically remove them from towers.",
+        "Ensure proper memory ordering semantics (acquire-release) on atomic operations when loading and storing forward pointers."
+      ],
+      "when_to_use": "Use when building high-concurrency ordered collections, in-memory databases, or caches where read-heavy and write-heavy workloads demand scalable non-blocking performance.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly minimized, or when simple single-threaded ordered maps suffice without synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a thread from freeing a node while another thread is traversing its forward pointers?",
+          "answer": "By protecting the accessed node reference with a hazard pointer before dereferencing its forward pointers."
+        },
+        {
+          "question": "What is the purpose of logical deletion before physical deletion in a lock-free skip-list?",
+          "answer": "It ensures that concurrent search and insert operations immediately recognize the node as removed, even if its tower pointers have not yet been fully unlinked."
+        }
+      ],
+      "related_topics": [
+        "Lock-free hash tables",
+        "Hazard pointers and memory management",
+        "Epoch-based garbage collection"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-10T01:39:01.603140+00:00",
+      "run_number": 2670
     }
   ]
 }
