@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2708,
-    "last_updated": "2026-10-10T15:37:40.234522+00:00",
-    "total_topics_learned": 2708
+    "total_runs": 2709,
+    "last_updated": "2026-10-10T15:40:49.473533+00:00",
+    "total_topics_learned": 2709
   },
   "entries": [
     {
@@ -129092,6 +129092,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:37:40.234506+00:00",
       "run_number": 2708
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell-checking in real-time autocomplete engines and concurrent dictionary search systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Burkhard-Keller (BK) Tree enables efficient fuzzy string searching and spell checking in multi-threaded environments. By utilizing atomic CAS primitives for edit-distance-thresholding and child-node-linking alongside hazard pointers, it allows threads to insert and query dictionary words without global locks.",
+      "key_points": [
+        "Uses atomic operations to safely link new child nodes based on Levenshtein or Damerau-Levenshtein edit distances.",
+        "Employs hazard pointers to guarantee safe memory reclamation of tree nodes under concurrent updates.",
+        "Optimizes multi-core spell-checking and autocomplete lookups by pruning subtrees that fall outside the current distance threshold.",
+        "Avoids race conditions during concurrent traversals and branch insertions using compare-and-swap loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking and hazard pointer protection during concurrent BK-Tree traversal.",
+        "correct": "void insert_concurrent(Node* root, const std::string& word) {\n    Node* current = root;\n    while (true) {\n        int dist = levenshtein(current->word, word);\n        Node* next = current->children[dist].load(std::memory_order_acquire);\n        if (!next) {\n            Node* new_node = new Node(word);\n            Node* expected = nullptr;\n            if (current->children[dist].compare_exchange_strong(expected, new_node, std::memory_order_release)) {\n                break;\n            }\n            delete new_node;\n            continue;\n        }\n        current = next;\n    }\n}",
+        "wrong": "void insert_unsafe(Node* root, const std::string& word) {\n    int dist = levenshtein(root->word, word);\n    if (!root->children[dist]) {\n        root->children[dist] = new Node(word); // Missing atomic CAS and thread safety\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers or epoch-based reclamation, leading to use-after-free bugs when threads concurrently delete nodes.",
+        "Neglecting memory ordering constraints (e.g., using relaxed memory order where acquire-release semantics are strictly required)."
+      ],
+      "best_practices": [
+        "Always wrap node traversal pointers with hazard pointers before dereferencing them in concurrent search paths.",
+        "Precompute string distance calculations locally before attempting atomic state modifications to minimize CAS contention."
+      ],
+      "when_to_use": "Use this structure when building real-time autocomplete systems, concurrent spell-checkers, or DNA sequence matching engines that demand high-throughput multi-core fuzzy searches.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency requirements where simple recursive locks or standard thread-safe wrappers incur significantly less overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node insertions without blocking concurrent search threads in a lock-free BK-Tree?",
+          "answer": "By using atomic compare-and-swap (CAS) primitives on the child distance array slots, retrying upon failure, and leveraging hazard pointers to ensure thread-safe memory management."
+        },
+        {
+          "question": "Why are standard mutexes inefficient for concurrent BK-Tree operations in high-throughput autocomplete engines?",
+          "answer": "Global or coarse-grained locking introduces severe thread contention during frequent parallel queries and updates, whereas lock-free designs allow progress and scalability across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Splay Trees",
+        "Concurrent R-Trees",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:40:49.473513+00:00",
+      "run_number": 2709
     }
   ]
 }
