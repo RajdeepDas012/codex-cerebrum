@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2706** |
-| Last Updated | `2026-10-10T15:31:22.887487+00:00` |
-| Dataset Size | `2706 entries` |
+| Total Topics Learned | **2707** |
+| Last Updated | `2026-10-10T15:34:31.653170+00:00` |
+| Dataset Size | `2707 entries` |
 
 ## 📂 Categories Learned
 
@@ -29,7 +29,7 @@
 | probability-math | 27 |
 | security | 24 |
 | machine-learning | 15 |
-| networking | 13 |
+| networking | 14 |
 | web-dev | 9 |
 | language-specific | 7 |
 | devops | 7 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix-Tree-based Routing Table using atomic prefix-length-modifying and next-hop-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core forwarding information base (FIB) lookups in real-time software-defined networking (SDN) controllers and concurrent enterprise routing engines`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic universe-splitting and summary-index-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-universe priority queue operations and multi-core integer key searching in real-time IP packet routing engines and concurrent network scheduling systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and double-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing search tree operations and multi-core frequently accessed node retrieval in real-time in-memory caching layers and concurrent database index engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-fingerprint-clustering CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core dynamic resizing in real-time distributed storage systems and concurrent caching engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-array-resizing and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task management and multi-core job scheduling in real-time background processing engines and concurrent task execution frameworks`
-- `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time in-memory database engines and concurrent key-value storage systems`
 
 <!-- STATS_END -->
 
