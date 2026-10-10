@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2699,
-    "last_updated": "2026-10-10T15:09:18.905119+00:00",
-    "total_topics_learned": 2699
+    "total_runs": 2700,
+    "last_updated": "2026-10-10T15:12:28.361488+00:00",
+    "total_topics_learned": 2700
   },
   "entries": [
     {
@@ -128662,6 +128662,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:09:18.905098+00:00",
       "run_number": 2699
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and hash-slot-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter streaming analytics and multi-core frequency estimation in real-time network traffic monitoring systems and concurrent stream processing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch enables high-throughput, multi-core frequency estimation and heavy-hitter detection in real-time data streams without utilizing blocking mutexes. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, multiple threads can safely increment and query frequency slots concurrently.",
+      "key_points": [
+        "Utilizes atomic frequency-incrementing and hash-slot-updating CAS operations to eliminate lock contention in multi-threaded stream ingestion.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or slot re-allocation without risking use-after-free bugs.",
+        "Provides sub-linear space complexity for probabilistic frequency queries, ideal for high-throughput network monitoring and log aggregation.",
+        "Guarantees freedom from deadlocks and priority inversion, ensuring predictable tail latencies in real-time systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic increment on a hash-slot using CAS primitives in a lock-free environment",
+        "correct": "void increment(uint64_t hash_val, int row) {\n    uint32_t* cell = &table[row][hash_val % COLUMNS];\n    uint32_t old_val = atomic_load(cell);\n    while (!atomic_compare_exchange_weak(cell, &old_val, old_val + 1));\n}",
+        "wrong": "void increment(uint64_t hash_val, int row) {\n    table[row][hash_val % COLUMNS]++; // Not thread-safe, causes race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle hash collisions properly, leading to overestimation errors in frequency queries.",
+        "Neglecting memory barriers or memory ordering constraints when updating shared counter slots via CAS loops.",
+        "Improper hazard pointer registration, causing memory leaks or premature reclamation of shared sketching structures."
+      ],
+      "best_practices": [
+        "Choose independent hash functions with uniform distribution properties to minimize systematic collision bias across rows.",
+        "Tune the width and depth of the sketch matrix according to acceptable error bounds and memory constraints.",
+        "Use relaxed memory ordering only where sequential consistency is not strictly required by dependent read operations."
+      ],
+      "when_to_use": "Use when processing massive, high-velocity data streams across multiple CPU cores where exact frequency counting is memory-prohibitive and lock contention degrades throughput.",
+      "when_not_to_use": "Avoid when absolute zero-error frequency counts are required or when streaming input rates are low enough for standard synchronized hash maps.",
+      "interview_questions": [
+        {
+          "question": "How do you guarantee thread safety in a Count-Min Sketch without using heavy locks?",
+          "answer": "By using atomic CAS loops to increment counter slots and hazard pointers or epoch-based reclamation to handle any structural memory updates safely."
+        },
+        {
+          "question": "What is the primary trade-off made by a Count-Min Sketch compared to an exact frequency map?",
+          "answer": "It trades exact accuracy for significantly reduced memory usage, accepting a bounded overestimation error due to hash collisions."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Lock-Free Ring Buffers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:12:28.361471+00:00",
+      "run_number": 2700
     }
   ]
 }
