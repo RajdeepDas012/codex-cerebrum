@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2677,
-    "last_updated": "2026-10-10T02:01:04.337518+00:00",
-    "total_topics_learned": 2677
+    "total_runs": 2678,
+    "last_updated": "2026-10-10T02:04:13.727865+00:00",
+    "total_topics_learned": 2678
   },
   "entries": [
     {
@@ -127614,6 +127614,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T02:01:04.337499+00:00",
       "run_number": 2677
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell checking in real-time autocomplete recommendation engines and concurrent autocorrect typing systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Burkhard-Keller (BK) tree optimized for concurrent fuzzy string matching. By employing atomic edit-distance partitioning, child-pointer updates via Compare-And-Swap (CAS), and hazard pointers for safe memory reclamation, it enables scalable multi-core spell checking and autocomplete systems without lock contention.",
+      "key_points": [
+        "Utilizes atomic operations to manage child pointers across dynamically branched edit distances without global locking.",
+        "Employs Levenshtein or Damerau-Levenshtein distance calculations to partition terms across tree edges lock-free.",
+        "Integrates hazard pointers to safely track and reclaim memory for nodes unlinked during concurrent multi-core insertions.",
+        "Optimizes real-time spell checking and autocomplete engines by maximizing throughput during massive parallel lookup queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent child node insertion using atomic CAS primitives and hazard pointers in a BK-Tree.",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child, HazardPointerList& hp) {\n    while (true) {\n        Node* current_child = atomic_load(&parent->children[distance]);\n        hp.protect(0, current_child);\n        if (atomic_load(&parent->children[distance]) != current_child) continue;\n        if (current_child != nullptr) {\n            hp.clear();\n            return insert(current_child, new_child->term);\n        }\n        if (atomic_compare_exchange_weak(&parent->children[distance], &current_child, new_child)) {\n            hp.clear();\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    if (parent->children[distance] == nullptr) {\n        parent->children[distance] = new_child;\n        return true;\n    }\n    return insert(parent->children[distance], new_child->term);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs during reclamation.",
+        "Assuming fixed-size arrays for distance pointers without handling dynamic resizing or sparse distance tracking effectively.",
+        "Using blocking synchronization primitives inside traversal loops, destroying the lock-free performance guarantees."
+      ],
+      "best_practices": [
+        "Always wrap node traversal references in hazard pointers before reading child pointers to prevent race conditions during concurrent deletions.",
+        "Cache computed edit distances where appropriate to minimize heavy computational overhead during dense recursive searches.",
+        "Batch memory deallocations via epoch-based reclamation or hazard pointer lists to reduce atomic overhead."
+      ],
+      "when_to_use": "Use when building high-throughput real-time autocomplete recommendation engines or autocorrect typing systems that require frequent parallel fuzzy string matching under heavy multi-core concurrency.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where exact matching suffices, as the overhead of hazard pointers and atomic CAS operations reduces baseline performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory safety when a thread attempts to read a BK-Tree node that another thread unlinks via CAS?",
+          "answer": "By using hazard pointers, the reading thread publishes the node address to a protected thread-local slot, ensuring that reclamation mechanisms defer freeing the memory until no thread holds a hazard reference to it."
+        },
+        {
+          "question": "Why is a standard tree-traversal approach insufficient for a lock-free concurrent BK-Tree?",
+          "answer": "Standard traversals assume static structures or rely on mutexes. In a lock-free environment, nodes can be inserted or modified concurrently, requiring atomic CAS primitives to safely update child pointers at specific edit-distance indexes."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B-link Tree",
+        "Hazard Pointer Memory Management",
+        "Lock-free Wavelet Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T02:04:13.727846+00:00",
+      "run_number": 2678
     }
   ]
 }
