@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2686,
-    "last_updated": "2026-10-10T08:24:05.389724+00:00",
-    "total_topics_learned": 2686
+    "total_runs": 2687,
+    "last_updated": "2026-10-10T08:27:14.525795+00:00",
+    "total_topics_learned": 2687
   },
   "entries": [
     {
@@ -128041,6 +128041,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T08:24:05.389710+00:00",
       "run_number": 2686
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and link-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring querying and multi-core text indexing in real-time document analysis platforms and concurrent search engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent suffix automaton is an advanced directed acyclic word graph (DAWG) structure that recognizes all suffixes of a given string in linear time and space, extended here to support lock-free thread safety using atomic compare-and-swap (CAS) primitives and hazard pointers. It is critical for high-throughput multi-core text indexing and real-time substring querying across distributed document analysis platforms.",
+      "key_points": [
+        "Utilizes atomic state-transition-linking and link-splitting CAS primitives to safely manipulate automaton nodes and transitions under high contention.",
+        "Employs hazard pointer memory reclamation to safely manage memory in a lock-free environment without relying on garbage collection.",
+        "Maintains structural invariants such as the longest paths (length) and suffix links (link) across concurrent insertions.",
+        "Achieves optimal linear-time construction complexity while allowing parallel multi-core thread execution for text search workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of concurrent state extension using atomic compare-and-swap operations for transitions in a lock-free suffix automaton.",
+        "correct": "void sa_extend(char c) {\n    int cur = ++sz;\n    st[cur].len = st[last].len + 1;\n    int p = last;\n    while (p != -1 && !st[p].next.count(c)) {\n        st[p].next.store(c, cur);\n        p = st[p].link;\n    }\n    // handle link splitting atomically...\n    last = cur;\n}",
+        "wrong": "void sa_extend(char c) {\n    // Non-atomic modification leading to race conditions under multi-threading\n    st[last].next[c] = cur;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect state transitions and link-splitting operations with proper atomic CAS loops, leading to lost updates.",
+        "Ignoring ABA problems or memory reclamation hazards, which causes use-after-free bugs when threads concurrently traverse deleted nodes.",
+        "Incorrectly updating suffix links during concurrent clone state generation, corrupting the automaton topology."
+      ],
+      "best_practices": [
+        "Protect all node allocations and pointer modifications with hazard pointers to ensure safe concurrent reclamation.",
+        "Use compare-and-swap (CAS) retry loops when establishing state transitions to gracefully handle contention from multiple threads inserting strings simultaneously.",
+        "Carefully isolate clone node creation and link-splitting steps to prevent readers from observing partially updated automaton states."
+      ],
+      "when_to_use": "Use this structure when building high-throughput real-time search engines or genomic analysis systems requiring multi-core parallel substring matching and dynamic text indexing.",
+      "when_not_to_use": "Avoid when working with single-threaded applications or static texts where simpler sequential suffix structures or basic hash maps suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when two threads attempt to insert the same character transition from a state simultaneously in a lock-free suffix automaton?",
+          "answer": "You use a compare-and-swap (CAS) operation to atomically set the transition. If the CAS fails, another thread has already inserted or modified the transition, and the current thread must retry or adapt based on the existing state."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free suffix automaton instead of standard garbage collection or manual deletion?",
+          "answer": "Hazard pointers allow threads to safely register nodes they are currently reading, preventing other threads from prematurely freeing or recycling those nodes while concurrent traversals or link-splitting operations are in progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Tree",
+        "Concurrent Directed Acyclic Word Graphs",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T08:27:14.525782+00:00",
+      "run_number": 2687
     }
   ]
 }
