@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2737,
-    "last_updated": "2026-10-10T23:48:03.386808+00:00",
-    "total_topics_learned": 2737
+    "total_runs": 2738,
+    "last_updated": "2026-10-10T23:51:11.914544+00:00",
+    "total_topics_learned": 2738
   },
   "entries": [
     {
@@ -130473,6 +130473,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T23:48:03.386788+00:00",
       "run_number": 2737
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-array-resizing and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task scheduling and multi-core job dispatching in real-time distributed execution platforms and concurrent thread pooling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Priority Queue, leveraging atomic Compare-And-Swap (CAS) operations for heap array expansions and node index-swapping. It ensures safe memory reclamation via hazard pointers to prevent use-after-free bugs under heavy multi-threaded contention.",
+      "key_points": [
+        "Uses atomic heap-array-resizing to handle dynamic growth without blocking concurrent reader or writer threads.",
+        "Employs index-swapping CAS primitives to maintain heap invariant properties across multi-core insertions and extractions.",
+        "Integrates hazard pointer memory reclamation to safely manage deleted nodes and prevent premature deallocation.",
+        "Optimized for high-throughput concurrent task scheduling and real-time distributed job execution platforms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free element insertion via atomic index-swapping and hazard pointer protection.",
+        "correct": "void enqueue(Node* newNode) {\n    while (true) {\n        int pos = size.fetch_add(1);\n        hazard_pointers[tid].protect(newNode);\n        if (cas_insert(heap, pos, newNode)) break;\n    }\n}",
+        "wrong": "void enqueue(Node* newNode) {\n    mutex.lock();\n    heap.push_back(newNode);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during index-swapping CAS operations on shared heap nodes.",
+        "Neglecting hazard pointer protection domains, resulting in race conditions and memory corruption during concurrent node extraction."
+      ],
+      "best_practices": [
+        "Pair every dynamic memory reallocation in the underlying heap array with proper epoch-based or hazard-pointer-based reclamation strategies.",
+        "Minimize CAS retry loops by utilizing backoff strategies or localized thread-caching for low-contention inserts."
+      ],
+      "when_to_use": "Use this structure when building high-performance thread pools, real-time job dispatchers, or event-driven distributed systems requiring strict priority ordering under heavy core contention.",
+      "when_not_to_use": "Avoid this approach in single-threaded environments or systems with low concurrency where simpler lock-based binary heaps offer better maintainability and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic index-swapping in a lock-free priority queue heap?",
+          "answer": "By utilizing tagged pointers or version counters combined with the CAS operation to ensure that a pointer value change is detected even if the memory address is reused."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free priority queues?",
+          "answer": "Hazard pointers avoid the heavy atomic write contention on shared reference counts that degrades scalability across many cores, instead using thread-local registers to publish active reads."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Work-Stealing Deque"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T23:51:11.914527+00:00",
+      "run_number": 2738
     }
   ]
 }
