@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2720,
-    "last_updated": "2026-10-10T20:14:07.172477+00:00",
-    "total_topics_learned": 2720
+    "total_runs": 2721,
+    "last_updated": "2026-10-10T20:17:15.760275+00:00",
+    "total_topics_learned": 2721
   },
   "entries": [
     {
@@ -129662,6 +129662,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-10T20:14:07.172458+00:00",
       "run_number": 2720
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Spline using atomic spline-segment-updating and interpolation-error-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput learned index lookups and multi-core point queries in real-time in-memory database engines and concurrent analytical storage systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Radix Spline combines radix indexing with linear splines to create a learned index that maps keys to positions with bounded error. Implementing it lock-free using atomic CAS operations and hazard pointers ensures high-throughput point queries and safe memory reclamation under heavy multi-core contention.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free updates to spline segments and error bounds.",
+        "Employs hazard pointers to safely reclaim memory of obsolete spline nodes during concurrent modifications.",
+        "Combines radix table prefix routing with piecewise linear interpolation for $O(1)$ expected lookup time.",
+        "Maintains strict error guarantees to bound binary search fallback ranges during point queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic segment updating and hazard pointer protection during a concurrent lookup.",
+        "correct": "SplineNode* node = hazard_ptr.protect(atomic_root.load());\nwhile (node && !node->matches(key)) {\n    node = hazard_ptr.protect(node->next.load());\n}",
+        "wrong": "SplineNode* node = atomic_root.load();\n// Missing hazard pointer protection can lead to use-after-free if another thread deletes node\nwhile (node && !node->matches(key)) {\n    node = node->next.load();\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to clear hazard pointers before thread exit, causing memory leaks in custom allocators.",
+        "Failing to enforce strict memory ordering (e.g., using acquire-release semantics incorrectly with CAS), leading to stale spline segment data."
+      ],
+      "best_practices": [
+        "Batch hazard pointer retirements to amortize synchronization overhead across multiple worker threads.",
+        "Keep spline segments compact to maximize CPU cache efficiency during linear interpolation steps."
+      ],
+      "when_to_use": "Use when building high-throughput read-heavy in-memory databases requiring learned index structures that adapt to data distributions under heavy concurrency.",
+      "when_not_to_use": "Avoid in systems with extremely frequent, random write patterns where spline rebuilding costs outweigh the lookup performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Radix Spline?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing the memory reclamation subsystem from freeing those nodes until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is piecewise linear interpolation combined with a radix table beneficial for concurrent point queries?",
+          "answer": "The radix table provides an immediate coarse-grained entry point based on key prefixes, and the linear spline provides a tight bounding interval, reducing search overhead to near-constant time."
+        }
+      ],
+      "related_topics": [
+        "Learned Indexes",
+        "Hazard Pointers",
+        "Lock-Free B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T20:17:15.760257+00:00",
+      "run_number": 2721
     }
   ]
 }
