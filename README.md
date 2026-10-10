@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2709** |
-| Last Updated | `2026-10-10T15:40:49.473533+00:00` |
-| Dataset Size | `2709 entries` |
+| Total Topics Learned | **2710** |
+| Last Updated | `2026-10-10T15:43:57.566287+00:00` |
+| Dataset Size | `2710 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1649 |
+| data-structures | 1650 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | crypto-blockchain | 139 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-augmenting CAS primitives alongside hazard pointer memory reclamation for high-throughput range overlapping queries and multi-core interval scheduling in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell-checking in real-time autocomplete engines and concurrent dictionary search systems`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems (GIS) and concurrent location-based services engines`
 - `Implementation of a lock-free thread-safe concurrent Radix-Tree-based Routing Table using atomic prefix-length-modifying and next-hop-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core forwarding information base (FIB) lookups in real-time software-defined networking (SDN) controllers and concurrent enterprise routing engines`
 - `Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic universe-splitting and summary-index-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-universe priority queue operations and multi-core integer key searching in real-time IP packet routing engines and concurrent network scheduling systems`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and double-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing search tree operations and multi-core frequently accessed node retrieval in real-time in-memory caching layers and concurrent database index engines`
 
 <!-- STATS_END -->
 

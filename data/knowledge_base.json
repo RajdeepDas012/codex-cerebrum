@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2709,
-    "last_updated": "2026-10-10T15:40:49.473533+00:00",
-    "total_topics_learned": 2709
+    "total_runs": 2710,
+    "last_updated": "2026-10-10T15:43:57.566287+00:00",
+    "total_topics_learned": 2710
   },
   "entries": [
     {
@@ -129139,6 +129139,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:40:49.473513+00:00",
       "run_number": 2709
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-augmenting CAS primitives alongside hazard pointer memory reclamation for high-throughput range overlapping queries and multi-core interval scheduling in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free interval tree optimized for multi-core processors. It leverages atomic compare-and-swap (CAS) primitives for overlap detection and node augmentation alongside hazard pointers to guarantee safe memory reclamation without blocking.",
+      "key_points": [
+        "Utilizes atomic primitives to safely execute overlap detection and node updates across multiple concurrent threads.",
+        "Maintains max-endpoint augmentation fields per node to efficiently prune search spaces during range queries.",
+        "Employs hazard pointers to track thread access and safely reclaim memory of deleted interval nodes without race conditions.",
+        "Eliminates traditional mutex bottlenecks, maximizing throughput for real-time interval scheduling and resource allocation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic validation of an interval overlap condition using a hypothetical CAS loop.",
+        "correct": "bool try_insert_interval(Node*& root, Interval new_val) {\n    Node* newNode = new Node(new_val);\n    while (true) {\n        Node* current = atomic_load(&root);\n        if (validate_no_conflict(current, new_val)) {\n            if (atomic_compare_exchange_weak(&root, &current, newNode)) return true;\n        } else {\n            delete newNode;\n            return false;\n        }\n    }\n}",
+        "wrong": "bool bad_insert(Node* root, Interval new_val) {\n    mutex.lock();\n    root->insert(new_val);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to update the augmented max-endpoint values atomically, leading to missed overlapping intervals during concurrent traversals.",
+        "Reclaiming memory of deleted nodes prematurely while other threads hold hazard pointers to them."
+      ],
+      "best_practices": [
+        "Ensure that augmented fields (such as the maximum high endpoint in subtrees) are recalculated or verified atomically using version tags or epoch-based methods.",
+        "Properly register and clear hazard pointers for every thread traversing the interval tree to prevent memory leaks or use-after-free bugs."
+      ],
+      "when_to_use": "Use when multiple concurrent threads must frequently query, insert, or delete time-ranges and intervals with minimal contention and latency.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler systems where standard mutex-backed locking provides sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle updating augmented values (like max endpoints) in a lock-free interval tree without creating race conditions?",
+          "answer": "You can use atomic CAS loops combined with version counters or transactional memory designs to ensure that both the tree structure and its augmentation fields update atomically."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in high-throughput lock-free interval trees?",
+          "answer": "Hazard pointers provide predictable, deterministic memory reclamation without the latency spikes and CPU pauses often associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Trees",
+        "Concurrent Segment Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:43:57.566269+00:00",
+      "run_number": 2710
     }
   ]
 }
