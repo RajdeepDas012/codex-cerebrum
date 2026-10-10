@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2692,
-    "last_updated": "2026-10-10T08:42:55.004686+00:00",
-    "total_topics_learned": 2692
+    "total_runs": 2693,
+    "last_updated": "2026-10-10T08:46:03.607004+00:00",
+    "total_topics_learned": 2693
   },
   "entries": [
     {
@@ -128327,6 +128327,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T08:42:55.004675+00:00",
       "run_number": 2692
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and mark-clearing CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core priority scheduling in real-time Dijkstra pathfinding engines and concurrent graph analytics platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Fibonacci Heap utilizing atomic compare-and-swap (CAS) operations for root-list manipulation and mark clearing, paired with hazard pointers to safely manage memory reclamation. Such a design enables ultra-fast decrease-key and merge operations across multiple threads without mutual exclusion bottlenecks, making it ideal for large-scale graph analysis. It matters because conventional locking heaps create massive thread contention during priority updates in real-time routing engines.",
+      "key_points": [
+        "Utilizes atomic root-list-splicing via CAS to achieve wait-free or lock-free node insertion and heap merging.",
+        "Employs atomic mark-clearing primitives to safely update child-cut states during multi-threaded decrease-key operations.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of deleted tree nodes under concurrency.",
+        "Supports amortized $O(1)$ insert and decrease-key operations, maximizing throughput for parallel shortest-path algorithms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern for atomic root-list pointer updates using CAS with hazard pointers in a concurrent heap.",
+        "correct": "bool link_roots(std::atomic<Node*>& root_head, Node* new_node, HazardPointer& hp) {\n    Node* old_head = root_head.load(std::memory_order_relaxed);\n    do {\n        hp.protect(old_head);\n        if (root_head.load(std::memory_order_relaxed) != old_head) continue;\n        new_node->right.store(old_head, std::memory_order_relaxed);\n    } while (!root_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "Node* link_roots(std::atomic<Node*>& root_head, Node* new_node) {\n    Node* old_head = root_head.load();\n    new_node->right = old_head;\n    root_head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting the ABA problem on pointer references when nodes are unlinked and re-inserted concurrently.",
+        "Failing to protect hazard pointers before reading node metadata, leading to use-after-free race conditions during consolidation."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing child or sibling pointers in unmanaged concurrent memory.",
+        "Keep critical sections inside atomic loops as tight as possible to minimize retry contention on high-contention roots."
+      ],
+      "when_to_use": "Use when building highly parallel graph algorithms or priority-based schedulers where decrease-key and merge operations happen concurrently at massive scale.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of atomic synchronization and hazard pointer management outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic root-list-splicing in a lock-free heap?",
+          "answer": "By utilizing tagged pointers (combining the pointer with a monotonically increasing version counter) or by leveraging epoch-based/hazard pointer memory management which delays recycling nodes until no threads reference them."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free graph data structures?",
+          "answer": "Hazard pointers avoid the massive cache-line bouncing and memory contention caused by atomic increment and decrement operations on shared reference counters across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Priority Queues",
+        "Hazard Pointers and Memory Management",
+        "Lock-free B+ Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T08:46:03.606970+00:00",
+      "run_number": 2693
     }
   ]
 }
