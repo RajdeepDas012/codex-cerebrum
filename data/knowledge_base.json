@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2678,
-    "last_updated": "2026-10-10T02:04:13.727865+00:00",
-    "total_topics_learned": 2678
+    "total_runs": 2679,
+    "last_updated": "2026-10-10T02:07:22.716865+00:00",
+    "total_topics_learned": 2679
   },
   "entries": [
     {
@@ -127663,6 +127663,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T02:04:13.727846+00:00",
       "run_number": 2678
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range queries and multi-core time-interval searching in real-time calendar scheduling applications and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Interval Tree that manages dynamic intervals under multi-threaded contention. By employing atomic compare-and-swap (CAS) primitives for endpoint adjustments and max-high attribute propagation alongside hazard pointers, it ensures safe memory reclamation and scalable real-time overlap searching.",
+      "key_points": [
+        "Utilizes atomic operations for modifying interval endpoints and propagating maximum high values across tree nodes without global locks.",
+        "Employs hazard pointers to safely defer memory deallocation of nodes actively traversed or modified by concurrent threads.",
+        "Maintains structural invariants during simultaneous insertions, deletions, and overlapping range searches.",
+        "Optimized for high-throughput multi-core workloads in scheduling, time-series analysis, and resource allocation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based update of a node's maximum high endpoint value in a lock-free interval tree.",
+        "correct": "bool updateMaxHigh(std::atomic<int>& currentMax, int newHigh) {\n    int expected = currentMax.load();\n    while (newHigh > expected) {\n        if (currentMax.compare_exchange_weak(expected, newHigh)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool updateMaxHigh(int& currentMax, int newHigh) {\n    // Non-atomic read-modify-write introduces race conditions in multi-threaded access\n    if (newHigh > currentMax) {\n        currentMax = newHigh;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers during concurrent tree rotations or deletions, leading to use-after-free bugs.",
+        "Ignoring the cascading propagation of max-high values up to ancestor nodes when a new interval with a large endpoint is inserted."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers before reading node pointers in traversal routines to prevent premature memory recycling.",
+        "Keep atomic transaction loops tight when updating max-high values to minimize contention and retry overhead under high thread counts."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping range queries and updates on dynamic intervals with low latency and high concurrency requirements.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple coarse-grained locking provides sufficient performance with lower algorithmic complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in a lock-free interval tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, preventing other threads from prematurely freeing those memory blocks until all readers have detached."
+        },
+        {
+          "question": "Why is max-high propagation challenging in a lock-free tree structure?",
+          "answer": "Because multiple threads may simultaneously insert intervals that alter subtree maximums, requiring atomic CAS loops to ascend and update parent nodes without overwriting concurrent updates from other threads."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Segment Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T02:07:22.716846+00:00",
+      "run_number": 2679
     }
   ]
 }
