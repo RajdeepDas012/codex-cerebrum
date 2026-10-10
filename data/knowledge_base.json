@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2696,
-    "last_updated": "2026-10-10T08:55:32.129443+00:00",
-    "total_topics_learned": 2696
+    "total_runs": 2697,
+    "last_updated": "2026-10-10T08:58:44.543885+00:00",
+    "total_topics_learned": 2697
   },
   "entries": [
     {
@@ -128517,6 +128517,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T08:55:32.129431+00:00",
       "run_number": 2696
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized mergeable priority queue operations and multi-core task scheduling in real-time job dispatching frameworks and concurrent event-driven simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Pairing Heap that utilizes atomic CAS primitives for root-linking and multi-pass merging alongside hazard pointers. It enables high-throughput amortized mergeable priority queue operations without traditional blocking mutexes, making it ideal for multi-core real-time task schedulers.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives to manage root-linking and multi-pass merging safely across multiple threads.",
+        "Utilizes hazard pointers for safe memory reclamation, preventing use-after-free bugs in concurrent node adjustments.",
+        "Delivers exceptional amortized performance for mergeable priority queue workloads in parallel environments.",
+        "Eliminates lock contention bottlenecks common in coarse-grained synchronization approaches for priority queues."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-linking using CAS for a lock-free pairing heap node.",
+        "correct": "bool link_roots(std::atomic<Node*>& current_root, Node* new_node) {\n    Node* old_root = current_root.load(std::memory_order_relaxed);\n    do {\n        new_node->next_sibling = old_root;\n    } while (!current_root.compare_exchange_weak(old_root, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool link_roots(Node*& current_root, Node* new_node) {\n    // Missing atomicity and thread-safety leading to race conditions\n    new_node->next_sibling = current_root;\n    current_root = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or restructured nodes with hazard pointers, leading to memory corruption under high contention.",
+        "Using weak memory orderings inappropriately during multi-pass merge operations, causing stale pointer reads."
+      ],
+      "best_practices": [
+        "Always pair lock-free node pointer updates with proper hazard pointer registration and retirement phases.",
+        "Thoroughly test memory reclamation logic under heavy thread concurrency to uncover elusive ABA problems."
+      ],
+      "when_to_use": "When building high-throughput real-time job dispatchers or event-driven simulation engines requiring fast mergeable priority queue operations across numerous CPU cores.",
+      "when_not_to_use": "When simpler, single-threaded priority queues suffice or when the platform lacks robust atomic primitives and hazard pointer libraries.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory corruption in a lock-free Pairing Heap?",
+          "answer": "Hazard pointers allow threads to temporarily register nodes they are currently accessing, preventing other threads from prematurely freeing or reclaiming those memory blocks via atomic memory reclamation."
+        },
+        {
+          "question": "What is the primary advantage of atomic root-linking in a concurrent priority queue?",
+          "answer": "It avoids global locks by allowing threads to append or merge sub-heaps directly to the root using Compare-And-Swap (CAS) operations, boosting multi-core scalability."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queue Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T08:58:44.543872+00:00",
+      "run_number": 2697
     }
   ]
 }
