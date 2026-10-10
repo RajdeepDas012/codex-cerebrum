@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2705,
-    "last_updated": "2026-10-10T15:28:13.777522+00:00",
-    "total_topics_learned": 2705
+    "total_runs": 2706,
+    "last_updated": "2026-10-10T15:31:22.887487+00:00",
+    "total_topics_learned": 2706
   },
   "entries": [
     {
@@ -128947,6 +128947,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:28:13.777503+00:00",
       "run_number": 2705
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Van Emde Boas Tree using atomic universe-splitting and summary-index-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-universe priority queue operations and multi-core integer key searching in real-time IP packet routing engines and concurrent network scheduling systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent Van Emde Boas (vEB) tree that leverages atomic universe-splitting and summary-index-updating Compare-And-Swap (CAS) primitives combined with hazard pointers for memory reclamation. It enables ultra-fast bounded-universe priority queue and search operations across multiple cores without lock contention, making it ideal for high-throughput IP routing and network scheduling. This architecture guarantees thread safety and progress guarantees under heavy concurrent access without relying on global locks.",
+      "key_points": [
+        "Utilizes atomic universe-splitting to recursively partition the key space into clusters and a summary structure without blocking.",
+        "Employs atomic summary-index-updating CAS operations to track populated clusters and maintain constant or logarithmic time complexity bounds.",
+        "Integrates hazard pointer memory reclamation to safely manage node deletions and updates in a lock-free environment without memory leaks.",
+        "Optimized for bounded integer key spaces, delivering predictable high-throughput performance for multi-core packet routing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic universe-splitting and summary updates using CAS loops alongside hazard pointer protection.",
+        "correct": "bool insert(std::atomic<Node*>& root, int key, HazardPointer& hp) {\n    Node* current;\n    while (true) {\n        current = hp.protect(root);\n        if (current->universe <= 1) return false;\n        int cluster_idx = key / current->upper_sqrt;\n        int offset = key % current->upper_sqrt;\n        if (current->clusters[cluster_idx]->min == NIL) {\n            // Atomic update to summary and cluster\n            if (atomic_compare_exchange_weak(&current->summary->min, &old_min, cluster_idx)) {\n                // Proceed with insertion\n                break;\n            }\n        }\n    }\n    return true;\n}",
+        "wrong": "bool insert_wrong(Node* root, int key) {\n    // Missing hazard pointers and lock-free atomic CAS loops lead to race conditions\n    int cluster_idx = key / root->upper_sqrt;\n    root->clusters[cluster_idx]->min = key;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to use-after-free bugs during concurrent node splitting.",
+        "Neglecting ABA problem mitigation when executing CAS loops on shared summary indices and cluster pointers.",
+        "Overlooking memory overhead caused by excessive recursive node allocation in large universe ranges."
+      ],
+      "best_practices": [
+        "Align tree nodes to cache lines to minimize false sharing across multi-core CPU architectures.",
+        "Reuse hazard pointer thread-local pools to reduce synchronization overhead during high-frequency lookups.",
+        "Pre-allocate vEB tree structures for fixed-size integer universes (e.g., 32-bit or 64-bit IPs) to eliminate dynamic allocation bottlenecks."
+      ],
+      "when_to_use": "When managing bounded-universe integer keys or priority queues requiring ultra-low latency and high concurrency across multiple cores, such as in network packet schedulers or IP routing tables.",
+      "when_not_to_use": "When the universe size of keys is extremely large or sparse, as the space complexity of a standard vEB tree becomes prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do atomic universe-splitting and summary-index-updating CAS primitives prevent race conditions in a concurrent vEB tree?",
+          "answer": "They allow threads to atomically update cluster states and summary flags without locking, using retry loops on CAS failures to ensure linearized updates."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free vEB tree instead of standard garbage collection?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation by allowing threads to safely announce which nodes they are currently accessing before deletion occurs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues",
+        "Cache-conscious Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:31:22.887469+00:00",
+      "run_number": 2706
     }
   ]
 }
