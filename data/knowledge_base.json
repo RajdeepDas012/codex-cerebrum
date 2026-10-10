@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2704,
-    "last_updated": "2026-10-10T15:25:04.674880+00:00",
-    "total_topics_learned": 2704
+    "total_runs": 2705,
+    "last_updated": "2026-10-10T15:28:13.777522+00:00",
+    "total_topics_learned": 2705
   },
   "entries": [
     {
@@ -128900,6 +128900,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:25:04.674862+00:00",
       "run_number": 2704
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and double-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing search tree operations and multi-core frequently accessed node retrieval in real-time in-memory caching layers and concurrent database index engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a concurrent, lock-free Splay Tree utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput, self-optimizing ordered operations where frequently accessed nodes are automatically moved closer to the root, improving overall retrieval efficiency in multi-threaded environments.",
+      "key_points": [
+        "Utilizes atomic root-splaying and double-rotation CAS primitives to adjust tree topology without blocking.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural modifications across concurrent threads.",
+        "Provides self-optimizing search characteristics, ensuring that hot keys require fewer traversal steps in multi-core caching layers.",
+        "Mitigates thread contention during structural updates via fine-grained optimistic node linking and validation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern for hazard pointer protection during atomic node access in a concurrent tree traversal.",
+        "correct": "Node* hazard_ptr = nullptr;\ndo {\n    hazard_ptr = global_node.load(std::memory_order_acquire);\n    hazard_pointer_registry.protect(0, hazard_ptr);\n} while (hazard_ptr != global_node.load(std::memory_order_relaxed));",
+        "wrong": "Node* node = global_node.load(); // Unprotected access vulnerable to concurrent reclamation\nuse_node(node);"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs.",
+        "Attempting full multi-node atomic rotations with a single CAS operation instead of breaking rotations down into granular, thread-safe step transitions."
+      ],
+      "best_practices": [
+        "Always publish thread-local hazard pointers before dereferencing potentially volatile shared node pointers.",
+        "Design tree rotation sequences to be idempotent or safely retryable upon encountering concurrent structural modifications."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory caching layers or database indices with strong locality of reference and heavy multi-threaded access.",
+      "when_not_to_use": "Avoid in single-threaded contexts where overhead of atomic operations and hazard pointers degrades performance, or when access patterns lack temporal locality.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation during concurrent tree rotations and node deletions?",
+          "answer": "By using hazard pointers to register threads' active node accesses, preventing reclamation until no thread holds a reference to the target node."
+        },
+        {
+          "question": "Why is implementing a lock-free Splay Tree more challenging than a lock-free Skip List?",
+          "answer": "Splay Trees require frequent global or semi-global structural changes (rotations) that alter paths from leaves to the root, creating high contention for CAS operations compared to the decoupled forward links of a Skip List."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:28:13.777503+00:00",
+      "run_number": 2705
     }
   ]
 }
