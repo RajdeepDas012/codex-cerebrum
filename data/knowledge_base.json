@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2727,
-    "last_updated": "2026-10-10T20:36:07.505660+00:00",
-    "total_topics_learned": 2727
+    "total_runs": 2728,
+    "last_updated": "2026-10-10T20:39:16.238872+00:00",
+    "total_topics_learned": 2728
   },
   "entries": [
     {
@@ -129991,6 +129991,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T20:36:07.505640+00:00",
       "run_number": 2727
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Box Hierarchy using atomic node-refitting and branch-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core ray tracing in real-time game engines and concurrent graphics rendering pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Bounding Box Hierarchy (BBH/BVH) that allows multiple CPU cores to simultaneously traverse, refit, and prune spatial acceleration structures without coarse-grained locking. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it achieves high-throughput ray tracing and collision detection in real-time dynamic simulation environments.",
+      "key_points": [
+        "Utilizes atomic node-refitting and branch-pruning CAS operations to allow concurrent modifications to spatial bounding volumes.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free race conditions when worker threads delete or restructure hierarchy nodes.",
+        "Maximizes multi-core utilization for real-time ray tracing and complex geometry collision queries in game engines.",
+        "Avoids global mutex lock contention during high-frequency insertion, deletion, and refitting of dynamic scene objects."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates using CAS for lock-free hierarchy traversal and child replacement",
+        "correct": "bool updateChildNode(std::atomic<BVHNode*>& parentSlot, BVHNode* oldNode, BVHNode* newNode) {\n    return parentSlot.compare_exchange_strong(oldNode, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "BVHNode* updateChildNode(BVHNode* parentSlot, BVHNode* oldNode, BVHNode* newNode) {\n    // Missing atomicity and thread safety; vulnerable to race conditions\n    parentSlot->child = newNode;\n    return newNode;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers during traversal, resulting in memory corruption when another thread prunes or refits the branch.",
+        "Using overly relaxed memory ordering on atomic writes, leading to stale bounding box coordinates being read during ray intersection tests."
+      ],
+      "best_practices": [
+        "Retire nodes via deferred reclamation pools using hazard pointers to ensure no thread holds a reference to a freed spatial node.",
+        "Keep bounding box refitting localized to affected subtrees to minimize cascading atomic CAS failures under high thread contention."
+      ],
+      "when_to_use": "Use when building real-time physics engines or ray tracers where dynamic objects are frequently added, removed, or updated across many threads simultaneously.",
+      "when_not_to_use": "Avoid when the scene geometry is entirely static, as traditional read-only hierarchies built once with fine-grained or single-threaded locks are simpler and more cache-efficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation bugs during concurrent lock-free BVH traversal?",
+          "answer": "Hazard pointers allow a reading thread to publish a reference to a node it is currently inspecting, signaling to deleter threads that the node must not be freed until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is fine-grained locking suboptimal compared to atomic CAS primitives for dynamic Bounding Box Hierarchies?",
+          "answer": "Fine-grained locking can lead to high lock contention, deadlocks during tree rotations, and severe thread serialization, whereas CAS primitives allow optimistic concurrency control and non-blocking progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent R-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T20:39:16.238853+00:00",
+      "run_number": 2728
     }
   ]
 }
