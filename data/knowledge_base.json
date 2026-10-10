@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2700,
-    "last_updated": "2026-10-10T15:12:28.361488+00:00",
-    "total_topics_learned": 2700
+    "total_runs": 2701,
+    "last_updated": "2026-10-10T15:15:37.844653+00:00",
+    "total_topics_learned": 2701
   },
   "entries": [
     {
@@ -128711,6 +128711,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-10T15:12:28.361471+00:00",
       "run_number": 2700
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-ier Filter using atomic version-tagging and history-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput versioned set membership querying and multi-core historical data auditing in real-time temporal database systems and concurrent audit logging engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bloom-ier Filter combines probabilistic set membership with historical version tracking, allowing queries to inspect past states without blocking. By utilizing atomic operations and hazard pointers, it delivers high throughput for multi-core temporal database and audit logging applications.",
+      "key_points": [
+        "Integrates version-tagging to support historical state querying of set membership without locking overhead.",
+        "Employs compare-and-swap (CAS) primitives for atomic insertion and history updates across shared bit-vector slots.",
+        "Utilizes hazard pointers to safely manage memory reclamation of deprecated node structures in a lock-free manner.",
+        "Optimizes concurrent performance in temporal databases and audit trails by eliminating thread contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic version-tagging and CAS operations for a bloom-ier filter node slot.",
+        "correct": "bool update_slot(std::atomic<uint64_t>& slot, uint32_t version, uint32_t val) {\n    uint64_t current = slot.load();\n    uint64_t next = ((uint64_t)version << 32) | val;\n    while (!slot.compare_exchange_weak(current, next)) {\n        if ((current >> 32) > version) return false; // Newer version exists\n    }\n    return true;\n}",
+        "wrong": "bool update_slot(std::atomic<uint64_t>& slot, uint32_t version, uint32_t val) {\n    // Missing loop and version check allows race conditions and stale overwrites\n    uint64_t next = ((uint64_t)version << 32) | val;\n    return slot.compare_exchange_strong(slot, next);\n}"
+      },
+      "common_mistakes": [
+        "Failing to check if an incoming write version is older than the currently recorded version, corrupting historical accuracy.",
+        "Neglecting proper hazard pointer registration during traversals of version history chains, leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Pack version tags and values compactly into single-word primitives to enable atomic single-instruction updates.",
+        "Epoch-based or hazard pointer reclamation should be tightly integrated with history nodes to bound memory consumption.",
+        "Design hash functions to uniformly distribute keys across the versioned slots to minimize collision overhead."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent inserts and point-in-time historical membership queries on a massive probabilistic set without global locking.",
+      "when_not_to_use": "Avoid in single-threaded environments or when absolute zero false-positive rates are required, as standard probabilistic trade-offs still apply.",
+      "interview_questions": [
+        {
+          "question": "How does a Bloom-ier Filter differ from a standard Bloom filter in terms of concurrent updates?",
+          "answer": "A Bloom-ier filter tracks historical versions for each entry using atomic version-tagging, whereas a standard Bloom filter only supports current-state insertions and membership checks."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free versioned data structure?",
+          "answer": "Hazard pointers safely shield nodes from premature memory reclamation while concurrent threads are reading historical version chains, preventing use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Graph",
+        "Concurrent Count-Min Sketch",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-10T15:15:37.844635+00:00",
+      "run_number": 2701
     }
   ]
 }
