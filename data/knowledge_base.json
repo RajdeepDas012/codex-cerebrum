@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2749,
-    "last_updated": "2026-10-11T05:26:49.845047+00:00",
-    "total_topics_learned": 2749
+    "total_runs": 2750,
+    "last_updated": "2026-10-11T05:29:59.900314+00:00",
+    "total_topics_learned": 2750
   },
   "entries": [
     {
@@ -131039,6 +131039,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T05:26:49.845028+00:00",
       "run_number": 2749
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components finding and multi-core equivalence relation querying in real-time graph analysis platforms and concurrent network routing topology engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free thread-safe concurrent Disjoint Set data structure using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput equivalence relation querying and connected component analysis across multi-core environments without blocking global locks.",
+      "key_points": [
+        "Utilizes atomic parent-pointer compression via CAS to flatten trees lock-free during find operations.",
+        "Implements rank-combining strategies atomically to merge disjoint sets and maintain balanced structures.",
+        "Employs hazard pointer memory reclamation to safely manage node allocations and prevent ABA problems or premature freeing.",
+        "Ensures linearizability across concurrent union and find queries in real-time graph workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find operation with path compression using CAS",
+        "correct": "Node* find(Node* x) {\n    while (true) {\n        Node* p = x->parent.load(std::memory_order_acquire);\n        if (p == x) return x;\n        Node* pp = p->parent.load(std::memory_order_acquire);\n        x->parent.compare_exchange_weak(p, pp, std::memory_order_release);\n        x = pp;\n    }\n}",
+        "wrong": "Node* find(Node* x) {\n    if (x->parent == x) return x;\n    return x->parent = find(x->parent); // Non-atomic and not thread-safe\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to use-after-free bugs.",
+        "Performing non-atomic rank updates that violate the monotonic progress required for lock-free guarantees."
+      ],
+      "best_practices": [
+        "Always wrap node reads during traversal in hazard pointers to ensure thread safety during concurrent modifications.",
+        "Use weak CAS loops for atomic pointer compression to handle contention gracefully in high-core environments."
+      ],
+      "when_to_use": "Use when you need to process massive graph components, equivalence relations, or network topologies concurrently across multiple threads with minimal synchronization overhead.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple coarse-grained locking provides sufficient throughput without added complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when implementing lock-free path compression in a Disjoint Set data structure?",
+          "answer": "By using hazard pointers or tagged pointers (version counts) combined with atomic CAS primitives to ensure that node reuse does not corrupt pointer updates."
+        },
+        {
+          "question": "Why is union by rank crucial in a concurrent Union-Find implementation?",
+          "answer": "It keeps the trees shallow, limiting the traversal depth during atomic find operations and reducing the window of contention for CAS failures."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointers",
+        "concurrent disjoint-set data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T05:29:59.900296+00:00",
+      "run_number": 2750
     }
   ]
 }
