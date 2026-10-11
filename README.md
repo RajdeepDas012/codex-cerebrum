@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2764** |
-| Last Updated | `2026-10-11T12:44:30.610995+00:00` |
-| Dataset Size | `2764 entries` |
+| Total Topics Learned | **2765** |
+| Last Updated | `2026-10-11T12:47:39.220678+00:00` |
+| Dataset Size | `2765 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1695 |
+| data-structures | 1696 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | algorithms | 140 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core index traversal in real-time transactional database systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-swapping and tower-height-expanding CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core parallel search operations in real-time distributed databases and concurrent in-memory caching systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and slot-colliding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitters estimation and multi-core frequency querying in real-time stream processing architectures and concurrent telemetry monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency querying and multi-core statistical aggregation in real-time streaming analytics engines and concurrent metric monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link-traversing and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range scans and multi-core high-concurrency database indexing in real-time transactional storage engines and concurrent in-memory database systems`
-- `Implementation of a lock-free thread-safe concurrent Persistence Vector using atomic chunk-descriptor-swapping and structural-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable collection transformations and multi-core functional state management in real-time streaming architectures and concurrent data processing pipelines`
 
 <!-- STATS_END -->
 

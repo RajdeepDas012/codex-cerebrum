@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2764,
-    "last_updated": "2026-10-11T12:44:30.610995+00:00",
-    "total_topics_learned": 2764
+    "total_runs": 2765,
+    "last_updated": "2026-10-11T12:47:39.220678+00:00",
+    "total_topics_learned": 2765
   },
   "entries": [
     {
@@ -131750,6 +131750,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-11T12:44:30.610976+00:00",
       "run_number": 2764
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core index traversal in real-time transactional database systems and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B+ Tree designed for high-throughput transactional storage engines. By leveraging atomic primitives like leaf-sibling linking, split descriptors, and hazard pointers, it ensures safe multi-core memory management and lock-free node traversal during intensive range queries.",
+      "key_points": [
+        "Utilizes atomic leaf-sibling-linking to allow concurrent readers to bypass locked or splitting nodes seamlessly.",
+        "Employs split-descriptor-swapping CAS primitives to make node splits an atomic, multi-step operation visible to other threads consistently.",
+        "Integrates hazard pointer memory reclamation to prevent premature deallocation of nodes actively traversed by concurrent reader or writer threads.",
+        "Optimizes multi-core index traversal for high-throughput range queries in real-time transactional database systems."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual demonstration of atomic node split descriptor swapping using compare-and-swap semantics.",
+        "correct": "class SplitDescriptor:\n    def __init__(self, left, right, key):\n        self.left = left\n        self.right = right\n        self.split_key = key\n\nclass ConcurrentBPlusNode:\n    def __init__(self):\n        self.descriptor = None\n\n    def try_complete_split(self, expected_desc, new_node):\n        # Atomic swap simulation representing split descriptor resolution\n        if self.descriptor == expected_desc:\n            self.descriptor = new_node\n            return True\n        return False",
+        "wrong": "class ConcurrentBPlusNode:\n    def __init__(self):\n        self.descriptor = None\n\n    def try_complete_split(self, expected_desc, new_node):\n        # Non-atomic modification vulnerable to race conditions\n        self.descriptor = new_node\n        return True"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs during node splitting.",
+        "Neglecting to handle incomplete split states left behind by interrupted threads, which can stall subsequent traversals."
+      ],
+      "best_practices": [
+        "Always publish hazard pointers before reading node references in concurrent execution paths.",
+        "Design split descriptors to be idempotent so that helping threads can safely finish pending structural modifications.",
+        "Keep critical sections inside lock-free loops concise to reduce contention on heavily updated root and internal nodes."
+      ],
+      "when_to_use": "Use when building high-performance transactional storage engines or concurrent in-memory databases requiring ultra-low latency range queries across numerous CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler workloads where standard mutex-backed B+ Trees offer lower implementation complexity and sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do split descriptors help achieve lock-free progress during a B+ Tree node split?",
+          "answer": "Split descriptors encapsulate the split state, allowing any thread encountering the node to help complete the split operation atomically via CAS before proceeding with its own traversal."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures like a lock-free B+ Tree?",
+          "answer": "Hazard pointers provide a safe lock-free memory reclamation scheme that prevents threads from freeing or reusing node memory while other concurrent threads are actively reading or traversing those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B-Link Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Skip List"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T12:47:39.220659+00:00",
+      "run_number": 2765
     }
   ]
 }
