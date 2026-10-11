@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2762,
-    "last_updated": "2026-10-11T12:38:13.679056+00:00",
-    "total_topics_learned": 2762
+    "total_runs": 2763,
+    "last_updated": "2026-10-11T12:41:22.170714+00:00",
+    "total_topics_learned": 2763
   },
   "entries": [
     {
@@ -131656,6 +131656,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T12:38:13.679037+00:00",
       "run_number": 2762
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and slot-colliding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitters estimation and multi-core frequency querying in real-time stream processing architectures and concurrent telemetry monitoring systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a thread-safe, lock-free Count-Min Sketch data structure optimized for multi-core streaming environments. By leveraging atomic compare-and-swap (CAS) operations for frequency updates and hazard pointers for safe memory management, it enables high-throughput heavy hitters estimation without locking overhead.",
+      "key_points": [
+        "Utilizes independent hash functions to map data streams to a fixed 2D array of counters with minimal collision overhead.",
+        "Employs atomic frequency-incrementing and slot-colliding CAS primitives to safely handle concurrent multi-threaded updates.",
+        "Integrates hazard pointer memory reclamation to ensure safe node and memory management without traditional locking bottlenecks.",
+        "Provides high-throughput estimation of heavy hitters and frequency queries suited for real-time telemetry and stream processing."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent atomic updates in a Count-Min Sketch using thread pools and atomic variables.",
+        "correct": "from concurrent.futures import ThreadPoolExecutor\nimport threading\n\nclass ConcurrentCMS:\n    def __init__(self, width, depth):\n        self.width = width\n        self.depth = depth\n        self.table = [[threading.Lock() for _ in range(width)] for _ in range(depth)]\n        self.counts = [[0] * width for _ in range(depth)]\n\n    def _hash(self, item, i):\n        return (hash(item) + i * 12345) % self.width\n\n    def add(self, item):\n        for i in range(self.depth):\n            col = self._hash(item, i)\n            with self.table[i][col]:\n                self.counts[i][col] += 1",
+        "wrong": "class UnsafeCMS:\n    def __init__(self, width):\n        self.counts = [0] * width\n    def add(self, item):\n        self.counts[hash(item) % len(self.counts)] += 1"
+      },
+      "common_mistakes": [
+        "Failing to account for hash collisions which can cause overestimation errors in frequency queries.",
+        "Using heavy global locks instead of fine-grained atomic CAS operations, severely bottlenecking multi-core throughput."
+      ],
+      "best_practices": [
+        "Select table dimensions (width and depth) based on desired error bounds and probability guarantees.",
+        "Pair atomic operations with robust memory reclamation schemes like hazard pointers or epoch-based reclamation to prevent memory leaks."
+      ],
+      "when_to_use": "Use when processing massive, high-velocity data streams across multiple cores where exact frequency counting is memory-prohibitive and approximate heavy hitters estimation is acceptable.",
+      "when_not_to_use": "Avoid when exact counts are strictly required or when the stream size is small enough to fit standard exact frequency maps comfortably in memory.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions in a Count-Min Sketch under high concurrency without using blocking locks?",
+          "answer": "By using atomic CAS loops (compare-and-swap) to increment counter values safely at the hashed indices across multiple threads."
+        },
+        {
+          "question": "Why are hazard pointers useful in lock-free streaming data structures?",
+          "answer": "Hazard pointers allow threads to safely declare which memory nodes they are currently accessing, preventing premature reclamation by other threads without requiring locks."
+        }
+      ],
+      "related_topics": [
+        "Count-Min Sketch",
+        "Hazard Pointers",
+        "Lock-Free Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T12:41:22.170694+00:00",
+      "run_number": 2763
     }
   ]
 }
