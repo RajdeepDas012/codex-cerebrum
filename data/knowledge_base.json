@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2772,
-    "last_updated": "2026-10-11T13:09:40.665836+00:00",
-    "total_topics_learned": 2772
+    "total_runs": 2773,
+    "last_updated": "2026-10-11T13:12:49.263212+00:00",
+    "total_topics_learned": 2773
   },
   "entries": [
     {
@@ -132129,6 +132129,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T13:09:40.665815+00:00",
       "run_number": 2772
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic character-branching and node-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix-based string searching and multi-core autocomplete indexing in real-time dictionary search platforms and concurrent text retrieval systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Ternary Search Tree (TST) uses atomic compare-and-swap (CAS) primitives and hazard pointers to allow multiple threads to safely insert, update, and search string prefixes simultaneously without lock contention. This architecture optimizes memory consumption compared to standard tries while maximizing multi-core throughput for real-time text retrieval and autocomplete applications.",
+      "key_points": [
+        "Utilizes atomic character-branching CAS operations to safely route traversals down low, equal, and high child pointers without explicit mutex locking.",
+        "Employs atomic node-allocation primitives to dynamically expand the tree structure under intense concurrent write loads.",
+        "Integrates hazard pointers to safely manage memory reclamation, preventing use-after-free races when competing threads concurrently delete or replace nodes.",
+        "Combines the space efficiency of binary search trees with the fast prefix-matching capabilities of multi-way tries in a concurrent execution model."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-branching CAS and hazard pointer protection during concurrent TST node traversal",
+        "correct": "bool insert_char(std::atomic<Node*>& child_ref, char c, HazardPointer& hp) {\n    Node* current = hp.protect(child_ref);\n    while (!current) {\n        Node* new_node = new Node(c);\n        if (child_ref.compare_exchange_weak(current, new_node)) return true;\n        delete new_node;\n        current = hp.protect(child_ref);\n    }\n    return false;\n}",
+        "wrong": "Node* current = child_ref.load();\nif (!current) {\n    child_ref.store(new Node(c)); // Non-atomic check-then-act race condition and missing hazard pointer protection\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect accessed nodes with hazard pointers, leading to memory corruption when another thread frees or modifies a subtree concurrently.",
+        "Using blocking synchronization primitives inside traversal loops, which completely defeats the lock-free design objective and introduces thread contention."
+      ],
+      "best_practices": [
+        "Thoroughly reuse retired nodes via lock-free memory pools or epoch-based reclamation alongside hazard pointers to minimize dynamic allocation overhead.",
+        "Keep node-splitting and pointer-updating operations small and idempotent to maximize the success rate of low-level atomic CAS loops."
+      ],
+      "when_to_use": "Ideal for high-concurrency systems requiring frequent prefix searches, autocomplete suggestions, and dynamic string dictionary updates across many CPU cores.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained and a simple serialized trie or standard hash map would suffice without multi-core scaling overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Ternary Search Tree?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading as 'protected', preventing the memory reclamation subsystem from freeing or reusing those nodes until all references are dropped."
+        },
+        {
+          "question": "Why is a Ternary Search Tree often preferred over a standard Trie in concurrent string retrieval systems?",
+          "answer": "TSTs consume significantly less memory because nodes only allocate child pointers for low, equal, and high branches rather than a full array of pointers for every possible character in the alphabet."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent BK-Tree",
+        "Hazard Pointer memory management",
+        "Concurrent Prefix Tries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T13:12:49.263193+00:00",
+      "run_number": 2773
     }
   ]
 }
