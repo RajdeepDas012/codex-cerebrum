@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2740,
-    "last_updated": "2026-10-10T23:57:29.376800+00:00",
-    "total_topics_learned": 2740
+    "total_runs": 2741,
+    "last_updated": "2026-10-11T00:00:38.652664+00:00",
+    "total_topics_learned": 2741
   },
   "entries": [
     {
@@ -130614,6 +130614,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-10T23:57:29.376777+00:00",
       "run_number": 2740
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput recently-accessed caching operations and multi-core frequent-key lookup in real-time in-memory database management systems and concurrent caching platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Splay Tree is an advanced self-adjusting binary search tree that moves frequently accessed elements closer to the root to optimize lookup times. By combining atomic root-rotation and self-balancing CAS primitives with hazard pointer memory management, it achieves high throughput and lock-free thread safety across multiple cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to execute structural modifications like root rotations safely without global locks.",
+        "Employs hazard pointers to track threads actively reading nodes, safely deferring memory reclamation to prevent use-after-free bugs.",
+        "Self-optimizes by 'splaying' accessed nodes to the root, naturally clustering hot keys for faster subsequent access in cache layers.",
+        "Ensures linearizability across multi-core architectures during concurrent inserts, lookups, and restructuring operations."
+      ],
+      "code_example": {
+        "language": "pseudo",
+        "description": "Demonstrates the pattern of attempting a lock-free atomic root rotation using CAS with hazard pointers.",
+        "correct": "function concurrent_rotate_right(node, hazard_mgr):\n    while true:\n        hazard_mgr.protect(node)\n        left_child = node.left\n        if left_child == null: break\n        hazard_mgr.protect(left_child)\n        if node.left != left_child: continue\n        \n        if atomic_cas(&node.left, left_child, left_child.right):\n            if atomic_cas(&left_child.right, left_child.right, node):\n                break\n    hazard_mgr.clear()",
+        "wrong": "function unsafe_rotate(node):\n    left_child = node.left\n    node.left = left_child.right\n    left_child.right = node"
+      },
+      "common_mistakes": [
+        "Forgetting to protect nodes with hazard pointers before reading child pointers, leading to race conditions and memory corruption.",
+        "Attempting full multi-node splay operations in a single CAS, which often fails due to high contention; instead, break operations down into smaller atomic steps."
+      ],
+      "best_practices": [
+        "Retire nodes safely through a hazard pointer deferred reclamation queue once unlinked from the tree.",
+        "Minimize CAS retry loops by limiting the scope of atomic modifications during deep tree restructuring."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caching systems or databases requiring fast access to recently used keys across multiple threads without lock contention.",
+      "when_not_to_use": "Avoid when strict worst-case guarantees are required (as standard splay trees lack strict balancing guarantees) or when read-write workloads heavily favor immutable structures.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in lock-free tree rotations?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that other threads can defer memory deallocation until no thread holds a reference to those nodes."
+        },
+        {
+          "question": "Why is it difficult to implement a lock-free splay operation using a single CAS primitive?",
+          "answer": "A splay operation often modifies multiple parent-child pointers across different levels of the tree simultaneously, which exceeds the atomic guarantees of single-word CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Binary Search Trees",
+        "Concurrent Caching Strategies"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-11T00:00:38.652644+00:00",
+      "run_number": 2741
     }
   ]
 }
