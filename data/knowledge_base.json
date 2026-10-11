@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2755,
-    "last_updated": "2026-10-11T05:45:45.602813+00:00",
-    "total_topics_learned": 2755
+    "total_runs": 2756,
+    "last_updated": "2026-10-11T05:48:54.332127+00:00",
+    "total_topics_learned": 2756
   },
   "entries": [
     {
@@ -131325,6 +131325,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T05:45:45.602792+00:00",
       "run_number": 2755
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and circular-buffer-wrapping CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer multi-consumer message passing and multi-core inter-thread communication in real-time financial trading systems and concurrent event-driven messaging engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent reads and writes over a fixed-size circular array without traditional blocking locks. By utilizing atomic compare-and-swap (CAS) primitives for head and tail pointer manipulation and hazard pointers for safe memory management, it achieves ultra-low latency and high throughput for multi-core inter-thread messaging.",
+      "key_points": [
+        "Employs atomic head-tail-advancing and circular-buffer-wrapping CAS primitives to guarantee thread safety without mutexes.",
+        "Utilizes hazard pointers to safely track and reclaim memory slots accessed by concurrent consumer threads.",
+        "Eliminates context-switching overhead, making it ideal for high-throughput, low-latency inter-thread communication.",
+        "Maintains a fixed pre-allocated capacity to prevent dynamic memory allocation overhead during runtime operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement and circular wrapping using compare-and-swap primitives.",
+        "correct": "template <typename T, size_t Capacity>\nclass LockFreeRingBuffer {\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\n    std::array<T, Capacity> buffer;\npublic:\n    bool push(const T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if ((current_tail + 1) % Capacity == current_head) return false; // Full\n        buffer[current_tail] = item;\n        tail.store((current_tail + 1) % Capacity, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "class UnsafeRingBuffer {\n    size_t head = 0, tail = 0;\n    int buffer[100];\npublic:\n    void push(int item) {\n        buffer[tail++] = item; // Non-atomic updates cause severe race conditions\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for circular buffer wraparound conditions properly when calculating available capacity.",
+        "Using incorrect memory ordering constraints (e.g., relaxed ordering where acquire-release semantics are required)."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail indices to different cache lines to eliminate false sharing between producer and consumer cores.",
+        "Pre-allocate all buffer slots during initialization to completely avoid dynamic allocation overhead during execution."
+      ],
+      "when_to_use": "When building low-latency, high-throughput message-passing pipelines or event-driven engines requiring strict non-blocking guarantees.",
+      "when_not_to_use": "When the dataset size is unbounded or dynamically changing, as fixed-capacity ring buffers cannot automatically grow without re-allocation.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer when head and tail pointers are equal?",
+          "answer": "Either by keeping one slot permanently empty as a sentinel or by utilizing an extra wrap-around generation counter for each pointer."
+        },
+        {
+          "question": "Why is cache-line padding critical for concurrent ring buffers shared across multiple cores?",
+          "answer": "It prevents false sharing, which occurs when independent threads update variables residing on the same hardware cache line, leading to costly cache invalidation traffic."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free queues",
+        "memory ordering semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T05:48:54.332107+00:00",
+      "run_number": 2756
     }
   ]
 }
