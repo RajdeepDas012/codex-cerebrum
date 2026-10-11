@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2774,
-    "last_updated": "2026-10-11T17:57:07.874225+00:00",
-    "total_topics_learned": 2774
+    "total_runs": 2775,
+    "last_updated": "2026-10-11T18:00:16.760002+00:00",
+    "total_topics_learned": 2775
   },
   "entries": [
     {
@@ -132223,6 +132223,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T17:57:07.874208+00:00",
       "run_number": 2774
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread synchronization in real-time execution engines and concurrent job processing frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent priority queue leveraging atomic heap node operations and hazard pointers. It enables multiple threads to insert and extract elements efficiently without blocking, making it crucial for high-performance task schedulers and real-time execution systems.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage heap structural modifications without locks.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation and prevent the ABA problem during node removals.",
+        "Ensures thread-safe concurrent task scheduling and job extraction across multi-core architectures.",
+        "Minimizes synchronization overhead and thread contention under heavy workloads compared to lock-based priority queues."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of using atomic CAS for heap node management alongside hazard pointers.",
+        "correct": "template <typename T>\nbool LockFreePriorityQueue<T>::push(T val) {\n    Node* newNode = new Node(val);\n    while (true) {\n        Node* oldTail = tail.load();\n        if (atomic_compare_exchange_weak(&tail, &oldTail, newNode)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "template <typename T>\nbool LockFreePriorityQueue<T>::push(T val) {\n    std::lock_guard<std::mutex> lock(mtx);\n    heap.push(val);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during atomic pointer updates.",
+        "Incorrectly retiring memory leading to use-after-free bugs when hazard pointers are mismanaged."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer manager before accessing shared lock-free nodes.",
+        "Keep critical CAS loops tight and free of blocking system calls to maintain high throughput."
+      ],
+      "when_to_use": "Use when building high-throughput task schedulers, real-time event loops, or multi-threaded job processing frameworks where lock contention significantly bottlenecks performance.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly minimized or when simplicity and maintainability outweigh the need for extreme lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free priority queue?",
+          "answer": "Hazard pointers allow a thread to atomically publish a reference to a node it is currently accessing, ensuring other threads do not free or reclaim that memory until it is safely unlinked and deregistered."
+        },
+        {
+          "question": "Why is implementing a heap-based priority queue lock-free significantly more complex than a lock-free stack or queue?",
+          "answer": "Unlike stacks or queues that only modify boundaries (head/tail), heap priority queues require structural maintenance across multiple parent-child nodes to maintain the heap invariant, often leading to complex multi-step CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Work-Stealing Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T18:00:16.759984+00:00",
+      "run_number": 2775
     }
   ]
 }

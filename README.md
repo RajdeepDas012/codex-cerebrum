@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2774** |
-| Last Updated | `2026-10-11T17:57:07.874225+00:00` |
-| Dataset Size | `2774 entries` |
+| Total Topics Learned | **2775** |
+| Last Updated | `2026-10-11T18:00:16.760002+00:00` |
+| Dataset Size | `2775 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1702 |
+| data-structures | 1703 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | algorithms | 141 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread synchronization in real-time execution engines and concurrent job processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct element counting in real-time stream processing analytics and concurrent telemetry monitoring engines`
 - `Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic character-branching and node-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix-based string searching and multi-core autocomplete indexing in real-time dictionary search platforms and concurrent text retrieval systems`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-tagging and range-minimum-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query updates and multi-core interval computation in real-time financial analytics engines and concurrent statistical monitoring platforms`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-linking and child-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell-checking in real-time dictionary search platforms and concurrent autocomplete suggestion engines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-updating and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent spatial database engines`
 
 <!-- STATS_END -->
 
