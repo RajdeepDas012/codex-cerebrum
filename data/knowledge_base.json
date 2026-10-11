@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2745,
-    "last_updated": "2026-10-11T05:13:37.026353+00:00",
-    "total_topics_learned": 2745
+    "total_runs": 2746,
+    "last_updated": "2026-10-11T05:16:46.012785+00:00",
+    "total_topics_learned": 2746
   },
   "entries": [
     {
@@ -130851,6 +130851,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T05:13:37.026332+00:00",
       "run_number": 2745
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput range-overlapping querying and multi-core interval collision detection in real-time genomic annotation platforms and concurrent computational geometry engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Interval Tree utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput multi-core querying and dynamic updates of overlapping intervals without blocking threads, crucial for genomic analysis and computational geometry.",
+      "key_points": [
+        "Utilizes atomic endpoint-updating and max-high-propagating CAS primitives to maintain tree invariants safely across concurrent threads.",
+        "Employs hazard pointer memory reclamation to prevent ABA problems and safely free nodes during concurrent node insertions and deletions.",
+        "Supports high-throughput range-overlapping queries, allowing multiple readers to traverse node boundaries concurrently without locks.",
+        "Ensures thread safety and minimizes contention during interval collision detection in high-performance computational environments."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node structure and atomic max-high value updating for a concurrent interval tree node.",
+        "correct": "class Node:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n        self.max_high = high\n        self.left = None\n        self.right = None\n    def update_max_high(self, new_val):\n        while True:\n            current = self.max_high\n            if new_val <= current:\n                break\n            if atomic_cas(self, 'max_high', current, new_val):\n                break",
+        "wrong": "class Node:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n        self.max_high = high\n    def update_max_high(self, new_val):\n        self.max_high = max(self.max_high, new_val)"
+      },
+      "common_mistakes": [
+        "Failing to propagate max-high values upward correctly, causing range queries to miss valid overlapping intervals in subtrees.",
+        "Neglecting hazard pointer protection during tree traversals, leading to use-after-free race conditions when another thread deletes a node."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointers before reading child pointers or node endpoints during concurrent traversal.",
+        "Ensure bounded retry loops with backoff strategies on CAS failures to prevent thread starvation under heavy write contention."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform concurrent range queries and dynamic insertions/deletions on overlapping intervals, such as in real-time genomic coordinate annotation tools.",
+      "when_not_to_use": "Avoid when workloads are strictly single-threaded or when standard coarse-grained locking provides sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle max-high propagation atomically during concurrent node insertions in an interval tree?",
+          "answer": "By using atomic CAS loops that check and update the node's max_high field recursively up the ancestral path whenever a newly inserted node's high endpoint exceeds the current maximum."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free interval tree implementation?",
+          "answer": "Hazard pointers protect threads from accessing memory nodes that have been concurrently unlinked and scheduled for deletion, preventing use-after-free bugs and memory corruption."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Computational Geometry Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T05:16:46.012767+00:00",
+      "run_number": 2746
     }
   ]
 }
