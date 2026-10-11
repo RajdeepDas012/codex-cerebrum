@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2791,
-    "last_updated": "2026-10-11T21:53:16.911225+00:00",
-    "total_topics_learned": 2791
+    "total_runs": 2792,
+    "last_updated": "2026-10-11T21:56:25.129318+00:00",
+    "total_topics_learned": 2792
   },
   "entries": [
     {
@@ -133029,6 +133029,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T21:53:16.911202+00:00",
       "run_number": 2791
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link-updating and node-split-descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index traversal and multi-core record searching in real-time enterprise database engines and concurrent storage management systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-Link Tree extends traditional B-Trees by adding right-links to sibling nodes at each level, enabling lock-free navigation and node splits. By using atomic CAS primitives and hazard pointers, multiple threads can safely traverse and modify the index simultaneously without global locking.",
+      "key_points": [
+        "Utilizes right-pointers at each tree level to allow threads to recover safely when encountering a concurrently split node.",
+        "Employs compare-and-swap (CAS) primitives for lock-free structural modifications like node splits and key insertions.",
+        "Integrates hazard pointers for safe memory reclamation, preventing premature deallocation of nodes actively visited by other threads.",
+        "Maximizes multi-core throughput in database storage engines by eliminating latch crabbing and reducing lock contention."
+      ],
+      "code_example": {
+        "language": "pseudo",
+        "description": "Demonstrates safe concurrent node traversal using right-links during a split",
+        "correct": "function search(root, key):\n    curr = root\n    while curr is not leaf:\n        curr = find_next_child(curr, key)\n        while curr.right and key >= curr.right.min_key:\n            curr = curr.right\n    return scan_leaf(curr, key)",
+        "wrong": "function search(root, key):\n    curr = root\n    while curr is not leaf:\n        curr = find_next_child(curr, key) // Fails if node splits concurrently without checking right link\n    return scan_leaf(curr, key)"
+      },
+      "common_mistakes": [
+        "Failing to check the right-pointer when a node is split by another thread during traversal, leading to missed keys.",
+        "Improper memory reclamation order, causing use-after-free bugs when threads hold pointers to nodes undergoing deletion."
+      ],
+      "best_practices": [
+        "Always validate node versions or use hazard pointers before dereferencing child or right pointers in concurrent environments.",
+        "Keep node split descriptors atomic to ensure readers can safely assist or bypass incomplete split operations."
+      ],
+      "when_to_use": "High-throughput database index structures and storage engines requiring concurrent multi-core reads and writes without global locks.",
+      "when_not_to_use": "Single-threaded applications or memory-constrained environments where the overhead of hazard pointers and right-links outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How does a B-Link Tree prevent reader threads from getting lost when a node splits?",
+          "answer": "By maintaining right-pointers between sibling nodes at the same level, allowing a thread that falls behind a split to traverse horizontally to the correct sibling."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free B-Link Tree implementation?",
+          "answer": "They protect dynamically allocated nodes from being reclaimed and freed while other concurrent threads are actively reading or traversing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointers",
+        "Concurrent Skip Lists",
+        "Latch-free Database Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T21:56:25.129273+00:00",
+      "run_number": 2792
     }
   ]
 }
