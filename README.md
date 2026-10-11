@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2796** |
-| Last Updated | `2026-10-11T22:08:59.444262+00:00` |
-| Dataset Size | `2796 entries` |
+| Total Topics Learned | **2797** |
+| Last Updated | `2026-10-11T22:12:08.326951+00:00` |
+| Dataset Size | `2797 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1720 |
+| data-structures | 1721 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | algorithms | 144 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-coordination CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core transactional record storage in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and counter-matrix-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core real-time telemetry analysis in distributed network monitoring platforms and concurrent event-streaming analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and forward-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core concurrent map operations in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and access-splaying CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting key-value indexing and multi-core cache-locality optimization in real-time in-memory caching systems and concurrent transactional databases`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and tree-node-cas primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency updates and multi-core range sum querying in real-time streaming analytics engines and concurrent statistical monitoring platforms`
-- `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link-updating and node-split-descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index traversal and multi-core record searching in real-time enterprise database engines and concurrent storage management systems`
 
 <!-- STATS_END -->
 
