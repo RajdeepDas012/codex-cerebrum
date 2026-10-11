@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2795,
-    "last_updated": "2026-10-11T22:05:49.822427+00:00",
-    "total_topics_learned": 2795
+    "total_runs": 2796,
+    "last_updated": "2026-10-11T22:08:59.444262+00:00",
+    "total_topics_learned": 2796
   },
   "entries": [
     {
@@ -133221,6 +133221,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T22:05:49.822405+00:00",
       "run_number": 2795
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and counter-matrix-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core real-time telemetry analysis in distributed network monitoring platforms and concurrent event-streaming analytics engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch uses atomic Compare-And-Swap (CAS) primitives to update a matrix of frequency counters across multiple hash functions without thread blocking. This architecture ensures high-throughput stream frequency tracking and real-time heavy-hitter identification in multi-core distributed telemetry systems.",
+      "key_points": [
+        "Utilizes a 2D matrix of counters combined with multiple independent hash functions to estimate item frequencies in data streams with sub-linear space complexity.",
+        "Employs atomic fetch-and-add and CAS primitives to safely increment specific counter locations across concurrent threads without global locks or mutex contention.",
+        "Integrates hazard pointer memory reclamation to ensure safe pointer traversal and memory deallocation in dynamically resizing or multi-versioned sketch topologies.",
+        "Provides probabilistic guarantees on frequency overestimation bounded by the sketch width and depth, making it ideal for high-throughput network monitoring."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic frequency incrementing in a Count-Min Sketch counter matrix using CAS loops",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentCountMinSketch {\n    std::vector<std::vector<std::atomic<uint32_t>>> table;\n    size_t depth, width;\npublic:\n    void increment(const std::string& key) {\n        for (size_t i = 0; i < depth; ++i) {\n            size_t col = hash(key, i) % width;\n            uint32_t current = table[i][col].load(std::memory_order_relaxed);\n            while (!table[i][col].compare_exchange_weak(current, current + 1,\n                std::memory_order_release, std::memory_order_relaxed));\n        }\n    }\n};",
+        "wrong": "void increment(const std::string& key) {\n    for (size_t i = 0; i < depth; ++i) {\n        table[i][hash(key, i) % width]++; // Non-atomic read-modify-write causes race conditions and lost updates\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on counter cells, leading to lost updates under high concurrency.",
+        "Failing to use appropriate memory ordering semantics (like acquire-release), which can cause stale frequency readings across threads."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for counter loads inside CAS loops where strict synchronization is handled by the atomic CAS operation.",
+        "Design hash functions that are fast and distribute keys uniformly across columns to minimize collision-induced overestimation."
+      ],
+      "when_to_use": "Use when processing massive, continuous high-speed data streams where exact frequency tracking requires too much memory and probabilistic estimates are acceptable.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory or when the input stream cardinality is extremely small and fits comfortably in a standard hash map.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads increment the same counter in a Count-Min Sketch?",
+          "answer": "By using atomic compare-and-swap (CAS) loops or atomic fetch-add primitives on individual matrix cells instead of acquiring locks."
+        },
+        {
+          "question": "What is the primary trade-off when sizing the width and depth of a Count-Min Sketch?",
+          "answer": "Increasing width reduces the error bound of frequency estimation, while increasing depth decreases the probability of exceeding that error bound, both at the cost of higher memory consumption."
+        }
+      ],
+      "related_topics": [
+        "HyperLogLog",
+        "Bloom Filters",
+        "Lock-free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T22:08:59.444240+00:00",
+      "run_number": 2796
     }
   ]
 }
