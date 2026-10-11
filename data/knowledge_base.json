@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2801,
-    "last_updated": "2026-10-11T22:24:41.621370+00:00",
-    "total_topics_learned": 2801
+    "total_runs": 2802,
+    "last_updated": "2026-10-11T22:27:49.832321+00:00",
+    "total_topics_learned": 2802
   },
   "entries": [
     {
@@ -133503,6 +133503,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T22:24:41.621348+00:00",
       "run_number": 2801
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-access-reordering and hash-bucket-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput evicting cache operations and multi-core memory management in real-time web proxy servers and concurrent in-memory key-value databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and implementation of a lock-free concurrent Least Recently Used (LRU) cache using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures thread-safe, high-throughput eviction and retrieval without global locks, making it ideal for multi-core caching architectures.",
+      "key_points": [
+        "Combines a concurrent hash map for $O(1)$ lookups with a lock-free doubly-linked list or approximate LRU queue for eviction ordering.",
+        "Utilizes atomic node-access-reordering to update recency flags without blocking concurrent read threads.",
+        "Appplies hazard pointers to safely manage memory reclamation and prevent the ABA problem during node eviction and re-linking.",
+        "Handles capacity overflows by safely coordinating concurrent evictions via atomic state transitions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic update of cache node pointers during a lock-free access operation",
+        "correct": "bool update_recency(std::atomic<Node*>& head, Node* target) { Node* current = head.load(); do { target->next = current; } while(!head.compare_exchange_weak(current, target)); return true; }",
+        "wrong": "bool update_recency(Node*& head, Node* target) { mutex.lock(); target->next = head; head = target; mutex.unlock(); return true; }"
+      },
+      "common_mistakes": [
+        "Using traditional mutexes for LRU list updates, creating lock contention bottlenecks under high read-heavy workloads.",
+        "Neglecting memory reclamation safety, leading to use-after-free bugs when an evicting thread frees a node currently being read by another thread."
+      ],
+      "best_practices": [
+        "Employ hazard pointers or epoch-based memory management to safely defer the deletion of evicted cache nodes.",
+        "Partition hash buckets or use fine-grained atomic states to minimize CAS retry loops under intense multi-core contention."
+      ],
+      "when_to_use": "When building high-throughput, multi-threaded caching layers, web proxy servers, or in-memory key-value stores where latency spikes from global lock contention are unacceptable.",
+      "when_not_to_use": "In single-threaded applications or environments where simpler lock-based caches provide adequate performance without the complexity of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when reordering nodes in a lock-free LRU cache?",
+          "answer": "By using tagged pointers or hazard pointers that incorporate version counters alongside memory addresses in atomic CAS operations."
+        },
+        {
+          "question": "Why is implementing an exact lock-free LRU cache difficult?",
+          "answer": "Because updating the recency of an item requires modifying both its position in the lookup index and its links in the eviction list atomically across multiple threads, creating heavy contention and complex CAS rollback scenarios."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Hash Maps",
+        "Concurrent Queue Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T22:27:49.832272+00:00",
+      "run_number": 2802
     }
   ]
 }
