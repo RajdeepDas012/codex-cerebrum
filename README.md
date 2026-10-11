@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2799** |
-| Last Updated | `2026-10-11T22:18:24.974534+00:00` |
-| Dataset Size | `2799 entries` |
+| Total Topics Learned | **2800** |
+| Last Updated | `2026-10-11T22:21:33.314742+00:00` |
+| Dataset Size | `2800 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1723 |
+| data-structures | 1724 |
 | trading-strategies | 228 |
 | technical-analysis | 147 |
 | algorithms | 144 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value indexing and multi-core immutable collection transformations in real-time distributed state stores and concurrent functional programming platforms`
 - `Implementation of a lock-free thread-safe concurrent Persistent Map using atomic structural-sharing and root-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable state versioning and multi-core functional data transformations in real-time event-sourcing engines and concurrent state-management platforms`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-descriptor-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core distributed deduplication in real-time caching systems and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-coordination CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core transactional record storage in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and counter-matrix-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core real-time telemetry analysis in distributed network monitoring platforms and concurrent event-streaming analytics engines`
-- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and forward-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core concurrent map operations in real-time in-memory databases and concurrent caching systems`
 
 <!-- STATS_END -->
 

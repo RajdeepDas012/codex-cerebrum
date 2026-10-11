@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2799,
-    "last_updated": "2026-10-11T22:18:24.974534+00:00",
-    "total_topics_learned": 2799
+    "total_runs": 2800,
+    "last_updated": "2026-10-11T22:21:33.314742+00:00",
+    "total_topics_learned": 2800
   },
   "entries": [
     {
@@ -133409,6 +133409,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T22:18:24.974512+00:00",
       "run_number": 2799
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-expansion and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput persistent key-value indexing and multi-core immutable collection transformations in real-time distributed state stores and concurrent functional programming platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Hash Array Mapped Trie (HAMT) is a specialized prefix tree that balances hash-based lookup performance with structural sharing, enabling lock-free thread safety via atomic Compare-And-Swap (CAS) primitives and hazard pointers. It facilitates high-throughput, non-blocking persistent key-value indexing and immutable state updates across multi-core systems.",
+      "key_points": [
+        "Utilizes multi-way branching based on hash chunks (e.g., 5 bits per level) to maintain a shallow tree depth and high cache locality.",
+        "Employs atomic node expansion and pointer swapping to ensure thread-safe structural mutations without locking overhead.",
+        "Integrates hazard pointers to safely manage memory reclamation of discarded sub-nodes in a lock-free environment.",
+        "Supports persistent structural sharing, allowing multiple concurrent snapshots or versions of the data structure to coexist efficiently."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates conceptual atomic pointer swapping and hazard pointer protection during a HAMT node insertion.",
+        "correct": "class HazardPointerManager:\n    def protect(self, pointer): pass\n    def retire(self, pointer): pass\n\nclass HAMTNode:\n    def __init__(self, bitmap=0, children=None):\n        self.bitmap = bitmap\n        self.children = children or []\n\ndef atomic_insert(root_ref, key_hash, value, hp_manager):\n    while True:\n        current_root = root_ref.get()\n        hp_manager.protect(current_root)\n        if root_ref.get() != current_root:\n            continue\n        new_root = clone_and_insert(current_root, key_hash, value, level=0)\n        if root_ref.compare_and_set(current_root, new_root):\n            hp_manager.retire(current_root)\n            break",
+        "wrong": "def unsafe_insert(root, key_hash, value):\n    root.children.append(value)  # Modifies shared state without CAS or isolation"
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers or epoch-based reclamation, leading to premature memory free and use-after-free race conditions.",
+        "Implementing dense child arrays instead of sparse bitmaps, causing catastrophic memory waste in high-branching nodes."
+      ],
+      "best_practices": [
+        "Use bitwise operations (popcount and bit-shifting) to compute sparse child indices efficiently.",
+        "Keep node modification localized to ensure CAS retry loops execute quickly under high contention."
+      ],
+      "when_to_use": "Ideal for high-concurrency systems requiring persistent key-value indexing, fast point lookups, and memory-efficient immutable snapshots.",
+      "when_not_to_use": "Avoid when workloads are write-heavy with low thread counts, or when range queries require sequential traversal over simple pointer chains.",
+      "interview_questions": [
+        {
+          "question": "How does a Hash Array Mapped Trie (HAMT) achieve space efficiency for sparse nodes?",
+          "answer": "It uses a bitmap to indicate which child slots are present, storing only active children in a compressed array rather than allocating fixed-size arrays for every branch."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free HAMT?",
+          "answer": "Hazard pointers protect nodes currently being traversed by reader threads from being prematurely reclaimed or freed by writer threads performing structural CAS updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointers and Memory Reclamation",
+        "Persistent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-11T22:21:33.314720+00:00",
+      "run_number": 2800
     }
   ]
 }
