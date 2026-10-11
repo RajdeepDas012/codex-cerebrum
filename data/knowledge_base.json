@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2751,
-    "last_updated": "2026-10-11T05:33:08.954495+00:00",
-    "total_topics_learned": 2751
+    "total_runs": 2752,
+    "last_updated": "2026-10-11T05:36:18.040870+00:00",
+    "total_topics_learned": 2752
   },
   "entries": [
     {
@@ -131133,6 +131133,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-11T05:33:08.954477+00:00",
       "run_number": 2751
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking (SDN) controllers and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Radix Tree (Patricia Trie) that leverages atomic Compare-And-Swap (CAS) operations for child pointer updates and node merging. It utilizes hazard pointers for safe memory reclamation to achieve scalable performance in high-throughput network routing and key-value indexing workloads.",
+      "key_points": [
+        "Employs atomic child-pointer-swapping CAS primitives to manage transitions and insertions without global locks.",
+        "Implements node-merging mechanisms to compact the tree structure atomically during deletions, preventing memory bloat.",
+        "Uses hazard pointers to track thread access to nodes, safely deferring memory reclamation to avoid ABA problems and use-after-free bugs.",
+        "Optimized for high-throughput longest-prefix matching and key-value lookups in multi-core networking and database environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer swapping via CAS for thread-safe Radix Tree node insertion",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t key_char, RadixNode* new_node) {\n    return atomic_compare_exchange_strong(&(parent->children[key_char]), &(parent->children[key_char]), new_node);\n}",
+        "wrong": "bool insert_child_unsafe(RadixNode* parent, uint8_t key_char, RadixNode* new_node) {\n    if (parent->children[key_char] == nullptr) {\n        parent->children[key_char] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers, leading to premature deallocation and use-after-free faults.",
+        "Neglecting the ABA problem during child-pointer updates, which can corrupt concurrent tree modifications."
+      ],
+      "best_practices": [
+        "Protect all traversed nodes in the hazard pointer domain prior to reading child pointers.",
+        "Keep node-merging and splitting logic fine-grained to minimize CAS retry loops under high contention."
+      ],
+      "when_to_use": "Use when building high-performance routing tables, IP prefix matchers, or concurrent in-memory key-value stores requiring frequent reads and updates across many cores.",
+      "when_not_to_use": "Avoid when keys are dense and uniformly distributed integers, where a standard concurrent hash map or array might provide simpler and faster lookups.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, blocking other threads from freeing those specific memory addresses until the reader unpublishes its hazard pointer."
+        },
+        {
+          "question": "Why are standard lock-based Radix Trees inefficient in multi-core SDN controllers?",
+          "answer": "Global or coarse-grained locking introduces high contention and thread serialization during frequent route updates and packet lookups, limiting throughput on multi-core processors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash maps",
+        "Hazard pointer memory management",
+        "Patricia tries and prefix routing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-11T05:36:18.040852+00:00",
+      "run_number": 2752
     }
   ]
 }
