@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2817,
-    "last_updated": "2026-10-12T01:47:30.887450+00:00",
-    "total_topics_learned": 2817
+    "total_runs": 2818,
+    "last_updated": "2026-10-12T01:50:39.334270+00:00",
+    "total_topics_learned": 2818
   },
   "entries": [
     {
@@ -134264,6 +134264,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-12T01:47:30.887429+00:00",
       "run_number": 2817
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Reference-Counted Pointer (Arc) using atomic reference-counter-incrementing and weak-pointer-upgrading CAS primitives alongside epoch-based memory reclamation for high-throughput shared resource management and multi-core memory safety in real-time systems programming platforms and concurrent runtime engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free reference-counted pointer (Arc) that coordinates shared ownership across multiple threads safely without blocking mutexes. It uses atomic compare-and-swap (CAS) operations for reference manipulation and epoch-based memory reclamation to manage object deallocation efficiently under heavy multi-core contention.",
+      "key_points": [
+        "Utilizes atomic primitives (fetch_add, CAS) to manage strong and weak reference counters safely across threads without traditional locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely defer resource deallocation until all accessing threads have exited the active epoch.",
+        "Handles weak-pointer upgrading carefully to prevent race conditions where an object is deallocated midway through an upgrade attempt.",
+        "Ensures memory safety and high throughput in real-time systems programming platforms and concurrent runtime engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic reference counter increment and weak pointer upgrade patterns.",
+        "correct": "#include <atomic>\n\ntemplate<typename T>\nstruct ArcBlock {\n    std::atomic<size> strong_refs;\n    std::atomic<size_t> weak_refs;\n    T* data;\n};",
+        "wrong": "#include <memory>\n// Using non-thread-safe counters in a multi-threaded environment\ntemplate<typename T>\nstruct BadArcBlock {\n    size_t strong_refs;\n    T* data;\n};"
+      },
+      "common_mistakes": [
+        "Failing to separate strong and weak reference counts, leading to premature deallocation when weak references still exist.",
+        "Using standard non-atomic arithmetic for reference count modifications, introducing data races.",
+        "Forgetting to protect against ABA problems during atomic weak-pointer upgrades."
+      ],
+      "best_practices": [
+        "Always pair atomic counter increments with rigorous memory ordering constraints (e.g., acquire-release semantics).",
+        "Leverage epoch-based or hazard-pointer-based reclamation rather than relying solely on garbage collection in systems-level concurrent designs.",
+        "Keep allocation blocks contiguous where possible to improve cache locality for metadata and underlying data."
+      ],
+      "when_to_use": "When building high-throughput concurrent runtimes, systems programming platforms, or shared-state data structures that require safe, lock-free memory sharing across multiple threads.",
+      "when_not_to_use": "In single-threaded applications where simpler, non-atomic smart pointers like std::unique_ptr or standard reference counters have zero overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a race condition when upgrading a weak pointer to a strong pointer in a lock-free Arc?",
+          "answer": "You must use a CAS loop that checks if the strong reference count is greater than zero before atomically incrementing it; if the count is zero, the upgrade fails because the resource has already been dropped."
+        },
+        {
+          "question": "Why is epoch-based memory reclamation preferred over immediate deletion in lock-free reference-counted structures?",
+          "answer": "Epoch-based reclamation prevents use-after-free bugs by deferring the actual memory deallocation until all threads have progressed past a safe epoch barrier, avoiding the overhead and contention of locking mechanisms."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Epoch-based memory reclamation",
+        "Atomic compare-and-swap (CAS) primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-12T01:50:39.334251+00:00",
+      "run_number": 2818
     }
   ]
 }
