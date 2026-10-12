@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2836** |
-| Last Updated | `2026-10-12T18:57:32.647690+00:00` |
-| Dataset Size | `2836 entries` |
+| Total Topics Learned | **2837** |
+| Last Updated | `2026-10-12T19:00:41.616286+00:00` |
+| Dataset Size | `2837 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1751 |
+| data-structures | 1752 |
 | trading-strategies | 228 |
 | algorithms | 150 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based message routing in real-time job execution engines and concurrent distributed task processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic node-versioning and path-copying CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core time-travel analytics in real-time financial trading ledgers and concurrent versioned database engines`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection querying and multi-core ray tracing in real-time rendering engines and concurrent geometric simulation platforms`
 - `Implementation of a lock-free thread-safe concurrent SimHash index using atomic bit-rotation and Hamming-distance-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput near-duplicate document detection and multi-core web crawling deduplication in real-time search engine pipelines and concurrent content moderation platforms`
 - `Implementation of a lock-free thread-safe concurrent Bloom-Cascading Filter using atomic level-shifting and bit-array-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-tier approximate membership testing and multi-core distributed filtering in real-time database query optimization engines and concurrent caching architectures`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic node-splitting and minimum-bounding-rectangle-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial querying and multi-core geographic indexing in real-time geographic information systems and concurrent spatial database engines`
 
 <!-- STATS_END -->
 
