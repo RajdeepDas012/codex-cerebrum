@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2809,
-    "last_updated": "2026-10-12T01:22:20.094461+00:00",
-    "total_topics_learned": 2809
+    "total_runs": 2810,
+    "last_updated": "2026-10-12T01:25:29.142945+00:00",
+    "total_topics_learned": 2810
   },
   "entries": [
     {
@@ -133885,6 +133885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-12T01:22:20.094436+00:00",
       "run_number": 2809
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core distributed deduplication in real-time caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Cuckoo Filter is a high-performance space-efficient probabilistic data structure that supports approximate membership queries, insertions, and deletions. By leveraging atomic bucket-kicking and fingerprint-swapping CAS primitives combined with hazard pointers, it enables multi-core threads to safely manipulate shared filter buckets without mutual exclusion locks.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) operations to insert and relocate fingerprints across alternative hash buckets without blocking.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing and prevent memory leaks under concurrent updates.",
+        "Implements bucket-kicking eviction chains to resolve hash collisions atomically in multi-threaded environments.",
+        "Offers superior space efficiency and deletion support compared to traditional Bloom filters in high-throughput caching systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic fingerprint swapping and hazard pointer registration during concurrent filter insertion.",
+        "correct": "bool ConcurrentCuckooFilter::insert(const std::string& key) {\n    uint32_t fp = fingerprint(key);\n    size_t i1 = hash1(key);\n    size_t i2 = i1 ^ hash(fp);\n    HazardPointerGuard hg;\n    while (true) {\n        if (try_insert_bucket(i1, fp) || try_insert_bucket(i2, fp)) return true;\n        if (relocate_fingerprints(i1, fp)) return true;\n    }\n}",
+        "wrong": "bool ConcurrentCuckooFilter::insert(const std::string& key) {\n    std::lock_guard<std::mutex> lock(mu);\n    // Using a global mutex instead of lock-free atomic CAS operations defeats concurrent scalability\n    return unsafe_insert(key);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently relocated buckets with hazard pointers, leading to use-after-free race conditions.",
+        "Creating infinite loops during the bucket-kicking eviction process when the filter reaches maximum load factor without proper loop bounds or resizing triggers."
+      ],
+      "best_practices": [
+        "Maintain a maximum displacement threshold for eviction chains to prevent thread starvation and excessive latency.",
+        "Keep fingerprints small (e.g., 8 to 16 bits) to maximize cache locality while keeping false positive rates low."
+      ],
+      "when_to_use": "When you need high-throughput, lock-free approximate membership testing with support for deletions and high load factors in multi-threaded systems.",
+      "when_not_to_use": "When zero false positives are required or when memory is extremely constrained and exact lookups are mandatory.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent race conditions when two threads attempt to kick the same fingerprint into alternative buckets simultaneously?",
+          "answer": "By using atomic CAS primitives on the bucket slots to ensure only one thread successfully claims the slot, forcing the other thread to retry or pick a different eviction path."
+        },
+        {
+          "question": "Why use hazard pointers instead of reference counting in a lock-free Cuckoo Filter?",
+          "answer": "Hazard pointers provide a lock-free mechanism for safe memory reclamation without incurring the atomic write overhead and cache-line bouncing associated with shared reference counters."
+        }
+      ],
+      "related_topics": [
+        "Bloom Filters",
+        "Hazard Pointers",
+        "Lock-Free Concurrent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-12T01:25:29.142927+00:00",
+      "run_number": 2810
     }
   ]
 }
