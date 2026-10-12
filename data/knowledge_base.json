@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2833,
-    "last_updated": "2026-10-12T09:39:58.662321+00:00",
-    "total_topics_learned": 2833
+    "total_runs": 2834,
+    "last_updated": "2026-10-12T18:51:13.916590+00:00",
+    "total_topics_learned": 2834
   },
   "entries": [
     {
@@ -135025,6 +135025,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-12T09:39:58.662301+00:00",
       "run_number": 2833
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SimHash index using atomic bit-rotation and Hamming-distance-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput near-duplicate document detection and multi-core web crawling deduplication in real-time search engine pipelines and concurrent content moderation platforms",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced algorithm structures a lock-free SimHash index using atomic primitives and hazard pointers to achieve thread-safe, high-throughput near-duplicate detection. It enables multi-core web crawlers and content moderation systems to identify similar documents concurrently without locking overhead.",
+      "key_points": [
+        "Utilizes atomic bit-rotation and Hamming distance calculations via compare-and-swap (CAS) primitives to safely manage concurrent index updates.",
+        "Employs hazard pointer memory reclamation to securely free deleted index nodes without race conditions or memory corruption.",
+        "Organizes high-dimensional fingerprint blocks into partitioned sub-tables to accelerate bounded-distance lookups.",
+        "Eliminates global lock bottlenecks, ensuring linearizable scaling across multiple CPU cores in distributed ingestion pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic CAS loop for inserting a rotated SimHash block into a concurrent bucket.",
+        "correct": "bool insert_block(std::atomic<Node*>& bucket_head, Node* new_node) {\n    while (true) {\n        Node* old_head = bucket_head.load(std::memory_order_acquire);\n        new_node->next = old_head;\n        if (bucket_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_block(Node*& bucket_head, Node* new_node) {\n    // Missing atomics and CAS loop leads to race conditions and lost updates under concurrency\n    new_node->next = bucket_head;\n    bucket_head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory ordering with CAS operations, leading to stale pointer reads across threads.",
+        "Forgetting to protect node traversal with hazard pointers, resulting in use-after-free bugs during concurrent mutations."
+      ],
+      "best_practices": [
+        "Partition the SimHash space into distinct bit-slices to reduce collision contention and narrow down search bands.",
+        "Always pair memory reclamation schemes like hazard pointers with epoch-based garbage collection safeguards."
+      ],
+      "when_to_use": "Use when building real-time web crawlers or large-scale deduplication engines requiring massive concurrent throughput and low latency.",
+      "when_not_to_use": "Avoid in low-concurrency environments or single-threaded applications where simpler hash sets or standard locks suffice.",
+      "interview_questions": [
+        {
+          "question": "How do atomic bit-rotation and Hamming distance calculations assist in lock-free SimHash indexing?",
+          "answer": "Bit-rotation maps sub-sections of the high-dimensional hash to targeted index buckets, while atomic CAS primitives ensure thread-safe insertions and distance verifications without global locks."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent SimHash index?",
+          "answer": "Hazard pointers safely track references to nodes currently being read by worker threads, preventing them from being reclaimed or freed prematurely by concurrent deletion threads."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "locality-sensitive hashing",
+        "hazard pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-12T18:51:13.916571+00:00",
+      "run_number": 2834
     }
   ]
 }
