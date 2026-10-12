@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2822,
-    "last_updated": "2026-10-12T09:05:11.505061+00:00",
-    "total_topics_learned": 2822
+    "total_runs": 2823,
+    "last_updated": "2026-10-12T09:08:20.926284+00:00",
+    "total_topics_learned": 2823
   },
   "entries": [
     {
@@ -134505,6 +134505,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-12T09:05:11.504993+00:00",
       "run_number": 2822
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile approximation and multi-core stream data summarization in real-time latency monitoring platforms and concurrent distributed telemetry engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent T-Digest data structure using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput, accurate percentile approximation and stream data summarization across multiple cores without lock contention.",
+      "key_points": [
+        "Utilizes atomic centroid-merging and quantile-estimating CAS primitives for lock-free state modifications.",
+        "Employs hazard pointer memory reclamation to ensure safe concurrent node deletion and prevent memory leaks.",
+        "Delivers high-throughput approximate quantiles, making it optimal for latency monitoring and stream telemetry.",
+        "Maintains high accuracy at the extremes of the distribution (p99, p99.9) under heavy multi-threaded write loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic centroid updates using CAS loops and hazard pointers in a concurrent T-Digest.",
+        "correct": "bool update_digest_atomic(std::atomic<Centroid*>& head, double value, double weight) {\n    HazardPointerGuard hg;\n    while (true) {\n        Centroid* old_head = hg.protect(head);\n        Centroid* new_head = merge_or_create(old_head, value, weight);\n        if (head.compare_exchange_weak(old_head, new_head)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_digest_unsafe(Centroid* head, double value) {\n    // Missing synchronization and hazard pointers leads to race conditions and data corruption\n    head->add(value);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect shared centroid nodes with hazard pointers before reading, resulting in use-after-free bugs.",
+        "Using coarse-grained locks instead of atomic CAS operations, which bottlenecks throughput on multi-core systems."
+      ],
+      "best_practices": [
+        "Design compression routines to batch updates locally before merging them globally via atomic primitives.",
+        "Recycle retired hazard pointers efficiently to minimize memory overhead during high-frequency data ingestion."
+      ],
+      "when_to_use": "Use when computing real-time approximate percentiles across vast streams of telemetry data with intense concurrent writes.",
+      "when_not_to_use": "Avoid when exact percentiles are strictly required or when data volumes fit comfortably in a single-threaded sorted array.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during lock-free memory reclamation in a concurrent data structure?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing so that other threads know not to free those memory addresses until the pointers are cleared."
+        },
+        {
+          "question": "Why is a T-Digest preferred over traditional sorting or buffering for computing extreme percentiles on high-throughput streams?",
+          "answer": "A T-Digest compresses the stream into weighted centroids, trading minor accuracy for constant space complexity and high accuracy specifically at the tails (p99, p99.9)."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Streaming Algorithms",
+        "Atomic Compare-And-Swap (CAS)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-12T09:08:20.926262+00:00",
+      "run_number": 2823
     }
   ]
 }
