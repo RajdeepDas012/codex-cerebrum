@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2845,
-    "last_updated": "2026-10-12T19:25:55.973604+00:00",
-    "total_topics_learned": 2845
+    "total_runs": 2846,
+    "last_updated": "2026-10-12T19:29:05.348532+00:00",
+    "total_topics_learned": 2846
   },
   "entries": [
     {
@@ -135598,6 +135598,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-12T19:25:55.973586+00:00",
       "run_number": 2845
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core distributed caching in real-time key-value storage engines and concurrent database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a concurrent, lock-free Bloom Filter tailored for high-throughput multi-core systems. By leveraging atomic bit-setting, word-cascading Compare-And-Swap (CAS) operations, and hazard pointer memory reclamation, it enables safe and scalable approximate membership testing without global locking overhead.",
+      "key_points": [
+        "Utilizes atomic bitwise operations to set multiple hash indices concurrently without locking whole data structures.",
+        "Employs word-cascading CAS primitives to manage state transitions and updates across underlying memory words safely.",
+        "Integrates hazard pointers to manage safe memory reclamation and prevent premature deallocation in concurrent environments.",
+        "Delivers high-throughput approximate membership testing ideal for multi-core distributed caches and real-time key-value storage engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent bit manipulation using atomic operations for a lock-free filter word update.",
+        "correct": "import threading\n\nclass LockFreeBloomWord:\n    def __init__(self):\n        self.word = 0\n        self.lock = threading.Lock()\n\n    def atomic_set_bit(self, bit_index):\n        mask = 1 << bit_index\n        while True:\n            current = self.word\n            if (current & mask) == mask:\n                return False\n            new_val = current | mask\n            if self._cas(current, new_val):\n                return True\n\n    def _cas(self, expected, desired):\n        with self.lock:\n            if self.word == expected:\n                self.word = desired\n                return True\n            return False",
+        "wrong": "class UnsafeBloomWord:\n    def __init__(self):\n        self.word = 0\n\n    def set_bit(self, bit_index):\n        self.word |= (1 << bit_index)"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations for bit arrays, leading to lost updates under high concurrency.",
+        "Failing to handle memory reclamation correctly, which can cause use-after-free bugs when resizing or reallocating the underlying filter structures."
+      ],
+      "best_practices": [
+        "Align filter word boundaries to cache lines to prevent false sharing across multi-core processors.",
+        "Use hardware-accelerated atomic primitives (such as GCC/Clang __atomic builtins or C++ std::atomic) rather than mutex emulation where possible.",
+        "Carefully bound hash function computations to avoid CPU bottlenecks during high-frequency membership checks."
+      ],
+      "when_to_use": "Use when building high-throughput multi-core key-value stores or distributed caches requiring rapid approximate membership queries with zero locking contention.",
+      "when_not_to_use": "Avoid when exact set membership is mandatory or when memory constraints require dynamic deletions without rebuilding the entire data structure.",
+      "interview_questions": [
+        {
+          "question": "How do you safely update bits in a shared Bloom filter word across multiple threads without using global mutexes?",
+          "answer": "By using atomic compare-and-swap (CAS) loops that read the current word state, compute the new bitmask, and atomically swap it in if no other thread has modified it."
+        },
+        {
+          "question": "What is the role of hazard pointers in a lock-free data structure implementation?",
+          "answer": "Hazard pointers provide a lock-free mechanism for safe memory reclamation, ensuring that threads announce which nodes or structures they are actively accessing before memory can be safely freed."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent cuckoo filter",
+        "hazard pointer memory management",
+        "atomic bitwise primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-12T19:29:05.348510+00:00",
+      "run_number": 2846
     }
   ]
 }
