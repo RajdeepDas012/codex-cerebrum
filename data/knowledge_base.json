@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2841,
-    "last_updated": "2026-10-12T19:13:18.737845+00:00",
-    "total_topics_learned": 2841
+    "total_runs": 2842,
+    "last_updated": "2026-10-12T19:16:28.566619+00:00",
+    "total_topics_learned": 2842
   },
   "entries": [
     {
@@ -135408,6 +135408,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-12T19:13:18.737824+00:00",
       "run_number": 2841
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation and bit-wise-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent router forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Radix Tree utilizing atomic compare-and-swap (CAS) operations for node allocation and bit-wise traversal, combined with hazard pointers to safely manage memory reclamation. It enables high-throughput, conflict-free prefix lookups essential for multi-core software-defined networking and real-time routing engines.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node insertion and bit-wise branching without global synchronization bottlenecks.",
+        "Employs hazard pointers to track threads actively accessing nodes, preventing premature memory reclamation and elimination of use-after-free race conditions.",
+        "Optimizes IP routing lookups by traversing compact paths based on binary prefixes, maximizing cache locality and throughput.",
+        "Ensures thread safety during concurrent tree mutations like node splitting and child pointer updates under high contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a lock-free node CAS operation and hazard pointer protection during radix tree traversal.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    RadixNode* expected = nullptr;\n    return parent->children[bit].compare_exchange_strong(expected, new_node);\n}",
+        "wrong": "RadixNode* child = parent->children[bit];\nif (child == nullptr) {\n    parent->children[bit] = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to memory corruption when another thread concurrently deletes or splits a node.",
+        "Relying on locks or mutexes inside the critical path of packet forwarding or routing lookup routines, severely limiting multi-core scaling."
+      ],
+      "best_practices": [
+        "Retire nodes safely using a deferred reclamation mechanism driven by hazard pointer epoch counts.",
+        "Minimize atomic retry loops by designing fine-grained bit-wise CAS paths for child insertions and path compressions."
+      ],
+      "when_to_use": "Ideal for high-performance network routing engines, software-defined networking (SDN) data planes, and multi-threaded systems requiring concurrent longest-prefix-match operations.",
+      "when_not_to_use": "Avoid when memory usage is tightly constrained and simpler lock-based tries or hash maps suffice without concurrency demands.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors in a lock-free radix tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing so that reclaiming threads know not to free those memory addresses until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why are bit-wise CAS primitives required instead of standard locks when updating radix tree child pointers?",
+          "answer": "Bit-wise CAS primitives enable lock-free progress guarantees (at least lock-free or obstruction-free), eliminating thread blocking, reducing latency spikes, and maximizing throughput on multi-core routing hardware."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Hash Maps",
+        "Longest Prefix Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-12T19:16:28.566600+00:00",
+      "run_number": 2842
     }
   ]
 }

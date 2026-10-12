@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2841** |
-| Last Updated | `2026-10-12T19:13:18.737845+00:00` |
-| Dataset Size | `2841 entries` |
+| Total Topics Learned | **2842** |
+| Last Updated | `2026-10-12T19:16:28.566619+00:00` |
+| Dataset Size | `2842 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1756 |
+| data-structures | 1757 |
 | trading-strategies | 228 |
 | algorithms | 150 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation and bit-wise-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent router forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and fingerprint-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput deletion-supported approximate membership testing and multi-core distributed caching in real-time key-value storage engines and concurrent database systems`
 - `Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and slot-ownership-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core circular queueing in real-time trading systems and concurrent network packet processing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic sequence analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core stream analytics in real-time telemetry processing pipelines and concurrent database engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based message routing in real-time job execution engines and concurrent distributed task processing platforms`
 
 <!-- STATS_END -->
 
