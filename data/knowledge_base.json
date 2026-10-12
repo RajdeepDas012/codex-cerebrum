@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2810,
-    "last_updated": "2026-10-12T01:25:29.142945+00:00",
-    "total_topics_learned": 2810
+    "total_runs": 2811,
+    "last_updated": "2026-10-12T01:28:38.093702+00:00",
+    "total_topics_learned": 2811
   },
   "entries": [
     {
@@ -133932,6 +133932,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-12T01:25:29.142927+00:00",
       "run_number": 2810
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Trie using atomic node-allocation and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix lookup and multi-core string routing in real-time DNS resolution servers and concurrent packet classification engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Radix Trie utilizes atomic Compare-And-Swap (CAS) operations for node allocation and child pointer updates, paired with hazard pointers, to enable lock-free, high-throughput prefix lookup and string routing. This architecture prevents race conditions during concurrent multi-core modifications, making it essential for real-time DNS servers and packet classifiers.",
+      "key_points": [
+        "Utilizes atomic node-allocation and child-pointer-updating CAS primitives to safely insert and modify prefix paths without locks.",
+        "Employs hazard pointer memory reclamation to securely manage node deletions and prevent ABA or use-after-free bugs in concurrent environments.",
+        "Achieves high-throughput prefix lookups and string routing suited for multi-core packet classification and DNS resolution.",
+        "Compacts single-child branches to minimize depth and reduce memory overhead during path compression."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual demonstration of atomic node updates and hazard pointer protection during child insertion in a radix trie",
+        "correct": "class RadixNode:\n    def __init__(self, prefix):\n        self.prefix = prefix\n        self.children = AtomicReference({})\n        self.hazard_protected = False\n\ndef insert_child(parent, key_part, new_node):\n    while True:\n        current_children = parent.children.get()\n        if key_part in current_children:\n            return current_children[key_part]\n        new_children = dict(current_children)\n        new_children[key_part] = new_node\n        if parent.children.compare_and_set(current_children, new_children):\n            return new_node",
+        "wrong": "def unsafe_insert(parent, key_part, new_node):\n    parent.children[key_part] = new_node"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, resulting in use-after-free errors when another thread deletes a node.",
+        "Neglecting the ABA problem during child pointer updates, which can corrupt the trie structure under high contention."
+      ],
+      "best_practices": [
+        "Always register active nodes in the hazard pointer domain before reading child pointers in concurrent threads.",
+        "Reuse unlinked nodes or defer their final reclamation until all threads have dropped their hazard references."
+      ],
+      "when_to_use": "Use when building multi-threaded routing tables, DNS resolvers, or IP packet classifiers that require extremely high read and write concurrency on string prefixes.",
+      "when_not_to_use": "Avoid when keys do not share common prefixes or when standard lock-based maps provide sufficient performance with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives ensure thread-safety during child pointer updates in a lock-free Radix Trie?",
+          "answer": "CAS allows a thread to update a child pointer only if the pointer has not changed since it was last read, retrying the operation if a concurrent modification occurred."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing nodes in a lock-free Radix Trie?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while other threads are still actively traversing or reading them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Graphs",
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-12T01:28:38.093683+00:00",
+      "run_number": 2811
     }
   ]
 }
