@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2867** |
-| Last Updated | `2026-10-13T09:22:42.393172+00:00` |
-| Dataset Size | `2867 entries` |
+| Total Topics Learned | **2868** |
+| Last Updated | `2026-10-13T09:26:29.822808+00:00` |
+| Dataset Size | `2868 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1775 |
+| data-structures | 1776 |
 | trading-strategies | 228 |
 | algorithms | 154 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core asynchronous event processing in real-time game simulation loops and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-sum-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query updates and multi-core interval calculations in real-time financial analytics engines and concurrent telemetry processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Vector Clock using atomic version-incrementing and vector-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput causal ordering and multi-core event synchronization in real-time distributed messaging platforms and concurrent replicated state machine engines`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core request throttling in real-time API gateway services and concurrent microservice routing architectures`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-connecting CAS primitives alongside hazard pointer memory reclamation for high-throughput exact string matching and multi-core pattern searching in real-time bioinformatics sequence alignment platforms and concurrent text analytics engines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems and concurrent location-based services databases`
 
 <!-- STATS_END -->
 
