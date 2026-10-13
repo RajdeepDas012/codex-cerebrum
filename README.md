@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2884** |
-| Last Updated | `2026-10-13T18:04:47.278671+00:00` |
-| Dataset Size | `2884 entries` |
+| Total Topics Learned | **2885** |
+| Last Updated | `2026-10-13T18:11:43.336735+00:00` |
+| Dataset Size | `2885 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1787 |
+| data-structures | 1788 |
 | trading-strategies | 228 |
 | algorithms | 158 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-structuring and node-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput range-minimum querying and multi-core spatial-temporal indexing in real-time geographic database engines and concurrent event-driven routing systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and matrix-min-computing CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitters estimation and multi-core stream frequency querying in real-time network traffic monitoring platforms and concurrent telemetry analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-linking and peer-node-joining CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer searching and multi-core distributed range queries in real-time decentralized storage networks and concurrent distributed hash table engines`
 - `Implementation of a lock-free thread-safe concurrent Lock-Free LCRQ (Linked Concurrent Ring Queue) using atomic tail-advancing and head-reclaiming CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer message passing and low-latency task queue dispatching in real-time asynchronous execution runtimes and concurrent event-driven server engines`
 - `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-decrementing and timestamp-refilling CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic control and multi-core request shaping in real-time API rate-limiting gateways and concurrent microservices infrastructure`
-- `Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-marking and prime-marking CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core divisibility filtering in real-time cryptographic key generation platforms and concurrent number-theoretic computation engines`
 
 <!-- STATS_END -->
 
