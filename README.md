@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2869** |
-| Last Updated | `2026-10-13T09:29:38.035725+00:00` |
-| Dataset Size | `2869 entries` |
+| Total Topics Learned | **2870** |
+| Last Updated | `2026-10-13T09:32:47.495554+00:00` |
+| Dataset Size | `2870 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1776 |
+| data-structures | 1777 |
 | trading-strategies | 228 |
 | algorithms | 155 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core spatial partitioning in real-time computer graphics rendering engines and concurrent physics simulation pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-computing CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count analysis in real-time web analytics platforms and concurrent data streaming engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core asynchronous event processing in real-time game simulation loops and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-sum-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query updates and multi-core interval calculations in real-time financial analytics engines and concurrent telemetry processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Vector Clock using atomic version-incrementing and vector-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput causal ordering and multi-core event synchronization in real-time distributed messaging platforms and concurrent replicated state machine engines`
-- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core request throttling in real-time API gateway services and concurrent microservice routing architectures`
 
 <!-- STATS_END -->
 
