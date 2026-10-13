@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2901,
-    "last_updated": "2026-10-13T23:10:28.063236+00:00",
-    "total_topics_learned": 2901
+    "total_runs": 2902,
+    "last_updated": "2026-10-13T23:13:37.271853+00:00",
+    "total_topics_learned": 2902
   },
   "entries": [
     {
@@ -138262,6 +138262,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T23:10:28.063217+00:00",
       "run_number": 2901
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-bubbling and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core event-driven execution in real-time job processing engines and concurrent task dispatching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure builds a lock-free concurrent priority queue utilizing atomic heap-node-bubbling and index-swapping Compare-And-Swap (CAS) primitives combined with hazard pointer memory management. It ensures high-throughput, thread-safe task scheduling and event-driven execution across multiple cores without incurring the contention bottlenecks of traditional locks.",
+      "key_points": [
+        "Utilizes atomic heap-node-bubbling and index-swapping CAS primitives to maintain priority ordering safely under high concurrency.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of active heap nodes by competing threads.",
+        "Eliminates traditional mutex locks, significantly reducing thread contention and latency overhead in multi-core systems.",
+        "Optimized for real-time job processing engines and high-throughput concurrent task dispatching systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe atomic index swapping and hazard pointer protection during priority queue node bubbling.",
+        "correct": "bool bubble_up(std::atomic<Node*>& heap_node, HazardPointer& hp) {\n    Node* current = hp.protect(heap_node);\n    while (current->parent && current->priority > current->parent->priority) {\n        if (compare_and_swap_nodes(current->parent, current)) {\n            break;\n        }\n        current = hp.protect(heap_node);\n    }\n    return true;\n}",
+        "wrong": "bool unsafe_bubble_up(Node* node) {\n    while (node->parent && node->priority > node->parent->priority) {\n        std::swap(node->priority, node->parent->priority);\n        node = node->parent;\n    }\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing parent-child relationships, leading to use-after-free bugs.",
+        "Relying on standard locking mechanisms inside concurrent CAS loops, which reintroduces bottlenecks."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any dynamically allocated nodes accessed during concurrent restructuring steps.",
+        "Keep CAS retry loops tight and back off appropriately to prevent CPU thrashing under extreme contention."
+      ],
+      "when_to_use": "Use when building high-throughput real-time task schedulers, event-driven execution loops, or job dispatching platforms requiring lock-free multi-core priority management.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where the complexity of hazard pointers and lock-free CAS primitives outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do atomic heap-node-bubbling and index-swapping CAS primitives maintain thread safety without locks?",
+          "answer": "They ensure that state transitions occur atomically; if another thread modifies the heap concurrently, the CAS fails, prompting a safe retry loop."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free priority queue?",
+          "answer": "Hazard pointers safely track nodes currently accessed by threads, preventing memory reclaimers from freeing nodes while other threads are still performing operations on them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic CAS Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T23:13:37.271835+00:00",
+      "run_number": 2902
     }
   ]
 }
