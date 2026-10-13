@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2870,
-    "last_updated": "2026-10-13T09:32:47.495554+00:00",
-    "total_topics_learned": 2870
+    "total_runs": 2871,
+    "last_updated": "2026-10-13T09:35:56.523586+00:00",
+    "total_topics_learned": 2871
   },
   "entries": [
     {
@@ -136790,6 +136790,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T09:32:47.495530+00:00",
       "run_number": 2870
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Buffer using atomic ring-buffer-slot-claiming and sequence-number-validating CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread communication and multi-core data streaming in real-time audio processing pipelines and concurrent logging frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance concurrent bounded buffer without traditional locks, utilizing atomic Compare-And-Swap (CAS) primitives and ring-buffer slot sequence validation. It matters for achieving ultra-low-latency inter-thread messaging and stream processing where thread blocking must be entirely avoided.",
+      "key_points": [
+        "Utilizes atomic ring-buffer-slot-claiming to safely coordinate concurrent producer and consumer indexes without mutex contention.",
+        "Employs sequence-number-validating CAS primitives to ensure data items are neither overwritten before being consumed nor read before being fully written.",
+        "Integrates hazard pointer memory reclamation to securely manage dynamically allocated nodes or wrapper structures without garbage collection overhead.",
+        "Guarantees linearizability and high throughput for multi-core data streaming scenarios such as real-time audio and logging."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual atomic sequence validation logic for a lock-free bounded buffer slot.",
+        "correct": "class BufferSlot:\n    def __init__(self, sequence=0):\n        self.sequence = AtomicInteger(sequence)\n        self.data = None\n\ndef claim_slot(buffer, tail_pos, mask):\n    while True:\n        index = tail_pos.get()\n        slot = buffer[index & mask]\n        seq = slot.sequence.get()\n        diff = seq - index\n        if diff == 0:\n            if tail_pos.compare_and_set(index, index + 1):\n                return slot, index\n        elif diff < 0:\n            return None, -1",
+        "wrong": "def claim_slot_bad(buffer, tail_pos):\n    # Missing atomic sequence validation leads to race conditions and data corruption\n    index = tail_pos.value\n    slot = buffer[index]\n    tail_pos.value += 1\n    return slot"
+      },
+      "common_mistakes": [
+        "Failing to check sequence number differences correctly, leading to ABA problems or overwriting unconsumed slots.",
+        "Ignoring memory ordering constraints (e.g., sequentially consistent vs. acquire-release semantics) when loading and storing atomic sequence numbers."
+      ],
+      "best_practices": [
+        "Pad atomic sequence variables to prevent false sharing across CPU cache lines on multi-core architectures.",
+        "Combine bounded buffer arrays with hazard pointers or epoch-based reclamation if elements require dynamic resizing or reference tracking."
+      ],
+      "when_to_use": "Use when implementing high-throughput inter-thread queues, real-time data streaming pipes, or lock-free asynchronous loggers requiring bounded memory.",
+      "when_not_to_use": "Avoid when data items exceed fixed-size memory pools or when simple lock-based synchronization provides sufficient performance without added implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do sequence numbers prevent producers from overwriting unconsumed slots in a lock-free ring buffer?",
+          "answer": "Each slot maintains a sequence number. A producer checks if the slot's sequence number equals the expected tail index; if it lags behind, the slot is still occupied by unread data, forcing the producer to retry or spin."
+        },
+        {
+          "question": "Why are standard mutexes avoided in real-time audio processing ring buffers?",
+          "answer": "Mutexes can introduce unpredictable OS-level thread context switches and priority inversions, causing audio dropouts and latency spikes that lock-free atomic designs eliminate."
+        }
+      ],
+      "related_topics": [
+        "lock-free priority queue",
+        "hazard pointer memory management",
+        "multi-producer multi-consumer ring buffers"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-13T09:35:56.523564+00:00",
+      "run_number": 2871
     }
   ]
 }
