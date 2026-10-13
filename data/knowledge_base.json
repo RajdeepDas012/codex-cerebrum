@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2857,
-    "last_updated": "2026-10-13T01:37:42.932236+00:00",
-    "total_topics_learned": 2857
+    "total_runs": 2858,
+    "last_updated": "2026-10-13T01:40:51.694292+00:00",
+    "total_topics_learned": 2858
   },
   "entries": [
     {
@@ -136175,6 +136175,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T01:37:42.932214+00:00",
       "run_number": 2857
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core transactional map indexing in real-time in-memory databases and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a lock-free concurrent Skip List using atomic primitives like Compare-And-Swap (CAS) and hazard pointers for safe memory management. It enables high-throughput, multi-core ordered key-value operations without traditional lock contention, making it ideal for scalable in-memory databases.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-linking and node-tower-splicing CAS primitives to safely modify multi-level node pointers without locks.",
+        "Employs hazard pointers for safe memory reclamation, preventing ABA problems and premature deletion of nodes actively accessed by other threads.",
+        "Provides probabilistic logarithmic search, insertion, and deletion performance comparable to balanced trees while scaling efficiently across multiple CPU cores.",
+        "Maintains sorted key order across multiple levels of linked forward towers to allow rapid traversal and range queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a lock-free skip list node and atomic pointer updates using CAS.",
+        "correct": "struct Node { int key; std::atomic<Node*> next; };\nbool insert(std::atomic<Node*>& head, Node* newNode) {\n    Node* oldHead = head.load();\n    newNode->next.store(oldHead);\n    return head.compare_exchange_weak(oldHead, newNode);\n}",
+        "wrong": "bool insert(Node*& head, Node* newNode) {\n    newNode->next = head;\n    head = newNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to handle the ABA problem when performing lock-free pointer updates, leading to memory corruption.",
+        "Failing to safely defer memory reclamation via hazard pointers or epoch-based garbage collection, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based reclamation to safely manage the lifecycle of deleted tower nodes.",
+        "Ensure memory ordering constraints (e.g., acquire-release semantics) are correctly specified on all atomic operations to guarantee visibility across cores."
+      ],
+      "when_to_use": "Use when building high-performance in-memory key-value stores or concurrent maps that require frequent ordered range queries under heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where simpler locks or standard library containers provide lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free skip list when multiple threads might be traversing a node that another thread is unlinking?",
+          "answer": "You use hazard pointers or epoch-based memory reclamation to register active references to nodes before traversing them, ensuring they are only freed after all threads have dropped their hazard references."
+        },
+        {
+          "question": "What is the role of atomic Compare-And-Swap (CAS) primitives in maintaining node towers in a concurrent skip list?",
+          "answer": "CAS primitives ensure that pointer updates—such as splicing a new node tower into multiple forward levels—succeed atomically only if the expected previous pointer has not been changed by another thread."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B+ Trees",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Atomic CAS primitives and Memory Ordering"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T01:40:51.694271+00:00",
+      "run_number": 2858
     }
   ]
 }
