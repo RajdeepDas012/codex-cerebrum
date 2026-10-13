@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2848,
-    "last_updated": "2026-10-12T19:35:24.418235+00:00",
-    "total_topics_learned": 2848
+    "total_runs": 2849,
+    "last_updated": "2026-10-13T01:11:32.602374+00:00",
+    "total_topics_learned": 2849
   },
   "entries": [
     {
@@ -135742,6 +135742,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-12T19:35:24.418217+00:00",
       "run_number": 2848
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-incrementing and state-flag-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput thread-pool task distribution and multi-core producer-consumer coordination in real-time asynchronous execution engines and concurrent task dispatching platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a high-performance, lock-free bounded queue using atomic Compare-And-Swap (CAS) operations for queue indexing and hazard pointers for safe memory management. It enables high-throughput, contention-free producer-consumer coordination essential for multi-threaded task dispatching and asynchronous execution platforms.",
+      "key_points": [
+        "Utilizes atomic head and tail pointers to allow concurrent enqueue and dequeue operations without mutex contention.",
+        "Employs circular array buffers with state flags or sequence numbers to detect full and empty conditions safely.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely manage node reuse.",
+        "Guarantees linearizability and progress guarantees (lock-free or wait-free) under heavy multi-core concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic slot indexing and state checking for a lock-free bounded queue enqueue operation.",
+        "correct": "bool enqueue(T item) {\n    Node* current_tail;\n    while (true) {\n        current_tail = tail.load(std::memory_order_relaxed);\n        // Check sequence and slot state via CAS\n        if (CAS_slot_update(current_tail, item)) break;\n    }\n    return true;\n}",
+        "wrong": "bool enqueue(T item) {\n    std::lock_guard<std::mutex> lock(mtx);\n    queue.push(item);\n}\n// Using mutex locks defeats the purpose of a lock-free data structure."
+      },
+      "common_mistakes": [
+        "Failing to handle memory ordering correctly, leading to race conditions and stale reads across threads.",
+        "Neglecting the ABA problem during head and tail pointer increments, which can corrupt queue state."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for internal index increments where strict synchronization is handled by atomic state flags.",
+        "Align atomic variables to cache line boundaries to prevent false sharing across multiple producer and consumer cores."
+      ],
+      "when_to_use": "Use when building high-performance thread pools, message passing frameworks, or task dispatchers requiring ultra-low latency and minimal thread contention.",
+      "when_not_to_use": "Avoid when memory usage must be strictly minimized, or when unbounded capacity queues are necessary without fixed sizing constraints.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating head and tail pointers in a lock-free queue?",
+          "answer": "By using sequence numbers combined with pointers in a double-word CAS (DCAS) or tagging the pointer with an incrementing operation count."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in real-time concurrent queues?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Memory Reclamation",
+        "Atomic Operations and Memory Ordering",
+        "Producer-Consumer Synchronization Patterns"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-13T01:11:32.602354+00:00",
+      "run_number": 2849
     }
   ]
 }
