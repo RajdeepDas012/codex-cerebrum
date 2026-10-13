@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2877,
-    "last_updated": "2026-10-13T09:54:49.963872+00:00",
-    "total_topics_learned": 2877
+    "total_runs": 2878,
+    "last_updated": "2026-10-13T09:57:59.669851+00:00",
+    "total_topics_learned": 2878
   },
   "entries": [
     {
@@ -137121,6 +137121,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-13T09:54:49.963850+00:00",
       "run_number": 2877
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core connected components analysis in real-time image processing pipelines and concurrent graph algorithms engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Disjoint Set data structure that supports thread-safe union and find operations using lock-free Compare-And-Swap (CAS) primitives and hazard pointers. It is critical for achieving low-latency, scalable connected components analysis and equivalence class grouping across multiple CPU cores without global locks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free multi-threaded node pointer updates during union and find operations.",
+        "Implements atomic path-compression to flatten tree structures during traversals and minimize contention.",
+        "Employs rank-merging techniques atomically to keep trees balanced and maintain optimal asymptotic complexity.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation without suffering from the ABA problem or premature deallocation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic Find operation with path compression using CAS primitives and hazard pointers.",
+        "correct": "Node* find(Node* node, HazardPointerContext& hp) {\n    while (true) {\n        Node* current = hp.protect(node);\n        Node* parent = current->parent.load(std::memory_order_acquire);\n        if (parent == current) return current;\n        Node* grand_parent = hp.protect2(parent->parent.load(std::memory_order_acquire));\n        current->parent.compare_exchange_weak(parent, grand_parent, std::memory_order_release);\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic update causing race conditions\n}"
+      },
+      "common_mistakes": [
+        "Performing non-atomic pointer assignments during path compression which corrupts tree invariants under high concurrency.",
+        "Failing to protect intermediate nodes with hazard pointers, leading to use-after-free bugs when concurrent threads modify the tree."
+      ],
+      "best_practices": [
+        "Always wrap dynamic traversal pointers in thread-local hazard pointer records before reading child or parent references.",
+        "Use weak CAS loops combined with exponential backoff or yielding to reduce CPU cache thrashing during high contention union operations."
+      ],
+      "when_to_use": "Use when multiple threads concurrently query and update disjoint sets at high frequencies, such as in real-time image segmentation or parallel graph connectivity algorithms.",
+      "when_not_to_use": "Avoid in single-threaded environments or lightweight applications where standard sequential Union-Find with path compression provides lower overhead and simpler code.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates during lock-free rank merging?",
+          "answer": "By using tagged pointers that combine the memory address with a monotonically increasing modification counter, or by utilizing hazard pointers combined with epoch-based memory reclamation."
+        },
+        {
+          "question": "Why is standard recursive path-compression dangerous in a lock-free concurrent Disjoint Set implementation?",
+          "answer": "Because concurrent threads modifying parent pointers during the recursion unwinding phase can cause infinite loops, missed updates, or race conditions that violate tree invariants."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Graph Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T09:57:59.669828+00:00",
+      "run_number": 2878
     }
   ]
 }
