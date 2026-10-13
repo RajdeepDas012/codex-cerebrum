@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2860** |
-| Last Updated | `2026-10-13T01:47:08.521727+00:00` |
-| Dataset Size | `2860 entries` |
+| Total Topics Learned | **2861** |
+| Last Updated | `2026-10-13T01:50:17.551696+00:00` |
+| Dataset Size | `2861 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1770 |
+| data-structures | 1771 |
 | trading-strategies | 228 |
 | algorithms | 153 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and node-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range queries and multi-core database indexing in real-time transaction processing engines and concurrent storage systems`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-marker-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput memory-efficient approximate membership testing and multi-core distributed caching in real-time key-value storage engines and concurrent database systems`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-slicing and rank-select-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct text indexing and multi-core compressed data retrieval in real-time genome analysis platforms and concurrent column-oriented database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core transactional map indexing in real-time in-memory databases and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic leaf-hashing and branch-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput incremental data verification and multi-core cryptographic proof generation in real-time distributed storage systems and concurrent cloud backup architectures`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index management in real-time relational database systems and concurrent storage engines`
 
 <!-- STATS_END -->
 
