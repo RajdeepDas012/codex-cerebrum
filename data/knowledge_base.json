@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2861,
-    "last_updated": "2026-10-13T01:50:17.551696+00:00",
-    "total_topics_learned": 2861
+    "total_runs": 2862,
+    "last_updated": "2026-10-13T01:53:26.128122+00:00",
+    "total_topics_learned": 2862
   },
   "entries": [
     {
@@ -136364,6 +136364,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T01:50:17.551674+00:00",
       "run_number": 2861
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile approximation and multi-core stream telemetry analysis in real-time performance monitoring platforms and concurrent distributed metrics aggregation engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent T-Digest data structure optimized for accurate percentile approximation in high-throughput streaming environments. By leveraging atomic compare-and-swap (CAS) primitives for centroid-merging and quantile-estimating alongside hazard pointers for safe memory reclamation, it enables multi-core distributed telemetry systems to aggregate performance metrics without lock contention.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to execute thread-safe centroid insertions and merges without blocking concurrent streams.",
+        "Employs hazard pointers to safely manage memory reclamation for dynamically changing centroid structures in lock-free streams.",
+        "Maintains higher accuracy at extreme tails (e.g., p99, p999) compared to traditional sketches by clustering centroids dynamically.",
+        "Enables linear scalability across multi-core architectures for real-time distributed performance monitoring and metrics aggregation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic centroid merging via CAS primitives for a concurrent T-Digest node.",
+        "correct": "bool update_centroid(std::atomic<Centroid*>& head, Centroid* new_node) {\n    Centroid* old_head = head.load();\n    do {\n        new_node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_node));\n    return true;\n}",
+        "wrong": "Centroid* old_head = head.load();\nhead.store(new_node);\nnew_node->next = old_head;"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically deallocated centroid nodes with hazard pointers, leading to use-after-free bugs in concurrent readers.",
+        "Using global locks for merge operations, which destroys throughput under high-contention multi-core workloads.",
+        "Neglecting scale function adjustments during concurrent centroid merging, leading to skewed quantile estimations."
+      ],
+      "best_practices": [
+        "Isolate thread-local buffer accumulation before batch-merging into the global T-Digest structure to reduce CAS contention.",
+        "Implement robust epoch-based or hazard pointer reclamation cycles to safely purge obsolete compression nodes.",
+        "Tune the compression parameter (delta) carefully to balance memory footprint against tail-latency accuracy."
+      ],
+      "when_to_use": "Use when calculating accurate tail percentiles (p95, p99, p999) over high-throughput, multi-threaded streaming telemetry or distributed monitoring datasets where locks introduce unacceptable latency.",
+      "when_not_to_use": "Avoid when exact percentile calculation over bounded static datasets is required, or when memory overhead constraints strictly preclude maintaining cluster centroid arrays.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives facilitate lock-free centroid updates in a concurrent T-Digest?",
+          "answer": "CAS primitives allow threads to attempt updating the pointer to the centroid list or merging buffer atomically. If another thread modifies the structure concurrently, the CAS fails, and the thread retries with the updated state without acquiring a mutex."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free T-Digest?",
+          "answer": "Hazard pointers protect dynamically reclaimed centroid nodes from being prematurely freed while another thread is reading or merging them, preventing race conditions and use-after-free vulnerabilities without halting execution."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Concurrent Quotient Filters",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-13T01:53:26.128095+00:00",
+      "run_number": 2862
     }
   ]
 }
