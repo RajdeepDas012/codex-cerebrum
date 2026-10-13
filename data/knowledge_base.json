@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2855,
-    "last_updated": "2026-10-13T01:30:49.568520+00:00",
-    "total_topics_learned": 2855
+    "total_runs": 2856,
+    "last_updated": "2026-10-13T01:34:18.558840+00:00",
+    "total_topics_learned": 2856
   },
   "entries": [
     {
@@ -136077,6 +136077,57 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T01:30:49.568498+00:00",
       "run_number": 2855
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index management in real-time relational database systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B+ Tree leverages atomic compare-and-swap (CAS) primitives for node splitting and leaf linking, combined with hazard pointers to guarantee safe memory reclamation during high-throughput parallel execution. This architecture eliminates lock contention, ensuring exceptional scalability for range queries and database index management on multi-core systems.",
+      "key_points": [
+        "Utilizes atomic leaf-linking and node-splitting CAS primitives to safely modify tree structures without coarse-grained locking.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe asynchronous freeing of nodes concurrently accessed by multiple threads.",
+        "Maintains sorted leaf node links enabling efficient, lock-free parallel range scans.",
+        "Optimizes multi-core index management in high-throughput relational databases and storage engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an atomic CAS-based node split and pointer update in a concurrent B+ Tree.",
+        "correct": "class Node:\n    def __init__(self, keys, children):\n        self.keys = keys\n        self.children = children\n        self.next = None\n\ndef atomic_split_and_link(parent, old_node, new_node, cas_func):\n    # Atomically update parent pointers using CAS primitives\n    success = False\n    while not success:\n        snapshot = parent.children[:]\n        index = snapshot.index(old_node)\n        new_children = snapshot[:index+1] + [new_node] + snapshot[index+1:]\n        success = cas_func(parent, snapshot, new_children)",
+        "wrong": "def unsafe_split(parent, old_node, new_node):\n    # Modifying shared structures without CAS or thread synchronization leads to race conditions\n    index = parent.children.index(old_node)\n    parent.children.insert(index + 1, new_node)\n    old_node.next = new_node"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Ignoring the ABA problem during structural modification CAS operations on parent nodes.",
+        "Acquiring locks during node splits, which defeats the lock-free design goals and reintroduces convoy effects.",
+        "Neglecting memory barriers when updating leaf-node sibling pointers."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are acquired before traversing any child or leaf reference to guarantee safe reclamation.",
+        "Implement epoch-based memory management or hazard pointers systematically for all dynamic node allocations and deletions.",
+        "Keep atomic operation retry loops bounded and use backoff strategies under extreme thread contention.",
+        "Thoroughly test concurrent range scans under heavy write loads to catch subtle synchronization bugs."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded storage engines, in-memory databases, or real-time indexes that demand extreme read-write concurrency and efficient range queries.",
+      "when_not_to_use": "Avoid in single-threaded applications, low-memory embedded environments, or simple key-value workloads where standard lock-based trees or hash maps provide lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in a lock-free B+ Tree during node splits?",
+          "answer": "Hazard pointers allow a thread to declare a shared node as currently 'in-use' before accessing it. Reclamation mechanisms must defer freeing any node until no thread holds an active hazard pointer pointing to it."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splitting in a B+ Tree, and how is it addressed?",
+          "answer": "The primary challenge is atomically updating both the child pointers of the parent node and the sibling links of the leaf nodes simultaneously. This is addressed using multi-step CAS operations or cooperative helper mechanisms to complete half-finished splits."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-free Skip List",
+        "Concurrent B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T01:34:18.558819+00:00",
+      "run_number": 2856
     }
   ]
 }
