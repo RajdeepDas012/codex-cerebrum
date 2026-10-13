@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2874,
-    "last_updated": "2026-10-13T09:45:22.713716+00:00",
-    "total_topics_learned": 2874
+    "total_runs": 2875,
+    "last_updated": "2026-10-13T09:48:31.804102+00:00",
+    "total_topics_learned": 2875
   },
   "entries": [
     {
@@ -136979,6 +136979,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T09:45:22.713694+00:00",
       "run_number": 2874
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Consistent Hashing ring using atomic vnode-remapping and node-successors-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed load balancing and multi-core shard re-mapping in real-time distributed caching clusters and concurrent key-value storage databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free consistent hashing ring provides scalable distributed load balancing and shard routing by organizing virtual nodes (vnodes) on a continuous ring using atomic Compare-And-Swap (CAS) primitives and hazard pointers. This structure allows multiple threads and distributed nodes to dynamically join, leave, or re-map shards concurrently without acquiring global locks, eliminating thread contention in high-throughput database systems.",
+      "key_points": [
+        "Utilizes atomic vnode-remapping and node-successors-updating CAS primitives to modify ring topology safely across threads.",
+        "Employs hazard pointer memory reclamation to securely free retired ring segments and old vnode mappings without use-after-free bugs.",
+        "Minimizes key migration overhead during node addition or removal by mapping physical nodes to multiple virtual nodes spread evenly across the hash ring.",
+        "Achieves lock-free progress guarantees, ensuring that system-wide throughput does not degrade due to thread blocking during high-frequency cluster reconfiguration."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent hazard pointer protection and atomic CAS updates for ring vnodes",
+        "correct": "class HazardPointerRegistry:\n    def __init__(self):\n        self.hazard_ptr = None\n    def protect(self, ptr):\n        self.hazard_ptr = ptr\n    def clear(self):\n        self.hazard_ptr = None\n\nclass RingNode:\n    def __init__(self, hash_val, node_id):\n        self.hash_val = hash_val\n        self.node_id = node_id\n        self.next = None",
+        "wrong": "global_ring = {}\ndef unsafe_update(hash_val, node_id):\n    global_ring[hash_val] = node_id  # Not thread-safe, race condition on updates"
+      },
+      "common_mistakes": [
+        "Failing to protect accessed vnodes with hazard pointers prior to reading successor pointers, leading to premature memory reclamation and segmentation faults.",
+        "Using coarse-grained locks on the entire ring structure instead of fine-grained atomic CAS operations on individual ring segments or vnode pointers."
+      ],
+      "best_practices": [
+        "Isolate memory retirement queues per thread to reduce cache contention when recycling old ring node allocations via hazard pointers.",
+        "Distribute virtual nodes sufficiently across the hash space to ensure uniform load distribution and prevent hot-spotting on specific physical servers."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching clusters or multi-threaded key-value stores that require frequent concurrent node topology updates and minimal latency jitter.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple static configuration setups where a basic sorted array or standard hash map provides sufficient performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread traverses a lock-free consistent hashing ring while another thread deletes a vnode?",
+          "answer": "Hazard pointers allow a reader thread to announce which node pointer it is currently inspecting. Writers cannot free memory associated with any node actively protected by a hazard pointer until all threads have cleared their reference."
+        },
+        {
+          "question": "Why are virtual nodes (vnodes) essential in a concurrent consistent hashing ring?",
+          "answer": "Vnodes evenly distribute the key space across physical nodes, preventing load imbalances and ensuring that adding or removing a node only redistributes a minimal fraction of keys without bottlenecking the system."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "consistent hashing",
+        "hazard pointers",
+        "distributed load balancing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T09:48:31.804081+00:00",
+      "run_number": 2875
     }
   ]
 }
