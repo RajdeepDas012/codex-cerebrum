@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2876,
-    "last_updated": "2026-10-13T09:51:40.282387+00:00",
-    "total_topics_learned": 2876
+    "total_runs": 2877,
+    "last_updated": "2026-10-13T09:54:49.963872+00:00",
+    "total_topics_learned": 2877
   },
   "entries": [
     {
@@ -137074,6 +137074,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T09:51:40.282365+00:00",
       "run_number": 2876
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate elimination in real-time web crawlers and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bloom Filter utilizing atomic word-level CAS primitives for safe bit manipulation without explicit locks. It ensures high scalability and memory safety via hazard pointers for parallel multi-core approximate membership checks and query optimization engines.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-masking operations (such as fetch-and-or) to safely manipulate shared bit array segments concurrently across multiple threads.",
+        "Employs hazard pointers for safe memory management, avoiding ABA problems and preventing premature reclamation of underlying array allocations during structural resizing or updates.",
+        "Eliminates coarse-grained synchronization bottlenecks, achieving high throughput for read-heavy approximate membership testing workloads in multi-core environments.",
+        "Crucial for duplicate URL elimination in web crawlers and checking existence filters in distributed database query planning without expensive disk or network I/O."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic word masking and bit-setting using thread-safe primitives.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bit_array = [0] * ((size + 63) // 64)\n        self.lock = threading.Lock()\n\n    def add(self, bit_index):\n        word_idx = bit_index // 64\n        bit_offset = bit_index % 64\n        mask = 1 << bit_offset\n        with self.lock:\n            self.bit_array[word_idx] |= mask",
+        "wrong": "def add_unsafe(self, bit_index):\n    word_idx = bit_index // 64\n    self.bit_array[word_idx] |= (1 << (bit_index % 64))"
+      },
+      "common_mistakes": [
+        "Failing to use atomic instructions for word-level modifications, leading to lost updates when multiple threads set bits in the same underlying 64-bit word simultaneously.",
+        "Neglecting memory barriers or proper memory reclamation protocols, which can cause use-after-free bugs if filter resizing occurs concurrently with reader queries."
+      ],
+      "best_practices": [
+        "Group individual bit indices into larger word blocks (e.g., 64-bit integers) to optimize atomic instructions and reduce cache-line contention.",
+        "Integrate hazard pointers or epoch-based memory reclamation when implementing dynamic resizing to safely track active reader threads."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded systems requiring rapid approximate membership checks where false positives are acceptable but locks create unacceptable contention.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory, or when memory overhead for sparse datasets makes alternative structures like hash sets more efficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent lost updates when two threads attempt to set different bits within the same underlying computer word concurrently?",
+          "answer": "By using atomic read-modify-write primitives such as Compare-And-Swap (CAS) loops or atomic fetch-and-OR operations on the word."
+        },
+        {
+          "question": "Why are hazard pointers useful when implementing a concurrent Bloom filter that supports resizing?",
+          "answer": "Hazard pointers allow reader threads to safely declare which memory blocks they are currently accessing, ensuring that resizing operations do not free or mutate the old array until all readers have finished."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filters",
+        "Hazard Pointer Memory Management",
+        "Atomic Bitwise Operations in Multithreaded Architectures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-13T09:54:49.963850+00:00",
+      "run_number": 2877
     }
   ]
 }
