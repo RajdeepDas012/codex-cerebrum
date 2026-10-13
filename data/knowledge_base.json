@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2863,
-    "last_updated": "2026-10-13T01:56:35.010096+00:00",
-    "total_topics_learned": 2863
+    "total_runs": 2864,
+    "last_updated": "2026-10-13T09:11:39.098289+00:00",
+    "total_topics_learned": 2864
   },
   "entries": [
     {
@@ -136460,6 +136460,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T01:56:35.010075+00:00",
       "run_number": 2863
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-connecting CAS primitives alongside hazard pointer memory reclamation for high-throughput exact string matching and multi-core pattern searching in real-time bioinformatics sequence alignment platforms and concurrent text analytics engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Suffix Tree utilizes atomic node-splitting and suffix-link-updating CAS operations combined with hazard pointers to safely manage node lifecycles without blocking threads. This enables high-throughput multi-core substring indexing and pattern matching critical for real-time text analytics and genomics.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives to handle concurrent insertions, node splits, and suffix link updates safely across multiple threads.",
+        "Utilizes hazard pointers to track thread-accessed nodes, preventing premature memory deallocation and avoiding locks or global synchronization bottlenecks.",
+        "Maintains Ukkonen's implicit tree properties in a concurrent context by ensuring linearization points for child pointer extensions and edge expansions.",
+        "Delivers high-throughput exact string matching and multi-core pattern searching essential for large-scale genomic sequence alignment platforms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation with hazard pointers for thread-safe concurrent tree expansion.",
+        "correct": "bool CASChildPointer(Node* parent, char c, Node* old_child, Node* new_child, HazardPointerList& hp) {\n    hp.protect(0, new_child);\n    return parent->children[c].compare_exchange_strong(old_child, new_child);\n}",
+        "wrong": "bool UnsafeInsert(Node* parent, char c, Node* new_child) {\n    parent->children[c] = new_child; // Non-atomic write causes race conditions and memory corruption\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing suffix links, leading to use-after-free bugs when another thread splits the target node.",
+        "Assuming standard lock-free linked list techniques apply directly to directed acyclic graphs like suffix trees without managing complex multi-edge updates."
+      ],
+      "best_practices": [
+        "Acquire hazard pointer protection on any node before reading its children map or following its suffix link.",
+        "Batch retired nodes locally per thread and defer reclamation until no active hazard pointers reference them."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously query and append strings to a shared suffix tree under heavy read-write contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or static text collections where traditional serialized Ukkonen's algorithm and compressed tries suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating child pointers and suffix links via CAS in a concurrent Suffix Tree?",
+          "answer": "By pairing pointers with monotonically increasing version counters or by utilizing epoch-based/hazard pointer memory reclamation schemes that ensure nodes are not recycled while any thread holds an active reference."
+        },
+        {
+          "question": "Why are standard mutexes inefficient for concurrent suffix tree updates during high-throughput genomic pattern searches?",
+          "answer": "Global or coarse-grained locking serializes tree insertions and causes severe thread contention, while fine-grained locking on complex directed acyclic graphs easily introduces deadlocks during simultaneous node splitting and suffix link traversal."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Wavelet Trees",
+        "Hazard Pointers",
+        "Lock-free B-link Trees",
+        "Suffix Arrays"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-13T09:11:39.098267+00:00",
+      "run_number": 2864
     }
   ]
 }
