@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2875,
-    "last_updated": "2026-10-13T09:48:31.804102+00:00",
-    "total_topics_learned": 2875
+    "total_runs": 2876,
+    "last_updated": "2026-10-13T09:51:40.282387+00:00",
+    "total_topics_learned": 2876
   },
   "entries": [
     {
@@ -137027,6 +137027,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T09:48:31.804081+00:00",
       "run_number": 2875
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core database lookups in real-time relational storage systems and concurrent file system engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe concurrent B-Tree utilizing atomic Compare-And-Swap (CAS) operations for node-splitting and child-pointer updates. It leverages hazard pointers for safe, lock-free memory reclamation to ensure high throughput in multi-core database and file system environments.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS for lock-free node-splitting and child-pointer adjustments.",
+        "Employs hazard pointers to track and safely reclaim memory of deleted nodes without blocking concurrent readers.",
+        "Maintains structural balance and high fan-out properties crucial for low-latency range queries and database indexing.",
+        "Eliminates traditional mutex bottlenecks, preventing convoy effects and thread contention across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer CAS updates for concurrent child linking in a lock-free B-Tree node",
+        "correct": "struct BTreeNode {\n    std::atomic<BTreeNode*> children[MAX_KEYS + 1];\n    bool compare_and_swap_child(int index, BTreeNode* expected, BTreeNode* desired) {\n        return children[index].compare_exchange_strong(expected, desired);\n    }\n};",
+        "wrong": "struct BTreeNode {\n    BTreeNode* children[MAX_KEYS + 1];\n    bool update_child(int index, BTreeNode* desired) {\n        children[index] = desired; // Not thread-safe without locks or atomics\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free bugs when another thread splits or deletes a node.",
+        "Ignoring the ABA problem during child pointer CAS operations, which can corrupt the tree topology."
+      ],
+      "best_practices": [
+        "Always register active nodes with the hazard pointer subsystem before traversing down the tree hierarchy.",
+        "Design split algorithms to be cooperative, allowing multiple threads to help complete pending structural modifications safely."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded database engines or file systems requiring extreme read/write concurrency and minimal latency jitter.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler systems where coarse-grained locking provides adequate performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, preventing other threads from freeing those nodes until no hazard pointers reference them."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splitting in a B-Tree?",
+          "answer": "Ensuring that structural modifications (splits) are performed atomically via CAS so that concurrent readers or writers never observe an invalid or inconsistent tree state."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip List",
+        "Atomic Compare-And-Swap (CAS) Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T09:51:40.282365+00:00",
+      "run_number": 2876
     }
   ]
 }
