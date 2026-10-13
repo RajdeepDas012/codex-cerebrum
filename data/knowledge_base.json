@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2888,
-    "last_updated": "2026-10-13T22:29:31.976182+00:00",
-    "total_topics_learned": 2888
+    "total_runs": 2889,
+    "last_updated": "2026-10-13T22:32:41.183813+00:00",
+    "total_topics_learned": 2889
   },
   "entries": [
     {
@@ -137643,6 +137643,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T22:29:31.976163+00:00",
       "run_number": 2888
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic axis-splitting and node-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point indexing and multi-core nearest neighbor searching in real-time robotics perception platforms and concurrent computer vision engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and implementation of a concurrent K-D Tree tailored for lock-free multi-dimensional spatial indexing. It utilizes atomic axis-splitting, node-bounding updates via compare-and-swap (CAS) primitives, and hazard pointers to safely manage memory reclamation under high-contention multi-threaded environments.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to manage axis-splitting and node-bounding without traditional mutex locks.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted or split tree nodes until active threads finish referencing them.",
+        "Optimizes multi-core throughput for spatial indexing, point cloud processing, and nearest neighbor searches in real-time robotics.",
+        "Prevents race conditions during simultaneous spatial insertions and multi-dimensional range queries."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual representation of a lock-free CAS-based node insertion attempt in a K-D tree utilizing hazard pointers.",
+        "correct": "class KDNode:\n    def __init__(self, point, axis):\n        self.point = point\n        self.axis = axis\n        self.left = None\n        self.right = None\n        self.next = None\n\ndef atomic_insert(root, new_point):\n    current = root\n    while True:\n        # Simulation of atomic hazard pointer acquisition and CAS traversal\n        if new_point[current.axis] < current.point[current.axis]:\n            if current.left is None:\n                # Attempt CAS to set left child\n                if compare_and_set(current, 'left', None, KDNode(new_point, (current.axis + 1) % len(new_point))):\n                    return True\n            else:\n                current = current.left\n        else:\n            if current.right is None:\n                if compare_and_set(current, 'right', None, KDNode(new_point, (current.axis + 1) % len(new_point))):\n                    return True\n            else:\n                current = current.right",
+        "wrong": "def unsafe_insert(root, new_point):\n    # Missing synchronization and CAS leads to race conditions on node splits\n    current = root\n    if new_point[current.axis] < current.point[current.axis]:\n        if current.left is None:\n            current.left = KDNode(new_point, current.axis + 1)"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversal paths with hazard pointers, leading to use-after-free bugs during concurrent structural modifications.",
+        "Failing to update bounding boxes atomically when new nodes are inserted deeper in the tree sub-hierarchies."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers into thread-local hazard pointer records before inspecting child references.",
+        "Keep atomic operations scoped tightly to node pointers and bounding coordinates to minimize cache-line bouncing across CPU cores."
+      ],
+      "when_to_use": "Use when building high-performance spatial-temporal systems, LiDAR processing pipelines, or computer vision tracking engines that require concurrent multi-dimensional queries without lock contention.",
+      "when_not_to_use": "Avoid when data dimensionality is extremely high (the curse of dimensionality renders K-D trees inefficient) or when single-threaded simplicity and low memory overhead are prioritized over concurrent scale.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent structural modifications in a lock-free K-D Tree?",
+          "answer": "Hazard pointers allow threads to publish pointers to nodes they are currently accessing so that concurrent mutators know not to reclaim or free those memory blocks until the reader unregisters the hazard pointer."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free multi-dimensional range searches in a K-D Tree?",
+          "answer": "Ensuring consistency between the bounding hyper-rectangles of subtrees and the actual node pointers during simultaneous insertions and deletions by other threads."
+        }
+      ],
+      "related_topics": [
+        "Skip-Octree",
+        "Priority Search Tree",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-13T22:32:41.183796+00:00",
+      "run_number": 2889
     }
   ]
 }
