@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2872,
-    "last_updated": "2026-10-13T09:39:05.017774+00:00",
-    "total_topics_learned": 2872
+    "total_runs": 2873,
+    "last_updated": "2026-10-13T09:42:13.944485+00:00",
+    "total_topics_learned": 2873
   },
   "entries": [
     {
@@ -136885,6 +136885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T09:39:05.017752+00:00",
       "run_number": 2872
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-linking and node-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree enables high-performance prefix matching and IP routing table lookups across multiple cores without mutual exclusion locks. By leveraging atomic compare-and-swap (CAS) operations for child pointer linking and node compression alongside hazard pointers for safe memory reclamation, it guarantees progress and minimizes contention.",
+      "key_points": [
+        "Utilizes atomic child-pointer-linking CAS primitives to safely insert and modify tree edges without locking.",
+        "Employs node-compression techniques to merge single-child paths, reducing depth and memory overhead.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes actively accessed by concurrent threads.",
+        "Optimized for high-throughput IP routing table lookups and multi-core prefix matching in software-defined networking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer CAS update during concurrent Radix Tree node insertion.",
+        "correct": "bool link_child(Node* parent, int index, Node* expected, Node* desired) {\n    return parent->children[index].compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_child_wrong(Node* parent, int index, Node* desired) {\n    if (parent->children[index] == nullptr) {\n        parent->children[index] = desired;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs during concurrent node compression.",
+        "Using weak memory orderings inappropriately without considering publication safety for newly allocated child nodes."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in the thread-local hazard pointer domain before reading child pointers.",
+        "Ensure node-compression operations are atomic or safely roll back when concurrent modifications occur on the same path."
+      ],
+      "when_to_use": "Use when building high-throughput networking routing tables, concurrent key-value prefix indexes, or routing engines requiring extreme read-heavy scalability across many cores.",
+      "when_not_to_use": "Avoid when keys do not share common prefixes or when standard mutex-protected maps provide sufficient performance with simpler code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free bugs in a lock-free radix tree when one thread deletes a compressed node while another is traversing it?",
+          "answer": "By using hazard pointers to mark the node as currently in-use by the traversing thread before reading its child pointers, deferring physical deallocation until no hazard pointers reference it."
+        },
+        {
+          "question": "What is the primary challenge of node compression in a lock-free radix tree?",
+          "answer": "Ensuring that path-compression and expansion updates occur atomically via CAS without leaving the tree in an inconsistent state visible to other threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Bounding Volume Hierarchy",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-free Cuckoo Filter"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T09:42:13.944462+00:00",
+      "run_number": 2873
     }
   ]
 }
