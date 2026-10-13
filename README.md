@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2880** |
-| Last Updated | `2026-10-13T17:36:04.273811+00:00` |
-| Dataset Size | `2880 entries` |
+| Total Topics Learned | **2881** |
+| Last Updated | `2026-10-13T17:40:16.611068+00:00` |
+| Dataset Size | `2881 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 143 |
 | market-analysis | 114 |
-| system-design | 85 |
+| system-design | 86 |
 | stocks-markets | 71 |
 | databases | 38 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-decrementing and timestamp-refilling CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic control and multi-core request shaping in real-time API rate-limiting gateways and concurrent microservices infrastructure`
 - `Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-marking and prime-marking CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core divisibility filtering in real-time cryptographic key generation platforms and concurrent number-theoretic computation engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic state-transition-linking and failure-link-navigating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary scanning in real-time intrusion detection systems and concurrent log filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core connected components analysis in real-time image processing pipelines and concurrent graph algorithms engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core duplicate elimination in real-time web crawlers and concurrent database query optimization engines`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core database lookups in real-time relational storage systems and concurrent file system engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2880,
-    "last_updated": "2026-10-13T17:36:04.273811+00:00",
-    "total_topics_learned": 2880
+    "total_runs": 2881,
+    "last_updated": "2026-10-13T17:40:16.611068+00:00",
+    "total_topics_learned": 2881
   },
   "entries": [
     {
@@ -137263,6 +137263,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-13T17:36:04.273792+00:00",
       "run_number": 2880
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-decrementing and timestamp-refilling CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic control and multi-core request shaping in real-time API rate-limiting gateways and concurrent microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free token bucket rate limiter using atomic compare-and-swap (CAS) operations and hazard pointers. It enables high-throughput, multi-core request throttling without blocking threads, ensuring precise API rate limits under heavy concurrent contention.",
+      "key_points": [
+        "Utilizes atomic primitives to manage bucket state (tokens and last-refill timestamps) without locks.",
+        "Calculates token accumulation dynamically based on elapsed time since the last recorded request.",
+        " Employs hazard pointers to safely reclaim and manage dynamic bucket structures in lock-free memory.",
+        "Minimizes synchronization overhead and thread contention in high-throughput gateway environments."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the core concept of computing token refills and atomic decrementing via CAS loops.",
+        "correct": "class TokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = capacity\n        self.refill_rate = refill_rate\n        self.tokens = capacity\n        self.last_refill = time.time()\n    def allow_request(self):\n        now = time.time()\n        # Simplified atomic state transition representation\n        elapsed = now - self.last_refill\n        self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)\n        self.last_refill = now\n        if self.tokens >= 1.0:\n            self.tokens -= 1.0\n            return True\n        return False",
+        "wrong": "def allow_request(self):\n    if self.tokens > 0:\n        self.tokens -= 1\n        return True\n    return False"
+      },
+      "common_mistakes": [
+        "Failing to account for clock drift or time precision issues when calculating refill deltas across multiple cores.",
+        "Using locks or heavy synchronization primitives which degrade throughput under high contention."
+      ],
+      "best_practices": [
+        "Design state records to fit within cache lines to minimize false sharing between concurrent worker threads.",
+        "Combine CAS loops with exponential backoff or hazard pointers to handle intense update contention safely."
+      ],
+      "when_to_use": "When building high-throughput API gateways or microservices requiring ultra-low latency, lock-free request rate-shaping.",
+      "when_not_to_use": "In single-threaded or low-throughput applications where standard mutex locks or simple rate-limiting libraries introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle lock-free updates to both the token count and the timestamp simultaneously using CAS?",
+          "answer": "Pack both fields into a single machine-word (e.g., 64-bit or 128-bit atomic integers) so they can be updated atomically in a single CAS instruction."
+        },
+        {
+          "question": "Why use hazard pointers in a concurrent rate limiter?",
+          "answer": "Hazard pointers allow safe memory reclamation of dynamically allocated bucket configurations or tracking structures without relying on garbage collection or risking use-after-free bugs in lock-free designs."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointer memory reclamation",
+        "distributed rate limiting algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T17:40:16.611052+00:00",
+      "run_number": 2881
     }
   ]
 }
