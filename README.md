@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2892** |
-| Last Updated | `2026-10-13T22:42:07.170290+00:00` |
-| Dataset Size | `2892 entries` |
+| Total Topics Learned | **2893** |
+| Last Updated | `2026-10-13T22:45:16.343685+00:00` |
+| Dataset Size | `2893 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1794 |
+| data-structures | 1795 |
 | trading-strategies | 228 |
 | algorithms | 158 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Tries using atomic node-allocating and child-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix-based key-value lookups and multi-core string routing in real-time DNS resolution servers and concurrent IP address lookup engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core distributed caching in real-time key-value storage engines and concurrent database systems`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized ordered mapping and multi-core key-value lookups in real-time in-memory key-value databases and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced searching and multi-core key-value indexing in real-time in-memory databases and concurrent caching systems`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic axis-splitting and node-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point indexing and multi-core nearest neighbor searching in real-time robotics perception platforms and concurrent computer vision engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core state validation in real-time distributed ledger platforms and concurrent blockchain storage engines`
 
 <!-- STATS_END -->
 
