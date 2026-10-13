@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2864** |
-| Last Updated | `2026-10-13T09:11:39.098289+00:00` |
-| Dataset Size | `2864 entries` |
+| Total Topics Learned | **2865** |
+| Last Updated | `2026-10-13T09:15:27.620818+00:00` |
+| Dataset Size | `2865 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 143 |
 | market-analysis | 114 |
-| system-design | 84 |
+| system-design | 85 |
 | stocks-markets | 71 |
 | databases | 38 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core request throttling in real-time API gateway services and concurrent microservice routing architectures`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-connecting CAS primitives alongside hazard pointer memory reclamation for high-throughput exact string matching and multi-core pattern searching in real-time bioinformatics sequence alignment platforms and concurrent text analytics engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems and concurrent location-based services databases`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile approximation and multi-core stream telemetry analysis in real-time performance monitoring platforms and concurrent distributed metrics aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and node-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range queries and multi-core database indexing in real-time transaction processing engines and concurrent storage systems`
-- `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-marker-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput memory-efficient approximate membership testing and multi-core distributed caching in real-time key-value storage engines and concurrent database systems`
 
 <!-- STATS_END -->
 

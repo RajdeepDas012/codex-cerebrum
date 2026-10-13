@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2864,
-    "last_updated": "2026-10-13T09:11:39.098289+00:00",
-    "total_topics_learned": 2864
+    "total_runs": 2865,
+    "last_updated": "2026-10-13T09:15:27.620818+00:00",
+    "total_topics_learned": 2865
   },
   "entries": [
     {
@@ -136508,6 +136508,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-13T09:11:39.098267+00:00",
       "run_number": 2864
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core request throttling in real-time API gateway services and concurrent microservice routing architectures",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Leaky Bucket rate limiter utilizes atomic compare-and-swap (CAS) primitives and hazard pointer reclamation to manage request throttling and traffic shaping efficiently across multi-core systems. It ensures high-throughput API gateway performance by deterministically leaking accumulated request volume over time without thread blocking.",
+      "key_points": [
+        "Uses atomic operations to track water levels and leakage timestamps without incurring lock contention overhead.",
+        "Employs hazard pointers to safely reclaim memory when bucket state descriptors are dynamically resized or reallocated.",
+        "Guarantees deterministic rate-limiting by calculating leaked amounts based on elapsed time differentials during each CAS retry loop.",
+        "Optimizes multi-core routing architectures by preventing cascading bottlenecks in high-throughput API gateway environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic token draining and timestamp updating using a CAS loop for a lock-free leaky bucket.",
+        "correct": "#include <atomic>\n#include <cstdint>\n\nstruct BucketState {\n    uint64_t tokens;\n    uint64_t last_update;\n};\n\nclass LockFreeLeakyBucket {\n    std::atomic<BucketState> state;\n    uint64_t capacity;\n    uint64_t leak_rate;\npublic:\n    bool consume(uint64_t requested, uint64_t now) {\n        BucketState old_state = state.load();\n        BucketState new_state;\n        do {\n            uint64_t elapsed = now > old_state.last_update ? now - old_state.last_update : 0;\n            uint64_t leaked = elapsed * leak_rate;\n            uint64_t current_tokens = old_state.tokens > leaked ? old_state.tokens - leaked : 0;\n            if (current_tokens + requested > capacity) return false;\n            new_state.tokens = current_tokens + requested;\n            new_state.last_update = now;\n        } while (!state.compare_exchange_weak(old_state, new_state));\n        return true;\n    }\n};",
+        "wrong": "class LockedLeakyBucket {\n    std::mutex mtx;\n    uint64_t tokens;\npublic:\n    bool consume(uint64_t requested) {\n        std::lock_guard<std::mutex> lock(mtx);\n        // Bottleneck under high concurrency due to global locking\n        tokens += requested;\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for clock skew or non-monotonic timestamps across multi-core CPU sockets.",
+        "Using blocking synchronization primitives inside high-throughput packet or request routing pipelines."
+      ],
+      "best_practices": [
+        "Leverage hardware-accelerated atomic instructions and explicit memory ordering constraints (e.g., acquire-release).",
+        "Integrate hazard pointers or epoch-based reclamation to prevent memory leaks during high-frequency concurrent updates."
+      ],
+      "when_to_use": "Ideal for high-throughput API gateways and distributed streaming proxies requiring low-latency, lock-free request throttling across many concurrent threads.",
+      "when_not_to_use": "Unsuitable for low-concurrency applications where simple mutex-based rate limiters provide sufficient throughput with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle time calculation safely inside a lock-free CAS loop for a rate limiter?",
+          "answer": "By reading the timestamp once before entering the CAS loop, calculating the leaked tokens based on elapsed time, and using compare_exchange_weak to update both the token count and the timestamp atomically."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in a high-throughput lock-free rate limiter?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Token Bucket rate limiter",
+        "Hazard pointer memory management",
+        "Concurrent traffic shaping algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T09:15:27.620795+00:00",
+      "run_number": 2865
     }
   ]
 }
