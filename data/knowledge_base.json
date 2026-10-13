@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2850,
-    "last_updated": "2026-10-13T01:14:40.752657+00:00",
-    "total_topics_learned": 2850
+    "total_runs": 2851,
+    "last_updated": "2026-10-13T01:17:48.701535+00:00",
+    "total_topics_learned": 2851
   },
   "entries": [
     {
@@ -135837,6 +135837,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-13T01:14:40.752635+00:00",
       "run_number": 2850
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hashing grid using atomic bucket-chaining and coordinate-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core neighbor searching in real-time game physics engines and concurrent particle simulation systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free spatial hashing data structure that maps multi-dimensional coordinates to hash buckets using atomic compare-and-swap operations. It enables high-performance parallel collision detection and neighbor queries in multi-threaded simulation environments without locking overhead.",
+      "key_points": [
+        "Uses atomic bucket-chaining and coordinate mapping for safe parallel updates to grid cells.",
+        "Employs hazard pointer memory reclamation to securely free deleted spatial nodes without race conditions.",
+        "Eliminates global lock contention, maximizing CPU cache utilization across multiple simulation threads.",
+        "Optimizes spatial queries by reducing $O(N^2)$ brute-force checks to localized neighborhood lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion into a spatial hashing bucket using CAS primitives",
+        "correct": "bool insert_particle(std::atomic<Node*>& bucket_head, Particle* new_particle) {\n    Node* old_head = bucket_head.load(std::memory_order_relaxed);\n    new_particle->next = old_head;\n    while (!bucket_head.compare_exchange_weak(old_head, new_particle, std::memory_order_release, std::memory_order_relaxed)) {\n        new_particle->next = old_head;\n    }\n    return true;\n}",
+        "wrong": "bool insert_particle(Node*& bucket_head, Particle* new_particle) {\n    // Missing atomics and CAS leads to lost updates under race conditions\n    new_particle->next = bucket_head;\n    bucket_head = new_particle;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs when another thread removes a particle from the grid.",
+        "Choosing a poor hash function or inadequate grid cell size, resulting in excessive hash collisions and degraded query performance."
+      ],
+      "best_practices": [
+        "Design hash functions that uniformly distribute spatial coordinates across buckets to minimize thread contention.",
+        "Integrate hazard pointers or epoch-based reclamation to safely manage memory lifetimes in dynamic particle systems."
+      ],
+      "when_to_use": "Use when building real-time physics engines, fluid simulations, or multi-agent systems requiring high-throughput, concurrent neighbor searches.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with static spatial data where simple flat arrays or standard spatial trees are easier to maintain.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing lock-free node insertions into a spatial hashing bucket chain?",
+          "answer": "By using tagged pointers, version counters combined with CAS, or hazard pointers to ensure nodes are not silently recycled while a thread is reading."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in high-throughput lock-free spatial structures?",
+          "answer": "Hazard pointers avoid the atomic RMW overhead on every read operation that reference counting incurs, significantly scaling better on multi-core systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded Queues",
+        "Hazard Pointers and Memory Reclamation",
+        "Spatial Indexing and BVH Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-13T01:17:48.701514+00:00",
+      "run_number": 2851
     }
   ]
 }
