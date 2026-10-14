@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2906,
-    "last_updated": "2026-10-14T02:02:58.531849+00:00",
-    "total_topics_learned": 2906
+    "total_runs": 2907,
+    "last_updated": "2026-10-14T02:08:38.948170+00:00",
+    "total_topics_learned": 2907
   },
   "entries": [
     {
@@ -138497,6 +138497,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T02:02:58.531831+00:00",
       "run_number": 2906
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-updating and delta-chain-consolidating CAS primitives alongside hazard pointer memory reclamation for high-throughput lock-free index updates and multi-core transactional storage in real-time database management systems and concurrent storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "The Bw-Tree is a lock-free variant of the B-Tree designed for high-concurrency database systems, utilizing a logical-to-physical mapping table and delta records to avoid inplace updates. It ensures thread safety and high throughput via atomic Compare-And-Swap (CAS) operations on mapping table entries and delta chains, coupled with hazard pointers for safe memory reclamation.",
+      "key_points": [
+        "Replaces in-place node modifications with append-only delta records forming a delta chain to prevent writer-writer and writer-reader locks.",
+        "Uses an indirection mapping table where physical node addresses are atomically updated using CAS primitives without changing logical keys.",
+        "Employs consolidation background threads or worker-triggered processes to compress long delta chains back into contiguous base nodes.",
+        "Utilizes hazard pointers to securely track and reclaim memory reclaimed during mapping table updates and delta chain consolidations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic mapping table updates and delta record appending via CAS primitives for Bw-Tree node modification.",
+        "correct": "bool install_delta(MappingTable& table, int slot, Node* old_node, DeltaNode* new_delta) {\n    new_delta->next = old_node;\n    return table.cas(slot, old_node, new_delta);\n}",
+        "wrong": "bool bad_install(MappingTable& table, int slot, Node* old_node, DeltaNode* new_delta) {\n    Node* current = table.get(slot);\n    current->next = new_delta;\n    table.set(slot, current);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed node memory with hazard pointers during mapping table swings, leading to use-after-free race conditions.",
+        "Allowing delta chains to grow indefinitely without triggering node consolidation, causing severe read amplification and performance degradation."
+      ],
+      "best_practices": [
+        "Bound the maximum length of a delta chain before forcing a consolidation operation into a new base node.",
+        "Batch hazard pointer acquisitions and releases to minimize synchronization overhead in high-throughput concurrent workloads."
+      ],
+      "when_to_use": "Use when building high-performance, multi-core transactional database engines that demand lock-free indexing and minimal thread contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or low-memory embedded environments where the complexity of mapping tables and delta chains outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How does the Bw-Tree avoid locks when modifying nodes?",
+          "answer": "It uses an indirection mapping table and appends modification changes as delta records, updating the mapping table atomically via Compare-And-Swap (CAS)."
+        },
+        {
+          "question": "Why is delta chain consolidation necessary in a Bw-Tree?",
+          "answer": "Without consolidation, long delta chains degrade read performance due to high traversal overhead (read amplification), making periodic compaction back into a single base node essential."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointers and Memory Reclamation",
+        "Transactional Memory"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T02:08:38.948152+00:00",
+      "run_number": 2907
     }
   ]
 }
