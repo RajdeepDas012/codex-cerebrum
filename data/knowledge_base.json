@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2938,
-    "last_updated": "2026-10-14T13:50:13.365550+00:00",
-    "total_topics_learned": 2938
+    "total_runs": 2939,
+    "last_updated": "2026-10-14T13:53:22.291722+00:00",
+    "total_topics_learned": 2939
   },
   "entries": [
     {
@@ -140011,6 +140011,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T13:50:13.365528+00:00",
       "run_number": 2938
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core set filtering in real-time distributed storage systems and concurrent database query engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bloom Filter optimized for multi-core environments using atomic bit operations and hazard pointers. It is crucial for high-throughput database engines and distributed storage looking to avoid expensive disk or network lookups without serialization bottlenecks.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-masking Compare-And-Swap (CAS) loops to manage bit array states safely across threads.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or underlying node allocations without blocking.",
+        "Delivers high-throughput approximate membership testing with zero false negatives and controlled false positive rates.",
+        "Eliminates traditional mutex contention, making it ideal for multi-core real-time query filtering."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting in a shared word array using CAS loops.",
+        "correct": "void set_bit(std::atomic<uint64_t>* words, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t mask = 1ULL << (bit_index % 64);\n    uint64_t old_val = words[word_idx].load(std::memory_order_relaxed);\n    while (!words[word_idx].compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {}\n}",
+        "wrong": "void set_bit_unsafe(uint64_t* words, size_t bit_index) {\n    words[bit_index / 64] |= (1ULL << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared word chunks, leading to lost updates.",
+        "Failing to use acquire-release memory ordering semantics, causing thread visibility issues across CPU cores."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for failed CAS iterations and release-acquire ordering for successful updates.",
+        "Ensure hash functions are fast and well-distributed (e.g., MurmurHash3 or xxHash) to minimize bit collisions."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform membership checks and insertions on a shared set where false positives are acceptable.",
+      "when_not_to_use": "Do not use when 100% precision is required or when deletions are frequent (standard Bloom filters do not support deletions).",
+      "interview_questions": [
+        {
+          "question": "How do you implement atomic bit manipulation without locking the entire word array?",
+          "answer": "By targeting the specific 64-bit word containing the bit and using a compare-and-swap (CAS) loop with bitwise OR masking."
+        },
+        {
+          "question": "Why are hazard pointers useful in concurrent approximate data structures?",
+          "answer": "They provide lock-free safe memory reclamation, ensuring that memory blocks being read by concurrent threads are not freed prematurely."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointers",
+        "Lock-free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T13:53:22.291700+00:00",
+      "run_number": 2939
     }
   ]
 }
