@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2964** |
-| Last Updated | `2026-10-14T22:16:09.695747+00:00` |
-| Dataset Size | `2964 entries` |
+| Total Topics Learned | **2965** |
+| Last Updated | `2026-10-14T22:19:20.061882+00:00` |
+| Dataset Size | `2965 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1853 |
+| data-structures | 1854 |
 | trading-strategies | 228 |
 | algorithms | 166 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-interval querying and multi-core scheduling range analysis in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint-calculating and coefficient-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set optimization in real-time distributed storage systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index operations and multi-core database table navigation in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count aggregation in real-time stream processing platforms and concurrent analytics database engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set operations in real-time distributed storage systems and concurrent database query optimization engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search operations and multi-core randomized index management in real-time distributed memory caches and concurrent associative array database engines`
 
 <!-- STATS_END -->
 
