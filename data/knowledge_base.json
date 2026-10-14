@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2970,
-    "last_updated": "2026-10-14T22:35:06.700100+00:00",
-    "total_topics_learned": 2970
+    "total_runs": 2971,
+    "last_updated": "2026-10-14T22:38:18.361773+00:00",
+    "total_topics_learned": 2971
   },
   "entries": [
     {
@@ -141525,6 +141525,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-14T22:35:06.700080+00:00",
       "run_number": 2970
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and slot-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer multi-consumer message passing and multi-core event stream buffering in real-time low-latency trading platforms and concurrent asynchronous messaging engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer is a fixed-size circular data structure that facilitates thread-safe message passing between producers and consumers without locks. By using atomic operations and advanced slot-masking strategies, it achieves ultra-low latency and high throughput crucial for high-frequency trading and event streaming systems.",
+      "key_points": [
+        "Utilizes atomic head-tail-advancing CAS primitives to coordinate producers and consumers safely across multiple CPU cores.",
+        "Employs slot-masking techniques to index circular buffer storage arrays efficiently without explicit modulo division overhead.",
+        "Integrates hazard pointer memory reclamation to securely track thread access to dynamic node allocations or sequence states without blocking.",
+        "Maximizes throughput in single-producer multi-consumer (SPMC) or multi-producer multi-consumer (MPMC) execution contexts."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement via compare-and-swap for lock-free ring buffer slot reservation",
+        "correct": "bool reserve_slot(std::atomic<size_t>& head, size_t capacity, size_t& current_head) {\n    current_head = head.load(std::memory_order_relaxed);\n    while (!head.compare_exchange_weak(current_head, current_head + 1, std::memory_order_release, std::memory_order_relaxed)) {\n        // Retry reservation\n    }\n    return true;\n}",
+        "wrong": "bool reserve_slot_wrong(size_t& head, size_t capacity) {\n    // Missing atomicity and thread synchronization causes race conditions\n    head++; \n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle memory ordering correctly, resulting in stale reads of slot data before the producer has fully written to it.",
+        "Neglecting false sharing by failing to pad atomic head and tail pointers onto separate CPU cache lines."
+      ],
+      "best_practices": [
+        "Align head and tail pointers to 64-byte boundaries to eliminate cache line bouncing between contending processor cores.",
+        "Use acquire-release memory semantics to enforce proper visibility of payload data written into ring buffer slots."
+      ],
+      "when_to_use": "Ideal for real-time low-latency trading systems, high-throughput message passing, and inter-thread event stream buffering where locking overhead is prohibitive.",
+      "when_not_to_use": "Avoid when dynamic sizing is required or when application memory footprint must adapt fluidly without a fixed pre-allocated capacity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent a fast producer from overwriting unconsumed slots in a lock-free ring buffer?",
+          "answer": "By maintaining a separate consumer tail pointer and checking that the distance between the head and tail does not exceed the total buffer capacity before issuing a CAS reservation."
+        },
+        {
+          "question": "What causes cache bouncing in a concurrent ring buffer, and how is it mitigated?",
+          "answer": "Cache bouncing occurs when multiple threads constantly invalidate the CPU cache line containing the head or tail pointers via atomic updates. It is mitigated by padding the atomic variables to occupy distinct cache lines."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Queue",
+        "Hazard Pointers",
+        "Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T22:38:18.361754+00:00",
+      "run_number": 2971
     }
   ]
 }
