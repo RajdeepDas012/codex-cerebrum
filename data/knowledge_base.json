@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2958,
-    "last_updated": "2026-10-14T19:00:25.396486+00:00",
-    "total_topics_learned": 2958
+    "total_runs": 2959,
+    "last_updated": "2026-10-14T19:03:35.387192+00:00",
+    "total_topics_learned": 2959
   },
   "entries": [
     {
@@ -140958,6 +140958,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-14T19:00:25.396465+00:00",
       "run_number": 2958
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic pointer-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed node promotion and multi-core localized searching in real-time caching proxies and concurrent memory management subsystems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Splay Tree, which utilizes atomic compare-and-swap (CAS) primitives for thread-safe node rotations and self-balancing operations. By integrating hazard pointers, it ensures safe memory reclamation under concurrent access, maximizing performance for frequently accessed data in real-time caching layers.",
+      "key_points": [
+        "Applies atomic pointer-rotation primitives to restructure the tree layout without global locks.",
+        "Employs self-balancing mechanisms via optimistic concurrency control and retry loops on CAS failures.",
+        "Utilizes hazard pointers to prevent premature memory deallocation of nodes currently traversed by concurrent threads.",
+        "Optimizes locality of reference by promoting frequently accessed nodes to the root, improving throughput in caching proxies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node access using hazard pointers during a concurrent tree traversal.",
+        "correct": "void* acquire_node(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "void* acquire_node(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(); // Lacks hazard pointer protection, risking use-after-free bugs\n}"
+      },
+      "common_mistakes": [
+        "Failing to re-verify node references after acquiring hazard pointers, leading to race conditions.",
+        "Attempting full multi-node global rotations in a single atomic step instead of breaking operations down into fine-grained atomic steps."
+      ],
+      "best_practices": [
+        "Always protect shared node pointers with hazard pointers before reading child pointers or node payloads.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize CPU cache contention and CAS retry overhead."
+      ],
+      "when_to_use": "Use when building high-throughput real-time caching proxies or memory management subsystems where workload access patterns exhibit strong temporal locality.",
+      "when_not_to_use": "Avoid in read-heavy or uniformly-distributed lookup environments where standard lock-free skip lists or balanced binary search trees exhibit lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle multi-node pointer rotations atomically without global locks in a concurrent Splay Tree?",
+          "answer": "By breaking the splay operation down into discrete, fine-grained atomic CAS steps (such as zig or zig-zag transformations) and retrying if concurrent threads modify the same local subtree."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Splay Tree?",
+          "answer": "Hazard pointers protect threads from accessing nodes that have been concurrently deleted or unlinked during rebalancing rotations, preventing use-after-free memory bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free AVL Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T19:03:35.387171+00:00",
+      "run_number": 2959
     }
   ]
 }
