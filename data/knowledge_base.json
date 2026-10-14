@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2943,
-    "last_updated": "2026-10-14T14:06:20.198383+00:00",
-    "total_topics_learned": 2943
+    "total_runs": 2944,
+    "last_updated": "2026-10-14T14:09:54.185831+00:00",
+    "total_topics_learned": 2944
   },
   "entries": [
     {
@@ -140249,6 +140249,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T14:06:20.198360+00:00",
       "run_number": 2943
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) cache using atomic pointer-swapping and node-reordering CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hot item retrieval in real-time web application servers and concurrent database caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a non-blocking, thread-safe LRU cache that leverages compare-and-swap (CAS) primitives and hazard pointers. It ensures safe multi-threaded eviction and node reordering without locking overhead, making it ideal for high-performance distributed caching systems.",
+      "key_points": [
+        "Utilizes atomic pointer-swapping and node-reordering CAS primitives to update doubly-linked list structures without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage deleted node memory in concurrent environments without use-after-free bugs.",
+        "Maintains an internal concurrent hash map mapping keys directly to nodes for $O(1)$ lookups alongside the eviction queue.",
+        "Optimizes multi-core throughput by minimizing contention during hot item retrieval and cache eviction cycles."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of atomic compare-and-swap for updating pointers in a lock-free node structure.",
+        "correct": "std::atomic<Node*> head;\nbool update_head(Node* expected, Node* desired) {\n    return head.compare_exchange_weak(expected, desired);\n}",
+        "wrong": "Node* current = head;\ncurrent->next = desired;\nhead = current; // Not thread-safe, prone to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to safely reclaim memory using hazard pointers, leading to memory leaks or use-after-free vulnerabilities during concurrent evictions.",
+        "Attempting to update both the hash map index and the doubly-linked list pointers in a single atomic operation without a transactional CAS loop."
+      ],
+      "best_practices": [
+        "Protect node traversal pointers with hazard pointers before reading node data to prevent premature memory deallocation by concurrent threads.",
+        "Use backoff strategies within CAS retry loops to reduce CPU cache-coherency traffic under high contention."
+      ],
+      "when_to_use": "When building low-latency, multi-threaded caching systems or in-memory databases where lock contention on the LRU queue becomes a performance bottleneck.",
+      "when_not_to_use": "In low-concurrency environments or single-threaded applications where simpler lock-based caches provide lower complexity and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing CAS operations on nodes in a concurrent LRU cache?",
+          "answer": "By using tagged pointers (version counts combined with the pointer) or hazard pointer mechanisms that guarantee nodes are not recycled while another thread references them."
+        },
+        {
+          "question": "Why is standard mutex locking inefficient for high-throughput LRU caches, and how does a lock-free design solve it?",
+          "answer": "Mutexes serialize access to the head and tail pointers of the eviction list, causing thread contention. Lock-free designs use atomic CAS primitives to allow optimistic concurrent modifications and retries."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free concurrent hash map",
+        "atomic compare-and-swap primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T14:09:54.185808+00:00",
+      "run_number": 2944
     }
   ]
 }
