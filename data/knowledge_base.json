@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2903,
-    "last_updated": "2026-10-14T01:46:34.379749+00:00",
-    "total_topics_learned": 2903
+    "total_runs": 2904,
+    "last_updated": "2026-10-14T01:52:25.073456+00:00",
+    "total_topics_learned": 2904
   },
   "entries": [
     {
@@ -138356,6 +138356,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T01:46:34.379728+00:00",
       "run_number": 2903
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking platforms and concurrent packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree enables high-throughput IP routing table lookups and prefix searches by combining atomic edge-splitting and node-merging Compare-And-Swap (CAS) primitives. Utilizing hazard pointers ensures safe memory reclamation without garbage collection overhead, making it ideal for multi-core software-defined networking platforms.",
+      "key_points": [
+        "Leverages atomic edge-splitting CAS operations to safely divide compressed path edges during concurrent key insertions.",
+        "Employs node-merging CAS primitives to restructure sparse paths and maintain compact trie representations without locks.",
+        "Uses hazard pointers to track thread references to active trie nodes, preventing premature deallocation during lock-free traversal.",
+        "Maximizes multi-core throughput for longest-prefix matching algorithms critical to high-performance packet forwarding engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers during a concurrent radix tree traversal.",
+        "correct": "HazardPointer hp;\nNode* current = hazard_protect(hp, &root);\nwhile (current) {\n    Node* next = atomic_load(&current->child);\n    if (hazard_protect(hp, &next) == current->child) {\n        current = next;\n    }\n}",
+        "wrong": "Node* current = root;\nwhile (current) {\n    current = current->child; // Unsafe: child could be freed by another thread via CAS before access\n}"
+      },
+      "common_mistakes": [
+        "Failing to clear hazard pointers promptly, causing memory leaks and blocking reclamation queues.",
+        "Neglecting ABA problems on edge pointers during concurrent split and merge operations."
+      ],
+      "best_practices": [
+        "Maintain a thread-local hazard pointer domain to minimize synchronization overhead during read-heavy routing lookups.",
+        "Batch retired nodes into a deferred reclamation list before passing them to the hazard pointer memory manager."
+      ],
+      "when_to_use": "Use when building high-performance IP routing tables, packet forwarding engines, or routing lookups requiring massive multi-core concurrency and deterministic low latency.",
+      "when_not_to_use": "Avoid when keys are dense and uniformly distributed, where simpler concurrent hash maps provide better cache locality and lower algorithmic overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node splitting in a lock-free radix tree?",
+          "answer": "Hazard pointers publish the address of the node a thread is reading, preventing other threads from recycling or freeing that memory block via epoch-based or pointer-based free lists until the reference is dropped."
+        },
+        {
+          "question": "Why are atomic edge-splitting primitives necessary for maintaining consistency during concurrent prefix insertions?",
+          "answer": "They ensure that if multiple threads attempt to insert overlapping prefixes simultaneously, only one thread successfully modifies the shared edge via CAS, while other threads retry with updated pointers."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Map",
+        "Hazard Pointer Memory Management",
+        "Longest Prefix Matching Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-14T01:52:25.073434+00:00",
+      "run_number": 2904
     }
   ]
 }
