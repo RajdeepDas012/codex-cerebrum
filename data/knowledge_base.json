@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2957,
-    "last_updated": "2026-10-14T18:57:15.142454+00:00",
-    "total_topics_learned": 2957
+    "total_runs": 2958,
+    "last_updated": "2026-10-14T19:00:25.396486+00:00",
+    "total_topics_learned": 2958
   },
   "entries": [
     {
@@ -140911,6 +140911,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T18:57:15.142432+00:00",
       "run_number": 2957
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counting and queue-draining CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core bandwidth enforcement in real-time edge proxy servers and concurrent API gateway routing engines",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An ultra-low latency, lock-free Leaky Bucket rate limiter utilizes atomic compare-and-swap (CAS) operations for queue state transitions and drop-counting, combined with hazard pointers to safely manage dynamic memory reclamation across multi-core systems. This architecture guarantees high-throughput traffic shaping and precise bandwidth enforcement without locking overhead in real-time edge proxies.",
+      "key_points": [
+        "Uses atomic drop-counting and queue-draining CAS primitives to prevent contention hot-spots on high-frequency API gateway entry points.",
+        "Employs hazard pointer memory reclamation to ensure safe concurrent deallocation of dynamic rate-limit bucket nodes without garbage collection pauses.",
+        "Enforces rigid bandwidth compliance by smoothing bursty traffic into a steady stream of outgoing requests via a constant leak rate.",
+        "Optimizes multi-core scaling by avoiding thread blocking, mutex acquisitions, and lock-convoy phenomena in high-throughput network pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free atomic token leakage and water-level adjustment using Compare-And-Swap loops.",
+        "correct": "bool LeakyBucket::try_consume(uint32_t tokens) {\n    uint64_t current = state.load(std::memory_order_relaxed);\n    do {\n        uint32_t water = extract_water(current);\n        uint64_t last_time = extract_time(current);\n        uint64_t now = get_current_time();\n        uint32_t leaked = (now - last_time) * leak_rate;\n        uint32_t new_water = water > leaked ? water - leaked : 0;\n        \n        if (new_water + tokens > capacity) {\n            atomic_increment_drops();\n            return false;\n        }\n        uint64_t next = pack_state(new_water + tokens, now);\n        if (state.compare_exchange_weak(current, next, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    } while (true);\n}",
+        "wrong": "bool LeakyBucket::try_consume(uint32_t tokens) {\n    std::lock_guard<std::mutex> lock(mtx); // Defeats lock-free high-throughput scaling\n    if (water_level + tokens > capacity) return false;\n    water_level += tokens;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent queue node modifications, leading to corrupted pointers or memory leaks.",
+        "Using heavy locking mechanisms like mutexes inside core packet evaluation paths, creating critical bottlenecks in multi-core edge routers."
+      ],
+      "best_practices": [
+        "Combine fine-grained atomic time tracking with water-level packing into a single double-word CAS to update state atomically.",
+        "Integrate hazard pointers or epoch-based reclamation to safely clean up obsolete queue structures under heavy concurrent load."
+      ],
+      "when_to_use": "Ideal for high-throughput edge proxy servers, distributed API gateways, and network routers requiring strict bandwidth shaping under millions of concurrent requests.",
+      "when_not_to_use": "Unnecessary for low-traffic applications or single-threaded environments where standard mutex-backed counters or simple token buckets provide sufficient simplicity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the water level and last-leaked timestamp simultaneously without using locks?",
+          "answer": "By packing both the water level and timestamp into a single atomic integer (or using DCAS) and updating them atomically via a Compare-And-Swap (CAS) loop."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection or reference counting in a lock-free rate limiter?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with extremely low overhead, avoiding the unpredictable pauses of GC and the heavy cache contention of atomic reference counting."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Token Bucket Rate Limiter",
+        "Hazard Pointer Memory Management",
+        "Atomic Compare-And-Swap Synchronization Patterns"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-14T19:00:25.396465+00:00",
+      "run_number": 2958
     }
   ]
 }

@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2957** |
-| Last Updated | `2026-10-14T18:57:15.142454+00:00` |
-| Dataset Size | `2957 entries` |
+| Total Topics Learned | **2958** |
+| Last Updated | `2026-10-14T19:00:25.396486+00:00` |
+| Dataset Size | `2958 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 144 |
 | market-analysis | 114 |
-| system-design | 89 |
+| system-design | 90 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counting and queue-draining CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core bandwidth enforcement in real-time edge proxy servers and concurrent API gateway routing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core pattern matching in real-time genomic analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-splitting and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geometric range queries in real-time geographic information systems and concurrent location-based service platforms`
 - `Implementation of a lock-free thread-safe concurrent Radix Trie using atomic node-splitting and bit-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing lookup tables and multi-core prefix matching in real-time software-defined networking packet processing pipelines and concurrent network security filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-partitioning and heap-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range querying and multi-core spatial-database indexing in real-time geographic information systems and concurrent spatial coordinate lookup engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-updating and tower-height-CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core transactional range scans in real-time in-memory databases and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 
