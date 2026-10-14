@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2946** |
-| Last Updated | `2026-10-14T14:16:29.592208+00:00` |
-| Dataset Size | `2946 entries` |
+| Total Topics Learned | **2947** |
+| Last Updated | `2026-10-14T18:25:43.454482+00:00` |
+| Dataset Size | `2947 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 144 |
 | market-analysis | 114 |
-| system-design | 88 |
+| system-design | 89 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic credit-replenishing and burst-permitting CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic throttling and multi-core rate enforcement in real-time microservice API gateways and concurrent cloud ingress proxies`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and cell-matrix-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core data stream analysis in real-time network traffic monitoring platforms and concurrent telemetry processing engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput interval modification and multi-core aggregate query execution in real-time financial analytics dashboards and concurrent range-aggregation database engines`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) cache using atomic pointer-swapping and node-reordering CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hot item retrieval in real-time web application servers and concurrent database caching layers`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) cache using atomic frequency-incrementing and bucket-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hot item retention in real-time content delivery networks and concurrent distributed object storage platforms`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index lookups in real-time relational database engines and concurrent storage systems`
 
 <!-- STATS_END -->
 

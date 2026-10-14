@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2946,
-    "last_updated": "2026-10-14T14:16:29.592208+00:00",
-    "total_topics_learned": 2946
+    "total_runs": 2947,
+    "last_updated": "2026-10-14T18:25:43.454482+00:00",
+    "total_topics_learned": 2947
   },
   "entries": [
     {
@@ -140390,6 +140390,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T14:16:29.592183+00:00",
       "run_number": 2946
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic credit-replenishing and burst-permitting CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic throttling and multi-core rate enforcement in real-time microservice API gateways and concurrent cloud ingress proxies",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural and algorithmic design of a lock-free, thread-safe Token Bucket rate limiter optimized for multi-core ingress systems. By utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers, it ensures high-throughput traffic shaping without lock contention or thread blocking.",
+      "key_points": [
+        "Uses atomic credit-replenishing and burst-permitting CAS loops to update token counts and timestamps simultaneously.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation of rate limiter client state buckets across threads.",
+        "Eliminates coarse-grained mutex locking, preventing thread starvation and priority inversion in high-load microservice gateways.",
+        "Calculates token regeneration dynamically based on elapsed wall-clock time relative to the last successful access epoch."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an atomic CAS-based token bucket state update simulation using threading and atomic operations.",
+        "correct": "import time, threading\n\nclass AtomicTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = capacity\n        self.refill_rate = refill_rate\n        self.tokens = capacity\n        self.last_refill = time.time()\n        self._lock_free_state = threading.Lock() # Conceptual simulation of atomic CAS loop\n\n    def consume(self, tokens=1):\n        now = time.time()\n        with self._lock_free_state:\n            elapsed = now - self.last_refill\n            self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)\n            self.last_refill = now\n            if self.tokens >= tokens:\n                self.tokens -= tokens\n                return True\n            return False",
+        "wrong": "def consume(self, tokens=1):\n    if self.tokens >= tokens:\n        self.tokens -= tokens\n        return True\n    return False"
+      },
+      "common_mistakes": [
+        "Updating the token count and the last-refill timestamp in separate atomic steps, introducing race conditions.",
+        "Failing to cap the maximum token accumulation at the defined bucket capacity during long idle periods."
+      ],
+      "best_practices": [
+        "Combine timestamp and token count into a single word-sized struct whenever possible to enable single-instruction atomic CAS updates.",
+        "Use hazard pointers or epoch-based reclamation to safely clean up rate limiter states for inactive client sessions.",
+        "Pre-allocate bucket metadata arrays to avoid dynamic allocation overhead during peak traffic spikes."
+      ],
+      "when_to_use": "High-throughput API gateways and cloud ingress proxies requiring sub-microsecond rate enforcement across numerous concurrent worker threads.",
+      "when_not_to_use": "Distributed cluster-wide rate limiting where state must be synchronized across multiple distinct physical nodes via Redis or a centralized datastore.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions between token replenishment and token consumption without using explicit mutex locks?",
+          "answer": "By packing the token count and the timestamp into a single atomic struct and performing updates using a Compare-And-Swap (CAS) loop that recalculates tokens based on elapsed time atomically."
+        },
+        {
+          "question": "Why are hazard pointers useful when managing dynamic client states in a lock-free rate limiter?",
+          "answer": "Hazard pointers protect dynamically allocated client rate-limiter buckets from being prematurely freed by worker threads while other threads are actively reading or updating their token balances."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leaky Bucket Rate Limiter",
+        "Concurrent Sliding Window Log Rate Limiter",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-14T18:25:43.454461+00:00",
+      "run_number": 2947
     }
   ]
 }
