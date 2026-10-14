@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2911** |
-| Last Updated | `2026-10-14T02:24:49.088566+00:00` |
-| Dataset Size | `2911 entries` |
+| Total Topics Learned | **2912** |
+| Last Updated | `2026-10-14T02:28:34.020979+00:00` |
+| Dataset Size | `2912 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 144 |
 | market-analysis | 114 |
-| system-design | 86 |
+| system-design | 87 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-decrementing and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput API throttling and multi-core rate enforcement in real-time cloud microservices architectures and concurrent distributed gateway engines`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic pointer-swapping and doubly-linked-list node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hotspot mitigation in real-time in-memory caching platforms and concurrent application data stores`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-incrementing and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core hotspot mitigation in real-time in-memory caching platforms and concurrent application data stores`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocating and signature-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput conflict-free key-value lookups and multi-core high-load insertion in real-time in-memory caching systems and concurrent transactional databases`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership checking and multi-core duplicate filtering in real-time web crawler engines and concurrent distributed cache systems`
-- `Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-updating and delta-chain-consolidating CAS primitives alongside hazard pointer memory reclamation for high-throughput lock-free index updates and multi-core transactional storage in real-time database management systems and concurrent storage engines`
 
 <!-- STATS_END -->
 

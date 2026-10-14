@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2911,
-    "last_updated": "2026-10-14T02:24:49.088566+00:00",
-    "total_topics_learned": 2911
+    "total_runs": 2912,
+    "last_updated": "2026-10-14T02:28:34.020979+00:00",
+    "total_topics_learned": 2912
   },
   "entries": [
     {
@@ -138732,6 +138732,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T02:24:49.088548+00:00",
       "run_number": 2911
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-decrementing and timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput API throttling and multi-core rate enforcement in real-time cloud microservices architectures and concurrent distributed gateway engines",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced topic covers the design of a lock-free, thread-safe Token Bucket rate limiter utilizing atomic compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput API throttling and low-latency request gating across multiple cores without incurring the overhead of traditional mutexes.",
+      "key_points": [
+        "Utilizes atomic operations (CAS) to update token counts and timestamps simultaneously without locks.",
+        "Employs hazard pointers for safe memory reclamation of dynamically configured bucket structures.",
+        "Implements a lazy token refill algorithm calculated on demand during each access attempt.",
+        "Prevents thread contention bottlenecks in high-throughput cloud API gateways and microservices."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free token decrementing and time-based refill using atomic operations.",
+        "correct": "#include <atomic>\n#include <chrono>\n\nstruct Bucket {\n    std::atomic<double> tokens;\n    std::atomic<uint64_t> last_refill;\n};\n\nbool consume_token(Bucket& b, double max_tokens, double refill_rate) {\n    uint64_t now = std::chrono::steady_clock::now().time_since_epoch().count();\n    double current_tokens = b.tokens.load();\n    uint64_t last = b.last_refill.load();\n    \n    while (true) {\n        uint64_t elapsed = now - last;\n        double generated = elapsed * refill_rate;\n        double new_tokens = std::min(max_tokens, current_tokens + generated);\n        \n        if (new_tokens < 1.0) return false;\n        \n        if (b.tokens.compare_exchange_weak(current_tokens, new_tokens - 1.0)) {\n            b.last_refill.store(now);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool consume_token(Bucket& b) {\n    std::lock_guard<std::mutex> lock(mtx); // Defeats lock-free design goals\n    if (b.tokens >= 1) {\n        b.tokens--;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to bound the maximum token capacity during the lazy refill calculation, leading to integer overflow or logic errors.",
+        "Failing to safely manage memory reclamation for dynamically allocated user/IP rate limit buckets under high concurrency."
+      ],
+      "best_practices": [
+        "Pre-allocate a fixed pool of token buckets or use hazard pointers for safe concurrent deletion and lookup.",
+        "Keep the CAS retry loop tight and lightweight to minimize CPU cycles wasted on high contention."
+      ],
+      "when_to_use": "Use when building high-throughput API gateways or microservices that require strict request rate limiting under extreme multi-threaded concurrency.",
+      "when_not_to_use": "Avoid in low-concurrency environments or single-threaded applications where simple mutex locks or standard sequential data structures are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating both the token count and the timestamp atomically without using locks?",
+          "answer": "By packing them into a single CAS-able word or using a CAS loop that recalculates the refill delta and atomically swaps the state if neither value has changed."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in a high-performance lock-free rate limiter?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation with extremely low latency overhead, avoiding the pauses associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent hash table",
+        "distributed rate limiting algorithms",
+        "hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T02:28:34.020963+00:00",
+      "run_number": 2912
     }
   ]
 }
