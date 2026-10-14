@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2951,
-    "last_updated": "2026-10-14T18:38:20.791348+00:00",
-    "total_topics_learned": 2951
+    "total_runs": 2952,
+    "last_updated": "2026-10-14T18:41:30.539979+00:00",
+    "total_topics_learned": 2952
   },
   "entries": [
     {
@@ -140626,6 +140626,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T18:38:20.791326+00:00",
       "run_number": 2951
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spell-checking in real-time auto-correction platforms and concurrent natural language processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent BK-Tree is a specialized metric tree data structure optimized for discrete metric spaces like Levenshtein edit distance, enabling fast fuzzy string matching. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, this implementation ensures lock-free thread safety, allowing multiple cores to insert and query strings simultaneously without blocking or suffering from race conditions.",
+      "key_points": [
+        "Utilizes Levenshtein distance metrics to partition child nodes based on integer edit distances from a parent term.",
+        "Employs atomic pointers for child-node linking to allow non-blocking concurrent insertions across multiple threads.",
+        "Integrates hazard pointer memory reclamation to safely manage memory deallocation without risking use-after-free errors under heavy concurrency.",
+        "Optimizes multi-core spell-checking and auto-correction pipelines by eliminating lock contention during real-time queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic insertion structure of a node in a concurrent BK-Tree using CAS primitives.",
+        "correct": "bool insert_child(std::atomic<Node*>& child_slot, Node* new_node) {\n    Node* expected = nullptr;\n    while (!child_slot.compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        if (expected != nullptr) return false; // Slot occupied, must traverse existing child\n    }\n    return true;\n}",
+        "wrong": "bool insert_child(Node*& child_slot, Node* new_node) {\n    if (child_slot == nullptr) {\n        child_slot = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to acquire hazard pointers before traversing dynamically allocated tree nodes, leading to race conditions where another thread frees the node.",
+        "Using incorrect memory ordering constraints (e.g., sequentially consistent everywhere when acquire-release semantics suffice), which degrades performance."
+      ],
+      "best_practices": [
+        "Wrap all lock-free node accesses within local thread hazard pointer protection domains to safely defer memory reclamation.",
+        "Pre-allocate nodes or use lock-free memory pools to minimize heap allocation overhead during high-throughput concurrent inserts."
+      ],
+      "when_to_use": "Use when building high-throughput real-time spell-checkers, auto-correction pipelines, or recommendation systems requiring low-latency fuzzy matching across many CPU cores.",
+      "when_not_to_use": "Avoid when data is strictly static or single-threaded, where a simpler recursive or iterative standard BK-Tree implementation with minimal overhead is sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free BK-Tree without causing memory leaks or use-after-free bugs?",
+          "answer": "By implementing hazard pointers that allow threads to register nodes they are currently reading, ensuring those nodes are only reclaimed by a garbage collection epoch once no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is Levenshtein distance well-suited for BK-Tree partitioning in multi-core text engines?",
+          "answer": "Levenshtein distance satisfies the triangle inequality, which allows the BK-Tree pruning algorithm to eliminate large subtrees during searches, significantly speeding up fuzzy matching queries."
+        }
+      ],
+      "related_topics": [
+        "Vantage-Point Tree",
+        "Aho-Corasick Automaton",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-14T18:41:30.539929+00:00",
+      "run_number": 2952
     }
   ]
 }
