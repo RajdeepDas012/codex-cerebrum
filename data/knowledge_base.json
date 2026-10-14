@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2912,
-    "last_updated": "2026-10-14T02:28:34.020979+00:00",
-    "total_topics_learned": 2912
+    "total_runs": 2913,
+    "last_updated": "2026-10-14T02:31:43.954938+00:00",
+    "total_topics_learned": 2913
   },
   "entries": [
     {
@@ -138779,6 +138779,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T02:28:34.020963+00:00",
       "run_number": 2912
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components analysis and multi-core equivalence relation querying in real-time social network graph partitioning platforms and concurrent compiler type inference engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Disjoint-Set Union-Find data structure optimized for multi-threaded environments. It leverages atomic Compare-And-Swap (CAS) primitives for thread-safe root linking and path compression (halving), combined with hazard pointers to safely manage node memory reclamation under heavy contention.",
+      "key_points": [
+        "Utilizes atomic pointer updates via CAS to safely modify parent pointers without global locks.",
+        "Implements lock-free path-halving during find operations to flatten the tree structure and improve future query performance.",
+        "Employs rank- or size-based atomic union operations to keep trees balanced and minimize depth under concurrent modifications.",
+        "Uses hazard pointers to track active thread references to nodes, preventing premature deallocation and use-after-free bugs during concurrent traversals."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS for concurrent union operations in a lock-free Disjoint-Set structure.",
+        "correct": "bool link(Node* root1, Node* root2) {\n    while (true) {\n        Node* p1 = root1->parent.load();\n        Node* p2 = root2->parent.load();\n        if (p1 != root1 || p2 != root2) return false;\n        if (root1 == root2) return true;\n        if (root1->rank < root2->rank) std::swap(root1, root2);\n        if (root1->parent.compare_exchange_weak(p1, root2)) {\n            if (root1->rank == root2->rank) {\n                root2->rank.fetch_add(1, std::memory_order_relaxed);\n            }\n            return true;\n        }\n    }\n}",
+        "wrong": "bool link(Node* root1, Node* root2) {\n    // Missing CAS loop and structural validation leads to race conditions and broken trees\n    if (root1->parent == root1 && root2->parent == root2) {\n        root1->parent = root2;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to re-check root pointers after reading them, leading to lost updates and disconnected components.",
+        "Neglecting memory reclamation synchronization, causing memory leaks or race conditions with hazard pointers.",
+        "Using blocking synchronization primitives inside traversal paths which bottlenecks highly parallel graph workloads."
+      ],
+      "best_practices": [
+        "Always wrap node traversal references inside hazard pointer guards to safely protect against concurrent deletions.",
+        "Prefer path-halving over full path-compression in lock-free variants to reduce the frequency of heavy atomic write contention on parent pointers.",
+        "Use relaxed memory ordering for non-pointer metadata like ranks where strict synchronization is unnecessary."
+      ],
+      "when_to_use": "When building high-throughput parallel graph algorithms, real-time social network community detection, or concurrent type-unification engines that require frequent, concurrent equivalence queries.",
+      "when_not_to_use": "When the workload is single-threaded, or when memory overhead from hazard pointers and complex atomic loops outweighs the benefits of lock-free parallelism.",
+      "interview_questions": [
+        {
+          "question": "Why is path-halving generally preferred over full path-compression in lock-free Disjoint-Set implementations?",
+          "answer": "Path-halving only updates every other node's parent pointer to point to its grandparent during a single traversal, reducing the frequency and cost of atomic CAS operations compared to flattening the entire path to the root in one go."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions when freeing nodes in a lock-free Union-Find data structure?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing. Before a node is reclaimed or deleted, the memory reclamation mechanism verifies that no other thread holds an active hazard pointer referencing that node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation strategies",
+        "Concurrent graph processing algorithms",
+        "Atomic compare-and-swap optimization patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T02:31:43.954920+00:00",
+      "run_number": 2913
     }
   ]
 }
