@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2926** |
-| Last Updated | `2026-10-14T07:50:26.417923+00:00` |
-| Dataset Size | `2926 entries` |
+| Total Topics Learned | **2927** |
+| Last Updated | `2026-10-14T07:53:34.745148+00:00` |
+| Dataset Size | `2927 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | technical-analysis | 147 |
 | crypto-blockchain | 144 |
 | market-analysis | 114 |
-| system-design | 87 |
+| system-design | 88 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and queue-overflow-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time cloud API gateways and concurrent distributed proxy servers`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search operations and multi-core frequently-accessed node optimization in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core geographic coordinate querying in real-time mapping navigation platforms and concurrent GIS database engines`
 - `Implementation of a lock-free thread-safe concurrent Zobrist Hashing engine using atomic state-swapping and board-key-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput game state indexing and multi-core transposition table lookups in real-time chess engines and concurrent AI search platforms`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotating and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced searching and multi-core priority management in real-time in-memory databases and concurrent scheduling engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-updating and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core range queries in real-time in-memory databases and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 

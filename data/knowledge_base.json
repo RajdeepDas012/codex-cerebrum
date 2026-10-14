@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2926,
-    "last_updated": "2026-10-14T07:50:26.417923+00:00",
-    "total_topics_learned": 2926
+    "total_runs": 2927,
+    "last_updated": "2026-10-14T07:53:34.745148+00:00",
+    "total_topics_learned": 2927
   },
   "entries": [
     {
@@ -139446,6 +139446,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T07:50:26.417902+00:00",
       "run_number": 2926
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic token-draining and queue-overflow-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time cloud API gateways and concurrent distributed proxy servers",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free, thread-safe Leaky Bucket rate limiter tailored for high-throughput cloud environments. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it enables multi-core request shaping and prevents resource exhaustion without incurring mutex contention overhead.",
+      "key_points": [
+        "Utilizes atomic operations to track current bucket fill levels and timestamps without global locks.",
+        "Employs hazard pointers to safely reclaim queue node memory under concurrent writer and reader threads.",
+        "Implements continuous leaky drainage coupled with strict overflow checks to reject excess traffic smoothly.",
+        "Maximizes throughput in distributed proxy servers by allowing independent threads to evaluate request rates concurrently."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state evaluation for a lock-free leaky bucket drop decision using CAS.",
+        "correct": "bool try_consume(std::atomic<uint64_t>& state, uint64_t capacity) {\n    uint64_t current = state.load();\n    do {\n        if (current >= capacity) return false;\n    } while (!state.compare_exchange_weak(current, current + 1));\n    return true;\n}",
+        "wrong": "bool try_consume(std::mutex& m, uint64_t& count, uint64_t capacity) {\n    std::lock_guard<std::mutex> lock(m);\n    if (count >= capacity) return false;\n    count++;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting time elapsed calculation in lock-free updates, leading to stale leak rates.",
+        "Failing to safely isolate memory reclamation, causing use-after-free race conditions under high thread contention."
+      ],
+      "best_practices": [
+        "Cache-align atomic state variables to minimize false sharing across multi-core processors.",
+        "Integrate hazard pointers or epoch-based reclamation to manage nodes dropped during high-load traffic bursts."
+      ],
+      "when_to_use": "When building low-latency, high-concurrency API gateways requiring deterministic traffic shaping across many CPU cores.",
+      "when_not_to_use": "In single-threaded applications or environments where simple mutex-based rate limiters provide sufficient throughput with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the leaky bucket's timestamp and token count atomically?",
+          "answer": "Pack both values into a single wider atomic word (e.g., 128-bit atomic) or use a descriptor-based pattern with CAS to update them simultaneously."
+        },
+        {
+          "question": "Why use hazard pointers instead of standard garbage collection in this lock-free rate limiter?",
+          "answer": "Hazard pointers offer deterministic, low-latency memory reclamation without stop-the-world pauses, which is crucial for high-throughput real-time proxy servers."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Token Bucket Rate Limiter",
+        "Hazard Pointer Memory Management",
+        "Concurrent Queue Architectures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-14T07:53:34.745105+00:00",
+      "run_number": 2927
     }
   ]
 }
