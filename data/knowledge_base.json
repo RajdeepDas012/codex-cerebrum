@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2907,
-    "last_updated": "2026-10-14T02:08:38.948170+00:00",
-    "total_topics_learned": 2907
+    "total_runs": 2908,
+    "last_updated": "2026-10-14T02:12:29.978546+00:00",
+    "total_topics_learned": 2908
   },
   "entries": [
     {
@@ -138544,6 +138544,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T02:08:38.948152+00:00",
       "run_number": 2907
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership checking and multi-core duplicate filtering in real-time web crawler engines and concurrent distributed cache systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bloom Filter utilizing atomic bit-level instructions (CAS primitives) and hazard pointers. It enables high-throughput, multi-core approximate membership queries without traditional locking bottlenecks.",
+      "key_points": [
+        "Uses atomic bit-setting and word-masking CAS operations to modify filter arrays safely across multiple threads without locks.",
+        "Employs hazard pointer memory reclamation to ensure safe concurrent memory management and prevent use-after-free bugs.",
+        "Provides high-throughput approximate membership checks essential for web crawlers and distributed caches.",
+        "Eliminates global lock contention, scaling linearly with the number of CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic word-masking and bit-setting via compare-and-swap for a lock-free Bloom filter chunk update.",
+        "correct": "bool set_bit(std::atomic<uint64_t>& word, size_t bit_offset) {\n    uint64_t mask = 1ULL << bit_offset;\n    uint64_t old_val = word.load(std::memory_order_relaxed);\n    while (true) {\n        if ((old_val & mask) == mask) return false; // Already set\n        if (word.compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool set_bit(std::atomic<uint64_t>& word, size_t bit_offset) {\n    uint64_t mask = 1ULL << bit_offset;\n    word.fetch_or(mask, std::memory_order_relaxed); // Misses checking if it was already set for return status\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic operations or naive locking, which severely degrades multi-core throughput.",
+        "Failing to use correct memory ordering (such as release-acquire semantics) with atomic CAS loops, leading to stale reads."
+      ],
+      "best_practices": [
+        "Always employ weak CAS in loops to handle hardware-level spurious failures efficiently.",
+        "Integrate hazard pointers or epoch-based memory reclamation when dynamic resizing or restructuring of the underlying bit array is supported."
+      ],
+      "when_to_use": "When building high-concurrency systems like web crawlers or distributed caches that require ultra-fast membership tests across numerous threads.",
+      "when_not_to_use": "When exact membership testing is required or when single-threaded simplicity and low memory overhead outweigh multi-core concurrency needs.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread-safe bit setting in a Bloom filter without locks?",
+          "answer": "By using atomic word-masking combined with a compare-and-swap (CAS) loop to update individual bits in a shared word."
+        },
+        {
+          "question": "Why is memory reclamation necessary in concurrent data structures like a lock-free Bloom Filter?",
+          "answer": "Even if filters are often statically allocated, dynamic resizing requires safe memory reclamation (like hazard pointers) to prevent race conditions and use-after-free errors when old arrays are freed."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T02:12:29.978527+00:00",
+      "run_number": 2908
     }
   ]
 }
