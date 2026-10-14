@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2967** |
-| Last Updated | `2026-10-14T22:25:38.653620+00:00` |
-| Dataset Size | `2967 entries` |
+| Total Topics Learned | **2968** |
+| Last Updated | `2026-10-14T22:28:47.833578+00:00` |
+| Dataset Size | `2968 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1856 |
+| data-structures | 1857 |
 | trading-strategies | 228 |
 | algorithms | 166 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocation and cycle-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput deterministic lookups and multi-core collision resolution in real-time distributed key-value stores and concurrent in-memory caching systems`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set deletion in real-time distributed storage systems and concurrent database query optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic peer-routing and stabilization-CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer discovery and multi-core distributed overlay routing in real-time content delivery networks and concurrent distributed hash table engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-interval querying and multi-core scheduling range analysis in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Xor Filter using atomic fingerprint-calculating and coefficient-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core set optimization in real-time distributed storage systems and concurrent database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index operations and multi-core database table navigation in real-time relational database management systems and concurrent storage engines`
 
 <!-- STATS_END -->
 
