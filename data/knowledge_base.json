@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2923,
-    "last_updated": "2026-10-14T07:41:00.173141+00:00",
-    "total_topics_learned": 2923
+    "total_runs": 2924,
+    "last_updated": "2026-10-14T07:44:08.807771+00:00",
+    "total_topics_learned": 2924
   },
   "entries": [
     {
@@ -139303,6 +139303,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T07:41:00.173105+00:00",
       "run_number": 2923
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Zobrist Hashing engine using atomic state-swapping and board-key-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput game state indexing and multi-core transposition table lookups in real-time chess engines and concurrent AI search platforms",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, lock-free concurrent Zobrist hashing engine tailored for parallel game tree searches. It leverages atomic Compare-And-Swap (CAS) operations and hazard pointers to safely manage transposition tables across multiple threads without lock contention.",
+      "key_points": [
+        "Utilizes Zobrist hashing for rapid, incremental computation of unique game state identifiers using bitwise XOR operations.",
+        "Employs atomic state-swapping and board-key-updating CAS primitives to allow multiple worker threads to update the transposition table concurrently.",
+        "Integrates hazard pointers to safely defer memory reclamation of evicted or overwritten transposition table entries in a lock-free manner.",
+        "Maximizes search throughput in multi-core chess engines and AI search algorithms by eliminating mutex bottlenecks during state evaluation and lookup."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic updates and hazard pointer protection for a concurrent transposition table entry.",
+        "correct": "#include <atomic>\n#include <cstdint>\n\nstruct TableEntry {\n    std::atomic<uint64_t> key;\n    std::atomic<uint64_t> value;\n};\n\nbool updateEntry(TableEntry* entry, uint64_t expected_key, uint64_t new_key, uint64_t new_val) {\n    uint64_t exp = expected_key;\n    if (entry->key.compare_exchange_strong(exp, new_key)) {\n        entry->value.store(new_val, std::memory_order_release);\n        return true;\n    }\n    return false;\n}",
+        "wrong": "bool updateEntry(TableEntry* entry, uint64_t new_key, uint64_t new_val) {\n    entry->key = new_key;\n    entry->value = new_val;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory semantics when reading and writing associated table entry values alongside atomic keys.",
+        "Forgetting to protect dynamic table resize or node allocation operations with hazard pointers, leading to ABA problems and use-after-free bugs."
+      ],
+      "best_practices": [
+        "Ensure Zobrist random bit sequences are initialized securely and uniformly across all piece-square and game-state attributes.",
+        "Design transposition table buckets with fixed-size arrays or lock-free probing to bound memory usage and prevent unbounded allocation under high concurrency."
+      ],
+      "when_to_use": "When building multi-threaded game-playing programs or parallel AI search engines that require ultra-fast, contention-free hash table lookups for state memoization.",
+      "when_not_to_use": "In single-threaded applications or domains where simple synchronized hash maps with standard mutexes introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How does Zobrist hashing allow incremental updates to game states?",
+          "answer": "By using the XOR property (A ^ A = 0), making and unmaking moves only requires XORing out the old piece position key and XORing in the new piece position key."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free concurrent transposition table?",
+          "answer": "They prevent worker threads from freeing or overwriting memory locations that other concurrent threads are currently reading or validating."
+        }
+      ],
+      "related_topics": [
+        "Lock-free hash tables",
+        "Hazard pointer memory management",
+        "Minimax search parallelization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T07:44:08.807749+00:00",
+      "run_number": 2924
     }
   ]
 }
