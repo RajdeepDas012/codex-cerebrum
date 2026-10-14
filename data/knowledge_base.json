@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2965,
-    "last_updated": "2026-10-14T22:19:20.061882+00:00",
-    "total_topics_learned": 2965
+    "total_runs": 2966,
+    "last_updated": "2026-10-14T22:22:29.349688+00:00",
+    "total_topics_learned": 2966
   },
   "entries": [
     {
@@ -141290,6 +141290,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-14T22:19:20.061862+00:00",
       "run_number": 2965
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic peer-routing and stabilization-CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer discovery and multi-core distributed overlay routing in real-time content delivery networks and concurrent distributed hash table engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Skip-Graph is an advanced distributed and multi-core data structure that generalizes skip lists to peer-to-peer overlay networks without sacrificing logarithmic search and routing bounds. By employing atomic peer-routing and stabilization-CAS primitives together with hazard pointers, it enables lock-free node insertion, deletion, and robust distributed searches under high contention.",
+      "key_points": [
+        "Utilizes multi-level linked structures similar to skip lists to guarantee logarithmic routing paths across nodes.",
+        "Employs atomic peer-routing and stabilization-CAS primitives to safely mutate neighborhood pointers without blocking threads.",
+        "Integrates hazard pointer memory reclamation to prevent premature deallocation of nodes actively traversed by concurrent reader threads.",
+        "Facilitates decentralized peer-to-peer discovery and distributed hash table operations with high thread throughput and scalability."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free node routing traversal step using hazard pointers and atomic pointer loading in a Skip-Graph.",
+        "correct": "SkipGraphNode* get_next_peer(SkipGraphNode* current, int level, uint64_t target_key, HazardPointerRegistry& hp_reg) {\n    HazardPointerGuard guard(hp_reg);\n    while (true) {\n        SkipGraphNode* next = guard.protect(current->next[level].load(std::memory_order_acquire));\n        if (next == nullptr || next->key >= target_key) return next;\n        current = next;\n        guard.protect(current);\n    }\n}",
+        "wrong": "SkipGraphNode* get_next_peer(SkipGraphNode* current, int level) {\n    return current->next[level].load(std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate nodes with hazard pointers during multi-level traversals, leading to use-after-free race conditions.",
+        "Using weak memory orderings like memory_order_relaxed for pointer updates, causing stale view anomalies during concurrent stabilization passes."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing node pointers fetched via atomic loads in concurrent environments.",
+        "Ensure atomic CAS operations validate both the target pointer and its associated membership state version to prevent ABA problems."
+      ],
+      "when_to_use": "Use when building high-throughput decentralized peer-to-peer systems, distributed hash tables, or multi-core routing tables that require lock-free parallel execution.",
+      "when_not_to_use": "Avoid in low-concurrency or single-threaded environments where standard pointer-based skip lists provide simpler implementation and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers ensure safe memory reclamation in a lock-free Skip-Graph?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, blocking other threads from freeing those nodes until the reference is cleared."
+        },
+        {
+          "question": "Why are stabilization-CAS primitives necessary during node insertions in a concurrent Skip-Graph?",
+          "answer": "They ensure that multi-level neighbor links are updated atomically and consistently, preventing readers from observing partially linked states."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Distributed Hash Tables",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T22:22:29.349669+00:00",
+      "run_number": 2966
     }
   ]
 }
