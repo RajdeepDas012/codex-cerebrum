@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2949,
-    "last_updated": "2026-10-14T18:32:01.990274+00:00",
-    "total_topics_learned": 2949
+    "total_runs": 2950,
+    "last_updated": "2026-10-14T18:35:11.544361+00:00",
+    "total_topics_learned": 2950
   },
   "entries": [
     {
@@ -140532,6 +140532,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-14T18:32:01.990253+00:00",
       "run_number": 2949
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic state-transition and failure-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary scanning in real-time intrusion detection systems and concurrent log analysis engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Aho-Corasick string matching automaton. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, multiple threads can safely traverse, expand, and query dictionary paths without global locking, ensuring high-throughput pattern analysis.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely update child state transitions and failure links concurrently.",
+        "Employs hazard pointers to manage memory reclamation safely during dynamic node insertions and automaton restructuring.",
+        "Enables high-throughput multi-pattern string matching across multiple CPU cores without thread blocking.",
+        "Maintains correctness of failure links and dictionary suffixes under high concurrency and contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic state-transition CAS loop with hazard pointer protection for thread-safe tree expansion.",
+        "correct": "Node* next_node = node->children[char_idx].load(std::memory_order_acquire);\nwhile (!next_node) {\n    Node* new_node = new Node();\n    if (node->children[char_idx].compare_exchange_weak(next_node, new_node, std::memory_order_release)) {\n        next_node = new_node;\n        break;\n    } else {\n        delete new_node;\n    }\n}",
+        "wrong": "Node* next_node = node->children[char_idx];\nif (!next_node) {\n    node->children[char_idx] = new Node();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically allocated nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Using sequential locking mechanisms on hot-path state transitions, destroying multi-core concurrency scaling."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to reading child transitions or failure links in concurrent traversal steps.",
+        "Carefully sequence memory ordering flags (acquire-release) to guarantee visibility of newly established failure links."
+      ],
+      "when_to_use": "Use when multiple worker threads must simultaneously scan high-volume data streams against a massive shared dictionary of dynamic strings.",
+      "when_not_to_use": "Avoid in single-threaded environments or static dictionaries where simpler locking or standard immutable automata provide lower implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent use-after-free bugs when another thread frees a node in a lock-free Aho-Corasick automaton?",
+          "answer": "By utilizing hazard pointers to register threads' active references to nodes before traversing transitions, deferring physical deletion until no hazard pointers reference the target."
+        },
+        {
+          "question": "Why is standard mutex-based locking problematic for high-throughput Aho-Corasick pattern matching engines?",
+          "answer": "Global or coarse-grained locking introduces high contention and thread blocking during frequent state transitions, severely degrading multi-core scaling."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash tables",
+        "Hazard pointer memory management",
+        "Suffix automata concurrency"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-14T18:35:11.544337+00:00",
+      "run_number": 2950
     }
   ]
 }
