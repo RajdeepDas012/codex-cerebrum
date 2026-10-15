@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2984,
-    "last_updated": "2026-10-15T01:41:56.994924+00:00",
-    "total_topics_learned": 2984
+    "total_runs": 2985,
+    "last_updated": "2026-10-15T01:45:06.215320+00:00",
+    "total_topics_learned": 2985
   },
   "entries": [
     {
@@ -142188,6 +142188,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-15T01:41:56.994898+00:00",
       "run_number": 2984
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic generational-timestamp-tracking and eviction-pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput hit-rate optimization and multi-core resource caching in real-time web application servers and concurrent in-memory storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Least Recently Used (LRU) cache that utilizes atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe memory reclamation and high throughput by avoiding global locks during cache hits, misses, and eviction cycles.",
+      "key_points": [
+        "Utilizes atomic generational timestamps to track recency without acquiring heavy mutexes.",
+        "Employs eviction-pointer-swapping CAS primitives to safely remove stale nodes under high contention.",
+        "Integrates hazard pointers to manage memory reclamation and prevent ABA problems and use-after-free bugs.",
+        "Achieves high throughput and optimal hit rates across multiple cores for real-time web application servers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based pointer swap for updating cache node recency pointers.",
+        "correct": "bool update_recency(std::atomic<Node*>& head, Node* old_node, Node* new_node) {\n    return head.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = head.load();\n// Another thread might modify head here\nhead.store(new_node); // Non-atomic check-then-act race condition"
+      },
+      "common_mistakes": [
+        "Failing to protect freed cache nodes with hazard pointers, leading to use-after-free vulnerabilities.",
+        "Relying on standard mutex locks inside the core lookup path, which introduces bottlenecks under multi-core scaling."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for non-dependent reads and acquire-release semantics for pointer modifications.",
+        "Batch hazard pointer retirements to reduce the frequency of expensive memory reclamation scans."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput in-memory caches or web servers where contention on cache eviction structures creates bottlenecks.",
+      "when_not_to_use": "Avoid when target systems have low core counts or simple workloads where standard synchronized hash maps or mutex-protected LRU caches provide sufficient performance with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating pointers in a lock-free LRU cache?",
+          "answer": "By using generational timestamps or tagged pointers combined with atomic CAS operations so that modifications alter the version tag alongside the address."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free high-performance caches?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the pause times and overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T01:45:06.215302+00:00",
+      "run_number": 2985
     }
   ]
 }
