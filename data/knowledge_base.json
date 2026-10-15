@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3001,
-    "last_updated": "2026-10-15T07:42:12.011091+00:00",
-    "total_topics_learned": 3001
+    "total_runs": 3002,
+    "last_updated": "2026-10-15T07:45:31.053689+00:00",
+    "total_topics_learned": 3002
   },
   "entries": [
     {
@@ -142995,6 +142995,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T07:42:12.011068+00:00",
       "run_number": 3001
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU Cache using atomic frequency-list-splicing and bucket-pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput access-frequency optimization and multi-core item retention in real-time big data analytics servers and concurrent in-memory caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural patterns required to design a lock-free, thread-safe Least Frequently Used (LFU) cache. By leveraging atomic operations and hazard pointers, it ensures high throughput and safe memory reclamation under intense multi-core contention.",
+      "key_points": [
+        "Utilizes atomic frequency-list-splicing to move items across frequency buckets without acquiring global locks.",
+        "Employs bucket-pointer-swapping CAS primitives to manage hash-to-frequency map transitions safely.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes actively read or updated by concurrent threads.",
+        "Maximizes throughput in high-concurrency analytics workloads by eliminating lock contention on cache hits and misses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency updating and node safeguarding using hazard pointers.",
+        "correct": "void* LFU::get(K key) {\n  HazardPointerGuard hp;\n  while (true) {\n    Node* node = hp.protect(map.find(key));\n    if (!node) return nullptr;\n    uint64_t old_freq = node->freq.load();\n    if (node->freq.compare_exchange_weak(old_freq, old_freq + 1)) {\n      splice_to_frequency_bucket(node, old_freq, old_freq + 1);\n      return node->value;\n    }\n  }\n}",
+        "wrong": "void* LFU::get(K key) {\n  std::lock_guard<std::mutex> lock(mu);\n  Node* node = map[key];\n  node->freq++;\n  return node->value;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs when concurrent threads evict nodes.",
+        "Relying on coarse-grained global locks which drastically degrade throughput on multi-core systems."
+      ],
+      "best_practices": [
+        "Pin thread-local hazard pointers before navigating shared pointer links to ensure memory safety during node removal.",
+        "Design frequency lists to scale horizontally, minimizing atomic retry loops during heavy read contention."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caching layers that must retain items strictly based on access frequency across numerous concurrent worker threads.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where standard lock-based caches provide sufficient throughput without added implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you safely reclaim memory of evicted items in a lock-free LFU cache without risking use-after-free errors?",
+          "answer": "By using hazard pointers to register threads that are actively reading specific cache nodes, deferring actual memory deallocation until no thread holds a hazard reference to the target node."
+        },
+        {
+          "question": "What is the primary challenge when updating item frequencies atomically in a concurrent LFU cache?",
+          "answer": "The challenge is updating the frequency counter and simultaneously moving the node to the corresponding frequency-sorted linked list without introducing race conditions or using heavy locks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Hash Maps",
+        "Concurrent LRU Caches"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T07:45:31.053668+00:00",
+      "run_number": 3002
     }
   ]
 }
