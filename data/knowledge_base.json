@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3047,
-    "last_updated": "2026-10-15T22:34:50.371236+00:00",
-    "total_topics_learned": 3047
+    "total_runs": 3048,
+    "last_updated": "2026-10-15T22:37:59.171831+00:00",
+    "total_topics_learned": 3048
   },
   "entries": [
     {
@@ -145180,6 +145180,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T22:34:50.371217+00:00",
       "run_number": 3047
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R*-Tree using atomic entry-splitting and minimum-overlap-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems and concurrent location-based service routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent R*-Tree data structure utilizing atomic Compare-And-Swap (CAS) operations for node entry splitting and overlap minimization. It incorporates hazard pointers for safe memory reclamation, enabling high-performance multi-dimensional spatial indexing and range querying across multiple CPU cores without lock contention.",
+      "key_points": [
+        "Uses atomic entry-splitting and minimum-overlap-adjusting primitives to maintain R*-tree spatial balance under heavy concurrent updates.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural modifications without blocking concurrent readers.",
+        "Achieves lock-free thread safety using low-level CAS primitives, preventing deadlocks and reducing thread contention in multi-core environments.",
+        "Optimized for high-throughput spatial indexing, multi-dimensional range queries, and real-time location-based routing applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation with hazard pointer protection for concurrent R*-Tree traversal.",
+        "correct": "Node* node = hazard_mgr.protect(root_ptr.load());\nwhile (!node->cas_split_entries(new_entry)) {\n    hazard_mgr.retire(node);\n    node = hazard_mgr.protect(root_ptr.load());\n}",
+        "wrong": "Node* node = root_ptr.load();\nif (node->is_full()) {\n    node->split(); // Not atomic, causes race conditions and memory corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed spatial nodes with hazard pointers, leading to use-after-free bugs during node splits and merges.",
+        "Relying on coarse-grained locking inside spatial indexing routines, which bottlenecks multi-core throughput during massive range queries."
+      ],
+      "best_practices": [
+        "Isolate memory reclamation logic using thread-local hazard pointer records to minimize synchronization overhead.",
+        "Design minimum-overlap heuristics to execute efficiently via fine-grained atomic operations before committing structural changes."
+      ],
+      "when_to_use": "Use when building real-time geographic information systems, location-based tracking engines, or spatial databases requiring high-concurrency multi-dimensional indexing.",
+      "when_not_to_use": "Avoid when dealing with single-threaded applications or simple static datasets where standard locking mechanisms or simpler spatial structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node splitting in a lock-free R*-Tree?",
+          "answer": "Hazard pointers allow threads to atomically register nodes they are currently accessing, ensuring that memory allocators do not reclaim or reuse those node addresses until all referencing threads have released their protection."
+        },
+        {
+          "question": "What is the primary challenge when adapting the R*-Tree's minimum-overlap splitting heuristic for lock-free concurrency?",
+          "answer": "The main challenge is that calculating and applying overlap-minimizing splits involves evaluating multiple bounding box permutations, which is difficult to encapsulate atomically within a single CAS instruction without causing high retry rates."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Hazard Pointers",
+        "Lock-Free Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T22:37:59.171810+00:00",
+      "run_number": 3048
     }
   ]
 }
