@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3005,
-    "last_updated": "2026-10-15T07:55:30.001525+00:00",
-    "total_topics_learned": 3005
+    "total_runs": 3006,
+    "last_updated": "2026-10-15T07:58:48.360209+00:00",
+    "total_topics_learned": 3006
   },
   "entries": [
     {
@@ -143189,6 +143189,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T07:55:30.001502+00:00",
       "run_number": 3005
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search operations and multi-core frequently accessed node optimization in real-time in-memory caching layers and concurrent database index engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Splay Tree utilizing atomic root-rotations and hazard pointers. It ensures thread-safe, high-throughput self-adjustment where frequently accessed nodes are moved closer to the root without blocking execution.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe node rotations and structural splicing.",
+        "Employs hazard pointers for safe memory reclamation in lock-free concurrent traversals and updates.",
+        "Implements self-adjusting splay operations that optimize access latency for hot items dynamically.",
+        "Prevents thread contention by avoiding global locks during multi-core search and update cycles."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection during a concurrent node splay operation",
+        "correct": "void* hazard_splay_search(HazardPointerRegistry& registry, std::atomic<Node*>& root, int key) {\n    HazardPointer hp(registry);\n    Node* curr;\n    do {\n        curr = hp.protect(root);\n        // Perform safe traversal and atomic splay rotation\n    } while (root.load() != curr);\n    return curr;\n}",
+        "wrong": "Node* unsafe_search(std::atomic<Node*>& root, int key) {\n    return root.load(); // Lacks hazard protection, risking use-after-free\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register hazard pointers before reading shared tree node pointers.",
+        "Attempting complex multi-step splays with a single CAS instead of breaking them into atomic sub-transformations."
+      ],
+      "best_practices": [
+        "Retire nodes safely using deferred reclamation queues after unlinking them via CAS.",
+        "Minimize retry loops in high-contention zones by backing off exponentially when CAS fails."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-core in-memory caching layers where access patterns exhibit strong temporal locality.",
+      "when_not_to_use": "Avoid in single-threaded environments or strict write-heavy workloads with uniform access patterns where traditional balanced trees perform better.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Splay Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are reading, preventing other threads from reclaiming or freeing those memory addresses until the read reference is released."
+        },
+        {
+          "question": "Why is performing a multi-step splay operation atomically difficult in a lock-free structure?",
+          "answer": "Because structural changes involve modifying multiple parent/child pointers across the tree, which cannot be updated atomically in a single instruction; thus, they must be broken down into smaller, valid intermediate states using CAS."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Link Trees",
+        "Hazard Pointer Memory Management",
+        "Lock-Free LFU Caches"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T07:58:48.360186+00:00",
+      "run_number": 3006
     }
   ]
 }
