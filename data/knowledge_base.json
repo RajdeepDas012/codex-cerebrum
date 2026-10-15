@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2988,
-    "last_updated": "2026-10-15T01:54:35.146356+00:00",
-    "total_topics_learned": 2988
+    "total_runs": 2989,
+    "last_updated": "2026-10-15T01:57:45.141405+00:00",
+    "total_topics_learned": 2989
   },
   "entries": [
     {
@@ -142379,6 +142379,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T01:54:35.146338+00:00",
       "run_number": 2988
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leakage-rate-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core bandwidth regulation in real-time edge computing proxies and concurrent API gateway routing engines",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This architectural pattern implements a non-blocking Leaky Bucket traffic shaper capable of handling high-frequency request streams across multiple cores. By utilizing atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures consistent output pacing without the bottlenecks or deadlocks typical of lock-based synchronization.",
+      "key_points": [
+        "Uses atomic queue-draining and leakage-rate-calculating CAS primitives to maintain strict output bandwidth limits without blocking threads.",
+        "Employs hazard pointer memory reclamation to safely free dropped or fully drained request nodes without suffering from the ABA problem.",
+        "Enables predictable traffic shaping by smoothing out bursty input traffic into a constant, regulated flow rate.",
+        "Optimized for multi-core edge computing proxies and high-throughput API gateways requiring minimal latency overhead."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates lock-free leak rate calculation and atomic queue state updates using compare-and-swap loops.",
+        "correct": "while True:\n    current_state = atomic_load(bucket)\n    new_state = calculate_leak(current_state, time.time())\n    if atomic_cas(bucket, current_state, new_state):\n        break",
+        "wrong": "with mutex:\n    current_state.leak()\n    bucket.update(current_state)"
+      },
+      "common_mistakes": [
+        "Failing to account for clock skew or high-resolution timestamp drift when computing leakage intervals across multiple worker threads.",
+        "Neglecting hazard pointer registration before reading shared bucket state pointers, leading to use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Batch leakage updates where possible to reduce contention on high-traffic atomic pointer locations.",
+        "Pre-allocate node pools for the leaky queue to minimize memory allocation overhead during traffic spikes.",
+        "Pair the leaky bucket algorithm with backpressure mechanisms to handle downstream saturation gracefully."
+      ],
+      "when_to_use": "When you need to enforce strict outbound bandwidth limits and smooth bursty traffic in high-concurrency edge proxies or API gateways.",
+      "when_not_to_use": "When absolute low-latency burst absorption is required without output pacing, as leaky buckets inherently queue and delay traffic.",
+      "interview_questions": [
+        {
+          "question": "How does a Leaky Bucket algorithm differ from a Token Bucket algorithm in a concurrent environment?",
+          "answer": "A Leaky Bucket enforces a constant outflow rate and smooths out bursts by queuing requests, whereas a Token Bucket allows bursts up to a predefined capacity while limiting the average rate."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection or mutexes in a lock-free rate limiter?",
+          "answer": "Garbage collection introduces unpredictable pause times that ruin real-time throughput, and mutexes cause thread contention; hazard pointers provide deterministic, lock-free memory reclamation safely visible to concurrent readers."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Token Bucket Rate Limiter",
+        "Hazard Pointer Memory Management",
+        "Concurrent Queue Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T01:57:45.141384+00:00",
+      "run_number": 2989
     }
   ]
 }
