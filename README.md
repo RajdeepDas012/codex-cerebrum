@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3027** |
-| Last Updated | `2026-10-15T18:24:50.697542+00:00` |
-| Dataset Size | `3027 entries` |
+| Total Topics Learned | **3028** |
+| Last Updated | `2026-10-15T18:28:05.504726+00:00` |
+| Dataset Size | `3028 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,8 +20,8 @@
 | data-structures | 1906 |
 | trading-strategies | 228 |
 | algorithms | 170 |
+| crypto-blockchain | 147 |
 | technical-analysis | 147 |
-| crypto-blockchain | 146 |
 | market-analysis | 114 |
 | system-design | 94 |
 | stocks-markets | 71 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic node-hashing and branch-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core state synchronization in real-time distributed ledger systems and concurrent distributed file storage engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate set membership testing and multi-core container compaction in real-time distributed storage layers and concurrent database caching engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct element counting in real-time big data analytics pipelines and concurrent stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-bucket-chaining and reference-count-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput evictions and multi-core item retrieval in real-time distributed web caching layers and concurrent database query response stores`
 - `Implementation of a lock-free thread-safe concurrent Skip-Net using atomic ring-routing-pointer-linking and virtual-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed overlay routing and multi-core decentralized DHT key lookup in real-time distributed storage networks and concurrent peer-to-peer streaming engines`
-- `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components finding and multi-core equivalence relation tracking in real-time social network friend suggestion engines and concurrent graph clustering systems`
 
 <!-- STATS_END -->
 
