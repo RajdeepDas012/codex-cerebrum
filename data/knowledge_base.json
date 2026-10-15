@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2977,
-    "last_updated": "2026-10-15T01:19:45.522598+00:00",
-    "total_topics_learned": 2977
+    "total_runs": 2978,
+    "last_updated": "2026-10-15T01:22:54.839167+00:00",
+    "total_topics_learned": 2978
   },
   "entries": [
     {
@@ -141855,6 +141855,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T01:19:45.522580+00:00",
       "run_number": 2977
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core decrease-key processing in real-time graph algorithm engines and concurrent Dijkstra shortest-path computation platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent Fibonacci Heap optimized for multi-threaded priority queue workloads. By utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers, it enables high-throughput decrease-key and merge operations without coarse-grained locking bottlenecks, proving essential for real-time graph pathfinding.",
+      "key_points": [
+        "Uses atomic min-pointer-updating and node-merging CAS primitives to achieve safe concurrent updates without global mutexes.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and structural reorganizations across threads.",
+        "Supports amortized $O(1)$ insertions and decrease-key operations suited for high-concurrency graph traversal frameworks.",
+        "Manages deferred consolidation phases safely under multi-core contention using epoch-based or hazard-protected pointer tracking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic minimum pointer update via CAS in a concurrent node structure.",
+        "correct": "bool update_min(std::atomic<Node*>& min_ptr, Node* expected, Node* desired) {\n    return min_ptr.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = min_ptr;\nif (current->key > new_node->key) {\n    min_ptr = new_node; // Non-atomic update prone to race conditions and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes from ABA problems during concurrent root list merges.",
+        "Overlooking memory reclamation hazards during the consolidation phase when trees are linked and roots are detached.",
+        "Using sequential consistency everywhere instead of carefully tuned acquire-release semantics, degrading multi-core performance."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based reclamation to prevent use-after-free bugs during asynchronous node extraction.",
+        "Keep critical sections inside CAS retry loops minimal to reduce cache-coherency traffic under high thread contention.",
+        "Profile memory bandwidth consumption carefully, as pointer-heavy structures like Fibonacci heaps incur heavy cache-miss penalties."
+      ],
+      "when_to_use": "Use when implementing high-throughput concurrent priority queues where decrease-key operations are frequent and performance must scale across numerous CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or strict real-time systems where the constant overhead of CAS retries and hazard management outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node extraction and root-list merging in a lock-free Fibonacci heap?",
+          "answer": "By pairing pointers with monotonically increasing version tags or counters within a double-word CAS (DCAS or 128-bit atomic operations), or by utilizing hazard pointers that pin nodes during traversal."
+        },
+        {
+          "question": "Why is the decrease-key operation notoriously difficult to make lock-free in a Fibonacci heap, and how can atomic CAS primitives help mitigate this?",
+          "answer": "It requires modifying node parent links, child lists, and cut flags across multiple disparate pointers simultaneously. Atomic CAS primitives allow optimistic updates coupled with validation steps to retry if another thread modifies the same neighborhood."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Priority Queues",
+        "Concurrent Disjoint-Set Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T01:22:54.839150+00:00",
+      "run_number": 2978
     }
   ]
 }
