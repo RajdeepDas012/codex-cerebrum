@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3033,
-    "last_updated": "2026-10-15T18:44:47.562162+00:00",
-    "total_topics_learned": 3033
+    "total_runs": 3034,
+    "last_updated": "2026-10-15T18:48:02.706737+00:00",
+    "total_topics_learned": 3034
   },
   "entries": [
     {
@@ -144512,6 +144512,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T18:44:47.562141+00:00",
       "run_number": 3033
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy using atomic node-subdividing and tree-refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D ray tracing and multi-core collision detection in real-time computer graphics engines and concurrent game physics simulation platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bounding Volume Hierarchy (BVH) organizes geometric objects hierarchically to accelerate spatial queries like ray tracing and collision detection. Implementing it lock-free using atomic Compare-And-Swap (CAS) primitives and hazard pointers ensures safe, high-throughput multi-core tree updates without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic node-subdivision and tree-refitting CAS primitives to allow multiple threads to modify the hierarchy concurrently.",
+        "Employs hazard pointer memory reclamation to safely manage retired tree nodes and avoid memory leaks or use-after-free bugs in a lock-free environment.",
+        "Maximizes parallel performance for real-time ray tracing and complex game physics collision detection loops.",
+        "Maintains logarithmic expected time complexity for spatial queries even under heavy concurrent insertions and deletions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safely reading and updating a BVH node pointer using hazard pointers and atomic CAS.",
+        "correct": "bool update_bvh_node(std::atomic<BVHNode*>& root, BVHNode* old_node, BVHNode* new_node, HazardPointerOwner& hp) {\n    HPGuard guard(hp);\n    while (true) {\n        BVHNode* current = guard.protect(root);\n        if (current != old_node) return false;\n        if (root.compare_exchange_weak(old_node, new_node)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "BVHNode* current = root.load();\nif (current == old_node) {\n    root.store(new_node);\n    delete current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to race conditions and use-after-free crashes during tree restructuring.",
+        "Using naive global locks to handle structural updates, which destroys multi-core scalability in real-time graphics pipelines."
+      ],
+      "best_practices": [
+        "Isolate node reclamation phases by tying memory deallocation strictly to hazard pointer epoch tracking or reference-safe reclamation lists.",
+        "Minimize retry loops on CAS primitives by using fine-grained local sub-tree modifications where possible."
+      ],
+      "when_to_use": "Use when building high-performance multi-threaded ray tracers, real-time physics engines, or dynamic spatial indexing systems requiring frequent parallel updates.",
+      "when_not_to_use": "Avoid in single-threaded environments or static scenes where a standard static BVH construction algorithm is simpler and more efficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors in a lock-free Bounding Volume Hierarchy?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that reclaiming threads know not to free those memory addresses until no thread holds a matching hazard pointer."
+        },
+        {
+          "question": "Why is structural refitting of a BVH more challenging to implement lock-free than a simple concurrent queue?",
+          "answer": "Unlike linear data structures, a BVH requires atomic updates across multiple parent-child pointers simultaneously to maintain tree connectivity and spatial validity invariants."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Suffix Array",
+        "concurrent spatial indexing",
+        "hazard pointer memory management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T18:48:02.706713+00:00",
+      "run_number": 3034
     }
   ]
 }
