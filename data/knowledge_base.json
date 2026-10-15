@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3034,
-    "last_updated": "2026-10-15T18:48:02.706737+00:00",
-    "total_topics_learned": 3034
+    "total_runs": 3035,
+    "last_updated": "2026-10-15T18:51:13.177734+00:00",
+    "total_topics_learned": 3035
   },
   "entries": [
     {
@@ -144559,6 +144559,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-15T18:48:02.706713+00:00",
       "run_number": 3034
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-with-Bitwise-Routing (Crit-Bit Tree) using atomic branch-node-allocating and bit-index-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing and multi-core IP address lookup in real-time software-defined networking routers and concurrent packet classification engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A Crit-Bit Tree is a specialized binary trie that omits nodes with a single child by storing the index of the critical bit where keys diverge, enabling extremely efficient prefix lookup. By combining atomic branch-node allocation and bit-index cascading CAS primitives with hazard pointers, it achieves lock-free concurrent execution suitable for high-throughput software-defined networking.",
+      "key_points": [
+        "Utilizes atomic branch-node allocation and bit-index-cascading CAS primitives to manipulate structural pointers without blocking locks.",
+        "Employs hazard pointer memory reclamation to safely manage node deallocation under high concurrent reader-writer contention.",
+        "Optimizes memory footprint and traversal time by skipping redundant internal nodes that contain only a single branching path.",
+        "Provides deterministic lookup performance bounded by the key length, making it ideal for IP routing table lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual traversal of a crit-bit tree node using critical bit indexing for prefix lookup",
+        "correct": "class CritBitNode:\n    def __init__(self, bit_index):\n        self.bit_index = bit_index\n        self.left = None\n        self.right = None\n\ndef lookup(root, key):\n    node = root\n    while isinstance(node, CritBitNode):\n        direction = 1 if (key & (1 << node.bit_index)) else 0\n        node = node.right if direction else node.left\n    return node",
+        "wrong": "def lookup(root, key):\n    # Mistake: traversing without checking bit indices or using standard binary search tree logic\n    node = root\n    while node and node.key != key:\n        node = node.right if key > node.key else node.left\n    return node"
+      },
+      "common_mistakes": [
+        "Failing to properly validate critical bit indices during concurrent insertions, leading to missed node divergences.",
+        "Neglecting hazard pointer protection during node updates, resulting in use-after-free bugs when concurrent threads traverse pruned paths."
+      ],
+      "best_practices": [
+        "Cache critical bit indices locally during traversal phases to reduce atomic read overhead across multi-core sockets.",
+        "Batch hazard pointer retirement lists to minimize thread synchronization overhead during intense structural mutations."
+      ],
+      "when_to_use": "Use when building high-performance networking routing tables or packet classification engines requiring lock-free prefix lookups under heavy multi-core concurrency.",
+      "when_not_to_use": "Avoid when keys vary widely in data type and do not map cleanly to fixed-length bit sequences or byte arrays.",
+      "interview_questions": [
+        {
+          "question": "How does a Crit-Bit tree differ from a standard Patricia trie or standard radix trie?",
+          "answer": "A Crit-Bit tree stores the index of the first bit where keys differ explicitly in the branch nodes and eliminates explicit single-child path compression nodes, resulting in a cleaner and more compact structure."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node replacement in a lock-free trie?",
+          "answer": "Hazard pointers allow a thread to atomically declare ownership of a node reference it is currently reading, blocking other threads from prematurely reclaiming or freeing that memory block until the reader safely unregisters the pointer."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded MPSC Queue",
+        "Concurrent Bloom Filter",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T18:51:13.177709+00:00",
+      "run_number": 3035
     }
   ]
 }
