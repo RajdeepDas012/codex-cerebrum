@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3024,
-    "last_updated": "2026-10-15T18:15:02.438094+00:00",
-    "total_topics_learned": 3024
+    "total_runs": 3025,
+    "last_updated": "2026-10-15T18:18:24.124640+00:00",
+    "total_topics_learned": 3025
   },
   "entries": [
     {
@@ -144088,6 +144088,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-15T18:15:02.438071+00:00",
       "run_number": 3024
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-bucket-chaining and reference-count-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput evictions and multi-core item retrieval in real-time distributed web caching layers and concurrent database query response stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free LRU cache combines atomic hash-bucket-chaining with reference-count updates and hazard pointer memory reclamation to support high-throughput, contention-free item retrieval and item evictions. This architecture eliminates traditional locks, ensuring low-latency operation for multi-core distributed web caching layers and database response stores under high concurrency.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe hash-bucket-chain updates and pointer manipulation.",
+        "Employs hazard pointer memory reclamation to safely manage deleted and evicted cache nodes without use-after-free race conditions.",
+        "Maintains an approximation of the Least Recently Used (LRU) order via atomic reference-count updating and state transitions.",
+        "Ensures high throughput and scalability across multiple CPU cores by eliminating global mutex locks during lookups and evictions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node insertion step within a lock-free hash bucket chain using CAS loops.",
+        "correct": "bool insert_bucket(std::atomic<Node*>& bucket_head, Node* new_node) {\n    Node* old_head = bucket_head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = old_head;\n    } while (!bucket_head.compare_exchange_weak(old_head, new_node,\n                                                std::memory_order_release,\n                                                std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool insert_bucket(Node** bucket_head, Node* new_node) {\n    // Missing atomicity and synchronization; prone to race conditions and lost updates\n    new_node->next = *bucket_head;\n    *bucket_head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free bugs during evictions.",
+        "Using heavy synchronization primitives like mutexes inside the critical path of lookups, defeating the lock-free design goal."
+      ],
+      "best_practices": [
+        "Always protect shared cache entries using thread-local hazard pointers before traversing pointer chains.",
+        "Use appropriate memory ordering semantics (acquire-release) to ensure safe publishing and reading of cache metadata and pointers."
+      ],
+      "when_to_use": "Ideal for high-throughput, latency-critical multi-threaded applications like distributed web caches and in-memory database query stores where lock contention becomes a bottleneck.",
+      "when_not_to_use": "Avoid when memory overhead of hazard pointers and the complexity of lock-free programming outweigh the benefits, or in single-threaded environments.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free LRU cache?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing in a globally visible list, preventing memory reclaimers from freeing those nodes until all references are dropped."
+        },
+        {
+          "question": "Why is achieving strict global LRU order difficult in a lock-free data structure?",
+          "answer": "Strict global LRU requires modifying shared tracking pointers on every read operation, introducing massive contention across threads that negates the advantages of lock-free synchronization; thus, approximations or epoch-based tracking are typically used."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-free Hash Maps",
+        "Memory Reclamation Strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T18:18:24.124617+00:00",
+      "run_number": 3025
     }
   ]
 }
