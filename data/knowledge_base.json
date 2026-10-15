@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3036,
-    "last_updated": "2026-10-15T18:54:23.047843+00:00",
-    "total_topics_learned": 3036
+    "total_runs": 3037,
+    "last_updated": "2026-10-15T22:03:14.733279+00:00",
+    "total_topics_learned": 3037
   },
   "entries": [
     {
@@ -144653,6 +144653,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T18:54:23.047821+00:00",
       "run_number": 3036
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic single-rotation and double-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search operations and multi-core frequently accessed node promotion in real-time in-memory caching systems and concurrent database indexing layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a concurrent lock-free Splay Tree. It utilizes atomic compare-and-swap (CAS) primitives for rotations and hazard pointers for safe memory management, ensuring high-throughput self-adjustment on multi-core systems without traditional mutex overhead.",
+      "key_points": [
+        "Employs lock-free atomic single and double rotations (zig, zig-zag, zig-zig) to restructure the tree and promote frequently accessed nodes.",
+        "Uses hazard pointers to safely manage memory reclamation during concurrent node restructuring and deletion without blocking threads.",
+        "Eliminates global lock contention, making it ideal for high-throughput multi-core in-memory caching and real-time database indexing layers.",
+        "Guarantees amortized logarithmic time bounds for search, insertion, and deletion operations under single-threaded models, extended concurrently via atomic primitives."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual atomic CAS loop used for rotating nodes in a concurrent lock-free splay tree structure.",
+        "correct": "bool atomic_rotate_left(Node** parent_ptr, Node* old_node, Node* new_node) {\n    return __atomic_compare_exchange_n(parent_ptr, &old_node, new_node, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED);\n}",
+        "wrong": "Node* rotate_left(Node* parent, Node* old_node) {\n    Node* new_node = old_node->right;\n    parent->right = new_node; // Non-atomic update causes race conditions and memory corruption in multi-threaded environments.\n    return new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during multi-step splay rotations, leading to use-after-free bugs when another thread unlinks the node.",
+        "Attempting to perform complex multi-node tree restructuring in a single CAS operation instead of breaking down updates into smaller, validated atomic transitions."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for all ancestor and descendant nodes involved in a splay operation before executing pointer updates.",
+        "Design fallback mechanisms or retry loops when a CAS operation fails due to concurrent modifications by other threads."
+      ],
+      "when_to_use": "Use when building high-performance, concurrent in-memory caching systems or database indexing layers where access patterns exhibit strong temporal locality and lock contention is a performance bottleneck.",
+      "when_not_to_use": "Avoid in systems with strictly limited memory or strict worst-case latency requirements where structural modifications by splaying could trigger excessive memory thrashing or high retry overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic tree rotations in a lock-free Splay Tree?",
+          "answer": "By utilizing tagged pointers or hazard pointers that combine the node address with a monotonically increasing version counter, ensuring that a CAS fails if the pointer has been modified and reused."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-throughput concurrent self-adjusting data structures?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times or high memory overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Tree",
+        "Hazard Pointers and Memory Management",
+        "Concurrent Skip List"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T22:03:14.733259+00:00",
+      "run_number": 3037
     }
   ]
 }
