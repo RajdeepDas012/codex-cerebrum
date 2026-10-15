@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3050,
-    "last_updated": "2026-10-15T22:44:18.382322+00:00",
-    "total_topics_learned": 3050
+    "total_runs": 3051,
+    "last_updated": "2026-10-15T22:47:27.813353+00:00",
+    "total_topics_learned": 3051
   },
   "entries": [
     {
@@ -145321,6 +145321,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-15T22:44:18.382306+00:00",
       "run_number": 3050
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic packet-draining and queue-overflow-dropping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core bandwidth regulation in real-time edge computing networks and concurrent API proxy servers",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Leaky Bucket traffic shaper where multiple threads concurrently enqueue, drop on overflow, and drain requests at a fixed constant rate. By leveraging atomic primitives (CAS) and hazard pointers, the implementation eliminates lock contention and safely reclaims memory under extreme high-throughput edge conditions.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage queue states and timestamps without coarse-grained locking.",
+        "Implements token/packet-draining mechanics based on elapsed real-time clocks to enforce strict constant-rate outflow smoothing.",
+        "Employs hazard pointer memory management to safely track and reclaim dropped or drained nodes in multi-core environments.",
+        "Handles queue overflow conditions deterministically by dropping excess requests atomically when capacity bounds are met."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic state updates for leaky bucket request processing.",
+        "correct": "bool LeakyBucket::try_consume() {\n    Node* old_head;\n    do {\n        old_head = head.load();\n        if (is_full(old_head)) return false;\n    } while (!head.compare_exchange_weak(old_head, create_node()));\n    return true;\n}",
+        "wrong": "bool LeakyBucket::try_consume() {\n    std::lock_guard<std::mutex> lock(mtx);\n    if (is_full()) return false;\n    push_node();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Relying on standard mutexes which introduce heavy contention and context-switch latency under high-frequency traffic loads.",
+        "Failing to account for the ABA problem during lock-free queue restructuring without proper hazard pointer or version-stamping protection."
+      ],
+      "best_practices": [
+        "Pair atomic pointer updates with hazard pointers to prevent premature memory deallocation of nodes concurrently accessed by draining threads.",
+        "Minimize CAS retry loops by utilizing backoff strategies or optimized fine-grained sub-bucket partitioning when core counts scale extensively."
+      ],
+      "when_to_use": "Use when designing ultra-low-latency edge proxies and distributed API gateways that require strict output rate smoothing with zero thread blocking.",
+      "when_not_to_use": "Avoid when traffic volume is low or when coarse-grained locks provide sufficient throughput without the debugging and implementation complexity of lock-free primitives.",
+      "interview_questions": [
+        {
+          "question": "How does a Leaky Bucket algorithm differ from a Token Bucket algorithm in terms of traffic control?",
+          "answer": "A Leaky Bucket enforces a strict constant outflow rate, smoothing out bursty traffic into steady drips, whereas a Token Bucket allows bursts up to a pre-defined capacity limit as long as tokens are accumulated."
+        },
+        {
+          "question": "Why are hazard pointers required instead of standard garbage collection in lock-free rate limiter queues?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing other threads from prematurely freeing those nodes while maintaining predictable, low-latency performance without global stop-the-world pauses."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Token Bucket rate limiter",
+        "Hazard pointer memory reclamation",
+        "Lock-free concurrent queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T22:47:27.813335+00:00",
+      "run_number": 3051
     }
   ]
 }
