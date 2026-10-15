@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3018,
-    "last_updated": "2026-10-15T13:53:41.941144+00:00",
-    "total_topics_learned": 3018
+    "total_runs": 3019,
+    "last_updated": "2026-10-15T13:57:07.711945+00:00",
+    "total_topics_learned": 3019
   },
   "entries": [
     {
@@ -143804,6 +143804,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T13:53:41.941124+00:00",
       "run_number": 3018
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput burst traffic shaping and multi-core bandwidth regulation in real-time edge computing proxies and concurrent API gateway routing engines",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and low-level synchronization mechanisms required to build a high-performance, lock-free Token Bucket rate limiter. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures zero contention overhead across multiple cores while precisely regulating burst traffic in modern API gateways.",
+      "key_points": [
+        "Utilizes atomic token-refilling and capacity-capping CAS operations to update bucket states without locks",
+        "Employs hazard pointer memory reclamation to safely manage dynamic bucket node lifecycles under heavy concurrency",
+        "Guarantees linearizable throughput and minimal latency overhead in multi-core edge proxy environments",
+        "Accurately handles burst traffic shaping by decoupling elapsed time calculation from token accumulation bounds"
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for refilling and consuming tokens from a shared bucket state.",
+        "correct": "bool try_consume(std::atomic<BucketState>& state, uint64_t current_time, uint64_t tokens_to_add, uint32_t capacity, uint32_t requested) {\n    BucketState old_state = state.load();\n    BucketState new_state;\n    do {\n        uint64_t elapsed = current_time - old_state.last_update;\n        double refilled = old_state.tokens + (elapsed * refill_rate);\n        new_state.tokens = std::min(static_cast<double>(capacity), refilled);\n        new_state.last_update = current_time;\n        if (new_state.tokens < requested) return false;\n        new_state.tokens -= requested;\n    } while (!state.compare_exchange_weak(old_state, new_state));\n    return true;\n}",
+        "wrong": "bool try_consume(std::atomic<uint32_t>& tokens, uint32_t requested) {\n    uint32_t current = tokens.load();\n    if (current < requested) return false;\n    tokens.store(current - requested); // Not atomic relative to time and missing CAS loop\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Using global mutex locks for token calculations, causing thread contention bottlenecks under high-throughput request loads",
+        "Failing to cap accumulated tokens at the maximum bucket capacity during long idle periods (integer overflow or unbounded growth)"
+      ],
+      "best_practices": [
+        "Cache-line align atomic bucket state variables to minimize false sharing across multiple core execution contexts",
+        "Use monotonic high-resolution clocks for elapsed time measurement to protect against system clock adjustments"
+      ],
+      "when_to_use": "When building low-latency, high-throughput distributed API gateways or edge proxies requiring strict multi-core rate regulation.",
+      "when_not_to_use": "In single-threaded applications or low-throughput systems where simple mutex-based rate limiting introduces negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating token bucket states using CAS primitives?",
+          "answer": "By packing a version counter or timestamp alongside the token count into a single atomically swappable word, ensuring state changes are uniquely identified."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over reference counting in lock-free rate limiters?",
+          "answer": "Hazard pointers avoid atomic write contention on shared reference counters during high-frequency read and consume operations, improving scalability."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation",
+        "Distributed rate limiting algorithms",
+        "Concurrent API gateway architectures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T13:57:07.711927+00:00",
+      "run_number": 3019
     }
   ]
 }
