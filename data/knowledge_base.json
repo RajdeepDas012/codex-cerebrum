@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3037,
-    "last_updated": "2026-10-15T22:03:14.733279+00:00",
-    "total_topics_learned": 3037
+    "total_runs": 3038,
+    "last_updated": "2026-10-15T22:06:24.397379+00:00",
+    "total_topics_learned": 3038
   },
   "entries": [
     {
@@ -144700,6 +144700,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T22:03:14.733259+00:00",
       "run_number": 3037
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spsc Queue using atomic head-tail-advancing and ring-buffer-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer messaging and multi-core inter-thread communication in real-time audio processing pipelines and concurrent network packet buffering engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Single-Producer Single-Consumer (SPSC) queue utilizes atomic ring-buffer indices and memory-ordering constraints to enable ultra-low-latency inter-thread messaging without locks. It eliminates kernel context switches and blocking overhead, making it critical for high-throughput data streaming.",
+      "key_points": [
+        "Uses atomic head and tail pointers to coordinate state between exactly one producer and one consumer thread.",
+        "Employs fixed-size ring buffers to completely avoid dynamic memory allocation during push and pop operations.",
+        "Leverages acquire-release memory semantics to ensure safe visibility of elements without heavy sequentially consistent barriers.",
+        "Can be implemented completely wait-free for individual bounded operations due to the elimination of multi-producer contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a basic atomic lock-free SPSC queue node advancement pattern.",
+        "correct": "template<typename T, size_t Capacity>\nclass SPSCQueue {\n    std::array<T, Capacity> buffer;\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\npublic:\n    bool push(const T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if ((current_tail + 1) % Capacity == current_head) return false;\n        buffer[current_tail] = item;\n        tail.store((current_tail + 1) % Capacity, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "template<typename T>\nclass BadQueue {\n    std::mutex mtx;\n    std::queue<T> q;\npublic:\n    bool push(const T& item) {\n        std::lock_guard<std::mutex> lock(mtx);\n        q.push(item);\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using sequential consistency (`memory_order_seq_cst`) everywhere, which hurts performance on modern architectures.",
+        "Failing to handle full-queue and empty-queue conditions properly, leading to infinite loops or data corruption."
+      ],
+      "best_practices": [
+        "Align atomic head and tail variables to cache line boundaries to prevent false sharing between producer and consumer cores.",
+        "Use relaxed memory order when loading indices on the thread's own side of the operation."
+      ],
+      "when_to_use": "When transferring high-frequency data streams between precisely two threads, such as audio thread to DSP thread or NIC driver thread to worker thread.",
+      "when_not_to_use": "When there are multiple producer or multiple consumer threads interacting with the same queue instance.",
+      "interview_questions": [
+        {
+          "question": "Why is an SPSC queue significantly simpler and faster to implement lock-free than an MPMC queue?",
+          "answer": "Because there is only one thread modifying the tail (producer) and one thread modifying the head (consumer), eliminating complex CAS retry loops for pointer advancement."
+        },
+        {
+          "question": "What memory order is required when the producer updates the tail pointer after writing data to the buffer?",
+          "answer": "std::memory_order_release, ensuring all prior writes to the buffer are visible to the consumer before the updated tail index is published."
+        }
+      ],
+      "related_topics": [
+        "MPMC Ring Buffer",
+        "Memory Barriers",
+        "False Sharing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T22:06:24.397360+00:00",
+      "run_number": 3038
     }
   ]
 }
