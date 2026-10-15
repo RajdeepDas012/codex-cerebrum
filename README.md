@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3049** |
-| Last Updated | `2026-10-15T22:41:08.693468+00:00` |
-| Dataset Size | `3049 entries` |
+| Total Topics Learned | **3050** |
+| Last Updated | `2026-10-15T22:44:18.382322+00:00` |
+| Dataset Size | `3050 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 147 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| system-design | 94 |
+| system-design | 95 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput bursty traffic shaping and multi-core rate enforcement in real-time API gateway services and concurrent microservice traffic controllers`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and bit-prefix-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent cloud routing engines`
 - `Implementation of a lock-free thread-safe concurrent R*-Tree using atomic entry-splitting and minimum-overlap-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core multi-dimensional range querying in real-time geographic information systems and concurrent location-based service routing engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic state-transition-linking and failure-link-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core malicious payload inspection in real-time intrusion detection systems and concurrent network security filtering engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core concurrent range queries in real-time in-memory database engines and concurrent key-value storage systems`
-- `Implementation of a lock-free thread-safe concurrent Bounded Priority Queue using atomic heap-order-preserving and priority-inversion-mitigating CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based message dispatching in real-time operating system kernels and concurrent asynchronous execution engines`
 
 <!-- STATS_END -->
 

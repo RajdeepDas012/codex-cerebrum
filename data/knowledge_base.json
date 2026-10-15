@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3049,
-    "last_updated": "2026-10-15T22:41:08.693468+00:00",
-    "total_topics_learned": 3049
+    "total_runs": 3050,
+    "last_updated": "2026-10-15T22:44:18.382322+00:00",
+    "total_topics_learned": 3050
   },
   "entries": [
     {
@@ -145274,6 +145274,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T22:41:08.693449+00:00",
       "run_number": 3049
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput bursty traffic shaping and multi-core rate enforcement in real-time API gateway services and concurrent microservice traffic controllers",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free thread-safe concurrent Token Bucket rate limiter utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to manage token refill calculations and capacity enforcement without locks. This architecture ensures high-throughput bursty traffic control with minimal contention, making it ideal for large-scale distributed API gateways and microservice traffic management.",
+      "key_points": [
+        "Uses atomic token-refilling and capacity-capping CAS operations to update available tokens and timestamps without mutex bottlenecks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic bucket state allocations and deallocations under heavy concurrent load.",
+        "Handles bursty traffic shaping effectively by allowing accumulated capacity up to a predefined maximum threshold.",
+        "Ensures microsecond-level rate enforcement accuracy across multi-core processors in distributed API gateway architectures."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual core of atomic token refilling and consumption using a CAS loop.",
+        "correct": "import time\nimport threading\n\nclass AtomicTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = float(capacity)\n        self.refill_rate = float(refill_rate)\n        self.tokens = float(capacity)\n        self.last_refill = time.time()\n        self.lock = threading.Lock() # Conceptual stand-in for atomic CAS loop\n\n    def consume(self, tokens_requested):\n        now = time.time()\n        while True:\n            current_tokens = self.tokens\n            current_refill = self.last_refill\n            elapsed = now - current_refill\n            new_tokens = min(self.capacity, current_tokens + elapsed * self.refill_rate)\n            \n            if new_tokens < tokens_requested:\n                return False\n            \n            # Simulated CAS operation on tokens and timestamp\n            if current_tokens == self.tokens and current_refill == self.last_refill:\n                self.tokens = new_tokens - tokens_requested\n                self.last_refill = now\n                return True",
+        "wrong": "class NaiveBucket:\n    def __init__(self, capacity):\n        self.tokens = capacity\n    def consume(self):\n        if self.tokens > 0:\n            self.tokens -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Failing to atomically update both the token count and the last-refilled timestamp together, leading to race conditions and inaccurate rate calculations.",
+        "Using heavy locking mechanisms like mutexes that degrade throughput and introduce latency spikes in high-concurrency API gateways."
+      ],
+      "best_practices": [
+        "Leverage hardware-supported atomic compare-and-swap (CAS) primitives along with backoff strategies to minimize CPU cache line bouncing.",
+        "Incorporate hazard pointers for thread-safe memory management when dynamically reconfiguring or scaling bucket structures under load."
+      ],
+      "when_to_use": "Use this when building high-throughput API gateways or multi-tenant microservices requiring extremely low-latency, lock-free traffic policing and burst handling.",
+      "when_not_to_use": "Avoid this in simple single-threaded applications or environments where standard lock-based rate limiters provide more than adequate throughput without added complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating token counts and timestamps atomically via CAS?",
+          "answer": "By packing the token count and timestamp into a single wide-word atomic register or by using version counters/sequence tags alongside hazard pointers."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection for a lock-free token bucket implementation?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation with low overhead, avoiding the unpredictable pause times of traditional runtime garbage collectors in real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation",
+        "Distributed rate limiting algorithms",
+        "Atomic compare-and-swap primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T22:44:18.382306+00:00",
+      "run_number": 3050
     }
   ]
 }
