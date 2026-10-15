@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3045** |
-| Last Updated | `2026-10-15T22:28:31.200591+00:00` |
-| Dataset Size | `3045 entries` |
+| Total Topics Learned | **3046** |
+| Last Updated | `2026-10-15T22:31:41.342145+00:00` |
+| Dataset Size | `3046 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1922 |
+| data-structures | 1923 |
 | trading-strategies | 228 |
 | algorithms | 171 |
 | crypto-blockchain | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core concurrent range queries in real-time in-memory database engines and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Bounded Priority Queue using atomic heap-order-preserving and priority-inversion-mitigating CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based message dispatching in real-time operating system kernels and concurrent asynchronous execution engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-linking and membership-vector-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized range queries and multi-core peer discovery in real-time distributed file-sharing networks and concurrent peer-to-peer storage engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized binary search tree operations and multi-core balanced key-value lookup in real-time distributed in-memory databases and concurrent caching layers`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-bit-flipping CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency calculation and multi-core point updating in real-time statistical stream processing engines and concurrent ranking leaderboard analytics systems`
-- `Implementation of a lock-free thread-safe concurrent Concurrent Linked Queue (Michael-Scott Queue) using atomic head-tail-pointer-advancing and node-enqueue-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput message passing and multi-core task queueing in real-time asynchronous event-loop systems and concurrent thread-pool dispatching engines`
 
 <!-- STATS_END -->
 
