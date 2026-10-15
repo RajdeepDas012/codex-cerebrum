@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **2983** |
-| Last Updated | `2026-10-15T01:38:48.361162+00:00` |
-| Dataset Size | `2983 entries` |
+| Total Topics Learned | **2984** |
+| Last Updated | `2026-10-15T01:41:56.994924+00:00` |
+| Dataset Size | `2984 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1870 |
+| data-structures | 1871 |
 | trading-strategies | 228 |
 | algorithms | 167 |
 | technical-analysis | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core range scanning in real-time in-memory databases and concurrent transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core thread synchronization in real-time operating systems and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversing and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary scanning in real-time intrusion detection systems and concurrent log analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence-class merging and multi-core connected-component queries in real-time social network friend-recommendation engines and concurrent graph processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency tracking and multi-core running total aggregation in real-time streaming analytics platforms and concurrent leaderboard scoring engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle Patricia Tree using atomic branch-node-updating and cryptographic-hash-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput state verification and multi-core cryptographic proof generation in real-time blockchain execution environments and concurrent distributed ledger databases`
 
 <!-- STATS_END -->
 
