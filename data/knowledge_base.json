@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3014,
-    "last_updated": "2026-10-15T13:38:58.424010+00:00",
-    "total_topics_learned": 3014
+    "total_runs": 3015,
+    "last_updated": "2026-10-15T13:42:20.818810+00:00",
+    "total_topics_learned": 3015
   },
   "entries": [
     {
@@ -143615,6 +143615,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T13:38:58.423956+00:00",
       "run_number": 3014
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-height-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core range scanning in real-time distributed key-value storage engines and concurrent in-memory database indexing layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip-list provides probabilistic logarithmic search, insertion, and deletion times across multiple threads without lock contention. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and high throughput for concurrent in-memory database indexing layers.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-linking and tower-height-cascading CAS primitives to modify multi-level node linkages safely without global locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes only when no active threads reference them.",
+        "Maintains probabilistic balance through randomized tower heights, ensuring O(log n) expected time complexity for operations.",
+        "Enables high-throughput ordered key-value lookup and scalable multi-core range scanning for distributed key-value storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward-pointer linking with hazard pointers for thread-safe node insertion in a lock-free skip-list.",
+        "correct": "bool insert(int key, void* value) {\n    Node* newNode = createNode(key, value, randomLevel());\n    while (true) {\n        Node* preds[MAX_LEVEL];\n        Node* succs[MAX_LEVEL];\n        if (find(key, preds, succs)) { freeNode(newNode); return false; }\n        for (int i = 1; i <= newNode->topLevel; i++) {\n            newNode->next[i].store(succs[i], std::memory_order_relaxed);\n        }\n        if (preds[1]->next[1].compare_exchange_strong(succs[1], newNode, std::memory_order_release)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(int key, void* value) {\n    mutex.lock();\n    // Unsynchronized global pointer mutation without hazard protection\n    Node* newNode = new Node(key, value);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Updating skip-list levels top-to-bottom instead of bottom-to-up, which violates lock-free linearization invariants."
+      ],
+      "best_practices": [
+        "Always validate that lower-level pointers are correctly linked before attempting higher-level tower CAS operations.",
+        "Integrate a robust memory retirement scheme like hazard pointers or epoch-based reclamation to recycle deleted nodes safely."
+      ],
+      "when_to_use": "Use when building high-throughput ordered in-memory indexes or distributed key-value stores requiring high concurrent read and write concurrency.",
+      "when_not_to_use": "Avoid when memory overhead per node is strictly constrained or when simple lock-based synchronization provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing CAS operations on forward pointers in a lock-free skip-list?",
+          "answer": "By combining tagged pointers (version counts) or utilizing hazard pointers to ensure nodes cannot be deallocated and reused while another thread holds a reference."
+        },
+        {
+          "question": "Why must node insertion in a lock-free skip-list be anchored at the bottom level first?",
+          "answer": "The bottom level contains all elements. Anchoring the bottom level via CAS first establishes the node's official presence in the set before higher-level towers are linked."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Priority Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Hash Map"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T13:42:20.818793+00:00",
+      "run_number": 3015
     }
   ]
 }
