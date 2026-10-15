@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3023,
-    "last_updated": "2026-10-15T18:11:46.516702+00:00",
-    "total_topics_learned": 3023
+    "total_runs": 3024,
+    "last_updated": "2026-10-15T18:15:02.438094+00:00",
+    "total_topics_learned": 3024
   },
   "entries": [
     {
@@ -144039,6 +144039,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-15T18:11:46.516679+00:00",
       "run_number": 3023
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Net using atomic ring-routing-pointer-linking and virtual-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed overlay routing and multi-core decentralized DHT key lookup in real-time distributed storage networks and concurrent peer-to-peer streaming engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Skip-Net is an advanced distributed overlay network data structure that combines the hierarchical search properties of skip lists with distributed ring topologies. By employing atomic compare-and-swap (CAS) primitives and hazard pointer memory management, it enables lock-free routing updates and decentralized key lookups across multi-core environments without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic ring-routing-pointer-linking CAS primitives to modify overlay network connections safely under high contention.",
+        "Employs virtual-node-swapping CAS operations to balance loads and handle dynamic node joins and leaves lock-free.",
+        "Integrates hazard pointer memory reclamation to safely defer node deallocations until concurrent traversal threads finish reading them.",
+        "Provides logarithmic search bounds for decentralized distributed hash table (DHT) lookups and real-time P2P stream routing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic ring routing pointer updates using CAS with hazard pointers in a Skip-Net structure.",
+        "correct": "bool update_ring_pointer(HazardPointer& hp, std::atomic<Node*>& current_link, Node* expected_next, Node* new_next) {\n    hp.protect(current_link);\n    if (current_link.load() != expected_next) {\n        hp.clear();\n        return false;\n    }\n    bool success = current_link.compare_exchange_strong(expected_next, new_next);\n    hp.clear();\n    return success;\n}",
+        "wrong": "bool update_ring_pointer(std::atomic<Node*>& current_link, Node* expected_next, Node* new_next) {\n    // Missing hazard pointer protection leads to use-after-free if another thread deletes expected_next\n    return current_link.compare_exchange_strong(expected_next, new_next);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed routing pointers with hazard pointers before validating them, causing memory corruption or use-after-free bugs.",
+        "Improper ordering of CAS steps during virtual node swapping, leading to broken ring structures and infinite routing loops."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection on any node pointer read from shared Skip-Net levels before performing validation checks.",
+        "Keep atomic routines fine-grained, targeting single ring pointer or level-link modifications rather than broad structural updates.",
+        "Thoroughly test concurrent join and leave workloads under heavy multi-core contention to ensure absence of deadlocks and livelocks."
+      ],
+      "when_to_use": "When building decentralized, high-throughput distributed storage networks or peer-to-peer streaming engines requiring lock-free multi-core overlay routing and key lookup.",
+      "when_not_to_use": "In single-threaded applications, simple in-memory key-value stores, or environments where standard centralized indexing suffices without distributed constraints.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during node deletion and routing pointer updates in a lock-free Skip-Net?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing so that concurrent reclamation threads know not to free those memory addresses until the read operations complete."
+        },
+        {
+          "question": "Why is compare-and-swap (CAS) preferred over traditional mutex locks when implementing multi-core ring-routing updates in a Skip-Net?",
+          "answer": "CAS avoids thread blocking, context switching overhead, and convoy phenomena, ensuring higher throughput and resilience against thread stalls under heavy concurrent traffic."
+        }
+      ],
+      "related_topics": [
+        "Skip Lists",
+        "Distributed Hash Tables",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-15T18:15:02.438071+00:00",
+      "run_number": 3024
     }
   ]
 }
