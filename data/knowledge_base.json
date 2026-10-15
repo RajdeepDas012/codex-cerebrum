@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3030,
-    "last_updated": "2026-10-15T18:34:59.481180+00:00",
-    "total_topics_learned": 3030
+    "total_runs": 3031,
+    "last_updated": "2026-10-15T18:38:28.133378+00:00",
+    "total_topics_learned": 3031
   },
   "entries": [
     {
@@ -144370,6 +144370,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T18:34:59.481158+00:00",
       "run_number": 3030
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC Queue using atomic head-tail-advancing and ring-buffer-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput task queuing and multi-core message passing in real-time actor execution frameworks and concurrent asynchronous event-loop systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bounded Multi-Producer Single-Consumer (MPSC) Queue enables multiple producer threads to safely push items into a fixed-size ring buffer using atomic CAS primitives while a single consumer thread drains them efficiently without locks. This architecture maximizes throughput and minimizes contention in asynchronous event loops and actor execution frameworks.",
+      "key_points": [
+        "Utilizes atomic head and tail pointer advancements to coordinate multiple producers and a single consumer safely.",
+        "Employs ring-buffer slot claiming CAS operations to ensure producers do not overwrite unconsumed data.",
+        "Integrates hazard pointer memory reclamation to prevent race conditions during concurrent node state transitions.",
+        "Eliminates traditional mutex locks, drastically reducing thread contention and context-switching overhead."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic tail claiming for a multi-producer enqueue operation in a bounded ring buffer.",
+        "correct": "bool enqueue(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        size_t current_head = head.load(std::memory_order_acquire);\n        if (current_tail - current_head >= CAPACITY) return false;\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current_tail % CAPACITY] = item;\n            return true;\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Using weaker memory orderings that allow reordering of slot writes and tail pointer updates, leading to data corruption.",
+        "Failing to handle full-buffer conditions correctly, causing producers to spin infinitely or overwrite valid unconsumed messages."
+      ],
+      "best_practices": [
+        "Pair acquire-release semantics carefully on atomic pointer loads and stores to ensure proper visibility across cores.",
+        "Use cache-line padding on shared atomic counters (head and tail) to prevent false sharing between producer and consumer threads."
+      ],
+      "when_to_use": "Ideal for high-throughput messaging architectures where multiple worker threads submit tasks or events to a single dedicated dispatch loop.",
+      "when_not_to_use": "Avoid when there are multiple consumer threads, as this specific data structure assumes a single consumer context for tail/head separation.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple producers from claiming the same ring buffer slot concurrently?",
+          "answer": "By using a compare-and-swap (CAS) operation on the tail pointer or slot sequence counter to atomically reserve the index before writing."
+        },
+        {
+          "question": "Why is this queue restricted to a single consumer, and how does that simplify the design?",
+          "answer": "A single consumer eliminates coordination overhead and CAS retry loops for the dequeue path, as only one thread modifies the head pointer."
+        }
+      ],
+      "related_topics": [
+        "lock-free spsc queue",
+        "hazard pointers",
+        "atomic memory ordering",
+        "actor model messaging"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-15T18:38:28.133332+00:00",
+      "run_number": 3031
     }
   ]
 }
