@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 2991,
-    "last_updated": "2026-10-15T02:04:14.238859+00:00",
-    "total_topics_learned": 2991
+    "total_runs": 2992,
+    "last_updated": "2026-10-15T07:12:24.583143+00:00",
+    "total_topics_learned": 2992
   },
   "entries": [
     {
@@ -142523,6 +142523,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-15T02:04:14.238839+00:00",
       "run_number": 2991
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-wrapping and enqueue-deque-slot-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer task handoff and multi-core thread synchronization in real-time asynchronous execution runtimes and concurrent thread pool worker scheduling engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free thread-safe concurrent bounded queue utilizes atomic head-tail wrapping and slot-cascading CAS primitives to manage multi-producer multi-consumer task handoffs without blocking. By combining hazard pointers for safe memory management, it achieves exceptionally high throughput and minimal contention in real-time asynchronous execution runtimes and thread pool worker scheduling engines.",
+      "key_points": [
+        "Utilizes atomic operations for head and tail index management with wrapping semantics in a fixed-size array buffer.",
+        "Employs slot-cascading Compare-And-Swap (CAS) primitives to safely claim individual queue entries across multiple concurrent producers and consumers.",
+        "Integrates hazard pointers to track active node references, safely deferring memory reclamation and avoiding ABA problems.",
+        "Delivers high-throughput thread synchronization and task handoff ideal for real-time asynchronous execution runtimes and concurrent thread pools."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot reservation using CAS for a lock-free bounded queue enqueue operation.",
+        "correct": "bool enqueue(T* item) {\n    size_t tail = tail_.load(std::memory_order_relaxed);\n    while (true) {\n        Slot& slot = buffer_[tail & mask_];\n        size_t seq = slot.sequence.load(std::memory_order_acquire);\n        intptr_t diff = (intptr_t)seq - (intptr_t)tail;\n        if (diff == 0) {\n            if (tail_.compare_exchange_weak(tail, tail + 1, std::memory_order_relaxed)) {\n                slot.data = item;\n                slot.sequence.store(tail + 1, std::memory_order_release);\n                return true;\n            }\n        } else if (diff < 0) {\n            return false; // Queue is full\n        } else {\n            tail = tail_.load(std::memory_order_relaxed);\n        }\n    }\n}",
+        "wrong": "bool enqueue(T* item) {\n    // Non-atomic modification leading to race conditions and corrupted indices\n    buffer_[tail_ % capacity] = item;\n    tail_++;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to check sequence numbers or state flags on buffer slots, leading to race conditions where old data is overwritten.",
+        "Ignoring the ABA problem when managing head and tail pointers or reusing buffer elements in cyclic arrays."
+      ],
+      "best_practices": [
+        "Pair atomic index manipulation with sequence-based slot synchronization to guarantee thread-safe visibility.",
+        "Leverage hazard pointers or epoch-based reclamation when managing dynamic node allocations within hybrid ring buffer structures.",
+        "Keep critical sections inside lock-free loops as short as possible to reduce CAS retry contention under heavy multi-core loads."
+      ],
+      "when_to_use": "Use this structure when building high-performance multi-producer multi-consumer worker pools or asynchronous runtimes that demand ultra-low latency task handoffs.",
+      "when_not_to_use": "Avoid using this when memory footprint is extremely constrained or when workload contention is low enough that standard coarse-grained mutexes provide sufficient simplicity and performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed slots in a lock-free bounded queue?",
+          "answer": "By using sequence numbers associated with each slot, where producers verify that the slot's sequence matches the expected tail index before attempting a CAS operation."
+        },
+        {
+          "question": "Why are hazard pointers or explicit memory reclamation strategies necessary in concurrent queue implementations?",
+          "answer": "They ensure that nodes being accessed or traversed by one thread are not prematurely freed or reused by another, preventing dangling pointer bugs and undefined behavior without using blocking locks."
+        }
+      ],
+      "related_topics": [
+        "Lock-free ring buffers",
+        "Hazard pointer memory reclamation",
+        "Multi-producer multi-consumer synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-15T07:12:24.583120+00:00",
+      "run_number": 2992
     }
   ]
 }
