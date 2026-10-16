@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3092,
-    "last_updated": "2026-10-16T12:49:18.351852+00:00",
-    "total_topics_learned": 3092
+    "total_runs": 3093,
+    "last_updated": "2026-10-16T12:52:35.682031+00:00",
+    "total_topics_learned": 3093
   },
   "entries": [
     {
@@ -147310,6 +147310,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T12:49:18.351837+00:00",
       "run_number": 3092
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chain-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core data ingestion in real-time distributed caching layers and concurrent in-memory database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent hash map enables high-throughput key-value operations across multiple CPU cores without thread contention or blocking locks. It leverages atomic Compare-And-Swap (CAS) primitives for safe bucket resizing and collision chain management, while using hazard pointers to manage safe memory reclamation.",
+      "key_points": [
+        "Utilizes atomic operations like CAS to modify bucket arrays and collision chains without acquiring explicit mutex locks.",
+        "Employs hazard pointers to track active thread references to map nodes, preventing premature deallocation and use-after-free bugs.",
+        "Implements atomic bucket resizing to scale the underlying storage incrementally without stalling concurrent reader and writer threads.",
+        "Achieves high-throughput data ingestion and predictable low-latency lookups in multi-core in-memory database storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion into a lock-free hash map bucket chain.",
+        "correct": "bool insert(std::atomic<Node*>& bucket, K key, V val) { Node* old_head; do { old_head = bucket.load(); newNode->next = old_head; } while (!bucket.compare_exchange_weak(old_head, newNode)); return true; }",
+        "wrong": "bool insert(Node** bucket, K key, V val) { Node* old_head = *bucket; newNode->next = old_head; *bucket = newNode; return true; }"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to race conditions and memory corruption.",
+        "Using blocking operations or global locks during the bucket resizing phase, which destroys the lock-free property."
+      ],
+      "best_practices": [
+        "Keep hazard pointer protection windows as short as possible to avoid delaying memory reclamation.",
+        "Design collision chains to be shallow or utilize alternative open-addressing schemes optimized for atomic primitives."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded systems, concurrent caching layers, or in-memory databases where lock contention on shared hash maps degrades performance.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking maps provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing so that other threads know not to reclaim or free that memory until the reference is cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing dynamic resizing in a lock-free hash map?",
+          "answer": "Coordinating concurrent insertions and lookups across multiple threads while migrating buckets to a larger array without using global locking mechanisms."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "compare-and-swap (CAS)",
+        "concurrent lru cache",
+        "lock-free tries"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-16T12:52:35.682013+00:00",
+      "run_number": 3093
     }
   ]
 }
