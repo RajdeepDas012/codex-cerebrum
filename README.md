@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3061** |
-| Last Updated | `2026-10-16T01:33:50.309190+00:00` |
-| Dataset Size | `3061 entries` |
+| Total Topics Learned | **3062** |
+| Last Updated | `2026-10-16T01:37:01.714850+00:00` |
+| Dataset Size | `3062 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1934 |
+| data-structures | 1935 |
 | trading-strategies | 228 |
 | algorithms | 172 |
 | crypto-blockchain | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and sibling-pointer-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index traversal in real-time in-memory relational databases and concurrent storage engine indexing layers`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile approximation and multi-core stream telemetry tracking in real-time distributed application performance monitoring systems and concurrent database metric aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and fingerprint-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate detection in real-time distributed storage systems and concurrent network packet inspection engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node-linking and branch-root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core state synchronization in real-time blockchain validation nodes and concurrent distributed ledger data structures`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic pointer-swapping and doubly-linked-list node-reordering CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded memory eviction and multi-core hotspot caching in real-time web application servers and concurrent database storage engines`
-- `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core stream aggregation in real-time big data analytics engines and concurrent distributed database monitoring systems`
 
 <!-- STATS_END -->
 
