@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3090,
-    "last_updated": "2026-10-16T12:42:33.790972+00:00",
-    "total_topics_learned": 3090
+    "total_runs": 3091,
+    "last_updated": "2026-10-16T12:46:00.868792+00:00",
+    "total_topics_learned": 3091
   },
   "entries": [
     {
@@ -147212,6 +147212,57 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T12:42:33.790959+00:00",
       "run_number": 3090
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and kick-out-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient set membership testing and multi-core duplicate detection in real-time distributed caching layers and concurrent key-value store routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Cuckoo Filter is a space-efficient probabilistic data structure that supports dynamic insertion, deletion, and membership queries using fingerprint hashing and alternative bucket locations. This advanced lock-free implementation utilizes atomic bucket-swapping and hazard pointers to safely manage concurrent relocations and kick-out paths across multiple cores without global locking overhead.",
+      "key_points": [
+        "Utilizes two alternative candidate buckets derived from fingerprint and hash functions for item placement.",
+        "Employs atomic Compare-And-Swap (CAS) primitives for concurrent bucket updates and fingerprint swapping.",
+        "Manages concurrent eviction chains ('kick-outs') safely using lock-free synchronization techniques.",
+        "Integrates hazard pointers to guarantee safe memory reclamation and prevent use-after-free race conditions during structural modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bucket swapping and fingerprint placement in a lock-free Cuckoo filter context",
+        "correct": "bool insert_fingerprint(BucketArray& buckets, size_t index, uint8_t fp) {\n    while (true) {\n        uint64_t current = buckets[index].load(std::memory_order_acquire);\n        if (is_bucket_full(current)) return false;\n        uint64_t updated = insert_into_slot(current, fp);\n        if (buckets[index].compare_exchange_weak(current, updated, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_fingerprint(BucketArray& buckets, size_t index, uint8_t fp) {\n    // Missing loop and atomic CAS leading to race conditions and lost updates\n    uint64_t current = buckets[index];\n    buckets[index] = insert_into_slot(current, fp);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle infinite displacement loops when the filter approaches high load factors.",
+        "Ignoring ABA problems during concurrent bucket state modifications and fingerprint swaps.",
+        "Improper memory ordering when reading and writing bucket slots across multiple threads.",
+        "Neglecting safe memory reclamation protocols during dynamic resizing operations."
+      ],
+      "best_practices": [
+        "Keep load factors below 95% to maintain high insertion success rates and prevent excessive kick-out chains.",
+        "Use acquire-release memory semantics on atomic operations to ensure visibility of swapped fingerprints.",
+        "Implement bounded maximum loop iterations for displacement chains to gracefully handle full filter states.",
+        "Combine hazard pointers with epoch-based reclamation to safely handle background structural expansions."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed caching layers and key-value routing engines requiring space-efficient set membership testing, dynamic deletions, and low-latency multi-core concurrency.",
+      "when_not_to_use": "Avoid when exact set membership is strictly required without false positives, or when memory footprint is completely unrestricted and standard lock-based hash tables suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter improve upon a Bloom Filter, and what concurrency challenges arise when making it lock-free?",
+          "answer": "Cuckoo Filters support deletions and use fingerprint-based hashing with alternative bucket locations. Concurrency challenges include handling concurrent kick-out chains where multiple threads attempt to displace items from overlapping buckets simultaneously."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a concurrent dynamic Cuckoo Filter that supports resizing?",
+          "answer": "Hazard pointers protect threads from accessing bucket arrays that are actively being deallocated or restructured by another thread during a concurrent resize operation, preventing use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Hazard Pointer Memory Management",
+        "Concurrent Hash Tables"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-16T12:46:00.868776+00:00",
+      "run_number": 3091
     }
   ]
 }
