@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3077,
-    "last_updated": "2026-10-16T07:28:50.804214+00:00",
-    "total_topics_learned": 3077
+    "total_runs": 3078,
+    "last_updated": "2026-10-16T07:32:07.651524+00:00",
+    "total_topics_learned": 3078
   },
   "entries": [
     {
@@ -146600,6 +146600,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T07:28:50.804195+00:00",
       "run_number": 3077
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and boundary-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core scheduling conflict detection in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Interval Tree utilizes atomic operations and hazard pointers to safely manage overlapping intervals and maximum endpoint metadata across multiple threads without mutual exclusion locks. It matters because it enables high-performance temporal searches and scheduling validations under heavy write contention.",
+      "key_points": [
+        "Utilizes atomic pointer swapping and boundary adjustment via Compare-And-Swap (CAS) primitives for thread-safe node insertion and rotation.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted or restructured interval nodes until all traversing threads release their references.",
+        "Maintains augmented node metrics (such as maximum endpoints) atomically to ensure correct traversal during concurrent range overlap queries.",
+        "Prevents priority inversion and convoy effects common in lock-based interval trees by guaranteeing lock-free progress properties."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe hazard pointer protection during a concurrent interval tree traversal and overlap query.",
+        "correct": "void* ptr = hazard_pointer_protect(&node->next, thread_id);\nif (check_overlap(ptr, query_range)) { collect_result(ptr); }\nhazard_pointer_clear(thread_id);",
+        "wrong": "void* ptr = node->next;\n// Another thread frees node->next here\nif (check_overlap(ptr, query_range)) { collect_result(ptr); }"
+      },
+      "common_mistakes": [
+        "Failing to atomically update the augmented maximum endpoint value when concurrent insertions modify subtree boundaries.",
+        "Reclaiming memory of deleted nodes immediately without waiting for traversing threads, leading to use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Always bind hazard pointers to thread-local storage slots before reading shared pointer references in traversal paths.",
+        "Ensure augmented tree metadata (max endpoints) is recalculated or updated using atomic retry loops during tree rebalancing."
+      ],
+      "when_to_use": "When managing dynamic schedules, overlapping time windows, or spatial-temporal ranges across numerous concurrent worker threads where read and write throughput must scale linearly.",
+      "when_not_to_use": "When standard non-overlapping point queries are sufficient, or when single-threaded simplicity outweighs the memory overhead and implementation complexity of lock-free hazard pointer algorithms.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the race condition when two threads simultaneously insert overlapping intervals that require updating the augmented maximum endpoint of a common ancestor?",
+          "answer": "By using a CAS loop on the maximum endpoint field, repeatedly reading the current max, calculating the new maximum with the inserted interval, and retrying until the atomic update succeeds."
+        },
+        {
+          "question": "Why are mutexes inadequate for high-throughput multi-core interval tree scheduling systems?",
+          "answer": "Mutexes introduce thread contention, context switching overhead, and susceptibility to convoy effects, whereas lock-free designs ensure at least one thread makes progress continuously."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip List",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T07:32:07.651505+00:00",
+      "run_number": 3078
     }
   ]
 }
