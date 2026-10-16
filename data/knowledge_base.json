@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3098,
-    "last_updated": "2026-10-16T17:19:41.732266+00:00",
-    "total_topics_learned": 3098
+    "total_runs": 3099,
+    "last_updated": "2026-10-16T17:23:07.308411+00:00",
+    "total_topics_learned": 3099
   },
   "entries": [
     {
@@ -147595,6 +147595,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T17:19:41.732246+00:00",
       "run_number": 3098
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-advancing and capacity-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput fixed-size task queuing and multi-core thread synchronization in real-time asynchronous execution pipelines and concurrent thread pool worker task dispatch systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent bounded queue manages task distribution in multi-threaded environments without utilizing heavy mutual exclusion locks. By leveraging compare-and-swap (CAS) primitives for head and tail pointer advancement alongside hazard pointers for safe memory management, it achieves high-throughput fixed-size task queuing and low-latency thread synchronization.",
+      "key_points": [
+        "Utilizes atomic operations to safely update head and tail indices across multiple concurrent threads.",
+        "Enforces a strict capacity constraint to prevent unbounded memory growth in high-load execution pipelines.",
+        "Employs hazard pointers to defer memory deallocation until no active threads reference the target node.",
+        "Eliminates lock contention, reducing thread blocking overhead and context-switching bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head and tail advancement using compare-and-swap primitives for a lock-free bounded queue.",
+        "correct": "bool enqueue(T item) {\n    Node* node = new Node(item);\n    while (true) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if (current_tail - current_head >= CAPACITY) {\n            delete node;\n            return false; // Queue is full\n        }\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current_tail % CAPACITY].store(node, std::memory_order_release);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    mutex.lock();\n    if (tail - head >= CAPACITY) { mutex.unlock(); return false; }\n    buffer[tail++ % CAPACITY] = item;\n    mutex.unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem correctly when updating index pointers with standard CAS.",
+        "Neglecting memory ordering constraints, which can lead to stale visibility of buffer slots across cores.",
+        "Forgetting to reclaim node memory safely, resulting in memory leaks or use-after-free bugs during high-frequency reuse."
+      ],
+      "best_practices": [
+        "Always pair atomic loads and stores with appropriate memory order constraints (e.g., acquire-release semantics).",
+        "Use hazard pointers or epoch-based reclamation to track thread access before freeing queue nodes.",
+        "Pre-allocate fixed-size node buffers to eliminate dynamic memory allocation overhead during runtime operations."
+      ],
+      "when_to_use": "Use when designing high-throughput thread pool worker task dispatch systems, fixed-size buffering for asynchronous pipelines, or low-latency inter-thread communication channels.",
+      "when_not_to_use": "Avoid when items must be stored indefinitely without a fixed capacity constraint, or when simpler lock-based queues are sufficient due to low concurrency requirements.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent threads from overwriting unconsumed items in a lock-free bounded queue?",
+          "answer": "By checking that the difference between the tail and head indices is strictly less than the queue capacity using atomic reads before attempting a CAS update on the tail pointer."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free queue implementation?",
+          "answer": "Hazard pointers protect against the ABA problem and safe memory reclamation by ensuring a thread marks a node as active before reading it, preventing other threads from freeing it prematurely."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free MPMC Ring Buffer",
+        "Hazard Pointers and Memory Reclamation",
+        "Atomic Operations and Memory Ordering"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T17:23:07.308395+00:00",
+      "run_number": 3099
     }
   ]
 }
