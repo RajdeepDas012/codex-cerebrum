@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3120,
-    "last_updated": "2026-10-16T21:14:15.827257+00:00",
-    "total_topics_learned": 3120
+    "total_runs": 3121,
+    "last_updated": "2026-10-16T21:17:30.174209+00:00",
+    "total_topics_learned": 3121
   },
   "entries": [
     {
@@ -148640,6 +148640,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-16T21:14:15.827239+00:00",
       "run_number": 3120
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-access-ordering and hash-map-bucket-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput evictions and multi-core high-frequency data access in real-time in-memory caching systems and concurrent database buffer pools",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent LRU cache combines a hash map and a doubly linked list using atomic Compare-And-Swap (CAS) primitives and hazard pointers to achieve high-throughput multi-core read and eviction operations. It ensures safe memory reclamation without global locks, making it ideal for high-frequency in-memory caching and database buffer pools.",
+      "key_points": [
+        "Utilizes atomic CAS primitives for thread-safe hash map bucket linking and node access reordering.",
+        "Employs hazard pointers to track active threads and safely reclaim evicted nodes without use-after-free races.",
+        "Maintains an approximation of the Least Recently Used (LRU) policy under high concurrency without heavy mutual exclusion locks.",
+        "Optimizes throughput for multi-core processors by eliminating thread contention on cache hit and miss paths."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS operation for updating pointer references in a lock-free cache node structure.",
+        "correct": "bool update_head(std::atomic<Node*>& head, Node* old_node, Node* new_node) {\n    return head.compare_exchange_strong(old_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* update_head(Node* head, Node* new_node) {\n    head->next = new_node;\n    return head;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed pointers with hazard pointers, leading to memory corruption and use-after-free bugs during evictions.",
+        "Using sequential consistency everywhere instead of carefully tuned memory ordering (acquire-release), degrading multi-core performance."
+      ],
+      "best_practices": [
+        "Pin threads using hazard pointers before reading shared cache node pointers to prevent premature memory reclamation by concurrent evictions.",
+        "Implement backoff strategies or retry loops for CAS failures under intense thread contention to reduce CPU pipeline stalls."
+      ],
+      "when_to_use": "When building high-throughput, low-latency in-memory data stores or database buffer pools experiencing heavy multi-threaded contention.",
+      "when_not_to_use": "When the application is single-threaded or low-concurrency, where standard lock-based LRU caches are significantly simpler and perform adequately.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node reordering in a lock-free LRU cache?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives to ensure that pointer modifications detect if an intermediate state change occurred."
+        },
+        {
+          "question": "Why are standard garbage collectors insufficient for high-performance lock-free LRU caches in systems programming?",
+          "answer": "GC introduces unpredictable latency pauses and overhead, whereas deterministic manual memory reclamation strategies like hazard pointers or epoch-based reclamation provide low, predictable latency bounds."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-free Hash Tables",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T21:17:30.174189+00:00",
+      "run_number": 3121
     }
   ]
 }
