@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3085** |
-| Last Updated | `2026-10-16T12:25:23.982380+00:00` |
-| Dataset Size | `3085 entries` |
+| Total Topics Learned | **3086** |
+| Last Updated | `2026-10-16T12:28:46.991123+00:00` |
+| Dataset Size | `3086 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 148 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| system-design | 97 |
+| system-design | 98 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time API gateway proxies and concurrent cloud microservice traffic shaping systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations in real-time in-memory databases and concurrent storage engine indexing layers`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and spatial-index-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial queries and multi-core geometric data indexing in real-time geographic information systems and concurrent location-based service engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and priority-inversion-preventing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based event processing in real-time operating system kernels and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Levenberg-Marquardt optimizer using atomic Jacobian-matrix-updating and damping-factor-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput non-linear curve fitting and multi-core parameter estimation in real-time robotic sensor fusion pipelines and concurrent computer vision camera calibration systems`
-- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput burst traffic shaping and multi-core rate enforcement in real-time cloud gateway proxies and concurrent microservice traffic controllers`
 
 <!-- STATS_END -->
 
