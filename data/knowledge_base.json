@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3095,
-    "last_updated": "2026-10-16T12:59:36.293534+00:00",
-    "total_topics_learned": 3095
+    "total_runs": 3096,
+    "last_updated": "2026-10-16T13:08:09.229409+00:00",
+    "total_topics_learned": 3096
   },
   "entries": [
     {
@@ -147452,6 +147452,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T12:59:36.293521+00:00",
       "run_number": 3095
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+Tree using atomic leaf-node-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core sequential access in real-time in-memory database indexing engines and concurrent storage system buffer pools",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent B+Tree optimized for multi-core processors. It leverages atomic Compare-And-Swap (CAS) primitives for leaf-node linking and internal-node splitting, combined with hazard pointers to safely manage memory reclamation without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to execute structural modifications like node splits and leaf linking without blocking threads.",
+        "Employs hazard pointers to track active thread references to nodes, preventing premature deallocation during concurrent access.",
+        "Ensures high-throughput range scans and sequential access patterns required by modern in-memory database indexing engines.",
+        "Avoids global locks, significantly reducing contention and scalability bottlenecks in multi-core database buffer pools."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection and atomic CAS operation for linking a new leaf node.",
+        "correct": "void* ptr;\nwhile ((ptr = atomic_load(&node->next)) != desired) {\n    hazard_pointer_protect(0, ptr);\n    if (atomic_compare_exchange_weak(&node->next, &ptr, new_next)) {\n        break;\n    }\n}\nhazard_pointer_clear(0);",
+        "wrong": "node->next = new_next; // Non-atomic write causing race conditions and memory corruption in concurrent threads."
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child or sibling pointers, leading to use-after-free bugs.",
+        "Incorrectly handling ABA problems during atomic pointer updates on split nodes.",
+        "Neglecting memory ordering constraints (e.g., using sequentially consistent memory orders everywhere unnecessarily, hurting performance)."
+      ],
+      "best_practices": [
+        "Use appropriate memory barriers and acquire-release semantics for atomic operations to balance synchronization overhead and correctness.",
+        "Batch hazard pointer retirements and defer actual memory reclamation until no threads hold matching hazard pointers.",
+        "Design split algorithms to handle concurrent insertions gracefully by allowing cooperative completion of partial splits."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded in-memory databases, storage engines, or indexing systems that require heavy concurrent reads, writes, and efficient range scans.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where the complexity of lock-free algorithms and hazard pointers outweighs their performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free B+Tree?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing so that other threads know not to free that memory address until the reference is cleared, safely isolating deallocation from concurrent modifications."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splits in a B+Tree, and how is it resolved?",
+          "answer": "The main challenge is atomically updating parent pointers and sibling links simultaneously. It is resolved using multi-step CAS operations or cooperative split flags that allow threads encountering an incomplete split to help finish it before proceeding."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Skip Lists",
+        "Concurrent B-Link Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T13:08:09.229395+00:00",
+      "run_number": 3096
     }
   ]
 }
