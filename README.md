@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3053** |
-| Last Updated | `2026-10-16T01:08:31.958902+00:00` |
-| Dataset Size | `3053 entries` |
+| Total Topics Learned | **3054** |
+| Last Updated | `2026-10-16T01:11:42.179485+00:00` |
+| Dataset Size | `3054 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1927 |
+| data-structures | 1928 |
 | trading-strategies | 228 |
 | algorithms | 171 |
 | crypto-blockchain | 147 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations and concurrent range lookups in real-time in-memory database engines and high-performance storage systems`
 - `Implementation of a lock-free thread-safe concurrent Concurrent Map (Java-style ConcurrentHashMap architecture) using atomic bin-node-linking and tree-bin-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core bucket traversal in real-time distributed in-memory caching systems and concurrent database indexing layers`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core job dispatching in real-time distributed execution engines and concurrent task-based runtime systems`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic packet-draining and queue-overflow-dropping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core bandwidth regulation in real-time edge computing networks and concurrent API proxy servers`
 - `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput bursty traffic shaping and multi-core rate enforcement in real-time API gateway services and concurrent microservice traffic controllers`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and bit-prefix-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix searching in real-time software-defined networking switches and concurrent cloud routing engines`
 
 <!-- STATS_END -->
 

@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3053,
-    "last_updated": "2026-10-16T01:08:31.958902+00:00",
-    "total_topics_learned": 3053
+    "total_runs": 3054,
+    "last_updated": "2026-10-16T01:11:42.179485+00:00",
+    "total_topics_learned": 3054
   },
   "entries": [
     {
@@ -145462,6 +145462,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-16T01:08:31.958882+00:00",
       "run_number": 3053
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations and concurrent range lookups in real-time in-memory database engines and high-performance storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent B-tree index. By leveraging atomic compare-and-swap (CAS) primitives for node splitting and tree restructuring alongside hazard pointers, it ensures safe memory reclamation and high throughput during intensive multi-core database operations.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to execute node-splitting and structural rebalancing without traditional mutex locks.",
+        "Employs hazard pointers to securely track thread-accessed nodes, preventing premature deallocation and mitigating memory reclamation race conditions.",
+        "Ensures high-throughput concurrent range queries and point lookups across multiple CPU cores without thread contention bottlenecks.",
+        "Maintains balanced tree invariants dynamically in a lock-free environment through cooperative multi-threaded structural assistance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS node splitting and hazard pointer protection for a lock-free B-tree leaf insertion",
+        "correct": "bool insert_key(BTreeNode* root, int key, HazardPointerManager& hpm) {\n    while (true) {\n        NodeGuard guard(hpm);\n        BTreeNode* leaf = guard.protect(find_leaf(root, key));\n        if (leaf->is_full()) {\n            if (atomic_split_node(leaf)) continue;\n        }\n        if (leaf->insert_atomic(key)) return true;\n    }\n}",
+        "wrong": "bool insert_key(BTreeNode* root, int key) {\n    BTreeNode* leaf = find_leaf(root, key);\n    if (leaf->is_full()) split_node(leaf);\n    leaf->insert_unsafe(key);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to use-after-free bugs during concurrent node splits.",
+        "Neglecting cooperative work by failing to allow competing threads to help finish pending node-splits and structural rebalancing steps."
+      ],
+      "best_practices": [
+        "Retire memory nodes safely using deferred reclamation epochs or hazard pointer lists to avoid reclaiming structures still in flight.",
+        "Keep node granularity balanced—neither too large to cause excessive CAS contention nor too small to degrade memory density."
+      ],
+      "when_to_use": "Use when building high-performance in-memory database engines, storage systems, or transactional indexes that experience heavy multi-threaded read and write workloads with strict latency constraints.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when workloads are strictly single-threaded, where standard lock-based B-trees or simple arrays provide lower complexity and overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free B-tree where multiple threads can concurrently delete or split nodes?",
+          "answer": "By using hazard pointers or epoch-based memory reclamation to ensure a node is not freed until all threads traversing it have safely unregistered their reference to it."
+        },
+        {
+          "question": "What is the primary challenge when performing atomic node splits in a lock-free B-tree?",
+          "answer": "Ensuring that structural changes are atomic and that if a thread encounters a half-split node, it can cooperatively complete the split before proceeding with its own operation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Core Database Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T01:11:42.179467+00:00",
+      "run_number": 3054
     }
   ]
 }
