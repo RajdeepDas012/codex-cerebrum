@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3125,
-    "last_updated": "2026-10-16T21:30:27.553000+00:00",
-    "total_topics_learned": 3125
+    "total_runs": 3126,
+    "last_updated": "2026-10-16T21:33:37.500345+00:00",
+    "total_topics_learned": 3126
   },
   "entries": [
     {
@@ -148875,6 +148875,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T21:30:27.552981+00:00",
       "run_number": 3125
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocating and table-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput key-value lookups and multi-core high-load dynamic resizing in real-time in-memory caching systems and concurrent distributed storage execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent Cuckoo Hash Table that achieves O(1) worst-case lookup time using multiple hash functions and alternative candidate buckets. It leverages atomic compare-and-swap (CAS) operations for bucket relocation and dynamic table resizing, combined with hazard pointers to ensure safe memory reclamation without traditional mutex locks.",
+      "key_points": [
+        "Utilizes two or more independent hash functions mapping keys to alternative candidate buckets to resolve collisions deterministically.",
+        "Employs atomic Compare-And-Swap (CAS) primitives to execute lock-free concurrent insertions, updates, and key displacements (cuckoo evictions).",
+        "Integrates hazard pointers to track threads actively accessing specific hash buckets, safely deferring memory deallocation during resize operations.",
+        "Supports multi-core high-load dynamic table resizing by coordinating background migration tasks via atomic state transitions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bucket relocation using CAS for a lock-free cuckoo hash table insert operation",
+        "correct": "bool insert(K key, V value) {\n    while (true) {\n        int h1 = hash1(key);\n        if (try_put(h1, key, value)) return true;\n        int h2 = hash2(key);\n        if (try_put(h2, key, value)) return true;\n        if (!relocate_and_insert(key, value)) {\n            trigger_resize();\n        }\n    }\n}",
+        "wrong": "bool insert(K key, V value) {\n    std::lock_guard<std::mutex> lock(mtx); // Using mutex locks instead of lock-free atomic CAS primitives\n    table[hash1(key)] = value;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect hazard pointers properly, leading to use-after-free race conditions during table resizing.",
+        "Deadlocking or entering infinite displacement loops during cuckoo eviction sequences when the load factor approaches critical capacity without triggering a resize."
+      ],
+      "best_practices": [
+        "Maintain load factors strictly below 50% to 60% in multi-hash cuckoo hashing to minimize infinite displacement loops.",
+        "Use epoch-based reclamation or hazard pointers correctly to manage memory safely across concurrent resizes."
+      ],
+      "when_to_use": "Use when building ultra-low latency, high-throughput in-memory caching systems or distributed database storage engines requiring lock-free O(1) lookups under heavy multi-core contention.",
+      "when_not_to_use": "Avoid when memory overhead must be tightly constrained or when workloads experience frequent write spikes near maximum capacity, as cuckoo rehashing overhead can degrade performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent infinite cuckoo eviction loops during concurrent insertions without using global locks?",
+          "answer": "By setting a maximum displacement chain depth threshold. If the limit is reached, the operation aborts and triggers a lock-free dynamic table resize or rehash."
+        },
+        {
+          "question": "Why are hazard pointers necessary when resizing a lock-free cuckoo hash table?",
+          "answer": "Hazard pointers allow reader threads to register which buckets they are currently traversing, ensuring that background resizing threads do not free or overwrite old memory blocks while they are still in use."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T21:33:37.500326+00:00",
+      "run_number": 3126
     }
   ]
 }
