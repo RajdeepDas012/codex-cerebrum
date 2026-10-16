@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3076,
-    "last_updated": "2026-10-16T07:25:33.825809+00:00",
-    "total_topics_learned": 3076
+    "total_runs": 3077,
+    "last_updated": "2026-10-16T07:28:50.804214+00:00",
+    "total_topics_learned": 3077
   },
   "entries": [
     {
@@ -146551,6 +146551,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T07:25:33.825789+00:00",
       "run_number": 3076
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and tower-height-building CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core parallel range scans in real-time in-memory key-value stores and concurrent database indexing layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) operations to manage multi-level forward pointers and node tower heights without locking, enabling high-throughput sorted data access. Combining this structure with hazard pointers ensures memory safety and safe reclamation during concurrent insertions, deletions, and range scans. This design is critical for building scalable in-memory key-value stores and high-performance database indexing layers.",
+      "key_points": [
+        "Uses atomic forward-pointer linking and tower-height building via CAS primitives to achieve non-blocking concurrency.",
+        "Employs hazard pointer memory reclamation to safely free detached nodes without suffering from the ABA problem or use-after-free bugs.",
+        "Maintains probabilistic multi-level indexing structures that offer logarithmic expected search, insertion, and deletion time complexity.",
+        "Supports lock-free multi-core parallel range scans by traversing lower-level forward pointers safely amidst concurrent structural updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic CAS insertion logic for a lock-free skip list node pointer link.",
+        "correct": "bool link_node(Node* pred, Node* succ, Node* newNode, int level) {\n    newNode->forward[level].store(succ, std::memory_order_relaxed);\n    return pred->forward[level].compare_exchange_strong(succ, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_node(Node* pred, Node* succ, Node* newNode, int level) {\n    pred->forward[level] = newNode;\n    newNode->forward[level] = succ;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically as deleted before attempting physical removal from all index levels.",
+        "Ignoring memory ordering constraints, which can lead to reordering of pointer writes and visibility issues across threads.",
+        "Not protecting traversed nodes with hazard pointers, resulting in premature memory deallocation by concurrent mutator threads."
+      ],
+      "best_practices": [
+        "Always use hazard pointers or epoch-based reclamation to manage node lifetimes safely under high thread contention.",
+        "Implement logical deletion (marking bits in pointers) to decouple visibility from physical pointer relinking.",
+        "Choose robust pseudo-random number generators for tower heights to preserve the probabilistic balance of the skip list levels."
+      ],
+      "when_to_use": "Use when you need high-throughput, ordered multi-threaded key-value access with frequent concurrent range queries and minimal lock contention.",
+      "when_not_to_use": "Avoid in memory-constrained environments where skip list forward pointer overhead and hazard pointer tracking metadata become prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates on skip list towers using CAS?",
+          "answer": "By packing a version or reference counter alongside the pointer address, or by utilizing hazard pointers that prevent nodes from being reused or freed while a thread holds a reference."
+        },
+        {
+          "question": "Why is logical deletion required before physical node removal in a lock-free skip list?",
+          "answer": "Logical deletion marks a node as removed so other threads traversing the structure can immediately bypass it, avoiding race conditions where a concurrent insertion or update modifies pointers of a node being unlinked."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-free Concurrent Priority Queue",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T07:28:50.804195+00:00",
+      "run_number": 3077
     }
   ]
 }
