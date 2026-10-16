@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3088,
-    "last_updated": "2026-10-16T12:35:42.460834+00:00",
-    "total_topics_learned": 3088
+    "total_runs": 3089,
+    "last_updated": "2026-10-16T12:39:03.978072+00:00",
+    "total_topics_learned": 3089
   },
   "entries": [
     {
@@ -147118,6 +147118,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T12:35:42.460817+00:00",
       "run_number": 3088
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Blocking Queue using atomic node-linking and thread-suspending semaphore primitives alongside hazard pointer memory reclamation for high-throughput producer-consumer coordination and multi-core task handoff in real-time asynchronous processing pipelines and concurrent thread pool execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent blocking queue that combines atomic CAS operations for node linking with synchronization primitives like semaphores to manage producer-consumer handoffs safely. It utilizes hazard pointers for safe memory reclamation, ensuring high-throughput task distribution without traditional global mutex bottlenecks.",
+      "key_points": [
+        "Uses atomic node-linking via Compare-And-Swap (CAS) to safely enqueue and dequeue elements without locks.",
+        "Incorporates hazard pointers to manage memory reclamation and prevent the ABA problem during concurrent node removal.",
+        "Employs thread-suspension and semaphore primitives to efficiently block producer or consumer threads when capacity or data limits are reached.",
+        "Enables high-throughput task handoff and multi-core synchronization for asynchronous processing pipelines and thread pool execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe enqueue and dequeue operations using atomic pointer updates and hazard pointers.",
+        "correct": "template<typename T>\nclass LockFreeBlockingQueue {\n    struct Node {\n        T data;\n        std::atomic<Node*> next;\n        Node(T val) : data(val), next(nullptr) {}\n    };\n    std::atomic<Node*> head;\n    std::atomic<Node*> tail;\npublic:\n    void enqueue(T val) {\n        Node* newNode = new Node(val);\n        Node* prevTail = tail.exchange(newNode);\n        prevTail->next.store(newNode, std::memory_order_release);\n    }\n};",
+        "wrong": "template<typename T>\nclass UnsafeQueue {\n    std::vector<T> data;\npublic:\n    void push(T val) { data.push_back(val); } // Missing synchronization, causes data races\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect memory reclamation with hazard pointers, leading to use-after-free bugs when concurrent threads traverse deleted nodes.",
+        "Neglecting proper memory ordering semantics (acquire-release), which can cause instruction reordering and inconsistent state views across CPU cores."
+      ],
+      "best_practices": [
+        "Always pair atomic state transitions with hazard pointer registrations to safely track node ownership during concurrent traversals.",
+        "Use appropriate memory barriers and memory order constraints to balance synchronization safety and hardware performance."
+      ],
+      "when_to_use": "Use this data structure when building low-latency asynchronous processing pipelines, thread pools, or message brokers that demand high throughput and strict producer-consumer coordination.",
+      "when_not_to_use": "Avoid this when a simple mutex-protected std::queue satisfies throughput requirements, as lock-free implementations introduce high code complexity and debugging difficulty.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free linked queue using CAS?",
+          "answer": "The ABA problem can be prevented by using hazard pointers to track active references, or by incorporating tagged pointers (version counts) alongside the node pointers in the atomic operation."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in high-performance lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable latency pauses introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free SPSC Ring Buffer",
+        "Concurrent Thread Pool Architecture"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T12:39:03.978053+00:00",
+      "run_number": 3089
     }
   ]
 }
