@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3057,
-    "last_updated": "2026-10-16T01:21:11.055847+00:00",
-    "total_topics_learned": 3057
+    "total_runs": 3058,
+    "last_updated": "2026-10-16T01:24:20.648826+00:00",
+    "total_topics_learned": 3058
   },
   "entries": [
     {
@@ -145650,6 +145650,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-16T01:21:11.055828+00:00",
       "run_number": 3057
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic pointer-swapping and doubly-linked-list node-reordering CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded memory eviction and multi-core hotspot caching in real-time web application servers and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free Least Recently Used (LRU) cache. By leveraging atomic compare-and-swap (CAS) operations and hazard pointers, it allows multiple threads to concurrently read, write, and reorder cache nodes without acquiring global locks.",
+      "key_points": [
+        "Utilizes atomic pointer-swapping to update cache node pointers without blocking concurrent readers and writers.",
+        "Employs a concurrent doubly-linked list structure to track recency, reordering nodes via CAS loops.",
+        "Integrates hazard pointers for safe memory reclamation to prevent ABA problems and use-after-free bugs.",
+        "Provides bounded memory eviction guarantees even under heavy multi-core contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node acquisition and hazard pointer registration for lock-free cache access",
+        "correct": "template<typename K, typename V>\nstruct Node {\n    K key;\n    V value;\n    std::atomic<Node*> next;\n    std::atomic<Node*> prev;\n};\n\nclass HazardPointerManager {\npublic:\n    void protect(int thread_id, Node* node);\n    void clear(int thread_id);\n};",
+        "wrong": "template<typename K, typename V>\nclass UnsafeLRUCache {\n    std::mutex mtx;\n    std::list<std::pair<K, V>> lru;\npublic:\n    void put(K k, V v) { std::lock_guard<std::mutex> l(mtx); lru.push_front({k, v}); }\n};"
+      },
+      "common_mistakes": [
+        "Modifying the doubly-linked list pointers using standard assignment instead of CAS loops, leading to race conditions.",
+        "Failing to protect nodes with hazard pointers before traversing or reordering, causing premature memory reclamation and segmentation faults."
+      ],
+      "best_practices": [
+        "Keep critical sections inside CAS retry loops as short as possible to minimize contention and CPU cache bouncing.",
+        "Implement a dedicated retired-node list processed by hazard pointers to safely defer memory deallocation."
+      ],
+      "when_to_use": "Use when building high-throughput web application servers or database caching layers with extreme concurrency demands where global locks create severe thread bottlenecks.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where simpler synchronized data structures offer better readability and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads simultaneously try to reorder the same LRU node?",
+          "answer": "By using a compare-and-swap (CAS) loop that validates the node's neighbors haven't changed before updating the pointer links."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free LRU cache?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while another thread is actively reading or updating them, avoiding use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Doubly Linked Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T01:24:20.648806+00:00",
+      "run_number": 3058
     }
   ]
 }
