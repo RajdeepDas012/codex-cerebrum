@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3106,
-    "last_updated": "2026-10-16T17:49:12.629729+00:00",
-    "total_topics_learned": 3106
+    "total_runs": 3107,
+    "last_updated": "2026-10-16T17:52:31.104666+00:00",
+    "total_topics_learned": 3107
   },
   "entries": [
     {
@@ -147980,6 +147980,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T17:49:12.629712+00:00",
       "run_number": 3106
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Stack using atomic top-pointer-incrementing and node-recycling CAS primitives alongside hazard pointer memory reclamation for high-throughput LIFO task scheduling and multi-core resource allocation in real-time execution engines and concurrent memory pooling systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent bounded stack utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to manage node pushes and pops safely without locks. It guarantees safe thread synchronization and bounded capacity, making it crucial for high-throughput LIFO execution engines and memory pooling systems.",
+      "key_points": [
+        "Uses atomic top-pointer-incrementing and state updates to manage the stack head without blocking threads.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free recycled nodes.",
+        "Enforces a bounded capacity limit to prevent unbounded memory growth during traffic surges.",
+        "Achieves high throughput and low latency under heavy contention in multi-core execution environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a simplified atomic CAS-based push operation for a lock-free stack.",
+        "correct": "bool push(Node* new_node) {\n    Node* old_top;\n    do {\n        old_top = top.load(std::memory_order_relaxed);\n        new_node->next = old_top;\n    } while (!top.compare_exchange_weak(old_top, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool push(Node* new_node) {\n    mutex.lock();\n    new_node->next = top;\n    top = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when reusing nodes, leading to silent memory corruption.",
+        "Using sequential consistency everywhere, causing unnecessary memory fence performance penalties."
+      ],
+      "best_practices": [
+        "Pair lock-free nodes with robust memory reclamation schemes like hazard pointers or epoch-based garbage collection.",
+        "Use weak CAS in loops instead of strong CAS to maximize performance on platforms with weak memory ordering."
+      ],
+      "when_to_use": "Use when building high-throughput execution engines, thread pools, or resource allocators requiring low-latency LIFO semantics under high multi-core contention.",
+      "when_not_to_use": "Avoid when memory reclamation complexity outweighs performance gains or when standard lock-based mutexes suffice due to low thread contention.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem in a lock-free stack implementation?",
+          "answer": "By using tagged pointers (combining the node pointer with a version counter) or proper hazard pointer/epoch-based memory management."
+        },
+        {
+          "question": "Why is compare_exchange_weak preferred over compare_exchange_strong inside retry loops?",
+          "answer": "compare_exchange_weak can spuriously fail on some architectures, but inside a loop, it compiles to more efficient instruction sequences."
+        }
+      ],
+      "related_topics": [
+        "lock-free queue",
+        "hazard pointers",
+        "ABA problem",
+        "atomic operations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T17:52:31.104649+00:00",
+      "run_number": 3107
     }
   ]
 }
