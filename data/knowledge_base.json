@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3073,
-    "last_updated": "2026-10-16T07:15:28.982022+00:00",
-    "total_topics_learned": 3073
+    "total_runs": 3074,
+    "last_updated": "2026-10-16T07:18:49.329738+00:00",
+    "total_topics_learned": 3074
   },
   "entries": [
     {
@@ -146410,6 +146410,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-16T07:15:28.981999+00:00",
       "run_number": 3073
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spsc Queue using atomic ring-buffer-slot-claiming and sequence-number-validating CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer messaging and multi-core inter-thread communication in real-time audio processing pipelines and concurrent network packet buffering systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Single-Producer Single-Consumer (SPSC) queue leverages atomic ring-buffer slot claiming and sequence number validation to enable ultra-low-latency inter-thread communication without blocking. By utilizing memory reclamation techniques like hazard pointers, it prevents race conditions and eliminates kernel-level context switching overhead in high-throughput environments.",
+      "key_points": [
+        "Utilizes a ring buffer layout to achieve bounded memory usage and $O(1)$ enqueue and dequeue operations.",
+        "Employs atomic sequence numbers or indices to safely coordinate access between the producer and consumer threads without locks.",
+        "Incorporates hazard pointers or memory barriers to ensure safe memory reclamation and visibility across multi-core architectures.",
+        "Eliminates mutex contention, making it ideal for real-time systems such as audio processing and high-frequency trading."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free SPSC queue node structure using atomic sequence tracking.",
+        "correct": "template<typename T, size_t Capacity>\nclass SPSCQueue {\n    struct Node {\n        std::atomic<size_t> sequence;\n        T data;\n    };\n    Node buffer[Capacity];\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\npublic:\n    bool enqueue(const T& item) {\n        // implementation using atomic sequence validation\n        return true;\n    }\n};",
+        "wrong": "template<typename T>\nclass UnsafeQueue {\n    std::queue<T> q;\n    std::mutex mtx;\npublic:\n    void push(T val) { mtx.lock(); q.push(val); mtx.unlock(); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use appropriate memory orderings (e.g., acquire-release semantics), leading to stale reads or instruction reordering across cores.",
+        "Overlooking false sharing between the head and tail atomic indices by failing to pad them to separate cache lines."
+      ],
+      "best_practices": [
+        "Align head and tail atomic variables to separate cache lines (e.g., using `alignas(64)`) to prevent cache thrashing on multi-core CPUs.",
+        "Use `std::memory_order_acquire` and `std::memory_order_release` explicitly to minimize unnecessary synchronization overhead."
+      ],
+      "when_to_use": "Use an SPSC queue when exactly one producer thread and one consumer thread need to pass messages or data buffers with minimum possible latency and zero lock contention.",
+      "when_not_to_use": "Avoid using an SPSC queue if you have multiple producer threads or multiple consumer threads, as this design relies strictly on single-owner assumptions for head and tail indices.",
+      "interview_questions": [
+        {
+          "question": "Why is an SPSC queue inherently simpler to implement lock-free than an MPMC (Multi-Producer Multi-Consumer) queue?",
+          "answer": "Because there is only one thread writing to the tail index and one thread reading from the head index, eliminating the need for CAS loops on the index updates themselves."
+        },
+        {
+          "question": "How do you prevent false sharing between the producer and consumer indices in a high-performance lock-free queue?",
+          "answer": "By aligning the producer and consumer index variables to separate CPU cache lines (typically 64 bytes) using hardware-specific alignment specifiers like `alignas(64)`."
+        }
+      ],
+      "related_topics": [
+        "Lock-free MPMC Queue",
+        "Memory Ordering Semantics",
+        "Hazard Pointers and Epoch-Based Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T07:18:49.329718+00:00",
+      "run_number": 3074
     }
   ]
 }
