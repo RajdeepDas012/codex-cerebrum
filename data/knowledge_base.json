@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3063,
-    "last_updated": "2026-10-16T01:40:11.874226+00:00",
-    "total_topics_learned": 3063
+    "total_runs": 3064,
+    "last_updated": "2026-10-16T01:43:21.298310+00:00",
+    "total_topics_learned": 3064
   },
   "entries": [
     {
@@ -145932,6 +145932,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T01:40:11.874208+00:00",
       "run_number": 3063
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent MPSC Queue using atomic producer-node-linking and consumer-head-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer single-consumer messaging and multi-core task submission in real-time asynchronous logging frameworks and concurrent actor message passing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Multi-Producer Single-Consumer (MPSC) queue using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It is essential for high-throughput task submission and messaging architectures where multiple threads concurrently push items while a single thread consumes them.",
+      "key_points": [
+        "Utilizes atomic producer-node-linking CAS operations to allow safe concurrent insertions from multiple threads without locks.",
+        "Employs consumer-head-advancing logic optimized for a single consumer thread, eliminating contention on the dequeue side.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent ABA problems or use-after-free bugs in concurrent environments.",
+        "Achieves high-throughput task submission tailored for asynchronous logging and actor model message passing pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic node linking for an MPSC queue push operation.",
+        "correct": "void enqueue(Node* new_node) {\n    Node* prev = tail.exchange(new_node, std::memory_order_acq_rel);\n    prev->next.store(new_node, std::memory_order_release);\n}",
+        "wrong": "void enqueue(Node* new_node) {\n    tail = new_node; // Not atomic, causes race conditions and memory corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory ordering correctly, leading to reordering of node payload visibility.",
+        "Forgetting hazard pointer protection during traversal, which can lead to memory corruption if another thread frees a node."
+      ],
+      "best_practices": [
+        "Design the consumer end to be strictly single-threaded to maximize dequeue performance without synchronization overhead.",
+        "Pad atomic head and tail pointers to prevent false sharing across CPU cores."
+      ],
+      "when_to_use": "Use when multiple producer threads need to stream tasks or messages to a single dedicated consumer thread with minimal latency.",
+      "when_not_to_use": "Avoid when there are multiple consumer threads, as the MPSC design relies on single-consumer assumptions for its dequeue path.",
+      "interview_questions": [
+        {
+          "question": "Why is an MPSC queue simpler to implement lock-free than an SPMC or MPMC queue?",
+          "answer": "Because there is only one consumer, the dequeue operation does not require synchronization or CAS primitives among multiple consumers, reducing contention to only the producer side."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in lock-free queues?",
+          "answer": "Hazard pointers allow threads to atomically register nodes they are currently accessing, preventing other threads from prematurely freeing those nodes until they are no longer referenced."
+        }
+      ],
+      "related_topics": [
+        "Lock-free SPMC Queue",
+        "Hazard Pointer Memory Management",
+        "Actor Model Message Passing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T01:43:21.298289+00:00",
+      "run_number": 3064
     }
   ]
 }
