@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3062,
-    "last_updated": "2026-10-16T01:37:01.714850+00:00",
-    "total_topics_learned": 3062
+    "total_runs": 3063,
+    "last_updated": "2026-10-16T01:40:11.874226+00:00",
+    "total_topics_learned": 3063
   },
   "entries": [
     {
@@ -145885,6 +145885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T01:37:01.714831+00:00",
       "run_number": 3062
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core duplicate detection in real-time distributed caching layers and concurrent web proxy filtering engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bloom Filter utilizing atomic bitwise operations and compare-and-swap (CAS) primitives. It ensures high-throughput probabilistic membership checks without locks, paired with hazard pointers to safely manage dynamic memory and avoid race conditions in multi-core web proxy filtering engines.",
+      "key_points": [
+        "Uses atomic bit-vector updates to set filter bits safely across multiple concurrent execution threads without global locking.",
+        "Employs multiple independent hash functions to map incoming keys to specific bit positions, minimizing false positive rates.",
+        "Integrates hazard pointers to track active thread references and safely reclaim memory or handle dynamic resizing blocks.",
+        "Delivers high-throughput membership tests critical for real-time distributed caching layers and duplicate request elimination."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates setting a bit atomically in a concurrent lock-free bit-vector using atomic fetch_or primitives.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> table;\npublic:\n    ConcurrentBloomFilter(size_t size) : table(size) {}\n    void add(size_t pos) {\n        size_t idx = pos / 64;\n        size_t bit = pos % 64;\n        table[idx].fetch_or(1ULL << bit, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class UnsafeBloomFilter {\n    std::vector<uint64_t> table;\npublic:\n    void add(size_t pos) {\n        size_t idx = pos / 64;\n        size_t bit = pos % 64;\n        table[idx] |= (1ULL << bit); // Data race under multi-threading\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use relaxed memory ordering correctly where synchronization is unnecessary, degrading performance.",
+        "Neglecting false positive probabilities when choosing the bit vector size relative to the expected number of elements."
+      ],
+      "best_practices": [
+        "Leverage std::atomic::fetch_or for atomic bitwise setting across shared memory words.",
+        "Precompute hash function parameters or use fast hash algorithms like MurmurHash or CityHash to reduce CPU overhead during membership queries."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caches or web proxy engines requiring lock-free probabilistic membership tests to block duplicate requests across numerous CPU cores.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required or when elements must be reliably deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you ensure thread safety when modifying bits in a shared Bloom filter without using mutexes?",
+          "answer": "By using atomic types (std::atomic<uint64_t>) and atomic bitwise operations such as fetch_or with appropriate memory orderings."
+        },
+        {
+          "question": "Why are hazard pointers or epoch-based reclamation useful in concurrent probabilistic data structures?",
+          "answer": "They safely manage memory reclamation by ensuring threads do not free nodes or memory blocks currently accessed by other concurrent reader or writer threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filter",
+        "Concurrent Bitmaps",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T01:40:11.874208+00:00",
+      "run_number": 3063
     }
   ]
 }
