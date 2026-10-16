@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3089** |
-| Last Updated | `2026-10-16T12:39:03.978072+00:00` |
-| Dataset Size | `3089 entries` |
+| Total Topics Learned | **3090** |
+| Last Updated | `2026-10-16T12:42:33.790972+00:00` |
+| Dataset Size | `3090 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 1955 |
+| data-structures | 1956 |
 | trading-strategies | 228 |
 | algorithms | 176 |
 | crypto-blockchain | 148 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-linking and doubly-linked-list-rearranging CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-capacity item eviction and multi-core memory management in real-time in-memory caching systems and concurrent database buffer pools`
 - `Implementation of a lock-free thread-safe concurrent Blocking Queue using atomic node-linking and thread-suspending semaphore primitives alongside hazard pointer memory reclamation for high-throughput producer-consumer coordination and multi-core task handoff in real-time asynchronous processing pipelines and concurrent thread pool execution engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count analytics in real-time streaming analytics pipelines and concurrent distributed database monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Spsc Ring Buffer using atomic head-tail-pointer-advancing and cache-line-padding CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core low-latency messaging in real-time high-frequency trading execution engines and concurrent network interface card packet polling systems`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time API gateway proxies and concurrent cloud microservice traffic shaping systems`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations in real-time in-memory databases and concurrent storage engine indexing layers`
 
 <!-- STATS_END -->
 
