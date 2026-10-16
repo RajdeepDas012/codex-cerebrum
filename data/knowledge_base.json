@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3074,
-    "last_updated": "2026-10-16T07:18:49.329738+00:00",
-    "total_topics_learned": 3074
+    "total_runs": 3075,
+    "last_updated": "2026-10-16T07:22:12.052066+00:00",
+    "total_topics_learned": 3075
   },
   "entries": [
     {
@@ -146457,6 +146457,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T07:18:49.329718+00:00",
       "run_number": 3074
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Work-Stealing Deque using atomic top-bottom-pointer-manipulating and double-ended-queue-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput task parallelism and multi-core thread load balancing in real-time parallel computing frameworks and concurrent fork-join execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free work-stealing deque allows worker threads to push and pop tasks from their own local end using atomic pointer updates while other threads can steal tasks from the opposite end. This data structure underpins modern fork-join task schedulers, maximizing multi-core CPU utilization with minimal contention.",
+      "key_points": [
+        "Supports LIFO operations for the owner thread at the bottom pointer to maintain cache locality.",
+        "Supports FIFO operations for thief threads at the top pointer to steal work from other cores.",
+        "Employs compare-and-swap (CAS) primitives to safely manage concurrent adjustments to top and bottom indices without locks.",
+        "Utilizes hazard pointers to safely reclaim dynamic buffer memory without causing use-after-free bugs during resizes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic pointer manipulation for pushing items onto the local end of a work-stealing deque.",
+        "correct": "void push(Task* t) {\n    int b = bottom.load(std::memory_order_relaxed);\n    int t_idx = top.load(std::memory_order_acquire);\n    if (b - t_idx >= capacity - 1) resize();\n    buffer[b & mask] = t;\n    std::atomic_thread_fence(std::memory_order_release);\n    bottom.store(b + 1, std::memory_order_relaxed);\n}",
+        "wrong": "void push(Task* t) {\n    mutex.lock();\n    buffer[bottom++] = t;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to issue proper memory fences or acquire-release semantics, leading to reordering of top and bottom pointer checks.",
+        "Ignoring race conditions between the owner popping the last item and a thief attempting to steal it simultaneously."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering where appropriate combined with explicit acquire-release fences to reduce synchronization overhead.",
+        "Ensure power-of-two buffer sizing to allow fast bitwise masking instead of expensive modulo arithmetic."
+      ],
+      "when_to_use": "When implementing custom fork-join parallel task executors or work-stealing schedulers that demand extremely high task throughput across multiple CPU cores.",
+      "when_not_to_use": "For general-purpose thread-safe queues where simple single-lock structures or standard channels are sufficient and easier to maintain.",
+      "interview_questions": [
+        {
+          "question": "Why do owner threads operate on the bottom of a work-stealing deque while thief threads operate on the top?",
+          "answer": "The owner operates on the bottom in a LIFO manner to maximize cache locality for recently generated subtasks, while thieves steal from the top in a FIFO manner to take the oldest, largest chunks of work and minimize contention."
+        },
+        {
+          "question": "How do you resolve race conditions when both the owner and a thief try to pop/steal the final remaining task?",
+          "answer": "By using a CAS operation on the top pointer to ensure only one thread successfully claims the single remaining task while the other backs off safely."
+        }
+      ],
+      "related_topics": [
+        "Fork-Join Framework",
+        "Hazard Pointers",
+        "Lock-Free Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T07:22:12.052046+00:00",
+      "run_number": 3075
     }
   ]
 }
