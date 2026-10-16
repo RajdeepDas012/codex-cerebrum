@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3052,
-    "last_updated": "2026-10-16T01:05:22.326537+00:00",
-    "total_topics_learned": 3052
+    "total_runs": 3053,
+    "last_updated": "2026-10-16T01:08:31.958902+00:00",
+    "total_topics_learned": 3053
   },
   "entries": [
     {
@@ -145415,6 +145415,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T01:05:22.326518+00:00",
       "run_number": 3052
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent Map (Java-style ConcurrentHashMap architecture) using atomic bin-node-linking and tree-bin-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core bucket traversal in real-time distributed in-memory caching systems and concurrent database indexing layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a high-performance concurrent hash map leveraging lock-free CAS primitives for bin node linking and dynamic tree bin transformations. Utilizing hazard pointers ensures safe memory reclamation, enabling high-throughput key-value operations across multiple cores without global locking bottlenecks.",
+      "key_points": [
+        "Employs atomic bin-node-linking and tree-bin-transforming Compare-And-Swap (CAS) primitives to eliminate coarse-grained locks.",
+        "Integrates hazard pointer memory reclamation to securely free nodes without premature deallocation races.",
+        "Scales horizontally across multi-core architectures by segmenting data into independent bucket bins.",
+        "Handles high-collision scenarios dynamically by transitioning overloaded linked-list bins into balanced search trees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free bucket node insertion using atomic CAS operations and hazard pointer protection.",
+        "correct": "bool insert(K key, V value) { Node* newNode = new Node(key, value); while(true) { Node* head = buckets[hash(key)].load(); newNode->next = head; if(buckets[hash(key)].compare_exchange_weak(head, newNode)) return true; } }",
+        "wrong": "bool insert(K key, V value) { mutex.lock(); buckets[hash(key)].push_front(new Node(key, value)); mutex.unlock(); }"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed node pointers with hazard records, leading to use-after-free vulnerabilities during concurrent resizing.",
+        "Neglecting exponential collision handling, resulting in degraded $O(N)$ lookup performance inside heavily contended buckets."
+      ],
+      "best_practices": [
+        "Design bucket arrays to dynamically resize or spread traffic to prevent hot-spotting on specific hash indices.",
+        "Batch hazard pointer retirement lists to minimize thread synchronization overhead during memory reclamation."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory caches, distributed routing tables, or real-time database indexing layers with extreme concurrent read/write ratios.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained embedded systems where simple mutex-backed maps or standard library collections suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a ConcurrentHashMap style architecture handle bucket collisions under heavy multi-threaded write contention?",
+          "answer": "It leverages atomic CAS primitives to link new nodes directly to the bucket head, and transitions linked lists into balanced tree bins when collision thresholds are exceeded to maintain logarithmic lookup times."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection or simple reference counting in lock-free concurrent maps?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the pause times of tracing garbage collectors or the severe atomic RMW contention scaling issues of reference counting."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Radix Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T01:08:31.958882+00:00",
+      "run_number": 3053
     }
   ]
 }
