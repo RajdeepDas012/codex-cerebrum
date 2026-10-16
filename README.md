@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3100** |
-| Last Updated | `2026-10-16T17:26:43.786287+00:00` |
-| Dataset Size | `3100 entries` |
+| Total Topics Learned | **3101** |
+| Last Updated | `2026-10-16T17:30:14.895646+00:00` |
+| Dataset Size | `3101 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | data-structures | 1966 |
 | trading-strategies | 228 |
 | algorithms | 176 |
-| crypto-blockchain | 148 |
+| crypto-blockchain | 149 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
 | system-design | 98 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-combining and node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput block verification and multi-core state validation in real-time distributed ledger systems and concurrent verifiable data storage engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set Union (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component queries and multi-core equivalence relation tracking in real-time graph analysis engines and concurrent network connectivity routing systems`
 - `Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-advancing and capacity-checking CAS primitives alongside hazard pointer memory reclamation for high-throughput fixed-size task queuing and multi-core thread synchronization in real-time asynchronous execution pipelines and concurrent thread pool worker task dispatch systems`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic node-splitting and axis-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searches and multi-core spatial point indexing in real-time machine learning feature stores and concurrent point cloud processing engines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic node-subdividing and spatial-index-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D collision detection and multi-core spatial partitioning in real-time game physics simulation engines and concurrent geographic rendering systems`
-- `Implementation of a lock-free thread-safe concurrent B+Tree using atomic leaf-node-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core sequential access in real-time in-memory database indexing engines and concurrent storage system buffer pools`
 
 <!-- STATS_END -->
 
