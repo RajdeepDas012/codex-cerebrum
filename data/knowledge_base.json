@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3075,
-    "last_updated": "2026-10-16T07:22:12.052066+00:00",
-    "total_topics_learned": 3075
+    "total_runs": 3076,
+    "last_updated": "2026-10-16T07:25:33.825809+00:00",
+    "total_topics_learned": 3076
   },
   "entries": [
     {
@@ -146504,6 +146504,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T07:22:12.052046+00:00",
       "run_number": 3075
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Consistent Hashing ring using atomic virtual-node-mapping and ring-topology-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed load balancing and multi-core cluster node re-mapping in real-time distributed key-value stores and concurrent caching proxy layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free consistent hashing ring that uses atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely manage dynamic cluster node additions, removals, and virtual node mappings. It is essential for achieving high-throughput, thread-safe distributed load balancing and minimal key re-mapping in multi-core caching and storage systems.",
+      "key_points": [
+        "Utilizes atomic operations and CAS primitives to manage ring topology changes without global locks.",
+        "Employs hazard pointers to guarantee safe memory reclamation of retired ring nodes and virtual node mappings under concurrent reads and writes.",
+        "Distributes keys across a virtual node space to ensure balanced load distribution and minimize key movement during node re-mapping.",
+        "Provides high-throughput concurrent lookup performance suitable for real-time distributed key-value stores and caching proxies."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of atomic virtual node mapping and hazard pointer protection during ring traversal.",
+        "correct": "class HazardPointerRing:\n    def __init__(self):\n        self.ring = atomic_reference([])\n    def lookup(self, key):\n        hp = acquire_hazard_pointer()\n        while True:\n            current_ring = self.ring.load()\n            hp.protect(current_ring)\n            if self.ring.load() == current_ring:\n                return find_node_on_ring(current_ring, key)\n            hp.clear()",
+        "wrong": "def lookup(self, key):\n    # Unsafe concurrent read without hazard pointers leading to use-after-free\n    return self.ring.nodes[key]"
+      },
+      "common_mistakes": [
+        "Failing to protect ring structures with hazard pointers, leading to use-after-free bugs when another thread rebuilds the ring topology.",
+        "Using heavy locking mechanisms during topology updates, which bottlenecks high-throughput multi-core request pipelines."
+      ],
+      "best_practices": [
+        "Batch virtual node updates where possible to reduce the frequency of expensive ring-topology rebuilding operations.",
+        "Ensure thread hazard pointers are cleared promptly after completing ring lookups to prevent memory leaks in the reclamation queue."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput distributed caching layers, sharded databases, or proxy routers that require lock-free concurrent lookups and frequent dynamic cluster topology changes.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide sufficient performance without added implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during a lock-free ring topology rebuild?",
+          "answer": "Hazard pointers allow threads to announce which ring structure they are currently accessing, preventing the reclamation mechanism from freeing the memory until all referencing threads have released their protection."
+        },
+        {
+          "question": "Why are virtual nodes important in a consistent hashing implementation?",
+          "answer": "Virtual nodes map physical cluster nodes to multiple points on the hash ring, ensuring an even distribution of keys and preventing hot-spots when nodes join or leave the cluster."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointer memory reclamation",
+        "Distributed load balancing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T07:25:33.825789+00:00",
+      "run_number": 3076
     }
   ]
 }
