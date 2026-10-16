@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3128,
-    "last_updated": "2026-10-16T23:26:44.676202+00:00",
-    "total_topics_learned": 3128
+    "total_runs": 3129,
+    "last_updated": "2026-10-16T23:29:53.487422+00:00",
+    "total_topics_learned": 3129
   },
   "entries": [
     {
@@ -149018,6 +149018,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-16T23:26:44.676184+00:00",
       "run_number": 3128
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core index lookups in real-time relational database storage engines and concurrent file system directory indexing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree data structure using atomic compare-and-swap (CAS) primitives and hazard pointers. It is critical for high-throughput database storage engines and file systems requiring safe, lockless multi-core range queries and index updates.",
+      "key_points": [
+        "Utilizes atomic primitives such as node-splitting and leaf-sibling-linking CAS operations to safely modify tree structures without coarse-grained locking.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent the ABA problem or premature freeing of nodes accessed by concurrent threads.",
+        "Optimizes multi-core read and write operations for high-throughput range scans and index lookups in database engines.",
+        "Ensures data consistency and thread safety under high contention without incurring the performance penalties of traditional mutual exclusion locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node split and pointer update in a concurrent B+ Tree implementation.",
+        "correct": "bool insert_key(Node* parent, Node* child, int key) {\n    Node* old_child;\n    do {\n        old_child = parent->get_child();\n        if (!safe_to_insert(old_child)) return false;\n    } while (!atomic_compare_exchange_weak(&(parent->child_ptr), &old_child, child));\n    return true;\n}",
+        "wrong": "bool insert_key(Node* parent, Node* child, int key) {\n    parent->lock();\n    parent->child_ptr = child;\n    parent->unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect read references with hazard pointers, leading to use-after-free bugs when another thread splits or deletes a node.",
+        "Failing to handle the ABA problem during concurrent node splits and pointer updates."
+      ],
+      "best_practices": [
+        "Always register active node traversal pointers in hazard pointer lists before reading node contents.",
+        "Design tree node splits and merges to be idempotent or gracefully retry upon CAS failure."
+      ],
+      "when_to_use": "Use when building high-performance in-memory relational databases or distributed storage engines requiring massive concurrent read and write scalability.",
+      "when_not_to_use": "Avoid in simple applications or low-concurrency environments where standard lock-based B+ Trees offer sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers help in implementing a lock-free B+ Tree?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory nodes until the read operation completes."
+        },
+        {
+          "question": "Why are standard mutex locks inefficient for high-throughput B+ Tree range scans in multi-core databases?",
+          "answer": "Mutex locks cause thread contention, context switching overhead, and serialization bottlenecks, whereas lock-free designs allow multiple threads to progress simultaneously using atomic CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Concurrent Skip Lists",
+        "Multi-version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-16T23:29:53.487403+00:00",
+      "run_number": 3129
     }
   ]
 }
