@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3109,
-    "last_updated": "2026-10-16T17:59:37.710242+00:00",
-    "total_topics_learned": 3109
+    "total_runs": 3110,
+    "last_updated": "2026-10-16T18:03:03.255743+00:00",
+    "total_topics_learned": 3110
   },
   "entries": [
     {
@@ -148122,6 +148122,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-16T17:59:37.710224+00:00",
       "run_number": 3109
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Circular Buffer using atomic tail-head-wrap-around and memory-barrier-synchronizing CAS primitives alongside hazard pointer memory reclamation for high-throughput stream ingestion and multi-core fixed-size packet buffering in real-time telecommunication network gateways and concurrent audio processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent circular buffer manages fixed-size data streams across multiple threads without traditional locking mechanisms by using atomic compare-and-swap operations for head and tail pointer updates. It is vital for high-throughput telemetry, packet routing, and audio buffering where predictable latency and zero lock contention are mandatory.",
+      "key_points": [
+        "Utilizes atomic primitives to manage wrap-around indices for head and tail pointers safely across multiple concurrent producers and consumers.",
+        "Employs memory barriers to guarantee strict ordering of read and write operations on shared buffer slots without mutual exclusion locks.",
+        "Integrates hazard pointer memory reclamation to safely track active node access and prevent premature reuse or deallocation in dynamic ring variations.",
+        "Achieves bounded memory footprints and high-throughput data passing suitable for real-time networking and streaming media engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual thread-safe enqueue/dequeue logic using atomic state management for a circular buffer.",
+        "correct": "class LockFreeCircularBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.head = 0\n        self.tail = 0\n    def enqueue(self, item):\n        current_tail = self.tail\n        next_tail = (current_tail + 1) % self.capacity\n        if next_tail == self.head:\n            return False # Buffer full\n        self.buffer[current_tail] = item\n        self.tail = next_tail\n        return True",
+        "wrong": "class UnsafeBuffer:\n    def __init__(self, cap):\n        self.buf = [None] * cap\n        self.idx = 0\n    def add(self, item):\n        self.buf[self.idx] = item\n        self.idx = (self.idx + 1) % len(self.buf)"
+      },
+      "common_mistakes": [
+        "Failing to account for ABA problems or race conditions when multiple producer threads attempt to claim the same tail index simultaneously.",
+        "Neglecting proper memory barriers, allowing out-of-order execution where data written to a buffer slot is visible before the pointer update."
+      ],
+      "best_practices": [
+        "Use power-of-two capacities to replace costly modulo operations with fast bitwise AND operations for index wrap-around.",
+        "Ensure cache-line separation between head and tail pointers to prevent false sharing and high cache-coherency traffic across CPU cores."
+      ],
+      "when_to_use": "When implementing low-latency, fixed-capacity producer-consumer data pipelines for high-frequency trading, audio stream routing, or network packet ingestion.",
+      "when_not_to_use": "When data streams have highly variable sizes or require dynamic resizing, which conflicts with the fixed-capacity architecture of circular buffers.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full buffer and an empty buffer when both head and tail pointers point to the same index?",
+          "answer": "Either by keeping an explicit atomic counter of elements, reserving a sentinel empty slot, or utilizing generation/sequence tags alongside the index pointers."
+        },
+        {
+          "question": "Why are memory barriers crucial when implementing lock-free data structures like circular buffers?",
+          "answer": "They prevent modern CPUs and compilers from reordering instructions, ensuring that data written into a buffer slot is fully committed before the pointer referencing that slot is updated."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bounded Stack",
+        "Lock-Free Queue",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-16T18:03:03.255725+00:00",
+      "run_number": 3110
     }
   ]
 }
