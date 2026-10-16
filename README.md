@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3087** |
-| Last Updated | `2026-10-16T12:32:13.223204+00:00` |
-| Dataset Size | `3087 entries` |
+| Total Topics Learned | **3088** |
+| Last Updated | `2026-10-16T12:35:42.460834+00:00` |
+| Dataset Size | `3088 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | data-structures | 1954 |
 | trading-strategies | 228 |
-| algorithms | 175 |
+| algorithms | 176 |
 | crypto-blockchain | 148 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core distinct count analytics in real-time streaming analytics pipelines and concurrent distributed database monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Spsc Ring Buffer using atomic head-tail-pointer-advancing and cache-line-padding CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core low-latency messaging in real-time high-frequency trading execution engines and concurrent network interface card packet polling systems`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time API gateway proxies and concurrent cloud microservice traffic shaping systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations in real-time in-memory databases and concurrent storage engine indexing layers`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and spatial-index-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial queries and multi-core geometric data indexing in real-time geographic information systems and concurrent location-based service engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and priority-inversion-preventing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core priority-based event processing in real-time operating system kernels and concurrent job execution engines`
 
 <!-- STATS_END -->
 
