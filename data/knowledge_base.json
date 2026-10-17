@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3206,
-    "last_updated": "2026-10-17T19:21:55.779173+00:00",
-    "total_topics_learned": 3206
+    "total_runs": 3207,
+    "last_updated": "2026-10-17T19:25:05.764074+00:00",
+    "total_topics_learned": 3207
   },
   "entries": [
     {
@@ -152722,6 +152722,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T19:21:55.779153+00:00",
       "run_number": 3206
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free Token Bucket rate limiter utilizes compare-and-swap (CAS) primitives and hazard pointers to manage traffic shaping across multiple CPU cores without lock contention. It ensures safe, high-throughput request throttling by atomically updating token counts and tracking timestamps for refill intervals.",
+      "key_points": [
+        "Uses atomic operations to calculate elapsed time and refill tokens dynamically without mutex bottlenecks.",
+        "Employs capacity-capping CAS logic to prevent the token count from exceeding the maximum bucket size.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamic bucket configurations and concurrent threads.",
+        "Provides deterministic throughput enforcement required by modern distributed API gateways and microservices."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a simplified atomic token bucket consumption step using a retry loop with CAS semantics.",
+        "correct": "import time\n\nclass TokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = capacity\n        self.refill_rate = refill_rate\n        self.tokens = capacity\n        self.last_refill = time.time()\n\n    def consume(self, tokens_requested=1):\n        now = time.time()\n        elapsed = now - self.last_refill\n        refill = elapsed * self.refill_rate\n        self.tokens = min(self.capacity, self.tokens + refill)\n        self.last_refill = now\n        if self.tokens >= tokens_requested:\n            self.tokens -= tokens_requested\n            return True\n        return False",
+        "wrong": "class UnsafeTokenBucket:\n    def __init__(self, capacity):\n        self.tokens = capacity\n    def consume(self):\n        # Missing thread synchronization, prone to race conditions under high concurrency\n        if self.tokens > 0:\n            self.tokens -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Failing to account for clock drift or monotonic time discrepancies when calculating token refill intervals.",
+        "Overlooking the ABA problem during high-frequency CAS updates on token counts and timestamps."
+      ],
+      "best_practices": [
+        "Use monotonic clocks instead of wall-clock time to avoid issues with daylight saving time or NTP adjustments.",
+        "Combine packed atomic structures for tokens and timestamps to reduce the frequency of double-word CAS failures."
+      ],
+      "when_to_use": "When building high-throughput API gateways or cloud infrastructure requiring ultra-low latency, lock-free rate limiting across many threads.",
+      "when_not_to_use": "When running single-threaded services or distributed multi-node rate limiting where centralized stores like Redis are more appropriate.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the token count and the last-refill timestamp simultaneously in a lock-free implementation?",
+          "answer": "By packing both the token count and the timestamp into a single wider word to enable atomic updates via double-word compare-and-swap (DCAS)."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in high-performance lock-free data structures?",
+          "answer": "Hazard pointers provide predictable, deterministic memory reclamation without the latency spikes and CPU overhead introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Leaky Bucket Rate Limiter",
+        "Lock-Free Queue Design",
+        "Distributed Rate Limiting with Redis"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-17T19:25:05.764055+00:00",
+      "run_number": 3207
     }
   ]
 }
