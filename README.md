@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3227** |
-| Last Updated | `2026-10-17T22:37:35.908490+00:00` |
-| Dataset Size | `3227 entries` |
+| Total Topics Learned | **3228** |
+| Last Updated | `2026-10-17T22:40:45.344902+00:00` |
+| Dataset Size | `3228 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2066 |
+| data-structures | 2067 |
 | trading-strategies | 228 |
 | algorithms | 192 |
 | crypto-blockchain | 153 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search-frequent key-value lookups and multi-core parallel dynamic caching in real-time in-memory database engines and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping-updating and max-endpoint-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval scheduling in real-time calendar management systems and concurrent database query planning engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and min-value-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitters stream processing and multi-core parallel frequency estimation in real-time network traffic monitoring platforms and concurrent database analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set Union (Union-Find) using atomic path-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component tracking and multi-core parallel equivalence relation querying in real-time social network friend graph analysis platforms and concurrent graph clustering engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node-updating and path-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic state verification and multi-core parallel state root calculation in real-time blockchain execution clients and concurrent verifiable key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-ranking CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct range frequency querying and multi-core parallel compressed text indexing in real-time genomic data search systems and concurrent in-memory columnar database analytics engines`
 
 <!-- STATS_END -->
 
