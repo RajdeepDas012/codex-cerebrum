@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3160,
-    "last_updated": "2026-10-17T08:36:02.437384+00:00",
-    "total_topics_learned": 3160
+    "total_runs": 3161,
+    "last_updated": "2026-10-17T08:39:11.434857+00:00",
+    "total_topics_learned": 3161
   },
   "entries": [
     {
@@ -150535,6 +150535,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T08:36:02.437325+00:00",
       "run_number": 3160
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index lookups in real-time in-memory database storage engines and concurrent key-value indexing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B-Tree index structure leveraging atomic compare-and-swap (CAS) operations for node splitting and child routing. It ensures high throughput and thread safety under heavy multi-core contention without traditional lock overhead, utilizing hazard pointers for safe memory reclamation.",
+      "key_points": [
+        "Utilizes atomic node-splitting and child-pointer-updating CAS primitives to safely manage concurrent structural modifications without global locks.",
+        "Employs hazard pointer memory reclamation to prevent premature freeing of nodes currently accessed by other worker threads.",
+        "Maintains shallow tree height and balanced branching factors optimized for high-throughput multi-core index lookups and range scans.",
+        "Scales effectively in real-time in-memory database storage engines and concurrent key-value indexing systems under heavy concurrent workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer updates using CAS operations on a B-Tree node branch.",
+        "correct": "bool updateChildPointer(BTreeNode* parent, int index, BTreeNode* expected_child, BTreeNode* new_child) {\n    return parent->children[index].compare_exchange_strong(expected_child, new_child, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool updateChildPointer(BTreeNode* parent, int index, BTreeNode* new_child) {\n    parent->children[index] = new_child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node references with hazard pointers, leading to use-after-free bugs during node splitting.",
+        "Using weak memory orderings inappropriately during child pointer updates, causing stale visibility across processor cores."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based reclamation systematically before traversing or modifying internal tree nodes.",
+        "Design node-splitting protocols to be optimistic, retrying CAS operations gracefully when race conditions occur."
+      ],
+      "when_to_use": "High-concurrency read-heavy or write-heavy multi-core database systems requiring predictable latency and lock-free ordered index lookups.",
+      "when_not_to_use": "Single-threaded applications or environments where the implementation complexity of lock-free node splitting and hazard pointers outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splitting atomically in a lock-free B-Tree without blocking concurrent search threads?",
+          "answer": "By using CAS primitives to install new split child pointers and coordinating state flags that let search threads safely traverse or retry if they encounter an in-flight split."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing memory in a lock-free concurrent B-Tree?",
+          "answer": "They protect nodes from being reclaimed by the memory allocator while other threads are actively holding pointers to them during traversal or modification."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip list",
+        "epoch-based memory reclamation",
+        "concurrent Radix Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T08:39:11.434835+00:00",
+      "run_number": 3161
     }
   ]
 }
