@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3196** |
-| Last Updated | `2026-10-17T16:43:57.443094+00:00` |
-| Dataset Size | `3196 entries` |
+| Total Topics Learned | **3197** |
+| Last Updated | `2026-10-17T16:47:09.263361+00:00` |
+| Dataset Size | `3197 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2042 |
+| data-structures | 2043 |
 | trading-strategies | 228 |
 | algorithms | 189 |
 | crypto-blockchain | 151 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjusting-access CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookups and multi-core parallel local caching in real-time in-memory database indexing systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-updating and node-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range updates and multi-core parallel query execution in real-time financial market analytics platforms and concurrent high-frequency trading calculation engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-probing CAS primitives alongside hazard pointer memory reclamation for high-throughput stream frequency estimation and multi-core parallel heavy-hitters tracking in real-time network traffic monitoring platforms and concurrent telemetry aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-splitting and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components finding and multi-core parallel equivalence relation querying in real-time social network friend suggestion systems and concurrent image segmentation processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized binary search tree operations and multi-core concurrent ordered map maintenance in real-time distributed in-memory caching systems and concurrent transactional database indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-splitting and rank-select-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel alphabet frequency analysis in real-time genomic data compression systems and concurrent column-oriented database storage engines`
 
 <!-- STATS_END -->
 
