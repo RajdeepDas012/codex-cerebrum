@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3173,
-    "last_updated": "2026-10-17T12:53:55.475427+00:00",
-    "total_topics_learned": 3173
+    "total_runs": 3174,
+    "last_updated": "2026-10-17T12:57:04.208481+00:00",
+    "total_topics_learned": 3174
   },
   "entries": [
     {
@@ -151148,6 +151148,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T12:53:55.475407+00:00",
       "run_number": 3173
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time edge proxy servers and concurrent cloud API gateway throttling systems",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Token Bucket rate limiter using atomic compare-and-swap (CAS) operations and hazard pointers. It enables high-throughput traffic shaping and rate enforcement without lock contention in multi-core environments like cloud API gateways.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free token refilling and capacity capping to maximize multi-core throughput.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation without blocking concurrent threads.",
+        "Calculates token accumulation dynamically based on elapsed time intervals since the last access timestamp.",
+        "Prevents race conditions during simultaneous request filtering and token deduction across multiple threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic token consumption with compare-and-swap retry loops.",
+        "correct": "bool consume_token(std::atomic<uint64_t>& tokens, uint64_t cost) {\n    uint64_t current = tokens.load();\n    while (true) {\n        if (current < cost) return false;\n        if (tokens.compare_exchange_weak(current, current - cost)) return true;\n    }\n}",
+        "wrong": "bool consume_token(std::atomic<uint64_t>& tokens, uint64_t cost) {\n    uint64_t current = tokens.load();\n    if (current >= cost) {\n        tokens.store(current - cost);\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for ABA problems when updating timestamps alongside token counts atomically.",
+        "Using blocking mutexes in high-frequency data planes instead of lock-free CAS loops.",
+        "Incorrectly handling overflow when calculating elapsed time deltas for token regeneration."
+      ],
+      "best_practices": [
+        "Combine timestamp and token count into a single word-sized structure if possible to enable double-word CAS (DCAS) operations.",
+        "Integrate hazard pointers to cleanly manage bucket reconfigurations or dynamic state resizing.",
+        "Keep CAS retry loops tight and bounded to prevent excessive CPU consumption under heavy contention."
+      ],
+      "when_to_use": "Use when building ultra-low-latency, multi-threaded edge proxy servers or cloud API gateways requiring strict rate limits under massive concurrent loads.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where simpler lock-based sliding window counters provide sufficient throughput and easier maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions between token refilling based on elapsed time and token consumption without using locks?",
+          "answer": "By packing the token count and last-updated timestamp into a single atomic word and utilizing a CAS retry loop to update both states simultaneously."
+        },
+        {
+          "question": "Why are hazard pointers required in this lock-free rate limiter implementation?",
+          "answer": "Hazard pointers allow threads to safely register ownership of shared rate limiter bucket nodes before accessing them, preventing premature memory reclamation by concurrent writer threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation",
+        "Distributed rate limiting algorithms",
+        "Concurrent data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T12:57:04.208461+00:00",
+      "run_number": 3174
     }
   ]
 }
