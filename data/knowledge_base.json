@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3141,
-    "last_updated": "2026-10-17T00:08:07.200290+00:00",
-    "total_topics_learned": 3141
+    "total_runs": 3142,
+    "last_updated": "2026-10-17T03:52:47.138339+00:00",
+    "total_topics_learned": 3142
   },
   "entries": [
     {
@@ -149636,6 +149636,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-17T00:08:07.200271+00:00",
       "run_number": 3141
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-pointing and state-transition-extending CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string searching and multi-core dictionary matching in real-time network intrusion detection systems and concurrent malware signature scanning engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Aho-Corasick automaton using Compare-And-Swap (CAS) primitives and hazard pointers. It enables safe, high-throughput multi-pattern string matching across multiple CPU cores without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic failure-link-pointing and state-transition-extending CAS operations for lock-free state machine updates.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during concurrent node modifications.",
+        "Maximizes throughput for multi-core environments in high-performance applications like network intrusion detection and malware scanning.",
+        "Eliminates thread contention and deadlocks inherent in traditional mutex-protected automaton implementations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for extending a state transition in a concurrent Aho-Corasick automaton",
+        "correct": "bool add_transition(State* current, char c, State* next_state) {\n    while (true) {\n        State* existing = current->transitions[c].load();\n        if (existing != nullptr) return false;\n        if (current->transitions[c].compare_exchange_weak(existing, next_state)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool add_transition(State* current, char c, State* next_state) {\n    mutex.lock();\n    current->transitions[c] = next_state;\n    mutex.unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node deletions with hazard pointers, leading to premature memory reclamation while other threads traverse the failure links.",
+        "Using blocking synchronization primitives inside high-frequency string scanning loops, negating the benefits of lock-free design."
+      ],
+      "best_practices": [
+        "Always register threads and acquire hazard pointers before traversing trie nodes and failure links.",
+        "Batch memory deallocations safely using epoch-based or hazard-pointer-based deferred reclamation queues."
+      ],
+      "when_to_use": "When building real-time, multi-threaded text scanning engines requiring high-throughput dictionary searches against thousands of patterns simultaneously.",
+      "when_not_to_use": "When working in single-threaded environments or applications with static, infrequent pattern lookups where simple immutable structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you safely update failure links in a lock-free Aho-Corasick automaton without causing race conditions during traversals?",
+          "answer": "By using atomic pointer exchanges via CAS along with hazard pointers to ensure traversing threads maintain a safe reference to nodes before they are modified or reclaimed."
+        },
+        {
+          "question": "Why are standard mutex locks inefficient for concurrent Aho-Corasick automata in network intrusion detection systems?",
+          "answer": "Mutex locks introduce severe thread contention and context-switching overhead under heavy multi-core packet inspection workloads, whereas lock-free CAS primitives allow non-blocking progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent TST",
+        "Hazard Pointer Memory Management",
+        "Concurrent String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T03:52:47.138320+00:00",
+      "run_number": 3142
     }
   ]
 }
