@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3209** |
-| Last Updated | `2026-10-17T19:31:24.282684+00:00` |
-| Dataset Size | `3209 entries` |
+| Total Topics Learned | **3210** |
+| Last Updated | `2026-10-17T19:34:34.019160+00:00` |
+| Dataset Size | `3210 entries` |
 
 ## 📂 Categories Learned
 
@@ -26,8 +26,8 @@
 | system-design | 103 |
 | stocks-markets | 71 |
 | databases | 39 |
+| security | 27 |
 | probability-math | 27 |
-| security | 26 |
 | machine-learning | 16 |
 | networking | 16 |
 | web-dev | 9 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversing and node-transition-CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core parallel log parsing in real-time cybersecurity SIEM platforms and concurrent intrusion detection systems`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-appending CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core spell checking in real-time autocomplete recommendation systems and concurrent natural language processing indexing engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-rectangle-splitting and spatial-index-traversing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial querying and multi-core geographic data indexing in real-time geospatial mapping systems and concurrent location-based service engines`
 - `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-updating and node-path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing and multi-core parallel IP address lookup in real-time cloud networking routers and concurrent high-speed packet forwarding engines`
-- `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic reader-writer-transition and queuing-ticket CAS primitives alongside hazard pointer memory reclamation for high-throughput fine-grained concurrency control and multi-core parallel resource access in real-time multi-threaded caching layers and concurrent in-memory database engines`
 
 <!-- STATS_END -->
 
