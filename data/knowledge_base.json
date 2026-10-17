@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3214,
-    "last_updated": "2026-10-17T19:47:12.775766+00:00",
-    "total_topics_learned": 3214
+    "total_runs": 3215,
+    "last_updated": "2026-10-17T19:50:22.095610+00:00",
+    "total_topics_learned": 3215
   },
   "entries": [
     {
@@ -153104,6 +153104,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T19:47:12.775748+00:00",
       "run_number": 3214
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-allocation and bounding-box-shifting CAS primitives alongside hazard pointer memory reclamation for high-throughput localized object querying and multi-core parallel collision detection in real-time massively multiplayer online gaming servers and concurrent simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free spatial indexing data structure designed for real-time applications. By leveraging atomic cell allocations, bounding-box updates via Compare-And-Swap (CAS) primitives, and hazard pointers, it ensures safe memory reclamation and seamless multi-core scaling without global locks.",
+      "key_points": [
+        "Utilizes atomic cell-allocation and bounding-box-shifting CAS operations to allow multiple threads to update spatial states concurrently.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic object insertions and deletions across buckets without inducing ABA problems or memory leaks.",
+        "Optimizes localized object querying by discretizing continuous 2D/3D space into fine-grained atomic grid cells.",
+        "Maximizes throughput on multi-core systems, making it ideal for high-density massively multiplayer online gaming and physics engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion into a grid cell using a hazard pointer protected CAS loop",
+        "correct": "bool insert_entity(SpatialGrid* grid, int cell_id, Entity* entity) {\n    Cell* cell = grid->get_or_create_cell(cell_id);\n    HazardPointer hp;\n    while (true) {\n        Entity* old_head = hp.protect(cell->head);\n        entity->next = old_head;\n        if (atomic_compare_exchange_weak(&cell->head, &old_head, entity)) {\n            hp.clear();\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_entity(SpatialGrid* grid, int cell_id, Entity* entity) {\n    mutex.lock();\n    grid->cells[cell_id].push_back(entity);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically reallocated grid nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Relying on coarse-grained locks for cell bucket expansions, which severely limits multi-core scalability."
+      ],
+      "best_practices": [
+        "Design grid cell granularity to balance memory overhead and the frequency of cross-cell boundary queries.",
+        "Pair atomic operations strictly with epoch-based reclamation or hazard pointers to bound memory consumption under heavy contention.",
+        "Minimize CAS retry loops by pre-allocating node structures when anticipating high insertion bursts."
+      ],
+      "when_to_use": "Use this data structure when building low-latency, multi-threaded applications like MMO game servers or physics engines that demand constant high-frequency spatial queries and updates across many CPU cores.",
+      "when_not_to_use": "Avoid this pattern in single-threaded environments or systems with sparse, static object distributions where simpler structures like standard quadtrees or flat arrays suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node insertions in a spatial grid cell?",
+          "answer": "Hazard pointers protect specific memory addresses from being reclaimed by announcing them as active to other threads, ensuring that a node cannot be freed and reallocated while a thread is attempting a CAS operation on its pointer."
+        },
+        {
+          "question": "Why is a grid-based spatial index often preferred over hierarchical structures like BVHs in lock-free concurrent designs?",
+          "answer": "Grids map spatial coordinates directly to discrete bucket indices, significantly reducing the scope of synchronization to localized cells rather than requiring global tree rebalancing or complex node-splitting CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "lock-free Bounding Volume Hierarchy",
+        "hazard pointer memory reclamation",
+        "concurrent quadtree and octree algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T19:50:22.095589+00:00",
+      "run_number": 3215
     }
   ]
 }
