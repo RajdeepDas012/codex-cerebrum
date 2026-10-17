@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3198,
-    "last_updated": "2026-10-17T16:50:18.515170+00:00",
-    "total_topics_learned": 3198
+    "total_runs": 3199,
+    "last_updated": "2026-10-17T16:53:27.359940+00:00",
+    "total_topics_learned": 3199
   },
   "entries": [
     {
@@ -152341,6 +152341,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T16:50:18.515150+00:00",
       "run_number": 3198
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput percentile calculation and multi-core parallel streaming analytics in real-time APM telemetry monitoring platforms and concurrent database performance profiling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent T-Digest data structure using atomic operations and hazard pointers for memory safety. It enables high-throughput, accurate percentile approximations across distributed multi-core streaming applications without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for lock-free centroid insertion and merging operations.",
+        "Employs hazard pointers to safely manage memory reclamation for dynamically allocated centroid nodes in shared multi-threaded environments.",
+        "Maintains higher accuracy at the tails of distributions (p0.1, p99.9) using scale functions for size-bounded clustering.",
+        "Enables real-time aggregation of streaming data across concurrent execution threads for APM and database performance metrics."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic centroid merging via CAS for a lock-free T-Digest node structure.",
+        "correct": "bool merge_centroid(std::atomic<Centroid*>& head, Centroid* new_node) {\n    Centroid* current = head.load();\n    do {\n        new_node->next = current;\n    } while (!head.compare_exchange_weak(current, new_node));\n    return true;\n}",
+        "wrong": "bool merge_centroid(Centroid*& head, Centroid* new_node) {\n    mutex.lock();\n    new_node->next = head;\n    head = new_node;\n    mutex.unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted centroid nodes with hazard pointers, leading to memory corruption or use-after-free bugs.",
+        "Using global locks for merging centroids, which creates severe contention bottlenecks in high-throughput streaming environments."
+      ],
+      "best_practices": [
+        "Design scale functions carefully to balance merging frequency with quantile accuracy constraints.",
+        "Implement epoch-based or hazard pointer-based reclamation schemes to clean up stale centroids safely under heavy concurrency."
+      ],
+      "when_to_use": "Use when you need high-throughput, low-latency accurate percentile calculations (like p99 latency) on streaming data across multiple concurrent worker threads.",
+      "when_not_to_use": "Avoid when exact quantiles are strictly required over streaming approximations, or when memory overhead constraints prohibit maintaining centroid structures.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races during concurrent T-Digest centroid updates?",
+          "answer": "Hazard pointers protect nodes currently accessed by threads by registering them in a thread-local list, preventing other threads from freeing them until no thread holds a reference to them."
+        },
+        {
+          "question": "Why are standard sorting-based percentile algorithms unsuitable for high-throughput concurrent stream processing?",
+          "answer": "Sorting requires storing all raw data points or acquiring heavy synchronization locks over a global array, resulting in high memory footprints and severe thread contention."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers",
+        "Stream processing and quantile estimation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T16:53:27.359922+00:00",
+      "run_number": 3199
     }
   ]
 }
