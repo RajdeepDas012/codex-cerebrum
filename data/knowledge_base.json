@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3146,
-    "last_updated": "2026-10-17T04:05:25.420523+00:00",
-    "total_topics_learned": 3146
+    "total_runs": 3147,
+    "last_updated": "2026-10-17T04:08:34.432079+00:00",
+    "total_topics_learned": 3147
   },
   "entries": [
     {
@@ -149871,6 +149871,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-17T04:05:25.420503+00:00",
       "run_number": 3146
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range queries and multi-core overlapping interval scheduling in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Interval Tree using atomic operations for node augmentation (such as maintaining maximum endpoint values) and overlap detection, paired with hazard pointers to ensure safe memory reclamation. It enables multiple threads to execute high-throughput range queries and interval scheduling without blocking.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free tree restructuring and node insertion.",
+        "Maintains augmented node values (like max endpoints) atomically to optimize interval overlap searching.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted nodes until no active threads reference them.",
+        "Ensures thread safety and high throughput under high contention in real-time scheduling applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-augmentation updates during concurrent interval tree node insertions.",
+        "correct": "bool updateMaxEndpoint(std::atomic<int>& max_val, int new_end) {\n    int current = max_val.load();\n    while (new_end > current) {\n        if (max_val.compare_exchange_weak(current, new_end)) return true;\n    }\n    return false;\n}",
+        "wrong": "bool updateMaxEndpoint(int& max_val, int new_end) {\n    if (new_end > max_val) {\n        max_val = new_end;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely manage memory reclamation, leading to use-after-free bugs when threads traverse concurrently deleted nodes.",
+        "Ignoring the cascading updates required for augmented values (max endpoints) during balancing and rotations."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to manage node lifetimes safely without traditional locks.",
+        "Keep atomic read-modify-write loops tight and loop-optimized to minimize CAS retry contention under heavy multi-core loads."
+      ],
+      "when_to_use": "Use this pattern when building high-frequency trading schedulers, real-time calendar management systems, or resource allocation engines that demand lock-free, low-latency interval tracking.",
+      "when_not_to_use": "Avoid when simple single-threaded structures suffice or when the operational overhead of hazard pointers and atomic CAS loops outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Interval Tree where nodes can be concurrently deleted and traversed?",
+          "answer": "Hazard pointers are used to register nodes that a thread is currently inspecting, ensuring that memory is only reclaimed after all referencing threads have released their hazards."
+        },
+        {
+          "question": "Why is node augmentation critical in an Interval Tree, and how is it updated lock-free?",
+          "answer": "Augmentation (such as storing the maximum endpoint in a subtree) allows quick pruning during overlap searches; it is updated atomically via CAS loops to ensure visibility across threads without global locks."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Search Trees",
+        "Atomic CAS Primitives and Memory Ordering"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T04:08:34.432053+00:00",
+      "run_number": 3147
     }
   ]
 }
