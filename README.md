@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3148** |
-| Last Updated | `2026-10-17T04:11:43.306945+00:00` |
-| Dataset Size | `3148 entries` |
+| Total Topics Learned | **3149** |
+| Last Updated | `2026-10-17T04:14:52.736810+00:00` |
+| Dataset Size | `3149 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2003 |
+| data-structures | 2004 |
 | trading-strategies | 228 |
 | algorithms | 182 |
 | crypto-blockchain | 150 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic branch-node-hashing and root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic data verification and multi-core state synchronization in real-time distributed storage validation systems and concurrent P2P data integrity frameworks`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time edge proxy servers and concurrent cloud API gateway throttling systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range queries and multi-core overlapping interval scheduling in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core spatial query execution in real-time geographic information systems and concurrent location-based service platforms`
 - `Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic head-tail-advancing and slot-sequence-numbering CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core producer-consumer data exchange in real-time high-frequency trading systems and concurrent network packet processing pipelines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent telecom core routing engines`
 
 <!-- STATS_END -->
 
