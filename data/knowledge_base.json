@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3143,
-    "last_updated": "2026-10-17T03:55:57.124404+00:00",
-    "total_topics_learned": 3143
+    "total_runs": 3144,
+    "last_updated": "2026-10-17T03:59:06.316812+00:00",
+    "total_topics_learned": 3144
   },
   "entries": [
     {
@@ -149730,6 +149730,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T03:55:57.124385+00:00",
       "run_number": 3143
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core prefix matching in real-time software-defined networking switches and concurrent telecom core routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent Radix Tree optimized for high-throughput IP routing and prefix lookups. It utilizes atomic operations like compare-and-swap (CAS) for node allocation and path compression, combined with hazard pointers to guarantee safe memory reclamation without blocking concurrent reader threads.",
+      "key_points": [
+        "Utilizes atomic child-node allocation and path compression via CAS to maintain tree structure safely across multiple cores.",
+        "Employs hazard pointer memory management to defer reclamation of deleted nodes until active reader threads no longer reference them.",
+        "Enables high-throughput concurrent insertions and longest-prefix-match lookups for real-time networking workloads.",
+        "Avoids global locks or heavy mutexes, preventing thread contention bottlenecks in software-defined networking (SDN) data planes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-allocation attempt using CAS for a concurrent Radix Tree path extension.",
+        "correct": "bool link_child(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    RadixNode* expected = nullptr;\n    return parent->children[bit].compare_exchange_strong(expected, new_child);\n}",
+        "wrong": "bool link_child(RadixNode* parent, uint8_t bit, RadixNode* new_child) {\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_child;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal paths with hazard pointers, leading to use-after-free bugs when another thread deletes a compressed path node.",
+        "Not handling ABA problems properly during multi-step node restructuring and path splitting operations."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer domain before initiating a traversal or lookup sequence.",
+        "Keep path compression segments atomic and immutable once published to minimize the complexity of concurrent structural modifications."
+      ],
+      "when_to_use": "Use when building ultra-low-latency networking routers, SDN forwarding planes, or high-concurrency IP-to-metadata lookup services requiring lock-free scalability.",
+      "when_not_to_use": "Avoid when memory usage overhead from hazard pointers is unacceptable or when workloads consist entirely of sparse, non-prefix key-value lookups better handled by lock-free hash maps.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free conditions in a lock-free Radix Tree during concurrent path compression updates?",
+          "answer": "Hazard pointers allow reader threads to publish pointers to nodes they are currently accessing. When a writer thread removes or compresses a node, it defers actual memory deallocation until no active hazard pointers reference that node."
+        },
+        {
+          "question": "Why is atomic child-node allocation and path compression critical for concurrent routing table lookups?",
+          "answer": "It ensures that readers never observe partially constructed nodes or broken pointer chains, allowing lock-free execution paths that scale linearly across multiple CPU cores without thread contention."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "IP Routing Table Longest Prefix Matching"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T03:59:06.316792+00:00",
+      "run_number": 3144
     }
   ]
 }
