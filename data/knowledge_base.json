@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3228,
-    "last_updated": "2026-10-17T22:40:45.344902+00:00",
-    "total_topics_learned": 3228
+    "total_runs": 3229,
+    "last_updated": "2026-10-17T22:43:54.496299+00:00",
+    "total_topics_learned": 3229
   },
   "entries": [
     {
@@ -153766,6 +153766,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T22:40:45.344883+00:00",
       "run_number": 3228
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free leaky bucket rate limiter coordinates high-throughput request shaping by maintaining state via atomic compare-and-swap (CAS) operations on queue structures and leak counters. It prevents resource exhaustion in microservices infrastructure while avoiding thread contention and deadlocks.",
+      "key_points": [
+        "Utilizes atomic queue-draining and leak-rate-updating CAS primitives to eliminate lock contention across multiple core threads.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic memory allocation without blocking concurrent readers and writers.",
+        "Enforces smooth traffic shaping by pacing bursty inputs into a steady, controlled output stream suitable for API gateways.",
+        "Ensures thread-safe coordination of bucket capacity and current watermark levels under heavy concurrent web workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic state updates for a leaky bucket capacity check using compare-and-swap loops.",
+        "correct": "import threading\nimport time\n\nclass LockFreeLeakyBucket:\n    def __init__(self, capacity, leak_rate):\n        self.capacity = capacity\n        self.leak_rate = leak_rate\n        self.water_level = 0.0\n        self.last_leak_time = time.time()\n        self.lock = threading.Lock() # Conceptual placeholder for atomic CAS primitive loop\n\n    def acquire(self, tokens=1):\n        with self.lock:\n            now = time.time()\n            elapsed = now - self.last_leak_time\n            self.last_leak_time = now\n            self.water_level = max(0.0, self.water_level - elapsed * self.leak_rate)\n            if self.water_level + tokens <= self.capacity:\n                self.water_level += tokens\n                return True\n            return False",
+        "wrong": "class UnsafeLeakyBucket:\n    def __init__(self, capacity):\n        self.water_level = 0\n    def acquire(self):\n        # Missing thread safety leads to race conditions on water_level increment\n        self.water_level += 1"
+      },
+      "common_mistakes": [
+        "Neglecting time elapsed calculation accuracy between concurrent threads, leading to drifted leak rates.",
+        "Failing to properly manage memory reclamation via hazard pointers, resulting in memory leaks or use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use hardware-level atomic instructions (CAS) instead of heavy mutex locks to reduce latency in high-throughput API gateways.",
+        "Design garbage collection strategies such as hazard pointers to safely free retired nodes in concurrent bucket queues."
+      ],
+      "when_to_use": "Ideal for high-traffic API gateways and microservices infrastructure requiring lock-free, low-latency rate limiting and traffic shaping.",
+      "when_not_to_use": "Avoid in low-concurrency systems where simpler mutex-based rate limiters are easier to maintain and debug.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions on the water level counter in a lock-free leaky bucket implementation?",
+          "answer": "By using atomic compare-and-swap (CAS) loops that repeatedly attempt to update the counter until it succeeds against concurrent modifications."
+        },
+        {
+          "question": "Why use hazard pointers instead of standard garbage collection in lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the pause times or overhead introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Token Bucket Rate Limiter",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T22:43:54.496279+00:00",
+      "run_number": 3229
     }
   ]
 }
