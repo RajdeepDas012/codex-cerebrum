@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3210,
-    "last_updated": "2026-10-17T19:34:34.019160+00:00",
-    "total_topics_learned": 3210
+    "total_runs": 3211,
+    "last_updated": "2026-10-17T19:37:43.708288+00:00",
+    "total_topics_learned": 3211
   },
   "entries": [
     {
@@ -152914,6 +152914,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-17T19:34:34.019141+00:00",
       "run_number": 3210
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-splitting and axis-aligned-bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core parallel spatial collision detection in real-time computer graphics engines and concurrent physics simulation platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Bounding Volume Hierarchy (BVH) using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables safe, highly parallel spatial index updates and traversal across multiple CPU cores without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node splitting and axis-aligned bounding box (AABB) updates during dynamic insertions and deletions.",
+        "Employs hazard pointers to safely manage memory reclamation, preventing use-after-free bugs when concurrent threads prune or restructure hierarchy nodes.",
+        "Optimizes multi-core throughput for ray tracing and spatial collision detection in demanding real-time simulation pipelines.",
+        "Minimizes synchronization overhead and thread contention compared to traditional mutex-protected tree structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based node updating for a BVH node bounding box",
+        "correct": "bool update_bbox(std::atomic<AABB*>& node_box, AABB* expected, AABB* desired) {\n    return node_box.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "AABB* box = node_box.load();\nif (box->intersects(target)) {\n    node_box.store(new_box); // Non-atomic read-modify-write race condition\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree nodes with hazard pointers during structural modifications, leading to premature memory deallocation and race conditions.",
+        "Using sequential consistency everywhere instead of relaxing memory orderings where strict synchronization is unnecessary, causing severe performance degradation."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer registration loops tightly around lock-free read operations to minimize memory latency overhead.",
+        "Implement exponential backoff strategies on CAS failure loops during heavy thread contention points within the BVH tree."
+      ],
+      "when_to_use": "Use when building high-performance real-time ray tracers, game engines, or physics simulators requiring massive multi-threaded spatial query throughput.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple mutex locks provide sufficient performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing so that other threads know not to reclaim or free that specific memory node until the reader unregisters its hazard pointer."
+        },
+        {
+          "question": "Why is structural restructuring of a BVH challenging to implement completely lock-free?",
+          "answer": "Because modifying multiple levels of parent-child pointers atomically requires multi-word CAS (DCAS) or careful epoch-based/hazard-pointer-backed deferred operations to avoid temporary inconsistent intermediate tree states."
+        }
+      ],
+      "related_topics": [
+        "R-Tree",
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-17T19:37:43.708265+00:00",
+      "run_number": 3211
     }
   ]
 }
