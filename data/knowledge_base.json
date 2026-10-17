@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3170,
-    "last_updated": "2026-10-17T09:07:47.132569+00:00",
-    "total_topics_learned": 3170
+    "total_runs": 3171,
+    "last_updated": "2026-10-17T09:10:56.604918+00:00",
+    "total_topics_learned": 3171
   },
   "entries": [
     {
@@ -151007,6 +151007,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T09:07:47.132546+00:00",
       "run_number": 3170
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core spelling correction in real-time search engine query suggestion systems and concurrent dictionary spell-checking engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Burkhard-Keller (BK) tree that safely handles concurrent string insertions and metric-space queries using atomic compare-and-swap (CAS) primitives. It leverages hazard pointers to safely manage node memory reclamation under high-throughput multi-threaded workloads.",
+      "key_points": [
+        "Utilizes atomic edit-distance-calculating and child-node-linking CAS operations to mutate tree topology safely without coarse-grained locking.",
+        "Employs hazard pointers to protect active tree nodes from premature memory reclamation during concurrent traversal and structural modification.",
+        "Enables high-throughput fuzzy string matching and approximate string searches across multiple CPU cores simultaneously.",
+        "Balances tree node children dynamically based on discrete metric space distances (e.g., Levenshtein distance)."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe hazard pointer protection when traversing and updating a lock-free BK-tree node.",
+        "correct": "void* acquire_node_safely(std::atomic<Node*>& child_ptr, HazardPointerRecord* hp) {\n    Node* node;\n    do {\n        node = child_ptr.load(std::memory_order_acquire);\n        hp->protect(node);\n    } while (node != child_ptr.load(std::memory_order_relaxed));\n    return node;\n}",
+        "wrong": "void* unsafe_access(std::atomic<Node*>& child_ptr) {\n    return child_ptr.load(); // Vulnerable to ABA and use-after-free without hazard pointers\n}"
+      },
+      "common_mistakes": [
+        "Failing to clear hazard pointers before reclaiming memory, leading to use-after-free bugs.",
+        "Incorrect memory ordering constraints around child-node pointer CAS operations, causing stale views of subtrees."
+      ],
+      "best_practices": [
+        "Always register threads and assign local hazard pointer records prior to traversing concurrent metric trees.",
+        "Batch retired node deletions using a deferred reclamation queue once no active hazard pointers reference them."
+      ],
+      "when_to_use": "Ideal for real-time search engine query suggestion systems and spell-checking engines handling massive concurrent write and fuzzy query workloads.",
+      "when_not_to_use": "Avoid in single-threaded environments or strict real-time systems where lock-free contention overhead outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent child-node CAS updates in a BK-Tree?",
+          "answer": "Hazard pointers publish the node reference a thread is currently reading, blocking other threads from freeing that specific memory address until the reader unprotects it."
+        },
+        {
+          "question": "Why is a metric space data structure like a BK-Tree challenging to make lock-free?",
+          "answer": "Because structural modifications require atomic updates to map arbitrary distance keys to dynamically branching child arrays without locking entire subtrees."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Suffix Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Metric Space Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T09:10:56.604897+00:00",
+      "run_number": 3171
     }
   ]
 }
