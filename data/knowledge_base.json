@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3182,
-    "last_updated": "2026-10-17T13:22:26.820709+00:00",
-    "total_topics_learned": 3182
+    "total_runs": 3183,
+    "last_updated": "2026-10-17T13:25:37.680600+00:00",
+    "total_topics_learned": 3183
   },
   "entries": [
     {
@@ -151583,6 +151583,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-17T13:22:26.820683+00:00",
       "run_number": 3182
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit-manipulating and run-clustering CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core duplicate elimination in real-time distributed storage caches and concurrent database compaction engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Quotient Filter is a space-efficient probabilistic data structure that supports approximate membership queries and multi-core duplicate elimination without using coarse-grained locks. By utilizing atomic metadata bits (is_occupied, is_continuation, shifted) combined with Compare-And-Swap (CAS) primitives and hazard pointers, multiple threads can safely insert and query elements concurrently while maintaining high cache locality.",
+      "key_points": [
+        "Divides hash values into a quotient (slot index) and a remainder (stored directly in the slot).",
+        "Uses three metadata bits per slot (is_occupied, is_continuation, shifted) to manage collisions and run clustering without locks.",
+        "Employs atomic operations and CAS primitives to safely modify slots and metadata across multiple concurrent threads.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent use-after-free bugs during dynamic slot shifting and resizing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion and metadata manipulation in a lock-free quotient filter slot array.",
+        "correct": "bool ConcurrentQuotientFilter::insert(uint64_t fingerprint) {\n    uint64_t q = fingerprint >> remainder_bits;\n    uint64_t r = fingerprint & ((1ULL << remainder_bits) - 1);\n    size_t idx = q;\n    while (true) {\n        Slot current = atomic_load(&slots[idx]);\n        if (current.is_empty()) {\n            Slot new_slot(r, /*is_continuation=*/false, /*is_occupied=*/true, /*shifted=*/(idx != q));\n            if (atomic_compare_exchange_weak(&slots[idx], &current, new_slot)) return true;\n        } else {\n            idx = (idx + 1) % capacity;\n        }\n    }\n}",
+        "wrong": "bool ConcurrentQuotientFilter::insert(uint64_t fingerprint) {\n    mutex.lock();\n    // Non-atomic modification of slots and metadata without hazard pointers or thread safety\n    slots[q].insert(fingerprint);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to update the 'is_occupied' and 'shifted' metadata bits atomically when resolving run clusters.",
+        "Neglecting hazard pointer protection during multi-slot probing and shifting, leading to race conditions and memory corruption.",
+        "Incorrectly handling cluster boundary wraps around the end of the fixed-size filter array."
+      ],
+      "best_practices": [
+        "Keep remainder and quotient bit lengths tuned to the expected false positive rate and workload volume.",
+        "Use hazard pointers or epoch-based reclamation to safely retire old memory blocks during dynamic resizing.",
+        "Align slot structures to cache line boundaries to minimize false sharing in multi-core environments."
+      ],
+      "when_to_use": "Use when high-throughput approximate membership tests and concurrent duplicate elimination are required in memory-constrained distributed caches or database compaction pipelines.",
+      "when_not_to_use": "Avoid when exact set membership is strictly mandatory or when items must be frequently deleted without risking performance degradation or complex tombstones.",
+      "interview_questions": [
+        {
+          "question": "How do the three metadata bits (is_occupied, is_continuation, shifted) allow a Quotient Filter to resolve collisions without explicit pointers?",
+          "answer": "They demarcate the boundaries of runs and clusters by indicating whether a slot corresponds to the canonical quotient slot, whether it belongs to a continuation of a run, and whether it has been displaced from its home position."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free quotient filter with dynamic resizing?",
+          "answer": "Hazard pointers prevent worker threads from accessing memory blocks that have been concurrently freed or reallocated during a filter resize operation, avoiding use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T13:25:37.680583+00:00",
+      "run_number": 3183
     }
   ]
 }
