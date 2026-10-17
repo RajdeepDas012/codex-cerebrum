@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3204** |
-| Last Updated | `2026-10-17T19:15:37.064086+00:00` |
-| Dataset Size | `3204 entries` |
+| Total Topics Learned | **3205** |
+| Last Updated | `2026-10-17T19:18:46.580596+00:00` |
+| Dataset Size | `3205 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | data-structures | 2049 |
 | trading-strategies | 228 |
-| algorithms | 190 |
+| algorithms | 191 |
 | crypto-blockchain | 151 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic reader-writer-transition and queuing-ticket CAS primitives alongside hazard pointer memory reclamation for high-throughput fine-grained concurrency control and multi-core parallel resource access in real-time multi-threaded caching layers and concurrent in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-sinking and priority-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event processing in real-time asynchronous job dispatching systems and concurrent message broker execution engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring pattern matching and multi-core parallel bioinformatics sequence alignment in real-time genomic analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and node-locking-omission CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent page indexing and multi-core parallel disk-based storage lookups in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-cascading and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core parallel range scans in real-time in-memory databases and concurrent transactional storage engines`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-linking and peer-routing-table-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer range queries and multi-core decentralized key-value lookups in real-time distributed storage networks and concurrent cloud routing engines`
 
 <!-- STATS_END -->
 

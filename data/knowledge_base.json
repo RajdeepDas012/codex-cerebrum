@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3204,
-    "last_updated": "2026-10-17T19:15:37.064086+00:00",
-    "total_topics_learned": 3204
+    "total_runs": 3205,
+    "last_updated": "2026-10-17T19:18:46.580596+00:00",
+    "total_topics_learned": 3205
   },
   "entries": [
     {
@@ -152626,6 +152626,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-17T19:15:37.064065+00:00",
       "run_number": 3204
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic reader-writer-transition and queuing-ticket CAS primitives alongside hazard pointer memory reclamation for high-throughput fine-grained concurrency control and multi-core parallel resource access in real-time multi-threaded caching layers and concurrent in-memory database engines",
+      "category": "algorithms",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Read-Write Lock leveraging atomic reader-writer transitions and ticket-based ordering with hazard pointers. It enables massive throughput for multiple concurrent readers while safely managing exclusive writer access without OS-level thread blocking. This is crucial for eliminating thread contention bottlenecks in real-time multi-core caching layers and in-memory transactional engines.",
+      "key_points": [
+        "Utilizes atomic reader-writer state transitions via Compare-And-Swap (CAS) primitives to manage shared-read and exclusive-write phases.",
+        "Employs queuing-ticket mechanisms to ensure fair scheduling and prevent writer starvation under heavy multi-core contention.",
+        "Integrates hazard pointer memory reclamation to securely track thread-local references and prevent premature deallocation of shared lock descriptor nodes.",
+        "Provides scoped RAII wrappers to guarantee deterministic lock acquisition and release across execution boundaries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free scoped read lock acquisition using atomic state transitions and hazard pointers.",
+        "correct": "class LockFreeRWLock {\n    std::atomic<uint64_t> state{0};\npublic:\n    bool try_lock_shared(HazardPointer& hp) {\n        uint64_t current = state.load(std::memory_order_relaxed);\n        if (is_writer_active(current)) return false;\n        return state.compare_exchange_weak(current, current + 2, std::memory_order_acquire, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class BadRWLock {\n    std::mutex mtx;\npublic:\n    void lock_shared() { mtx.lock(); } // Violates lock-free progress guarantees and introduces OS scheduling latency.\n};"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory ordering (acquire-release semantics) during state transitions, leading to stale reads.",
+        "Neglecting writer starvation when read requests continually interleave and dominate the atomic state updates."
+      ],
+      "best_practices": [
+        "Pair every dynamic pointer dereference in the lock protocol with hazard pointer protection to prevent ABA problems and use-after-free bugs.",
+        "Use exponential backoff or hybrid yielding mechanisms in high-contention loops to mitigate CPU cache line bouncing."
+      ],
+      "when_to_use": "Use when building ultra-low-latency in-memory databases, concurrent caching layers, or data structures with a high read-to-write ratio requiring lock-free progress guarantees.",
+      "when_not_to_use": "Avoid in simple applications where standard blocking mutexes or read-write locks (like pthread_rwlock_t) provide sufficient performance without the immense implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a lock-free read-write lock prevent writer starvation under continuous read concurrency?",
+          "answer": "By implementing a queuing ticket system where incoming writers take a ticket, and subsequent readers are blocked or queued once a writer is waiting, ensuring bounded wait times."
+        },
+        {
+          "question": "Why are hazard pointers required when managing dynamic state transitions in a lock-free synchronization primitive?",
+          "answer": "Hazard pointers safely announce which lock nodes or shared resources threads are currently accessing, preventing other threads from prematurely freeing them while a CAS operation is in flight."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Data Structures",
+        "Atomic Compare-And-Swap Synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T19:18:46.580577+00:00",
+      "run_number": 3205
     }
   ]
 }
