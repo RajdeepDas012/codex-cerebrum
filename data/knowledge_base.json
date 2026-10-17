@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3147,
-    "last_updated": "2026-10-17T04:08:34.432079+00:00",
-    "total_topics_learned": 3147
+    "total_runs": 3148,
+    "last_updated": "2026-10-17T04:11:43.306945+00:00",
+    "total_topics_learned": 3148
   },
   "entries": [
     {
@@ -149918,6 +149918,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T04:08:34.432053+00:00",
       "run_number": 3147
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time edge proxy servers and concurrent cloud API gateway throttling systems",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free Leaky Bucket rate limiter that uses atomic compare-and-swap (CAS) primitives and hazard pointers to manage traffic smoothing safely across multiple cores. It enforces a constant output rate by accumulating leak values and processing queued requests without relying on heavy mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic operations for state transitions to eliminate lock contention on multi-core systems.",
+        "Employs hazard pointers for safe, lock-free memory reclamation of expired or removed queue nodes.",
+        "Implements a leak-rate-accumulating mechanism based on elapsed time to enforce steady-state output smoothing.",
+        "Ensures high-throughput request handling ideal for cloud API gateways and edge proxy environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state updates for a lock-free queue drain loop using CAS primitives.",
+        "correct": "bool try_drain(std::atomic<Node*>& head, HazardPointer& hp) {\n    Node* old_head = head.load(std::memory_order_acquire);\n    do {\n        if (!old_head) return false;\n        hp.protect(old_head);\n        if (head.load(std::memory_order_relaxed) != old_head) continue;\n    } while (!head.compare_exchange_weak(old_head, old_head->next, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool bad_drain(std::atomic<Node*>& head) {\n    Node* old_head = head.load();\n    if (!old_head) return false;\n    head.store(old_head->next);\n    delete old_head;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading next pointers, leading to use-after-free race conditions.",
+        "Using sequential consistency everywhere, causing unnecessary memory barrier penalties that bottleneck high-throughput scaling."
+      ],
+      "best_practices": [
+        "Apply acquire-release memory ordering strictly around CAS loops to balance synchronization safety and performance.",
+        "Batch hazard pointer retirement lists to amortize the overhead of safe memory reclamation."
+      ],
+      "when_to_use": "Use when building high-throughput edge proxies or API gateways requiring strict traffic smoothing and low-latency multi-core execution.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where simple mutex-based rate limiting introduces negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free leaky bucket queue?",
+          "answer": "Hazard pointers explicitly mark nodes as actively accessed by a specific thread before any traversal, preventing other threads from reclaiming or freeing those memory addresses until the read operation completes."
+        },
+        {
+          "question": "Why is a Leaky Bucket algorithm preferred over a Token Bucket algorithm for traffic smoothing?",
+          "answer": "A Leaky Bucket enforces a strictly constant outflow rate regardless of burstiness, effectively smoothing out spikes into a steady stream, whereas a Token Bucket allows bursts up to the capacity limit."
+        }
+      ],
+      "related_topics": [
+        "Token Bucket rate limiter",
+        "Hazard pointer memory management",
+        "Lock-free ring buffers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T04:11:43.306926+00:00",
+      "run_number": 3148
     }
   ]
 }
