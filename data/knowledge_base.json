@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3175,
-    "last_updated": "2026-10-17T13:00:16.068475+00:00",
-    "total_topics_learned": 3175
+    "total_runs": 3176,
+    "last_updated": "2026-10-17T13:03:25.477412+00:00",
+    "total_topics_learned": 3176
   },
   "entries": [
     {
@@ -151244,6 +151244,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T13:00:16.068454+00:00",
       "run_number": 3175
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-pointing and state-transition-CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core dictionary searching in real-time network intrusion detection systems and concurrent malware scanning engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Aho-Corasick automaton that enables multiple threads to insert dictionary patterns and perform multi-pattern string searches simultaneously. It utilizes atomic compare-and-swap (CAS) operations for thread-safe state transitions and failure link updates, paired with hazard pointers to safely manage dynamic memory reclamation without global locking.",
+      "key_points": [
+        "Uses atomic operations to safely link state transitions and assign failure links across multiple threads without explicit mutual exclusion locks.",
+        "Employs hazard pointers to track active threads traversing nodes, preventing premature memory deallocation of states undergoing updates.",
+        "Supports high-throughput multi-pattern matching by simultaneously searching for an arbitrary dictionary of strings in an input stream.",
+        "Solves the ABA problem and race conditions inherent in concurrent multi-way tree modifications and graph pointer updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic state transition linking with hazard pointers for a concurrent Aho-Corasick node",
+        "correct": "bool add_transition(State* current, char c, State* next, HazardPointer& hp) {\n    while (true) {\n        State* existing = current->transitions[c].load();\n        if (existing != nullptr) return false;\n        hp.protect(current);\n        if (current->transitions[c].compare_exchange_weak(existing, next)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool add_transition(State* current, char c, State* next) {\n    if (current->transitions[c] == nullptr) {\n        current->transitions[c] = next;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs when another thread deletes a state.",
+        "Updating failure links using non-atomic assignments while other threads are traversing the automaton, causing infinite loops or segmentation faults."
+      ],
+      "best_practices": [
+        "Acquire hazard pointer protection immediately upon loading any node pointer from a shared state transition table.",
+        "Ensure memory reclamation deferred via hazard pointers is processed in bounded batch sizes to prevent memory bloat."
+      ],
+      "when_to_use": "Use when building high-throughput network intrusion detection systems, log analysis pipelines, or real-time malware scanners that must scan massive text streams against thousands of patterns across multiple CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-concurrency settings where standard locking or single-threaded Aho-Corasick implementations offer lower overhead and simpler debugging.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads simultaneously try to add a transition to the same state in a concurrent Aho-Corasick automaton?",
+          "answer": "By using an atomic compare-and-swap (CAS) operation on the transition slot, ensuring only one thread successfully links the new state while the other retries or detects the existing transition."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing states in a lock-free graph structure like an Aho-Corasick automaton?",
+          "answer": "Hazard pointers allow a thread to announce which node it is currently inspecting, ensuring that concurrent threads deleting nodes do not reclaim memory until no other thread holds a reference to it."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Automaton",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Tries Routing Table"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T13:03:25.477393+00:00",
+      "run_number": 3176
     }
   ]
 }
