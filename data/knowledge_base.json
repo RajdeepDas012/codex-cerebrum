@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3193,
-    "last_updated": "2026-10-17T16:34:29.405568+00:00",
-    "total_topics_learned": 3193
+    "total_runs": 3194,
+    "last_updated": "2026-10-17T16:37:38.970065+00:00",
+    "total_topics_learned": 3194
   },
   "entries": [
     {
@@ -152105,6 +152105,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T16:34:29.405545+00:00",
       "run_number": 3193
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-splitting and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components finding and multi-core parallel equivalence relation querying in real-time social network friend suggestion systems and concurrent image segmentation processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Disjoint Set (Union-Find) data structure utilizing atomic Compare-And-Swap (CAS) operations for path splitting and rank-based merging. It employs hazard pointers to guarantee safe memory reclamation in multi-threaded environments, enabling ultra-fast connected component identification and equivalence queries without global locks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to perform concurrent find and union operations without acquiring global or node-level locks.",
+        "Implements path splitting during find traversals to flatten the tree structure atomically and reduce future lookup depths.",
+        "Applies rank-merging strategies combined with atomic loops to ensure balanced tree growth during parallel set unions.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free race conditions when nodes are dynamically modified or deleted across multiple threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based find operation with path splitting for a lock-free Disjoint Set node.",
+        "correct": "struct Node { std::atomic<int> parent; std::atomic<int> rank; };\nint find_split(std::vector<Node>& nodes, int i) {\n    int curr = i;\n    while (true) {\n        int p = nodes[curr].parent.load(std::memory_order_acquire);\n        if (p == curr) return curr;\n        int pp = nodes[p].parent.load(std::memory_order_relaxed);\n        nodes[curr].parent.compare_exchange_strong(p, pp, std::memory_order_release);\n        curr = pp;\n    }\n}",
+        "wrong": "int find_naive(std::vector<Node>& nodes, int i) {\n    int p = nodes[i].parent.load();\n    if (p == i) return i;\n    return find_naive(nodes, p); // Non-atomic recursive lookup missing loops and thread safety guarantees\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when performing CAS operations on parent pointers during concurrent tree modifications.",
+        "Omitting memory barriers or relying on relaxed memory orders for parent updates, leading to stale pointer reads across threads."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based reclamation to manage safe node retirement and free memory without blocking concurrent readers.",
+        "Employ path splitting or path halving instead of full path compression to limit the scope of atomic updates and reduce contention."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously query and update equivalence relations or connected components under high-throughput requirements.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency environments where standard pointer-based recursive Union-Find with path compression provides simpler and faster execution.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to union different roots of the same set simultaneously?",
+          "answer": "By using a CAS loop on the parent pointer of the lower-rank root, ensuring only one thread successfully updates the pointer while others retry."
+        },
+        {
+          "question": "Why is path splitting preferred over full path compression in lock-free concurrent implementations?",
+          "answer": "Path splitting flattens the tree partially in a single downward traversal without requiring heavy recursive backtracking or complex multi-pointer CAS updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Synchronization Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T16:37:38.970046+00:00",
+      "run_number": 3194
     }
   ]
 }
