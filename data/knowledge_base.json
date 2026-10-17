@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3140,
-    "last_updated": "2026-10-17T00:04:58.282116+00:00",
-    "total_topics_learned": 3140
+    "total_runs": 3141,
+    "last_updated": "2026-10-17T00:08:07.200290+00:00",
+    "total_topics_learned": 3141
   },
   "entries": [
     {
@@ -149589,6 +149589,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T00:04:58.282097+00:00",
       "run_number": 3140
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent TST (Ternary Search Tree) using atomic node-splitting and character-branch-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix dictionary lookups and multi-core autocomplete string searching in real-time search engine suggestion systems and concurrent natural language processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Ternary Search Tree that utilizes atomic CAS operations for dynamic node allocation and character-branch linking without locks. By combining lock-free navigation with hazard pointers, it ensures safe memory reclamation under intense multi-threaded read and write workloads for autocomplete and prefix matching applications.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives to handle character-branch-linking and node-splitting safely across multiple concurrent threads.",
+        "Employs hazard pointers to track active node references, preventing premature memory deallocation during lock-free traversals.",
+        "Balances space efficiency of tries with the search flexibility of binary search trees for character-by-character string prefix matching.",
+        "Eliminates thread contention and deadlocks common in coarse-grained lock-based tree structures by using fine-grained atomic updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic character-branch linking using CAS for a lock-free TST node insertion.",
+        "correct": "bool link_child(Node* parent, Node* new_node, ChildType type) {\n    Node* expected = nullptr;\n    std::atomic<Node*>* child_ptr = get_child_address(parent, type);\n    return child_ptr->compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_child(Node* parent, Node* new_node, ChildType type) {\n    if (parent->child[type] == nullptr) {\n        parent->child[type] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free bugs when another thread deletes a subtree.",
+        "Using weak memory orderings inappropriately during pointer updates, causing stale branch visibility across cores."
+      ],
+      "best_practices": [
+        "Always register active nodes into the hazard pointer domain before reading child pointers in concurrent traversals.",
+        "Keep atomic pointer update logic isolated into tight CAS retry loops to minimize back-off delays under high write contention."
+      ],
+      "when_to_use": "Use this structure when building high-throughput, multi-threaded autocomplete systems or dictionary lookups that experience heavy concurrent read and write operations.",
+      "when_not_to_use": "Avoid this for single-threaded applications or simple key-value stores where standard lock-based trees or hash maps provide lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free Ternary Search Tree?",
+          "answer": "Hazard pointers allow threads to publish the node references they are currently visiting, ensuring that any concurrent deletion thread defers freeing those memory blocks until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is a Ternary Search Tree often preferred over a standard Trie in multi-core text processing applications?",
+          "answer": "TSTs save significant memory space compared to standard multi-way tries by avoiding massive sparse child arrays at each node, reducing cache misses during concurrent traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Trie Structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-17T00:08:07.200271+00:00",
+      "run_number": 3141
     }
   ]
 }
