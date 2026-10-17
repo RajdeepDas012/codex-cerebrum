@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3163,
-    "last_updated": "2026-10-17T08:45:40.052211+00:00",
-    "total_topics_learned": 3163
+    "total_runs": 3164,
+    "last_updated": "2026-10-17T08:48:49.095229+00:00",
+    "total_topics_learned": 3164
   },
   "entries": [
     {
@@ -150676,6 +150676,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T08:45:40.052190+00:00",
       "run_number": 3163
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and hash-bucket-colliding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core approximate event counting in real-time network traffic monitoring systems and concurrent log analytics pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, concurrent Count-Min Sketch data structure optimized for multi-core streaming environments. By leveraging atomic compare-and-swap (CAS) operations on frequency matrix cells and hazard pointers for safe memory management, it enables high-throughput approximate frequency tracking without lock contention.",
+      "key_points": [
+        "Utilizes a 2D array of frequency counters addressed by multiple independent hash functions for probabilistic frequency estimation.",
+        "Employs atomic fetch-and-add or CAS primitives to safely increment counter cells across concurrent worker threads without global locking.",
+        "Integrates hazard pointer memory reclamation to ensure safe cleanup and prevent memory leaks during concurrent structure expansion or reset operations.",
+        "Provides bounded space complexity at the cost of potential overestimation errors caused by hash collisions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency cell incrementing using fetch_add for a Count-Min Sketch row",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass CMSketchRow {\n    std::vector<std::atomic<uint32_t>> table;\npublic:\n    explicit CMSketchRow(size_t width) : table(width) {\n        for(auto& cell : table) cell.store(0, std::memory_order_relaxed);\n    }\n    void increment(size_t index) {\n        table[index].fetch_add(1, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class CMSketchRow {\n    std::vector<uint32_t> table;\npublic:\n    void increment(size_t index) {\n        table[index]++; // Non-atomic operation causes race conditions and lost updates under concurrency\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments on sketch cells, leading to lost updates and severe inaccuracies in frequency estimation under high concurrency.",
+        "Applying strong memory ordering constraints universally when relaxed or acquire-release semantics would suffice, degrading performance."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic counter increments where strict synchronization between unrelated cells is unnecessary.",
+        "Optimize hash function selection to minimize hash collisions and maintain tight error bounds across the sketch width."
+      ],
+      "when_to_use": "Use this when processing massive continuous data streams across multiple CPU cores where exact frequency counting is memory-prohibitive and approximate bounds are acceptable.",
+      "when_not_to_use": "Avoid this when exact, zero-error frequency counts are mandatory or when stream throughput is low enough that standard locked hash maps suffice.",
+      "interview_questions": [
+        {
+          "question": "Why does a Count-Min Sketch experience overestimation rather than underestimation?",
+          "answer": "Because multiple distinct elements can hash to the same table indices (collisions), causing their counter increments to accumulate on shared cells."
+        },
+        {
+          "question": "How do atomic CAS primitives facilitate lock-free updates in a shared frequency sketch?",
+          "answer": "They allow threads to attempt reading, modifying, and writing back a counter cell in a single atomic instruction, retrying automatically if another thread modified the cell concurrently."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "HyperLogLog",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T08:48:49.095206+00:00",
+      "run_number": 3164
     }
   ]
 }
