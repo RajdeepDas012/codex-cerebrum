@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3188** |
-| Last Updated | `2026-10-17T16:18:36.346099+00:00` |
-| Dataset Size | `3188 entries` |
+| Total Topics Learned | **3189** |
+| Last Updated | `2026-10-17T16:21:45.512508+00:00` |
+| Dataset Size | `3189 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 151 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| system-design | 101 |
+| system-design | 102 |
 | stocks-markets | 71 |
 | databases | 39 |
 | probability-math | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core bandwidth throttling in real-time API rate limiting engines and concurrent edge proxy traffic control systems`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-kicking and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient item deletion support and multi-core duplicate detection in real-time distributed storage systems and concurrent database caching layers`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership queries and multi-core duplicate filtering in real-time distributed caching layers and concurrent web crawler URL deduplication engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel array updates in real-time streaming analytics platforms and concurrent statistical computing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core high-concurrency database index lookups in real-time relational database management systems and concurrent transactional storage engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-upper-bound-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping interval queries and multi-core resource scheduling in real-time interval-based event processing systems and concurrent database temporal range indexing engines`
 
 <!-- STATS_END -->
 
