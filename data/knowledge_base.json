@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3183,
-    "last_updated": "2026-10-17T13:25:37.680600+00:00",
-    "total_topics_learned": 3183
+    "total_runs": 3184,
+    "last_updated": "2026-10-17T13:28:47.311284+00:00",
+    "total_topics_learned": 3184
   },
   "entries": [
     {
@@ -151632,6 +151632,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-17T13:25:37.680583+00:00",
       "run_number": 3183
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-upper-bound-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping interval queries and multi-core resource scheduling in real-time interval-based event processing systems and concurrent database temporal range indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Interval Tree that utilizes atomic compare-and-swap (CAS) primitives and hazard pointers. It enables multi-core systems to perform high-throughput overlapping interval queries and updates safely without traditional mutex contention.",
+      "key_points": [
+        "Uses atomic operations (CAS) for lock-free endpoint updates and node manipulations.",
+        "Maintains max-upper-bound metadata atomically to optimize interval overlap searching across threads.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation without blocking concurrent readers.",
+        "Designed for high-throughput, low-latency concurrent environments like temporal databases and real-time scheduling."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based updates for interval nodes with hazard pointers.",
+        "correct": "bool update_interval(std::atomic<Node*>& node_ptr, int new_high) {\n    Node* old_node;\n    Node* new_node;\n    do {\n        old_node = node_ptr.load();\n        if (!old_node) return false;\n        new_node = clone_node(old_node);\n        new_node->high = new_high;\n        new_node->max_high = std::max(new_node->high, new_node->left_max);\n    } while (!node_ptr.compare_exchange_weak(old_node, new_node));\n    hazard_retire(old_node);\n    return true;\n}",
+        "wrong": "bool update_interval(Node* node, int new_high) {\n    std::lock_guard<std::mutex> lock(node->mtx);\n    node->high = new_high;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to update the max-upper-bound propagation up the tree ancestors during concurrent insertions or updates.",
+        "Reclaiming memory of retired nodes prematurely before all concurrent reader threads have released their hazard pointers."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to traversing down volatile child pointers in a lock-free structure.",
+        "Keep atomic retry loops compact to minimize CPU cache thrashing during high-contention scenarios."
+      ],
+      "when_to_use": "Use when multiple threads frequently query and modify overlapping intervals concurrently under strict latency requirements.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems where coarse-grained mutex locking provides sufficient throughput with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle max-upper-bound propagation atomically in a lock-free interval tree without creating race conditions among parent and child updates?",
+          "answer": "By using atomic CAS loops that re-read child maximums and update the parent's metadata only if no concurrent modifications have occurred, leveraging back-off strategies if contention is high."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in lock-free interval trees?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation that avoids the overhead and global synchronization pauses associated with traditional garbage collection or atomic reference counting."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent KD-Tree",
+        "hazard pointer memory management",
+        "temporal range indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-17T13:28:47.311264+00:00",
+      "run_number": 3184
     }
   ]
 }
