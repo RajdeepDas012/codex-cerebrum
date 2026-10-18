@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3332** |
-| Last Updated | `2026-10-18T23:32:29.213094+00:00` |
-| Dataset Size | `3332 entries` |
+| Total Topics Learned | **3333** |
+| Last Updated | `2026-10-18T23:35:38.023577+00:00` |
+| Dataset Size | `3333 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2151 |
+| data-structures | 2152 |
 | trading-strategies | 228 |
 | algorithms | 201 |
 | crypto-blockchain | 155 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core parallel sorted map retrieval in real-time in-memory databases and concurrent storage engine architectures`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and remainder-storing CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel dynamic resizing in real-time distributed storage systems and concurrent database indexing layers`
 - `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate limiting in real-time API gateways and concurrent cloud microservices platforms`
 - `Implementation of a lock-free thread-safe concurrent Work-Stealing Deque using atomic top-bottom-pointer-adjusting and descriptor-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel load balancing in real-time actor runtimes and concurrent fork-join execution engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core parallel job scheduling in real-time event-driven engines and concurrent task execution frameworks`
-- `Implementation of a lock-free thread-safe concurrent Futex-based lightweight mutex using atomic state-transition and thread-parking CAS primitives alongside hazard pointer memory reclamation for high-throughput synchronization and multi-core parallel resource locking in real-time operating system runtimes and concurrent systems programming frameworks`
 
 <!-- STATS_END -->
 
