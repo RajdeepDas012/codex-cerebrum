@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3329,
-    "last_updated": "2026-10-18T23:22:22.081357+00:00",
-    "total_topics_learned": 3329
+    "total_runs": 3330,
+    "last_updated": "2026-10-18T23:25:31.150012+00:00",
+    "total_topics_learned": 3330
   },
   "entries": [
     {
@@ -158572,6 +158572,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T23:22:22.081338+00:00",
       "run_number": 3329
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Work-Stealing Deque using atomic top-bottom-pointer-adjusting and descriptor-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel load balancing in real-time actor runtimes and concurrent fork-join execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A work-stealing deque is a specialized double-ended queue designed for parallel task execution where worker threads primarily push and pop tasks from their own local end while other threads steal tasks from the opposite end. By utilizing atomic top-bottom pointer adjustments and hazard pointer memory reclamation, this structure achieves lock-free thread safety, maximizing throughput and load balancing across multi-core systems.",
+      "key_points": [
+        "Supports local LIFO or FIFO task management for the owner thread with minimal contention.",
+        "Allows remote worker threads to steal tasks asynchronously from the opposite end using compare-and-swap (CAS) primitives.",
+        "Employs hazard pointers to safely manage memory reclamation of dequeued nodes without locks or garbage collection overhead.",
+        "Eliminates global synchronization bottlenecks, making it a cornerstone for high-performance fork-join and actor-based runtimes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual model of a work-stealing deque with local push/pop and remote stealing operations.",
+        "correct": "class WorkStealingDeque:\n    def __init__(self):\n        self.tasks = []\n    def push_bottom(self, task):\n        self.tasks.append(task)\n    def pop_bottom(self):\n        return self.tasks.pop() if self.tasks else None\n    def steal_top(self):\n        return self.tasks.pop(0) if self.tasks else None",
+        "wrong": "class UnsafeDeque:\n    def __init__(self):\n        self.tasks = []\n    def push(self, task):\n        self.tasks.append(task)\n    def pop(self):\n        return self.tasks.pop() # Lacks thread safety, atomicity, and memory separation for stealing."
+      },
+      "common_mistakes": [
+        "Failing to handle race conditions when the deque has only a single element and both owner pop and stealer operations execute concurrently.",
+        "Using traditional locking mechanisms which reintroduce overhead and defeat the purpose of a lock-free work-stealing architecture.",
+        "Neglecting proper memory reclamation strategies, leading to severe memory leaks or use-after-free bugs during node stealing."
+      ],
+      "best_practices": [
+        "Design the owner thread operations to use relaxed memory ordering where appropriate, reserving sequential consistency barriers for contended CAS operations.",
+        "Integrate hazard pointers or epoch-based reclamation to safely defer destruction of removed nodes until no threads hold references to them.",
+        "Align deque control structures to CPU cache lines to prevent false sharing between competing worker threads."
+      ],
+      "when_to_use": "Use when implementing high-performance task schedulers, fork-join parallel processing frameworks, or actor runtimes requiring efficient dynamic load balancing across multiple CPU cores.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or lightweight workloads where standard sequential queues or basic thread-safe synchronization primitives provide sufficient performance with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do Chase-Lev or similar work-stealing deques resolve race conditions when only one task remains in the queue and both the owner and a stealer attempt to access it?",
+          "answer": "They use advanced atomic CAS primitives on the top and bottom pointers to ensure that exactly one thread succeeds in claiming the final task while the other safely backs off."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard garbage collection in high-throughput lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory management without the unpredictable latency spikes and CPU overhead introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Queue",
+        "Priority Queue",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T23:25:31.149994+00:00",
+      "run_number": 3330
     }
   ]
 }
