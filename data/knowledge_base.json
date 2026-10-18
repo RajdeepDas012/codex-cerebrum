@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3244,
-    "last_updated": "2026-10-18T01:24:09.321474+00:00",
-    "total_topics_learned": 3244
+    "total_runs": 3245,
+    "last_updated": "2026-10-18T01:27:18.262753+00:00",
+    "total_topics_learned": 3245
   },
   "entries": [
     {
@@ -154534,6 +154534,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T01:24:09.321455+00:00",
       "run_number": 3244
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list-splicing and hash-bucket-anchoring CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core parallel hot-data retrieval in real-time distributed application caching layers and concurrent in-memory storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Least Recently Used (LRU) cache that combines non-blocking hash table lookups with atomic doubly-linked-list manipulations. It matters because it allows multiple threads to read, write, and evict items concurrently without global lock contention, ensuring high throughput under heavy multi-core loads.",
+      "key_points": [
+        "Utilizes atomic doubly-linked-list-splicing CAS operations to update item recency without locking the entire list.",
+        "Employs hash-bucket-anchoring CAS primitives to manage concurrent insertions, updates, and bucket re-linking in the underlying hash map.",
+        "Integrates hazard pointers to safely manage memory reclamation for nodes removed during concurrent evictions or updates.",
+        "Eliminates thread starvation and lock convoys, making it ideal for low-latency, high-concurrency caching tiers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the core concept of using atomic CAS for node linking and hazard pointers for safe memory management in a concurrent context.",
+        "correct": "template<typename K, typename V>\nclass LockFreeLRUNode {\npublic:\n    K key;\n    std::atomic<V> value;\n    std::atomic<LockFreeLRUNode*> next;\n    std::atomic<LockFreeLRUNode*> prev;\n    std::atomic<bool> marked_for_deletion;\n};",
+        "wrong": "template<typename K, typename V>\nclass UnsafeLRUNode {\npublic:\n    K key;\n    V value;\n    UnsafeLRUNode* next;\n    UnsafeLRUNode* prev;\n};"
+      },
+      "common_mistakes": [
+        "Modifying pointers in the doubly linked list with regular assignments instead of atomic Compare-And-Swap loops, leading to race conditions.",
+        "Freeing evicted nodes immediately while other threads might still hold pointers to them, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based reclamation to defer memory deallocation until no active threads reference the evicted nodes.",
+        "Keep critical sections inside retry loops as short as possible to minimize CAS contention and CPU cache-line bouncing."
+      ],
+      "when_to_use": "Use this when building high-performance in-memory caches or distributed systems that experience heavy read/write contention and demand strict tail-latency guarantees.",
+      "when_not_to_use": "Avoid this in low-concurrency or single-threaded applications where standard, simpler lock-based mutex caches provide better maintainability and lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates on doubly-linked list nodes during LRU reordering?",
+          "answer": "By using tagged pointers (combining a pointer with a monotonically increasing version counter) or leveraging hazard pointers that protect the node instance from being recycled while a thread is operating on it."
+        },
+        {
+          "question": "Why is standard garbage collection or immediate memory freeing dangerous in a lock-free LRU cache eviction path?",
+          "answer": "Because another thread might have just read the node pointer before eviction; freeing it immediately creates a race condition leading to use-after-free errors. Hazard pointers solve this by tracking active thread references before reclamation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Hash Tables",
+        "Concurrent B+ Tree Implementations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T01:27:18.262735+00:00",
+      "run_number": 3245
     }
   ]
 }
