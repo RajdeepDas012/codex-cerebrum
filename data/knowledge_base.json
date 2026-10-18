@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3296,
-    "last_updated": "2026-10-18T18:08:43.071684+00:00",
-    "total_topics_learned": 3296
+    "total_runs": 3297,
+    "last_updated": "2026-10-18T18:11:52.910607+00:00",
+    "total_topics_learned": 3297
   },
   "entries": [
     {
@@ -156999,6 +156999,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T18:08:43.071664+00:00",
       "run_number": 3296
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPMC (Multi-Producer Multi-Consumer)Queue using atomic ring-buffer-slot-claiming and sequence-number-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput asynchronous task distribution and multi-core parallel message passing in real-time event-driven messaging platforms and concurrent actor framework engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent bounded Multi-Producer Multi-Consumer queue. It leverages atomic ring-buffer slot reservation via sequence numbers and Compare-And-Swap (CAS) primitives to coordinate safe concurrent writes and reads without global locks. Hazard pointers are integrated to safely manage memory reclamation in dynamic multi-threaded environments.",
+      "key_points": [
+        "Utilizes a fixed-size ring buffer array to avoid dynamic allocation overhead during steady-state operations.",
+        "Employs per-slot sequence numbers alongside atomic head and tail pointers to safely coordinate multiple producers and consumers without blocking locks.",
+        "Implements atomic ring-buffer-slot-claiming via CAS operations to ensure each queue entry is written or read by exactly one thread.",
+        "Integrates hazard pointer memory reclamation mechanisms to securely manage thread-shared buffer metadata and prevent use-after-free bugs."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual skeleton of a lock-free sequence-tracked bounded MPMC queue slot management mechanism.",
+        "correct": "class MPNCCell:\n    def __init__(self, seq):\n        self.sequence = Atomic(seq)\n        self.data = None\n\nclass BoundedMPMCQueue:\n    def __init__(self, capacity):\n        self.buffer = [MPNCCell(i) for i in range(capacity)]\n        self.enqueue_pos = Atomic(0)\n        self.dequeue_pos = Atomic(0)\n        self.capacity = capacity",
+        "wrong": "class UnsafeQueue:\n    def __init__(self):\n        self.buffer = []\n    def push(self, val):\n        self.buffer.append(val)"
+      },
+      "common_mistakes": [
+        "Failing to enforce proper memory ordering semantics (acquire/release) on sequence numbers, leading to stale reads of queue contents.",
+        "Ignoring the ABA problem on sequence numbers or pointer updates when slot reuse happens rapidly across multiple thread cycles."
+      ],
+      "best_practices": [
+        "Ensure buffer sizes are powers of two to allow fast bitwise masking instead of costly modulo operations for index wrap-around.",
+        "Pad atomic head, tail, and cell sequence counters to distinct cache lines to mitigate false sharing degradation across CPU cores."
+      ],
+      "when_to_use": "Use when high-throughput task distribution or message passing is required between multiple producer and consumer threads under strict latency requirements.",
+      "when_not_to_use": "Avoid when the maximum queue size is unpredictable or dynamic, as a bounded buffer can cause blocking or dropping policies when full.",
+      "interview_questions": [
+        {
+          "question": "How do sequence numbers prevent race conditions between producers in a lock-free bounded MPMC queue?",
+          "answer": "Sequence numbers track the generation of each slot in the ring buffer, allowing producers to verify via CAS whether a specific slot is ready for writing by checking if its sequence matches the expected producer round."
+        },
+        {
+          "question": "Why is cache line padding particularly important for the head and tail pointers of a concurrent MPMC queue?",
+          "answer": "Padding ensures that frequently modified atomic variables accessed by different cores do not reside on the same cache line, preventing costly cache line bouncing (false sharing)."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Single-Producer Single-Consumer (SPSC) Ring Buffers",
+        "ABA Problem and Memory Ordering Models",
+        "Hazard Pointers and Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T18:11:52.910587+00:00",
+      "run_number": 3297
     }
   ]
 }
