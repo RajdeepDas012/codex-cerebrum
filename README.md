@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3259** |
-| Last Updated | `2026-10-18T06:18:07.255275+00:00` |
-| Dataset Size | `3259 entries` |
+| Total Topics Learned | **3260** |
+| Last Updated | `2026-10-18T06:21:16.400462+00:00` |
+| Dataset Size | `3260 entries` |
 
 ## 📂 Categories Learned
 
@@ -23,7 +23,7 @@
 | crypto-blockchain | 153 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
-| system-design | 105 |
+| system-design | 106 |
 | stocks-markets | 71 |
 | databases | 39 |
 | security | 27 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range queries and multi-core parallel time-interval scheduling in real-time calendar management systems and concurrent event streaming platforms`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set Union (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core parallel connected component analysis in real-time social network graph partitioning and concurrent network connectivity engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and hash-bucket-colliding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy hitter stream processing and multi-core parallel frequency estimation in real-time network traffic monitoring platforms and concurrent distributed analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Consistent Hashing ring using atomic virtual-node-splicing and node-weight-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed key routing and multi-core parallel partition load balancing in real-time distributed key-value data stores and concurrent caching cluster infrastructure`
-- `Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-array-marking and prime-marking-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core parallel sieve computation in real-time cryptographic key generation platforms and concurrent numerical analysis engines`
 
 <!-- STATS_END -->
 
