@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3330,
-    "last_updated": "2026-10-18T23:25:31.150012+00:00",
-    "total_topics_learned": 3330
+    "total_runs": 3331,
+    "last_updated": "2026-10-18T23:29:00.344450+00:00",
+    "total_topics_learned": 3331
   },
   "entries": [
     {
@@ -158621,6 +158621,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T23:25:31.149994+00:00",
       "run_number": 3330
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate limiting in real-time API gateways and concurrent cloud microservices platforms",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers designing a non-blocking, multi-threaded token bucket rate limiter that handles high-throughput requests without locks. By leveraging compare-and-swap (CAS) loops for atomic token accumulation and capacity capping, alongside hazard pointers for safe memory management, systems can throttle traffic efficiently across multiple CPU cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to update token counts and timestamps without blocking threads.",
+        "Calculates token refilling lazily based on elapsed time since the last update, bounded by a maximum capacity.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic bucket configurations and prevent race conditions during state transitions.",
+        "Ensures high-throughput request throttling in distributed API gateways and concurrent microservices without kernel-level mutex overhead."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of an atomic token bucket consumption step using a CAS loop.",
+        "correct": "while True:\n    current_tokens, last_time = load_state(bucket)\n    now = get_time()\n    new_tokens = min(capacity, current_tokens + (now - last_time) * refill_rate)\n    if new_tokens < requested:\n        return False\n    if compare_and_swap(bucket, (current_tokens, last_time), (new_tokens - requested, now)):\n        return True",
+        "wrong": "tokens -= requested  # Not thread-safe and lacks time-based refilling"
+      },
+      "common_mistakes": [
+        "Failing to account for clock drift or monotonic time discrepancies across multi-core processors.",
+        "Updating tokens and timestamps independently, resulting in severe race conditions and negative token balances."
+      ],
+      "best_practices": [
+        "Use monotonic clocks for precise elapsed time calculations during token refilling.",
+        "Keep CAS retry loops tight and limit contention hot spots by partitioning buckets per client IP or API key."
+      ],
+      "when_to_use": "When building high-throughput API gateways or cloud services requiring precise, lock-free rate limiting across multiple concurrent threads.",
+      "when_not_to_use": "In single-threaded applications or low-throughput systems where simple mutex-based rate limiters introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the token bucket's timestamp and token count simultaneously?",
+          "answer": "By bundling the timestamp and token count into a single word-sized structure and using a CAS loop to update both atomically."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in a lock-free rate limiter?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times of traditional garbage collectors, which is crucial for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrency control",
+        "Hazard pointer memory management",
+        "API gateway traffic shaping"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T23:29:00.344432+00:00",
+      "run_number": 3331
     }
   ]
 }
