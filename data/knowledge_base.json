@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3263,
-    "last_updated": "2026-10-18T10:47:46.424626+00:00",
-    "total_topics_learned": 3263
+    "total_runs": 3264,
+    "last_updated": "2026-10-18T10:50:55.076890+00:00",
+    "total_topics_learned": 3264
   },
   "entries": [
     {
@@ -155433,6 +155433,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T10:47:46.424603+00:00",
       "run_number": 3263
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bε-Tree using atomic buffer-merging and pivot-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput write-optimized indexing and multi-core parallel append-heavy data manipulation in real-time columnar storage engines and concurrent time-series databases",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of lock-free concurrent Bε-Trees designed for write-optimized indexing and high-throughput append-heavy workloads. It leverages atomic Compare-And-Swap (CAS) operations for message buffer merging and node pivot splitting, alongside hazard pointers for safe, lock-free memory reclamation in multi-core database engines.",
+      "key_points": [
+        "Utilizes internal node message buffers to absorb high-frequency write operations, transforming random I/O into sequential append workloads.",
+        "Employs atomic CAS primitives to safely merge buffers and split pivots without acquiring global locks or halting reader threads.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free anomalies during concurrent node mutations and splits.",
+        "Maximizes multi-core parallel throughput in append-heavy environments such as real-time columnar storage and time-series database architectures."
+      ],
+      "code_example": {
+        "language": "pseudo-code",
+        "description": "Demonstrates atomic message insertion into a concurrent Bε-Tree node buffer using CAS loops.",
+        "correct": "function insert_buffered_key(node, key, value, hazard_mgr) {\n  while (true) {\n    Node* current = hazard_mgr.protect(node.buffer_ptr);\n    Buffer* new_buf = clone_and_append(current, key, value);\n    if (atomic_compare_exchange_weak(&node.buffer_ptr, &current, new_buf)) {\n      hazard_mgr.retire(current);\n      break;\n    }\n  }\n}",
+        "wrong": "function insert_buffered_key(node, key, value) {\n  mutex.lock();\n  node.buffer.append(key, value);\n  mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect old buffer pointers with hazard pointers during memory reclamation, leading to premature deallocation and race conditions.",
+        "Ignoring the cost of excessive message buffer accumulation, which can degrade read query latency if flushes and splits are triggered too infrequently."
+      ],
+      "best_practices": [
+        "Implement careful trigger thresholds for message buffer flushes down the tree to balance write amortization with read amplification penalties.",
+        "Design fine-grained hazard pointer registries per thread to minimize cache-line bouncing during frequent lock-free updates."
+      ],
+      "when_to_use": "Use when building high-throughput write-optimized databases, time-series engines, or LSM-tree alternatives that require predictable low-latency concurrent insertions and range queries.",
+      "when_not_to_use": "Avoid in read-heavy or low-concurrency systems where traditional B-Trees or simpler lock-based structures incur lower implementation and memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How do Bε-Trees optimize write performance compared to traditional B-Trees?",
+          "answer": "Bε-Trees use internal message buffers to batch writes, converting random disk updates into sequential append operations and amortizing modification costs."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free data structures like the Bε-Tree?",
+          "answer": "Hazard pointers provide a lock-free mechanism to track which nodes or buffers are actively referenced by threads, safely deferring memory reclamation until no thread can access them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Log-Structured Merge-Trees (LSM-Trees)",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T10:50:55.076878+00:00",
+      "run_number": 3264
     }
   ]
 }
