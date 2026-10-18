@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3241,
-    "last_updated": "2026-10-18T01:14:42.799094+00:00",
-    "total_topics_learned": 3241
+    "total_runs": 3242,
+    "last_updated": "2026-10-18T01:17:51.148779+00:00",
+    "total_topics_learned": 3242
   },
   "entries": [
     {
@@ -154391,6 +154391,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T01:14:42.799075+00:00",
       "run_number": 3241
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and root-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted index lookups in real-time relational database management systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a concurrent, lock-free B+ Tree designed for modern multi-core relational databases. It utilizes fine-grained atomic operations such as compare-and-swap (CAS) for leaf-sibling linking and root-pointer swinging, paired with hazard pointers to guarantee safe memory reclamation without lock contention.",
+      "key_points": [
+        "Employs atomic leaf-sibling pointers to enable lock-free forward and backward range scans across split nodes.",
+        "Utilizes root-pointer swinging via CAS primitives to handle structural tree growth and root replacements safely.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free nodes concurrently.",
+        "Ensures high-throughput multi-core index lookups and updates without blocking execution threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS during a concurrent split operation",
+        "correct": "bool linkLeaves(std::atomic<Node*>& currentNext, Node* newNode, Node* targetNext) {\n    newNode->next.store(targetNext, std::memory_order_relaxed);\n    return currentNext.compare_exchange_strong(targetNext, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool linkLeaves(Node* currentNext, Node* newNode, Node* targetNext) {\n    // Missing atomic CAS and hazard protection, leading to race conditions\n    currentNext = newNode;\n    newNode->next = targetNext;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Neglecting the ABA problem on pointer reuse during frequent concurrent splits and merges."
+      ],
+      "best_practices": [
+        "Protect node traversal pointers with hazard pointers before reading node contents.",
+        "Use appropriate memory ordering models (acquire-release) to synchronize multi-threaded state transitions safely."
+      ],
+      "when_to_use": "Use when building high-performance storage engines or relational databases requiring maximum concurrent throughput for range queries.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where standard lock-based synchronization or garbage collection adds sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+ Tree without a managed garbage collector?",
+          "answer": "By implementing hazard pointers that threads register before accessing shared nodes, ensuring nodes are only reclaimed after all threads drop their references."
+        },
+        {
+          "question": "What is the purpose of atomic leaf-sibling-linking in a concurrent B+ Tree?",
+          "answer": "It allows threads performing range scans to traverse horizontally across newly split leaf nodes without acquiring locks or restarting the traversal from the root."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T01:17:51.148758+00:00",
+      "run_number": 3242
     }
   ]
 }
