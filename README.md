@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3327** |
-| Last Updated | `2026-10-18T23:16:04.437745+00:00` |
-| Dataset Size | `3327 entries` |
+| Total Topics Learned | **3328** |
+| Last Updated | `2026-10-18T23:19:13.471116+00:00` |
+| Dataset Size | `3328 entries` |
 
 ## 📂 Categories Learned
 
@@ -19,7 +19,7 @@
 |---|---|
 | data-structures | 2148 |
 | trading-strategies | 228 |
-| algorithms | 200 |
+| algorithms | 201 |
 | crypto-blockchain | 155 |
 | technical-analysis | 147 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Futex-based lightweight mutex using atomic state-transition and thread-parking CAS primitives alongside hazard pointer memory reclamation for high-throughput synchronization and multi-core parallel resource locking in real-time operating system runtimes and concurrent systems programming frameworks`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-stitching and edge-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel bioinformatics pattern matching in real-time genomic sequencing pipelines and concurrent text analytics systems`
 - `Implementation of a lock-free thread-safe concurrent Concurrent Queue using atomic head-tail-node-advancing and enqueue-dequeue-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer task handoff and multi-core parallel message passing in real-time asynchronous execution engines and concurrent actor frameworks`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range scanning in real-time in-memory databases and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and neighborhood-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer routing and multi-core parallel approximate range querying in real-time distributed hash tables and concurrent overlay network systems`
-- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-tail-accounting and token-draining CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure`
 
 <!-- STATS_END -->
 

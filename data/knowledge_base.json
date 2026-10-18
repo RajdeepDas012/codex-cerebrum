@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3327,
-    "last_updated": "2026-10-18T23:16:04.437745+00:00",
-    "total_topics_learned": 3327
+    "total_runs": 3328,
+    "last_updated": "2026-10-18T23:19:13.471116+00:00",
+    "total_topics_learned": 3328
   },
   "entries": [
     {
@@ -158476,6 +158476,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T23:16:04.437726+00:00",
       "run_number": 3327
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Futex-based lightweight mutex using atomic state-transition and thread-parking CAS primitives alongside hazard pointer memory reclamation for high-throughput synchronization and multi-core parallel resource locking in real-time operating system runtimes and concurrent systems programming frameworks",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A Futex (fast userspace mutex) combines atomic operations in user space for uncontended acquisition with kernel-level thread parking and waking only when contention occurs. This design minimizes system call overhead while ensuring safe, scalable thread synchronization across multi-core systems.",
+      "key_points": [
+        "Uses atomic state-transition CAS primitives to handle uncontended lock acquisition entirely in user space with zero system call overhead.",
+        "Delegates thread parking and waking to the underlying kernel futex facility only when genuine contention is detected.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamic lock metadata structures and avoid use-after-free bugs under concurrent reclamation.",
+        "Maximizes multi-core parallel resource throughput by reducing unnecessary context switching and bus contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the state-transition pattern for a fast-path uncontended atomic mutex acquisition and slow-path parking.",
+        "correct": "class LightweightMutex {\n    std::atomic<int> state{0};\npublic:\n    void lock() {\n        int expected = 0;\n        if (state.compare_exchange_strong(expected, 1, std::memory_order_acquire)) {\n            return; // Fast path\n        }\n        lock_slow(); // Slow path with futex wait\n    }\n};",
+        "wrong": "class LightweightMutex {\n    std::mutex m;\npublic:\n    void lock() { m.lock(); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use acquire-release memory orderings during atomic state transitions, leading to race conditions on protected critical section data.",
+        "Triggering kernel system calls on every lock acquisition attempt, negating the primary performance benefit of a fast-path userspace mutex."
+      ],
+      "best_practices": [
+        "Optimize the fast-path CAS operation to execute in a tight loop with minimal instructions before falling back to kernel parking.",
+        "Carefully manage thread wake-up cascades to prevent thundering herd problems when multiple parked threads contend for a newly released lock."
+      ],
+      "when_to_use": "When implementing low-level synchronization primitives, concurrent runtime libraries, or custom locking mechanisms where minimizing kernel transition overhead for uncontended locks is paramount.",
+      "when_not_to_use": "When standard library synchronization primitives like std::mutex or pthread_mutex already meet your performance and platform requirements.",
+      "interview_questions": [
+        {
+          "question": "How does a futex differ from a traditional kernel-only mutex?",
+          "answer": "A futex performs uncontended lock and unlock operations entirely in user space using atomic instructions without kernel intervention, only involving the kernel when threads must be put to sleep or woken up due to contention."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation useful in custom synchronization primitives?",
+          "answer": "It allows threads to safely access shared lock control blocks and metadata concurrently without locks, ensuring memory is only reclaimed after all active readers have unlinked their hazard pointers."
+        }
+      ],
+      "related_topics": [
+        "Atomic Compare-And-Swap (CAS) Primitives",
+        "Hazard Pointer Memory Reclamation",
+        "Kernel Thread Parking and Wakeup Semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T23:19:13.471097+00:00",
+      "run_number": 3328
     }
   ]
 }
