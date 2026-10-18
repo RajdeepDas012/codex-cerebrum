@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3272,
-    "last_updated": "2026-10-18T11:16:06.693357+00:00",
-    "total_topics_learned": 3272
+    "total_runs": 3273,
+    "last_updated": "2026-10-18T11:19:15.582629+00:00",
+    "total_topics_learned": 3273
   },
   "entries": [
     {
@@ -155862,6 +155862,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T11:16:06.693334+00:00",
       "run_number": 3272
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index access in real-time database engines and concurrent storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B-Tree that utilizes atomic compare-and-swap (CAS) operations for structural modifications such as node splitting and merging. It employs hazard pointers to safely manage memory reclamation in multi-threaded database environments without blocking readers or writers.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node-splitting and structural-merging to maintain tree balance without global locks.",
+        "Employs hazard pointers to track active reader threads and safely reclaim node memory post-deletion or mutation.",
+        "Optimizes multi-core parallel sorted index access for high-throughput range querying in concurrent database engines.",
+        "Handles complex synchronization challenges such as multi-word compare-and-swap equivalents or helping mechanisms for incomplete structural updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers during a concurrent tree traversal.",
+        "correct": "Node* hazard_ptr_protect(std::atomic<Node*>& node_ptr, HazardPointerRecord* rec) {\n    Node* node;\n    do {\n        node = node_ptr.load();\n        rec->hp.store(node);\n    } while (node_ptr.load() != node);\n    return node;\n}",
+        "wrong": "Node* node = node_ptr.load(); // Unprotected read risking ABA or use-after-free\nreturn node;"
+      },
+      "common_mistakes": [
+        "Failing to properly validate node pointers after hazard pointer registration, leaving a window for use-after-free.",
+        "Not handling helping mechanisms, where threads encountering an unfinished split or merge operation must complete it before proceeding."
+      ],
+      "best_practices": [
+        "Always re-read and verify pointer values after publishing them to hazard pointer records to prevent stale reads.",
+        "Batch retired node memory reclamation requests to minimize overhead from thread-local hazard pointer scan phases."
+      ],
+      "when_to_use": "Use when designing high-throughput, multi-core in-memory database indexes or storage engines requiring predictable low-latency range queries without lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where simpler lock-based B-Tree implementations provide better maintainability and lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free B-Tree without using garbage collection?",
+          "answer": "By using hazard pointers or epoch-based memory reclamation, which ensure that no memory is freed until all threads currently accessing that node have unpinned or moved away from it."
+        },
+        {
+          "question": "What happens if a thread encounters a partially split node left by another crashed or delayed thread?",
+          "answer": "The thread must execute a helping mechanism to complete the structural modification (finishing the split or merge) before it can proceed with its own search or update operation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Core Database Indexing Strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T11:19:15.582607+00:00",
+      "run_number": 3273
     }
   ]
 }
