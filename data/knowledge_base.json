@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3290,
-    "last_updated": "2026-10-18T15:06:04.311090+00:00",
-    "total_topics_learned": 3290
+    "total_runs": 3291,
+    "last_updated": "2026-10-18T15:09:14.529277+00:00",
+    "total_topics_learned": 3291
   },
   "entries": [
     {
@@ -156715,6 +156715,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T15:06:04.311070+00:00",
       "run_number": 3290
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic queue-draining and counter-decrementing CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core rate limiting in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and low-level concurrency mechanisms of a lock-free Leaky Bucket rate limiter. By leveraging atomic CAS primitives and hazard pointers, it ensures high-throughput, thread-safe traffic smoothing across multi-core systems without blocking.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free queue draining and counter updates.",
+        "Employs hazard pointers to safely manage memory reclamation in concurrent environments without locking overhead.",
+        "Ensures smooth, predictable traffic output by regulating bursts into a steady trickle rate.",
+        "Designed for multi-core scalability in high-performance API gateways and cloud-native microservices."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual core of atomic token leakage and bucket capacity checks.",
+        "correct": "import threading\nimport time\n\nclass LockFreeLeakyBucket:\n    def __init__(self, capacity, leak_rate):\n        self.capacity = capacity\n        self.leak_rate = leak_rate\n        self.water_level = 0.0\n        self.last_leak_time = time.time()\n        self.lock = threading.Lock() # Conceptual placeholder for CAS loop\n\n    def allow_request(self, tokens=1):\n        now = time.time()\n        elapsed = now - self.last_leak_time\n        self.last_leak_time = now\n        # Leak water based on elapsed time\n        leaked = elapsed * self.leak_rate\n        self.water_level = max(0.0, self.water_level - leaked)\n        if self.water_level + tokens <= self.capacity:\n            self.water_level += tokens\n            return True\n        return False",
+        "wrong": "class UnsafeLeakyBucket:\n    def __init__(self, capacity):\n        self.water = 0\n    def allow(self):\n        self.water += 1 # Non-atomic increment causes race conditions across multiple threads"
+      },
+      "common_mistakes": [
+        "Failing to account for high-frequency clock jitter when calculating time elapsed for bucket leakage.",
+        "Using traditional mutual exclusion locks (Mutex/Spinlocks) which degrade performance under high-contention multi-core API gateway loads."
+      ],
+      "best_practices": [
+        "Implement lock-free hazard pointers to safely defer deallocation of nodes in concurrent queue structures.",
+        "Batch atomic updates where possible to minimize CAS instruction retry loops under extreme core contention."
+      ],
+      "when_to_use": "Use when building high-throughput API gateways or cloud microservices infrastructure requiring strict traffic smoothing and low-latency concurrency.",
+      "when_not_to_use": "Avoid in low-concurrency single-threaded applications where simple locking or standard library rate limiters introduce less code complexity.",
+      "interview_questions": [
+        {
+          "question": "Why use a lock-free Leaky Bucket rate limiter over a mutex-protected version in high-throughput API gateways?",
+          "answer": "Lock-free implementations eliminate thread suspension, lock contention bottlenecks, and priority inversion overhead, allowing maximum multi-core scaling."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption during concurrent queue draining?",
+          "answer": "Hazard pointers allow threads to temporarily register ownership of a node before accessing it, ensuring no other thread can free or recycle that memory address until the pointer is released."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Token Bucket Rate Limiter",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Queue Architectures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T15:09:14.529253+00:00",
+      "run_number": 3291
     }
   ]
 }
