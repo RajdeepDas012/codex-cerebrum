@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3297,
-    "last_updated": "2026-10-18T18:11:52.910607+00:00",
-    "total_topics_learned": 3297
+    "total_runs": 3298,
+    "last_updated": "2026-10-18T18:15:02.575545+00:00",
+    "total_topics_learned": 3298
   },
   "entries": [
     {
@@ -157046,6 +157046,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T18:11:52.910587+00:00",
       "run_number": 3297
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-sift-up and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job dispatching in real-time operating system kernels and concurrent asynchronous execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent priority queue without traditional locks, leveraging lock-free atomic primitives like Compare-And-Swap (CAS) for node swapping and heap sifting alongside hazard pointers for safe memory management. It is crucial for maximizing throughput and reducing latency in multi-core operating systems and real-time task dispatchers.",
+      "key_points": [
+        "Utilizes atomic heap-sift-up and node-swapping CAS primitives to manage concurrent priority heap adjustments.",
+        "Employs hazard pointer memory reclamation to safely manage node allocation and deallocation under concurrent access.",
+        "Ensures thread safety and high throughput without lock contention, ideal for multi-core parallel job dispatching.",
+        "AddressesABA problem and memory visibility concerns inherent in lock-free tree/heap data structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of atomic compare-and-swap operations for lock-free heap node swapping.",
+        "correct": "bool try_swap_nodes(std::atomic<Node*>& parent, std::atomic<Node*>& child) {\n    Node* p = parent.load();\n    Node* c = child.load();\n    if (p->priority < c->priority) {\n        return parent.compare_exchange_strong(p, c);\n    }\n    return false;\n}",
+        "wrong": "bool bad_swap(Node* parent, Node* child) {\n    if (parent->priority < child->priority) {\n        std::swap(parent->priority, child->priority);\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during node swapping operations.",
+        "Improper hazard pointer registration leading to premature memory reclamation and use-after-free bugs.",
+        "Overlooking memory ordering constraints (e.g., sequentially consistent vs. acquire-release semantics) in CAS loops."
+      ],
+      "best_practices": [
+        "Always protect shared node references with hazard pointers before traversing or modifying heap levels.",
+        "Use appropriate memory barriers and acquire-release semantics on atomic operations to ensure visibility.",
+        "Keep critical CAS retry loops bounded or implement exponential backoff under high contention."
+      ],
+      "when_to_use": "When building real-time operating system schedulers, high-frequency async execution engines, or multi-threaded job dispatchers requiring minimal synchronization latency.",
+      "when_not_to_use": "In low-concurrency environments or simple applications where the implementation complexity of lock-free data structures outweighs performance benefits over fine-grained lock-based queues.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic node swaps in a lock-free priority queue?",
+          "answer": "By using tagged pointers or version counters combined with the CAS operation, ensuring that even if a node's value is recycled, its version change causes the CAS to fail appropriately."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free heap structures?",
+          "answer": "Hazard pointers avoid the contention and atomic overhead of updating shared reference counters globally by allowing threads to locally announce which nodes they are actively inspecting."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent MPMC Queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T18:15:02.575527+00:00",
+      "run_number": 3298
     }
   ]
 }

@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3297** |
-| Last Updated | `2026-10-18T18:11:52.910607+00:00` |
-| Dataset Size | `3297 entries` |
+| Total Topics Learned | **3298** |
+| Last Updated | `2026-10-18T18:15:02.575545+00:00` |
+| Dataset Size | `3298 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2123 |
+| data-structures | 2124 |
 | trading-strategies | 228 |
 | algorithms | 198 |
 | crypto-blockchain | 154 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-sift-up and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job dispatching in real-time operating system kernels and concurrent asynchronous execution engines`
 - `Implementation of a lock-free thread-safe concurrent Bounded MPMC (Multi-Producer Multi-Consumer)Queue using atomic ring-buffer-slot-claiming and sequence-number-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput asynchronous task distribution and multi-core parallel message passing in real-time event-driven messaging platforms and concurrent actor framework engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic suffix-link-updating and node-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel bioinformatics pattern matching in real-time genomic sequence analysis engines and concurrent text indexing systems`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate detection in real-time distributed storage engines and concurrent database indexing layers`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted data manipulation in real-time in-memory databases and concurrent key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bitset-marking and chunk-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core parallel number-theoretic computation in real-time cryptographic key generation platforms and concurrent mathematical modeling engines`
 
 <!-- STATS_END -->
 
