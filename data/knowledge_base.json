@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3325,
-    "last_updated": "2026-10-18T23:09:46.231344+00:00",
-    "total_topics_learned": 3325
+    "total_runs": 3326,
+    "last_updated": "2026-10-18T23:12:55.123129+00:00",
+    "total_topics_learned": 3326
   },
   "entries": [
     {
@@ -158382,6 +158382,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T23:09:46.231324+00:00",
       "run_number": 3325
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent Queue using atomic head-tail-node-advancing and enqueue-dequeue-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer task handoff and multi-core parallel message passing in real-time asynchronous execution engines and concurrent actor frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a high-performance lock-free concurrent queue using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables safe multi-producer multi-consumer task scheduling and message passing across multiple CPU cores without thread blocking.",
+      "key_points": [
+        "Utilizes atomic head-tail-node-advancing operations to allow concurrent pushes and pops without global locking contention.",
+        "Employs enqueue-dequeue-pointer-splicing CAS primitives to safely link and unlink nodes in a linked-list structure.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of deleted nodes in lock-free environments.",
+        "Optimized for high-throughput multi-producer multi-consumer task handoff in asynchronous execution engines and actor models."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free queue node enqueue operation using atomic CAS pointers.",
+        "correct": "bool enqueue(T val) {\n    Node* newNode = new Node(val);\n    while (true) {\n        Node* last = tail.load();\n        Node* next = last->next.load();\n        if (last == tail.load()) {\n            if (next == nullptr) {\n                if (last->next.compare_exchange_weak(next, newNode)) {\n                    tail.compare_exchange_strong(last, newNode);\n                    return true;\n                }\n            } else {\n                tail.compare_exchange_strong(last, next);\n            }\n        }\n    }\n}",
+        "wrong": "bool enqueue(T val) {\n    std::lock_guard<std::mutex> lock(mtx);\n    tail->next = new Node(val);\n    tail = tail->next;\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to handle the case where the tail pointer lags behind, causing stalled enqueue operations.",
+        "Ignoring the ABA problem when reusing memory blocks, leading to corrupted queue pointers."
+      ],
+      "best_practices": [
+        "Pair every dynamic node allocation with hazard pointers before reading shared next-pointers to avoid premature deallocation.",
+        "Use relaxed memory ordering where appropriate, but ensure acquire-release semantics on critical CAS updates."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous execution engines, actor frameworks, or task schedulers requiring minimal thread contention across many cores.",
+      "when_not_to_use": "Avoid in low-memory embedded environments where hazard pointer tracking overhead or node memory fragmentation is unacceptable.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the tail pointer lagging behind during concurrent enqueues in a lock-free queue?",
+          "answer": "Any thread that detects a lagging tail pointer must attempt to advance it using a CAS operation before proceeding with its own enqueue."
+        },
+        {
+          "question": "Why are hazard pointers necessary in lock-free queue implementations?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while another thread is still traversing references to them, preventing use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Skip List",
+        "ABA Problem in Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T23:12:55.123111+00:00",
+      "run_number": 3326
     }
   ]
 }
