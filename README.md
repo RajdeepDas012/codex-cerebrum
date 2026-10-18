@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3307** |
-| Last Updated | `2026-10-18T20:27:46.714949+00:00` |
-| Dataset Size | `3307 entries` |
+| Total Topics Learned | **3308** |
+| Last Updated | `2026-10-18T20:30:55.777295+00:00` |
+| Dataset Size | `3308 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2131 |
+| data-structures | 2132 |
 | trading-strategies | 228 |
 | algorithms | 199 |
 | crypto-blockchain | 154 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel ordered index retrieval in real-time transactional databases and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index management in real-time relational databases and concurrent storage engine architectures`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and prefix-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string prefix matching in real-time network packet processing engines and concurrent database indexing systems`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-bit-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel unique visitor counting in real-time web analytics platforms and concurrent big data streaming engines`
 - `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic state-bits-tracking and waiter-queue-parking CAS primitives alongside hazard pointer memory reclamation for high-throughput shared resource access and multi-core parallel concurrency control in real-time in-memory databases and concurrent systems programming frameworks`
-- `Implementation of a lock-free thread-safe concurrent Bounded SPSC (Single-Producer Single-Consumer) ring buffer using atomic head-tail-pointer-offset-wrapping and cache-line-padding CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core parallel high-frequency financial trading systems and concurrent network packet processing engines`
 
 <!-- STATS_END -->
 
