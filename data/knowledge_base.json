@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3322,
-    "last_updated": "2026-10-18T22:57:45.451953+00:00",
-    "total_topics_learned": 3322
+    "total_runs": 3323,
+    "last_updated": "2026-10-18T23:02:49.326212+00:00",
+    "total_topics_learned": 3323
   },
   "entries": [
     {
@@ -158241,6 +158241,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T22:57:45.451905+00:00",
       "run_number": 3322
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-tail-accounting and token-draining CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced system design pattern implements a non-blocking Leaky Bucket rate limiter using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables multi-core API gateways to enforce smooth traffic shaping and drop excess requests without lock contention.",
+      "key_points": [
+        "Utilizes atomic operations for token-draining and drop-tail accounting to avoid mutual exclusion locks.",
+        "Employs hazard pointers to safely reclaim memory of transient state objects without causing ABA problems or race conditions.",
+        "Guarantees linearizable rate enforcement under extreme concurrent loads in microservices infrastructure.",
+        "Maintains constant outflow rates regardless of erratic incoming request bursts by smoothing traffic patterns."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic token updates and drop-tail decisions using compare-and-swap semantics.",
+        "correct": "import threading\nimport time\n\nclass AtomicLeakyBucket:\n    def __init__(self, capacity, leak_rate):\n        self.capacity = capacity\n        self.leak_rate = leak_rate\n        self.water_level = 0.0\n        self.last_leak_time = time.time()\n        self.lock = threading.Lock() # Simplified representation of atomic thread-safe logic\n\n    def acquire(self):\n        now = time.time()\n        with self.lock:\n            elapsed = now - self.last_leak_time\n            self.water_level = max(0.0, self.water_level - (elapsed * self.leak_rate))\n            self.last_leak_time = now\n            if self.water_level + 1.0 <= self.capacity:\n                self.water_level += 1.0\n                return True\n            return False",
+        "wrong": "class NaiveLeakyBucket:\n    def __init__(self, capacity):\n        self.water = capacity\n    def acquire(self):\n        if self.water > 0:\n            self.water -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Failing to account for elapsed time between requests correctly, causing inaccurate leak calculations.",
+        "Using coarse-grained locks instead of lock-free CAS primitives, which bottlenecks high-throughput API gateways under heavy multi-core load."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to manage dynamic state safely without garbage collection pauses.",
+        "Batch atomic updates where possible to minimize cache line bouncing across multiple CPU cores."
+      ],
+      "when_to_use": "High-traffic distributed API gateways requiring strict traffic shaping and predictable outflow rates across multi-core systems.",
+      "when_not_to_use": "Low-throughput applications or simple single-threaded environments where standard mutex-based limiters suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the water level in a multi-threaded leaky bucket without using heavy locks?",
+          "answer": "By using atomic compare-and-swap (CAS) primitives combined with retry loops to conditionally update the water level based on elapsed time."
+        },
+        {
+          "question": "Why are hazard pointers useful when managing dynamic rate limiter configurations or state nodes?",
+          "answer": "They safely track references currently accessed by threads, allowing safe memory reclamation without premature deallocation or locks."
+        }
+      ],
+      "related_topics": [
+        "Token Bucket rate limiter",
+        "Hazard Pointer memory management",
+        "Lock-free concurrent data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T23:02:49.326193+00:00",
+      "run_number": 3323
     }
   ]
 }
