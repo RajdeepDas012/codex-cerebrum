@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3313,
-    "last_updated": "2026-10-18T20:46:43.320802+00:00",
-    "total_topics_learned": 3313
+    "total_runs": 3314,
+    "last_updated": "2026-10-18T20:49:53.607854+00:00",
+    "total_topics_learned": 3314
   },
   "entries": [
     {
@@ -157810,6 +157810,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T20:46:43.320784+00:00",
       "run_number": 3313
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Stack using atomic head-pointer-swapping and ABA-prevention tag-versioning CAS primitives alongside hazard pointer memory reclamation for high-throughput LIFO task dispatching and multi-core parallel resource pooling in real-time execution engines and concurrent systems programming frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent lock-free stack enables multiple threads to push and pop elements in a LIFO order without traditional mutual exclusion locks. By utilizing atomic Compare-And-Swap (CAS) primitives combined with ABA-prevention version tags and hazard pointers, it prevents race conditions and memory reclamation hazards under high-throughput conditions.",
+      "key_points": [
+        "Utilizes atomic head-pointer updates via Compare-And-Swap (CAS) to achieve lock-free thread safety.",
+        "Employs ABA-prevention tag-versioning to prevent subtle pointer corruption bugs where a node is removed, freed, and reallocated identically between CAS reads.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation without suffering from the ABA or use-after-free problems.",
+        "Provides high-throughput LIFO task dispatching and resource pooling ideal for multi-core parallel systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free push operation using atomic pointer swapping and tag versioning.",
+        "correct": "struct Node { void* data; Node* next; uintptr_t tag; };\nstd::atomic<Node*> head;\nvoid push(void* data) {\n    Node* newNode = new Node{data, nullptr, 0};\n    Node* oldHead = head.load();\n    do {\n        newNode->next = oldHead;\n        newNode->tag = oldHead ? oldHead->tag + 1 : 1;\n    } while (!head.compare_exchange_weak(oldHead, newNode));\n}",
+        "wrong": "void push(void* data) {\n    Node* newNode = new Node{data, head};\n    head = newNode; // Not atomic, massive race condition!\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem, leading to silent memory corruption when recycled nodes are reused.",
+        "Improper memory reclamation resulting in use-after-free crashes when other threads hold stale pointers to popped nodes."
+      ],
+      "best_practices": [
+        "Always pair lock-free data structures with a safe memory reclamation scheme like hazard pointers or epoch-based garbage collection.",
+        "Use double-word CAS (DCAS) or tagged pointers to embed version counters alongside memory addresses to mitigate ABA issues.",
+        "Minimize contention hot spots by utilizing backoff strategies or local thread caches when pushing or popping frequently."
+      ],
+      "when_to_use": "Use when building high-performance concurrent task schedulers, execution engines, or memory pools requiring high contention resilience and non-blocking guarantees.",
+      "when_not_to_use": "Avoid when standard mutex-backed data structures provide sufficient throughput, or when targeting environments lacking robust atomic hardware primitives.",
+      "interview_questions": [
+        {
+          "question": "What is the ABA problem in lock-free data structures, and how does tag-versioning solve it?",
+          "answer": "The ABA problem occurs when a value is read as A, changed to B, and then changed back to A before a CAS operation executes, making the CAS incorrectly succeed. Tag-versioning increments a counter alongside the pointer on every modification, ensuring that even if the pointer address is identical, the version tag differs."
+        },
+        {
+          "question": "Why can't you immediately call free() or delete on a popped node in a lock-free stack?",
+          "answer": "Another thread might have pre-fetched a reference to that node before the pop occurred. Deleting it immediately would cause a use-after-free error, which is why hazard pointers or epoch-based reclamation must be used to defer deallocation until no threads reference the node."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "ABA Problem",
+        "Lock-Free Queue",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T20:49:53.607837+00:00",
+      "run_number": 3314
     }
   ]
 }
