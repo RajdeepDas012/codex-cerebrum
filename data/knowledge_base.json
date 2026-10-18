@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3299,
-    "last_updated": "2026-10-18T18:18:13.275049+00:00",
-    "total_topics_learned": 3299
+    "total_runs": 3300,
+    "last_updated": "2026-10-18T18:21:42.325460+00:00",
+    "total_topics_learned": 3300
   },
   "entries": [
     {
@@ -157144,6 +157144,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T18:18:13.275032+00:00",
       "run_number": 3299
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic throttling and multi-core rate limiting in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Token Bucket rate limiter utilizes atomic primitives like compare-and-swap (CAS) combined with hazard pointers to safely manage shared bucket states across multiple threads without lock contention. This architecture is vital for high-throughput API gateways and cloud infrastructure requiring precise, real-time traffic throttling and surge management under heavy multi-core concurrency.",
+      "key_points": [
+        "Utilizes atomic operations for token refilling and capacity capping to ensure lock-free synchronization across threads.",
+        "Employs hazard pointers for safe memory reclamation of dynamic bucket configurations or connection states without blocking.",
+        "Maintains high throughput and low latency under heavy concurrent request volumes typical in modern API gateways.",
+        "Prevents race conditions during burst traffic checks by atomically calculating elapsed time and scaling available tokens."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic token consumption and refilling using CAS primitives in a lock-free loop.",
+        "correct": "#include <atomic>\n#include <chrono>\n\nstruct TokenBucket {\n    std::atomic<double> tokens;\n    std::atomic<long long> last_refill;\n    double capacity;\n    double refill_rate;\n\n    bool consume(double count) {\n        long long now = std::chrono::steady_clock::now().time_since_epoch().count();\n        double current_tokens = tokens.load();\n        long long last = last_refill.load();\n        \n        // Refill logic omitted for brevity in snippet; standard CAS loop structure:\n        while (true) {\n            if (current_tokens < count) return false;\n            if (tokens.compare_exchange_weak(current_tokens, current_tokens - count)) {\n                return true;\n            }\n        }\n    }\n};",
+        "wrong": "bool consume(double count) {\n    // Naive non-atomic check and modify vulnerable to race conditions\n    if (tokens >= count) {\n        tokens -= count;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for ABA problems or integer overflows during high-frequency atomic updates of timestamps and tokens.",
+        "Neglecting proper memory ordering semantics (e.g., using sequentially consistent operations everywhere instead of acquire-release)."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering where strict synchronization isn't necessary, combined with acquire-release semantics for critical state updates.",
+        "Integrate hazard pointers or epoch-based reclamation to prevent memory leaks and dangling pointer issues when dynamically reallocating limits.",
+        "Benchmark CAS loop contention under peak multi-core workloads to ensure lock-free progress guarantees are maintained."
+      ],
+      "when_to_use": "When designing high-performance API gateways, distributed rate limiters, or cloud edge proxies requiring deterministic latency and high thread concurrency.",
+      "when_not_to_use": "When traffic volumes are low enough that traditional mutex-based locking introduces negligible overhead, or when simpler fixed-window counters suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to refill and consume tokens simultaneously without using locks?",
+          "answer": "By using compare-and-swap (CAS) loops that repeatedly fetch the current state, calculate the elapsed time and token additions atomically, and attempt to commit the new state only if no other thread has modified it in the interim."
+        },
+        {
+          "question": "Why are hazard pointers useful in lock-free rate limiters with dynamic configurations?",
+          "answer": "Hazard pointers allow threads to safely announce which shared memory nodes they are currently accessing, ensuring that memory reclamation routines do not free objects until all referencing threads have detached."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent MPMC Queue",
+        "Hazard Pointer Memory Reclamation",
+        "Distributed Rate Limiting Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T18:21:42.325444+00:00",
+      "run_number": 3300
     }
   ]
 }
