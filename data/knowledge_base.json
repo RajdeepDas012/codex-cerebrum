@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3286,
-    "last_updated": "2026-10-18T14:53:16.091359+00:00",
-    "total_topics_learned": 3286
+    "total_runs": 3287,
+    "last_updated": "2026-10-18T14:56:26.015782+00:00",
+    "total_topics_learned": 3287
   },
   "entries": [
     {
@@ -156527,6 +156527,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T14:53:16.091334+00:00",
       "run_number": 3286
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Consistent Hashing ring using atomic virtual-node-splicing and ring-boundary-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed load balancing and multi-core parallel key routing in real-time microservice gateway routing and concurrent distributed cache partitioning systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Consistent Hashing ring allows multiple threads to map keys to physical nodes dynamically via virtual nodes using atomic Compare-And-Swap (CAS) primitives and hazard pointers. This structure prevents race conditions during node joins and leaves without global locks, ensuring low-latency routing for distributed caches and API gateways.",
+      "key_points": [
+        "Utilizes atomic virtual-node-splicing and ring-boundary-updating CAS operations to modify the ring structure without global locking.",
+        "Employs hazard pointer memory reclamation to safely manage retired ring nodes in concurrent execution environments without premature deallocation.",
+        "Distributes virtual nodes evenly across the hash space to ensure balanced key allocation and minimize hot-spotting.",
+        "Guarantees linearizability for concurrent lookups, insertions, and deletions under heavy multi-core load."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic virtual-node insertion into a concurrent consistent hashing ring using CAS loops.",
+        "correct": "bool insert_vnode(std::atomic<Node*>& head, Node* new_node) {\n    while (true) {\n        Node* current = head.load(std::memory_order_acquire);\n        new_node->next = current;\n        if (head.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_vnode(Node*& head, Node* new_node) {\n    Node* current = head;\n    new_node->next = current;\n    head = new_node; // Non-atomic update causes race conditions and lost updates\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect ring traversal pointers with hazard pointers, leading to use-after-free bugs when another thread unlinks a virtual node.",
+        "Using naive lock-free loops that suffer from heavy contention and starvation under massive multi-core workloads."
+      ],
+      "best_practices": [
+        "Protect all accessed shared ring nodes using thread-local hazard pointer records before performing traversal or lookup operations.",
+        "Batch virtual node updates or use backoff strategies within the CAS retry loop to mitigate high cache contention on the ring head."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed caching systems and API gateways requiring zero-lock overhead and predictable scaling under heavy multi-threaded routing loads.",
+      "when_not_to_use": "Avoid in low-concurrency environments or single-threaded applications where standard sorted arrays or simple hash maps provide simpler maintenance and lower constant-factor overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free consistent hashing ring?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading, preventing other threads from prematurely reclaiming or freeing memory via memory reclamation until the reading thread unregisters the hazard pointer."
+        },
+        {
+          "question": "Why is consistent hashing preferred over standard modulo hashing in distributed partition systems?",
+          "answer": "Consistent hashing minimizes the number of keys that need to be remapped when physical nodes are added or removed, ensuring stability and balanced load distribution across the cluster."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Distributed consistent hashing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T14:56:26.015760+00:00",
+      "run_number": 3287
     }
   ]
 }
