@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3319,
-    "last_updated": "2026-10-18T21:05:40.013512+00:00",
-    "total_topics_learned": 3319
+    "total_runs": 3320,
+    "last_updated": "2026-10-18T21:08:49.214703+00:00",
+    "total_topics_learned": 3320
   },
   "entries": [
     {
@@ -158098,6 +158098,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T21:05:40.013492+00:00",
       "run_number": 3319
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class querying and multi-core parallel connected components analysis in real-time network routing platforms and concurrent graph processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Disjoint Set (Union-Find) data structure utilizing atomic Compare-And-Swap (CAS) primitives for parent updates and path compression. It is vital for multi-core parallel processing of connected components without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) for lock-free parent pointer updates and root linking.",
+        "Implements atomic path compression to flatten trees concurrently without race conditions.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted or merged nodes.",
+        "Enables high-throughput concurrent equivalence queries and parallel connected components discovery."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find with path compression using CAS in a lock-free Disjoint Set.",
+        "correct": "std::atomic<Node*> parent;\nNode* find(Node* node) {\n    while (true) {\n        Node* p = node->parent.load();\n        if (p == node) return node;\n        Node* pp = p->parent.load();\n        node->parent.compare_exchange_weak(p, pp);\n        node = p;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic and not thread-safe\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle intermediate pointer updates during concurrent path compression, leading to lost updates.",
+        "Using traditional locks for union operations which degrades multi-core scalability in graph engines."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to prevent ABA problems on node allocations.",
+        "Apply bounded retry loops for CAS operations on highly contested root nodes."
+      ],
+      "when_to_use": "When executing high-throughput parallel graph algorithms, dynamic connectivity checks, or network routing optimizations across multiple threads.",
+      "when_not_to_use": "For single-threaded applications or workloads where simple sequential Union-Find with path compression suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during path compression in a lock-free Union-Find data structure?",
+          "answer": "By using atomic CAS operations to cautiously update parent pointers, ensuring that even if another thread modifies the pointer concurrently, the CAS fails safely and retries."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures with dynamic node pointer manipulation?",
+          "answer": "Hazard pointers protect nodes from being reclaimed or freed by the memory manager while another thread holds a reference to them during traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded Channel",
+        "Concurrent Segment Tree",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T21:08:49.214686+00:00",
+      "run_number": 3320
     }
   ]
 }
