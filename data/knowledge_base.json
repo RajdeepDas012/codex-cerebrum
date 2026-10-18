@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3302,
-    "last_updated": "2026-10-18T18:28:21.819424+00:00",
-    "total_topics_learned": 3302
+    "total_runs": 3303,
+    "last_updated": "2026-10-18T18:31:31.669268+00:00",
+    "total_topics_learned": 3303
   },
   "entries": [
     {
@@ -157286,6 +157286,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T18:28:21.819407+00:00",
       "run_number": 3302
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded SPSC (Single-Producer Single-Consumer) ring buffer using atomic head-tail-pointer-offset-wrapping and cache-line-padding CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core parallel high-frequency financial trading systems and concurrent network packet processing engines",
+      "category": "data-structures",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "An SPSC (Single-Producer Single-Consumer) bounded ring buffer utilizes atomic head and tail pointers with cache-line padding to eliminate false sharing between the producer and consumer threads. It achieves extremely high throughput and low latency for zero-copy message passing by avoiding locks, mutexes, and heavy synchronization primitives.",
+      "key_points": [
+        "Utilizes independent head and tail indices owned exclusively by the producer and consumer respectively, eliminating contention on pointer updates.",
+        "Employs cache-line padding (e.g., alignas(64)) to prevent false sharing on multi-core processors where producer and consumer run on separate CPU cores.",
+        "Implements atomic offset-wrapping via power-of-two buffer sizing for fast modulo operations using bitwise masking.",
+        "Integrates hazard pointer memory reclamation safely to manage dynamic payloads without incurring garbage collection pauses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a simplified SPSC ring buffer structure with atomic head/tail pointers and cache line padding.",
+        "correct": "template <typename T, size_t Capacity>\nclass SPSCRingBuffer {\n    alignas(64) std::atomic<size_t> head_{0};\n    alignas(64) std::atomic<size_t> tail_{0};\n    alignas(64) T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        const size_t head = head_.load(std::memory_order_relaxed);\n        const size_t tail = tail_.load(std::memory_order_acquire);\n        if (head - tail >= Capacity) return false;\n        buffer_[head % Capacity] = item;\n        head_.store(head + 1, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "class BadSPSC {\n    std::atomic<size_t> head_{0};\n    std::atomic<size_t> tail_{0};\n    int buffer_[1024];\npublic:\n    void push(int x) {\n        buffer_[head_++] = x; // Missing memory ordering, cache line padding, and capacity checks\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use cache-line padding, leading to cache-coherency ping-pong (false sharing) between producer and consumer cores.",
+        "Using incorrect memory ordering constraints (such as sequentially consistent orders everywhere) which severely degrades pipeline throughput."
+      ],
+      "best_practices": [
+        "Use memory_order_acquire and memory_order_release semantics properly to synchronize state between producer and consumer threads.",
+        "Size the ring buffer to a power of two so that index wrapping can be efficiently executed using bitwise AND operations instead of expensive modulo divisions."
+      ],
+      "when_to_use": "When passing high-frequency data streams strictly between one producer thread and one consumer thread with ultra-low latency requirements, such as in financial order books or network packet dispatching.",
+      "when_not_to_use": "When multiple producer or multiple consumer threads need to access the ring buffer concurrently, as the SPSC design assumes exact single-source and single-sink ownership.",
+      "interview_questions": [
+        {
+          "question": "Why is cache-line padding critical for performance in an SPSC ring buffer?",
+          "answer": "It prevents false sharing by ensuring that the producer's head pointer and the consumer's tail pointer reside on distinct CPU cache lines, avoiding unnecessary cache invalidation traffic across cores."
+        },
+        {
+          "question": "How does an SPSC ring buffer avoid using mutexes while remaining thread-safe?",
+          "answer": "By leveraging strict single-writer ownership rules for each pointer (only the producer updates the head; only the consumer updates the tail) and utilizing atomic operations with release-acquire memory ordering."
+        }
+      ],
+      "related_topics": [
+        "lock-free MPMC queue",
+        "false sharing and cache coherence",
+        "memory barriers and ordering semantics"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-18T18:31:31.669250+00:00",
+      "run_number": 3303
     }
   ]
 }

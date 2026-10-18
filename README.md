@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3302** |
-| Last Updated | `2026-10-18T18:28:21.819424+00:00` |
-| Dataset Size | `3302 entries` |
+| Total Topics Learned | **3303** |
+| Last Updated | `2026-10-18T18:31:31.669268+00:00` |
+| Dataset Size | `3303 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2126 |
+| data-structures | 2127 |
 | trading-strategies | 228 |
 | algorithms | 199 |
 | crypto-blockchain | 154 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bounded SPSC (Single-Producer Single-Consumer) ring buffer using atomic head-tail-pointer-offset-wrapping and cache-line-padding CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core parallel high-frequency financial trading systems and concurrent network packet processing engines`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and weight-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput percentile estimation and multi-core parallel streaming analytics in real-time latency monitoring platforms and concurrent database metric aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and multi-core parallel geometric range querying in real-time geographic mapping databases and concurrent spatial analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic throttling and multi-core rate limiting in real-time API gateway platforms and concurrent cloud microservices infrastructure`
 - `Implementation of a lock-free thread-safe concurrent Work-Stealing Deque using atomic top-bottom-pointer-manipulation and task-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel load balancing in real-time asynchronous execution runtimes and concurrent thread pool engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-sift-up and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job dispatching in real-time operating system kernels and concurrent asynchronous execution engines`
 
 <!-- STATS_END -->
 
