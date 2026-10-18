@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3237,
-    "last_updated": "2026-10-18T01:02:07.023945+00:00",
-    "total_topics_learned": 3237
+    "total_runs": 3238,
+    "last_updated": "2026-10-18T01:05:16.244427+00:00",
+    "total_topics_learned": 3238
   },
   "entries": [
     {
@@ -154199,6 +154199,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T01:02:07.023924+00:00",
       "run_number": 3237
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-replenishing and burst-capacity-enforcing CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic throttling and multi-core rate enforcement in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A high-performance, lock-free Token Bucket rate limiter utilizes compare-and-swap (CAS) primitives and hazard pointers to safely manage shared token counts and timestamps across multi-core processors without lock contention. This architecture is vital for API gateways and microservices that must enforce strict traffic throttling policies with ultra-low latency.",
+      "key_points": [
+        "Uses atomic operations to calculate and replenish tokens based on elapsed time without acquiring global mutexes.",
+        "Enforces burst capacity limits by capping the maximum accumulated tokens during idle periods.",
+        "Employs hazard pointers to safely reclaim bucket memory blocks in dynamic multi-tenant rate-limiting topologies.",
+        "Provides linearizable throughput scaling across multiple concurrent worker threads handling incoming requests."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic token consumption loop using compare-and-swap primitives.",
+        "correct": "bool try_consume(std::atomic<BucketState>& state, uint64_t current_time) {\n    BucketState old_state = state.load();\n    BucketState new_state;\n    do {\n        new_state = replenish(old_state, current_time);\n        if (new_state.tokens < 1.0) return false;\n        new_state.tokens -= 1.0;\n    } while (!state.compare_exchange_weak(old_state, new_state));\n    return true;\n}",
+        "wrong": "bool try_consume(std::mutex& mtx, double& tokens) {\n    std::lock_guard<std::mutex> lock(mtx);\n    if (tokens < 1.0) return false;\n    tokens -= 1.0;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for thread interleavings during time calculations, leading to negative or over-replenished token counts.",
+        "Using blocking synchronization primitives which introduce severe latency bottlenecks in high-frequency API routing layers."
+      ],
+      "best_practices": [
+        "Cache monotonic clock readings or utilize hardware timestamp counters where feasible to reduce system call overhead.",
+        "Design state structs to fit within cache lines (false sharing prevention) when partitioning rate limiters per core or client IP."
+      ],
+      "when_to_use": "When building high-throughput API gateways or microservice meshes requiring strict, lock-free rate limiting with minimal latency jitter.",
+      "when_not_to_use": "In low-concurrency or resource-constrained embedded systems where simpler, blocking token bucket implementations suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating bucket state descriptors with CAS?",
+          "answer": "By incorporating a version counter or sequence tag into the atomic state word alongside the token count and timestamp."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection for dynamic rate limiter configurations?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with bounded latency suitable for real-time networking data paths."
+        }
+      ],
+      "related_topics": [
+        "Leaky Bucket Rate Limiter",
+        "Hazard Pointers",
+        "Lock-Free Concurrent Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T01:05:16.244407+00:00",
+      "run_number": 3238
     }
   ]
 }
