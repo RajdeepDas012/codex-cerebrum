@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3301,
-    "last_updated": "2026-10-18T18:25:12.606659+00:00",
-    "total_topics_learned": 3301
+    "total_runs": 3302,
+    "last_updated": "2026-10-18T18:28:21.819424+00:00",
+    "total_topics_learned": 3302
   },
   "entries": [
     {
@@ -157239,6 +157239,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T18:25:12.606604+00:00",
       "run_number": 3301
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and weight-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput percentile estimation and multi-core parallel streaming analytics in real-time latency monitoring platforms and concurrent database metric aggregation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent T-Digest data structure using atomic operations and hazard pointers. It enables extremely accurate high-throughput percentile approximations in multi-threaded streaming analytics pipelines without lock contention.",
+      "key_points": [
+        "Utilizes atomic centroid-merging and weight-compressing CAS primitives for lock-free structural modifications.",
+        "Employs hazard pointers to safely manage memory reclamation of dynamically resized or merged centroids across threads.",
+        "Provides high-accuracy streaming quantile and percentile estimations suitable for tail-latency tracking.",
+        "Achieves scalable multi-core performance by eliminating global locks during concurrent updates and metric aggregation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic centroid updates with hazard pointer protection in a concurrent T-Digest.",
+        "correct": "void add_value(HazardPointerRegistry& registry, std::atomic<CentroidNode*>& root, double val) {\n    HazardPointer& hp = registry.acquire();\n    while (true) {\n        CentroidNode* current = hp.protect(root);\n        CentroidNode* updated = clone_and_insert(current, val);\n        if (root.compare_exchange_weak(current, updated)) {\n            registry.release(hp);\n            break;\n        }\n    }\n}",
+        "wrong": "void add_value(std::atomic<CentroidNode*>& root, double val) {\n    CentroidNode* current = root.load();\n    CentroidNode* updated = clone_and_insert(current, val);\n    root.store(updated); // Missing CAS loop and hazard pointer protection, leading to race conditions and memory corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed centroid nodes with hazard pointers, leading to use-after-free bugs during node compression.",
+        "Using naive compare-and-swap loops that suffer from high contention and starvation under heavy write workloads without exponential backoff."
+      ],
+      "best_practices": [
+        "Batch incoming data locally in thread-local buffers before submitting updates to the shared T-Digest structure to reduce CAS contention.",
+        "Periodically trigger background compression sweeps to merge nearby centroids and maintain bounded memory footprints."
+      ],
+      "when_to_use": "Use when you need precise tail-latency percentile calculations (like p99 or p99.9) across millions of high-throughput concurrent streams without blocking worker threads.",
+      "when_not_to_use": "Avoid when data volumes are small enough to fit into a sorted array, or when exact quantiles over static historical datasets are required instead of approximate streaming digests.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent thread starvation when multiple worker threads simultaneously attempt to merge centroids using CAS primitives?",
+          "answer": "By implementing exponential backoff strategies and local thread-local accumulation buffers that reduce direct atomic contention on the shared structure."
+        },
+        {
+          "question": "Why are hazard pointers preferred over traditional reference counting for lock-free T-Digest memory reclamation?",
+          "answer": "Hazard pointers avoid atomic read-modify-write overhead on every pointer traversal (which degrades cache coherence), requiring atomic writes only when publishing or retiring pointers."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Data Structures",
+        "Streaming Quantile Estimation Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T18:28:21.819407+00:00",
+      "run_number": 3302
     }
   ]
 }
