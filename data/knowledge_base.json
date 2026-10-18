@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3305,
-    "last_updated": "2026-10-18T18:37:50.708377+00:00",
-    "total_topics_learned": 3305
+    "total_runs": 3306,
+    "last_updated": "2026-10-18T18:41:00.055402+00:00",
+    "total_topics_learned": 3306
   },
   "entries": [
     {
@@ -157427,6 +157427,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T18:37:50.708359+00:00",
       "run_number": 3305
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and prefix-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string prefix matching in real-time network packet processing engines and concurrent database indexing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree utilizes atomic Compare-And-Swap (CAS) primitives and hazard pointers to manage dynamic node insertions, child pointer updates, and prefix compressions without traditional mutex locks. This design enables scalable, high-throughput prefix routing lookups and string indexing across multiple CPU cores.",
+      "key_points": [
+        "Employs atomic CAS operations for node creation, child pointer updates, and branch mutations without locking overhead.",
+        "Utilizes hazard pointers to safely track and reclaim memory reclaimed during structural modifications like prefix splitting and merging.",
+        "Implements compressed path matching to collapse single-child chains, minimizing traversal depth during IP lookups.",
+        "Provides linearizable reads and writes, preventing race conditions in high-concurrency packet routing environments."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent node traversal and atomic child pointer swapping in a lock-free radix tree structure",
+        "correct": "import threading\nclass AtomicRadixNode:\n    def __init__(self):\n        self.children = {}\n        self.is_end = False\n        self.lock = threading.Lock()\n    def compare_and_swap_child(self, char, expected_node, new_node):\n        with self.lock:\n            if self.children.get(char) == expected_node:\n                self.children[char] = new_node\n                return True\n            return False",
+        "wrong": "class UnsafeRadixNode:\n    def __init__(self):\n        self.children = {}\n    def insert(self, char, node):\n        # Missing thread synchronization causes lost updates under concurrency\n        self.children[char] = node"
+      },
+      "common_mistakes": [
+        "Failing to safely manage memory reclamation, leading to use-after-free bugs when another thread traverses a node being structurally modified.",
+        "Neglecting edge cases during prefix compression splits, which can orphan concurrent reader threads."
+      ],
+      "best_practices": [
+        "Protect actively traversed nodes using hazard pointers before reading child pointers to prevent premature memory deallocation.",
+        "Keep atomic sections small and isolated to maximize multi-core throughput and minimize CAS retry loops."
+      ],
+      "when_to_use": "Use when building high-performance IP routing tables, network packet inspection engines, or concurrent string-based indexing systems requiring extreme multi-core scalability.",
+      "when_not_to_use": "Avoid in low-concurrency environments or memory-constrained embedded systems where the complexity of hazard pointers and atomic CAS retry loops outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption during concurrent node deletions in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, blocking other threads from freeing those memory locations until all active hazard pointers are cleared."
+        },
+        {
+          "question": "What happens to concurrent reader threads if a writer thread performs a prefix split operation using a CAS loop?",
+          "answer": "Readers retry their traversal if the CAS fails due to a structural modification, ensuring they never observe partially constructed or inconsistent tree states."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-free Bounded SPSC Ring Buffer",
+        "Lock-free Scoped Read-Write Lock"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T18:41:00.055383+00:00",
+      "run_number": 3306
     }
   ]
 }
