@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3232,
-    "last_updated": "2026-10-18T00:46:21.343507+00:00",
-    "total_topics_learned": 3232
+    "total_runs": 3233,
+    "last_updated": "2026-10-18T00:49:30.890602+00:00",
+    "total_topics_learned": 3233
   },
   "entries": [
     {
@@ -153957,6 +153957,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T00:46:21.343466+00:00",
       "run_number": 3232
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-descriptor-CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed range queries and multi-core parallel sorted data manipulation in real-time transactional database systems and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree coordinates multi-core access to balanced multi-way search trees without traditional mutexes, utilizing atomic node-splitting operations, structural descriptors, and hazard pointers. This architecture guarantees high throughput and low latency for concurrent indexed lookups and range scans under heavy multi-threaded contention.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives on structural descriptors to accomplish safe, non-blocking node splits and merges.",
+        "Integrates hazard pointers to safely manage node memory reclamation, preventing use-after-free bugs in concurrent environments without blocking reader threads.",
+        "Maintains multi-way search tree balance dynamically to ensure logarithmic lookup times while permitting high concurrency across distinct tree branches.",
+        "Optimizes throughput for real-time transactional databases and storage engines requiring intensive concurrent range queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the structural descriptor and atomic split logic for a lock-free B-Tree node.",
+        "correct": "#include <atomic>\n#include <vector>\n\ntemplate<typename K, typename V>\nstruct BTreeNode {\n    struct ChildEntry { K key; std::atomic<BTreeNode*> ptr; };\n    std::atomic<bool> is_splitting{false};\n    std::vector<ChildEntry> children;\n    \n    bool try_split(BTreeNode* parent, K split_key) {\n        bool expected = false;\n        return is_splitting.compare_exchange_strong(expected, true);\n    }\n};",
+        "wrong": "template<typename K, typename V>\nstruct BTreeNode {\n    bool is_splitting; // Not atomic, causing race conditions in multi-threaded checks\n    std::vector<std::pair<K, BTreeNode*>> children;\n    \n    bool try_split() {\n        if (!is_splitting) {\n            is_splitting = true; // Non-atomic check-then-act vulnerability\n            return true;\n        }\n        return false;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use atomic operations when reading and updating structural state flags like node split indicators.",
+        "Neglecting hazard pointer protection during traversal, leading to race conditions where a node is freed while another thread reads its pointers.",
+        "Improper handling of intermediate states during structural modifications, causing traversal threads to become lost or fall into infinite loops."
+      ],
+      "best_practices": [
+        "Isolate node structural changes behind multi-word or descriptor-based CAS operations to ensure atomic visibility.",
+        "Retain hazard pointers for all traversed nodes until the thread explicitly unlinks or steps off the active path.",
+        "Design fine-grained back-off or work-stealing mechanisms when contention on hot root or internal nodes spikes."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded storage engines or transactional databases where read-heavy workloads and range scans demand minimal lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide sufficient performance without the immense complexity of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits safely in a lock-free B-Tree without blocking concurrent reader threads?",
+          "answer": "By using structural descriptors and atomic CAS primitives to transition the node into an intermediate state, allowing readers to safely route around or help complete the split operation."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a concurrent B-Tree?",
+          "answer": "Hazard pointers prevent memory from being prematurely reclaimed while other threads hold active pointers to nodes during tree traversal, avoiding use-after-free concurrency bugs."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent B+ Tree Indexing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T00:49:30.890580+00:00",
+      "run_number": 3233
     }
   ]
 }
