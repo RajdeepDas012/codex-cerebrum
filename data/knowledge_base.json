@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3254,
-    "last_updated": "2026-10-18T06:01:52.564025+00:00",
-    "total_topics_learned": 3254
+    "total_runs": 3255,
+    "last_updated": "2026-10-18T06:05:21.816696+00:00",
+    "total_topics_learned": 3255
   },
   "entries": [
     {
@@ -155007,6 +155007,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T06:01:52.564007+00:00",
       "run_number": 3254
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-array-marking and prime-marking-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core parallel sieve computation in real-time cryptographic key generation platforms and concurrent numerical analysis engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Sieve of Eratosthenes utilizing atomic bitwise operations and compare-and-swap (CAS) primitives to safely mark composites across multiple threads. It guarantees high-throughput prime generation without heavy locking overhead, making it ideal for distributed cryptography and parallel math engines.",
+      "key_points": [
+        "Utilizes atomic bit-array-marking to allow multiple threads to concurrently flag composite numbers without race conditions.",
+        "Employs prime-marking-cascading CAS primitives to transition states and propagate multiple elimination updates across threads efficiently.",
+        "Integrates hazard pointer memory reclamation to manage dynamic shared data structures safely in lock-free environments.",
+        "Maximizes multi-core CPU utilization for large-scale prime generation required in cryptographic key creation and number theory research."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit manipulation for concurrent prime sieving.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentSieve {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    ConcurrentSieve(size_t size) : bits((size + 63) / 64, 0) {}\n    bool mark_composite(size_t index) {\n        size_t word = index / 64;\n        uint64_t mask = 1ULL << (index % 64);\n        uint64_t current = bits[word].load(std::memory_order_relaxed);\n        while (!(current & mask)) {\n            if (bits[word].compare_exchange_weak(current, current | mask, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        }\n        return false;\n    }\n};",
+        "wrong": "void mark_composite(std::vector<bool>& sieve, size_t index) {\n    sieve[index] = true; // Non-atomic update causes severe race conditions and corrupted state across threads\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic container writes (like std::vector<bool>) inside a multi-threaded parallel sieve loop, leading to data races.",
+        "Failing to handle memory reclamation correctly when dynamically expanding shared state, causing leaks or use-after-free bugs."
+      ],
+      "best_practices": [
+        "Leverage relaxed memory ordering for atomic loads where synchronization is handled explicitly by acquire-release semantics during CAS operations.",
+        "Partition large sieve ranges into cache-friendly chunks to minimize false sharing and maximize multi-core parallel efficiency."
+      ],
+      "when_to_use": "Use when high-performance, multi-threaded prime number generation is required under strict latency constraints, such as in cryptographic systems.",
+      "when_not_to_use": "Avoid in single-threaded environments or small-range computations where the overhead of atomics and thread coordination outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to mark the same composite number in a concurrent sieve?",
+          "answer": "By using atomic compare-and-swap (CAS) loops on a shared bit-array, ensuring only one thread successfully changes the state from unmarked to marked."
+        },
+        {
+          "question": "Why are standard mutexes suboptimal for high-throughput parallel sieve implementations?",
+          "answer": "Mutexes introduce heavy context-switching overhead and thread contention, whereas lock-free atomic primitives allow continuous concurrent progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Tree",
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T06:05:21.816675+00:00",
+      "run_number": 3255
     }
   ]
 }
