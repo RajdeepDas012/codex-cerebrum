@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3268,
-    "last_updated": "2026-10-18T11:03:30.854063+00:00",
-    "total_topics_learned": 3268
+    "total_runs": 3269,
+    "last_updated": "2026-10-18T11:06:39.966019+00:00",
+    "total_topics_learned": 3269
   },
   "entries": [
     {
@@ -155671,6 +155671,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T11:03:30.854039+00:00",
       "run_number": 3268
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate limiting in real-time API gateway platforms and concurrent cloud microservices infrastructure",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural pattern for building lock-free token bucket rate limiters in high-throughput distributed systems. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it prevents thread contention and memory mismanagement under heavy parallel request loads.",
+      "key_points": [
+        "Utilizes atomic operations to update token counts and timestamps simultaneously without locks",
+        "Employs hazard pointers to safely manage memory reclamation for dynamically allocated bucket states",
+        "Applies mathematical token refilling algorithms bound by strict capacity-capping limits",
+        "Ensures linearizability across multiple CPU cores for distributed API gateway throttling"
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic token consumption logic via simulated CAS semantics",
+        "correct": "import time\n\nclass AtomicTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = capacity\n        self.refill_rate = refill_rate\n        self.tokens = capacity\n        self.last_refill = time.time()\n\n    def consume(self, tokens_requested=1):\n        now = time.time()\n        elapsed = now - self.last_refill\n        new_tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)\n        if new_tokens >= tokens_requested:\n            self.tokens = new_tokens - tokens_requested\n            self.last_refill = now\n            return True\n        return False",
+        "wrong": "import threading\n\nclass UnsafeTokenBucket:\n    def __init__(self, capacity, refill_rate):\n        self.capacity = capacity\n        self.tokens = capacity\n\n    def consume(self):\n        if self.tokens > 0:\n            self.tokens -= 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Using global locks which introduce thread contention bottlenecks in multi-core gateways",
+        "Failing to handle time drift and non-monotonic clock jumps across distributed instances"
+      ],
+      "best_practices": [
+        "Combine timestamp updates with token calculations in a single atomic word if possible to avoid ABA problems",
+        "Use hazard pointers or epoch-based reclamation to prevent use-after-free errors when deleting idle bucket structures"
+      ],
+      "when_to_use": "When building low-latency, high-concurrency API gateways or edge proxies that must drop excess traffic without blocking worker threads.",
+      "when_not_to_use": "In low-throughput services where standard mutex locks are simpler to maintain and performance overhead is negligible.",
+      "interview_questions": [
+        {
+          "question": "How do you avoid race conditions when updating token counts across multiple threads without using mutexes?",
+          "answer": "By using lock-free Compare-And-Swap (CAS) loops that recalculate elapsed time, refill tokens, and attempt to atomically update the bucket state."
+        },
+        {
+          "question": "Why are hazard pointers useful when managing dynamic rate limiter buckets in memory?",
+          "answer": "They provide a safe mechanism for thread-local memory reclamation, ensuring that a bucket struct is not deallocated while another thread is concurrently attempting to read or update it."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leaky Bucket Rate Limiter",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic CAS Primitives in Distributed Systems"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T11:06:39.965997+00:00",
+      "run_number": 3269
     }
   ]
 }
