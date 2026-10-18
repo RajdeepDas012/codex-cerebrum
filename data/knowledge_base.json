@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3284,
-    "last_updated": "2026-10-18T14:46:56.842339+00:00",
-    "total_topics_learned": 3284
+    "total_runs": 3285,
+    "last_updated": "2026-10-18T14:50:06.670780+00:00",
+    "total_topics_learned": 3285
   },
   "entries": [
     {
@@ -156432,6 +156432,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T14:46:56.842310+00:00",
       "run_number": 3284
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) cache using atomic frequency-list-splicing and node-eviction CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction management and multi-core parallel hot-key retention in real-time content delivery networks and concurrent distributed caching services",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and implementation of a high-performance concurrent Least Frequently Used (LFU) cache that eschews traditional coarse-grained locks. By utilizing atomic frequency-list splicing, node-eviction compare-and-swap (CAS) primitives, and hazard pointer memory management, it enables lock-free multi-core scaling for real-time caching tiers and edge networks.",
+      "key_points": [
+        "Employs atomic frequency-list-splicing CAS operations to transition nodes across access-frequency buckets without blocking concurrent readers or writers.",
+        "Utilizes hazard pointers to safely track and reclaim memory for evicted nodes under intense concurrent thread access without memory leaks or premature frees.",
+        "Maintains an approximate or exact minimum frequency pointer using atomic fetch-and-add variants to streamline O(1) amortized eviction processing.",
+        "Prevents race conditions during concurrent hot-key hits and cache-line invalidations via fine-grained state flags embedded in node pointer words."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of wrapping an atomic node pointer acquisition with hazard pointers for lock-free LFU access.",
+        "correct": "template<typename T>\nvoid* LFUCache<T>::safe_read(std::atomic<Node*>& head_node, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = head_node.load(std::memory_order_acquire);\n        hp.protect(ptr);\n    } while (ptr != head_node.load(std::memory_order_relaxed));\n    return ptr;\n}",
+        "wrong": "template<typename T>\nvoid* LFUCache<T>::unsafe_read(std::atomic<Node*>& head_node) {\n    return head_node.load(); // Lacks hazard protection; node could be freed and reused concurrently\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing frequency list pointers, leading to use-after-free bugs when concurrent evictions occur.",
+        "Relying on standard mutexes inside frequency update paths, which destroys throughput under high contention in multi-core distributed caches."
+      ],
+      "best_practices": [
+        "Pair every hazard pointer acquisition with explicit thread-local cleanup routines to prevent memory registration bottlenecks.",
+        "Use memory_order_acquire and memory_order_release semantics explicitly around CAS frequency-bucket transitions to ensure visibility of key-value payloads."
+      ],
+      "when_to_use": "Use this structure when building high-throughput in-memory caching layers or CDN edge nodes where hit rates must favor long-term frequency over recency and thread contention is severe.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with simple workloads where standard lock-based LRU or thread-safe maps incur less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node reclamation safely in a lock-free LFU cache without garbage collection?",
+          "answer": "By using hazard pointers or epoch-based reclamation to ensure a node is only freed after all concurrent threads have finished referencing its memory address."
+        },
+        {
+          "question": "What is the primary challenge when updating frequency lists concurrently in an LFU cache?",
+          "answer": "Maintaining atomic consistency across dual pointers (the previous/next frequency bucket links and the node's frequency counter) to avoid broken lists during concurrent hits and evictions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free LRU Cache",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Hash Maps with CAS Primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T14:50:06.670757+00:00",
+      "run_number": 3285
     }
   ]
 }
