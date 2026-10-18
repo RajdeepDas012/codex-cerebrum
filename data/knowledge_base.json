@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3275,
-    "last_updated": "2026-10-18T11:25:34.186063+00:00",
-    "total_topics_learned": 3275
+    "total_runs": 3276,
+    "last_updated": "2026-10-18T11:29:07.191689+00:00",
+    "total_topics_learned": 3276
   },
   "entries": [
     {
@@ -156006,6 +156006,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T11:25:34.186039+00:00",
       "run_number": 3275
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range-scan indexing and multi-core parallel sequential data access in real-time relational database engines and concurrent storage systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree data structure optimized for high-throughput range scans. By combining atomic node splits, leaf-node linking, and hazard pointers, multiple threads can concurrently traverse and mutate the tree without locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives to manage internal node splits and structural modifications safely.",
+        "Maintains concurrent leaf node linked lists to enable lock-free, high-throughput sequential range scans.",
+        "Employs hazard pointer memory reclamation to securely defer freeing nodes until all concurrent reader and writer threads have unreferenced them.",
+        "Optimizes multi-core parallel data access by avoiding global mutexes or coarse-grained locking on the root and intermediate branches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection for safely reading a concurrent B+ Tree leaf node pointer.",
+        "correct": "HazardPointer hp;\nNode* current = hp.protect(&root_node);\nwhile (current->is_internal()) {\n    current = hp.protect(&current->find_child(key));\n}\n// Safe to access leaf node data via 'current'",
+        "wrong": "Node* current = root_node.load();\nwhile (current->is_internal()) {\n    current = current->find_child(key);\n}\n// Danger: Another thread may delete and free 'current' here before it is accessed!"
+      },
+      "common_mistakes": [
+        "Forgetting to protect pointer acquisitions with hazard pointers, leading to use-after-free race conditions during concurrent node splits.",
+        "Failing to ensure atomicity when updating the leaf-node sibling pointers during a node split, causing scanners to miss data records."
+      ],
+      "best_practices": [
+        "Always publish thread-local hazard pointers before dereferencing any shared node pointers in concurrent structures.",
+        "Batch retired node deletions using a threshold-based deferred reclamation queue to minimize atomic overhead."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, storage engines, or indexing layers that require heavy concurrent writes and sequential range scans.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or systems with low concurrency where traditional mutex-backed B+ Trees offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free B+ Tree?",
+          "answer": "Hazard pointers allow threads to explicitly declare which shared nodes they are currently accessing, preventing the memory reclamation subsystem from freeing those nodes until all active readers have unreferenced them."
+        },
+        {
+          "question": "Why are leaf-linking primitives critical for concurrent B+ Tree range scans?",
+          "answer": "Leaf-linking primitives maintain atomic forward and backward pointers between adjacent leaf nodes, allowing scan operations to traverse sorted keys sequentially without needing to re-traverse from the root."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Tree implementation",
+        "Hazard pointer memory management",
+        "Lock-free Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T11:29:07.191668+00:00",
+      "run_number": 3276
     }
   ]
 }
