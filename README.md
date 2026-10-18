@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3321** |
-| Last Updated | `2026-10-18T21:11:58.860548+00:00` |
-| Dataset Size | `3321 entries` |
+| Total Topics Learned | **3322** |
+| Last Updated | `2026-10-18T22:57:45.451953+00:00` |
+| Dataset Size | `3322 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2143 |
+| data-structures | 2144 |
 | trading-strategies | 228 |
 | algorithms | 200 |
 | crypto-blockchain | 155 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list-splicing and hash-index-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cache hit-rate optimization and multi-core parallel item eviction in real-time in-memory databases and concurrent caching middleware systems`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and node-eviction CAS primitives alongside hazard pointer memory reclamation for high-throughput cache hit-rate optimization and multi-core parallel item eviction in real-time in-memory databases and concurrent caching middleware systems`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class querying and multi-core parallel connected components analysis in real-time network routing platforms and concurrent graph processing engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and bucket-colliding CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter streaming analytics and multi-core parallel frequency estimation in real-time network traffic monitoring platforms and concurrent database stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Bounded Channel using atomic producer-consumer-pointer-advancing and slot-state-transition CAS primitives alongside hazard pointer memory reclamation for high-throughput asynchronous communication and multi-core parallel CSP-style message passing in real-time concurrency runtimes and concurrent reactive programming engines`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookup and multi-core parallel self-adjusting data manipulation in real-time in-memory caching systems and concurrent database indexing engines`
 
 <!-- STATS_END -->
 

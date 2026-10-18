@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3321,
-    "last_updated": "2026-10-18T21:11:58.860548+00:00",
-    "total_topics_learned": 3321
+    "total_runs": 3322,
+    "last_updated": "2026-10-18T22:57:45.451953+00:00",
+    "total_topics_learned": 3322
   },
   "entries": [
     {
@@ -158192,6 +158192,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T21:11:58.860530+00:00",
       "run_number": 3321
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list-splicing and hash-index-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cache hit-rate optimization and multi-core parallel item eviction in real-time in-memory databases and concurrent caching middleware systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent Least Recently Used (LRU) cache utilizing lock-free hash mapping and atomic doubly-linked list adjustments via Compare-And-Swap (CAS) operations. It integrates hazard pointers to guarantee safe memory reclamation across multi-core systems without traditional mutex overhead.",
+      "key_points": [
+        "Combines lock-free hash maps for $O(1)$ lookups with atomic doubly-linked list updates for recency ordering.",
+        "Employs CAS primitives to safely splice nodes into the LRU order list under high contention.",
+        "Uses hazard pointers to track thread-active nodes, preventing premature deallocation during concurrent eviction and access races.",
+        "Maximizes throughput in high-frequency in-memory caching systems by eliminating blocking mutex locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node pointer management using hazard pointers during an LRU cache lookup operation.",
+        "correct": "Node* hazard_ptr = acquire_hazard_pointer(&global_hp_list, target_node);\nif (target_node->is_deleted.load()) { release_hazard_pointer(hazard_ptr); return nullptr; }\n// Safe to access target_node data\nrelease_hazard_pointer(hazard_ptr);",
+        "wrong": "Node* node = hash_map.find(key);\n// Thread interruption here could lead to use-after-free if another thread evicts and frees 'node'\nprocess(node->value);"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers in the concurrent hash map or doubly-linked list, causing use-after-free bugs.",
+        "Attempting to update both the hash index and the doubly-linked list pointers in a single non-atomic step, resulting in structural corruption."
+      ],
+      "best_practices": [
+        "Always register threads and publish hazard pointers prior to reading shared node addresses.",
+        "Design memory reclamation retirement lists to batch free operations and reduce atomic overhead.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caching layers, database indexing systems, or middleware that experiences massive parallel read/write contention and demands strict recency-based item eviction.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-concurrency settings where the algorithmic overhead of hazard pointers and CAS retry loops outweighs the benefits of lock-free scaling.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating pointers in a lock-free doubly-linked LRU list?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives so that pointer modifications detect if another thread has altered the node state in the interim."
+        },
+        {
+          "question": "Why are standard reference counters insufficient for a lock-free cache without hazard pointers?",
+          "answer": "Reference counting requires atomic increments on the pointer itself before reading, which creates a synchronization bottleneck and read-modify-write hazard on shared memory locations, whereas hazard pointers allow thread-local registration without modifying shared cache lines."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free hash tables",
+        "concurrent data structures",
+        "memory reclamation algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T22:57:45.451905+00:00",
+      "run_number": 3322
     }
   ]
 }
