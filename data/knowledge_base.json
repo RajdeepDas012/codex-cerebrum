@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3251,
-    "last_updated": "2026-10-18T05:51:32.302049+00:00",
-    "total_topics_learned": 3251
+    "total_runs": 3252,
+    "last_updated": "2026-10-18T05:55:11.698028+00:00",
+    "total_topics_learned": 3252
   },
   "entries": [
     {
@@ -154866,6 +154866,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T05:51:32.302031+00:00",
       "run_number": 3251
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent SimHash index using atomic fingerprint-distance-calculating and Hamming-weight-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput near-duplicate document detection and multi-core parallel web crawling deduplication in real-time search engine ingestion pipelines and concurrent document storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free SimHash index optimized for near-duplicate document detection under high thread contention. By employing atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and atomic fingerprint distance evaluations without locking overhead.",
+      "key_points": [
+        "Utilizes atomic fingerprint-distance-calculating and Hamming-weight-matching CAS primitives for lock-free updates.",
+        "Employs hazard pointer memory reclamation to prevent premature freeing of shared nodes accessed by concurrent threads.",
+        "Enables high-throughput near-duplicate document detection for real-time search engine ingestion pipelines.",
+        "Maximizes multi-core parallel efficiency during web crawling deduplication and document storage operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic updates and hazard pointer registration for a lock-free SimHash index bucket.",
+        "correct": "bool update_simhash_bucket(std::atomic<Node*>& head, uint64_t new_fingerprint, HazardPointerRegistry& hp_reg) {\n    Node* current;\n    while (true) {\n        current = head.load();\n        hp_reg.protect(current);\n        if (head.load() != current) continue;\n        Node* new_node = new Node(new_fingerprint, current);\n        if (head.compare_exchange_weak(current, new_node)) {\n            hp_reg.release();\n            return true;\n        }\n    }\n}",
+        "wrong": "Node* current = head.load();\nif (hamming_distance(current->fingerprint, new_fp) < threshold) {\n    current->next = new Node(new_fp); // Missing CAS, race condition and unsafe mutation\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to publish hazard pointers before reading shared memory pointers, leading to use-after-free bugs.",
+        "Using blocking synchronization primitives (like mutexes) inside performance-critical ingestion loops."
+      ],
+      "best_practices": [
+        "Always validate that the protected node pointer hasn't changed after acquiring a hazard pointer.",
+        "Batch memory reclamation requests to reduce overhead on the hazard pointer management subsystem."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput web crawlers or search engines requiring real-time near-duplicate text detection across multi-core systems.",
+      "when_not_to_use": "Avoid this pattern for low-concurrency environments or strict exact-match lookup scenarios where simpler hash maps or blocking structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free index?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are reading, preventing other threads from recycling or freeing those memory addresses until the read reference is dropped."
+        },
+        {
+          "question": "Why is Hamming distance matching crucial when indexing SimHash values in parallel?",
+          "answer": "SimHash maps similar documents to close bitwise representations; Hamming distance measures this bit-level difference, allowing threads to efficiently identify near-duplicates within a specified threshold."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent Cuckoo Filters",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T05:55:11.698009+00:00",
+      "run_number": 3252
     }
   ]
 }
