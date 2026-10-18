@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3285,
-    "last_updated": "2026-10-18T14:50:06.670780+00:00",
-    "total_topics_learned": 3285
+    "total_runs": 3286,
+    "last_updated": "2026-10-18T14:53:16.091359+00:00",
+    "total_topics_learned": 3286
   },
   "entries": [
     {
@@ -156479,6 +156479,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T14:50:06.670757+00:00",
       "run_number": 3285
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU cache using atomic doubly-linked-list-splicing and hash-map-routing CAS primitives alongside hazard pointer memory reclamation for high-throughput cache hit management and multi-core parallel hot-data retention in real-time in-memory databases and concurrent application caching layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Least Recently Used (LRU) cache combining hazard pointers for safe memory reclamation with atomic compare-and-swap (CAS) primitives. It enables multiple concurrent threads to read, insert, and update cache items without global locks, maximizing throughput in multi-core in-memory systems.",
+      "key_points": [
+        "Utilizes atomic doubly-linked-list splicing to reorder elements on cache hits without blocking other threads.",
+        "Employs lock-free hash map routing to map keys to cache nodes efficiently across multiple cores.",
+        "Integrates hazard pointers to safely defer memory reclamation of evicted nodes until active readers finish accessing them.",
+        "Prevents race conditions during simultaneous cache eviction and insertion using fine-grained CAS operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual thread-safe hazard pointer registration pattern during node access.",
+        "correct": "void* acquire_node(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load();\n        hp.protect(ptr);\n    } while (node_ptr.load() != ptr);\n    return ptr;\n}",
+        "wrong": "void* acquire_node(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(); // Unprotected read leads to use-after-free if another thread evicts it\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers, leading to use-after-free bugs.",
+        "Attempting to update both the hash map and the LRU list in a single non-atomic step, causing data inconsistency."
+      ],
+      "best_practices": [
+        "Batch hazard pointer retirements to amortize the cost of memory reclamation sweeps.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-throughput, low-latency in-memory caching layers or databases that experience extreme read/write contention across many CPU cores.",
+      "when_not_to_use": "Avoid when target hardware lacks robust multi-word atomic instructions or when simpler lock-based caches satisfy performance requirements with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating pointers in a lock-free LRU cache?",
+          "answer": "By using tagged pointers (version counts combined with memory addresses) or hazard pointers to ensure state changes are detected."
+        },
+        {
+          "question": "Why are standard mutexes suboptimal for high-throughput LRU caches under heavy multi-core contention?",
+          "answer": "Mutexes force thread serialization on cache hits (which update the LRU order), creating a major bottleneck compared to lock-free atomic splicing."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Concurrent Hash Maps",
+        "Memory Reclamation Strategies"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T14:53:16.091334+00:00",
+      "run_number": 3286
     }
   ]
 }
