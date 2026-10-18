@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3243,
-    "last_updated": "2026-10-18T01:21:00.306528+00:00",
-    "total_topics_learned": 3243
+    "total_runs": 3244,
+    "last_updated": "2026-10-18T01:24:09.321474+00:00",
+    "total_topics_learned": 3244
   },
   "entries": [
     {
@@ -154485,6 +154485,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-18T01:21:00.306483+00:00",
       "run_number": 3243
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and min-frequency-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction policy execution and multi-core parallel hot-key management in real-time distributed caching infrastructure and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent LFU cache uses atomic Compare-And-Swap (CAS) primitives to manage frequency-based linked lists and track the minimum frequency without global locks. It relies on hazard pointers to safely reclaim memory during concurrent evictions, enabling high-throughput hot-key management in distributed storage systems.",
+      "key_points": [
+        "Employs atomic frequency-list-splicing CAS primitives to transition nodes between frequency lists without race conditions.",
+        "Tracks the minimum frequency variable atomically to ensure $O(1)$ eviction candidate identification under high contention.",
+        "Utilizes hazard pointers to prevent premature memory deallocation of nodes being concurrently accessed or evicted by other threads.",
+        "Achieves high throughput and minimizes lock contention in multi-core environments for real-time key-value stores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an atomic frequency node update using simulated CAS operations",
+        "correct": "import threading\n\nclass AtomicLFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = 1\n        self.lock_free_state = threading.Lock() # Conceptual representation of CAS state\n\n    def cas_increment_frequency(self, expected_freq, new_freq):\n        with self.lock_free_state:\n            if self.freq == expected_freq:\n                self.freq = new_freq\n                return True\n            return False",
+        "wrong": "class UnsafeLFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = 1\n    def increment(self):\n        self.freq += 1 # Non-atomic increment vulnerable to race conditions"
+      },
+      "common_mistakes": [
+        "Updating the node frequency and the global minimum frequency counter in separate non-atomic steps, leading to inconsistent eviction states.",
+        "Failing to protect nodes with hazard pointers during eviction, which causes use-after-free bugs when concurrent reader threads access the evicted key.",
+        "Using heavy mutual exclusion locks inside the cache hot path instead of fine-grained atomic CAS primitives."
+      ],
+      "best_practices": [
+        "Design frequency buckets as lock-free doubly linked lists to allow cheap O(1) splices when frequencies change.",
+        "Batch or lazily update the minimum frequency tracker only when a frequency-1 list becomes empty during eviction.",
+        "Integrate a robust hazard pointer or epoch-based memory reclamation scheme to handle concurrent node destruction safely."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed caching systems and in-memory key-value stores where hit ratios must favor long-term popular items and thread contention is severe.",
+      "when_not_to_use": "Avoid when access patterns shift rapidly and recency matters more than frequency (prefer an LRU cache), or when memory footprint overhead of atomic structures is prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain an accurate minimum frequency pointer in a lock-free LFU cache without global locking?",
+          "answer": "By using atomic CAS operations to update the min-frequency indicator only when the last node of the current minimum frequency bucket is removed or when a new node is inserted with a frequency lower than the current minimum."
+        },
+        {
+          "question": "Why are hazard pointers required in a lock-free concurrent LFU cache during eviction?",
+          "answer": "Hazard pointers ensure that a thread reading or updating a cache node cannot have its memory reclaimed or freed by an eviction thread executing a CAS-based removal until the reader safely releases its hazard pointer protection."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent LRU Cache",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-18T01:24:09.321455+00:00",
+      "run_number": 3244
     }
   ]
 }
