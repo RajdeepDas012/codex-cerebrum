@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3316,
-    "last_updated": "2026-10-18T20:56:11.674802+00:00",
-    "total_topics_learned": 3316
+    "total_runs": 3317,
+    "last_updated": "2026-10-18T20:59:20.822931+00:00",
+    "total_topics_learned": 3317
   },
   "entries": [
     {
@@ -157955,6 +157955,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T20:56:11.674784+00:00",
       "run_number": 3316
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookup and multi-core parallel self-adjusting data manipulation in real-time in-memory caching systems and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Splay Tree that utilizes atomic root-rotations and self-balancing node-splicing CAS primitives. It ensures safe memory reclamation via hazard pointers, enabling high-throughput self-adjusting data access in multi-core environments.",
+      "key_points": [
+        "Uses atomic Compare-And-Swap (CAS) primitives for thread-safe tree modifications.",
+        "Implements hazard pointers to securely manage memory reclamation without locking.",
+        "Performs self-adjusting rotations (zig, zag, zig-zig) concurrently to move frequently accessed nodes closer to the root.",
+        "Optimized for high-throughput in-memory caching systems and real-time database indexes with skewed access patterns."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates during a lock-free tree rotation step.",
+        "correct": "bool rotate_left(std::atomic<Node*>& root, Node* parent, Node* child) {\n    Node* temp = child->right.load();\n    if (child->right.compare_exchange_strong(temp, parent)) {\n        parent->left.store(temp);\n        return true;\n    }\n    return false;\n}",
+        "wrong": "Node* rotate_left(Node* parent) {\n    // Missing atomics and CAS loops, causing race conditions in multi-threaded access\n    Node* child = parent->right;\n    parent->right = child->left;\n    child->left = parent;\n    return child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to prevent ABA problems during complex multi-node rotations.",
+        "Neglecting proper hazard pointer registration before traversing nodes, leading to use-after-free vulnerabilities."
+      ],
+      "best_practices": [
+        "Wrap multi-step pointer adjustments in atomic CAS retry loops.",
+        "Retire nodes safely using deferred memory reclamation techniques like hazard pointers."
+      ],
+      "when_to_use": "When building real-time in-memory caches or database indexing layers with highly skewed workloads where recently accessed items are likely to be accessed again.",
+      "when_not_to_use": "When workload access patterns are uniformly random, as splay operations introduce unnecessary overhead without locality benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free Splay Tree where nodes are frequently detached and reattached during rotations?",
+          "answer": "By employing hazard pointers to protect nodes currently being traversed or modified by a thread, deferring actual deallocation until no threads reference them."
+        },
+        {
+          "question": "Why is implementing a lock-free splay tree significantly more complex than a lock-free stack?",
+          "answer": "Because splay trees require coordinated multi-node updates (rotations) across different levels of the tree structure, which cannot be atomically changed with a single CAS instruction."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Segment Tree",
+        "Concurrent Hash Map",
+        "Hazard Pointers and Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T20:59:20.822912+00:00",
+      "run_number": 3317
     }
   ]
 }
