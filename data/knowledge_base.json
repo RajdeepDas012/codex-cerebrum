@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3292,
-    "last_updated": "2026-10-18T17:56:04.926735+00:00",
-    "total_topics_learned": 3292
+    "total_runs": 3293,
+    "last_updated": "2026-10-18T17:59:15.429292+00:00",
+    "total_topics_learned": 3293
   },
   "entries": [
     {
@@ -156809,6 +156809,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T17:56:04.926713+00:00",
       "run_number": 3292
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bitset-marking and chunk-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput prime number generation and multi-core parallel number-theoretic computation in real-time cryptographic key generation platforms and concurrent mathematical modeling engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Sieve of Eratosthenes that coordinates multiple threads to mark composite numbers in a shared bitset using atomic Compare-And-Swap operations. By leveraging chunk allocation and hazard pointers, the algorithm avoids global locks and memory reclamation hazards, achieving massive speedups for prime number generation in distributed cryptographic systems.",
+      "key_points": [
+        "Utilizes atomic bitset operations (CAS on word boundaries) to allow multiple worker threads to simultaneously cross out multiples of discovered primes without race conditions.",
+        "Implements dynamic chunk allocation where threads claim unsegmented ranges of numbers atomically, balancing workload across multi-core processors.",
+        "Employs hazard pointer memory reclamation to safely manage dynamically allocated chunks or dynamically resizing bitsets without stop-the-world garbage collection or blocking locks.",
+        "Optimizes prime sieving loops by skipping even numbers and pre-calculating thread-local stride offsets to minimize memory contention on shared cache lines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic chunk acquisition and bitset marking using CAS primitives for concurrent prime generation.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentSieve {\n    std::atomic<uint64_t>* bitset;\n    std::atomic<size_t> next_chunk;\n    size_t max_limit;\n    size_t chunk_size;\n\npublic:\n    void mark_composite(size_t index) {\n        size_t word_idx = index / 64;\n        size_t bit_idx = index % 64;\n        uint64_t mask = (1ULL << bit_idx);\n        uint64_t old_val = bitset[word_idx].load(std::memory_order_relaxed);\n        while (!(old_val & mask) && \n              !bitset[word_idx].compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {\n            // Retries via CAS until successfully marked\n        }\n    }\n};",
+        "wrong": "void mark_composite_wrong(size_t index) {\n    // Mistake: Non-atomic read-modify-write introduces severe race conditions on shared bits\n    size_t word_idx = index / 64;\n    bitset[word_idx] |= (1ULL << (index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operations on shared words, leading to lost updates when multiple threads mark different composites inside the same 64-bit word.",
+        "Failing to align chunk sizes to CPU cache line boundaries, resulting in false sharing and degraded multi-core throughput.",
+        "Neglecting memory reclamation safety for dynamically grown bitsets, which can cause use-after-free bugs when worker threads access deallocated memory blocks."
+      ],
+      "best_practices": [
+        "Pad shared atomic counters and chunk markers to cache line sizes (typically 64 bytes) to eliminate false sharing between cores.",
+        "Use relaxed memory ordering for load-heavy checks where strict synchronization is unnecessary, reserving acquire-release semantics strictly for CAS synchronization points.",
+        "Integrate hazard pointers or epoch-based reclamation specifically when handling dynamic memory expansions of the prime bitset."
+      ],
+      "when_to_use": "Use when you need extreme-throughput prime generation or number-theoretic screening across multiple CPU cores for cryptographic key generation or real-time mathematical computations.",
+      "when_not_to_use": "Avoid for small maximum limits where single-threaded sequential sieving overhead outpaces multi-core thread coordination costs.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent multiple threads from writing to the exact same bit in a shared bitset concurrently without using a mutex?",
+          "answer": "By using atomic CAS (Compare-And-Swap) loops (`compare_exchange_weak`) on the underlying word (e.g., a 64-bit integer) containing that bit, ensuring only one thread successfully changes the state if another thread modifies it simultaneously."
+        },
+        {
+          "question": "What is false sharing in the context of a concurrent bitset, and how can it be mitigated?",
+          "answer": "False sharing occurs when independent threads modify different bits that happen to reside within the same CPU cache line, forcing unnecessary cache invalidations. It can be mitigated by chunking ranges so threads work on distinct memory regions or padding data structures."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bitset Design",
+        "Hazard Pointer Memory Management",
+        "Cache-Conscious Parallel Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T17:59:15.429273+00:00",
+      "run_number": 3293
     }
   ]
 }
