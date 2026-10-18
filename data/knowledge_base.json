@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3293,
-    "last_updated": "2026-10-18T17:59:15.429292+00:00",
-    "total_topics_learned": 3293
+    "total_runs": 3294,
+    "last_updated": "2026-10-18T18:02:24.775940+00:00",
+    "total_topics_learned": 3294
   },
   "entries": [
     {
@@ -156858,6 +156858,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-18T17:59:15.429273+00:00",
       "run_number": 3293
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted data manipulation in real-time in-memory databases and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) operations to manage forward pointers and multi-level node splicing without locks, achieving high-throughput ordered data access. Combined with hazard pointers, it ensures safe memory reclamation under intense multi-core contention.",
+      "key_points": [
+        "Leverages multi-level probabilistic balancing to achieve O(log n) expected time complexity for search, insertion, and deletion operations.",
+        "Employs atomic forward-pointer-linking and level-splicing CAS primitives to enable lock-free multi-threaded updates.",
+        "Utilizes hazard pointers to securely track and defer memory deallocation of deleted nodes, preventing race conditions and use-after-free bugs.",
+        "Ensures linearizability across concurrent insertions and deletions by carefully ordering pointer modifications and mark flags."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS and hazard pointers for safe memory reclamation.",
+        "correct": "bool insert(int key, int val) {\n    Node* preds[MAX_LEVEL];\n    Node* succs[MAX_LEVEL];\n    while (true) {\n        if (find(key, preds, succs)) return false;\n        Node* newNode = new Node(key, val, randomLevel());\n        // Link bottom-most level using CAS\n        if (preds[0]->next[0].compare_exchange_weak(succs[0], newNode)) {\n            // Splice remaining levels...\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(int key, int val) {\n    // Mutex lock missing or incorrect pointer updates without hazard tracking\n    mutex.lock();\n    nodes.add(key, val);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark deleted nodes logically before unlinking them physically, leading to race conditions with concurrent insertions.",
+        "Neglecting proper memory reclamation strategies like hazard pointers, resulting in memory leaks or premature deallocation of active nodes."
+      ],
+      "best_practices": [
+        "Always validate predecessor and successor pointers using atomic snapshots before executing CAS insertions or deletions.",
+        "Integrate a robust hazard pointer framework to safely manage retired node memory under heavy concurrency."
+      ],
+      "when_to_use": "Ideal for high-throughput, latency-sensitive in-memory databases and key-value stores requiring concurrent ordered range queries and frequent multi-core updates.",
+      "when_not_to_use": "Avoid in low-memory environments where the overhead of multi-level forward pointers and hazard pointer tracking outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing CAS operations on skip list forward pointers?",
+          "answer": "By embedding logical deletion mark bits directly into pointer references or utilizing hazard pointers and version-stamped node pointers."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free skip lists?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the pause times or memory overhead typically associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent hash tables",
+        "hazard pointer memory management",
+        "lock-free priority queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-18T18:02:24.775920+00:00",
+      "run_number": 3294
     }
   ]
 }
