@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3390,
-    "last_updated": "2026-10-19T21:01:48.343200+00:00",
-    "total_topics_learned": 3390
+    "total_runs": 3391,
+    "last_updated": "2026-10-19T21:06:20.072989+00:00",
+    "total_topics_learned": 3391
   },
   "entries": [
     {
@@ -161469,6 +161469,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T21:01:48.343178+00:00",
       "run_number": 3390
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic head-tail-advancing and wrap-around-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer-multi-consumer stream processing and multi-core parallel message passing in real-time trading systems and concurrent inter-thread communication pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent ring buffer utilizes atomic head-tail-advancing and wrap-around-masking CAS primitives to manage circular array indices without locks. Combined with hazard pointers, it ensures safe memory reclamation for high-throughput multi-producer or single-producer multi-consumer message passing.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely advance read and write pointers across threads without locking.",
+        "Employs wrap-around-masking (often using power-of-two buffer sizes) to efficiently map unbounded sequence numbers to array indices.",
+        "Integrates hazard pointer memory reclamation to prevent premature deallocation of dynamic messages being read concurrently.",
+        "Delivers ultra-low latency and high throughput critical for real-time trading systems and inter-thread communication."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head-tail advancement using compare-and-swap for lock-free ring buffer slot claiming.",
+        "correct": "bool claim_slot(std::atomic<size_t>& tail, size_t mask, size_t& claimed_index) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (!tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed));\n    claimed_index = current_tail & mask;\n    return true;\n}",
+        "wrong": "size_t claim_slot(size_t& tail, size_t mask) {\n    size_t index = tail;\n    tail++;\n    return index & mask;\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic increments for head and tail pointers, leading to race conditions and corrupted buffer states.",
+        "Failing to use appropriate memory ordering (acquire-release semantics), causing threads to read stale slot contents."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail counters to separate cache lines and avoid false sharing between producer and consumer threads.",
+        "Use power-of-two buffer sizing to replace expensive modulo arithmetic with fast bitwise-AND masking."
+      ],
+      "when_to_use": "Use when you require ultra-low-latency, bounded inter-thread message passing or stream processing where blocking synchronization is unacceptable.",
+      "when_not_to_use": "Avoid when the buffer size cannot be predetermined or when unbounded queue growth is required.",
+      "interview_questions": [
+        {
+          "question": "How do you avoid false sharing between producer and consumer threads updating the ring buffer pointers?",
+          "answer": "By aligning atomic head and tail pointers to distinct CPU cache line boundaries (typically 64 bytes) using alignment directives."
+        },
+        {
+          "question": "Why is power-of-two sizing preferred for ring buffer implementations?",
+          "answer": "It allows the wrap-around logic to use a simple bitwise-AND mask (index & (size - 1)) instead of a costly modulo division operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Leaky Bucket rate limiter",
+        "Hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-19T21:06:20.072968+00:00",
+      "run_number": 3391
     }
   ]
 }
