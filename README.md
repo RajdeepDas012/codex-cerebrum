@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3340** |
-| Last Updated | `2026-10-19T01:09:54.252347+00:00` |
-| Dataset Size | `3340 entries` |
+| Total Topics Learned | **3341** |
+| Last Updated | `2026-10-19T01:13:06.124243+00:00` |
+| Dataset Size | `3341 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2158 |
+| data-structures | 2159 |
 | trading-strategies | 228 |
 | algorithms | 202 |
 | crypto-blockchain | 155 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and tree-node-navigating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency querying and multi-core parallel point update operations in real-time streaming analytics engines and concurrent database aggregation layers`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-based indexing and multi-core parallel block searching in real-time storage engines and concurrent database systems`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-splitting and sibling-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range queries and multi-core parallel sorted index maintenance in real-time in-memory databases and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic sequence-wrapping and head-tail-slot-reservation CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core parallel event logging in real-time observability platforms and concurrent telemetry aggregation pipelines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching in real-time software-defined networking switches and concurrent cloud infrastructure controllers`
-- `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time big data analytics pipelines and concurrent stream processing engines`
 
 <!-- STATS_END -->
 
