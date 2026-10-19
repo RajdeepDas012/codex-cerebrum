@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3337,
-    "last_updated": "2026-10-19T01:00:24.272811+00:00",
-    "total_topics_learned": 3337
+    "total_runs": 3338,
+    "last_updated": "2026-10-19T01:03:34.281857+00:00",
+    "total_topics_learned": 3338
   },
   "entries": [
     {
@@ -158954,6 +158954,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-19T01:00:24.272790+00:00",
       "run_number": 3337
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic sequence-wrapping and head-tail-slot-reservation CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core parallel event logging in real-time observability platforms and concurrent telemetry aggregation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent ring buffer uses atomic compare-and-swap (CAS) operations on head and tail sequence indices to coordinate multi-producer and multi-consumer slot reservations without locks. It is essential for low-latency inter-thread messaging, telemetry streaming, and high-throughput event logging where thread suspension overhead must be eliminated.",
+      "key_points": [
+        "Utilizes atomic sequence wrapping to cycle through fixed-size buffer arrays efficiently without dynamic memory allocation bottlenecks.",
+        "Employs head-tail slot reservation CAS primitives to safely allow multiple producer and consumer threads to claim buffer slots concurrently.",
+        "Integrates hazard pointer memory reclamation or sequence state flags to prevent race conditions during concurrent data reads and writes.",
+        "Maximizes cache locality and minimizes contention compared to standard mutex-protected queues, achieving predictable microsecond-level latency."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic slot reservation and sequence wrapping in a lock-free ring buffer.",
+        "correct": "import threading\nimport time\n\nclass LockFreeRingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.head = 0\n        self.tail = 0\n        self.lock = threading.Lock() # Conceptual stand-in for atomic CAS in managed runtimes\n\n    def push(self, item):\n        while True:\n            t = self.tail\n            h = self.head\n            if t - h >= self.capacity:\n                return False # Buffer full\n            if self._cas_tail(t, t + 1):\n                self.buffer[t % self.capacity] = item\n                return True\n\n    def _cas_tail(self, expected, desired):\n        with self.lock:\n            if self.tail == expected:\n                self.tail = desired\n                return True\n            return False",
+        "wrong": "class UnsafeRingBuffer:\n    def __init__(self, capacity):\n        self.buffer = [None] * capacity\n        self.tail = 0\n    def push(self, item):\n        self.buffer[self.tail % len(self.buffer)] = item\n        self.tail += 1"
+      },
+      "common_mistakes": [
+        "Failing to handle buffer wrap-around correctly, leading to out-of-bounds errors or data corruption.",
+        "Using weak memory ordering where sequentially consistent or acquire-release semantics are strictly required, resulting in stale data visibility."
+      ],
+      "best_practices": [
+        "Align buffer indices and shared atomic variables to CPU cache line boundaries (e.g., 64 bytes) to eliminate false sharing between threads.",
+        "Pre-allocate all internal node storage and buffer slots during initialization to completely avoid allocation overhead during critical execution paths."
+      ],
+      "when_to_use": "Use when building high-frequency telemetry ingestion pipelines, inter-thread event streaming engines, or real-time trading systems requiring deterministic bounded latency.",
+      "when_not_to_use": "Avoid when data stream volume is low and standard blocking queues or language-provided channels offer easier maintenance with negligible performance impact.",
+      "interview_questions": [
+        {
+          "question": "How do you handle a full ring buffer in a lock-free producer scenario without blocking the calling thread?",
+          "answer": "The producer can either return a failure status immediately (drop or retry later), implement backpressure by yielding the thread, or push the data to an overflow fallback structure."
+        },
+        {
+          "question": "What causes false sharing in a concurrent ring buffer, and how is it mitigated?",
+          "answer": "False sharing occurs when separate threads modify independent variables (like head and tail pointers) that reside on the same CPU cache line. It is mitigated by padding variables to occupy distinct 64-byte cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free queues",
+        "Hazard pointers",
+        "Memory barriers and ordering"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-19T01:03:34.281836+00:00",
+      "run_number": 3338
     }
   ]
 }
