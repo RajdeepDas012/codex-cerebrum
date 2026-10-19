@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3338** |
-| Last Updated | `2026-10-19T01:03:34.281857+00:00` |
-| Dataset Size | `3338 entries` |
+| Total Topics Learned | **3339** |
+| Last Updated | `2026-10-19T01:06:44.295323+00:00` |
+| Dataset Size | `3339 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2156 |
+| data-structures | 2157 |
 | trading-strategies | 228 |
 | algorithms | 202 |
 | crypto-blockchain | 155 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-splitting and sibling-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range queries and multi-core parallel sorted index maintenance in real-time in-memory databases and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Ring Buffer using atomic sequence-wrapping and head-tail-slot-reservation CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread telemetry streaming and multi-core parallel event logging in real-time observability platforms and concurrent telemetry aggregation pipelines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching in real-time software-defined networking switches and concurrent cloud infrastructure controllers`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time big data analytics pipelines and concurrent stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocating and child-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput dictionary lookups and multi-core parallel autocomplete suggestion engines in real-time search-as-you-type systems and concurrent text indexing platforms`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-updating and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent location-based services engines`
 
 <!-- STATS_END -->
 
