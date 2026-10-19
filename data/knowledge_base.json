@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3358,
-    "last_updated": "2026-10-19T06:24:10.579696+00:00",
-    "total_topics_learned": 3358
+    "total_runs": 3359,
+    "last_updated": "2026-10-19T06:27:22.363709+00:00",
+    "total_topics_learned": 3359
   },
   "entries": [
     {
@@ -159952,6 +159952,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T06:24:10.579678+00:00",
       "run_number": 3358
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Deferrable Timer Wheel using atomic timer-slot-advancing and cascading-bucket-rescheduling CAS primitives alongside hazard pointer memory reclamation for high-throughput delayed task scheduling and multi-core parallel timeout tracking in real-time network protocol stacks and concurrent asynchronous I/O runtimes",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent timer wheel that utilizes atomic compare-and-swap (CAS) primitives for slot advancement and bucket cascading, paired with hazard pointers to safely manage dynamic memory. This architecture eliminates lock contention in high-performance network stacks and asynchronous runtimes handling millions of simultaneous timeout registrations.",
+      "key_points": [
+        "Employs atomic timer-slot-advancing operations to allow multiple threads to progress the tick clock without mutual exclusion.",
+        "Uses cascading-bucket-rescheduling to dynamically redistribute tasks across hierarchical wheel levels when coarser time slots expire.",
+        "Integrates hazard pointer memory reclamation to securely clean up expired timer nodes without triggering use-after-free bugs.",
+        "Maximizes throughput in asynchronous I/O engines by replacing traditional heavy mutex-protected min-heaps with O(1) slot indexing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic slot advancement and bucket CAS updates for multi-threaded timer node insertion.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct TimerNode {\n    uint64_t expire_tick;\n    std::atomic<TimerNode*> next;\n};\n\nclass LockFreeTimerWheel {\n    std::atomic<uint64_t> current_tick_{0};\n    std::vector<std::atomic<TimerNode*>> slots;\npublic:\n    explicit LockFreeTimerWheel(size_t num_slots) : slots(num_slots) {}\n    void advance_tick() {\n        current_tick_.fetch_add(1, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "class UnsafeTimerWheel {\n    uint64_t current_tick_ = 0;\n    std::vector<TimerNode*> slots;\npublic:\n    void advance_tick() {\n        current_tick_++; // Non-atomic update prone to race conditions across multiple worker threads\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent node unlinking and bucket pointer updates.",
+        "Using overly strict memory ordering barriers that degrade multi-core scaling efficiency.",
+        "Neglecting proper hazard pointer registration during cascading bucket migrations, leading to memory leaks or premature reclamation."
+      ],
+      "best_practices": [
+        "Leverage relaxed memory orderings where atomicity is sufficient, reserving acquire-release semantics strictly for pointer synchronization.",
+        "Design hierarchical timer wheels with power-of-two slot counts to optimize bitwise modulo operations during tick calculations.",
+        "Batch hazard pointer retirements to amortize synchronization overhead across high-frequency timer ticks."
+      ],
+      "when_to_use": "Ideal for high-performance network protocol stacks, TCP connection timeout managers, and asynchronous event loops requiring O(1) timer insertion and cancellation across many threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with sparse, long-duration timers where a simple min-heap or sorted array requires significantly less memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a timer wheel achieve O(1) time complexity for insertions and expirations compared to a binary min-heap?",
+          "answer": "A timer wheel uses direct index calculation based on the expiration time relative to the current tick (expire_time % wheel_size), whereas a min-heap requires O(log N) operations to maintain structural invariants."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread deletes an expired timer node while another thread is traversing it?",
+          "answer": "A thread publishes a reference to the target node in a thread-local hazard pointer record before reading its pointers, signaling the memory reclamation subsystem to defer deletion until the hazard pointer is cleared."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Hierarchical Timer Wheels"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-19T06:27:22.363690+00:00",
+      "run_number": 3359
     }
   ]
 }
