@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3356,
-    "last_updated": "2026-10-19T06:17:49.891547+00:00",
-    "total_topics_learned": 3356
+    "total_runs": 3357,
+    "last_updated": "2026-10-19T06:21:00.253930+00:00",
+    "total_topics_learned": 3357
   },
   "entries": [
     {
@@ -159856,6 +159856,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T06:17:49.891528+00:00",
       "run_number": 3356
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Read-Copy Update (RCU) hash table using atomic pointer-swapping and epoch-based reclamation CAS primitives alongside deferred memory disposal for high-throughput read-heavy workloads and multi-core parallel data synchronization in real-time Linux kernel modules and concurrent systems programming frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An RCU hash table allows multiple readers to access data concurrently without locking, overhead, or contention by deferring memory reclamation until all pre-existing readers have completed their read phases. It achieves high-throughput performance in read-heavy scenarios by duplicating data structures for writes and atomically swapping pointers.",
+      "key_points": [
+        "Readers operate lock-free with zero synchronization overhead by entering and exiting RCU read-side critical sections.",
+        "Writers perform updates by creating a copy of the modified node, applying changes, and using atomic pointer-swapping CAS primitives to replace the old pointer.",
+        "Epoch-based reclamation tracks thread participation to safely defer memory disposal of old nodes until all threads have advanced past the reclamation epoch.",
+        "Eliminates read-write lock contention entirely, making it ideal for high-frequency lookup tables and routing tables."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic pointer swap during a node update in an RCU hash table.",
+        "correct": "void update_node(std::atomic<Node*>& bucket_head, int key, int new_val) {\n    Node* old_node = bucket_head.load(std::memory_order_acquire);\n    Node* new_node = new Node(key, new_val);\n    new_node->next = old_node;\n    while (!bucket_head.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        new_node->next = old_node;\n    }\n    reclaim_manager.defer_free(old_node);\n}",
+        "wrong": "void update_node(Node* bucket_head, int key, int new_val) {\n    mutex.lock();\n    bucket_head->val = new_val;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Freeing old nodes immediately after a pointer swap while active readers are still traversing them.",
+        "Failing to use appropriate memory ordering barriers (acquire/release), leading to stale reads on weak-ordering architectures.",
+        "Blocking inside an RCU read-side critical section, which can stall epoch advancement and exhaust memory."
+      ],
+      "best_practices": [
+        "Keep RCU read-side critical sections extremely short, avoiding I/O, syscalls, or blocking operations.",
+        "Use epoch-based or quiescent-state-based reclamation (QSBR) queues to batch deferred memory frees.",
+        "Pair atomic pointer loads with memory_order_acquire and stores/swaps with memory_order_release."
+      ],
+      "when_to_use": "Use when workloads have an extremely high read-to-write ratio (e.g., 99:1) and read latency must remain strictly bounded without lock contention.",
+      "when_not_to_use": "Avoid in write-heavy workloads, as the overhead of copying data structures and managing deferred reclamation will degrade performance.",
+      "interview_questions": [
+        {
+          "question": "How does RCU achieve lock-free reads without using atomic operations inside the read path?",
+          "answer": "Readers register their entry and exit from critical sections (or rely on quiescent states), allowing writers to publish updates via atomic pointer swaps and defer memory reclamation until all pre-existing readers have exited."
+        },
+        {
+          "question": "What is the primary trade-off of using an RCU hash table compared to a standard fine-grained reader-writer locked hash table?",
+          "answer": "RCU provides near-zero overhead and wait-free execution for readers, but shifts the performance penalty to writers who must duplicate nodes and manage deferred memory recycling."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Reclamation",
+        "Quiescent State-Based Reclamation (QSBR)",
+        "Lock-Free Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-19T06:21:00.253912+00:00",
+      "run_number": 3357
     }
   ]
 }

@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3356** |
-| Last Updated | `2026-10-19T06:17:49.891547+00:00` |
-| Dataset Size | `3356 entries` |
+| Total Topics Learned | **3357** |
+| Last Updated | `2026-10-19T06:21:00.253930+00:00` |
+| Dataset Size | `3357 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2172 |
+| data-structures | 2173 |
 | trading-strategies | 228 |
 | algorithms | 202 |
 | crypto-blockchain | 156 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Read-Copy Update (RCU) hash table using atomic pointer-swapping and epoch-based reclamation CAS primitives alongside deferred memory disposal for high-throughput read-heavy workloads and multi-core parallel data synchronization in real-time Linux kernel modules and concurrent systems programming frameworks`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-allocating and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered map lookups and multi-core parallel range scans in real-time in-memory databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counter-incrementing and leak-rate-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core rate control in real-time API gateways and concurrent cloud ingress controllers`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-splicing and doubly-linked-list-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core parallel hit-ratio tracking in real-time in-memory databases and concurrent application caching layers`
 - `Implementation of a lock-free thread-safe concurrent LFU Cache using atomic frequency-node-splicing and eviction-list-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core parallel access pattern tracking in real-time in-memory databases and concurrent application caching layers`
-- `Implementation of a lock-free thread-safe concurrent Skip-Octree using atomic octant-splitting and spatial-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial partitioning and multi-core parallel point-cloud collision detection in real-time robotics simulation engines and concurrent virtual reality rendering platforms`
 
 <!-- STATS_END -->
 
