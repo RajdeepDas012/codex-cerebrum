@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3373** |
-| Last Updated | `2026-10-19T14:51:39.003760+00:00` |
-| Dataset Size | `3373 entries` |
+| Total Topics Learned | **3374** |
+| Last Updated | `2026-10-19T14:54:50.136801+00:00` |
+| Dataset Size | `3374 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2187 |
+| data-structures | 2188 |
 | trading-strategies | 228 |
 | algorithms | 203 |
 | crypto-blockchain | 156 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and leaf-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed data lookups and multi-core parallel range scans in real-time in-memory databases and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and bitwise-OR CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel query scaling in real-time distributed caching layers and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-bit-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel point updates in real-time streaming analytics and concurrent rank-tracking database systems`
 - `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quad-bucket-splitting and multi-dimensional-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic spatial indexing and multi-core parallel point-region queries in real-time geographic tracking systems and concurrent multi-player gaming servers`
 - `Implementation of a lock-free thread-safe concurrent Vector Clock using atomic version-vector-incrementing and timestamp-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput causal ordering and multi-core parallel event synchronization in real-time distributed databases and concurrent eventual consistency state engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-testing and node-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel prefix matching in real-time software-defined networking routers and concurrent cloud packet processing pipelines`
 
 <!-- STATS_END -->
 
