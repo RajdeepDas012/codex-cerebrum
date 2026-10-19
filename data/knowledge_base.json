@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3348,
-    "last_updated": "2026-10-19T01:35:15.450114+00:00",
-    "total_topics_learned": 3348
+    "total_runs": 3349,
+    "last_updated": "2026-10-19T01:38:24.635358+00:00",
+    "total_topics_learned": 3349
   },
   "entries": [
     {
@@ -159480,6 +159480,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-19T01:35:15.450095+00:00",
       "run_number": 3348
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-overlapping and left-right-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range matching and multi-core parallel event scheduling in real-time calendar systems and concurrent financial order-matching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a concurrent lock-free Interval Tree, utilizing atomic compare-and-swap (CAS) operations for overlapping range detection and maximum-endpoint management. It leverages hazard pointers to guarantee safe memory reclamation in multi-threaded environments performing high-frequency temporal and spatial queries.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free node insertion, deletion, and left-right endpoint updates.",
+        "Employs hazard pointers to track threads reading active interval nodes and prevent premature memory deallocation.",
+        "Maintains max-endpoints at each node concurrently to guide interval overlap traversals without global locks.",
+        "Enables high-throughput temporal range queries suitable for real-time calendar systems and financial order books."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual atomic node update step for tracking interval endpoints in a lock-free structure.",
+        "correct": "bool update_interval_endpoint(std::atomic<int>& max_endpoint, int new_val) {\n    int current = max_endpoint.load();\n    while (new_val > current) {\n        if (max_endpoint.compare_exchange_weak(current, new_val)) return true;\n    }\n    return false;\n}",
+        "wrong": "bool update_interval_endpoint(int& max_endpoint, int new_val) {\n    if (new_val > max_endpoint) {\n        max_endpoint = new_val;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs.",
+        "Updating node maximum endpoints without cascading atomic updates up the tree path, causing missed overlapping queries."
+      ],
+      "best_practices": [
+        "Pair every hazard pointer acquisition with a rigorous validation check confirming the node has not been unlinked.",
+        "Keep atomic transaction scopes as narrow as possible to minimize CAS retry contention under heavy multi-core loads."
+      ],
+      "when_to_use": "Use when multiple threads frequently query and mutate overlapping temporal ranges or intervals under high contention.",
+      "when_not_to_use": "Avoid when standard coarse-grained locking provides sufficient throughput or when workloads are predominantly single-threaded.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node deletions in a lock-free interval tree without causing readers to access invalid memory?",
+          "answer": "By implementing hazard pointers or epoch-based reclamation to defer memory freeing until all traversing threads have unpinned the target node."
+        },
+        {
+          "question": "Why is tracking the maximum endpoint challenging in a lock-free interval tree implementation?",
+          "answer": "Because concurrent insertions and deletions can alter subtree bounds, requiring atomic CAS loops to bubble maximum endpoint changes upward safely."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent AVL Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-19T01:38:24.635341+00:00",
+      "run_number": 3349
     }
   ]
 }
