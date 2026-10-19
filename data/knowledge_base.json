@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3350,
-    "last_updated": "2026-10-19T01:41:34.686102+00:00",
-    "total_topics_learned": 3350
+    "total_runs": 3351,
+    "last_updated": "2026-10-19T01:44:44.345158+00:00",
+    "total_topics_learned": 3351
   },
   "entries": [
     {
@@ -159574,6 +159574,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T01:41:34.686084+00:00",
       "run_number": 3350
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and descriptor-based-cooperative-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core parallel dynamic rehashing in real-time in-memory databases and concurrent caching middleware systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent hash map designed for high-throughput multi-core environments. By utilizing atomic bucket-resizing, descriptor-based cooperative splitting, and hazard pointer memory reclamation, it guarantees thread safety and non-blocking progress without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Employs compare-and-swap (CAS) primitives to execute lock-free insertions, lookups, and deletions.",
+        "Uses descriptor-based cooperative splitting to allow multiple threads to assist in ongoing bucket resizing and structural splits safely.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation and prevent premature freeing of active hash buckets.",
+        "Achieves high scalability in modern multi-core systems by avoiding global locks during rehashing and key-value resolution."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a lock-free node with hazard pointer protection for concurrent map traversal",
+        "correct": "template <typename K, typename V>\nstruct Node {\n    std::atomic<K> key;\n    std::atomic<V> value;\n    std::atomic<Node<K, V>*> next;\n    std::atomic<bool> marked_for_deletion;\n};",
+        "wrong": "template <typename K, typename V>\nstruct Node {\n    K key;\n    V value;\n    Node* next;\n    // Missing atomicity leads to data races and undefined behavior under concurrent mutations\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during CAS operations on bucket pointers without version tags or hazard pointers.",
+        "Neglecting cooperative help protocols during resizes, causing contending threads to stall or overwrite concurrent structural modifications."
+      ],
+      "best_practices": [
+        "Pair hazard pointer protection scopes strictly around pointer reads and node dereferences to eliminate memory leaks and use-after-free bugs.",
+        "Design resizing operations to be incremental and cooperative so that worker threads can bypass or assist incomplete migrations seamlessly."
+      ],
+      "when_to_use": "Use when building ultra-low-latency in-memory databases, concurrent caching layers, or real-time distributed middleware requiring high read/write concurrency.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or environments where standard mutex-backed hash maps provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free hash map?",
+          "answer": "Hazard pointers allow threads to publish references they are actively accessing, ensuring that memory reclaimers cannot delete those nodes until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the role of descriptor-based cooperative splitting in lock-free resizing?",
+          "answer": "It provides a shared state descriptor for the migration process, enabling any thread encountering an ongoing resize to help complete the bucket split before proceeding with its own operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skiplist",
+        "Hazard Pointers Memory Management",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-19T01:44:44.345138+00:00",
+      "run_number": 3351
     }
   ]
 }

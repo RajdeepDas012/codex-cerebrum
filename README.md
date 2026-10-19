@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3350** |
-| Last Updated | `2026-10-19T01:41:34.686102+00:00` |
-| Dataset Size | `3350 entries` |
+| Total Topics Learned | **3351** |
+| Last Updated | `2026-10-19T01:44:44.345158+00:00` |
+| Dataset Size | `3351 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2167 |
+| data-structures | 2168 |
 | trading-strategies | 228 |
 | algorithms | 202 |
 | crypto-blockchain | 156 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and descriptor-based-cooperative-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core parallel dynamic rehashing in real-time in-memory databases and concurrent caching middleware systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and hash-bucket-skipping CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core parallel heavy hitters identification in real-time streaming data pipelines and concurrent telemetry monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-overlapping and left-right-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range matching and multi-core parallel event scheduling in real-time calendar systems and concurrent financial order-matching engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel full-text search in real-time document search engines and concurrent bioinformatics analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-query-updating and lazy-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput interval arithmetic and multi-core parallel range aggregation in real-time financial trading platforms and concurrent spatial database analytics engines`
-- `Implementation of a lock-free thread-safe concurrent Bounded Priority Queue using atomic heap-reordering and priority-inversion-mitigating CAS primitives alongside hazard pointer memory reclamation for high-throughput real-time task scheduling and multi-core parallel bounded message prioritization in real-time execution engines and concurrent task dispatching platforms`
 
 <!-- STATS_END -->
 
