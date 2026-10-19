@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3361,
-    "last_updated": "2026-10-19T06:33:45.696750+00:00",
-    "total_topics_learned": 3361
+    "total_runs": 3362,
+    "last_updated": "2026-10-19T06:36:55.412485+00:00",
+    "total_topics_learned": 3362
   },
   "entries": [
     {
@@ -160095,6 +160095,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T06:33:45.696731+00:00",
       "run_number": 3361
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and consumption-debiting CAS primitives alongside hazard pointer memory reclamation for high-throughput burst traffic control and multi-core parallel request throttling in real-time API gateways and concurrent cloud service meshes",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free token bucket rate limiter utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to manage concurrent token updates and request throttling without mutual exclusion locks. This architecture ensures minimal latency and high scalability across multi-core systems handling massive burst traffic in distributed cloud environments.",
+      "key_points": [
+        "Utilizes atomic token-refilling based on elapsed time intervals to keep bucket states current without global locks.",
+        "Employs consumption-debiting CAS operations to safely subtract tokens for incoming requests under high concurrency.",
+        "Integrates hazard pointer memory reclamation to prevent race conditions during dynamic bucket reconfiguration and cleanup.",
+        "Enables high-throughput burst traffic control suitable for edge API gateways and cloud service meshes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates lock-free token consumption using atomic CAS loops.",
+        "correct": "while True:\n    current = self.tokens.load()\n    refilled = min(self.capacity, current + elapsed * self.rate)\n    if refilled < requested:\n        return False\n    if self.tokens.compare_and_set(current, refilled - requested):\n        return True",
+        "wrong": "with self.lock:\n    current_tokens += tokens_to_add\n    if current_tokens >= req:\n        current_tokens -= req\n        return True"
+      },
+      "common_mistakes": [
+        "Failing to bound maximum token capacity, leading to unbounded integer growth or overflow.",
+        "Updating timestamps and token counts in separate atomic steps, causing race windows and over-allocation."
+      ],
+      "best_practices": [
+        "Use monotonic clocks to calculate time elapsed between token refills to avoid system time adjustments.",
+        "Combine fine-grained hazard pointer protection with thread-local caches to reduce atomic contention on hot buckets."
+      ],
+      "when_to_use": "Use when building high-throughput API gateways or service meshes that require strict rate limiting with minimal lock contention under heavy multi-core traffic.",
+      "when_not_to_use": "Avoid in low-concurrency applications or environments where simpler lock-based sliding window counters provide sufficient performance without added complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to refill and consume tokens simultaneously from the same bucket?",
+          "answer": "By wrapping the calculation and update steps inside a lock-free Compare-And-Swap (CAS) retry loop that recalculates the elapsed time and remaining tokens until the atomic update succeeds."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in a lock-free rate limiter?",
+          "answer": "Hazard pointers allow safe, deterministic memory reclamation of transient bucket structures without stop-the-world pauses, ensuring predictable low latency in real-time networking paths."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrency control",
+        "Distributed rate limiting algorithms",
+        "Hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-19T06:36:55.412468+00:00",
+      "run_number": 3362
     }
   ]
 }
