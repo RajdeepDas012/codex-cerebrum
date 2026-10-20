@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3457,
-    "last_updated": "2026-10-20T20:28:23.405089+00:00",
-    "total_topics_learned": 3457
+    "total_runs": 3458,
+    "last_updated": "2026-10-20T20:31:33.540051+00:00",
+    "total_topics_learned": 3458
   },
   "entries": [
     {
@@ -164638,6 +164638,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T20:28:23.405070+00:00",
       "run_number": 3457
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geospatial tracking systems and concurrent location-based service engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent R-Tree enables multiple threads to perform spatial insertions and geometric range queries simultaneously without traditional locks. By leveraging atomic Compare-And-Swap (CAS) operations for bounding box adjustments and node splits, alongside hazard pointers for safe memory reclamation, it delivers maximum multi-core scalability for high-throughput geospatial applications.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to safely adjust minimum bounding rectangles (MBRs) during parallel node updates.",
+        "Implements lock-free node splitting and pointer swinging to handle tree growth under high contention.",
+        "Employs hazard pointers to track thread-accessed nodes, preventing premature deallocation and eliminating ABA problems.",
+        "Maximizes multi-core throughput for concurrent spatial range queries and coordinate indexing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bounding box adjustment via CAS in a concurrent R-Tree node.",
+        "correct": "bool updateMBR(std::atomic<BoundingBox*>& current_box, BoundingBox* expected, BoundingBox* desired) {\n    return current_box.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "BoundingBox* box = current_box.load();\nbox->expand(new_point); // Non-atomic update prone to race conditions and data corruption across threads."
+      },
+      "common_mistakes": [
+        "Modifying bounding boxes in place without atomic CAS loops, leading to inconsistent spatial states.",
+        "Failing to protect traverse pointers with hazard pointers, resulting in use-after-free bugs during concurrent node splitting.",
+        "Ignoring the cascading effect of node splits up the tree hierarchy under heavy write contention."
+      ],
+      "best_practices": [
+        "Always protect shared node references with hazard pointers prior to reading coordinate data or traversing child links.",
+        "Design split operations to be retry-friendly using atomic state flags to ensure only one thread successfully splits a saturated node.",
+        "Keep critical sections inside CAS retry loops as short as possible to minimize cache line bouncing."
+      ],
+      "when_to_use": "Use this when building high-performance geospatial engines, ride-sharing dispatchers, or real-time location-based services that demand heavy concurrent writes and spatial searches across multiple CPU cores.",
+      "when_not_to_use": "Avoid this for single-threaded applications or low-concurrency systems where standard locking R-Trees provide simpler maintenance and adequate performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free R-Tree when multiple threads are simultaneously traversing and splitting nodes?",
+          "answer": "Hazard pointers are used to register nodes currently accessed by a thread so that memory allocators do not reclaim them until no thread holds a hazard reference to them."
+        },
+        {
+          "question": "What is the primary challenge when updating minimum bounding rectangles (MBRs) atomically in a concurrent tree?",
+          "answer": "The challenge is ensuring that concurrent insertions do not overwrite overlapping MBR expansions, which is solved by using atomic CAS loops to validate and swap the bounding box pointer or descriptor."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B-link Tree",
+        "Hazard Pointer Memory Management",
+        "Spatial Indexing and R-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T20:31:33.540033+00:00",
+      "run_number": 3458
     }
   ]
 }
