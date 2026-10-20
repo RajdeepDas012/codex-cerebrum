@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3406,
-    "last_updated": "2026-10-20T00:39:58.537052+00:00",
-    "total_topics_learned": 3406
+    "total_runs": 3407,
+    "last_updated": "2026-10-20T00:43:09.687134+00:00",
+    "total_topics_learned": 3407
   },
   "entries": [
     {
@@ -162222,6 +162222,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T00:39:58.537039+00:00",
       "run_number": 3406
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Deque using atomic head-tail-stealing and pointer-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput work-stealing task scheduling and multi-core parallel load balancing in real-time asynchronous execution engines and concurrent task processing frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free, thread-safe concurrent double-ended queue (deque) utilizing atomic head-tail operations and hazard pointers for safe memory management. It enables high-performance task scheduling by allowing an owner thread to push and pop from one end while competing worker threads steal tasks from the opposite end without lock contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for head and tail index manipulation to eliminate coarse-grained locking overhead.",
+        "Implements a work-stealing algorithm where the owner thread operates primarily on the local tail while concurrent thieves contend for the remote head.",
+        "Employs hazard pointers to track active memory references, ensuring safely deferred reclamation of dynamically resized array nodes without memory leaks or race conditions.",
+        "Handles race conditions during concurrent pop and steal operations when the deque contains only a single element, preventing duplicate execution or dangling pointers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free atomic tail push operation for a concurrent work-stealing deque",
+        "correct": "void push_bottom(Task* task) {\n    int64_t b = bottom.load(std::memory_order_relaxed);\n    int64_t t = top.load(std::memory_order_acquire);\n    Node* array = active_array.load(std::memory_order_relaxed);\n    if (b - t >= array->capacity - 1) {\n        expand_array();\n        array = active_array.load(std::memory_order_relaxed);\n    }\n    array->put(b, task);\n    std::atomic_thread_fence(std::memory_order_release);\n    bottom.store(b + 1, std::memory_order_relaxed);\n}",
+        "wrong": "void push_bottom(Task* task) {\n    // Missing memory fences and atomic synchronization leading to out-of-order execution\n    int64_t b = bottom;\n    array[b] = task;\n    bottom = b + 1;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting memory barriers or acquiring insufficient memory order semantics, leading to stale reads of the top index by the owner thread.",
+        "Failing to handle the single-element race condition where both the owner (pop) and a thief (steal) attempt to claim the exact same item simultaneously.",
+        "Improper memory reclamation resulting in use-after-free bugs when old circular buffer arrays are deallocated while other threads are still accessing their contents."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for independent index calculations combined with explicit acquire-release fences to maximize concurrency performance.",
+        "Integrate hazard pointers or epoch-based reclamation schemes to safely manage the lifecycle of dynamically resized internal array buffers.",
+        "Design circular buffer resizing routines to allocate double-capacity arrays lock-free and safely publish them via atomic pointer substitution."
+      ],
+      "when_to_use": "Use this structure when designing high-throughput work-stealing task schedulers, thread pools, or parallel runtime environments where execution units frequently distribute load dynamically across multiple CPU cores.",
+      "when_not_to_use": "Avoid using this in single-threaded applications or low-concurrency environments where standard locking deques provide sufficient throughput with vastly simpler implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the race condition when both the owner thread popping from the tail and a thief thread stealing from the head attempt to access the last remaining element in a lock-free deque?",
+          "answer": "The thief must use an atomic CAS operation on the top pointer from 't' to 't + 1'. If the CAS succeeds, the thief successfully claims the item; if it fails, it means the owner thread already modified the bottom index or another thief succeeded, signaling a collision where the thief aborts the steal."
+        },
+        {
+          "question": "Why are hazard pointers required in lock-free deques instead of standard garbage collection or immediate deletion?",
+          "answer": "Hazard pointers allow threads to explicitly register which nodes or arrays they are currently reading before dereferencing them. This prevents other threads from prematurely freeing or recycling memory buffers while concurrent operations are in flight, avoiding use-after-free vulnerabilities without stopping the world."
+        }
+      ],
+      "related_topics": [
+        "Work-Stealing Task Schedulers",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Circular Buffers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:43:09.687118+00:00",
+      "run_number": 3407
     }
   ]
 }
