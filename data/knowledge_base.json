@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3429,
-    "last_updated": "2026-10-20T11:22:09.787736+00:00",
-    "total_topics_learned": 3429
+    "total_runs": 3430,
+    "last_updated": "2026-10-20T11:25:19.066561+00:00",
+    "total_topics_learned": 3430
   },
   "entries": [
     {
@@ -163317,6 +163317,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T11:22:09.787718+00:00",
       "run_number": 3429
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-wrapping and slot-reservation CAS primitives alongside hazard pointer memory reclamation for high-throughput producer-consumer messaging and multi-core parallel task dispatching in real-time asynchronous event loops and concurrent stream processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent bounded queue utilizes atomic operations like compare-and-swap (CAS) for head-tail tracking and slot reservation, bypassing traditional locks to eliminate thread contention. Combined with hazard pointers, it ensures safe memory reclamation, making it ideal for high-throughput producer-consumer systems and asynchronous task dispatching.",
+      "key_points": [
+        "Employs atomic head-tail-wrapping to manage a fixed-size ring buffer without blocking threads.",
+        "Uses slot-reservation CAS primitives to safely claim array indices for concurrent producers and consumers.",
+        "Integrates hazard pointers to prevent premature memory deallocation and manage safe reclamation.",
+        "Maximizes throughput and minimizes latency by avoiding kernel-level context switches associated with mutexes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic enqueue operation using CAS on a sequence-based bounded queue slot.",
+        "correct": "bool enqueue(T item) {\n  cell_t* cell;\n  size_t pos = tail.load(std::memory_order_relaxed);\n  for (;;) {\n    cell = &buffer[pos & mask];\n    size_t seq = cell->sequence.load(std::memory_order_acquire);\n    intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n    if (dif == 0) {\n      if (tail.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))\n        break;\n    } else if (dif < 0) {\n      return false; // Queue is full\n    } else {\n      pos = tail.load(std::memory_order_relaxed);\n    }\n  }\n  cell->data = item;\n  cell->sequence.store(pos + 1, std::memory_order_release);\n  return true;\n}",
+        "wrong": "bool enqueue(T item) {\n  size_t pos = tail++;\n  buffer[pos % capacity] = item; // Not thread-safe, race condition on tail and buffer writes\n  return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem or wrap-around race conditions on sequence numbers.",
+        "Incorrect memory ordering (e.g., using relaxed memory order where acquire-release semantics are mandatory)."
+      ],
+      "best_practices": [
+        "Align atomic variables to cache line boundaries to prevent false sharing across CPU cores.",
+        "Use appropriate memory barriers (acquire-release) to guarantee visibility of node data across threads."
+      ],
+      "when_to_use": "Use when building ultra-low-latency systems like financial exchanges or high-frequency event loops requiring predictable multi-core message passing with a fixed capacity.",
+      "when_not_to_use": "Avoid when items are unbounded and memory cannot be strictly pre-allocated, or when simpler lock-based queues satisfy the throughput requirements.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed items in a lock-free bounded queue?",
+          "answer": "By using cell sequence numbers that track the generation/round of wrap-around, ensuring a slot's sequence equals the expected tail position before writing."
+        },
+        {
+          "question": "Why are hazard pointers useful in concurrent queue implementations?",
+          "answer": "They provide a lock-free mechanism to track which nodes are currently accessed by threads, safely deferring memory reclamation until no thread holds a reference to them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Map",
+        "Hazard Pointers",
+        "Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T11:25:19.066543+00:00",
+      "run_number": 3430
     }
   ]
 }
