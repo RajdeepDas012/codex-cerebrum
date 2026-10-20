@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3472** |
-| Last Updated | `2026-10-20T23:49:35.145924+00:00` |
-| Dataset Size | `3472 entries` |
+| Total Topics Learned | **3473** |
+| Last Updated | `2026-10-20T23:52:45.723036+00:00` |
+| Dataset Size | `3473 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2264 |
+| data-structures | 2265 |
 | trading-strategies | 228 |
 | algorithms | 212 |
 | crypto-blockchain | 159 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core parallel dynamic priority updates in real-time memory management runtimes and concurrent associative container engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting key searches and multi-core parallel frequently-accessed data optimization in real-time caching runtimes and concurrent memory management subsystems`
 - `Implementation of a lock-free thread-safe concurrent Spatial Hash Grid using atomic bucket-clustering and particle-repositioning CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core parallel neighborhood searches in real-time physics simulation engines and concurrent multi-agent gaming systems`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-descriptor-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput memory-efficient approximate membership testing and multi-core parallel dynamic resizing in real-time distributed key-value stores and concurrent database indexing layers`
 - `Implementation of a lock-free thread-safe concurrent Xor-Filter using atomic fingerprint-hashing and bit-matrix-solving CAS primitives alongside hazard pointer memory reclamation for high-throughput memory-efficient set membership testing and multi-core parallel static filtering in real-time distributed caching layers and concurrent database query optimization engines`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and root-pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted data access in real-time transactional database systems and concurrent in-memory storage engines`
 
 <!-- STATS_END -->
 
