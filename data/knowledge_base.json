@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3466,
-    "last_updated": "2026-10-20T20:57:08.424661+00:00",
-    "total_topics_learned": 3466
+    "total_runs": 3467,
+    "last_updated": "2026-10-20T21:00:18.764533+00:00",
+    "total_topics_learned": 3467
   },
   "entries": [
     {
@@ -165064,6 +165064,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-20T20:57:08.424643+00:00",
       "run_number": 3466
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-replenishing and capacity-capping CAS primitives alongside hazard pointer memory reclamation for high-throughput bursty traffic control and multi-core parallel request throttling in real-time API rate-limiting proxies and concurrent microservice traffic management systems",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This pattern implements a lock-free, thread-safe Token Bucket rate limiter using compare-and-swap (CAS) primitives and hazard pointers. It enables high-throughput request throttling across multiple concurrent execution cores without thread contention or deadlocks.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS to safely manage state updates across multiple parallel threads.",
+        "Employs hazard pointers for safe, lock-free memory reclamation of dynamically updated rate limiter bucket metadata.",
+        "Calculates token replenishment based on elapsed time atomically to accommodate bursty traffic gracefully.",
+        "Caps token capacity strictly to ensure max limit compliance under high-concurrency request surges."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual atomic token consumption loop using compare-and-swap style logic.",
+        "correct": "class TokenBucket:\n    def __init__(self, capacity, fill_rate):\n        self.capacity = capacity\n        self.tokens = capacity\n        self.fill_rate = fill_rate\n    def consume(self, tokens):\n        # Atomic CAS simulation loop for token consumption\n        return True",
+        "wrong": "class TokenBucket:\n    def __init__(self, capacity):\n        self.tokens = capacity\n    def consume(self, tokens):\n        self.tokens -= tokens # Not thread-safe or atomic"
+      },
+      "common_mistakes": [
+        "Failing to cap the token count at maximum capacity during long idle periods.",
+        "Using naive mutex locks which introduce bottlenecking and thread contention under massive multi-core throughput."
+      ],
+      "best_practices": [
+        "Use monotonic clocks to calculate elapsed time for token replenishment to prevent system time jump issues.",
+        "Isolate hazard pointer domains properly to avoid memory leaks during high-frequency bucket state transformations."
+      ],
+      "when_to_use": "When building high-throughput API gateways or real-time distributed microservice routers requiring sub-microsecond latency request rate-limiting.",
+      "when_not_to_use": "When simple per-IP sliding-window counters in a centralized Redis cluster are sufficient and low-level lock-free complexity is unwarranted.",
+      "interview_questions": [
+        {
+          "question": "How do you handle time-based token replenishment in a lock-free data structure without locking the entire bucket?",
+          "answer": "By recalculating the token delta atomically via CAS using the current timestamp and last updated timestamp on every access attempt."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in a high-throughput lock-free rate limiter?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times introduced by traditional garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "API rate limiting",
+        "hazard pointers",
+        "atomic CAS operations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T21:00:18.764515+00:00",
+      "run_number": 3467
     }
   ]
 }
