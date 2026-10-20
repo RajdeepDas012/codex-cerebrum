@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3426,
-    "last_updated": "2026-10-20T06:32:25.432883+00:00",
-    "total_topics_learned": 3426
+    "total_runs": 3427,
+    "last_updated": "2026-10-20T11:15:50.329581+00:00",
+    "total_topics_learned": 3427
   },
   "entries": [
     {
@@ -163173,6 +163173,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T06:32:25.432841+00:00",
       "run_number": 3426
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-rectangle-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent geospatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking spatial index structure that enables multiple threads to insert and query multi-dimensional bounding boxes concurrently without locks. It relies on atomic compare-and-swap (CAS) primitives for adjusting minimum bounding rectangles and splitting nodes, combined with hazard pointers to safely manage memory reclamation in dynamic multi-core environments.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to update bounding boxes and split overfull tree nodes without acquiring global locks.",
+        "Employs hazard pointers to track active reader threads and safely reclaim freed tree node memory without triggering ABA problems or race conditions.",
+        "Optimizes multi-dimensional spatial data access for high-throughput parallel geometric range searches and nearest-neighbor queries.",
+        "Addresses the high contention overhead typical of tree-based spatial indices by decoupling traversal paths from structural modification operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node split operation utilizing a CAS loop on a pointer in a lock-free R-Tree context.",
+        "correct": "bool try_split_node(std::atomic<Node*>& child_ptr, Node* old_node, Node* new_node) {\n    return child_ptr.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = child_ptr.load();\nif (current == old_node) {\n    // Interruption window here allows another thread to modify child_ptr\n    child_ptr.store(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, resulting in use-after-free bugs when another thread concurrently splits or removes a node.",
+        "Relying on standard locking mechanisms inside tree traversal paths, which introduces bottlenecks and defeats the lock-free design."
+      ],
+      "best_practices": [
+        "Keep hazard pointer protection scopes as narrow as possible to minimize memory retention overhead during deep tree traversals.",
+        "Design bounding box adjustments to be idempotent or gracefully retry when concurrent modifications shift spatial boundaries mid-operation."
+      ],
+      "when_to_use": "Use when building high-performance geospatial databases, real-time tracking systems, or GIS applications requiring intensive concurrent spatial queries across multiple CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the extreme complexity of lock-free memory management and CAS-based tree balancing outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splitting atomically in a lock-free R-Tree without blocking concurrent readers?",
+          "answer": "By constructing the replacement and split nodes out-of-place and using a single CAS operation to atomically swing the parent pointer or child reference from the old node to the new subtree configuration."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a concurrent lock-free spatial index like an R-Tree?",
+          "answer": "They prevent reader threads from accessing memory belonging to a node that has been unlinked and freed by a concurrent writer thread performing a split or deletion."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B+ Tree",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Data Structures",
+        "Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T11:15:50.329565+00:00",
+      "run_number": 3427
     }
   ]
 }
