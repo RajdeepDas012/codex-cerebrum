@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3470,
-    "last_updated": "2026-10-20T23:43:09.356115+00:00",
-    "total_topics_learned": 3470
+    "total_runs": 3471,
+    "last_updated": "2026-10-20T23:46:24.367698+00:00",
+    "total_topics_learned": 3471
   },
   "entries": [
     {
@@ -165255,6 +165255,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T23:43:09.356097+00:00",
       "run_number": 3470
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hash Grid using atomic bucket-clustering and particle-repositioning CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core parallel neighborhood searches in real-time physics simulation engines and concurrent multi-agent gaming systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Spatial Hash Grid divides a continuous multi-dimensional space into discrete grid cells using atomic operations and hazard pointers, enabling high-performance parallel neighborhood searches and collision detection. It eliminates locking overhead, allowing multiple simulation threads to insert, update, and query particles simultaneously without deadlocks.",
+      "key_points": [
+        "Uses atomic bucket-clustering and particle-repositioning CAS primitives to manage grid cell assignments without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamically allocated linked lists or arrays within grid buckets during concurrent updates.",
+        "Maps continuous coordinates $(x, y, z)$ to discrete hash keys to achieve $O(1)$ expected time complexity for neighborhood queries.",
+        "Crucial for high-throughput real-time physics engines and multi-agent systems where thousands of moving entities must check for collisions concurrently."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual thread-safe spatial hash grid update using atomic operations and hazard pointers.",
+        "correct": "void update_particle(SpatialGrid& grid, Particle& p, Vector3 old_pos, Vector3 new_pos) {\n    size_t old_bucket = grid.hash(old_pos);\n    size_t new_bucket = grid.hash(new_pos);\n    if (old_bucket != new_bucket) {\n        grid.remove_from_bucket(old_bucket, &p);\n        grid.atomic_insert_into_bucket(new_bucket, &p);\n    }\n}",
+        "wrong": "void update_particle(SpatialGrid& grid, Particle& p, Vector3 new_pos) {\n    grid.global_mutex.lock();\n    p.pos = new_pos;\n    grid.rebuild();\n    grid.global_mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Using global locks for bucket updates, creating severe bottlenecks during high-density multi-agent simulations.",
+        "Failing to safely reclaim memory when particles rapidly transition between buckets, leading to severe use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Design hash functions that minimize spatial clustering to distribute particle loads evenly across grid buckets.",
+        "Utilize thread-local scratch buffers for collecting neighborhood search results before reducing them in parallel."
+      ],
+      "when_to_use": "Use when building real-time physics simulation engines or multi-agent games requiring rapid, lock-free neighborhood searches and collision detection across multi-core architectures.",
+      "when_not_to_use": "Avoid when the spatial domain is highly dynamic with extreme clustering density variations that break uniform grid assumptions, or in single-threaded environments where lock-free overhead is unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when two threads attempt to insert particles into the same spatial hash bucket simultaneously?",
+          "answer": "By using Compare-And-Swap (CAS) loops to atomically prepend nodes to the bucket's linked list or update array pointers."
+        },
+        {
+          "question": "Why are hazard pointers essential for a lock-free spatial hash grid?",
+          "answer": "They prevent the memory of deleted or relocated bucket nodes from being freed while other threads are actively traversing them for neighborhood queries."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Quadtree/Octree Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T23:46:24.367679+00:00",
+      "run_number": 3471
     }
   ]
 }
