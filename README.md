@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3435** |
-| Last Updated | `2026-10-20T11:41:35.476860+00:00` |
-| Dataset Size | `3435 entries` |
+| Total Topics Learned | **3436** |
+| Last Updated | `2026-10-20T11:44:45.399285+00:00` |
+| Dataset Size | `3436 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2235 |
+| data-structures | 2236 |
 | trading-strategies | 228 |
 | algorithms | 209 |
 | crypto-blockchain | 158 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting node access and multi-core parallel frequency-based rebalancing in real-time in-memory caching layers and concurrent memory management subsystems`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core parallel duplicate filtering in real-time distributed caching layers and concurrent database query routing engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and tree-node-navigating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel dynamic array updates in real-time streaming analytics engines and concurrent statistical tracking systems`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core parallel item deletion in real-time distributed caching systems and concurrent database query optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and prefix-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest-prefix matching in real-time software-defined networking switches and concurrent cloud packet forwarding engines`
-- `Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-replenishing and burst-capacity-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core parallel rate-limiting in real-time API gateways and concurrent cloud microservice architectures`
 
 <!-- STATS_END -->
 
