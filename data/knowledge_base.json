@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3397,
-    "last_updated": "2026-10-20T00:11:23.895584+00:00",
-    "total_topics_learned": 3397
+    "total_runs": 3398,
+    "last_updated": "2026-10-20T00:14:36.719236+00:00",
+    "total_topics_learned": 3398
   },
   "entries": [
     {
@@ -161799,6 +161799,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T00:11:23.895568+00:00",
       "run_number": 3397
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HyperLogLog counter using atomic register-updating and max-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time big data analytics pipelines and concurrent stream processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent HyperLogLog (HLL) data structure optimized for multi-threaded stream processing. By leveraging atomic compare-and-swap (CAS) operations on individual sparse/dense registers and hazard pointers, it safely estimates massive cardinality without global locks or bottlenecks.",
+      "key_points": [
+        "Utilizes atomic register-updating CAS primitives to update distinct element tracking registers without thread blocking.",
+        "Employs max-value-merging logic to safely handle concurrent updates to the same stochastic register across multiple threads.",
+        "Integrates hazard pointers to manage memory reclamation safely during dynamic adjustments between sparse and dense representations.",
+        "Enables high-throughput parallel distinct counting for real-time distributed logs and big data streaming architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic max-value updates on a HyperLogLog register array using compare-and-swap loops.",
+        "correct": "void update_register(std::atomic<uint8_t>* registers, size_t index, uint8_t val) {\n    uint8_t current = registers[index].load(std::memory_order_relaxed);\n    while (val > current && !registers[index].compare_exchange_weak(current, val, std::memory_order_release, std::memory_order_relaxed)) {\n        // current is automatically updated by compare_exchange_weak on failure\n    }\n}",
+        "wrong": "void update_register(uint8_t* registers, size_t index, uint8_t val) {\n    if (val > registers[index]) {\n        registers[index] = val; // Race condition: non-atomic read-modify-write causes lost updates\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using global mutexes around register updates, which creates contention and destroys throughput in high-velocity streaming engines.",
+        "Failing to use appropriate memory ordering (like acquire-release semantics), leading to stale register state visibility across threads."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for initial load operations and release-acquire semantics for the CAS loop to balance performance and correctness.",
+        "Implement cache-line padding on register arrays to prevent false sharing when multiple threads update adjacent indices concurrently."
+      ],
+      "when_to_use": "Use when you need to count distinct elements across massive data streams concurrently with minimal latency and zero blocking locks.",
+      "when_not_to_use": "Avoid when exact cardinality is required or when memory footprint constraints forbid even probabilistic estimation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to the same HyperLogLog register without locking?",
+          "answer": "By using a compare-and-swap (CAS) loop that reads the current value, checks if the new value is larger, and atomically writes it only if the register has not changed in the interim."
+        },
+        {
+          "question": "Why is false sharing a major concern in a concurrent HyperLogLog implementation, and how do you mitigate it?",
+          "answer": "False sharing occurs when multiple threads write to different registers that reside on the same CPU cache line. It is mitigated by aligning registers or adding padding so that thread updates isolate distinct cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Probabilistic data structures",
+        "Hazard pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:14:36.719220+00:00",
+      "run_number": 3398
     }
   ]
 }
