@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3419** |
-| Last Updated | `2026-10-20T06:10:16.764156+00:00` |
-| Dataset Size | `3419 entries` |
+| Total Topics Learned | **3420** |
+| Last Updated | `2026-10-20T06:13:26.170470+00:00` |
+| Dataset Size | `3420 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | algorithms | 209 |
 | crypto-blockchain | 158 |
 | technical-analysis | 147 |
-| system-design | 115 |
+| system-design | 116 |
 | market-analysis | 114 |
 | stocks-markets | 71 |
 | databases | 40 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counter-incrementing and queue-capacity-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core parallel flow control in real-time API gateways and concurrent cloud infrastructure services`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic leaf-hashing and root-hash-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed data verification and multi-core parallel consistency checking in real-time distributed storage systems and concurrent peer-to-peer file sharing networks`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-quadrant-splitting and node-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D spatial indexing and multi-core parallel collision detection in real-time game physics engines and concurrent simulation spatial partitioning platforms`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box-splitting and dimension-alternating CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial coordinate searching and multi-core parallel nearest-neighbor queries in real-time robotics perception systems and concurrent computer graphics ray-tracing engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class merging and multi-core parallel connected component analysis in real-time social network graph partitioning and concurrent image segmentation processing engines`
-- `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and peer-level-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer lookup and multi-core parallel distributed hash table queries in real-time cloud storage systems and concurrent overlay network architectures`
 
 <!-- STATS_END -->
 

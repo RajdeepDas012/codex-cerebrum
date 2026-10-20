@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3419,
-    "last_updated": "2026-10-20T06:10:16.764156+00:00",
-    "total_topics_learned": 3419
+    "total_runs": 3420,
+    "last_updated": "2026-10-20T06:13:26.170470+00:00",
+    "total_topics_learned": 3420
   },
   "entries": [
     {
@@ -162839,6 +162839,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T06:10:16.764136+00:00",
       "run_number": 3419
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counter-incrementing and queue-capacity-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core parallel flow control in real-time API gateways and concurrent cloud infrastructure services",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced system design pattern implements a lock-free concurrent Leaky Bucket rate limiter utilizing atomic operations and hazard pointers. It enables high-throughput traffic shaping and precise flow control without thread contention in multi-core cloud environments.",
+      "key_points": [
+        "Leverages atomic CAS (Compare-And-Swap) primitives for lock-free queue capacity bounding and leak-rate updates.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic buffer nodes without blocking or garbage collection pauses.",
+        "Guarantees deterministic output smoothing by processing incoming bursts at a constant leakage rate.",
+        "Optimized for multi-core scaling in API gateways and cloud services experiencing millions of concurrent requests."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic token drop counting and capacity checking for a lock-free leaky bucket",
+        "correct": "bool try_consume(std::atomic<size_t>& current_tokens, size_t max_capacity) {\n    size_t tokens = current_tokens.load(std::memory_order_relaxed);\n    while (true) {\n        if (tokens >= max_capacity) return false; // Bucket full, drop request\n        if (current_tokens.compare_exchange_weak(tokens, tokens + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool try_consume(std::atomic<size_t>& current_tokens, size_t max_capacity) {\n    // Missing lock or atomic loop causes race conditions and incorrect token counts under high concurrency\n    if (current_tokens < max_capacity) {\n        current_tokens++;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Using locks or mutexes for rate tracking, which creates severe bottlenecks under heavy ingress traffic.",
+        "Failing to safely reclaim bucket node memory, leading to memory leaks or use-after-free bugs in concurrent executions."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for read-heavy state checks where strict synchronization is unnecessary.",
+        "Combine hazard pointers with epoch-based reclamation to minimize synchronization overhead during high-frequency traffic spikes."
+      ],
+      "when_to_use": "Ideal for high-throughput API gateways and cloud systems requiring strict traffic shaping, burst smoothing, and zero-lock execution.",
+      "when_not_to_use": "Unnecessary for low-traffic applications or simple rate-limiting scenarios where standard thread-safe locks introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads concurrently add requests to a leaky bucket queue without using locks?",
+          "answer": "By utilizing atomic Compare-And-Swap (CAS) loops to update the queue fill level and drop counters safely."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free rate limiters?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times introduced by garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Token Bucket Rate Limiter",
+        "Lock-Free Concurrent Queues",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-20T06:13:26.170451+00:00",
+      "run_number": 3420
     }
   ]
 }
