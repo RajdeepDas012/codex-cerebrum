@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3459,
-    "last_updated": "2026-10-20T20:34:45.742395+00:00",
-    "total_topics_learned": 3459
+    "total_runs": 3460,
+    "last_updated": "2026-10-20T20:37:56.060351+00:00",
+    "total_topics_learned": 3460
   },
   "entries": [
     {
@@ -164734,6 +164734,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-20T20:34:45.742377+00:00",
       "run_number": 3459
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-tail-queuing and leakage-rate-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic smoothing and multi-core parallel request shaping in real-time API gateways and concurrent cloud ingress controllers",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a high-performance, lock-free Leaky Bucket rate limiter engineered for multi-core environments. By utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers, it enables high-throughput traffic smoothing and request shaping without thread contention bottlenecks.",
+      "key_points": [
+        "Leverages lock-free atomic CAS operations for drop-tail queuing and bucket leakage-rate updates to eliminate lock contention.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic request node allocations without locking or ABA hazards.",
+        "Provides deterministic output traffic smoothing by processing queued requests at a constant, controlled leak rate.",
+        "Ensures thread safety and high scalability across multi-core architectures for high-load API gateways and cloud ingress nodes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic state updates for a leaky bucket rate limiter",
+        "correct": "import threading\nimport time\n\nclass LeakyBucket:\n    def __init__(self, capacity, leak_rate):\n        self.capacity = capacity\n        self.leak_rate = leak_rate\n        self.water = 0.0\n        self.last_leak = time.time()\n        self.lock = threading.Lock()\n\n    def acquire(self):\n        with self.lock:\n            now = time.time()\n            elapsed = now - self.last_leak\n            self.water = max(0.0, self.water - elapsed * self.leak_rate)\n            self.last_leak = now\n            if self.water + 1.0 <= self.capacity:\n                self.water += 1.0\n                return True\n            return False",
+        "wrong": "class NaiveLeakyBucket:\n    def __init__(self, capacity, leak_rate):\n        self.water = 0\n    def acquire(self):\n        if self.water < 10:\n            self.water += 1\n            return True\n        return False"
+      },
+      "common_mistakes": [
+        "Using heavy mutual exclusion locks (Mutex/ReentrantLock) instead of lock-free CAS primitives, leading to thread contention under massive request surges.",
+        "Failing to account for time elapsed between leak calculations, resulting in inaccurate bucket draining and broken rate-limiting guarantees."
+      ],
+      "best_practices": [
+        "Combine atomic variables for water level and timestamp updates to ensure consistent state transitions under heavy multi-threading.",
+        "Utilize hazard pointers or epoch-based memory reclamation to safely free dropped or processed request nodes in lock-free queues."
+      ],
+      "when_to_use": "Ideal for high-throughput cloud ingress controllers and API gateways that require strict output traffic smoothing and protection against traffic bursts.",
+      "when_not_to_use": "Unnecessary for low-traffic applications or single-threaded systems where standard locking mechanisms provide sufficient performance without complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a Leaky Bucket rate limiter differ from a Token Bucket rate limiter?",
+          "answer": "A Leaky Bucket smooths out traffic bursts by outputting requests at a constant, fixed rate, whereas a Token Bucket allows bursty traffic up to a predefined token capacity."
+        },
+        {
+          "question": "Why use hazard pointers instead of garbage collection in a lock-free rate limiter?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times of traditional garbage collection, which is critical for real-time ingress controllers."
+        }
+      ],
+      "related_topics": [
+        "Token Bucket Algorithm",
+        "Lock-Free Ring Buffers",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T20:37:56.060331+00:00",
+      "run_number": 3460
     }
   ]
 }
