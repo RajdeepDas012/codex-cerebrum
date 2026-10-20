@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3423** |
-| Last Updated | `2026-10-20T06:22:56.143580+00:00` |
-| Dataset Size | `3423 entries` |
+| Total Topics Learned | **3424** |
+| Last Updated | `2026-10-20T06:26:06.618225+00:00` |
+| Dataset Size | `3424 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2224 |
+| data-structures | 2225 |
 | trading-strategies | 228 |
 | algorithms | 209 |
 | crypto-blockchain | 158 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel point queries in real-time transactional database systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core parallel job scheduling in real-time asynchronous execution engines and concurrent task processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Circular Ring Buffer using atomic head-tail-advancing and slot-state-flagging CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core parallel event streaming in real-time low-latency financial trading platforms and concurrent high-frequency telemetry logging pipelines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core parallel range scanning in real-time in-memory database engines and concurrent distributed key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Leaky Bucket rate limiter using atomic drop-counter-incrementing and queue-capacity-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core parallel flow control in real-time API gateways and concurrent cloud infrastructure services`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic leaf-hashing and root-hash-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed data verification and multi-core parallel consistency checking in real-time distributed storage systems and concurrent peer-to-peer file sharing networks`
 
 <!-- STATS_END -->
 
