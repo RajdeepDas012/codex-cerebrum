@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3400,
-    "last_updated": "2026-10-20T00:20:56.624949+00:00",
-    "total_topics_learned": 3400
+    "total_runs": 3401,
+    "last_updated": "2026-10-20T00:24:05.976673+00:00",
+    "total_topics_learned": 3401
   },
   "entries": [
     {
@@ -161940,6 +161940,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T00:20:56.624936+00:00",
       "run_number": 3400
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel prefix searches in real-time software-defined networking switches and concurrent cloud infrastructure controllers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe child allocation and path compression, avoiding traditional locks. Combined with hazard pointers, it ensures safe memory reclamation for high-throughput IP routing and prefix searches under high multi-core contention.",
+      "key_points": [
+        "Uses atomic operations to manage child-node allocation and path compression without blocking critical sections.",
+        "Employs hazard pointers to track threads accessing specific nodes, preventing premature memory deallocation during concurrent structural modifications.",
+        "Optimizes IP routing table lookups and longest-prefix matches via space-compressed compact trie nodes.",
+        "Eliminates lock contention bottlenecks, scaling linearly across many CPU cores in software-defined networking and cloud control planes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-node insertion using CAS on a Radix Tree node pointer.",
+        "correct": "bool insert_child(RadixNode* volatile* child_ptr, RadixNode* new_node) {\n    RadixNode* expected = nullptr;\n    return __atomic_compare_exchange_n(child_ptr, &expected, new_node, true, __ATOMIC_RELEASE, __ATOMIC_RELAXED);\n}",
+        "wrong": "RadixNode* child = *child_ptr;\nif (child == nullptr) {\n    *child_ptr = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node traversal paths with hazard pointers, leading to use-after-free bugs when concurrent threads delete compressed paths.",
+        "Using weak memory ordering without proper release-acquire semantics, causing threads to observe partially initialized child pointers."
+      ],
+      "best_practices": [
+        "Register thread-local hazard pointers before traversing any branch of the lock-free radix tree.",
+        "Perform deferred reclamation of retired nodes using an epoch or hazard-pointer-based garbage collection registry."
+      ],
+      "when_to_use": "Use when building high-throughput network routing tables, packet forwarding engines, or cloud infrastructure components requiring ultra-low latency prefix searches under extreme multi-threaded concurrency.",
+      "when_not_to_use": "Avoid when memory overhead of hazard pointers and atomic node allocation is prohibitive, or when simpler mutex-locked prefix trees satisfy throughput requirements.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow a reader thread to publish a pointer it is currently accessing, ensuring that concurrent deleter threads defer physical memory reclamation until no thread holds a hazard reference to that node."
+        },
+        {
+          "question": "Why are standard non-atomic checks insufficient when allocating a new child node in a concurrent radix tree?",
+          "answer": "Without a CAS primitive, two threads could simultaneously observe a null child pointer and both attempt to allocate and assign a new node, resulting in a memory leak or pointer overwrite."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Tries-based routing tables",
+        "Hazard pointer memory management",
+        "Concurrent prefix search algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:24:05.976659+00:00",
+      "run_number": 3401
     }
   ]
 }
