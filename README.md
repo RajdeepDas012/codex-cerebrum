@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3453** |
-| Last Updated | `2026-10-20T17:27:53.633521+00:00` |
-| Dataset Size | `3453 entries` |
+| Total Topics Learned | **3454** |
+| Last Updated | `2026-10-20T17:32:16.369039+00:00` |
+| Dataset Size | `3454 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2247 |
+| data-structures | 2248 |
 | trading-strategies | 228 |
 | algorithms | 212 |
 | crypto-blockchain | 159 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-bubbling and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event processing in real-time game simulation loops and concurrent background worker pools`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-access-ordering and hash-bucket-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory caching and multi-core parallel item eviction in real-time web application servers and concurrent database buffer pools`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core parallel range scans in real-time in-memory database indexes and concurrent transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Levenshtein Distance matrix using atomic substitution-cost-evaluating and minimum-path-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel fuzzy record linkage in real-time master data management systems and concurrent spell-checking pipelines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hashing and branch-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput verifiable state transitions and multi-core parallel blockchain validation in real-time distributed ledger systems and concurrent cryptographic storage engines`
-- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping-checking and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event scheduling in real-time calendar management systems and concurrent resource allocation engines`
 
 <!-- STATS_END -->
 
