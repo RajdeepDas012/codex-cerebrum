@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3441,
-    "last_updated": "2026-10-20T12:00:49.620152+00:00",
-    "total_topics_learned": 3441
+    "total_runs": 3442,
+    "last_updated": "2026-10-20T16:40:24.781703+00:00",
+    "total_topics_learned": 3442
   },
   "entries": [
     {
@@ -163885,6 +163885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T12:00:49.620133+00:00",
       "run_number": 3441
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core parallel spell-checking in real-time text autocomplete systems and concurrent dictionary search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free metric tree optimized for discrete metric spaces like Levenshtein distance. It utilizes hazard pointers and compare-and-swap (CAS) primitives to enable safe, multi-core parallel insertions and approximate string queries without traditional locking overhead.",
+      "key_points": [
+        "Leverages metric space properties (triangle inequality) to prune search spaces during concurrent fuzzy queries.",
+        "Employs atomic operations to dynamically link new child nodes to parent distance buckets without blocking other threads.",
+        "Uses hazard pointers to safely defer memory reclamation of deleted or replaced tree nodes until concurrent readers finish traversal.",
+        "Avoids race conditions during simultaneous string insertions that share identical edit distances from a parent node."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an atomic child-pointer linking step in a concurrent BK-Tree.",
+        "correct": "def atomic_link_child(parent_node, distance, new_child, cas_func):\n    while True:\n        current_child = parent_node.children.get(distance)\n        if current_child is not None:\n            return False # Collision handling required\n        if cas_func(parent_node.children, distance, None, new_child):\n            return True",
+        "wrong": "def atomic_link_child(parent_node, distance, new_child):\n    if distance not in parent_node.children:\n        parent_node.children[distance] = new_child"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal nodes with hazard pointers, leading to use-after-free errors when another thread mutates subtrees.",
+        "Assuming edit distance calculations are thread-safe without ensuring immutable string states or thread-local buffers."
+      ],
+      "best_practices": [
+        "Bound the maximum edit distance threshold early during concurrent traversal to minimize thread contention on deep subtrees.",
+        "Batch hazard pointer retirements to reduce the frequency of expensive memory reclamation synchronization steps."
+      ],
+      "when_to_use": "Use when building high-throughput spelling correctors or autocomplete engines that must handle thousands of concurrent fuzzy string matches on multi-core hardware.",
+      "when_not_to_use": "Avoid when exact string matching is required or when the dataset is small enough that a simple concurrent hash map or sequential scan outperforms metric trees.",
+      "interview_questions": [
+        {
+          "question": "How does a BK-Tree leverage the triangle inequality to accelerate fuzzy searching?",
+          "answer": "It restricts the search space by only visiting child nodes whose edge distance to the current node falls within the range [query_distance - threshold, query_distance + threshold]."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free BK-Tree?",
+          "answer": "They prevent threads from reading nodes that have been concurrently removed or replaced, safely deferring memory deallocation until all traversing threads unregister their hazards."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management",
+        "Levenshtein Automata"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T16:40:24.781683+00:00",
+      "run_number": 3442
     }
   ]
 }
