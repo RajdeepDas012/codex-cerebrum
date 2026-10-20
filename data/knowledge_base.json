@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3421,
-    "last_updated": "2026-10-20T06:16:36.159763+00:00",
-    "total_topics_learned": 3421
+    "total_runs": 3422,
+    "last_updated": "2026-10-20T06:19:46.168580+00:00",
+    "total_topics_learned": 3422
   },
   "entries": [
     {
@@ -162933,6 +162933,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-20T06:16:36.159745+00:00",
       "run_number": 3421
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Circular Ring Buffer using atomic head-tail-advancing and slot-state-flagging CAS primitives alongside hazard pointer memory reclamation for high-throughput zero-copy inter-thread messaging and multi-core parallel event streaming in real-time low-latency financial trading platforms and concurrent high-frequency telemetry logging pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free circular ring buffer uses atomic compare-and-swap (CAS) primitives to manage head and tail pointers across multiple producer and consumer threads without standard locking overhead. It achieves extreme throughput and low latency via zero-copy data passing and safe memory management through hazard pointers.",
+      "key_points": [
+        "Utilizes atomic head-tail-advancing and slot-state-flagging operations to ensure thread safety without locks.",
+        "Employs hazard pointers for safe memory reclamation in dynamic allocation scenarios without garbage collection stalls.",
+        "Achieves high-throughput inter-thread messaging by avoiding context switches and minimizing cache contention.",
+        "Enables zero-copy data transmission directly within pre-allocated shared buffer slots for maximum efficiency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot state flagging and head advancement for a lock-free ring buffer push operation.",
+        "correct": "bool push(const T& item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        Slot* slot = &buffer[current_tail & mask];\n        SlotState state = slot->state.load(std::memory_order_acquire);\n        if (state == SlotState::Empty) {\n            if (slot->state.compare_exchange_weak(state, SlotState::Writing, std::memory_order_release)) {\n                slot->data = item;\n                slot->state.store(SlotState::Full, std::memory_order_release);\n                tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed);\n                return true;\n            }\n        } else {\n            current_tail = tail.load(std::memory_order_relaxed);\n        }\n    }\n}",
+        "wrong": "bool push(const T& item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to use appropriate memory ordering flags (like acquire-release), leading to stale data visibility across cores.",
+        "Ignoring the ABA problem on pointer or index updates when dealing with recycled slot structures."
+      ],
+      "best_practices": [
+        "Align buffer metadata and cache lines to prevent false sharing between producer and consumer threads on different CPU cores.",
+        "Use relaxed memory orderings where synchronization constraints are not strictly required to maximize execution speed."
+      ],
+      "when_to_use": "When building ultra-low-latency messaging systems, real-time financial order books, or high-frequency telemetry pipelines requiring strict bounding and zero-copy performance.",
+      "when_not_to_use": "When fixed-size constraints are unacceptable, or when development simplicity outweighs the need for microsecond-level latency optimizations.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed data in a lock-free circular ring buffer?",
+          "answer": "By using atomic slot state flags (e.g., Empty, Writing, Full) combined with CAS loops that verify the slot's state before attempting modification."
+        },
+        {
+          "question": "Why are hazard pointers useful in concurrent lock-free buffer designs?",
+          "answer": "They provide a lock-free mechanism for safely tracking references to dynamically managed memory nodes, preventing premature reclamation while other threads are accessing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Hazard Pointer Memory Management",
+        "Atomic CAS Primitives"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-20T06:19:46.168559+00:00",
+      "run_number": 3422
     }
   ]
 }
