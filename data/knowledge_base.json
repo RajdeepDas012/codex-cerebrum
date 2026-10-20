@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3465,
-    "last_updated": "2026-10-20T20:53:57.384634+00:00",
-    "total_topics_learned": 3465
+    "total_runs": 3466,
+    "last_updated": "2026-10-20T20:57:08.424661+00:00",
+    "total_topics_learned": 3466
   },
   "entries": [
     {
@@ -165017,6 +165017,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T20:53:57.384616+00:00",
       "run_number": 3465
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel duplicate filtering in real-time web crawling systems and concurrent database query acceleration engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter enables high-throughput probabilistic set membership queries across multiple threads without lock contention. By leveraging atomic bit-setting CAS operations and hazard pointer memory reclamation, it guarantees safe multi-core access and accurate duplicate elimination for real-time web crawlers and databases.",
+      "key_points": [
+        "Utilizes atomic bitwise instructions and Compare-And-Swap (CAS) primitives to update filter bits safely across concurrent threads.",
+        "Employs hazard pointers to manage memory safely and prevent premature reclamation of shared structures during concurrent operations.",
+        "Delivers high-throughput probabilistic membership testing with zero false negatives and a bounded, tunable false positive rate.",
+        "Optimizes multi-core parallel duplicate filtering for high-velocity data streams in web crawling and query acceleration."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting in a concurrent Bloom filter using memory-ordered operations.",
+        "correct": "void add(std::atomic<uint64_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t bit_mask = 1ULL << (bit_index % 64);\n    uint64_t old_val = bit_array[word_idx].load(std::memory_order_relaxed);\n    while (!bit_array[word_idx].compare_exchange_weak(old_val, old_val | bit_mask, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void add(uint64_t* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t bit_mask = 1ULL << (bit_index % 64);\n    bit_array[word_idx] |= bit_mask; // Non-atomic write causes race conditions and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared bit arrays, resulting in lost bit updates under heavy thread contention.",
+        "Failing to use appropriate memory ordering constraints (e.g., acquire-release semantics), leading to visibility issues of set bits across CPU cores."
+      ],
+      "best_practices": [
+        "Pack bits into word arrays and use word-level atomic CAS loops to minimize memory bus contention.",
+        "Tune the size of the bit array and the number of hash functions based on expected ingestion volume and target false positive rate."
+      ],
+      "when_to_use": "Use when high-throughput multi-threaded applications require fast approximate membership testing and duplicate filtering with bounded space usage.",
+      "when_not_to_use": "Do not use when absolute zero false positives are required or when elements must be dynamically deleted from the filter.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent bit updates in a lock-free Bloom filter without using mutexes?",
+          "answer": "By mapping the target bit to a word in an atomic array and using a Compare-And-Swap (CAS) loop combined with bitwise OR to ensure thread-safe updates."
+        },
+        {
+          "question": "Why is standard Bloom filter deletion difficult in a lock-free concurrent implementation?",
+          "answer": "Because multiple elements can hash to the same bit position, unsetting a bit could inadvertently remove another active element, causing false negatives unless counting Bloom filters with atomic counters are used."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-Free HyperLogLog",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-20T20:57:08.424643+00:00",
+      "run_number": 3466
     }
   ]
 }
