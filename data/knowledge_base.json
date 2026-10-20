@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3452,
-    "last_updated": "2026-10-20T17:23:41.618534+00:00",
-    "total_topics_learned": 3452
+    "total_runs": 3453,
+    "last_updated": "2026-10-20T17:27:53.633521+00:00",
+    "total_topics_learned": 3453
   },
   "entries": [
     {
@@ -164403,6 +164403,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-20T17:23:41.618516+00:00",
       "run_number": 3452
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic node-access-ordering and hash-bucket-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory caching and multi-core parallel item eviction in real-time web application servers and concurrent database buffer pools",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Least Recently Used (LRU) cache that combines non-blocking hash map lookups with atomic doubly-linked list node splicing. It matters because it eliminates lock contention in multi-threaded caching layers, ensuring predictable low-latency item retrieval and memory eviction under heavy concurrent workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to update node-access ordering and splice hash buckets without acquiring global or fine-grained mutexes.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation of evicted nodes, preventing ABA problems and use-after-free races.",
+        "Maintains a concurrent hash table for $O(1)$ key lookups coupled with an approximate or lock-free ordered list representing recency.",
+        "Scales effectively across multiple CPU cores for high-throughput database buffer pools and web application session stores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual thread-safe update flow using atomic references and state checking for an LRU cache node.",
+        "correct": "class Node:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.next = None\n        self.prev = None\n\nclass LockFreeLRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.map = {}\n    def get(self, key):\n        node = self.map.get(key)\n        if not node:\n            return None\n        return node.value",
+        "wrong": "class UnsafeLRUCache:\n    def __init__(self):\n        self.cache = {}\n    def put(self, k, v):\n        self.cache[k] = v  # Not thread-safe, race conditions on concurrent puts and evictions"
+      },
+      "common_mistakes": [
+        "Failing to protect list restructuring steps with hazard pointers, leading to memory corruption when a thread reads a node concurrently being unlinked.",
+        "Attempting to atomically update both the hash map index and the doubly-linked list pointers in a single step without multi-word CAS support, causing temporary inconsistent states."
+      ],
+      "best_practices": [
+        "Use epoch-based reclamation or hazard pointers to defer freeing evicted cache nodes until all concurrent reader threads have finished accessing them.",
+        "Design the eviction policy to tolerate minor stale states in recency tracking to maximize lock-free concurrency performance."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caches, distributed session stores, or database buffer pools requiring extreme multi-core scalability and zero lock contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where standard synchronized maps or mutex-protected caches provide sufficient throughput with far less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when updating the recency order of an LRU cache node in a lock-free environment?",
+          "answer": "By using atomic CAS operations to update predecessor and successor pointers, combined with hazard pointers to ensure nodes are not reclaimed mid-traversal."
+        },
+        {
+          "question": "What is the primary challenge in combining a hash table with a doubly-linked list in a lock-free structure?",
+          "answer": "The requirement to atomically update multiple pointers across both the hash bucket and the linked list, which typically requires careful ordering or auxiliary state tracking to handle partial updates safely."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Hash Tables",
+        "Non-Blocking Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T17:27:53.633503+00:00",
+      "run_number": 3453
     }
   ]
 }
