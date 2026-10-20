@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3439,
-    "last_updated": "2026-10-20T11:54:24.079795+00:00",
-    "total_topics_learned": 3439
+    "total_runs": 3440,
+    "last_updated": "2026-10-20T11:57:34.377443+00:00",
+    "total_topics_learned": 3440
   },
   "entries": [
     {
@@ -163791,6 +163791,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T11:54:24.079776+00:00",
       "run_number": 3439
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core parallel indexing and real-time database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-Tree provides efficient multi-core parallel indexing by utilizing atomic Compare-And-Swap (CAS) operations for node splits and child pointer updates. By integrating hazard pointers, it ensures safe memory reclamation without blocking concurrent reader and writer threads in high-throughput database engines.",
+      "key_points": [
+        "Employs atomic node-splitting primitives to handle concurrent node capacity overflows safely.",
+        "Uses child-pointer-updating CAS operations to link newly split child nodes into the parent structure.",
+        "Integrates hazard pointers to prevent premature memory deallocation of nodes accessed by concurrent threads.",
+        "Maximizes multi-core parallel indexing throughput in real-time database storage engines without traditional locking overhead."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of a lock-free B-Tree node split using atomic references and hazard pointers.",
+        "correct": "class LockFreeBTreeNode:\n    def __init__(self, keys, children):\n        self.keys = AtomicReference(keys)\n        self.children = AtomicReference(children)\n\ndef split_child(parent, index, child, hazard_manager):\n    hazard_manager.protect(child)\n    mid = len(child.keys.get()) // 2\n    new_node = LockFreeBTreeNode(child.keys.get()[mid+1:], child.children.get()[mid+1:])\n    # Atomic CAS logic to insert new_node and update child pointers\n    hazard_manager.unprotect(child)",
+        "wrong": "def split_child_unsafe(parent, index, child):\n    mid = len(child.keys) // 2\n    parent.children.insert(index + 1, LockFreeBTreeNode(child.keys[mid+1:], [])) # Missing atomic operations and hazard protection leads to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, resulting in use-after-free bugs.",
+        "Performing multi-word modifications without proper state coordination, leading to inconsistent parent-child links."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection for any node before reading its child pointers or key arrays.",
+        "Design split and merge operations to be idempotent or strictly guarded by atomic CAS primitives."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, storage engines, or indexing systems requiring massive read/write concurrency across multiple CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking mechanisms provide sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to split the same B-Tree node simultaneously?",
+          "answer": "By using a Compare-And-Swap (CAS) primitive to atomically replace the target node with its split variants, ensuring only one thread succeeds while others retry."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B-Tree?",
+          "answer": "Hazard pointers track which nodes threads are actively reading, preventing memory reclamation subsystems from freeing nodes that are concurrently accessed during traversal or splitting."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Concurrent B-Link Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T11:57:34.377424+00:00",
+      "run_number": 3440
     }
   ]
 }
