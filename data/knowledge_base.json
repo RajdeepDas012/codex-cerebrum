@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3396,
-    "last_updated": "2026-10-19T21:26:32.851550+00:00",
-    "total_topics_learned": 3396
+    "total_runs": 3397,
+    "last_updated": "2026-10-20T00:11:23.895584+00:00",
+    "total_topics_learned": 3397
   },
   "entries": [
     {
@@ -161752,6 +161752,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-19T21:26:32.851527+00:00",
       "run_number": 3396
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput packet forwarding and multi-core parallel route lookups in real-time software-defined networking switches and concurrent telecom core routing engines",
+      "category": "networking",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent tries-based routing table enables lock-free IP prefix lookups by utilizing atomic pointer-swapping and prefix-matching operations combined with hazard pointer protection. This architecture prevents thread contention and memory reclamation races in high-throughput software-defined networking switches and telecom routing engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to modify trie node pointers safely without global locking mechanisms.",
+        "Employs hazard pointer memory reclamation to securely defer the deletion of trie nodes currently being traversed by concurrent worker threads.",
+        "Optimizes packet forwarding performance by enabling lock-free parallel route lookups and longest prefix matching across multiple CPU cores.",
+        "Manages structural updates like node expansion and path insertion atomically to maintain consistency in real-time data planes."
+      ],
+      "code_example": {
+        "language": "pseudo",
+        "description": "Demonstrates atomic prefix matching and pointer swapping for concurrent trie insertion",
+        "correct": "function insert_prefix(root, prefix, next_hop):\n    while true:\n        node = find_or_create_child_atomically(root, prefix)\n        hp = hazard_pointer_protect(node)\n        if node is still valid:\n            if atomic_cas(&node.next_hop, node.next_hop, next_hop):\n                hazard_pointer_release(hp)\n                return SUCCESS\n        hazard_pointer_release(hp)",
+        "wrong": "function insert_prefix(root, prefix, next_hop):\n    lock(global_mutex)\n    node = find_or_create_child(root, prefix)\n    node.next_hop = next_hop\n    unlock(global_mutex)"
+      },
+      "common_mistakes": [
+        "Reclaiming memory of deleted trie nodes immediately without checking active hazard pointers, leading to use-after-free bugs.",
+        "Failing to handle failed CAS attempts during prefix updates, resulting in infinite loops or dropped routing table updates."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer manager before traversing or modifying any trie nodes.",
+        "Keep atomic sections small and focused purely on pointer updates to minimize CAS retry overhead under heavy packet traffic."
+      ],
+      "when_to_use": "Use when building high-performance software-defined networking data planes or telecom core routers that demand line-rate concurrent route lookups without lock contention.",
+      "when_not_to_use": "Avoid in low-throughput control plane applications where simpler, lock-based structures or standard libraries are easier to maintain and debug.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when freeing nodes in a lock-free trie?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, ensuring that memory reclaimers cannot free those nodes until no hazard pointers reference them."
+        },
+        {
+          "question": "What is the primary performance bottleneck of using standard mutex locks in a high-speed routing table, and how does a lock-free trie solve it?",
+          "answer": "Mutex locks cause thread blocking and context-switching overhead under heavy multi-core contention. Lock-free tries eliminate blocking by using atomic CAS primitives for optimistic updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash maps",
+        "Hazard pointer memory management",
+        "Longest prefix matching algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:11:23.895568+00:00",
+      "run_number": 3397
     }
   ]
 }
