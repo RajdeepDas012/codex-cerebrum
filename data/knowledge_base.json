@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3409,
-    "last_updated": "2026-10-20T00:49:30.280024+00:00",
-    "total_topics_learned": 3409
+    "total_runs": 3410,
+    "last_updated": "2026-10-20T00:52:43.065771+00:00",
+    "total_topics_learned": 3410
   },
   "entries": [
     {
@@ -162365,6 +162365,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-20T00:49:30.280009+00:00",
       "run_number": 3409
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-bounding and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core parallel spell-checking queries in real-time text processing pipelines and concurrent autocorrect database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This module covers the architecture of a lock-free concurrent Burkhard-Keller (BK) tree that uses atomic primitives and hazard pointers to support high-throughput, multi-core fuzzy string matching and Levenshtein distance queries without deadlocks. It enables safe concurrent inserts and searches across shared memory space, preventing race conditions during dynamic node expansion.",
+      "key_points": [
+        "Utilizes atomic edit-distance-bounding to validate threshold boundaries during concurrent tree traversal and search operations.",
+        "Employs child-node-linking CAS operations to safely attach new metric distance children to parent nodes without explicit locks.",
+        "Integrates hazard pointers to track thread-local active node references, safely deferring memory reclamation until nodes are unlinked.",
+        "Optimizes multi-core parallel spell-checking and autocomplete pipelines by eliminating thread contention on shared metric space branches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic child-node linking using Compare-And-Swap in a concurrent BK-Tree structure",
+        "correct": "bool link_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        if (current == nullptr) {\n            if (parent->children[distance].compare_exchange_strong(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n                return true;\n            }\n        } else {\n            // Traverse or delegate to existing child node\n            return false;\n        }\n    }\n}",
+        "wrong": "bool link_child(Node* parent, int distance, Node* new_child) {\n    if (parent->children[distance] == nullptr) {\n        parent->children[distance] = new_child; // Non-atomic write causes race conditions\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing distance-indexed child pointers, leading to use-after-free vulnerabilities during concurrent structural modifications.",
+        "Assuming Levenshtein distance calculations are thread-safe when modifying shared memoization tables without proper synchronization."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for both parent and child nodes prior to evaluating edit distances in parallel query threads.",
+        "Use memory_order_acquire and memory_order_release explicitly around all atomic distance slot updates to guarantee proper visibility across cores."
+      ],
+      "when_to_use": "Use when building high-throughput real-time autocorrect systems or distributed genomic and text search engines requiring concurrent fuzzy matching under heavy read/write contention.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained or when workload consists entirely of static datasets where read-optimized arrays or simple lock-based structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to insert different words into the exact same distance slot of a BK-Tree parent node simultaneously?",
+          "answer": "By using a Compare-And-Swap (CAS) loop on the distance child pointer slot, ensuring only one thread successfully attaches its node while the other detects the change and handles collision traversal."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free BK-Tree instead of relying purely on garbage collection?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation by allowing threads to register which nodes they are currently inspecting, preventing premature deallocation by concurrent writer threads without blocking execution."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Hazard Pointer Memory Management",
+        "Levenshtein Distance Metric Spaces"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:52:43.065758+00:00",
+      "run_number": 3410
     }
   ]
 }
