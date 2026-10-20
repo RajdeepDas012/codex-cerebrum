@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3471,
-    "last_updated": "2026-10-20T23:46:24.367698+00:00",
-    "total_topics_learned": 3471
+    "total_runs": 3472,
+    "last_updated": "2026-10-20T23:49:35.145924+00:00",
+    "total_topics_learned": 3472
   },
   "entries": [
     {
@@ -165302,6 +165302,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T23:46:24.367679+00:00",
       "run_number": 3471
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting key searches and multi-core parallel frequently-accessed data optimization in real-time caching runtimes and concurrent memory management subsystems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Splay Tree is a self-adjusting binary search tree that moves frequently accessed nodes closer to the root using atomic Compare-And-Swap (CAS) primitives and node rotations. It ensures thread safety and high-throughput data access in multi-threaded environments without coarse-grained locking, relying on hazard pointers for safe memory reclamation.",
+      "key_points": [
+        "Utilizes atomic node-rotation and zig-zag-splicing CAS primitives to restructure the tree layout lock-free.",
+        "Employs hazard pointers to safely manage node deletion and prevent memory corruption during concurrent structural modifications.",
+        "Brings recently accessed keys closer to the root, optimizing performance for workloads with skewed, temporal access patterns.",
+        "Eliminates thread contention common in global-lock binary search trees by allowing fine-grained optimistic traversals."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection around a concurrent node access and splay operation.",
+        "correct": "void* hazard_splay_search(HazardPointerDomain& hp_domain, std::atomic<Node*>& root, int key) {\n    HazardPointer* hp = hp_domain.acquire();\n    while (true) {\n        Node* curr = hp->protect(root);\n        if (!curr) { hp_domain.release(hp); return nullptr; }\n        if (curr->key == key) { hp_domain.release(hp); return curr; }\n        // Proceed with traversal and atomic rotation\n    }\n}",
+        "wrong": "Node* unsafe_search(std::atomic<Node*>& root, int key) {\n    Node* curr = root.load();\n    while (curr && curr->key != key) {\n        curr = (key < curr->key) ? curr->left.load() : curr->right.load();\n    }\n    return curr; // Risk of use-after-free if another thread frees curr concurrently\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to race conditions and use-after-free bugs.",
+        "Attempting full global tree rebalancing with simple CAS instructions, causing extensive retry loops and degraded throughput under high contention."
+      ],
+      "best_practices": [
+        "Keep hazard pointer protection windows as short as possible to minimize memory reclamation latency.",
+        "Design tree rotation steps as small, atomic delta updates that can fail and retry gracefully if structural interference occurs."
+      ],
+      "when_to_use": "Use when building concurrent caching runtimes or memory managers where access patterns are heavily skewed and frequently accessed nodes benefit from self-adjustment.",
+      "when_not_to_use": "Avoid when access distributions are uniform, as the overhead of frequent tree restructuring and atomic rotations outweighs the benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during lock-free splay tree node deletion?",
+          "answer": "Hazard pointers allow threads to announce which nodes they are currently accessing, ensuring that a node is only reclaimed by the memory manager after all threads have unannounced it."
+        },
+        {
+          "question": "Why is implementing a lock-free splay tree significantly more complex than a lock-free stack or queue?",
+          "answer": "Splay trees require non-local structural modifications (rotations and splicing) that span multiple parent-child pointers, which cannot always be updated atomically in a single CAS instruction."
+        }
+      ],
+      "related_topics": [
+        "Concurrent B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T23:49:35.145905+00:00",
+      "run_number": 3472
     }
   ]
 }
