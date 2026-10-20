@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3446,
-    "last_updated": "2026-10-20T16:57:53.179513+00:00",
-    "total_topics_learned": 3446
+    "total_runs": 3447,
+    "last_updated": "2026-10-20T17:02:07.439518+00:00",
+    "total_topics_learned": 3447
   },
   "entries": [
     {
@@ -164121,6 +164121,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T16:57:53.179492+00:00",
       "run_number": 3446
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components analysis and multi-core parallel equivalence relation tracking in real-time social network friend suggestion engines and concurrent image segmentation processing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Disjoint Set (Union-Find) data structure utilizing atomic compare-and-swap (CAS) primitives for lock-free path compression and rank-based unions. By integrating hazard pointers, it ensures safe memory reclamation, enabling high-throughput parallel tracking of equivalence relations without coarse-grained locking.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to update parent pointers and ranks safely across multiple threads without locks.",
+        "Implements lock-free path compression to flatten tree structures during `find` operations, reducing future traversal depth atomically.",
+        "Employs rank-based union heuristics via atomic updates to attach smaller trees under larger ones, maintaining balanced hierarchies.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation and prevent ABA problems and use-after-free race conditions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual node structure and atomic hazard-protected path compression for a concurrent Union-Find set.",
+        "correct": "class Node:\n    def __init__(self, parent):\n        self.parent = parent\n        self.rank = 0\n\ndef atomic_find(node, hazard_manager):\n    while True:\n        p = hazard_manager.protect(node.parent)\n        if p == node:\n            return node\n        pp = hazard_manager.protect(p.parent)\n        # Atomic CAS for path compression\n        if compare_and_swap(node, 'parent', p, pp):\n            hazard_manager.release(p)\n        node = pp",
+        "wrong": "def unsafe_find(node):\n    # Missing synchronization causes race conditions and infinite loops during concurrent path compression\n    if node.parent != node:\n        node.parent = unsafe_find(node.parent)\n    return node.parent"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate node references with hazard pointers, leading to use-after-free errors when another thread frees or reassigns nodes.",
+        "Implementing path compression without atomic retry loops, which can overwrite concurrent union operations and corrupt set hierarchies."
+      ],
+      "best_practices": [
+        "Always wrap node pointer reads in hazard pointer protection domains before traversing references in concurrent environments.",
+        "Use bounded retry loops with backoff strategies on CAS failures to prevent CPU saturation under high contention."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously perform disjoint-set operations (find and union) on massive graphs with high read and write contention.",
+      "when_not_to_use": "Avoid when single-threaded performance is paramount or when a simple global mutex lock introduces negligible contention.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates during lock-free path compression?",
+          "answer": "By using tagged pointers (version counts combined with the memory address) or hazard pointers that track active thread references to ensure nodes are not recycled prematurely."
+        },
+        {
+          "question": "Why is standard path compression challenging in a lock-free Union-Find implementation?",
+          "answer": "Because multiple threads may simultaneously attempt to update the parent pointer of the same node to different ancestors, requiring atomic CAS loops to resolve conflicts safely."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Atomic Compare-And-Swap (CAS) Primitives",
+        "Parallel Graph Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T17:02:07.439498+00:00",
+      "run_number": 3447
     }
   ]
 }
