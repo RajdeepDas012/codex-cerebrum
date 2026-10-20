@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3399,
-    "last_updated": "2026-10-20T00:17:47.371687+00:00",
-    "total_topics_learned": 3399
+    "total_runs": 3400,
+    "last_updated": "2026-10-20T00:20:56.624949+00:00",
+    "total_topics_learned": 3400
   },
   "entries": [
     {
@@ -161893,6 +161893,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-20T00:17:47.371671+00:00",
       "run_number": 3399
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Token Bucket rate limiter using atomic token-refilling and capacity-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput traffic shaping and multi-core parallel request throttling in real-time API gateways and concurrent cloud microservices architectures",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This architecture implements a lock-free Token Bucket rate limiter utilizing Compare-And-Swap (CAS) primitives and hazard pointers to achieve ultra-high-throughput request throttling. It ensures safe, scalable concurrent token refilling and capacity bounding across multiple cores without utilizing blocking synchronization mechanisms.",
+      "key_points": [
+        "Employs atomic token-refilling and capacity-bounding CAS operations to manage bucket states across concurrent threads safely.",
+        "Utilizes hazard pointers for lock-free memory reclamation, preventing race conditions during dynamic rate limit state modifications.",
+        "Maximizes throughput in high-load API gateways by eliminating thread contention and lock overhead during request evaluation.",
+        "Handles time-based token accumulation accurately through fine-grained monotonic timestamps and non-blocking state updates."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a conceptual lock-free token bucket state update loop using atomic CAS operations.",
+        "correct": "while True:\n    current = load_atomic(bucket)\n    elapsed = now() - current.timestamp\n    new_tokens = min(capacity, current.tokens + elapsed * refill_rate)\n    if new_tokens < required:\n        return False\n    updated = BucketState(new_tokens - required, now())\n    if compare_and_swap(bucket, current, updated):\n        return True",
+        "wrong": "with lock:\n    tokens -= required"
+      },
+      "common_mistakes": [
+        "Failing to bound maximum token capacity accurately during long idle periods, leading to burst limit violations.",
+        "Using traditional mutex locks under high core counts, resulting in thread starvation and severe latency spikes."
+      ],
+      "best_practices": [
+        "Ensure monotonic clocks are used for time delta calculations to prevent clock skew issues.",
+        "Design atomic state structs carefully to fit within native word-size bounds for efficient hardware CAS execution."
+      ],
+      "when_to_use": "Ideal for high-throughput cloud microservices and API gateways requiring strict rate-limiting with minimal latency under extreme concurrent loads.",
+      "when_not_to_use": "Inappropriate for low-concurrency applications where simple mutex-based limiters offer sufficient performance with less code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the token count from exceeding the bucket capacity during refilling without using locks?",
+          "answer": "By applying a mathematical min() function against the pre-determined maximum capacity inside the atomic CAS calculation loop before committing the state."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in a lock-free token bucket implementation?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation with extremely low latency overhead, avoiding the unpredictable pause times associated with traditional GC."
+        }
+      ],
+      "related_topics": [
+        "Leaky Bucket Rate Limiter",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-20T00:20:56.624936+00:00",
+      "run_number": 3400
     }
   ]
 }
