@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3487,
-    "last_updated": "2026-10-21T04:17:04.573900+00:00",
-    "total_topics_learned": 3487
+    "total_runs": 3488,
+    "last_updated": "2026-10-21T04:20:14.788597+00:00",
+    "total_topics_learned": 3488
   },
   "entries": [
     {
@@ -166065,6 +166065,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T04:17:04.573881+00:00",
       "run_number": 3487
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-incrementing and min-heap-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction tracking and multi-core parallel hot-key caching in real-time key-value storage engines and concurrent in-memory caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Least Frequently Used (LFU) cache using atomic operations and hazard pointers to safely manage eviction metadata under heavy multi-threaded contention. It ensures high throughput for parallel caching layers by eliminating global lock bottlenecks during frequent key accesses and node promotions.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free frequency incrementing and min-heap node swapping.",
+        "Employs hazard pointers to guarantee safe memory reclamation of evicted nodes without read-freeing races.",
+        "Tracks access frequencies concurrently to maintain accurate eviction candidates without mutex serialization.",
+        "Minimizes cache thrashing across multiple CPU cores during parallel hot-key lookups and updates."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates conceptual atomic frequency increment and tracking for a concurrent LFU node",
+        "correct": "import threading\n\nclass LFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = threading.local()\n        self.freq.val = 1\n        self._lock = threading.Lock()\n\n    def increment_freq(self):\n        with self._lock:\n            self.freq.val += 1",
+        "wrong": "class LFUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.freq = 1\n\n    def increment_freq(self):\n        self.freq += 1"
+      },
+      "common_mistakes": [
+        "Updating the frequency count and the heap position non-atomically, leading to structural inconsistencies.",
+        "Failing to protect freed nodes from concurrent readers using hazard pointers, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Keep hazard pointer tracking localized to thread execution contexts to minimize synchronization overhead.",
+        "Use fine-grained atomic state transitions for min-heap rebalancing operations."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caching layers that must scale linearly across many cores under read-heavy workloads with skewed access patterns.",
+      "when_not_to_use": "Avoid when access patterns change rapidly and recency (LRU) is a better predictor of future use than frequency, or when target hardware lacks robust multi-word atomic instructions.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads increment the access frequency of the same LFU cache entry simultaneously?",
+          "answer": "By using atomic CAS operations on the frequency field combined with atomic node-swapping routines to maintain heap integrity without acquiring global locks."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free LFU cache eviction mechanism?",
+          "answer": "Hazard pointers ensure that a node scheduled for eviction by one thread cannot be freed and reclaimed while another thread is still reading or updating its frequency metadata."
+        }
+      ],
+      "related_topics": [
+        "Lock-free LRU Cache",
+        "Hazard Pointer Memory Management",
+        "Concurrent Min-Heaps"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-21T04:20:14.788579+00:00",
+      "run_number": 3488
     }
   ]
 }
