@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3513,
-    "last_updated": "2026-10-21T10:37:57.782560+00:00",
-    "total_topics_learned": 3513
+    "total_runs": 3514,
+    "last_updated": "2026-10-21T10:41:29.697193+00:00",
+    "total_topics_learned": 3514
   },
   "entries": [
     {
@@ -167296,6 +167296,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T10:37:57.782537+00:00",
       "run_number": 3513
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-height-CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value storage and multi-core parallel sorted range scans in real-time transactional databases and concurrent in-memory caching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent skip list utilizing atomic compare-and-swap operations for node insertion, deletion, and forward pointer splicing. It ensures safe memory reclamation via hazard pointers, enabling high-performance parallel sorted range queries without blocking threads.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives to modify forward pointers across multiple levels without global locks.",
+        "Employs hazard pointers to safely manage node retirement and reclamation in a concurrent multi-threaded environment.",
+        "Maintains probabilistic tower heights per node to achieve expected O(log n) time complexity for search, insert, and delete operations.",
+        "Supports multi-core parallel sorted range scans by traversing next-pointers safely while concurrent mutations occur."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward pointer splicing using CAS in a concurrent skip list node insertion.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level].store(curr, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(curr, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level_wrong(Node* pred, Node* curr, Node* newNode, int level) {\n    pred->next[level] = newNode;\n    newNode->next[level] = curr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically deleted with a marked pointer bit before physically unlinking them via CAS.",
+        "Improper memory ordering during pointer updates, leading to stale reads or memory visibility issues across threads."
+      ],
+      "best_practices": [
+        "Always protect shared node references with hazard pointers before traversing or reading pointer fields to prevent use-after-free bugs.",
+        "Use acquire-release memory semantics on pointer loads and stores to ensure proper synchronization of node payloads."
+      ],
+      "when_to_use": "Use when you need high-throughput, ordered key-value storage with frequent concurrent reads, inserts, and range queries where blocking locks cause bottlenecks.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained, as skip lists require extra memory overhead for forward pointers and tower height variations.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic pointer updates in a lock-free skip list?",
+          "answer": "By using tagged pointers (combining the node pointer with a version counter) or hazard pointers that explicitly protect nodes from being recycled while a thread holds a reference."
+        },
+        {
+          "question": "Why is logical deletion required before physical removal in a concurrent lock-free skip list?",
+          "answer": "Logical deletion marks a node as deleted by setting a bit in its pointer field, preventing other threads from inserting new nodes after it while concurrent clean-up operations physically splice out the node."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Concurrent B+ Trees",
+        "Lock-Free Priority Queues"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-21T10:41:29.697172+00:00",
+      "run_number": 3514
     }
   ]
 }
