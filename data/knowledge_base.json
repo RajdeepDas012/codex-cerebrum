@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3505,
-    "last_updated": "2026-10-21T10:12:34.618761+00:00",
-    "total_topics_learned": 3505
+    "total_runs": 3506,
+    "last_updated": "2026-10-21T10:15:45.537352+00:00",
+    "total_topics_learned": 3506
   },
   "entries": [
     {
@@ -166917,6 +166917,55 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-21T10:12:34.618739+00:00",
       "run_number": 3505
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node-linking and state-root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic account state proofs and multi-core parallel blockchain transaction validation in real-time decentralized ledger runtimes and concurrent verifiable state storage engines",
+      "category": "crypto-blockchain",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent data structure that combines Patricia trie path-compression with cryptographic Merkle tree hashing, enabling safe multi-core access via lock-free atomic Compare-And-Swap (CAS) primitives and hazard pointer-based memory management. It is crucial for high-throughput blockchain execution engines to generate verifiable account state proofs in parallel without lock contention.",
+      "key_points": [
+        "Utilizes atomic branch-node-linking and state-root-updating CAS primitives to allow multiple threads to modify and commit trie nodes simultaneously without global locks.",
+        "Integrates cryptographic hashing (e.g., Keccak/SHA-256) at every branch level to produce verifiable state roots and Merkle inclusion proofs.",
+        "Employs hazard pointer memory reclamation to safely manage node deletions and updates in a lock-free environment without premature memory deallocation bugs.",
+        "Supports parallel multi-core transaction validation by isolating independent state modification paths and resolving update conflicts using retry loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic branch-node linking via CAS and hazard pointer protection during parallel Merkle Patricia Trie node updates.",
+        "correct": "bool update_node(AtomicNodePtr& parent_link, const NibblePath& path, Hash new_hash) {\n    HazardPointer hp;\n    while (true) {\n        Node* current = hp.protect(parent_link);\n        if (!current) return false;\n        Node* updated = current->clone_and_modify(path, new_hash);\n        if (parent_link.compare_exchange_weak(current, updated)) {\n            hp.reclaim(current);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_node(Node* parent, NibblePath path, Hash new_hash) {\n    std::lock_guard<std::mutex> lock(parent->mu);\n    parent->child = new Node(new_hash); // Missing lock-free CAS and hazard pointers, causing race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers before reading child pointers, leading to use-after-free vulnerabilities when other threads mutate the trie.",
+        "Neglecting to recompute and propagate cryptographic hashes upward to the state root after executing a deep node update.",
+        "Using blocking synchronization primitives (like std::mutex) inside the inner retry loop, defeating the purpose of lock-free design."
+      ],
+      "best_practices": [
+        "Keep CAS retry loops tight and back off appropriately under high thread contention to reduce CPU cache thrashing.",
+        "Batch hazard pointer registrations and defer deallocations using epoch-based or hazard-pointer-based deferred reclamation lists.",
+        "Ensure immutable node design where modified subpaths generate newly allocated subtrees rather than mutating shared memory in place."
+      ],
+      "when_to_use": "Use when building high-performance blockchain node runtimes, parallel transaction execution engines, or verifiable databases requiring heavy concurrent state reads and writes with cryptographic integrity proofs.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple key-value stores where the overhead of lock-free atomic primitives, path compression, and cryptographic hashing introduces unnecessary complexity and latency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free Merkle Patricia Trie?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently reading, preventing other threads from prematurely freeing or recycling those nodes via memory reclamation until the reader releases its hazard pointer."
+        },
+        {
+          "question": "Why is structural sharing important when performing lock-free updates on a cryptographic trie?",
+          "answer": "Structural sharing allows threads to create new versions of modified nodes and paths while leaving unmodified subtrees untouched, minimizing memory allocation overhead and ensuring safe concurrent reads without deep-copying the entire structure."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash tables",
+        "Hazard pointer memory reclamation algorithms",
+        "Cryptographic accumulator and Merkle tree proofs"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-21T10:15:45.537330+00:00",
+      "run_number": 3506
     }
   ]
 }
