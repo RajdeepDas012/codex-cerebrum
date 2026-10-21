@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3516,
-    "last_updated": "2026-10-21T15:09:31.271054+00:00",
-    "total_topics_learned": 3516
+    "total_runs": 3517,
+    "last_updated": "2026-10-21T15:13:51.971871+00:00",
+    "total_topics_learned": 3517
   },
   "entries": [
     {
@@ -167441,6 +167441,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T15:09:31.271034+00:00",
       "run_number": 3516
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-allocation and bounding-box-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-object collision detection and multi-core parallel spatial partitioning in real-time multiplayer game servers and concurrent physics simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Spatial Index Grid partitions continuous multi-dimensional space into discrete cells using atomic primitives and hazard pointers to safely manage dynamic object references across multiple threads. This architecture is vital for avoiding thread contention in high-frequency update loops typical of large-scale physical simulations and multiplayer environments.",
+      "key_points": [
+        "Utilizes atomic cell-allocation and bounding-box mapping to map moving objects to discrete grid buckets without locking.",
+        "Employs compare-and-swap (CAS) primitives for thread-safe insertion and removal of entity references within grid nodes.",
+        "Integrates hazard pointer memory reclamation to securely free grid cell nodes and object lists without premature deallocation or memory leaks.",
+        "Enables high-throughput multi-core parallel spatial queries to accelerate broad-phase collision detection."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic pointer assignment for inserting an object into a spatial grid cell",
+        "correct": "bool insert_object(std::atomic<Node*>& cell_head, Node* new_node) {\n    Node* old_head = cell_head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = old_head;\n    } while (!cell_head.compare_exchange_weak(old_head, new_node,\n        std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool insert_object_unsafe(Node*& cell_head, Node* new_node) {\n    new_node->next = cell_head;\n    cell_head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free bugs.",
+        "Using strong memory ordering everywhere, which severely degrades multi-core scalability due to unnecessary cache line invalidations."
+      ],
+      "best_practices": [
+        "Use acquire-release semantics appropriately to balance thread synchronization overhead with memory visibility guarantees.",
+        "Fine-tune the grid resolution relative to average object sizes to minimize multi-cell spanning and redundant collision checks."
+      ],
+      "when_to_use": "Use when building high-performance multiplayer game servers or physics engines that demand scalable, lock-free parallel updates across thousands of moving entities.",
+      "when_not_to_use": "Avoid when the dataset has a heavily skewed spatial distribution causing extreme hot-spot contention on a few grid cells, or in single-threaded applications where locks introduce no overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free spatial grid?",
+          "answer": "Hazard pointers allow threads to register ownership of a node they are currently reading, preventing other threads from recycling or freeing that memory via memory reclamation epochs until the reader unprotects it."
+        },
+        {
+          "question": "Why is a grid-based spatial index preferred over a dynamic BVH in certain high-frequency concurrent physics updates?",
+          "answer": "A grid provides $O(1)$ spatial mapping via direct coordinate hashing, avoiding complex tree-balancing locks and structural re-allocations that can bottleneck multi-core scaling during rapid translation updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Parallel Broad-Phase Collision Detection"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T15:13:51.971852+00:00",
+      "run_number": 3517
     }
   ]
 }
