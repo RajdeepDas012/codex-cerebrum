@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3477,
-    "last_updated": "2026-10-21T00:05:41.777528+00:00",
-    "total_topics_learned": 3477
+    "total_runs": 3478,
+    "last_updated": "2026-10-21T00:08:51.999674+00:00",
+    "total_topics_learned": 3478
   },
   "entries": [
     {
@@ -165591,6 +165591,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-10-21T00:05:41.777509+00:00",
       "run_number": 3477
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and union-by-rank CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class querying and multi-core parallel connected components analysis in real-time social network graph partitioning and concurrent compiler type inference engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Disjoint-Set data structure that enables parallel execution of Union and Find operations without traditional coarse-grained locks. By combining atomic primitives (CAS) for optimistic path compression and union-by-rank alongside hazard pointers, it ensures high throughput and memory safety in multi-threaded environments.",
+      "key_points": [
+        "Utilizes compare-and-swap (CAS) primitives to atomically update parent pointers during path compression and set unions.",
+        "Employs union-by-rank heuristics to keep the tree shallow and reduce contention during concurrent modifications.",
+        "Integrates hazard pointers to safely manage node reclamation and prevent ABA problems or use-after-free bugs in a lock-free context.",
+        "Enables scalable parallel execution for applications such as dynamic graph connectivity, image segmentation, and type inference."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of a lock-free Disjoint-Set node update using atomic operations.",
+        "correct": "class Node:\n    def __init__(self, parent, rank):\n        self.parent = parent\n        self.rank = rank\n\ndef atomic_find(node, hazard_manager):\n    current = node\n    while True:\n        hazard_manager.protect(current)\n        p = current.parent\n        if p == current:\n            return current\n        # Attempt path compression atomically\n        if current.parent == p:\n            compare_and_swap(current, 'parent', p, p.parent)\n        current = p",
+        "wrong": "def unsafe_find(node):\n    if node.parent != node:\n        node.parent = unsafe_find(node.parent) # Race condition on concurrent updates\n    return node.parent"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when updating parent pointers via CAS, leading to silent data corruption.",
+        "Overlooking memory reclamation hazards, which can cause use-after-free errors when nodes are concurrently compressed or merged."
+      ],
+      "best_practices": [
+        "Protect node references with hazard pointers before traversing parent chains to ensure safe memory access.",
+        "Design retry loops carefully to handle contention gracefully when multiple threads attempt to update the same root or parent."
+      ],
+      "when_to_use": "Use this data structure when multiple threads need to concurrently query and update equivalence classes at high throughput, such as in parallel graph processing or concurrent compiler optimizations.",
+      "when_not_to_use": "Avoid when the workload is strictly single-threaded, where standard, simpler pointer-based Disjoint-Set implementations offer lower overhead and better cache locality.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating parent pointers using CAS in a lock-free Disjoint-Set?",
+          "answer": "By pairing the parent pointer with a version counter or sequence tag into a single atomic word (or utilizing hazard pointers with epoch-based reclamation to ensure nodes are not prematurely recycled)."
+        },
+        {
+          "question": "Why is path compression challenging to implement in a lock-free environment?",
+          "answer": "Because multiple threads may simultaneously attempt to re-route parent pointers for the same node chain, requiring careful retry logic and atomic CAS loops to ensure structural integrity is maintained without locking."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Graph Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T00:08:51.999656+00:00",
+      "run_number": 3478
     }
   ]
 }
