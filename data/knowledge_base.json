@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3508,
-    "last_updated": "2026-10-21T10:22:05.530912+00:00",
-    "total_topics_learned": 3508
+    "total_runs": 3509,
+    "last_updated": "2026-10-21T10:25:16.563917+00:00",
+    "total_topics_learned": 3509
   },
   "entries": [
     {
@@ -167061,6 +167061,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T10:22:05.530889+00:00",
       "run_number": 3508
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Universal Hashing Map using atomic bucket-resizing and collision-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic key-value storage and multi-core parallel load balancing in real-time in-memory caching systems and concurrent distributed databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free universal hash map that utilizes atomic Compare-And-Swap (CAS) primitives and hazard pointers. It guarantees safe concurrent bucket resizing and collision resolution without locking, ensuring high scalability in multi-threaded environments.",
+      "key_points": [
+        "Uses universal hash families to minimize worst-case collision probabilities across arbitrary key sets.",
+        "Employs atomic CAS operations to safely link collision chains and manage dynamic bucket array resizing.",
+        "Integrates hazard pointers to safely reclaim memory from deleted or migrated nodes without garbage collection pauses.",
+        "Achieves high-throughput parallel execution suited for high-load caching layers and distributed key-value engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bucket node insertion into a lock-free hash map collision chain.",
+        "correct": "bool insert(std::atomic<Node*>& bucket, K key, V val) {\n    Node* newNode = new Node(key, val);\n    while (true) {\n        Node* oldHead = bucket.load(std::memory_order_acquire);\n        newNode->next = oldHead;\n        if (bucket.compare_exchange_weak(oldHead, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node** bucket, K key, V val) {\n    Node* newNode = new Node(key, val);\n    newNode->next = *bucket;\n    *bucket = newNode; // Not atomic, leads to race conditions and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversal pointers with hazard pointers, causing use-after-free bugs during concurrent resizing.",
+        "Using weak universal hash functions vulnerable to denial-of-service collision attacks."
+      ],
+      "best_practices": [
+        "Protect read operations by registering pointers in a thread-local hazard pointer domain before traversing collision chains.",
+        "Implement incremental resizing strategies to prevent thread synchronization bottlenecks during major capacity expansions."
+      ],
+      "when_to_use": "Use when building ultra-low-latency in-memory caches or state stores requiring massive concurrency and non-blocking progress guarantees.",
+      "when_not_to_use": "Avoid in single-threaded environments or resource-constrained embedded systems where simpler locks or standard libraries suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during lock-free node deletion and bucket resizing?",
+          "answer": "Hazard pointers publish pointers that a thread is currently accessing, forcing other threads to defer memory reclamation of those nodes until they are no longer marked as hazardous."
+        },
+        {
+          "question": "Why are universal hash families preferred over standard cryptographic hashes in high-performance concurrent hash maps?",
+          "answer": "Universal hash families provide strong mathematical guarantees against worst-case collision patterns while executing significantly faster than cryptographic hashing functions."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Universal Hashing and Load Balancing Strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T10:25:16.563895+00:00",
+      "run_number": 3509
     }
   ]
 }
