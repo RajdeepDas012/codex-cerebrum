@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3553,
-    "last_updated": "2026-10-21T23:37:45.077857+00:00",
-    "total_topics_learned": 3553
+    "total_runs": 3554,
+    "last_updated": "2026-10-21T23:40:54.561625+00:00",
+    "total_topics_learned": 3554
   },
   "entries": [
     {
@@ -169197,6 +169197,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-21T23:37:45.077835+00:00",
       "run_number": 3553
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC (Multi-Producer Single-Consumer) Queue using atomic ring-buffer-indexing and tail-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread message passing and multi-core parallel event streaming in real-time asynchronous logging frameworks and concurrent actor execution runtimes",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a high-throughput, lock-free Multi-Producer Single-Consumer queue utilizing bounded ring-buffers and atomic primitives. It is vital for enabling fast, contention-resilient message passing across multiple worker threads without relying on heavy mutex locks.",
+      "key_points": [
+        "Utilizes atomic ring-buffer indexing to safely coordinate writes across multiple concurrent producer threads.",
+        "Employs compare-and-swap (CAS) primitives on tail-advancing operations to guarantee progress without deadlocks.",
+        "Restricts consumption to a single thread (MPSC), drastically simplifying the consumer side and eliminating multi-consumer synchronization overhead.",
+        "Integrates hazard pointer memory reclamation to securely manage shared node states and prevent memory leaks or use-after-free bugs."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a simplified atomic producer enqueue operation using a ring buffer index.",
+        "correct": "bool enqueue(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (!tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n        // retry on CAS failure\n    }\n    buffer[current_tail % CAPACITY] = item;\n    return true;\n}",
+        "wrong": "bool enqueue(T item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle memory ordering correctly, leading to reordering bugs on weak-memory architectures like ARM.",
+        "Ignoring the queue capacity bounds, which causes buffer overflows or silent data corruption."
+      ],
+      "best_practices": [
+        "Use appropriate memory barriers (acquire-release semantics) to balance performance and synchronization correctness.",
+        "Minimize contention on atomic variables by utilizing backoff strategies during high-contention spikes."
+      ],
+      "when_to_use": "When you have multiple producer threads streaming events or messages to a single dedicated consumer thread with low latency requirements.",
+      "when_not_to_use": "When you have multiple consumer threads pulling tasks from the same queue, which requires an MPMC queue instead.",
+      "interview_questions": [
+        {
+          "question": "Why is an MPSC queue simpler to implement lock-free than an MPMC queue?",
+          "answer": "Because there is only a single consumer, queue head updates do not require atomic CAS operations, eliminating the ABA problem and complex synchronization on the dequeue side."
+        },
+        {
+          "question": "What is the purpose of using hazard pointers in a lock-free queue?",
+          "answer": "Hazard pointers allow threads to safely declare which memory nodes they are currently accessing, preventing other threads from prematurely freeing or recycling those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free SPSC Queue",
+        "Hazard Pointer Memory Management",
+        "Atomic Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-21T23:40:54.561579+00:00",
+      "run_number": 3554
     }
   ]
 }
