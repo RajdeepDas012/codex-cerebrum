@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3478,
-    "last_updated": "2026-10-21T00:08:51.999674+00:00",
-    "total_topics_learned": 3478
+    "total_runs": 3479,
+    "last_updated": "2026-10-21T00:12:05.779147+00:00",
+    "total_topics_learned": 3479
   },
   "entries": [
     {
@@ -165638,6 +165638,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T00:08:51.999656+00:00",
       "run_number": 3478
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-navigating and state-transition-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core parallel intrusion detection in real-time cybersecurity log monitors and concurrent content filtering engines",
+      "category": "security",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Aho-Corasick string matching automaton tailored for multi-core environments. By combining atomic Compare-And-Swap (CAS) operations with hazard pointers, it allows multiple threads to search texts and dynamically expand states without blocking or incurring race conditions, making it essential for high-speed threat scanning.",
+      "key_points": [
+        "Utilizes atomic primitives to safely build and traverse state transitions and failure links concurrently across threads.",
+        "Employs hazard pointers to guarantee safe memory reclamation of dynamically added state nodes without explicit global locking.",
+        "Enables simultaneous multi-pattern dictionary matching ideal for high-throughput payload analysis and intrusion detection systems.",
+        "Maintains lock-free progress guarantees, preventing thread starvation and priority inversion during peak telemetry loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe state acquisition using an atomic CAS pointer update in a concurrent Aho-Corasick node transition table.",
+        "correct": "AcNode* expected = nullptr;\nif (node->transitions[char_idx].compare_exchange_strong(expected, new_node)) {\n    // Successfully allocated new state transition\n} else {\n    // Another thread created it first; clean up new_node and use expected\n    delete new_node;\n}",
+        "wrong": "AcNode* next_node = node->transitions[char_idx];\nif (next_node == nullptr) {\n    node->transitions[char_idx] = new AcNode(); // Non-atomic check-then-act race condition\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect state node reads with hazard pointers during failure-link traversal, leading to use-after-free bugs.",
+        "Forgetting to handle race conditions where multiple threads attempt to insert the same child state simultaneously via CAS."
+      ],
+      "best_practices": [
+        "Retain thread-local hazard pointer records to ensure unlinked nodes are only freed after all accessor threads release them.",
+        "Pre-allocate common transition table blocks or use lock-free memory pools to reduce latency during dynamic automaton expansion."
+      ],
+      "when_to_use": "Use when multiple worker threads must scan massive streams of incoming text or network packets against thousands of signatures concurrently with minimal latency.",
+      "when_not_to_use": "Avoid when the pattern set is static and simple, or when a single-threaded implementation fully satisfies throughput requirements without added synchronization complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle simultaneous creation of the same child transition by two different threads in a lock-free Aho-Corasick tree?",
+          "answer": "Use atomic CAS (`compare_exchange_strong`) to install the new node pointer; if it fails, another thread succeeded, so you discard your newly allocated node and use the newly established reference."
+        },
+        {
+          "question": "Why are standard garbage collection mechanisms or simple `delete` calls dangerous when updating failure links in a concurrent automaton?",
+          "answer": "Another thread might be actively traversing those failure links while you update or free a node, resulting in race conditions and use-after-free segmentation faults unless hazard pointers or epoch-based reclamation is used."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Trie and Radix Tree Architectures",
+        "Parallel Deep Packet Inspection (DPI) Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T00:12:05.779126+00:00",
+      "run_number": 3479
     }
   ]
 }
