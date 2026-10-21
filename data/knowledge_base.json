@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3491,
-    "last_updated": "2026-10-21T04:29:43.572501+00:00",
-    "total_topics_learned": 3491
+    "total_runs": 3492,
+    "last_updated": "2026-10-21T04:32:53.575770+00:00",
+    "total_topics_learned": 3492
   },
   "entries": [
     {
@@ -166254,6 +166254,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T04:29:43.572484+00:00",
       "run_number": 3491
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-wrapping and cursor-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread messaging and multi-core parallel event distribution in real-time financial trading systems and concurrent high-frequency messaging pipelines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building an ultra-low latency, lock-free ring buffer modeled after the LMAX Disruptor pattern. It employs atomic sequence wrapping and cursor advancing via Compare-And-Swap (CAS) alongside hazard pointers to achieve high-throughput inter-thread event streaming without traditional mutex contention.",
+      "key_points": [
+        "Utilizes a pre-allocated circular array buffer to eliminate dynamic memory allocation overhead during runtime execution.",
+        "Employs atomic sequence cursors and sequence-wrapping checks to coordinate producers and consumers without locks.",
+        "Integrates hazard pointers to safely manage concurrent node access and memory reclamation across multiple competing threads.",
+        "Prevents false sharing by aligning sequence counters and buffer slots to CPU cache line boundaries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic cursor advancement and sequence wrapping for a lock-free ring buffer producer.",
+        "correct": "#include <atomic>\n#include <vector>\n\ntemplate <typename T, size_t Capacity>\nclass RingBuffer {\n    struct Entry { std::atomic<size_t> sequence{0}; T data; };\n    std::vector<Entry> buffer;\n    std::atomic<size_t> cursor{0};\npublic:\n    RingBuffer() : buffer(Capacity) {\n        for(size_t i=0; i<Capacity; ++i) buffer[i].sequence.store(i);\n    }\n    bool publish(const T& item, size_t current_tail) {\n        size_t current = cursor.load(std::memory_order_relaxed);\n        if (current - current_tail >= Capacity) return false;\n        if (cursor.compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current % Capacity].data = item;\n            buffer[current % Capacity].sequence.store(current + 1, std::memory_order_release);\n            return true;\n        }\n        return false;\n    }\n};",
+        "wrong": "class BadRingBuffer {\n    std::mutex mtx;\n    std::queue<int> q;\npublic:\n    void push(int val) {\n        std::lock_guard<std::mutex> lock(mtx);\n        q.push(val);\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to pad atomic variables or buffer entries to cache line sizes, resulting in severe performance degradation due to false sharing.",
+        "Using incorrect memory ordering constraints (e.g., memory_order_relaxed where acquire-release semantics are strictly required)."
+      ],
+      "best_practices": [
+        "Align buffer indices and sequence counters to 64-byte boundaries to match modern CPU cache line sizes.",
+        "Use power-of-two buffer capacities to enable fast bitwise masking instead of slow modulo arithmetic.",
+        "Integrate hazard pointers or epoch-based reclamation if payload nodes or pointer-based queues are mixed with the ring buffer."
+      ],
+      "when_to_use": "Ideal for ultra-low latency, high-throughput financial trading systems, messaging backplanes, and inter-thread event distribution where mutex overhead is unacceptable.",
+      "when_not_to_use": "Avoid when data volumes are unpredictable, dynamic sizing is mandatory, or when simpler blocking queues provide sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed slots in a lock-free ring buffer without using locks?",
+          "answer": "By maintaining tracking sequences for consumers and ensuring the producer cursor does not exceed the slowest consumer sequence plus the ring buffer capacity."
+        },
+        {
+          "question": "Why are power-of-two capacities preferred in ring buffer implementations?",
+          "answer": "They allow the use of a simple bitwise AND operation (index & (capacity - 1)) for wrapping around the buffer, which is significantly faster than modulo division."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation techniques",
+        "False sharing and CPU cache optimization",
+        "Single-producer single-consumer (SPSC) versus multi-producer multi-consumer (MPMC) queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-21T04:32:53.575750+00:00",
+      "run_number": 3492
     }
   ]
 }
