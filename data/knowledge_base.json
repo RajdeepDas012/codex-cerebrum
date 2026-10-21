@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3506,
-    "last_updated": "2026-10-21T10:15:45.537352+00:00",
-    "total_topics_learned": 3506
+    "total_runs": 3507,
+    "last_updated": "2026-10-21T10:18:56.031307+00:00",
+    "total_topics_learned": 3507
   },
   "entries": [
     {
@@ -166966,6 +166966,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-21T10:15:45.537330+00:00",
       "run_number": 3506
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and rank-array-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel bioinformatics pattern matching in real-time genomic sequence analysis platforms and concurrent text search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Suffix Array that utilizes atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput substring indexing and multi-core parallel pattern matching without relying on traditional coarse-grained locks, making it ideal for high-concurrency systems like genomic sequence analyzers.",
+      "key_points": [
+        "Utilizes atomic suffix-sorting and rank-array-updating CAS operations to safely modify array structures under high thread contention.",
+        "Employs hazard pointer memory reclamation to securely free retired memory blocks without causing use-after-free race conditions.",
+        "Ensures high-throughput indexing for massive text datasets across multiple concurrent CPU cores.",
+        "Avoids locking overheads, preventing priority inversion and thread blockages in real-time pattern matching applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe pointer acquisition using hazard pointers during concurrent data structure traversal.",
+        "correct": "template<typename T>\nvoid* acquire_hazard_ptr(std::atomic<T*>& source, HazardPointerRecord* rec) {\n    T* ptr;\n    do {\n        ptr = source.load(std::memory_order_acquire);\n        rec->hazard.store(ptr, std::memory_order_release);\n    } while (ptr != source.load(std::memory_order_acquire));\n    return ptr;\n}",
+        "wrong": "void* unsafe_acquire(std::atomic<void*>& source) {\n    return source.load(); // Lacks hazard protection, risking concurrent deletion\n}"
+      },
+      "common_mistakes": [
+        "Failing to establish a proper memory barrier sequence when updating rank arrays atomically.",
+        "Reclaiming memory blocks immediately without verifying if any active hazard pointers reference them."
+      ],
+      "best_practices": [
+        "Always pair atomic load operations with appropriate acquire-release memory ordering semantics.",
+        "Periodically scan hazard pointer records to batch and safely free retired memory nodes.",
+        "Keep critical sections inside CAS retry loops as minimal as possible to reduce cache-line bouncing."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform concurrent substring searches and index updates on large-scale textual or genomic data requiring ultra-low latency.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency, where standard locking mechanisms or simple arrays provide simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the ABA problem and memory reclamation challenge in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to publish pointers they are currently accessing into a thread-local protected list, ensuring memory collectors do not free those nodes until no hazard pointer references them."
+        },
+        {
+          "question": "Why are atomic CAS primitives preferred over mutexes in high-throughput real-time indexing engines?",
+          "answer": "CAS primitives avoid operating system context switches, blocking, and convoy effects, enabling true non-blocking progress guarantees and better scaling under high thread contention."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Concurrent Suffix Trees",
+        "Atomic CAS Primitives and Memory Ordering"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T10:18:56.031286+00:00",
+      "run_number": 3507
     }
   ]
 }
