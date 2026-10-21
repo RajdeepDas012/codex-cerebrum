@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3532** |
-| Last Updated | `2026-10-21T20:05:50.794558+00:00` |
-| Dataset Size | `3532 entries` |
+| Total Topics Learned | **3533** |
+| Last Updated | `2026-10-21T20:09:01.314917+00:00` |
+| Dataset Size | `3533 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2318 |
+| data-structures | 2319 |
 | trading-strategies | 228 |
 | algorithms | 216 |
 | crypto-blockchain | 160 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index scans in real-time transactional database systems and concurrent in-memory storage engines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic quadrant-allocation and bounding-box-subdividing CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D spatial indexing and multi-core parallel collision detection in real-time geographic mapping applications and concurrent game simulation engines`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list pointer-splicing and hash-bucket-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction management and multi-core parallel hot-key tracking in real-time in-memory storage engines and concurrent database caching layers`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and leaf-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core parallel range scans in real-time transactional database systems and concurrent in-memory storage engines`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and node-promotion CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction management and multi-core parallel hot-key tracking in real-time in-memory storage engines and concurrent caching clusters`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and bitwise-OR CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core parallel duplicate filtering in real-time distributed web crawlers and concurrent database query optimization engines`
 
 <!-- STATS_END -->
 
