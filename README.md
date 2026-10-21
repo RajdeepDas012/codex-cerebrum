@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3483** |
-| Last Updated | `2026-10-21T00:24:45.829339+00:00` |
-| Dataset Size | `3483 entries` |
+| Total Topics Learned | **3484** |
+| Last Updated | `2026-10-21T00:27:56.581599+00:00` |
+| Dataset Size | `3484 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2274 |
+| data-structures | 2275 |
 | trading-strategies | 228 |
 | algorithms | 212 |
 | crypto-blockchain | 159 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Tree index using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database indexing in real-time transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and forward-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range scans in real-time in-memory databases and concurrent transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Bloom-Lookup Cache using atomic bit-array-probing and generational-timestamp-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput metadata caching and multi-core parallel read-heavy acceleration in real-time distributed file systems and concurrent key-value storage nodes`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hashing and branch-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput data integrity verification and multi-core parallel blockchain state validation in real-time distributed ledger systems and concurrent verifiable database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-overlapping and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event scheduling in real-time calendar management systems and concurrent resource allocation engines`
-- `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-navigating and state-transition-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core parallel intrusion detection in real-time cybersecurity log monitors and concurrent content filtering engines`
 
 <!-- STATS_END -->
 
