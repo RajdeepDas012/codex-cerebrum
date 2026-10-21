@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3479,
-    "last_updated": "2026-10-21T00:12:05.779147+00:00",
-    "total_topics_learned": 3479
+    "total_runs": 3480,
+    "last_updated": "2026-10-21T00:15:15.392255+00:00",
+    "total_topics_learned": 3480
   },
   "entries": [
     {
@@ -165685,6 +165685,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T00:12:05.779126+00:00",
       "run_number": 3479
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-overlapping and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event scheduling in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent Interval Tree utilizing lock-free atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely manage dynamic interval modifications and overlaps across multiple threads. It is crucial for high-throughput parallel event scheduling and real-time range querying systems where locks cause prohibitive contention.",
+      "key_points": [
+        "Uses atomic operations (CAS) to update node intervals and maintain maximum endpoints without locks.",
+        "Employs hazard pointers to guarantee safe memory reclamation for dynamically modified nodes without blocking readers.",
+        "Supports concurrent range overlapping queries for high-throughput time-interval intersections.",
+        "Prevents priority inversion and thread contention under heavy multi-core concurrent scheduling workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic hazard pointer registration for lock-free node access during concurrent interval tree traversals.",
+        "correct": "void* hazard_ptr = hazard_mgr.protect(node_ptr, thread_id);\nif (node_ptr->load() == hazard_ptr) {\n    // Safely read interval data\n    process_interval(node_ptr->interval);\n}\nhazard_mgr.clear(thread_id);",
+        "wrong": "node_t* current = root.load();\n// Reading without hazard protection can lead to use-after-free if another thread deletes the node concurrently\nprocess_interval(current->interval);"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to use-after-free bugs.",
+        "Forgetting to update the subtree's max-endpoint atomically, which breaks interval overlap search invariants."
+      ],
+      "best_practices": [
+        "Always re-verify node pointers after acquiring hazard pointer protection to ensure the node was not unlinked.",
+        "Batch retired nodes into a local thread-specific free-list before reclaiming memory via hazard pointer epoch checks."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform concurrent range queries and interval updates on a shared dataset requiring ultra-low latency.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple coarse-grained mutex locking provides sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free interval tree without using traditional garbage collection?",
+          "answer": "By utilizing hazard pointers, threads publish the nodes they are currently accessing so that concurrent deleters know when it is safe to reclaim the memory."
+        },
+        {
+          "question": "Why is updating the maximum endpoint of nodes challenging in a lock-free interval tree?",
+          "answer": "Because structural modifications can ripple up the tree, requiring recursive or iterative atomic CAS updates to maintain the max-endpoint invariant across concurrent insertions and deletions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T00:15:15.392208+00:00",
+      "run_number": 3480
     }
   ]
 }
