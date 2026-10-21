@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3489** |
-| Last Updated | `2026-10-21T04:23:23.848771+00:00` |
-| Dataset Size | `3489 entries` |
+| Total Topics Learned | **3490** |
+| Last Updated | `2026-10-21T04:26:33.242640+00:00` |
+| Dataset Size | `3490 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2280 |
+| data-structures | 2281 |
 | trading-strategies | 228 |
 | algorithms | 212 |
 | crypto-blockchain | 159 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent location-based service platforms`
 - `Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic head-tail-splicing and hash-bucket-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction tracking and multi-core parallel hot-key caching in real-time key-value storage engines and concurrent in-memory caching layers`
 - `Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-incrementing and min-heap-node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction tracking and multi-core parallel hot-key caching in real-time key-value storage engines and concurrent in-memory caching layers`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-query-updating and lazy-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput interval aggregation and multi-core parallel range updates in real-time financial analytics engines and concurrent telemetry processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core parallel distributed routing in real-time peer-to-peer networks and concurrent overlay storage systems`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and multi-word CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event dispatching in real-time game server runtimes and concurrent distributed execution engines`
 
 <!-- STATS_END -->
 
