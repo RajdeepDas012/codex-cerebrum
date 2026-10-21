@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3557,
-    "last_updated": "2026-10-21T23:50:26.333547+00:00",
-    "total_topics_learned": 3557
+    "total_runs": 3558,
+    "last_updated": "2026-10-21T23:53:36.665362+00:00",
+    "total_topics_learned": 3558
   },
   "entries": [
     {
@@ -169390,6 +169390,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T23:50:26.333527+00:00",
       "run_number": 3557
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-pointing and compressed-edge-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string prefix matching in real-time software-defined networking switches and concurrent in-memory caching platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Radix Tree (Patricia trie) that safely handles multi-core string prefix searches and insertions without blocking. By combining atomic Compare-And-Swap (CAS) primitives for edge splitting and child pointing with hazard pointers for memory reclamation, it guarantees safe and scalable memory access under extreme thread contention.",
+      "key_points": [
+        "Utilizes atomic child-node-pointing and compressed-edge-splitting CAS operations to manage tree modifications without mutex locks.",
+        "Employs hazard pointers to defer memory deallocation safely until all concurrent reader threads have released references to evicted nodes.",
+        "Optimizes memory layout and search paths via compressed edges, making it ideal for string prefix matching and IP routing tables.",
+        "Ensures thread safety and linearizability under high-throughput concurrent access across multiple execution cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of an atomic child pointer update using CAS during radix tree node insertion.",
+        "correct": "bool update_child_cas(std::atomic<Node*>& parent_edge, Node* expected_node, Node* new_node) {\n    return parent_edge.compare_exchange_strong(expected_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* update_child_naive(Node* parent_edge, Node* new_node) {\n    // Missing atomicity and CAS validation, leading to race conditions\n    parent_edge->child = new_node;\n    return parent_edge;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during edge splitting.",
+        "Using weak memory ordering semantics incorrectly when publishing new child nodes, resulting in stale reads by other threads."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for any nodes traversed during a lock-free read or write operation before inspecting their contents.",
+        "Keep critical sections and retry loops minimal to reduce CAS contention and latency penalties on multi-core systems."
+      ],
+      "when_to_use": "Use when you need high-throughput, low-latency concurrent prefix lookups or routing table evaluations across many threads without lock contention.",
+      "when_not_to_use": "Avoid when your dataset requires simple key-value lookups with exact matching, where a concurrent hash map or skip list would be simpler and more performant.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors in a lock-free radix tree?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading so that reclamation mechanisms know not to free those memory addresses until no thread holds a reference to them."
+        },
+        {
+          "question": "What is the primary challenge when performing compressed-edge-splitting concurrently with CAS?",
+          "answer": "Ensuring that intermediate node states during a split are atomic and safely discoverable or ignorable by concurrent reader and writer threads."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T23:53:36.665342+00:00",
+      "run_number": 3558
     }
   ]
 }
