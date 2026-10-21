@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3482,
-    "last_updated": "2026-10-21T00:21:35.965738+00:00",
-    "total_topics_learned": 3482
+    "total_runs": 3483,
+    "last_updated": "2026-10-21T00:24:45.829339+00:00",
+    "total_topics_learned": 3483
   },
   "entries": [
     {
@@ -165826,6 +165826,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T00:21:35.965721+00:00",
       "run_number": 3482
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-building and forward-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range scans in real-time in-memory databases and concurrent transactional key-value stores",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent skip list utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput ordered key-value lookups and multi-core parallel range scans without global locking overhead.",
+      "key_points": [
+        "Utilizes probabilistic multi-level towers to achieve O(log n) expected time complexity for search, insertion, and deletion operations.",
+        "Employs atomic CAS primitives to safely swing forward pointers and link new nodes into multiple height levels concurrently.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent ABA problems and use-after-free bugs in lock-free structures.",
+        "Supports multi-core parallel range scans by navigating forward pointers across base levels without holding locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic forward pointer insertion using CAS in a concurrent skip list node.",
+        "correct": "bool insert_forward(Node* pred, Node* succ, Node* newNode, int level) {\n    newNode->forward[level].store(succ, std::memory_order_relaxed);\n    return pred->forward[level].compare_exchange_strong(succ, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_forward(Node* pred, Node* succ, Node* newNode, int level) {\n    pred->forward[level] = newNode;\n    newNode->forward[level] = succ;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node references with hazard pointers, leading to premature deallocation and race conditions.",
+        "Not handling partially inserted nodes correctly during search and traversal routines, causing missing entries."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers on target nodes before validating state or attempting pointer manipulation.",
+        "Use appropriate memory ordering semantics (acquire-release) to ensure correct visibility of node modifications across cores."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory databases or transactional key-value stores requiring frequent ordered range queries under heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid when memory usage overhead from multi-level forward pointers is prohibitive, or when single-threaded B-Trees or simple mutex-backed maps suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating forward pointers in a lock-free skip list?",
+          "answer": "By using hazard pointers or tagged pointers (version counts combined with pointers) during CAS operations to ensure the node hasn't been modified or recycled."
+        },
+        {
+          "question": "Why is a skip list often preferred over a balanced binary search tree in lock-free concurrent programming?",
+          "answer": "Skip lists allow localized modifications via CAS operations on individual forward pointers, avoiding the complex, highly contentious global rebalancing operations required by lock-free AVL or Red-Black trees."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Tables",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T00:24:45.829316+00:00",
+      "run_number": 3483
     }
   ]
 }
