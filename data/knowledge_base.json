@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3542,
-    "last_updated": "2026-10-21T20:38:39.140638+00:00",
-    "total_topics_learned": 3542
+    "total_runs": 3543,
+    "last_updated": "2026-10-21T20:41:50.557168+00:00",
+    "total_topics_learned": 3543
   },
   "entries": [
     {
@@ -168677,6 +168677,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-21T20:38:39.140618+00:00",
       "run_number": 3542
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput packet forwarding and multi-core parallel route lookup in real-time software-defined networking routers and concurrent cloud infrastructure firewalls",
+      "category": "networking",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a concurrent, lock-free routing table leveraging prefix trees (tries), atomic compare-and-swap (CAS) operations for thread-safe node allocation and prefix matching, and hazard pointers for safe memory reclamation. It ensures ultra-high throughput and minimal latency for multi-core packet forwarding engines in software-defined networking (SDN).",
+      "key_points": [
+        "Utilizes trie structures for efficient longest-prefix matching (LPM) required in IP routing tables.",
+        "Employs atomic CAS primitives to handle concurrent insertions, deletions, and updates without blocking threads.",
+        "Integrates hazard pointers to safely manage dynamic node memory reclamation without ABA problem vulnerabilities.",
+        "Enables linearizable scaling across multiple CPU cores for high-speed packet routing and cloud firewall rule processing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node allocation and prefix-matching for a concurrent trie-based routing table using compare-and-swap operations.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct TrieNode {\n    std::atomic<TrieNode*> children[2];\n    std::atomic<bool> is_terminal{false};\n    uintptr_t next_hop{0};\n};\n\nbool insert_prefix(std::atomic<TrieNode*>& root, const char* bits, size_t length, uintptr_t hop) {\n    TrieNode* curr = root.load();\n    for (size_t i = 0; i < length; ++i) {\n        int bit = bits[i] - '0';\n        TrieNode* next = curr->children[bit].load();\n        while (!next) {\n            TrieNode* new_node = new TrieNode();\n            if (curr->children[bit].compare_exchange_strong(next, new_node)) {\n                next = new_node;\n            } else {\n                delete new_node;\n                next = curr->children[bit].load();\n            }\n        }\n        curr = next;\n    }\n    curr->next_hop = hop;\n    curr->is_terminal.store(true);\n    return true;\n}",
+        "wrong": "bool insert_prefix(TrieNode* root, const char* bits, size_t length, uintptr_t hop) {\n    TrieNode* curr = root;\n    for (size_t i = 0; i < length; ++i) {\n        int bit = bits[i] - '0';\n        if (!curr->children[bit]) {\n            curr->children[bit] = new TrieNode(); // Not thread-safe, race condition on pointer assignment\n        }\n        curr = curr->children[bit];\n    }\n    curr->next_hop = hop;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent node removal and re-allocation, leading to dangling pointers.",
+        "Overlooking memory reclamation safety, which causes severe memory leaks or segmentation faults when nodes are unlinked by competing writer threads."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based garbage collection to track thread-local traversal states before freeing unlinked trie nodes.",
+        "Keep atomic read paths lock-free to maximize packet throughput and avoid context-switching overhead in data-plane forwarding."
+      ],
+      "when_to_use": "Use this when building high-performance software-defined networking (SDN) data planes, carrier-grade routers, or cloud firewalls requiring dynamic concurrent route updates and sub-microsecond packet lookups.",
+      "when_not_to_use": "Avoid in static routing environments or low-throughput network appliances where simple read-copy-update (RCU) mechanisms or coarse-grained mutex locking suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing lock-free node updates in a concurrent trie?",
+          "answer": "By using tagged pointers (combining a version count with the memory address in a double-word CAS) or utilizing hazard pointers to protect nodes currently accessed by reader threads."
+        },
+        {
+          "question": "Why are tries favored over hash maps for IP routing table lookups?",
+          "answer": "Tries natively support longest-prefix matching (LPM), which is fundamental for IP subnet routing, whereas hash maps only support exact key matches."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Tables",
+        "Hazard Pointers and Memory Reclamation",
+        "Software-Defined Networking (SDN) Data Planes"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-21T20:41:50.557150+00:00",
+      "run_number": 3543
     }
   ]
 }
