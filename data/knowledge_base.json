@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3554,
-    "last_updated": "2026-10-21T23:40:54.561625+00:00",
-    "total_topics_learned": 3554
+    "total_runs": 3555,
+    "last_updated": "2026-10-21T23:44:04.803266+00:00",
+    "total_topics_learned": 3555
   },
   "entries": [
     {
@@ -169244,6 +169244,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-21T23:40:54.561579+00:00",
       "run_number": 3554
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct count aggregation in real-time stream processing platforms and concurrent analytics telemetry engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a thread-safe, lock-free HyperLogLog sketch using atomic compare-and-swap (CAS) operations to update estimation registers without blocking. It ensures high-throughput distinct element counting across multiple concurrent threads, leveraging hazard pointers to safely manage dynamic memory reclamation during real-time telemetry stream aggregations.",
+      "key_points": [
+        "Utilizes atomic register updates to handle concurrent multi-threaded writes to shared HyperLogLog buckets without coarse-grained locking.",
+        "Employs max-val-merging CAS logic to ensure registers only store the maximum leading-zero count observed across parallel streams.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free race conditions during concurrent sketch scaling or merging phases.",
+        "Delivers high-throughput distinct count aggregation suitable for low-latency real-time analytics and telemetry pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic maximum-value updates on a lock-free HyperLogLog register array using CAS loops.",
+        "correct": "#include <atomic>\n#include <vector>\n#include <algorithm>\n\nclass ConcurrentHLLRegister {\n    std::atomic<uint8_t>* registers;\n    size_t num_buckets;\npublic:\n    void update(size_t bucket, uint8_t val) {\n        uint8_t current = registers[bucket].load(std::memory_order_relaxed);\n        while (current < val && !registers[bucket].compare_exchange_weak(current, val, std::memory_order_release, std::memory_order_relaxed)) {\n            // Loop continues until CAS succeeds or current >= val\n        }\n    }\n};",
+        "wrong": "void update(size_t bucket, uint8_t val) {\n    // Mistake: Non-atomic check-then-act leads to race conditions and lost updates\n    if (registers[bucket] < val) {\n        registers[bucket] = val;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic check-then-act patterns when comparing and updating register values, leading to lost maximum values under high concurrency.",
+        "Neglecting memory ordering constraints, which can cause stale register values to be observed across different CPU cores during merge operations."
+      ],
+      "best_practices": [
+        "Use relaxed memory order loads combined with release-acquire semantics on CAS loops to balance performance and synchronization correctness.",
+        "Incorporate hazard pointers or epoch-based memory reclamation when dynamically resizing or merging distributed HyperLogLog structures.",
+        "Align register arrays to CPU cache lines to eliminate false sharing when multiple threads update adjacent buckets simultaneously."
+      ],
+      "when_to_use": "When building real-time telemetry ingestion engines or distributed stream processors that require low-latency, concurrent distinct-count estimations across multiple worker threads.",
+      "when_not_to_use": "When exact set cardinalities are strictly required or when single-threaded memory footprints and simplicity outweigh multi-core throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you implement a lock-free update for a HyperLogLog register shared across multiple threads?",
+          "answer": "By using a compare-and-swap (CAS) loop that repeatedly checks if the incoming value is greater than the current register value and attempts an atomic update."
+        },
+        {
+          "question": "Why are standard locks inefficient for updating high-frequency streaming data structures like HyperLogLog?",
+          "answer": "Mutexes introduce thread contention, context-switching overhead, and pipeline stalls, severely limiting the throughput required for real-time telemetry ingestion."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded MPSC Queue",
+        "Hazard Pointer Memory Management",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-21T23:44:04.803245+00:00",
+      "run_number": 3555
     }
   ]
 }
