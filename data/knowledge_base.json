@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3604,
-    "last_updated": "2026-10-22T20:04:05.292914+00:00",
-    "total_topics_learned": 3604
+    "total_runs": 3605,
+    "last_updated": "2026-10-22T20:07:36.274864+00:00",
+    "total_topics_learned": 3605
   },
   "entries": [
     {
@@ -171612,6 +171612,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T20:04:05.292894+00:00",
       "run_number": 3604
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel ordered indexing in real-time relational database systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B+ Tree that utilizes atomic primitives for leaf-sibling linking and split propagation, combined with hazard pointers for safe memory management. It enables high-throughput range scans and multi-core parallel ordered indexing, which are critical for performance in real-time relational databases and transactional storage engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage node splits and parent propagation without coarse-grained locking.",
+        "Maintains doubly-linked leaf nodes atomically to facilitate high-performance concurrent range scans across multiple threads.",
+        "Employs hazard pointers to track thread-local references to nodes, safely reclaiming memory without risking use-after-free bugs during concurrent structural modifications.",
+        "Ensures all data records reside at the leaf level while internal nodes act purely as a sparse routing guide for ordered lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic split propagation and hazard pointer protection pattern during a concurrent tree insertion.",
+        "correct": "bool insert_key(BPlusTree* tree, int key, Value val) {\n    HazardPointerGuard guard;\n    while (true) {\n        LeafNode* leaf = tree->find_leaf(key, guard);\n        if (leaf->try_insert(key, val)) return true;\n        // Node is full; split atomically and propagate up\n        tree->split_and_propagate(leaf);\n    }\n}",
+        "wrong": "bool insert_key_mutex(BPlusTree* tree, int key, Value val) {\n    tree->global_mutex.lock();\n    tree->unsafe_insert(key, val);\n    tree->global_mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to memory corruption when another thread deletes or splits the node.",
+        "Not handling transient states where a leaf node has been split but the parent pointer has not yet been updated via CAS."
+      ],
+      "best_practices": [
+        "Design leaf nodes with atomic next-pointers to guarantee that range scans can gracefully handle concurrent splits.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize CAS retry contention under high thread counts."
+      ],
+      "when_to_use": "Use a lock-free concurrent B+ Tree when building high-throughput in-memory databases, storage engines, or indexing layers that require frequent ordered range queries under heavy multi-core contention.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency environments where standard locking or simpler tree structures offer better maintainability and lower implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation issues in a lock-free B+ Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing, ensuring that memory allocators do not reclaim or reuse a node until no thread holds a hazard pointer to it."
+        },
+        {
+          "question": "Why are leaf-sibling links essential for concurrent range scans in a lock-free B+ Tree?",
+          "answer": "They allow a scanning thread to traverse horizontally to the next leaf node atomically if a split occurs or if the current node is exhausted, avoiding the need to re-traverse from the root during an ongoing scan."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-22T20:07:36.274843+00:00",
+      "run_number": 3605
     }
   ]
 }
