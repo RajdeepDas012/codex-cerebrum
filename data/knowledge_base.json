@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3599,
-    "last_updated": "2026-10-22T15:53:26.191327+00:00",
-    "total_topics_learned": 3599
+    "total_runs": 3600,
+    "last_updated": "2026-10-22T15:57:27.132293+00:00",
+    "total_topics_learned": 3600
   },
   "entries": [
     {
@@ -171376,6 +171376,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T15:53:26.191309+00:00",
       "run_number": 3599
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic leftist-property-restoring and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel job scheduling in real-time task execution platforms and concurrent operating system schedulers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Leftist Heap leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe multi-core memory management and high-throughput mergeable priority queue manipulation without conventional locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS to perform leftist-property-restoring and rank-updating operations safely across multiple threads.",
+        "Employs hazard pointer memory reclamation to prevent premature freeing of nodes actively traversed by concurrent worker threads.",
+        "Guarantees logarithmic height characteristics via the leftist property, optimizing merge, insert, and delete-min operations.",
+        "Ideal for highly dynamic multi-core real-time task execution environments requiring frequent merging of priority queues."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node merging using atomic compare-and-swap operations on child pointers in a leftist heap.",
+        "correct": "bool CASMerge(std::atomic<Node*>& target, Node* expected, Node* desired) {\n    return target.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* unsafeMerge(Node* a, Node* b) {\n    if (!a) return b;\n    if (!b) return a;\n    if (a->val > b->val) std::swap(a, b);\n    a->right = unsafeMerge(a->right, b);\n    if (a->left->rank < a->right->rank) std::swap(a->left, a->right);\n    a->rank = a->right->rank + 1;\n    return a;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed heap nodes with hazard pointers, leading to ABA problems or use-after-free faults.",
+        "Neglecting to properly update and restore the leftist rank property after structural modifications, degrading merge performance."
+      ],
+      "best_practices": [
+        "Always register active nodes into the thread-local hazard pointer domain before executing pointer traversals.",
+        "Keep atomic transaction retry loops tight to minimize contention under heavy multi-core thread loads."
+      ],
+      "when_to_use": "Use when multiple worker threads concurrently insert, delete, and merge prioritized tasks in real-time execution platforms.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple array-based binary heaps or standard mutex-locked structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node removal in a lock-free leftist heap?",
+          "answer": "Hazard pointers publish references that threads intend to access, forcing other threads to defer memory recycling until no active thread holds a hazard pointer to the targeted node."
+        },
+        {
+          "question": "Why is the leftist property crucial for maintaining efficiency in mergeable priority queues?",
+          "answer": "It keeps the right spine short (at most logarithmic with respect to the number of nodes), ensuring that recursive merge operations run in O(log n) time."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binomial Heaps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T15:57:27.132273+00:00",
+      "run_number": 3600
     }
   ]
 }
