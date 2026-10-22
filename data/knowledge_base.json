@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3578,
-    "last_updated": "2026-10-22T10:06:20.086272+00:00",
-    "total_topics_learned": 3578
+    "total_runs": 3579,
+    "last_updated": "2026-10-22T10:09:29.653814+00:00",
+    "total_topics_learned": 3579
   },
   "entries": [
     {
@@ -170389,6 +170389,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T10:06:20.086254+00:00",
       "run_number": 3578
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence relation querying and multi-core parallel connected components analysis in real-time social network graph partitioning and concurrent compiler type inference engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Disjoint Set data structure that utilizes atomic compare-and-swap (CAS) primitives for path compression and rank-based union operations. It ensures safe memory management in highly parallel environments using hazard pointers, enabling scalable connected components analysis and type inference.",
+      "key_points": [
+        "Utilizes atomic pointer updates via compare-and-swap (CAS) to manage parent pointers without global locking.",
+        "Implements lock-free path compression to flatten tree structures during lookup phases safely under concurrency.",
+        "Employs rank-based union heuristics adapted for atomic operations to prevent degenerate tree topologies.",
+        "Integrates hazard pointer memory reclamation to safely free or reuse nodes without risking use-after-free race conditions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find with lock-free path compression using a CAS loop.",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grand_parent = parent->parent.load(std::memory_order_acquire);\n        if (grand_parent == parent) return parent;\n        node->parent.compare_exchange_weak(parent, grand_parent, std::memory_order_release);\n        node = grand_parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic update and unsafe recursion under concurrency\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to use-after-free bugs when nodes are concurrently restructured.",
+        "Using naive non-atomic assignments for parent pointer compression, which introduces severe race conditions and data corruption."
+      ],
+      "best_practices": [
+        "Ensure memory acquisition and release orderings are strictly maintained around CAS loops for parent pointer updates.",
+        "Bound path compression steps during traversal to prevent infinite loops caused by cyclic pointer updates under heavy contention."
+      ],
+      "when_to_use": "Use this when multiple threads need to concurrently query and merge equivalence sets at high throughput, such as in parallel graph algorithms or type checking.",
+      "when_not_to_use": "Avoid this in single-threaded environments or simple applications where the overhead of hazard pointers and atomic CAS operations outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during path compression in a lock-free Disjoint Set?",
+          "answer": "By using atomic compare-and-swap (CAS) operations to update parent pointers, allowing threads to retry if another thread has already modified the pointer."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Union-Find data structure?",
+          "answer": "Hazard pointers prevent memory reclamation of nodes that are actively being traversed or modified by other concurrent threads, avoiding use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Graph Partitioning"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-10-22T10:09:29.653796+00:00",
+      "run_number": 3579
     }
   ]
 }
