@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3617,
-    "last_updated": "2026-10-22T23:11:07.429242+00:00",
-    "total_topics_learned": 3617
+    "total_runs": 3618,
+    "last_updated": "2026-10-22T23:14:16.424309+00:00",
+    "total_topics_learned": 3618
   },
   "entries": [
     {
@@ -172230,6 +172230,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T23:11:07.429220+00:00",
       "run_number": 3617
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core parallel shortest path computation in real-time network routing engines and concurrent graph analytics frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent Fibonacci Heap utilizing hardware-level Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput asynchronous decrease-key operations and parallel shortest path calculations across multiple threads without traditional locking overhead.",
+      "key_points": [
+        "Uses atomic root-list-splicing and min-pointer-swinging CAS operations to manage concurrent updates without blocking.",
+        "Employs hazard pointer memory reclamation to safely free nodes removed during extract-min and delete operations in a lock-free environment.",
+        "Supports amortized $O(1)$ insert and decrease-key operations concurrently across multiple processor cores.",
+        "Optimizes multi-core parallel graph algorithms like Dijkstra's shortest path computation in real-time routing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion into a lock-free Fibonacci Heap using atomic CAS primitives.",
+        "correct": "void ConcurrentFibHeap::insert(Node* newNode) {\n    Node* oldMin;\n    do {\n        oldMin = min_ptr.load(std::memory_order_relaxed);\n        newNode->right = oldMin;\n    } while (!min_ptr.compare_exchange_weak(oldMin, newNode, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void ConcurrentFibHeap::insert(Node* newNode) {\n    mutex.lock();\n    root_list.push_back(newNode);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed heap nodes from premature memory reclamation using hazard pointers.",
+        "Using sequential consistency everywhere, introducing unnecessary memory barrier overhead that degrades multi-core scalability."
+      ],
+      "best_practices": [
+        "Acquire hazard pointers for any node fetched via pointer-traversal before reading its internal key or child pointers.",
+        "Leverage weak CAS inside retry loops for atomic pointer-swinging operations to handle spurious hardware failures efficiently."
+      ],
+      "when_to_use": "Use when building highly concurrent graph processing engines or real-time network routing systems where multiple worker threads frequently perform decrease-key and insert operations simultaneously.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with low concurrency where the complexity of lock-free atomics and hazard pointers outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent modifications to the minimum pointer in a lock-free Fibonacci Heap?",
+          "answer": "By using atomic compare-and-swap (CAS) loops to safely swing the global min-pointer to newly inserted or extracted nodes."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Fibonacci Heap?",
+          "answer": "They prevent the ABA problem and ensure that memory freed during extract-min operations is not reallocated while other threads are still traversing or referencing those nodes."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Concurrent Priority Queues",
+        "Parallel Dijkstra Algorithm Implementation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T23:14:16.424287+00:00",
+      "run_number": 3618
     }
   ]
 }
