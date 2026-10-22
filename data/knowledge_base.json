@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3594,
-    "last_updated": "2026-10-22T15:22:27.487851+00:00",
-    "total_topics_learned": 3594
+    "total_runs": 3595,
+    "last_updated": "2026-10-22T15:33:02.068808+00:00",
+    "total_topics_learned": 3595
   },
   "entries": [
     {
@@ -171141,6 +171141,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-22T15:22:27.487834+00:00",
       "run_number": 3594
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-plane-splitting and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point indexing and multi-core parallel nearest neighbor searching in real-time robotics perception systems and concurrent spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent K-D tree utilizing atomic compare-and-swap (CAS) operations for splitting bounding hyperplanes and allocating nodes safely across threads. By integrating hazard pointers, it ensures safe memory reclamation without locks, achieving high-throughput multi-dimensional spatial queries and parallel nearest-neighbor searches in low-latency systems.",
+      "key_points": [
+        "Uses atomic operations to update bounding-plane splitting axes and coordinate thresholds safely across threads.",
+        "Employs hazard pointers to protect nodes currently accessed during traversal from premature memory reclamation.",
+        "Maximizes multi-core parallel performance for spatial indexing and k-nearest neighbor (k-NN) queries.",
+        "Eliminates lock contention bottlenecks typical in traditional multi-threaded spatial data structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers during a concurrent K-D tree traversal.",
+        "correct": "KDNode* hazard_protect_node(std::atomic<KDNode*>& node_ref, HazardPointerRecord* hp) {\n    KDNode* ptr;\n    do {\n        ptr = node_ref.load(std::memory_order_acquire);\n        hp->protect(ptr);\n    } while (node_ref.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "KDNode* ptr = node_ref.load(); // Unprotected access vulnerable to concurrent deletion and use-after-free."
+      },
+      "common_mistakes": [
+        "Failing to clear hazard pointers immediately after releasing node references, leading to memory leaks.",
+        "Incorrect memory ordering (using relaxed semantics where acquire-release is necessary for pointer visibility)."
+      ],
+      "best_practices": [
+        "Always validate node pointers against expected values after setting hazard pointers to guard against ABA problems.",
+        "Batch retired nodes in thread-local lists before invoking reclamation routines to reduce atomic overhead."
+      ],
+      "when_to_use": "When building high-frequency multi-dimensional spatial indexing systems or real-time robotics applications requiring concurrent nearest-neighbor searches.",
+      "when_not_to_use": "When data dimensions are extremely high (curse of dimensionality) or when workloads are strictly single-threaded where simpler structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free K-D tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently reading, preventing other threads from recycling or freeing those memory addresses until the read operation completes."
+        },
+        {
+          "question": "Why is lock-free node splitting difficult in a K-D tree compared to a flat hash map?",
+          "answer": "Because structural modifications near the root or splitting hyperplanes affect large subtrees, requiring intricate atomic coordination to maintain spatial invariants without blocking concurrent traversals."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Lock-Free Quadtree",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T15:33:02.068788+00:00",
+      "run_number": 3595
     }
   ]
 }
