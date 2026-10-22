@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3621,
-    "last_updated": "2026-10-22T23:23:45.094034+00:00",
-    "total_topics_learned": 3621
+    "total_runs": 3622,
+    "last_updated": "2026-10-22T23:26:54.365314+00:00",
+    "total_topics_learned": 3622
   },
   "entries": [
     {
@@ -172418,6 +172418,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T23:23:45.094014+00:00",
       "run_number": 3621
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic key-redirection and range-locking-bypass CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal versioning and multi-core parallel flashback querying in real-time time-series databases and concurrent multi-version concurrency control execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Bx-Tree optimized for temporal data management. By employing atomic key-redirection and hazard pointers, it allows multi-core systems to perform high-throughput temporal versioning and parallel flashback queries without traditional latch bottlenecks.",
+      "key_points": [
+        "Utilizes atomic key-redirection and range-locking-bypass CAS primitives to safely modify tree structures without global locks.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes accessed during concurrent temporal traversals.",
+        "Enables high-throughput temporal versioning to track state evolution across various dimensions of time.",
+        "Supports multi-core parallel flashback querying for fast historical data retrieval in multi-version concurrency control (MVCC) engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free atomic node updates and hazard pointer protection for a concurrent Bx-Tree node traversal.",
+        "correct": "template <typename T>\nbool update_key_atomic(std::atomic<Node<T>*>& node_ptr, Node<T>* expected, Node<T>* desired) {\n    HazardPointerGuard guard;\n    Node<T>* current = guard.protect(node_ptr);\n    if (current != expected) return false;\n    return node_ptr.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "template <typename T>\nvoid update_key_unsafe(Node<T>* node_ptr, Node<T>* desired) {\n    // Lacks atomic CAS operations and hazard pointer protection, leading to race conditions\n    node_ptr->next = desired;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed version nodes with hazard pointers, leading to use-after-free bugs during rapid structural updates.",
+        "Using blocking read-write locks for range queries inside a design intended to be entirely lock-free, causing priority inversion and contention."
+      ],
+      "best_practices": [
+        "Always register active traversal pointers with the thread's hazard pointer domain before reading child node addresses.",
+        "Design key-redirection logic to be idempotent so that failed CAS operations can safely retry without corrupting the temporal chain."
+      ],
+      "when_to_use": "Use when building high-performance time-series databases, auditing systems, or MVCC storage engines requiring heavy concurrent flashback reads and real-time temporal writes.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or systems where standard lock-based B-Trees provide sufficient throughput and avoid the high implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do atomic key-redirection primitives prevent race conditions during concurrent node splits in a lock-free Bx-Tree?",
+          "answer": "They allow threads to redirect pointer references atomically via CAS operations so that readers observe either the old consistent state or the fully installed new state without intermediate partial updates."
+        },
+        {
+          "question": "Why are hazard pointers preferred over traditional garbage collection mechanisms in high-throughput lock-free temporal trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times or high memory overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Multi-Version Concurrency Control (MVCC)",
+        "Hazard Pointer Memory Management",
+        "Lock-Free B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T23:26:54.365292+00:00",
+      "run_number": 3622
     }
   ]
 }
