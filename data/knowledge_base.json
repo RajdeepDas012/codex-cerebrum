@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3605,
-    "last_updated": "2026-10-22T20:07:36.274864+00:00",
-    "total_topics_learned": 3605
+    "total_runs": 3606,
+    "last_updated": "2026-10-22T20:11:25.957583+00:00",
+    "total_topics_learned": 3606
   },
   "entries": [
     {
@@ -171659,6 +171659,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-22T20:07:36.274843+00:00",
       "run_number": 3605
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core parallel lookups in real-time in-memory caching systems and concurrent execution runtimes",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and low-level synchronization mechanics required to build a lock-free concurrent hash map. It utilizes atomic bucket-resizing, collision-chaining CAS primitives, and hazard pointers to guarantee thread safety, eliminate mutex bottlenecks, and safely reclaim memory in high-throughput multi-core environments.",
+      "key_points": [
+        "Employs Compare-And-Swap (CAS) primitives to implement lock-free bucket inserts and collision chain modifications.",
+        "Uses hazard pointers to track active thread references to nodes, safely deferring memory deallocation until no threads point to them.",
+        "Supports dynamic atomic bucket-resizing to gracefully scale the underlying table array without blocking concurrent readers or writers.",
+        "Achieves high-throughput parallel lookups and mutations by avoiding global locks and minimizing cache line contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual lock-free node insertion via atomic compare-and-swap on a bucket collision chain.",
+        "correct": "bool insert(Bucket& bucket, Node* new_node) {\n    while (true) {\n        Node* old_head = bucket.head.load(std::memory_order_acquire);\n        new_node->next = old_head;\n        if (bucket.head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Bucket& bucket, Node* new_node) {\n    std::lock_guard<std::mutex> lock(bucket.mu);\n    new_node->next = bucket.head;\n    bucket.head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to the ABA problem or use-after-free race conditions.",
+        "Using sequential consistency everywhere instead of carefully tuning acquire-release memory orderings, causing severe performance degradation."
+      ],
+      "best_practices": [
+        "Integrate a thread-local hazard pointer retirement pool to batch memory deallocations and reduce atomic overhead.",
+        "Design bucket structures with padding or fine-grained array separation to avoid false sharing across adjacent CPU cache lines."
+      ],
+      "when_to_use": "Use this structure when building high-frequency in-memory caches, execution runtimes, or databases requiring extreme read-write concurrency with minimal latency jitter.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard library mutex-protected maps provide sufficient performance with drastically lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in a lock-free hash map without using a garbage collector?",
+          "answer": "Hazard pointers act as single-writer, multi-reader publish descriptors where a thread registers a pointer it is currently accessing. Before freeing any unlinked node, a thread scans all active hazard pointers to ensure no other thread holds a reference to it."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic resizing in a lock-free hash map?",
+          "answer": "The main challenge is coordinating background table migration so that concurrent reader and writer threads safely transition to or assist with the new bucket array without duplicating operations or reading uninitialized slots."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Concurrent Skip List",
+        "Atomic Memory Ordering Models"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T20:11:25.957563+00:00",
+      "run_number": 3606
     }
   ]
 }

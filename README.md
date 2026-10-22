@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3605** |
-| Last Updated | `2026-10-22T20:07:36.274864+00:00` |
-| Dataset Size | `3605 entries` |
+| Total Topics Learned | **3606** |
+| Last Updated | `2026-10-22T20:11:25.957583+00:00` |
+| Dataset Size | `3606 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2383 |
+| data-structures | 2384 |
 | trading-strategies | 228 |
 | algorithms | 220 |
 | crypto-blockchain | 162 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core parallel lookups in real-time in-memory caching systems and concurrent execution runtimes`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel ordered indexing in real-time relational database systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic bounding-box-subdividing and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D spatial indexing and multi-core parallel collision detection in real-time game simulation engines and concurrent geospatial indexing platforms`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-swinging and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key-value caching and multi-core parallel localized lookup operations in real-time in-memory databases and concurrent caching proxy systems`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced searching and multi-core parallel dynamic set operations in real-time in-memory indexes and concurrent probabilistic map engines`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-list-merging and two-pass-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel discrete event simulation in real-time execution engines and concurrent task scheduling platforms`
 
 <!-- STATS_END -->
 
