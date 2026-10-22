@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3596,
-    "last_updated": "2026-10-22T15:38:58.369639+00:00",
-    "total_topics_learned": 3596
+    "total_runs": 3597,
+    "last_updated": "2026-10-22T15:42:55.991426+00:00",
+    "total_topics_learned": 3597
   },
   "entries": [
     {
@@ -171235,6 +171235,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T15:38:58.369623+00:00",
       "run_number": 3596
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent operating system kernels",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Binomial Heap utilizing atomic operations like binomial-tree-linking and root-pointer-swinging CAS primitives. It ensures safe memory management via hazard pointers to achieve high-throughput mergeable priority queue functionality for multi-core parallel event-driven systems.",
+      "key_points": [
+        "Utilizes atomic binomial-tree-linking CAS primitives to combine binomial trees of identical degrees without locks.",
+        "Employs root-pointer-swinging CAS operations to safely update the head pointer of the heap roots list under high contention.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free nodes during concurrent merges and deletions.",
+        "Provides efficient mergeable priority queue operations vital for multi-core parallel event scheduling in simulations and OS kernels."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic root-pointer-swinging pattern using compare_exchange_strong for a concurrent binomial heap root list.",
+        "correct": "bool linkRoots(std::atomic<Node*>& rootHead, Node* newRoot) {\n    Node* oldHead = rootHead.load(std::memory_order_acquire);\n    do {\n        newRoot->sibling = oldHead;\n    } while (!rootHead.compare_exchange_weak(oldHead, newRoot, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool linkRoots(Node*& rootHead, Node* newRoot) {\n    newRoot->sibling = rootHead;\n    rootHead = newRoot;\n}\n// Missing atomicity and CAS loop leads to race conditions and lost updates."
+      },
+      "common_mistakes": [
+        "Failing to protect deleted binomial tree nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Using naive lock-based pointer updates inside concurrent heap merge routines, creating performance bottlenecks under heavy multi-core load."
+      ],
+      "best_practices": [
+        "Always pair lock-free root updates with hazard pointers to guarantee safe memory traversal and deletion.",
+        "Keep atomic CAS loops tight and minimize memory contention by utilizing acquire-release memory ordering semantics."
+      ],
+      "when_to_use": "Use when building high-throughput real-time simulation platforms or operating system schedulers that require frequent concurrent priority queue merging operations across multiple threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of hazard pointers and atomic CAS loops outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic root-pointer-swinging CAS operations on a concurrent Binomial Heap?",
+          "answer": "By integrating hazard pointers or tag-versioned pointers that ensure a node's address and state have not changed concurrently between the read and the CAS execution."
+        },
+        {
+          "question": "Why are binomial-tree-linking CAS primitives preferred over global locks in multi-core parallel event schedulers?",
+          "answer": "They eliminate lock contention and thread blocking, allowing multiple threads to concurrently link trees of identical orders and update root pointers with higher throughput and predictability."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Concurrent Pairing Heaps",
+        "Hazard Pointers and Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T15:42:55.991405+00:00",
+      "run_number": 3597
     }
   ]
 }
