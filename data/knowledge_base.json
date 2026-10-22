@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3628,
-    "last_updated": "2026-10-22T23:46:05.504283+00:00",
-    "total_topics_learned": 3628
+    "total_runs": 3629,
+    "last_updated": "2026-10-22T23:49:14.066821+00:00",
+    "total_topics_learned": 3629
   },
   "entries": [
     {
@@ -172748,6 +172748,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T23:46:05.504262+00:00",
       "run_number": 3628
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B* Tree using atomic sibling-node-redistribution and overflow-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput node balancing and multi-core parallel congested-page execution in real-time transactional database systems and concurrent high-concurrency storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent B* Tree data structure that maintains high fill-factors through sibling key redistribution during overflows, utilizing compare-and-swap (CAS) primitives and hazard pointers. It enables scalable, non-blocking page updates and index maintenance essential for high-throughput storage systems.",
+      "key_points": [
+        "Uses atomic CAS primitives for sibling node redistribution and overflow balancing instead of traditional lock-based page latches.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted or split tree nodes without risking use-after-free bugs.",
+        "Ensures high fill factors by shifting keys to adjacent sibling nodes prior to node splitting, reducing overall tree height and memory waste.",
+        "Facilitates multi-core parallel execution on congested database pages, significantly minimizing contention in real-time transactional engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node split and sibling redistribution attempt in a lock-free B* Tree",
+        "correct": "bool redistribute_or_split(BStarNode* node, Key k, Value v) {\n    HazardPointer hp(node);\n    if (node->is_full()) {\n        if (try_redistribute_with_sibling(node, k, v)) return true;\n        return atomic_split_node(node, k, v);\n    }\n    return atomic_insert(node, k, v);\n}",
+        "wrong": "bool redistribute_or_split(BStarNode* node, Key k, Value v) {\n    node->lock(); // Using coarse-grained locks defeats the lock-free design\n    node->insert(k, v);\n    node->unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate node references with hazard pointers during concurrent sibling modification, leading to memory corruption.",
+        "Neglecting the ABA problem during pointer-swapping CAS operations on index pointers."
+      ],
+      "best_practices": [
+        "Always register accessed nodes into local hazard pointer lists prior to validating structural state pointers.",
+        "Design sibling redistribution protocols to check modification counters or version stamps atomically before applying updates."
+      ],
+      "when_to_use": "Ideal for high-concurrency transactional database storage engines requiring high fill factors and minimal read-write thread contention.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or memory-constrained embedded environments where lock-free overhead is unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How does a B* Tree differ from a standard B+ Tree in terms of node overflow handling?",
+          "answer": "A B* Tree attempts to redistribute keys to adjacent siblings when a node overflows, achieving a higher minimum fill factor (typically 2/3 instead of 1/2) before splitting."
+        },
+        {
+          "question": "Why are hazard pointers required when implementing a lock-free B* Tree?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing other threads from prematurely freeing or recycling those memory blocks."
+        }
+      ],
+      "related_topics": [
+        "lock-free B+ trees",
+        "hazard pointer memory management",
+        "lock-free concurrent skip lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T23:49:14.066799+00:00",
+      "run_number": 3629
     }
   ]
 }
