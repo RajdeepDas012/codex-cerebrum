@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3593** |
-| Last Updated | `2026-10-22T15:17:32.076396+00:00` |
-| Dataset Size | `3593 entries` |
+| Total Topics Learned | **3594** |
+| Last Updated | `2026-10-22T15:22:27.487851+00:00` |
+| Dataset Size | `3594 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2373 |
+| data-structures | 2374 |
 | trading-strategies | 228 |
 | algorithms | 219 |
 | crypto-blockchain | 162 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and biased-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting logarithmic searching and multi-core parallel dynamic set operations in real-time in-memory databases and concurrent caching infrastructure platforms`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-suffix-linking and child-edge-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel pattern matching in real-time genome sequencing pipelines and concurrent text processing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic routing-pointer-updating and membership-vector-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer routing and multi-core parallel distributed hash table indexing in real-time cloud storage networks and concurrent overlay routing architectures`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency calculation and multi-core parallel point update operations in real-time streaming analytics engines and concurrent statistical tracking platforms`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership queries and multi-core parallel duplicate filtering in real-time web crawlers and concurrent distributed caching systems`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-wise-branching and child-node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string prefix indexing in real-time software-defined networking switches and concurrent database indexing layers`
 
 <!-- STATS_END -->
 

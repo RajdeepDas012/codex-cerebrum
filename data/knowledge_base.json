@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3593,
-    "last_updated": "2026-10-22T15:17:32.076396+00:00",
-    "total_topics_learned": 3593
+    "total_runs": 3594,
+    "last_updated": "2026-10-22T15:22:27.487851+00:00",
+    "total_topics_learned": 3594
   },
   "entries": [
     {
@@ -171094,6 +171094,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T15:17:32.076375+00:00",
       "run_number": 3593
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and biased-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting logarithmic searching and multi-core parallel dynamic set operations in real-time in-memory databases and concurrent caching infrastructure platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Scapegoat Tree. It leverages atomic Compare-And-Swap (CAS) primitives for subtree-weight-balancing and hazard pointers for safe memory reclamation, enabling high-performance parallel dynamic set operations in multi-core environments.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to coordinate structural updates and weight-balancing without conventional locking overhead.",
+        "Employs hazard pointers to safely manage memory reclamation for nodes displaced during partial or complete subtree rebuilds.",
+        "Maintains logarithmic search performance guarantees through partial weight-balanced restructuring invariants.",
+        "Optimizes concurrent access for high-throughput in-memory databases and caching architectures handling intensive parallel mutations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion with weight tracking for a concurrent Scapegoat Tree node.",
+        "correct": "bool insert_node(std::atomic<Node*>& root, Node* new_node, HazardPointerManager& hp_mgr) {\n    while (true) {\n        Node* curr = hp_mgr.protect(root);\n        if (curr == nullptr) {\n            if (root.compare_exchange_weak(curr, new_node)) return true;\n        } else {\n            // Navigate and insert using CAS on child pointers\n        }\n    }\n}",
+        "wrong": "bool insert_node(Node* root, Node* new_node) {\n    // Using mutex locks instead of atomic CAS primitives\n    std::lock_guard<std::mutex> lock(mtx);\n    root->addChild(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free vulnerabilities during tree rebuilding.",
+        "Over-rebuilding the entire subtree synchronously, which degrades concurrency and introduces high latency spikes in multi-threaded contexts."
+      ],
+      "best_practices": [
+        "Implement lazy weight-based threshold checks to minimize the frequency of expensive subtree flattening and rebuilding operations.",
+        "Batch hazard pointer retirements to reduce synchronization overhead across concurrent worker threads."
+      ],
+      "when_to_use": "Use when building high-throughput, lock-free in-memory indexes where worst-case logarithmic search time and dynamic set flexibility are critical under heavy multi-core contention.",
+      "when_not_to_use": "Avoid when memory footprint must be kept strictly minimal or when traditional lock-based AVL or Red-Black trees are sufficient due to low core counts.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when an entire subtree is restructured or flattened in a lock-free Scapegoat Tree?",
+          "answer": "By tracking active readers using hazard pointers and deferring node deallocations to a safe epoch or garbage collection queue once no threads reference the displaced nodes."
+        },
+        {
+          "question": "What is the primary challenge when implementing weight-balancing operations concurrently via CAS?",
+          "answer": "Ensuring that concurrent updates do not violate depth or weight invariants mid-operation, requiring careful atomic validation before committing structural rebuilds."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip Lists",
+        "concurrent B+ Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-22T15:22:27.487834+00:00",
+      "run_number": 3594
     }
   ]
 }
