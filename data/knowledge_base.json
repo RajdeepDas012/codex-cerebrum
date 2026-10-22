@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3562,
-    "last_updated": "2026-10-22T04:16:54.052631+00:00",
-    "total_topics_learned": 3562
+    "total_runs": 3563,
+    "last_updated": "2026-10-22T04:20:04.733820+00:00",
+    "total_topics_learned": 3563
   },
   "entries": [
     {
@@ -169626,6 +169626,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-22T04:16:54.052610+00:00",
       "run_number": 3562
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic wrap-around-indexing and multi-producer-multi-consumer CAS primitives alongside hazard pointer memory reclamation for high-throughput task queuing and multi-core parallel work-stealing execution in real-time game engine loops and concurrent task scheduling systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent multi-producer and multi-consumer access to a fixed-size circular array without traditional blocking mechanisms. It utilizes atomic wrap-around indexing and CAS operations to achieve high-throughput task passing and low-latency work-stealing execution.",
+      "key_points": [
+        "Employs atomic head and tail pointer increments with wrap-around logic to manage buffer capacity safely.",
+        "Utilizes Compare-And-Swap (CAS) primitives to safely claim slots in multi-producer and multi-consumer environments.",
+        "Integrates hazard pointers or epoch-based reclamation to safely manage node states and prevent ABA problems.",
+        "Crucial for high-performance task scheduling, inter-thread communication, and game engine loop execution."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head incrementing using CAS for a concurrent ring buffer slot reservation",
+        "correct": "bool enqueue(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        size_t current_head = head.load(std::memory_order_acquire);\n        if ((current_tail - current_head) >= CAPACITY) return false;\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current_tail % CAPACITY] = item;\n            return true;\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    size_t t = tail++; // Non-atomic increment causes race conditions\n    buffer[t % CAPACITY] = item;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when multiple threads update wrap-around pointers concurrently.",
+        "Using sequential consistency everywhere, introducing severe performance bottlenecks on modern multi-core CPUs.",
+        "Incorrectly calculating buffer fullness leading to silent data overwrites or unreadable slots."
+      ],
+      "best_practices": [
+        "Leverage acquire-release memory ordering semantics to balance synchronization safety and execution speed.",
+        "Ensure buffer sizes are powers of two to replace expensive modulo arithmetic with fast bitwise masking operations.",
+        "Incorporate padded indices or cache-line alignment to prevent false sharing between producer and consumer threads."
+      ],
+      "when_to_use": "When implementing ultra-low latency inter-thread communication, high-throughput task schedulers, or real-time game engine loops where blocking locks introduce unacceptable jitter.",
+      "when_not_to_use": "When the queue size must dynamically expand beyond a fixed capacity or when simpler, low-contention mutex-backed queues provide sufficient throughput.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer when head and tail pointers wrap around?",
+          "answer": "You can either reserve one slot as empty, maintain a separate atomic count of items, or use sequence numbers embedded within the buffer cells."
+        },
+        {
+          "question": "What is false sharing in a ring buffer context and how do you mitigate it?",
+          "answer": "False sharing occurs when producer and consumer pointers reside on the same CPU cache line, causing constant cache invalidations. It is mitigated by aligning pointers to separate cache lines using alignment specifiers."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Compare-And-Swap (CAS)",
+        "Work-Stealing Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T04:20:04.733803+00:00",
+      "run_number": 3563
     }
   ]
 }
