@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3619,
-    "last_updated": "2026-10-22T23:17:26.402972+00:00",
-    "total_topics_learned": 3619
+    "total_runs": 3620,
+    "last_updated": "2026-10-22T23:20:35.838445+00:00",
+    "total_topics_learned": 3620
   },
   "entries": [
     {
@@ -172324,6 +172324,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T23:17:26.402951+00:00",
       "run_number": 3619
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-bit-testing and child-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel packet classification in real-time software-defined networking switches and concurrent network packet processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free Radix Tree utilizing atomic prefix-bit-testing and child-node-splicing compare-and-swap operations to achieve high-throughput IP routing table lookups. By integrating hazard pointers, it ensures safe memory reclamation without relying on locks, making it ideal for multi-core software-defined networking (SDN) switches and high-speed packet processing pipelines.",
+      "key_points": [
+        "Employs atomic prefix-bit-testing to navigate variable-length bit strings concurrently without global locks.",
+        "Utilizes child-node-splicing CAS primitives to safely insert and update routing table branches under heavy contention.",
+        "Integrates hazard pointers to track thread-local references and prevent premature memory deallocation of deleted tree nodes.",
+        "Optimizes throughput for real-time IP routing lookups and parallel packet classification in software-defined networking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node splicing using a compare-and-swap loop in a lock-free Radix Tree",
+        "correct": "bool insert_child(RadixNode* parent, RadixNode* new_child, int index) {\n    while (true) {\n        RadixNode* current = parent->children[index].load(std::memory_order_acquire);\n        new_child->next.store(current, std::memory_order_relaxed);\n        if (parent->children[index].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(RadixNode* parent, RadixNode* new_child, int index) {\n    parent->children[index] = new_child; // Non-atomic assignment prone to race conditions and data corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free bugs during aggressive node splicing.",
+        "Using sequential consistency everywhere instead of carefully tuned acquire-release semantics, which severely degrades multi-core hardware scaling."
+      ],
+      "best_practices": [
+        "Protect all traversed nodes during lookup and mutation phases by acquiring hazard pointers before dereferencing child pointers.",
+        "Keep node granularity fine enough to minimize CAS retry contention while balancing memory overhead from prefix splitting."
+      ],
+      "when_to_use": "Use this structure when building high-performance networking elements, routers, or SDN switches that require massive concurrent reads and updates of IP prefix routing tables without lock contention.",
+      "when_not_to_use": "Avoid this approach for low-concurrency applications or simple key-value stores where standard locked maps or simpler concurrent hash tables provide sufficient performance with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that other threads deleting nodes know to defer actual memory deallocation until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why are compare-and-swap (CAS) primitives preferred over mutexes in high-throughput SDN packet classification engines?",
+          "answer": "CAS primitives avoid OS-level thread context switches, blocking, and convoy effects, allowing multiple processor cores to make independent progress simultaneously under high-contention packet routing workloads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filters",
+        "Concurrent Hash Tables",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-22T23:20:35.838423+00:00",
+      "run_number": 3620
     }
   ]
 }
