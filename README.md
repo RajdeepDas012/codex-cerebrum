@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3569** |
-| Last Updated | `2026-10-22T04:39:25.185226+00:00` |
-| Dataset Size | `3569 entries` |
+| Total Topics Learned | **3570** |
+| Last Updated | `2026-10-22T04:42:35.168501+00:00` |
+| Dataset Size | `3570 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2352 |
+| data-structures | 2353 |
 | trading-strategies | 228 |
 | algorithms | 217 |
 | crypto-blockchain | 161 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic bounding-box-subdividing and pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial point indexing and multi-core parallel region querying in real-time geographic tracking systems and concurrent location-based services engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating system schedulers and concurrent event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed key-value indexing and multi-core parallel range queries in real-time storage engines and concurrent database management systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and bucket-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream monitoring and multi-core parallel frequency estimation in real-time network traffic analysis platforms and concurrent telemetry aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating system kernels and concurrent event-driven execution engines`
-- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-linking and priority-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core parallel task prioritization in real-time operating system schedulers and concurrent event-driven simulation engines`
 
 <!-- STATS_END -->
 
