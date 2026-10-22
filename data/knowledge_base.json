@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3620,
-    "last_updated": "2026-10-22T23:20:35.838445+00:00",
-    "total_topics_learned": 3620
+    "total_runs": 3621,
+    "last_updated": "2026-10-22T23:23:45.094034+00:00",
+    "total_topics_learned": 3621
   },
   "entries": [
     {
@@ -172371,6 +172371,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-22T23:20:35.838423+00:00",
       "run_number": 3620
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-flipping and volatile-word-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel duplicate filtering in real-time distributed caching layers and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter enables multiple threads to insert elements and check membership probabilities simultaneously without blocking or utilizing heavy mutual exclusion locks. By leveraging atomic bit-vector-flipping and volatile-word-updating compare-and-swap (CAS) primitives combined with hazard pointer memory management, it guarantees high throughput and low latency across multi-core environments.",
+      "key_points": [
+        "Utilizes atomic bit-vector-flipping and volatile-word-updating CAS operations to toggle bits safely across parallel threads.",
+        "Avoids traditional global or fine-grained locking mechanisms, completely eliminating lock contention, deadlocks, and priority inversion.",
+        "Employs hazard pointer memory reclamation to ensure safe reuse and deletion of dynamically allocated sub-structures without ABA problems.",
+        "Provides high-throughput probabilistic membership testing essential for reducing redundant disk I/O and network round-trips in caching layers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit manipulation for setting a bit in a lock-free filter word.",
+        "correct": "#include <atomic>\n#include <stdint.h>\n\nvoid atomic_set_bit(std::atomic<uint64_t>& word, uint32_t bit_index) {\n    uint64_t current = word.load(std::memory_order_relaxed);\n    uint64_t next;\n    do {\n        next = current | (1ULL << bit_index);\n    } while (!word.compare_exchange_weak(current, next, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void unsafe_set_bit(uint64_t& word, uint32_t bit_index) {\n    word |= (1ULL << bit_index); // Race condition on concurrent modifications\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operations that lead to lost updates when multiple threads write to the same underlying word.",
+        "Failing to handle memory visibility properly, leading to stale cache lines across separate CPU cores during concurrent reads and writes."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for read operations where synchronization is not strictly required, and release-acquire orderings for CAS loops.",
+        "Ensure the backing bit array is properly padded or partitioned to minimize false sharing across CPU cache lines."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching systems or real-time query optimization engines that require rapid multi-core membership checks with bounded false-positive rates.",
+      "when_not_to_use": "Avoid when exact set membership is required (false positives are unacceptable) or when the workload has low concurrency where a simple mutex-backed filter is sufficient.",
+      "interview_questions": [
+        {
+          "question": "Why can standard bitwise OR operations (e.g., word |= mask) cause data corruption in a concurrent multi-threaded Bloom filter?",
+          "answer": "Standard bitwise OR is a read-modify-write operation that is not atomic; if two threads read the word simultaneously, modify their local copies, and write them back, one thread's update will overwrite and lose the other's."
+        },
+        {
+          "question": "How do atomic CAS primitives resolve the concurrency challenge in lock-free bit-vector updates?",
+          "answer": "CAS primitives ensure that the bit-vector word is only updated if its value has not changed since it was last read; if another thread modified it in the interim, the CAS fails and retries with the fresh value."
+        }
+      ],
+      "related_topics": [
+        "concurrent cuckoo filter",
+        "lock-free radix tree",
+        "hazard pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T23:23:45.094014+00:00",
+      "run_number": 3621
     }
   ]
 }
