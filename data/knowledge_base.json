@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3571,
-    "last_updated": "2026-10-22T04:45:45.245881+00:00",
-    "total_topics_learned": 3571
+    "total_runs": 3572,
+    "last_updated": "2026-10-22T04:48:55.856955+00:00",
+    "total_topics_learned": 3572
   },
   "entries": [
     {
@@ -170054,6 +170054,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T04:45:45.245867+00:00",
       "run_number": 3571
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-node-pointing CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core parallel spell checking in real-time autocomplete recommendation systems and concurrent natural language processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Burkhard-Keller (BK) tree optimized for metric space searching, such as Levenshtein distance-based string matching. By utilizing atomic compare-and-swap (CAS) primitives and hazard pointers, multiple threads can concurrently insert and query fuzzy string indices without locking bottlenecks, ensuring high performance in real-time recommendation engines.",
+      "key_points": [
+        "Leverages metric space properties (like triangle inequality) to bound search spaces during concurrent queries.",
+        "Uses atomic child-node pointers and CAS operations to safely link new distance branches without locking the entire tree.",
+        "Employs hazard pointers to guarantee safe memory reclamation and prevent use-after-free bugs during concurrent node modifications.",
+        "Enables scalable parallel spell checking and autocomplete suggestions across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node insertion structure for a lock-free concurrent BK-Tree using CAS and hazard pointers.",
+        "correct": "bool insert(Node* head, const std::string& word) {\n    Node* curr = head;\n    while (true) {\n        int dist = levenshtein(curr->word, word);\n        Node** next_ptr = &curr->children[dist];\n        Node* next = atomic_load(next_ptr);\n        if (next == nullptr) {\n            Node* new_node = new Node(word);\n            if (atomic_compare_exchange_strong(next_ptr, &next, new_node)) return true;\n            delete new_node;\n        } else {\n            curr = next;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* head, const std::string& word) {\n    // Missing synchronization and hazard pointers leads to race conditions and memory leaks\n    mutex.lock();\n    int dist = levenshtein(head->word, word);\n    if (!head->children[dist]) head->children[dist] = new Node(word);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, causing premature memory deallocation by concurrent writer threads.",
+        "Recomputing expensive edit distances inside critical lock-free retry loops without caching intermediate results.",
+        "Ignoring ABA problems on pointer-swinging CAS operations when nodes are dynamically deleted or updated."
+      ],
+      "best_practices": [
+        "Retire nodes safely via epoch-based or hazard pointer-based reclamation schemes to prevent memory corruption.",
+        "Keep metric distance functions lightweight or memoize results to reduce latency during deep tree traversals.",
+        "Design tree nodes with compact child storage or dynamic arrays to handle variable metric branch distances efficiently."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive applications requiring concurrent fuzzy string matching, autocorrect, or nearest-neighbor queries in metric spaces.",
+      "when_not_to_use": "Avoid when exact string matching is sufficient, or when memory overhead and implementation complexity of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free BK-Tree without traditional mutexes?",
+          "answer": "By using hazard pointers or epoch-based memory reclamation, threads register nodes they are currently accessing so that deleters know when it is safe to free memory."
+        },
+        {
+          "question": "What is the primary challenge when updating child pointers in a metric tree using CAS?",
+          "answer": "Handling contention when multiple threads attempt to insert words with the exact same edit distance simultaneously, requiring retry loops and atomic pointer updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management",
+        "Metric Space Searching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T04:48:55.856937+00:00",
+      "run_number": 3572
     }
   ]
 }
