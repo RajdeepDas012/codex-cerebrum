@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3589,
-    "last_updated": "2026-10-22T10:41:09.738343+00:00",
-    "total_topics_learned": 3589
+    "total_runs": 3590,
+    "last_updated": "2026-10-22T15:02:27.344874+00:00",
+    "total_topics_learned": 3590
   },
   "entries": [
     {
@@ -170906,6 +170906,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-22T10:41:09.738324+00:00",
       "run_number": 3589
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership queries and multi-core parallel duplicate filtering in real-time web crawlers and concurrent distributed caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter enables multiple threads to simultaneously test and add items to a shared probabilistic set without thread contention or blocking locks. By utilizing atomic bit-array-setting and CAS primitives, it ensures safe parallel updates to the underlying bit vector, making it optimal for high-throughput filtering workloads.",
+      "key_points": [
+        "Employs atomic operations to safely modify bits in a shared array across multiple threads without locks.",
+        "Uses hazard pointers to safely manage memory reclamation for dynamically resized or concurrent filter structures.",
+        "Provides space-efficient approximate membership queries with zero false negatives and tunable false positive rates.",
+        "Ideal for high-throughput parallel workloads such as web crawlers and distributed caching layers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates setting a bit atomically in a concurrent bit-array using compare-and-swap operations.",
+        "correct": "void atomic_set_bit(std::atomic<uint64_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t mask = 1ULL << (bit_index % 64);\n    uint64_t old_val = bit_array[word_idx].load(std::memory_order_relaxed);\n    while (!(old_val & mask) && !bit_array[word_idx].compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {}\n}",
+        "wrong": "void unsafe_set_bit(uint64_t* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    bit_array[word_idx] |= (1ULL << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise operations which lead to lost updates under multi-threaded concurrency.",
+        "Ignoring false positive probability tuning, resulting in degraded filter accuracy as capacity fills up."
+      ],
+      "best_practices": [
+        "Pre-allocate the optimal bit array size based on expected insertion volume and acceptable false positive rate.",
+        "Utilize fast, non-cryptographic hash functions like MurmurHash or CityHash to minimize CPU overhead during lookups."
+      ],
+      "when_to_use": "Use when you need high-throughput, thread-safe approximate membership testing across many concurrent threads with strict latency requirements.",
+      "when_not_to_use": "Do not use when absolute zero false positives are required or when elements must be reliably deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to the same underlying word in a lock-free Bloom Filter bit array?",
+          "answer": "By using a compare-and-swap (CAS) loop that reads the current word, computes the target bitwise OR mask, and attempts to swap it in atomically."
+        },
+        {
+          "question": "Why is standard deletion not supported in a basic Bloom Filter?",
+          "answer": "Clearing bits can inadvertently remove other elements that share the same hashed bit positions, introducing false negatives."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointers",
+        "Lock-Free Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-22T15:02:27.344856+00:00",
+      "run_number": 3590
     }
   ]
 }
