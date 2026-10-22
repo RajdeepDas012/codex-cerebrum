@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3579,
-    "last_updated": "2026-10-22T10:09:29.653814+00:00",
-    "total_topics_learned": 3579
+    "total_runs": 3580,
+    "last_updated": "2026-10-22T10:12:39.318461+00:00",
+    "total_topics_learned": 3580
   },
   "entries": [
     {
@@ -170436,6 +170436,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-22T10:09:29.653796+00:00",
       "run_number": 3579
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-overlapping and left-max-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range queries and multi-core parallel dynamic schedule analysis in real-time time-interval management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Interval Tree that uses atomic primitives for managing overlapping intervals and updating auxiliary left-max values. It combines hazard pointers to ensure safe memory reclamation without blocking threads during high-throughput range searches.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely manage concurrent insertions and structural modifications without locks.",
+        "Maintains augmented left-max values atomically across tree nodes to guide efficient parallel overlapping range queries.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes actively accessed by concurrent reader threads.",
+        "Enables high-throughput multi-core execution for real-time time-interval management and dynamic schedule analysis."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic interval tree node with hazard pointer protection for concurrent searches.",
+        "correct": "struct Node { Interval interval; int max_high; std::atomic<Node*> left, right; };\nvoid* search(Node* root, Interval query) {\n    HazardPointerGuard g;\n    Node* curr = g.protect(root);\n    while (curr) {\n        if (overlaps(curr->interval, query)) return curr;\n        if (curr->left && g.protect(curr->left)->max_high >= query.low)\n            curr = curr->left;\n        else\n            curr = curr->right;\n    }\n    return nullptr;\n}",
+        "wrong": "Node* search(Node* root, Interval query) {\n    Node* curr = root;\n    while (curr) {\n        if (overlaps(curr->interval, query)) return curr;\n        curr = (curr->left && curr->left->max_high >= query.low) ? curr->left : curr->right;\n    }\n    return nullptr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers, leading to use-after-free bugs when concurrent threads delete nodes.",
+        "Updating augmented fields like left-max values non-atomically, causing race conditions during multi-threaded range queries."
+      ],
+      "best_practices": [
+        "Always register active nodes in the hazard pointer domain before traversing child pointers.",
+        "Ensure augmented interval metrics are recalculated and propagated using atomic operations during tree balancing or re-linking."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent high-frequency updates and overlapping range searches on dynamic interval data without lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or when simple read-heavy workloads can be efficiently handled by a reader-writer locked traditional interval tree.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the atomic maintenance of augmented maximum bounds during concurrent structural modifications in a lock-free interval tree?",
+          "answer": "By using multi-word CAS or version-counted pointers to update both the child link and the recalculated augmented bound simultaneously or through validated retry loops."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-performance lock-free interval trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the pause times or memory overhead typically introduced by tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointer memory management",
+        "concurrent augmented search trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-22T10:12:39.318439+00:00",
+      "run_number": 3580
     }
   ]
 }
