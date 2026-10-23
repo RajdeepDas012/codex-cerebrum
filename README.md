@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3662** |
-| Last Updated | `2026-10-23T14:53:14.470067+00:00` |
-| Dataset Size | `3662 entries` |
+| Total Topics Learned | **3663** |
+| Last Updated | `2026-10-23T14:56:44.672381+00:00` |
+| Dataset Size | `3663 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2434 |
+| data-structures | 2435 |
 | trading-strategies | 228 |
 | algorithms | 224 |
 | crypto-blockchain | 164 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and weight-biased-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable heap operations and multi-core parallel job prioritization in real-time task scheduling platforms and concurrent event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-hyperplane-subdividing and leaf-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point indexing and multi-core parallel nearest-neighbor searching in real-time robotics perception systems and concurrent spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput pattern matching and multi-core parallel genome sequencing in real-time bioinformatics analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and hierarchical-membership-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer range queries and multi-core parallel decentralized node discovery in real-time cloud gaming topologies and concurrent distributed hash tables`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-marking and node-range-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query updates and multi-core parallel cumulative aggregation in real-time financial analytics engines and concurrent stream processing platforms`
-- `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic reader-writer-queuing and phase-fair-granting CAS primitives alongside hazard pointer memory reclamation for high-throughput shared resource access and multi-core parallel read-heavy workload processing in real-time distributed caching engines and concurrent database transaction managers`
 
 <!-- STATS_END -->
 
