@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3687,
-    "last_updated": "2026-10-23T19:34:28.153085+00:00",
-    "total_topics_learned": 3687
+    "total_runs": 3688,
+    "last_updated": "2026-10-23T19:37:40.253436+00:00",
+    "total_topics_learned": 3688
   },
   "entries": [
     {
@@ -175535,6 +175535,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T19:34:28.153064+00:00",
       "run_number": 3687
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting and child-node-compacting CAS primitives alongside hazard pointer memory reclamation for high-throughput string-keyed routing lookups and multi-core parallel IP address prefix matching in real-time software-defined networking routers and concurrent cloud packet classification engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree optimizes space and lookup time for string and bit-string keys by compressing single-child chains and using atomic compare-and-swap (CAS) primitives. It leverages hazard pointers to safely manage dynamic memory reclamation without acquiring heavy-weight mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic CAS operations for node modifications, edge-splitting, and child-node-compacting to achieve lock-free thread safety.",
+        "Employs hazard pointers to track active threads reading node references, preventing premature memory deallocation during concurrent structural updates.",
+        "Compresses redundant paths by storing common string prefixes or bit-segments in single nodes, reducing tree depth and memory footprints.",
+        "Enables high-throughput concurrent IP address prefix matching and routing table lookups for multi-core software-defined networking (SDN) pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node pointer update pattern used when inserting or modifying edges in a lock-free Radix Tree.",
+        "correct": "bool update_child_edge(Node* parent, const std::string& label, Node* expected_child, Node* new_child) {\n    return parent->children.compare_exchange_strong(expected_child, new_child);\n}",
+        "wrong": "bool update_child_edge_wrong(Node* parent, const std::string& label, Node* new_child) {\n    parent->lock();\n    parent->children[label] = new_child;\n    parent->unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to use-after-free bugs during structural rotations or splits.",
+        "Ignoring the ABA problem during child-pointer CAS updates, which can corrupt the tree structure under high contention."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard-pointer-based memory management frameworks to cleanly defer deallocation of split or compressed nodes.",
+        "Design concise node layout structures to fit cache lines where possible, minimizing cache misses during deep string traversal."
+      ],
+      "when_to_use": "Use when building high-performance networking routers, IP address lookup tables, or routing engines requiring ultra-low latency reads and heavy concurrent writes.",
+      "when_not_to_use": "Avoid when keys are strictly numeric with fixed uniform distributions where standard lock-free hash maps or flat arrays provide simpler, faster alternatives.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when multiple threads traverse and concurrently modify (split/compact) nodes in a lock-free Radix Tree?",
+          "answer": "Hazard pointers or epoch-based reclamation (EBR) are used to register nodes currently being accessed by reader threads, ensuring they are only freed after all threads have released their references."
+        },
+        {
+          "question": "What concurrency challenge arises when two threads attempt to insert overlapping string keys into the same Radix Tree path simultaneously?",
+          "answer": "The threads will attempt to update the same parent child-pointer via CAS; one will succeed while the other fails, necessitating a retry loop after re-reading the current node state."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Tries (Prefix Tree)",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T19:37:40.253409+00:00",
+      "run_number": 3688
     }
   ]
 }
