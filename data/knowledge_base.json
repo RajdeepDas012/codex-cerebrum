@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3671,
-    "last_updated": "2026-10-23T15:24:10.127373+00:00",
-    "total_topics_learned": 3671
+    "total_runs": 3672,
+    "last_updated": "2026-10-23T15:27:22.993283+00:00",
+    "total_topics_learned": 3672
   },
   "entries": [
     {
@@ -174776,6 +174776,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T15:24:10.127353+00:00",
       "run_number": 3671
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-swinging and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value indexing and multi-core parallel range scanning in real-time in-memory database engines and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent skip-list is a probabilistic data structure that provides logarithmic search, insertion, and deletion performance similar to balanced trees, but optimized for lock-free parallel access. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it enables high-throughput ordered key-value indexing and multi-core parallel range scanning.",
+      "key_points": [
+        "Uses probabilistic multi-level towers to achieve O(log n) expected search and modification times.",
+        "Employs atomic forward-pointer-swinging via CAS to safely link and unlink nodes without coarse-grained locks.",
+        "Utilizes tower-height-adjustment mechanisms to dynamically incorporate newly spliced nodes into higher abstraction levels.",
+        "Integrates hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during concurrent traversals and deletions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent node insertion using atomic forward pointer updates in a skip-list level.",
+        "correct": "class Node:\n    def __init__(self, key, value, height):\n        self.key = key\n        self.value = value\n        self.forward = [None] * height\n        self.fully_linked = False\n        self.marked = False\n\ndef cas_insert(preds, succs, new_node, level):\n    while True:\n        pred, succ = preds[level], succs[level]\n        new_node.forward[level] = succ\n        if pred.forward[level] == succ:\n            if pred.forward[level].compare_and_set(succ, new_node):\n                return True\n        return False",
+        "wrong": "def unsafe_insert(pred, succ, new_node, level):\n    new_node.forward[level] = succ\n    pred.forward[level] = new_node"
+      },
+      "common_mistakes": [
+        "Failing to logically delete nodes by setting a 'marked' bit before physically unlinking pointers, leading to race conditions with concurrent insertions.",
+        "Neglecting safe memory reclamation techniques like hazard pointers or epoch-based reclamation, resulting in premature memory deallocation of nodes still referenced by concurrent threads."
+      ],
+      "best_practices": [
+        "Always separate logical deletion (marking) from physical deletion (pointer swinging) to ensure linearizability.",
+        "Acquire hazard pointer protection for target nodes prior to traversing forward pointers to avoid use-after-free vulnerabilities.",
+        "Keep tower height bounded by a pre-defined maximum limit to prevent excessive memory overhead and deep pointer traversals."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory databases, concurrent key-value stores, or real-time indexing systems requiring frequent sorted range scans and heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where standard locking or simpler ordered arrays/trees provide lower memory overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing CAS operations on forward pointers in a lock-free skip-list?",
+          "answer": "You can use pointer tagging (storing a version bit or mark alongside the memory address) or rely on hazard pointers/epoch-based reclamation which guarantee that nodes are not reused while active threads hold references to them."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical deletion in a concurrent lock-free skip-list?",
+          "answer": "Logical deletion marks a node as deleted by setting an atomic flag, which prevents concurrent threads from inserting new nodes immediately after it while it is still being actively unlinked from lower and upper tower levels."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers and memory reclamation",
+        "Concurrent B-Trees"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-23T15:27:22.993264+00:00",
+      "run_number": 3672
     }
   ]
 }
