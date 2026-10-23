@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3692,
-    "last_updated": "2026-10-23T22:04:39.613443+00:00",
-    "total_topics_learned": 3692
+    "total_runs": 3693,
+    "last_updated": "2026-10-23T22:07:48.860835+00:00",
+    "total_topics_learned": 3693
   },
   "entries": [
     {
@@ -175772,6 +175772,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T22:04:39.613421+00:00",
       "run_number": 3692
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scs-Tree using atomic node-merging and leaf-redistributing CAS primitives alongside hazard pointer memory reclamation for high-throughput string key-value storage and multi-core parallel prefix compression in real-time embedded database systems and concurrent dictionary indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Scs-Tree (Semi-Compact Suffix Tree or specialized string compression tree) utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It guarantees safe concurrent memory reclamation and non-blocking traversal for high-performance string key-value storage engines.",
+      "key_points": [
+        "Utilizes atomic node-merging and leaf-redistributing CAS primitives to handle concurrent insertions and deletions without blocking locks.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes actively traversed by concurrent reader threads.",
+        "Implements multi-core parallel prefix compression to reduce memory footprint and improve cache locality in embedded database systems.",
+        "Ensures linearizability for string-keyed insertions, lookups, and range queries under heavy multi-threaded contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual node-merging atomic operation using CAS in a concurrent tree structure.",
+        "correct": "bool try_merge_nodes(Node* parent, Node* child, std::atomic<Node*>& edge) {\n    Node* expected = child;\n    Node* desired = child->merged_version;\n    return edge.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = edge.load();\nedge.store(current->merged_version);"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during node merging.",
+        "Using blocking synchronization primitives inside leaf-redistribution routines, defeating the lock-free guarantee.",
+        "Neglecting ABA problems on node pointer modifications during concurrent CAS operations."
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer domain before executing any traversal or mutation on the Scs-Tree.",
+        "Keep atomic operations granular and bundle structural modifications into distinct validation phases.",
+        "Thoroughly test memory reclamation overhead under high-contention multi-core read-write workloads."
+      ],
+      "when_to_use": "Use when building high-throughput embedded databases, concurrent string indexers, or real-time storage engines requiring lock-free prefix compression and massive multi-core scaling.",
+      "when_not_to_use": "Avoid when dealing with simple single-threaded applications, small datasets where synchronization overhead outweighs benefits, or memory-constrained environments where hazard pointers introduce excessive tracking overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node merging and deletion in a lock-free Scs-Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, blocking other threads from immediately reclaiming the memory via free() until all pointers referencing that node are cleared."
+        },
+        {
+          "question": "Why are atomic node-merging and leaf-redistributing CAS primitives preferred over traditional mutexes in real-time embedded database engines?",
+          "answer": "CAS primitives avoid lock contention, priority inversion, and thread sleeping overheads, guaranteeing system-wide progress even if individual threads are delayed or preempted."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Radix Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Suffix Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T22:07:48.860813+00:00",
+      "run_number": 3693
     }
   ]
 }
