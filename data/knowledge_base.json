@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3664,
-    "last_updated": "2026-10-23T15:00:00.129760+00:00",
-    "total_topics_learned": 3664
+    "total_runs": 3665,
+    "last_updated": "2026-10-23T15:03:14.769985+00:00",
+    "total_topics_learned": 3665
   },
   "entries": [
     {
@@ -174444,6 +174444,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T15:00:00.129738+00:00",
       "run_number": 3664
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search tree operations and multi-core parallel priority-ordered lookups in real-time in-memory caching systems and concurrent relational database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Treap that combines Binary Search Tree ordering on keys with Heap ordering on randomized priorities. It uses atomic CAS operations for tree rotations and randomized priority assignments, paired with hazard pointers to guarantee safe memory reclamation without global locks.",
+      "key_points": [
+        "Integrates BST key properties with randomized heap priorities to maintain balance without global rebalancing locks.",
+        "Employs atomic compare-and-swap (CAS) primitives for thread-safe tree rotations and node insertions.",
+        "Utilizes hazard pointers to safely track and reclaim memory for nodes unlinked during concurrent rotations and deletions.",
+        "Ensures high-throughput multi-core parallel priority-ordered lookups for high-frequency in-memory caching and database engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of concurrent node insertion with atomic priority assignment and CAS-based rotation updates.",
+        "correct": "bool insert(Node*& root, int key, int priority) {\n    Node* newNode = new Node(key, priority);\n    while (true) {\n        // Atomically insert and restore heap property via CAS rotation\n        if (cas_insert(root, newNode)) return true;\n    }\n}",
+        "wrong": "bool insert(Node*& root, int key, int priority) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Using locks defeats the lock-free design and degrades multi-core throughput\n    root = standard_bst_insert(root, key, priority);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently unlinked nodes with hazard pointers, leading to use-after-free bugs.",
+        "Attempting full tree-wide locking during rotations, which destroys concurrent scaling benefits."
+      ],
+      "best_practices": [
+        "Protect all traversal and pointer-dereference steps using local thread hazard pointer arrays.",
+        "Keep atomic retry loops concise to minimize cache-line bouncing under high contention."
+      ],
+      "when_to_use": "Use when building highly concurrent in-memory caches or database indices requiring balanced search operations and range queries across many CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where simpler blocking data structures provide lower latency overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node rotations safely using CAS without causing deadlocks or lost updates?",
+          "answer": "By performing local CAS operations on parent-child pointers and validating that nodes have not been modified or removed during the rotation sequence using epoch or hazard pointer checks."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free Treap implementation?",
+          "answer": "They prevent other threads from freeing memory of nodes that have been detached via tree rotations or deletions while a thread is still actively reading them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Concurrent AVL Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T15:03:14.769965+00:00",
+      "run_number": 3665
     }
   ]
 }
