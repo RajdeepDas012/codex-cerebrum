@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3674,
-    "last_updated": "2026-10-23T15:34:16.909473+00:00",
-    "total_topics_learned": 3674
+    "total_runs": 3675,
+    "last_updated": "2026-10-23T15:37:33.326896+00:00",
+    "total_topics_learned": 3675
   },
   "entries": [
     {
@@ -174919,6 +174919,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-10-23T15:34:16.909454+00:00",
       "run_number": 3674
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-allocation and dynamic-bucket-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-agent collision avoidance and multi-core parallel proximity searching in real-time massively multiplayer online game servers and concurrent simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, lock-free spatial indexing grid utilizing atomic primitives and hazard pointers. It enables multi-core systems to execute rapid proximity queries and collision detection without thread blocking, ensuring ultra-low latency in real-time simulations and game servers.",
+      "key_points": [
+        "Utilizes atomic cell-allocation and dynamic-bucket-resizing CAS operations to manage grid partitions safely across multiple threads without locks.",
+        "Employs hazard pointers for safe, lock-free memory reclamation of resized or deleted grid buckets and entity nodes.",
+        "Optimizes multi-agent collision detection and proximity queries by localizing spatial checks to bounded grid cells.",
+        "Eliminates global lock bottlenecks, allowing linear scalability across multiple CPU cores for high-density simulation environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic cell allocation and hazard pointer protection for safely accessing a spatial grid bucket.",
+        "correct": "void* access_grid_bucket(std::atomic<Bucket*>& cell_ptr, HazardPointerList& hp_list, std::thread::id tid) {\n    Bucket* bucket;\n    while (true) {\n        bucket = cell_ptr.load(std::memory_order_acquire);\n        hp_list.protect(tid, bucket);\n        if (cell_ptr.load(std::memory_order_relaxed) == bucket) {\n            break;\n        }\n    }\n    return bucket;\n}",
+        "wrong": "Bucket* bucket = cell_ptr.load();\n// Missing hazard pointer protection and validation check leading to use-after-free\nprocess(bucket);"
+      },
+      "common_mistakes": [
+        "Failing to re-verify atomic pointers after acquiring a hazard pointer, leading to race conditions if the bucket is concurrently resized or deleted.",
+        "Overlooking ABA problems during bucket resizing and atomic pointer swaps."
+      ],
+      "best_practices": [
+        "Always register threads and publish hazard pointers before dereferencing any dynamically changing grid node references.",
+        "Design grid partitioning sizes to balance memory overhead and collision search granularity based on expected agent density."
+      ],
+      "when_to_use": "When building real-time multi-agent simulations, MMO game servers, or physics engines requiring high-throughput, lock-free spatial queries across numerous concurrent threads.",
+      "when_not_to_use": "In single-threaded applications or systems with sparse, static spatial data where simpler data structures like standard quadtrees or flat arrays with coarse-grained locking suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs when resizing lock-free grid buckets?",
+          "answer": "Hazard pointers allow threads to explicitly announce which memory nodes they are currently accessing. Before reclaiming or freeing an old bucket during a dynamic resize, a thread scans all active hazard pointers to ensure no other thread is referencing that specific memory address."
+        },
+        {
+          "question": "Why is a lock-free spatial grid preferred over a fine-grained locked grid in massively multiplayer online game servers?",
+          "answer": "Lock-free grids avoid thread contention, priority inversion, and deadlocks caused by blocking mutexes, ensuring predictable, ultra-low latency updates for thousands of concurrent agents."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Concurrent Quadtrees and Spatial Partitioning",
+        "Lock-Free Hash Tables and Dynamic Resizing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T15:37:33.326875+00:00",
+      "run_number": 3675
     }
   ]
 }
