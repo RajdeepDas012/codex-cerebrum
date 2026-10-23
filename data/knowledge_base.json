@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3665,
-    "last_updated": "2026-10-23T15:03:14.769985+00:00",
-    "total_topics_learned": 3665
+    "total_runs": 3666,
+    "last_updated": "2026-10-23T15:06:38.822158+00:00",
+    "total_topics_learned": 3666
   },
   "entries": [
     {
@@ -174491,6 +174491,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T15:03:14.769965+00:00",
       "run_number": 3665
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quadrant-pointer-swinging and leaf-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial point indexing and multi-core parallel region querying in real-time location-based tracking systems and concurrent geographic information platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-Quadtree combines skip list probabilistic multi-level routing with quadtree spatial partitioning, utilizing atomic primitives like quadrant-pointer-swinging and leaf-node-splitting alongside hazard pointers. It is critical for achieving high-throughput, contention-resilient spatial point indexing and concurrent multi-core parallel region querying.",
+      "key_points": [
+        "Utilizes atomic quadrant-pointer-swinging and leaf-node-splitting CAS primitives to safely modify tree topology without locks.",
+        "Employs hazard pointer memory reclamation to prevent ABA problems and safely free unlinked nodes during high-concurrency splits.",
+        "Merges the probabilistic balancing layers of a skip list with the 2D spatial decomposition of a quadtree for efficient range and point queries.",
+        "Ensures thread safety and minimizes synchronization bottlenecks, making it ideal for real-time multi-core spatial applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node updating using atomic CAS operations and hazard pointer protection in a concurrent Skip-Quadtree.",
+        "correct": "bool insert_point(Node* root, Point p, HazardPointerManager& hpm) {\n    HazardPointer hp = hpm.protect(root);\n    // Perform atomic quadrant-pointer-swinging CAS loop\n    while (!try_split_and_link(root, p)) {\n        hp.refresh(root);\n    }\n    hpm.release(hp);\n    return true;\n}",
+        "wrong": "bool insert_point(Node* root, Point p) {\n    // Missing hazard pointer protection and manual lock usage leads to race conditions\n    lock_guard<mutex> lock(root->mtx);\n    root->add(p);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs when concurrent threads split leaf nodes.",
+        "Incorrectly managing the multi-level skip links during quadrant insertion, which can orphan valid spatial regions."
+      ],
+      "best_practices": [
+        "Always register threads and acquire hazard pointers before traversing any modifiable sub-tree pointers.",
+        "Design memory retirement queues carefully to batch node reclamations and reduce synchronization overhead."
+      ],
+      "when_to_use": "Use when building real-time location-based tracking systems or geographic information platforms that demand high-throughput spatial indexing across many concurrent cores.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with low concurrency where simpler structures like standard quadtrees or R-trees incur less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do atomic quadrant-pointer-swinging CAS primitives prevent race conditions during concurrent point insertions?",
+          "answer": "They ensure that updates to specific spatial quadrant child pointers succeed only if the expected pointer hasn't changed since it was last read, retrying automatically if a conflict occurs."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Skip-Quadtree?",
+          "answer": "They protect nodes from being reclaimed or freed by memory management threads while another thread is actively traversing or modifying references pointing to them."
+        }
+      ],
+      "related_topics": [
+        "Concurrent K-D Tree",
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T15:06:38.822137+00:00",
+      "run_number": 3666
     }
   ]
 }
