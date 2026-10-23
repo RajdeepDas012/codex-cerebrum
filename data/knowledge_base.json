@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3679,
-    "last_updated": "2026-10-23T19:09:09.368617+00:00",
-    "total_topics_learned": 3679
+    "total_runs": 3680,
+    "last_updated": "2026-10-23T19:12:20.490996+00:00",
+    "total_topics_learned": 3680
   },
   "entries": [
     {
@@ -175156,6 +175156,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T19:09:09.368593+00:00",
       "run_number": 3679
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-key-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path algorithm execution and multi-core parallel network routing optimization in real-time telecommunication traffic engines and concurrent graph processing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Fibonacci Heap provides amortized $O(1)$ insertions and decrease-key operations, adapted for multi-threaded environments through lock-free atomic root-list splicing and compare-and-swap primitives. By incorporating hazard pointers, it safely manages memory reclamation across threads without blocking execution, making it ideal for high-throughput parallel shortest path and routing optimization engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manipulate root lists and update minimum node pointers without global locks.",
+        "Implements hazard pointers to track thread-local active node references, safely deferring memory deallocation until no thread holds a reference to a deleted node.",
+        "Preserves the lazy consolidation property of Fibonacci heaps concurrently, reducing the contention overhead during frequent multi-core insertions.",
+        "Enables high-throughput concurrent execution of Dijkstra's algorithm for dynamic network routing and massive graph analytics."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free node insertion via atomic CAS root-list splicing.",
+        "correct": "bool insert(Node* new_node) {\n    while (true) {\n        Node* old_head = min_root.load(std::memory_order_relaxed);\n        new_node->right = old_head;\n        if (min_root.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* new_node) {\n    // Non-atomic modification leading to race conditions under multi-threading\n    new_node->right = min_root;\n    min_root = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during extraction, leading to use-after-free vulnerabilities when another thread updates tree pointers.",
+        "Using heavy synchronization locks for decrease-key operations, which bottleneck throughput and negate the lock-free design advantage."
+      ],
+      "best_practices": [
+        "Batch hazard pointer registrations and retirements to minimize atomic fence instruction overhead.",
+        "Design tree node layouts to fit within cache lines to reduce false sharing across parallel worker threads."
+      ],
+      "when_to_use": "When implementing multi-threaded graph algorithms like parallel Dijkstra's where insert and decrease-key operations occur at high frequencies across multiple cores.",
+      "when_not_to_use": "In single-threaded applications or systems with low concurrency where the memory overhead and complexity of lock-free primitives and hazard pointers outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node extraction in a lock-free Fibonacci heap?",
+          "answer": "Hazard pointers publish a thread's intent to access a specific node before reading its pointers, ensuring that any concurrently executing thread attempting to free or reclaim the node's memory defers the deallocation until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is structural modification in a concurrent Fibonacci heap typically split into lazy updates using CAS?",
+          "answer": "Splitting operations like consolidation into non-blocking, atomic steps allows threads to collaboratively contribute to heap maintenance without holding exclusive locks, significantly scaling throughput under heavy contention."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Concurrent Priority Queues",
+        "Parallel Graph Processing and Shortest Path Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-23T19:12:20.490976+00:00",
+      "run_number": 3680
     }
   ]
 }
