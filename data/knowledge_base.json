@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3630,
-    "last_updated": "2026-10-22T23:52:23.262598+00:00",
-    "total_topics_learned": 3630
+    "total_runs": 3631,
+    "last_updated": "2026-10-23T04:14:13.534528+00:00",
+    "total_topics_learned": 3631
   },
   "entries": [
     {
@@ -172842,6 +172842,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-22T23:52:23.262576+00:00",
       "run_number": 3630
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Tree using atomic path-merging and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput meldable priority queue operations and multi-core parallel merge-heavy workload scheduling in real-time event-driven execution engines and concurrent task distribution frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Leftist Tree that utilizes atomic primitives for path-merging and null-path-length (NPL) updates. By combining Compare-And-Swap (CAS) operations with hazard pointer memory reclamation, it achieves high-throughput meldable priority queue operations suitable for multi-core parallel workload scheduling.",
+      "key_points": [
+        "Uses atomic CAS primitives to execute thread-safe path-merging operations on leftist tree nodes.",
+        "Maintains structural balance concurrently by updating null-path-lengths (NPL) without global locking mechanisms.",
+        "Employs hazard pointer memory reclamation to safely manage deleted nodes and prevent memory leaks under high contention.",
+        "Optimized for real-time event-driven execution engines requiring fast meldable priority queue processing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node merging with hazard pointer protection for a concurrent Leftist Tree.",
+        "correct": "bool try_meld(std::atomic<Node*>& dest, Node* src, HazardPointerContext& hp) {\n    Node* current = hp.protect(dest);\n    // Perform atomic merge logic based on NPL values\n    return dest.compare_exchange_weak(current, merged_node);\n}",
+        "wrong": "Node* try_meld(Node* dest, Node* src) {\n    // Non-atomic modification vulnerable to race conditions and memory reclamation errors\n    return dest->right = merge(dest->right, src);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading pointers, leading to use-after-free bugs during concurrent merges.",
+        "Updating null-path-lengths (NPL) out of order, which degrades the leftist property and hurts merge performance."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing or modifying dynamically allocated child pointers.",
+        "Ensure atomic NPL recalculations occur as part of the retry loop in CAS-based structural updates."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded priority queue systems that require frequent meld operations and strict lock-free guarantees.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking or simpler binary heaps provide sufficient performance with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property (null-path-length balance) in a lock-free concurrent environment?",
+          "answer": "By using CAS loops to recalculate NPL values during the merge phase, retrying if concurrent modifications alter the child subtrees."
+        },
+        {
+          "question": "Why are hazard pointers necessary for implementing a lock-free Leftist Tree?",
+          "answer": "Hazard pointers protect threads from accessing nodes that have been concurrently removed or replaced during destructive merge operations, preventing use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B* Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T04:14:13.534478+00:00",
+      "run_number": 3631
     }
   ]
 }
