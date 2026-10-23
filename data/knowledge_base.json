@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3640,
-    "last_updated": "2026-10-23T04:42:50.518896+00:00",
-    "total_topics_learned": 3640
+    "total_runs": 3641,
+    "last_updated": "2026-10-23T04:46:00.225357+00:00",
+    "total_topics_learned": 3641
   },
   "entries": [
     {
@@ -173313,6 +173313,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T04:42:50.518875+00:00",
       "run_number": 3640
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking in real-time search engine correction platforms and concurrent dictionary matching engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Burkhard-Keller (BK) tree optimized for metric space searching and string distance metrics. By combining atomic edit-distance-partitioning, child-node-linking CAS operations, and hazard pointers, it enables multi-core thread safety and lock-free memory safety for low-latency spell checking and approximate searches.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely append and link child nodes across multiple edit-distance branches without blocking threads.",
+        "Employs hazard pointers to guarantee safe memory reclamation and prevent use-after-free bugs during concurrent node additions and metric traversals.",
+        "Organizes metric space partitions based on Levenshtein or Damerau-Levenshtein distances, dramatically reducing the search space for approximate string matching.",
+        "Provides linearizability and high throughput for concurrent readers and writers in multi-core dictionary lookups and auto-correction platforms."
+      ],
+      "code_example": {
+        "language": "pseudocode",
+        "description": "Demonstrates atomic child-node linking and hazard pointer protection in a concurrent BK-Tree insert operation.",
+        "correct": "function concurrent_insert(root, new_node, distance_func):\n    curr = root\n    while true:\n        hazard_ptr_protect(curr)\n        dist = distance_func(curr.word, new_node.word)\n        child_ptr = curr.children[dist]\n        if child_ptr == null:\n            if atomic_cas(&curr.children[dist], null, new_node):\n                hazard_ptr_release()\n                return SUCCESS\n        else:\n            curr = child_ptr",
+        "wrong": "function unsafe_insert(root, new_node):\n    dist = calc_dist(root.word, new_node.word)\n    if root.children[dist] is null:\n        root.children[dist] = new_node // Not thread-safe, race condition on assignment\n    else:\n        unsafe_insert(root.children[dist], new_node)"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to race conditions where another thread frees a parent node during structural modification.",
+        "Assuming metric space triangle inequality guarantees a single-path traversal in concurrent writes, causing missed branch insertions under high contention."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers for nodes before reading their children arrays to prevent premature memory reclamation.",
+        "Keep distance calculation functions pure and side-effect free so they can be safely executed outside of critical atomic sections."
+      ],
+      "when_to_use": "Use when building real-time search engine correction systems or high-throughput spell checkers requiring concurrent dictionary updates and low-latency approximate matching.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where exact string matching (like hash maps or tries) suffices and memory overhead is tightly constrained.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory corruption in a lock-free BK-Tree during concurrent node insertion?",
+          "answer": "Hazard pointers announce to other threads that a specific node is currently being accessed, ensuring that any thread attempting to delete or reallocate that node defers reclamation until it is no longer protected."
+        },
+        {
+          "question": "What is the primary synchronization challenge when updating child pointers across multiple edit-distance buckets in a concurrent BK-Tree?",
+          "answer": "The primary challenge is handling concurrent insertion attempts into the same distance bucket using atomic CAS operations, requiring retry loops or fallback strategies when another thread successfully links a node first."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Metric Space Searching and BK-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T04:46:00.225335+00:00",
+      "run_number": 3641
     }
   ]
 }
