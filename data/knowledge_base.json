@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3638,
-    "last_updated": "2026-10-23T04:36:31.365539+00:00",
-    "total_topics_learned": 3638
+    "total_runs": 3639,
+    "last_updated": "2026-10-23T04:39:40.539228+00:00",
+    "total_topics_learned": 3639
   },
   "entries": [
     {
@@ -173219,6 +173219,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T04:36:31.365514+00:00",
       "run_number": 3638
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries (Crit-Bit Tree) using atomic branch-bit-testing and bit-position-skipping CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table updates and multi-core parallel longest prefix matching in real-time software-defined networking switches and concurrent telecom routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Crit-Bit tree (a compressed binary trie) that optimizes prefix and string searches by skipping redundant single-child nodes. It leverages atomic Compare-And-Swap operations for branch-bit-testing and hazard pointers to safely manage node memory reclamation under high-concurrency multi-core environments.",
+      "key_points": [
+        "Crit-Bit trees store keys by focusing only on the critical bit where branching occurs, skipping homogeneous inner nodes.",
+        "Atomic CAS primitives allow multiple threads to safely insert, delete, or update routing entries without global lock contention.",
+        "Hazard pointers protect reader and writer threads from premature memory deallocation of inner nodes undergoing atomic pointer adjustments.",
+        "Longest prefix matching becomes extremely efficient by evaluating bit-level differences directly against network destination addresses."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic bit-testing and pointer CAS operation for lock-free node insertion in a concurrent Crit-Bit tree.",
+        "correct": "bool insert_crit_bit(Node*& root, uint32_t key, void* value) {\n    HazardPointerGuard hg;\n    while (true) {\n        Node* curr = hg.protect(root);\n        // Traverse tree using critical bit checking and execute CAS on match\n        if (atomic_compare_exchange_weak(&curr->next, &old_node, new_node)) return true;\n    }\n}",
+        "wrong": "bool insert_crit_bit(Node*& root, uint32_t key, void* value) {\n    mutex.lock();\n    // Unsafe non-atomic pointer updates without memory reclamation protection\n    root = new Node(key, value);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer links, leading to ABA problems and use-after-free bugs.",
+        "Incorrectly computing the critical bit index between the lookup key and stored keys, which corrupts tree invariants."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with local thread hazard pointer arrays prior to reading pointer fields.",
+        "Ensure memory reclamation uses deferred deletion epochs or hazard pointer reference counts to safely clean up obsolete trie branches."
+      ],
+      "when_to_use": "Ideal for high-throughput networking routers and concurrent in-memory routing tables requiring ultra-fast longest prefix matching.",
+      "when_not_to_use": "Unsuitable for systems with very low concurrency, minimal memory availability, or workloads requiring frequent range queries rather than exact/prefix point lookups.",
+      "interview_questions": [
+        {
+          "question": "How does a Crit-Bit tree optimize memory and search time compared to a standard binary trie?",
+          "answer": "It compresses the trie by eliminating single-child inner nodes and storing only the critical bit index where keys diverge, reducing tree depth and memory overhead."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent Crit-Bit tree?",
+          "answer": "Hazard pointers prevent other threads from freeing node memory while a thread is actively traversing or updating pointers through that node, avoiding race conditions and use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B-link Trees",
+        "Concurrent Radix Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T04:39:40.539208+00:00",
+      "run_number": 3639
     }
   ]
 }
