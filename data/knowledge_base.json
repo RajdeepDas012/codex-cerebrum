@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3701,
-    "last_updated": "2026-10-23T22:33:18.608159+00:00",
-    "total_topics_learned": 3701
+    "total_runs": 3702,
+    "last_updated": "2026-10-23T22:36:29.092953+00:00",
+    "total_topics_learned": 3702
   },
   "entries": [
     {
@@ -176197,6 +176197,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T22:33:18.608130+00:00",
       "run_number": 3701
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-incrementing and sequence-slot-occupancy CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer event streaming in real-time message queuing systems and concurrent task processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, lock-free Multi-Producer Multi-Consumer (MPMC) bounded queue using atomic Compare-And-Swap (CAS) instructions and sequence-based slot occupancy flags. By avoiding traditional locks, it enables concurrent task distribution across threads without blocking contention bottlenecks, while hazard pointers safely manage memory reclamation.",
+      "key_points": [
+        "Utilizes circular buffer architecture with fixed capacity to eliminate dynamic memory allocation overhead during throughput spikes.",
+        "Employs sequence numbers per slot to coordinate slot ownership, ensuring producers and consumers never write to or read from uncommitted cells.",
+        "Leverages atomic head and tail pointer increments via CAS loops to safely support arbitrary concurrent producers and consumers.",
+        "Integrates hazard pointers to safely track and reclaim memory references without risking use-after-free bugs in concurrent environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic sequence-slot check for enqueueing into a lock-free bounded queue",
+        "correct": "bool enqueue(T const& data) {\n    cell_t* cell;\n    size_t pos = tail_.load(std::memory_order_relaxed);\n    for (;;) {\n        cell = &buffer_[pos & mask_];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n        if (dif == 0) {\n            if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))\n                break;\n        } else if (dif < 0) {\n            return false;\n        } else {\n            pos = tail_.load(std::memory_order_relaxed);\n        }\n    }\n    cell->data = data;\n    cell->sequence.store(pos + 1, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool enqueue_wrong(T const& data) {\n    size_t pos = tail_;\n    buffer_[pos % capacity] = data;\n    tail_ = pos + 1;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use proper memory ordering (e.g., using sequential consistency everywhere or failing to use acquire-release semantics for sequence numbers), leading to instruction reordering bugs.",
+        "Neglecting to handle full or empty queue conditions gracefully under high contention, causing infinite spin loops (livelock)."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail pointers to distinct cache lines to prevent false sharing between concurrent producer and consumer threads.",
+        "Use relaxed memory orderings for internal counter reads where synchronization is handled explicitly by sequence numbers.",
+        "Choose power-of-two queue capacities to optimize modulo operations using simple bitwise masking."
+      ],
+      "when_to_use": "Use when building ultra-low-latency message brokers, event-streaming layers, or task-stealing worker thread pools where contention must be minimized.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained and a dynamic resizing structure is required, or when simple coarse-grained locks provide adequate throughput.",
+      "interview_questions": [
+        {
+          "question": "How do sequence numbers prevent race conditions between producers and consumers in a lock-free bounded queue?",
+          "answer": "Sequence numbers track the generation count of each slot in the circular buffer. A producer can only write to a slot when its sequence equals its current tail position, and a consumer can only read when the sequence equals head + 1, ensuring no slot is overwritten before it is consumed."
+        },
+        {
+          "question": "What is false sharing in the context of concurrent queues, and how do you mitigate it?",
+          "answer": "False sharing occurs when independent threads modify variables that reside on the same CPU cache line, causing unnecessary cache invalidations. It is mitigated by padding atomic head and tail variables so they reside on separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Ring Buffers",
+        "Hazard Pointers and Memory Reclamation",
+        "Memory Ordering Semantics in Multithreading"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-23T22:36:29.092931+00:00",
+      "run_number": 3702
     }
   ]
 }
