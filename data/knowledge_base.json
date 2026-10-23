@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3699,
-    "last_updated": "2026-10-23T22:26:59.221408+00:00",
-    "total_topics_learned": 3699
+    "total_runs": 3700,
+    "last_updated": "2026-10-23T22:30:08.856003+00:00",
+    "total_topics_learned": 3700
   },
   "entries": [
     {
@@ -176103,6 +176103,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T22:26:59.221388+00:00",
       "run_number": 3699
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree using atomic memtable-swapping and SSTable-compaction-triggering CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy data ingestion and multi-core parallel background compaction in real-time distributed key-value stores and concurrent NoSQL storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Log-Structured Merge-tree (LSM-Tree) uses atomic primitives and hazard pointers to achieve lock-free memtable swaps and background SSTable compactions. This design eliminates lock contention during write-heavy ingestion phases, maximizing performance for real-time distributed storage engines.",
+      "key_points": [
+        "Utilizes atomic memtable-swapping via Compare-And-Swap (CAS) to seamlessly transition active write buffers to immutable flush states without blocking writer threads.",
+        "Employs hazard pointer memory reclamation to safely manage retired memory nodes during concurrent reads and writes across multiple levels of SSTables.",
+        "Triggers background SSTable compactions atomically to merge overlapping key ranges, maintaining bounded read amplification under heavy concurrent workloads.",
+        "Optimizes write-heavy data ingestion throughput by completely avoiding coarse-grained locks or mutex bottlenecks in critical execution paths."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic memtable swapping using compare-and-swap semantics in a concurrent environment.",
+        "correct": "import threading\n\nclass LockFreeLSM:\n    def __init__(self):\n        self.active_memtable = {}\n        self.immutable_memtable = None\n        self.lock = threading.Lock() # Conceptual substitute for atomic CAS loop in python\n\n    def put(self, key, value):\n        while True:\n            current = self.active_memtable\n            if len(current) >= 3: # Threshold reached\n                if self._try_swap_memtable(current):\n                    break\n            else:\n                current[key] = value\n                break\n\n    def _try_swap_memtable(self, expected):\n        # Simulated atomic CAS swap\n        if self.active_memtable is expected:\n            self.immutable_memtable = expected\n            self.active_memtable = {}\n            return True\n        return False",
+        "wrong": "class UnsafeLSM:\n    def __init__(self):\n        self.memtable = {}\n    def put(self, k, v):\n        self.memtable[k] = v # Lacks concurrency control, leading to race conditions during flushes"
+      },
+      "common_mistakes": [
+        "Failing to safely reclaim memory during memtable flushes, leading to memory leaks or use-after-free bugs.",
+        "Triggering too many parallel SSTable compactions concurrently, causing I/O saturation and thread thrashing."
+      ],
+      "best_practices": [
+        "Implement robust hazard pointer protection zones for all reader threads traversing active and immutable memtables.",
+        "Use backpressure mechanisms when background compaction threads fail to keep pace with high-throughput write ingestion rates."
+      ],
+      "when_to_use": "Use when building high-throughput, write-heavy distributed key-value stores or NoSQL database engines requiring ultra-low latency write paths and predictable multi-core scalability.",
+      "when_not_to_use": "Avoid in read-heavy applications with strict point-lookup latency requirements where traditional B-Trees or in-memory hash maps provide superior read performance.",
+      "interview_questions": [
+        {
+          "question": "How do atomic memtable-swapping CAS primitives prevent write stalls in a concurrent LSM-Tree?",
+          "answer": "They allow a thread to atomically redirect incoming writes to a fresh active memtable while converting the full memtable to an immutable state for background flushing, all without acquiring global locks."
+        },
+        {
+          "question": "Why are hazard pointers essential when managing memory reclamation in a lock-free LSM-Tree implementation?",
+          "answer": "Hazard pointers protect nodes currently being accessed by reader threads from being prematurely freed or recycled by background compaction or flushing threads, preventing use-after-free errors safely without locking."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "SSTable Compaction Strategies",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T22:30:08.855981+00:00",
+      "run_number": 3700
     }
   ]
 }
