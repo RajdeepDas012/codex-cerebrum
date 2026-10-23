@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3696,
-    "last_updated": "2026-10-23T22:17:17.171793+00:00",
-    "total_topics_learned": 3696
+    "total_runs": 3697,
+    "last_updated": "2026-10-23T22:20:26.532597+00:00",
+    "total_topics_learned": 3697
   },
   "entries": [
     {
@@ -175962,6 +175962,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T22:17:17.171771+00:00",
       "run_number": 3696
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chain-relinking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core parallel state management in real-time in-memory caching layers and concurrent distributed transaction processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a non-blocking, lock-free concurrent hash map. It utilizes atomic compare-and-swap (CAS) primitives for operations like bucket resizing and collision chain node linking, paired with hazard pointers to guarantee safe memory reclamation without thread contention or deadlocks.",
+      "key_points": [
+        "Employs lock-free synchronization using atomic CAS primitives to eliminate mutex contention across parallel threads.",
+        "Implements atomic bucket-resizing and incremental re-hashing strategies to prevent massive latency spikes during growth phases.",
+        "Uses collision-chain-relinking techniques to safely update bucket nodes under concurrent writer access.",
+        "Integrates hazard pointer memory reclamation to securely defer the deallocation of nodes until no active threads reference them."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual atomic compare-and-swap update on a hash map bucket entry using C++ atomics.",
+        "correct": "bool update_bucket(std::atomic<Node*>& bucket, Node* expected_node, Node* new_node) {\n    return bucket.compare_exchange_weak(expected_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = bucket;\nif (current == expected_node) {\n    bucket = new_node;\n    return true;\n}\nreturn false;"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when reading and updating atomic bucket pointers.",
+        "Forgetting to protect node traversal pointers with hazard pointers, leading to use-after-free bugs during concurrent deletions or resizing."
+      ],
+      "best_practices": [
+        "Utilize acquire-release memory ordering correctly to ensure visibility of key-value pairs across threads.",
+        "Batch hazard pointer registrations and employ localized thread-cache structures to minimize synchronization overhead."
+      ],
+      "when_to_use": "Ideal for high-throughput, multi-core applications with heavy read-write contention, such as in-memory caching layers and real-time transaction processing.",
+      "when_not_to_use": "Unsuitable for low-memory embedded environments or simple single-threaded applications where standard blocking maps provide simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in lock-free hash maps?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing into a thread-local protected list, preventing any other thread from reclaiming or freeing that memory address until it is unregistered."
+        },
+        {
+          "question": "What is the primary challenge when resizing a lock-free hash map concurrently?",
+          "answer": "Ensuring that reader and writer threads can still access or route to old and new buckets safely during an incremental migration phase without blocking."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Skip Lists",
+        "Atomic Compare-And-Swap (CAS)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T22:20:26.532575+00:00",
+      "run_number": 3697
     }
   ]
 }
