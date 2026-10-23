@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3704,
-    "last_updated": "2026-10-23T22:42:47.726166+00:00",
-    "total_topics_learned": 3704
+    "total_runs": 3705,
+    "last_updated": "2026-10-23T22:45:56.717290+00:00",
+    "total_topics_learned": 3705
   },
   "entries": [
     {
@@ -176340,6 +176340,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-23T22:42:47.726144+00:00",
       "run_number": 3704
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel pattern matching in real-time genomic sequence analysis platforms and concurrent text indexing engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent suffix array utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput substring queries and parallel pattern matching across multiple CPU cores without thread contention or deadlocks.",
+      "key_points": [
+        "Utilizes atomic index-sorting and LCP-array-constructing CAS primitives for safe concurrent state updates.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs in lock-free pointer sharing.",
+        "Eliminates traditional mutex locks, maximizing throughput and eliminating thread-blocking overhead in multi-core text indexing engines.",
+        "Optimized for real-time genomic sequence analysis where fast parallel pattern matching against massive reference strings is critical."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic CAS loop pattern for updating index pointers in a concurrent data structure using hazard pointers",
+        "correct": "bool update_suffix_pointer(std::atomic<Node*>& target, Node* expected, Node* desired, HazardPointerRecord* hp) {\n    while (true) {\n        hp->protect(target);\n        if (target.load() != expected) {\n            hp->clear();\n            return false;\n        }\n        if (target.compare_exchange_weak(expected, desired)) {\n            hp->clear();\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_suffix_pointer(std::atomic<Node*>& target, Node* expected, Node* desired) {\n    return target.compare_exchange_strong(expected, desired);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect shared nodes with hazard pointers prior to reading pointer fields, leading to use-after-free races.",
+        "Using blocking synchronization primitives inside lock-free progression loops, defeating the purpose of wait-free or lock-free guarantees."
+      ],
+      "best_practices": [
+        "Always acquire and register hazard pointers before traversing nodes that are subject to concurrent reclamation.",
+        "Keep critical sections inside CAS retry loops as short as possible to minimize cache-line bouncing under high core counts."
+      ],
+      "when_to_use": "Use when building high-throughput text search engines or genomic analysis pipelines that require concurrent reads and writes over large string collections on multi-core systems.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free memory management outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the ABA problem and memory reclamation challenge in lock-free suffix arrays?",
+          "answer": "Hazard pointers allow threads to explicitly announce which shared nodes they are currently accessing, preventing other threads from prematurely freeing those nodes until all readers have detached."
+        },
+        {
+          "question": "Why are standard mutex-based locks suboptimal for parallel LCP array construction in genomic pattern matching?",
+          "answer": "Mutexes cause thread context switching and contention bottlenecks when multiple cores try to read and update adjacent index sectors simultaneously, whereas lock-free CAS enables fine-grained progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Wavelet Trees",
+        "Hazard Pointer Memory Management",
+        "Parallel Suffix Array Construction Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-23T22:45:56.717268+00:00",
+      "run_number": 3705
     }
   ]
 }

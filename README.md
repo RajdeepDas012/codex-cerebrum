@@ -9,17 +9,17 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3704** |
-| Last Updated | `2026-10-23T22:42:47.726166+00:00` |
-| Dataset Size | `3704 entries` |
+| Total Topics Learned | **3705** |
+| Last Updated | `2026-10-23T22:45:56.717290+00:00` |
+| Dataset Size | `3705 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
 | data-structures | 2470 |
+| algorithms | 228 |
 | trading-strategies | 228 |
-| algorithms | 227 |
 | crypto-blockchain | 165 |
 | technical-analysis | 147 |
 | system-design | 119 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel pattern matching in real-time genomic sequence analysis platforms and concurrent text indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bit-vector-partitioning and rank-select-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel succinct data structure querying in real-time genomic sequence analysis platforms and concurrent compressed full-text search engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-swinging and level-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput sorted set operations and multi-core parallel range scans in real-time transactional database systems and concurrent in-memory caching platforms`
 - `Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-incrementing and sequence-slot-occupancy CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer multi-consumer event streaming in real-time message queuing systems and concurrent task processing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-flag-setting and interval-node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query updates and multi-core parallel cumulative metric aggregation in real-time financial analytics platforms and concurrent stream processing engines`
-- `Implementation of a lock-free thread-safe concurrent LSM-Tree using atomic memtable-swapping and SSTable-compaction-triggering CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy data ingestion and multi-core parallel background compaction in real-time distributed key-value stores and concurrent NoSQL storage engines`
 
 <!-- STATS_END -->
 
