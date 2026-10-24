@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3713,
-    "last_updated": "2026-10-24T01:49:34.716385+00:00",
-    "total_topics_learned": 3713
+    "total_runs": 3714,
+    "last_updated": "2026-10-24T01:52:44.309127+00:00",
+    "total_topics_learned": 3714
   },
   "entries": [
     {
@@ -176766,6 +176766,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T01:49:34.716366+00:00",
       "run_number": 3713
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitwise-OR-setting and hash-slot-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate filtering in real-time web crawlers and concurrent distributed caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking concurrent Bloom Filter engineered for multi-core environments. By combining atomic bitwise-OR operations and compare-and-swap (CAS) primitives with hazard pointers, it achieves high-throughput approximate membership tests without thread contention or memory safety hazards.",
+      "key_points": [
+        "Utilizes atomic bitwise-OR-setting and hash-slot-masking CAS primitives to safely modify shared bit vectors across multiple threads without locking.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or underlying memory blocks without premature deallocation.",
+        "Provides space-efficient approximate membership testing with a tunable false positive rate suitable for massive datasets.",
+        "Enables high-throughput multi-core parallel duplicate filtering ideal for web crawlers and caching layers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates setting a bit atomically in a shared bit array using atomic CAS loops.",
+        "correct": "void atomic_set_bit(std::atomic<uint64_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t mask = 1ULL << (bit_index % 64);\n    uint64_t old = bit_array[word_idx].load(std::memory_order_relaxed);\n    while (!bit_array[word_idx].compare_exchange_weak(old, old | mask, std::memory_order_release, std::memory_order_relaxed)) {}\n}",
+        "wrong": "void unsafe_set_bit(uint64_t* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t mask = 1ULL << (bit_index % 64);\n    bit_array[word_idx] |= mask; // Data race on multi-core writes\n}"
+      },
+      "common_mistakes": [
+        "Failing to use relaxed memory ordering for load operations inside the CAS retry loop, causing unnecessary cache coherency traffic.",
+        "Ignoring false positive probabilities when sizing the bit array relative to the expected number of inserted elements."
+      ],
+      "best_practices": [
+        "Precompute optimal bit array sizes and hash function counts based on expected item volume and target false positive rates.",
+        "Use thread-local caching or batch updates if insertion rates overwhelm global atomic bit array bandwidth."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent, lock-free approximate membership checks and memory space is severely constrained.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required or when elements must be frequently deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom Filter without using mutual exclusion locks?",
+          "answer": "By utilizing atomic bitwise-OR operations combined with Compare-And-Swap (CAS) loops to update underlying bit arrays safely across concurrent threads."
+        },
+        {
+          "question": "Why are hazard pointers necessary if a Bloom Filter only sets bits and never frees individual elements?",
+          "answer": "Hazard pointers become essential if the filter supports dynamic resizing, background compaction, or memory reclamation of old underlying array segments."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Quotient Filter",
+        "Concurrent HyperLogLog",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-24T01:52:44.309108+00:00",
+      "run_number": 3714
     }
   ]
 }
