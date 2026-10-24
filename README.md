@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3787** |
-| Last Updated | `2026-10-24T22:39:45.170758+00:00` |
-| Dataset Size | `3787 entries` |
+| Total Topics Learned | **3788** |
+| Last Updated | `2026-10-24T22:42:54.583014+00:00` |
+| Dataset Size | `3788 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2543 |
+| data-structures | 2544 |
 | algorithms | 231 |
 | trading-strategies | 228 |
 | crypto-blockchain | 168 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-merging and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel job scheduling in real-time task distribution platforms and concurrent workflow engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and child-heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel event scheduling in real-time simulation engines and concurrent task execution frameworks`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer searching and multi-core parallel decentralized routing in real-time distributed hash tables and concurrent overlay networks`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel task scheduling in real-time operating systems and concurrent execution platforms`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core parallel shortest path computation in real-time graph routing platforms and concurrent network optimization engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-testing and child-node-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel packet classification in real-time software-defined networking (SDN) platforms and concurrent network routing engines`
 
 <!-- STATS_END -->
 
