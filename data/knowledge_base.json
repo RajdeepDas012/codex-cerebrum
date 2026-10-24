@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3783,
-    "last_updated": "2026-10-24T22:27:09.083966+00:00",
-    "total_topics_learned": 3783
+    "total_runs": 3784,
+    "last_updated": "2026-10-24T22:30:18.460252+00:00",
+    "total_topics_learned": 3784
   },
   "entries": [
     {
@@ -180078,6 +180078,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T22:27:09.083946+00:00",
       "run_number": 3783
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core parallel shortest path computation in real-time graph routing platforms and concurrent network optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe concurrent Fibonacci Heap, utilizing atomic primitives and hazard pointers to ensure safe memory reclamation and high performance. It enables concurrent multi-core shortest path computations and efficient decrease-key operations without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic root-list-splicing and min-pointer-swinging Compare-And-Swap (CAS) primitives for synchronization-free node insertions and minimum tracking.",
+        "Employs hazard pointer memory reclamation to prevent ABA problems and safely free nodes reclaimed during consolidation and extraction phases.",
+        "Optimizes real-time graph routing platforms by providing amortized O(1) time complexity for insert and decrease-key operations in a parallel multi-core environment.",
+        "Mitigates thread contention inherent in traditional lock-based priority queues by replacing global locks with fine-grained atomic operations on heap nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic min-pointer swinging using compare_exchange_strong for a concurrent Fibonacci Heap root list.",
+        "correct": "bool update_min(std::atomic<Node*>& current_min, Node* new_node) {\n    Node* old_min = current_min.load(std::memory_order_relaxed);\n    while (new_node->key < old_min->key) {\n        if (current_min.compare_exchange_weak(old_min, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool update_min(Node*& current_min, Node* new_node) {\n    if (new_node->key < current_min->key) {\n        current_min = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes accessed during concurrent consolidation phases with hazard pointers, leading to use-after-free bugs.",
+        "Relying on standard non-atomic pointer assignments when updating min-pointers or root list pointers, causing race conditions and data corruption."
+      ],
+      "best_practices": [
+        "Integrate hazard pointer protection domains specifically tailored to asynchronous reader and writer threads modifying the heap structure.",
+        "Use relaxed memory ordering for non-dependent loads and acquires/releases carefully around CAS loops to balance performance and safety."
+      ],
+      "when_to_use": "Use when building high-throughput distributed systems or real-time graph algorithms (like Dijkstra's algorithm) requiring frequent parallel decrease-key operations.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simpler lock-based priority queues provide adequate performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating the minimum pointer in a lock-free Fibonacci Heap?",
+          "answer": "By pairing pointers with monotonically increasing version tags or sequence numbers, or by utilizing hazard pointers that protect the targeted node from being recycled while a CAS operation is pending."
+        },
+        {
+          "question": "Why is a concurrent Fibonacci Heap preferable to a binary heap for parallel Dijkstra's algorithm?",
+          "answer": "It offers amortized O(1) time complexity for decrease-key operations compared to O(log N) for binary heaps, significantly reducing bottlenecks when multiple worker threads update node distances concurrently."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Binomial Heap",
+        "hazard pointer memory management",
+        "parallel Dijkstra shortest path algorithm"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-24T22:30:18.460233+00:00",
+      "run_number": 3784
     }
   ]
 }
