@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3774** |
-| Last Updated | `2026-10-24T19:46:40.514944+00:00` |
-| Dataset Size | `3774 entries` |
+| Total Topics Learned | **3775** |
+| Last Updated | `2026-10-24T19:49:49.506574+00:00` |
+| Dataset Size | `3775 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2532 |
+| data-structures | 2533 |
 | algorithms | 231 |
 | trading-strategies | 228 |
 | crypto-blockchain | 167 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic leaf-splitting and bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial range queries and multi-core parallel point-cloud indexing in real-time geographic information systems and concurrent geospatial database engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time stream processing systems and concurrent telemetry analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocation and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix searches and multi-core parallel autocomplete lookup in real-time search engine suggestions and concurrent dictionary services`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-manipulating CAS primitives alongside hazard pointer memory reclamation for high-throughput succinct data structure queries and multi-core parallel rank/select operations in real-time text indexing platforms and concurrent compressed bioinformatics databases`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic node-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed key optimization in real-time in-memory databases and concurrent caching engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic priority-rotation and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced search tree operations and multi-core parallel dynamic priority queue maintenance in real-time in-memory databases and concurrent caching layers`
 
 <!-- STATS_END -->
 
