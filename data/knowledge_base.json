@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3730,
-    "last_updated": "2026-10-24T07:33:04.435783+00:00",
-    "total_topics_learned": 3730
+    "total_runs": 3731,
+    "last_updated": "2026-10-24T07:36:17.018955+00:00",
+    "total_topics_learned": 3731
   },
   "entries": [
     {
@@ -177570,6 +177570,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T07:33:04.435762+00:00",
       "run_number": 3730
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Monotonic Queue using atomic tail-enqueue-dropping and head-dequeuing CAS primitives alongside hazard pointer memory reclamation for high-throughput sliding window maximum computations and multi-core parallel moving statistics calculation in real-time stream processing engines and concurrent time-series analytics platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Monotonic Queue maintains elements in a strictly monotonic order by dropping smaller or larger elements from the tail during enqueues, allowing $O(1)$ amortized sliding window extrema queries. Utilizing atomic compare-and-swap (CAS) primitives and hazard pointers, it achieves high-throughput multi-core parallel processing without locks.",
+      "key_points": [
+        "Monotonic invariant maintains elements in descending or ascending order by removing obsolete tail entries during pushes.",
+        "Atomic tail-enqueue-dropping and head-dequeuing CAS operations eliminate mutex bottlenecks in multi-threaded stream pipelines.",
+        "Hazard pointer memory reclamation safely manages nodes freed during concurrent tail purges and head pops without ABA issues.",
+        "Enables real-time sliding window maximum and minimum computations in concurrent time-series analytics and stream engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the structural pattern of lock-free node updates using atomic CAS and hazard pointers in a concurrent queue.",
+        "correct": "template<typename T>\nclass ConcurrentMonotonicQueue {\n    struct Node {\n        T data;\n        std::atomic<Node*> next;\n    };\n    std::atomic<Node*> head;\n    std::atomic<Node*> tail;\npublic:\n    void push(T val) {\n        Node* new_node = new Node{val, nullptr};\n        Node* t;\n        do {\n            t = tail.load(std::atomic_order_acquire);\n        } while (!tail.compare_exchange_weak(t, new_node));\n    }\n};",
+        "wrong": "void push(T val) {\n    Node* new_node = new Node{val, nullptr};\n    tail->next = new_node;\n    tail = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes dropped during monotonic tail compaction with hazard pointers, leading to use-after-free vulnerabilities.",
+        "Neglecting the ABA problem during head dequeues and tail CAS operations in heavily contested multi-core environments."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to safely free discarded nodes during monotonic tail reductions.",
+        "Minimize CAS retry loops by utilizing backoff strategies when high thread contention causes excessive write-contention."
+      ],
+      "when_to_use": "Use when multiple threads concurrently push time-series data and require real-time $O(1)$ sliding window extrema calculations without blocking.",
+      "when_not_to_use": "Avoid when data does not require a sliding window monotonic order, or when simple lock-based queues suffice due to low thread counts.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the monotonic property in a lock-free queue when multiple threads are concurrently pushing elements?",
+          "answer": "By validating the tail elements against the incoming value using atomic CAS loops, repeatedly popping or dropping smaller/larger elements from the tail before committing the new node."
+        },
+        {
+          "question": "Why are hazard pointers required in a concurrent monotonic queue implementation?",
+          "answer": "Hazard pointers prevent other threads from accessing nodes that are concurrently unlinked and reclaimed during tail-dropping or head-dequeuing operations, avoiding memory corruption."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Priority Queue",
+        "hazard pointer memory reclamation",
+        "sliding window maximum algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T07:36:17.018933+00:00",
+      "run_number": 3731
     }
   ]
 }
