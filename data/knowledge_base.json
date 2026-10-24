@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3719,
-    "last_updated": "2026-10-24T02:08:40.249876+00:00",
-    "total_topics_learned": 3719
+    "total_runs": 3720,
+    "last_updated": "2026-10-24T02:11:50.412893+00:00",
+    "total_topics_learned": 3720
   },
   "entries": [
     {
@@ -177050,6 +177050,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T02:08:40.249855+00:00",
       "run_number": 3719
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Graph-Structured Stack using atomic top-pointer-swinging and node-relinking CAS primitives alongside hazard pointer memory reclamation for high-throughput thread-pool task dependency tracking and multi-core parallel asynchronous execution flow control in real-time workflow orchestration engines and concurrent task execution frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent graph-structured stack where elements can form DAG dependencies rather than a simple linear order, utilizing atomic compare-and-swap (CAS) operations and hazard pointers. It enables scalable, non-blocking task orchestration and dependency tracking across multiple execution threads without lock contention.",
+      "key_points": [
+        "Uses atomic top-pointer-swinging and node-relinking CAS primitives to modify the stack structure safely across multiple threads without locks.",
+        "Employs hazard pointer memory reclamation to securely manage node deallocation and prevent the ABA problem in dynamic multi-threaded environments.",
+        "Supports graph-structured dependencies, enabling complex branching and joining tasks necessary for asynchronous execution flow control.",
+        "Optimized for high-throughput thread-pool task dependency tracking in real-time workflow orchestration engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-relinking via CAS for lock-free stack operations.",
+        "correct": "#include <atomic>\n\ntemplate <typename T>\nclass LockFreeGraphStack {\n    struct Node {\n        T data;\n        Node* next;\n        Node(T val) : data(val), next(nullptr) {}\n    };\n    std::atomic<Node*> top;\npublic:\n    void push(T val) {\n        Node* newNode = new Node(val);\n        newNode->next = top.load(std::memory_order_relaxed);\n        while (!top.compare_exchange_weak(newNode->next, newNode,\n                  std::memory_order_release, std::memory_order_relaxed));\n    }\n};",
+        "wrong": "void push(T val) {\n    Node* newNode = new Node(val);\n    newNode->next = top; // Non-atomic read\n    top = newNode;       // Non-atomic write, causes race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during top-pointer swinging, leading to corrupted data structures.",
+        "Neglecting safe memory reclamation protocols like hazard pointers or epoch-based garbage collection, causing memory leaks or use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use appropriate memory ordering constraints (e.g., acquire-release semantics) to balance synchronization overhead and correctness.",
+        "Integrate hazard pointers or epoch-based reclamation to safely defer destruction of nodes until no active threads reference them."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous execution engines, workflow orchestrators, or thread pools requiring concurrent, multi-parent dependency tracking.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler systems where standard mutex-protected linear stacks provide sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer swings on a lock-free stack?",
+          "answer": "By using tagged pointers (combining a pointer with a monotonically increasing version counter) or by implementing hazard pointers to track active references."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free graph-structured data structures?",
+          "answer": "Hazard pointers avoid the cache contention and atomic read-modify-write overhead associated with shared reference counts, while safely deferring node reclamation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Queues",
+        "ABA Problem Mitigation Strategies"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-24T02:11:50.412873+00:00",
+      "run_number": 3720
     }
   ]
 }
