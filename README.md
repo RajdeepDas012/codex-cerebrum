@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3738** |
-| Last Updated | `2026-10-24T12:40:02.452026+00:00` |
-| Dataset Size | `3738 entries` |
+| Total Topics Learned | **3739** |
+| Last Updated | `2026-10-24T12:43:17.002367+00:00` |
+| Dataset Size | `3739 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2500 |
+| data-structures | 2501 |
 | algorithms | 229 |
 | trading-strategies | 228 |
 | crypto-blockchain | 166 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core parallel sorted map indexing in real-time in-memory databases and concurrent caching platforms`
 - `Implementation of a lock-free thread-safe concurrent B*-Tree using atomic sibling-redistribution and node-overflow-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput node balancing and multi-core parallel sorted index lookups in real-time enterprise database storage engines and concurrent in-memory caching platforms`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial index lookups and multi-core parallel geometric range queries in real-time geographic information systems and concurrent geospatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic key-redistribution and index-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional indexing and multi-core parallel spatial range scanning in real-time geospatial database systems and concurrent spatial indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-bound-updating and lazy-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput interval query processing and multi-core parallel range aggregation in real-time financial analytics engines and concurrent computational geometry platforms`
-- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and tower-height-expanding CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core parallel range scans in real-time in-memory databases and concurrent distributed key-value storage engines`
 
 <!-- STATS_END -->
 
