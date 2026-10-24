@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3757,
-    "last_updated": "2026-10-24T16:50:39.869290+00:00",
-    "total_topics_learned": 3757
+    "total_runs": 3758,
+    "last_updated": "2026-10-24T16:54:04.277928+00:00",
+    "total_topics_learned": 3758
   },
   "entries": [
     {
@@ -178850,6 +178850,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T16:50:39.869269+00:00",
       "run_number": 3757
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-extending and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping time-range queries and multi-core parallel event scheduling in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Interval Tree leveraging atomic Compare-And-Swap (CAS) primitives like node-interval-extending and max-endpoint-updating alongside hazard pointers for safe memory reclamation. It enables high-throughput overlapping time-range operations and scales efficiently across multi-core systems without blocking. Such data structures are vital for modern real-time scheduling platforms and resource allocation engines.",
+      "key_points": [
+        "Utilizes atomic node-interval-extending and max-endpoint-updating CAS primitives to ensure thread-safe modifications without explicit locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely reclaim memory in highly concurrent mutation scenarios.",
+        "Maintains max endpoints across subtrees atomically to accelerate overlapping range searches under heavy multi-threaded contention.",
+        "Provides linearizable range query operations making it ideal for multi-core calendar management and concurrent resource scheduling engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion and max-endpoint update for a concurrent interval tree node.",
+        "correct": "bool update_max_endpoint(std::atomic<double>& current_max, double candidate) {\n    double old_max = current_max.load(std::memory_order_relaxed);\n    while (candidate > old_max) {\n        if (current_max.compare_exchange_weak(old_max, candidate, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n    return false;\n}",
+        "wrong": "bool update_max_endpoint(double& current_max, double candidate) {\n    if (candidate > current_max) {\n        current_max = candidate;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to propagate max-endpoint updates up the tree atomically, leading to missed overlapping intervals during concurrent traversals.",
+        "Neglecting proper memory reclamation strategies like hazard pointers, causing memory leaks or use-after-free bugs under high contention."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for read operations where synchronization is not immediately required, and release-acquire semantics for CAS updates.",
+        "Keep critical sections inside lock-free loops extremely short to maximize throughput and minimize CAS retry overhead."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping range queries and dynamic interval updates simultaneously on multi-core hardware.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where the complexity of lock-free primitives and memory management introduces unnecessary overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the propagation of max endpoints atomically up an interval tree without blocking concurrent inserters?",
+          "answer": "By using recursive or iterative CAS loops that update the max endpoint of ancestor nodes only if the new candidate is strictly greater than the existing value, retrying on failure."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free interval trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency thread-local protection for nodes currently being traversed or modified, avoiding the unpredictable pauses associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Segment Trees",
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T16:54:04.277880+00:00",
+      "run_number": 3758
     }
   ]
 }
