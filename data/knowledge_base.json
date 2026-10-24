@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3753,
-    "last_updated": "2026-10-24T16:36:58.159103+00:00",
-    "total_topics_learned": 3753
+    "total_runs": 3754,
+    "last_updated": "2026-10-24T16:40:23.848345+00:00",
+    "total_topics_learned": 3754
   },
   "entries": [
     {
@@ -178662,6 +178662,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T16:36:58.159086+00:00",
       "run_number": 3753
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-linking and degree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Binomial Heap utilizing atomic root-list-linking and degree-merging Compare-And-Swap (CAS) operations paired with hazard pointers for safe memory management. It enables high-throughput priority queue management and scalable task scheduling across multi-core processors without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to manage the binomial tree root lists and handle concurrent linking of trees with matching degrees.",
+        "Employs hazard pointers to safely defer memory reclamation of nodes removed or merged during concurrent priority queue operations.",
+        "Ensures thread-safe insertions and minimum extractions by avoiding global locks, significantly reducing contention in multi-core job schedulers.",
+        "Maintains structural invariants of binomial heaps under high contention through optimistic concurrency control and retry loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root linking via CAS and hazard pointer protection for concurrent binomial heap node access",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct Node {\n    int key;\n    int degree;\n    std::atomic<Node*> parent;\n    std::atomic<Node*> child;\n    std::atomic<Node*> sibling;\n};\n\nbool linkRoots(std::atomic<Node*>& rootList, Node* newRoot) {\n    Node* oldHead = rootList.load();\n    newRoot->sibling.store(oldHead);\n    return rootList.compare_exchange_weak(oldHead, newRoot);\n}",
+        "wrong": "Node* linkRoots(Node* rootList, Node* newRoot) {\n    newRoot->sibling = rootList;\n    rootList = newRoot;\n    return rootList;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during parallel deletions.",
+        "Neglecting the ABA problem on root pointers and child links during multi-threaded degree merging."
+      ],
+      "best_practices": [
+        "Always register nodes accessed during traversal with thread-local hazard pointer records before reading pointer contents.",
+        "Keep CAS retry loops tight and bounded to prevent thread starvation under extremely high contention environments."
+      ],
+      "when_to_use": "Use when building high-throughput priority queues or task schedulers in multi-threaded real-time systems where lock contention limits scalability.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simpler lock-based priority queues provide lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating the root list of a lock-free binomial heap?",
+          "answer": "By using tagged pointers (version counts combined with the memory address) or hazard pointers that ensure node references cannot be silently recycled while another thread is executing a CAS."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in high-performance lock-free data structures?",
+          "answer": "Hazard pointers offer deterministic, low-latency memory reclamation without the unpredictable pause times and global synchronization overhead typical of tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Hazard Pointers and Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T16:40:23.848323+00:00",
+      "run_number": 3754
     }
   ]
 }
