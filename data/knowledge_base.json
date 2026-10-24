@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3786,
-    "last_updated": "2026-10-24T22:36:36.293959+00:00",
-    "total_topics_learned": 3786
+    "total_runs": 3787,
+    "last_updated": "2026-10-24T22:39:45.170758+00:00",
+    "total_topics_learned": 3787
   },
   "entries": [
     {
@@ -180219,6 +180219,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T22:36:36.293938+00:00",
       "run_number": 3786
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and child-heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel event scheduling in real-time simulation engines and concurrent task execution frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Pairing Heap using atomic compare-and-swap (CAS) primitives and hazard pointers. It enables efficient multi-core parallel priority queue operations without blocking, which is critical for real-time simulation engines and high-throughput task schedulers.",
+      "key_points": [
+        "Utilizes atomic root-linking and child-heap-merging CAS operations to manage heap nodes safely across multiple threads without explicit locks.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes that are actively being traversed or modified by concurrent threads.",
+        "Provides high-throughput priority queue operations suitable for multi-core parallel event scheduling and discrete-event simulations.",
+        "Balances the simplicity of pairing heap structures with advanced lock-free synchronization techniques to minimize contention and latency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safely updating a pairing heap root pointer using atomic CAS and hazard pointers.",
+        "correct": "bool link_roots(std::atomic<Node*>& global_root, Node* new_root) {\n    Node* current = global_root.load();\n    do {\n        new_root->next_sibling = current;\n    } while (!global_root.compare_exchange_weak(current, new_root));\n    return true;\n}",
+        "wrong": "Node* link_roots_unsafe(Node* global_root, Node* new_root) {\n    new_root->next_sibling = global_root;\n    global_root = new_root;\n    return global_root;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during multi-pass merges.",
+        "Using weak CAS without a proper loop, causing silent failures when multiple threads attempt to modify heap pointers simultaneously."
+      ],
+      "best_practices": [
+        "Retire memory safely by deferring node deallocation through a hazard pointer domain until no threads hold references to the retired nodes.",
+        "Keep critical sections and retry loops minimal to reduce cache-line bouncing and contention under high thread concurrency."
+      ],
+      "when_to_use": "Use when building high-throughput real-time simulation engines or concurrent task execution frameworks that require low-latency priority queue updates across many cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free atomics and hazard pointers outweighs the performance benefits of concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during lock-free node reclamation in a concurrent pairing heap?",
+          "answer": "Hazard pointers allow threads to publish a pointer they are currently accessing so that other threads know not to deallocate or recycle that memory until it is no longer marked as hazardous."
+        },
+        {
+          "question": "Why is compare-and-swap (CAS) insufficient on its own for complex multi-pointer heap structural updates like multi-pass merging?",
+          "answer": "CAS only atomic-updates a single memory location. Complex heap updates involving multiple pointers require careful staging, auxiliary atomic flags, or breaking operations down into atomic single-pointer transitions."
+        }
+      ],
+      "related_topics": [
+        "Binomial Heap",
+        "Fibonacci Heap",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T22:39:45.170739+00:00",
+      "run_number": 3787
     }
   ]
 }
