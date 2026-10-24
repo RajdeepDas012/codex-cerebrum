@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3766,
-    "last_updated": "2026-10-24T19:20:49.424955+00:00",
-    "total_topics_learned": 3766
+    "total_runs": 3767,
+    "last_updated": "2026-10-24T19:24:09.319977+00:00",
+    "total_topics_learned": 3767
   },
   "entries": [
     {
@@ -179273,6 +179273,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T19:20:49.424939+00:00",
       "run_number": 3766
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic head-pointer-swinging and node-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task scheduling and multi-core parallel work-stealing execution in real-time asynchronous task engines and concurrent microservice processing platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue leveraging atomic primitives and hazard pointers to ensure safe memory management under heavy multi-core contention. It is vital for maximizing throughput in parallel task schedulers and work-stealing execution engines without thread blocking.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free head-pointer-swinging and node-cascading updates.",
+        "Employs hazard pointers to safely defer memory reclamation of nodes removed concurrently by multiple threads.",
+        "Eliminates traditional mutex bottlenecks, preventing priority inversion and thread starvation in high-throughput environments.",
+        "Ensures linearizable operations for task insertion and highest-priority extraction across multi-core systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic head pointer CAS loop for thread-safe priority queue node insertion.",
+        "correct": "bool push(Node* new_node) {\n    while (true) {\n        Node* old_head = head.load(std::memory_order_relaxed);\n        new_node->next = old_head;\n        if (head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool push(Node* new_node) {\n    std::lock_guard<std::mutex> lock(mtx);\n    new_node->next = head;\n    head = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to the ABA problem or use-after-free bugs.",
+        "Using sequential consistency everywhere instead of relaxing memory orders where appropriate, hurting overall concurrency performance."
+      ],
+      "best_practices": [
+        "Implement robust hazard pointer registration and epoch-based scanning to clean up unlinked queue nodes safely.",
+        "Design node structures with cache-line alignment to minimize false sharing across multi-core CPU architectures."
+      ],
+      "when_to_use": "Use this when building high-performance asynchronous task scheduling systems or work-stealing runtimes that demand ultra-low latency and minimal thread contention under heavy multi-threaded loads.",
+      "when_not_to_use": "Avoid this in simple applications or single-threaded contexts where standard blocking priority queues offer simpler maintenance and negligible performance penalties.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free priority queue using atomic pointers?",
+          "answer": "By using tagged pointers (combining a node pointer with a monotonically increasing version counter) or by leveraging hazard pointers/epoch-based reclamation so that recycled nodes are not reused immediately while another thread is referencing them."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free data structures?",
+          "answer": "Standard atomic reference counting causes cache line bouncing because every thread increments and decrements the counter on shared memory locations, whereas hazard pointers use thread-local reservation arrays that require no atomic writes during read operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Work-Stealing Scheduler Architecture"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T19:24:09.319955+00:00",
+      "run_number": 3767
     }
   ]
 }
