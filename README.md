@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3712** |
-| Last Updated | `2026-10-24T01:46:25.232446+00:00` |
-| Dataset Size | `3712 entries` |
+| Total Topics Learned | **3713** |
+| Last Updated | `2026-10-24T01:49:34.716385+00:00` |
+| Dataset Size | `3713 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2475 |
+| data-structures | 2476 |
 | algorithms | 228 |
 | trading-strategies | 228 |
 | crypto-blockchain | 166 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-Plus Tree using atomic node-splitting and leaf-sibling-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed-style in-memory range queries and multi-core parallel sorted index scans in real-time relational database storage engines and concurrent analytical indexing platforms`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time telemetry streaming platforms and concurrent analytics database engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit-shifting and run-cluster-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate filtering in real-time distributed caching layers and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-combining and node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput block verification and multi-core parallel state validation in real-time distributed ledger platforms and concurrent cryptographic verification engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversing and multi-pattern-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput string matching and multi-core parallel intrusion detection in real-time cybersecurity packet inspection systems and concurrent log analysis engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and binary-search-tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic self-balancing insertions and multi-core parallel sorted range queries in real-time in-memory caching systems and concurrent database indexing platforms`
 
 <!-- STATS_END -->
 
