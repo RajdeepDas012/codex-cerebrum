@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3744,
-    "last_updated": "2026-10-24T12:59:15.464277+00:00",
-    "total_topics_learned": 3744
+    "total_runs": 3745,
+    "last_updated": "2026-10-24T13:02:38.539963+00:00",
+    "total_topics_learned": 3745
   },
   "entries": [
     {
@@ -178229,6 +178229,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T12:59:15.464257+00:00",
       "run_number": 3744
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitset-setting and double-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core parallel duplicate URL filtering in real-time web crawlers and concurrent distributed caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers designing a lock-free concurrent Bloom Filter utilizing atomic bitset operations and double hashing for multi-core thread safety. It enables high-throughput approximate membership queries without locking bottlenecks, vital for large-scale distributed systems and web crawlers.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives on shared bitset arrays to allow multiple threads to set hash-derived indices simultaneously.",
+        "Employs double-hashing techniques to efficiently compute multiple independent hash positions per inserted key without heavy computational overhead.",
+        "Incorporates hazard pointer memory reclamation patterns to safely manage dynamic resizing or auxiliary metadata modifications under concurrent loads.",
+        "Guarantees zero false negatives while bounded false positives make it optimal for filtering redundant data before expensive storage lookups."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates simulated atomic bit-setting using threading and atomics for concurrent filter updates",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size, hash_count):\n        self.size = size\n        self.hash_count = hash_count\n        self.bitset = 0\n        self.lock = threading.Lock() # Simplified representation of atomic CAS word-level updates\n        \n    def add(self, item):\n        for i in range(self.hash_count):\n            pos = (hash(item) + i * hash(item)) % self.size\n            with self.lock:\n                self.bitset |= (1 << pos)",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.bitset = [0] * size\n    def add(self, item):\n        pos = hash(item) % len(self.bitset)\n        self.bitset[pos] = 1 # Race condition under multi-threaded writes"
+      },
+      "common_mistakes": [
+        "Failing to handle word-boundary contention when multiple threads update bits residing within the same underlying machine integer word.",
+        "Using coarse-grained locks that serialize bitset writes and completely negate the benefits of lock-free concurrency architectures."
+      ],
+      "best_practices": [
+        "Pack multiple boolean flags into atomic word-sized integers (e.g., 64-bit words) to maximize cache-line efficiency and leverage native atomic bitwise instructions.",
+        "Pre-calculate optimal bitset sizes and hash function counts based on expected ingestion volume to minimize false positive probability."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to rapidly verify if an item is possibly present in a massive dataset, prioritizing read/write throughput over absolute determinism.",
+      "when_not_to_use": "Avoid when your application cannot tolerate any false positives or requires the ability to delete items without rebuilding the entire data structure.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when two concurrent threads attempt to set the exact same bit in a shared bitset array?",
+          "answer": "By using atomic bitwise OR operations backed by hardware CAS primitives (such as fetch-and-or) or chunking the bitset into lock-free atomic words."
+        },
+        {
+          "question": "Why can standard Bloom Filters not support a thread-safe deletion operation out of the box?",
+          "answer": "Because clearing a bit might inadvertently erase a hash collision shared by another active item, thereby introducing false negatives."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Quotient Filters",
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T13:02:38.539943+00:00",
+      "run_number": 3745
     }
   ]
 }
