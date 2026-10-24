@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3775,
-    "last_updated": "2026-10-24T19:49:49.506574+00:00",
-    "total_topics_learned": 3775
+    "total_runs": 3776,
+    "last_updated": "2026-10-24T19:52:59.063484+00:00",
+    "total_topics_learned": 3776
   },
   "entries": [
     {
@@ -179697,6 +179697,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-24T19:49:49.506560+00:00",
       "run_number": 3775
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership queries and multi-core parallel duplicate filtering in real-time distributed caching layers and concurrent database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Bloom filter that supports high-throughput approximate membership queries using atomic bit-level operations and hazard pointers. It is crucial for multi-core environments where multiple threads perform rapid duplicate filtering and lookup checks without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-cascading Compare-And-Swap (CAS) primitives to modify filter bits safely across threads without locks.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation of underlying word arrays if resizing or reconfiguration occurs.",
+        "Enables high-throughput approximate membership queries with a guaranteed zero false negative rate and bounded false positive rate.",
+        "Optimized for multi-core parallel duplicate filtering in distributed caching layers and high-performance database engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting in a shared word array using atomic CAS loops.",
+        "correct": "void add(std::atomic<uint64_t>* words, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    size_t bit_offset = bit_index % 64;\n    uint64_t mask = 1ULL << bit_offset;\n    uint64_t old_val = words[word_idx].load(std::memory_order_relaxed);\n    while (!words[word_idx].compare_exchange_weak(old_val, old_val | mask, std::memory_order_release, std::memory_order_relaxed)) {\n    }\n}",
+        "wrong": "void add(uint64_t* words, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    size_t bit_offset = bit_index % 64;\n    words[word_idx] |= (1ULL << bit_offset);\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared words, leading to lost bit updates across concurrent threads.",
+        "Failing to account for cache-line bouncing when multiple threads contend on updating bits residing in the same 64-bit machine word."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for load operations combined with acquire-release semantics during atomic CAS loops to balance performance and synchronization.",
+        "Pre-allocate the underlying bit array to a fixed optimal size based on expected insertion volume to avoid costly resizing operations."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to rapidly check for approximate set membership and filter duplicates under heavy write and read contention without lock overhead.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory or when false positives cannot be tolerated under any circumstances.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to set different bits within the exact same 64-bit word simultaneously?",
+          "answer": "By using an atomic compare-and-swap (CAS) loop that reads the current word value, computes the bitwise OR with the target bit mask, and successfully swaps it only if the word has not changed in the interim."
+        },
+        {
+          "question": "Why is a lock-free Bloom filter preferable to a mutex-protected standard Bloom filter in high-throughput caching layers?",
+          "answer": "A lock-free approach eliminates thread contention, context switching overhead, and potential deadlocks associated with mutual exclusion locks, resulting in higher scalability across multi-core systems."
+        }
+      ],
+      "related_topics": [
+        "Concurrent HyperLogLog",
+        "Lock-free Hash Tables",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T19:52:59.063470+00:00",
+      "run_number": 3776
     }
   ]
 }
