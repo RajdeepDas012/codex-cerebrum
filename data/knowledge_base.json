@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3731,
-    "last_updated": "2026-10-24T07:36:17.018955+00:00",
-    "total_topics_learned": 3731
+    "total_runs": 3732,
+    "last_updated": "2026-10-24T07:39:27.045147+00:00",
+    "total_topics_learned": 3732
   },
   "entries": [
     {
@@ -177617,6 +177617,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T07:36:17.018933+00:00",
       "run_number": 3731
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Monotonic Stack using atomic top-push-popping and descending-order-maintaining CAS primitives alongside hazard pointer memory reclamation for high-throughput next-greater-element computations and multi-core parallel financial tick analysis in real-time trading systems and concurrent market data processing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural implementation of a lock-free concurrent monotonic stack leveraging atomic compare-and-swap (CAS) primitives and hazard pointers to preserve a strictly ordered stack invariant. It guarantees thread-safe push and pop operations without mutex contention, enabling high-performance processing of financial market data ticks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free top-node manipulations to avoid thread blocking and priority inversion.",
+        "Maintains a monotonic descending order invariant by conditionally popping elements smaller than incoming values during parallel inserts.",
+        "Employs hazard pointer memory reclamation to safely manage node lifetimes and prevent the ABA problem in concurrent access.",
+        "Optimized for high-throughput stream computations such as next-greater-element tracking in low-latency financial execution systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a basic lock-free hazard pointer protected node pushing mechanism for a concurrent stack.",
+        "correct": "void push(Node* new_node) {\n    Node* old_top;\n    do {\n        old_top = top.load(std::memory_order_relaxed);\n        new_node->next = old_top;\n    } while (!top.compare_exchange_weak(old_top, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void push(Node* new_node) {\n    mutex.lock();\n    new_node->next = top;\n    top = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading shared pointers, resulting in use-after-free race conditions.",
+        "Neglecting the ABA problem during CAS-based top pointer updates, leading to silent memory corruption."
+      ],
+      "best_practices": [
+        "Always pair memory reclamation schemes like hazard pointers or epoch-based reclamation with lock-free structures.",
+        "Use appropriate memory ordering constraints (acquire-release semantics) to ensure visibility across multi-core architectures."
+      ],
+      "when_to_use": "Use when multiple producer and consumer threads require ultra-low latency updates and monotonic ordering constraints over incoming real-time metric streams.",
+      "when_not_to_use": "Avoid when standard lock-based data structures are sufficient due to low concurrency levels or when memory overhead from hazard pointers is prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain a monotonic invariant in a lock-free stack without locking out concurrent writers?",
+          "answer": "By using a loop with compare-and-swap (CAS) that repeatedly checks and pops elements violating the monotonic condition from the top until the invariant is satisfied before pushing the new element."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent stack?",
+          "answer": "Hazard pointers protect threads from accessing memory that has been concurrently freed by another thread, safely deferring deallocation until no active reader references the node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Monotonic Queue",
+        "Hazard Pointer Memory Management",
+        "ABA Problem Mitigation Strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T07:39:27.045126+00:00",
+      "run_number": 3732
     }
   ]
 }
