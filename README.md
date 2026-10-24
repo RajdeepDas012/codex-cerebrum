@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3784** |
-| Last Updated | `2026-10-24T22:30:18.460252+00:00` |
-| Dataset Size | `3784 entries` |
+| Total Topics Learned | **3785** |
+| Last Updated | `2026-10-24T22:33:26.955515+00:00` |
+| Dataset Size | `3785 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2540 |
+| data-structures | 2541 |
 | algorithms | 231 |
 | trading-strategies | 228 |
 | crypto-blockchain | 168 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel task scheduling in real-time operating systems and concurrent execution platforms`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core parallel shortest path computation in real-time graph routing platforms and concurrent network optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-testing and child-node-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel packet classification in real-time software-defined networking (SDN) platforms and concurrent network routing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-ranking and index-sorting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel genome sequencing in real-time bioinformatics analysis platforms and concurrent text retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) using atomic path-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core parallel connected components analysis in real-time social network graph partitioning platforms and concurrent image segmentation engines`
-- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel point-update operations in real-time statistical telemetry streaming platforms and concurrent online analytics engines`
 
 <!-- STATS_END -->
 
