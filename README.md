@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3760** |
-| Last Updated | `2026-10-24T17:00:42.053767+00:00` |
-| Dataset Size | `3760 entries` |
+| Total Topics Learned | **3761** |
+| Last Updated | `2026-10-24T17:03:51.692717+00:00` |
+| Dataset Size | `3761 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2518 |
+| data-structures | 2519 |
 | algorithms | 231 |
 | trading-strategies | 228 |
 | crypto-blockchain | 167 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range queries and multi-core parallel sorted index lookups in real-time relational database systems and concurrent in-memory storage engines`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking in real-time natural language processing systems and concurrent fuzzy search engines`
 - `Implementation of a lock-free thread-safe concurrent K-d Tree using atomic bounding-box-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point queries and multi-core parallel nearest-neighbor searches in real-time recommendation systems and concurrent spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-extending and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping time-range queries and multi-core parallel event scheduling in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel job stealing in real-time task scheduling platforms and concurrent execution engines`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child-linking and decrease-key-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel event-driven simulation in real-time discrete event systems and concurrent execution platforms`
 
 <!-- STATS_END -->
 
