@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3706,
-    "last_updated": "2026-10-24T01:26:58.342741+00:00",
-    "total_topics_learned": 3706
+    "total_runs": 3707,
+    "last_updated": "2026-10-24T01:30:15.094270+00:00",
+    "total_topics_learned": 3707
   },
   "entries": [
     {
@@ -176434,6 +176434,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T01:26:58.342723+00:00",
       "run_number": 3706
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-swinging and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element lookups and multi-core parallel self-balancing search in real-time memory management systems and concurrent caching architecture platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent splay tree that leverages atomic compare-and-swap (CAS) operations for root-rotation and self-adjustment. It utilizes hazard pointers to ensure safe memory reclamation, enabling high-throughput and low-latency self-balancing binary search tree operations across multiple concurrent threads.",
+      "key_points": [
+        "Uses atomic primitives (CAS) to perform concurrent tree rotations (zig, zag, zig-zig, zig-zag) without global locks.",
+        "Implements self-adjustment mechanics to move frequently accessed nodes closer to the root for accelerated subsequent lookups.",
+        "Employs hazard pointers to safely manage node lifecycles and prevent memory corruption during concurrent structural modifications.",
+        "Optimizes throughput for multi-core caching architectures and dynamic memory management layers under heavy access contention."
+      ],
+      "code_example": {
+        "language": "C++",
+        "description": "Demonstrates the atomic CAS-based hazard pointer acquisition structure for safely reading node references during concurrent tree traversals.",
+        "correct": "Node* hazard_ptr = hazard_mgr.protect(0, atomic_node_ptr.load(std::memory_order_acquire));\nif (hazard_ptr != nullptr) {\n    // Safe to access hazard_ptr->key\n}",
+        "wrong": "Node* raw_ptr = atomic_node_ptr.load(std::memory_order_relaxed);\n// Another thread might free raw_ptr here, causing a use-after-free fault.\nprocess(raw_ptr->key);"
+      },
+      "common_mistakes": [
+        "Failing to re-verify node pointers after acquiring hazard protection, leading to race conditions if the node was unlinked.",
+        "Using locks or blocking synchronization inside the self-adjustment rotation phase, which degrades scalability."
+      ],
+      "best_practices": [
+        "Always bind hazard pointers to thread-local storage slots before reading shared pointer fields.",
+        "Ensure memory ordering constraints (acquire-release semantics) are strictly enforced during CAS-based pointer swinging."
+      ],
+      "when_to_use": "Use when workloads feature high access skew (temporal locality) where a small subset of keys is queried repeatedly in a multi-threaded environment.",
+      "when_not_to_use": "Avoid in uniform access patterns where strict balancing or simple lock-free binary search trees provide more predictable average-case performance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems during atomic node rotations in a lock-free splay tree?",
+          "answer": "By incorporating version tags or epoch counters into the node pointers, or by utilizing hazard pointers that ensure nodes cannot be reused while a thread holds a reference."
+        },
+        {
+          "question": "Why is self-adjustment difficult to implement in a lock-free context compared to a lock-based tree?",
+          "answer": "Because structural modifications span multiple parent-child pointers that must be updated atomically, requiring complex multi-word CAS or cooperative helping mechanisms to prevent intermediate inconsistent states."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Binary Search Trees",
+        "Atomic Compare-And-Swap (CAS)"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-24T01:30:15.094250+00:00",
+      "run_number": 3707
     }
   ]
 }
