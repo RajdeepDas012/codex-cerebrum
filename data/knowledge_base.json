@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3756,
-    "last_updated": "2026-10-24T16:47:14.413676+00:00",
-    "total_topics_learned": 3756
+    "total_runs": 3757,
+    "last_updated": "2026-10-24T16:50:39.869290+00:00",
+    "total_topics_learned": 3757
   },
   "entries": [
     {
@@ -178803,6 +178803,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-24T16:47:14.413652+00:00",
       "run_number": 3756
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel job stealing in real-time task scheduling platforms and concurrent execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent leftist heap utilizing atomic null-path-length updates, merge operations via compare-and-swap (CAS), and hazard pointers to safely manage memory reclamation. It enables efficient, scalable priority queue merging and task stealing across multi-core systems without traditional mutex overhead.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives for lock-free node linking and null-path-length (npl) updates.",
+        "Employs hazard pointers to safely track and reclaim memory without suffering from ABA problems or memory leaks during concurrent heap merges.",
+        "Maintains the leftist heap property (left child's npl is greater than or equal to the right child's npl) under multi-threaded contention.",
+        "Optimized for high-throughput priority queue operations and work-stealing schedulers in concurrent execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic Compare-And-Swap merge step for concurrent leftist heap nodes.",
+        "correct": "bool CAS_Merge(std::atomic<Node*>& parent, Node* expected, Node* newVal) {\n    return parent.compare_exchange_weak(expected, newVal, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = parent;\nif (current->key > newVal->key) {\n    parent = newVal;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or re-linked nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Forgetting to validate null-path-length properties atomically after concurrent structural modifications."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in hazard pointer domains before reading child pointers in traversal and merge routines.",
+        "Use acquire-release memory ordering semantics on CAS operations to ensure visibility of node structural updates across cores."
+      ],
+      "when_to_use": "Use when building high-performance work-stealing schedulers or real-time priority queues requiring frequent, fast merging of heap structures across multiple threads.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler systems where standard mutex-backed heaps provide sufficient performance without synchronization complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property (NPL condition) in a lock-free concurrent environment where multiple threads are merging heaps simultaneously?",
+          "answer": "By recalculating the null-path-length during local node construction phases and utilizing CAS loops to swing pointers only if the structural invariants remain consistent between read and write phases."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in lock-free leftist heaps?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with low overhead, preventing premature deallocation of nodes that other threads might be referencing during concurrent merge operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Work-Stealing Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-24T16:50:39.869269+00:00",
+      "run_number": 3757
     }
   ]
 }

@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3756** |
-| Last Updated | `2026-10-24T16:47:14.413676+00:00` |
-| Dataset Size | `3756 entries` |
+| Total Topics Learned | **3757** |
+| Last Updated | `2026-10-24T16:50:39.869290+00:00` |
+| Dataset Size | `3757 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2514 |
+| data-structures | 2515 |
 | algorithms | 231 |
 | trading-strategies | 228 |
 | crypto-blockchain | 167 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue merging and multi-core parallel job stealing in real-time task scheduling platforms and concurrent execution engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child-linking and decrease-key-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel event-driven simulation in real-time discrete event systems and concurrent execution platforms`
 - `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quadrant-pointer-swinging and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel point location in real-time location-based services platforms and concurrent geospatial tracking engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-linking and degree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and cascading-cut CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's algorithm acceleration and multi-core parallel network routing optimization in real-time telecommunication traffic engineering platforms and concurrent graph processing engines`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index operations in real-time database management systems and concurrent storage engines`
 
 <!-- STATS_END -->
 
