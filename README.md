@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3820** |
-| Last Updated | `2026-10-25T06:22:38.457045+00:00` |
-| Dataset Size | `3820 entries` |
+| Total Topics Learned | **3821** |
+| Last Updated | `2026-10-25T06:25:58.656933+00:00` |
+| Dataset Size | `3821 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2572 |
+| data-structures | 2573 |
 | algorithms | 234 |
 | trading-strategies | 228 |
 | crypto-blockchain | 169 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-swinging and access-splaying CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting ordered set operations and multi-core parallel frequently-accessed item caching in real-time in-memory databases and concurrent key-value indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event-driven task scheduling in real-time operating systems and concurrent simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range queries and multi-core parallel time-travel analytics in real-time financial auditing platforms and concurrent version-controlled database engines`
 - `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and partial-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-balancing ordered set operations and multi-core parallel dynamic dictionary maintenance in real-time in-memory caching systems and concurrent transactional databases`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered set operations and multi-core parallel dynamic dictionary maintenance in real-time in-memory caching layers and concurrent key-value indexing engines`
-- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event notification in real-time operating systems and concurrent task scheduling frameworks`
 
 <!-- STATS_END -->
 

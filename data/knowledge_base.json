@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3820,
-    "last_updated": "2026-10-25T06:22:38.457045+00:00",
-    "total_topics_learned": 3820
+    "total_runs": 3821,
+    "last_updated": "2026-10-25T06:25:58.656933+00:00",
+    "total_topics_learned": 3821
   },
   "entries": [
     {
@@ -181827,6 +181827,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T06:22:38.457021+00:00",
       "run_number": 3820
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-swinging and access-splaying CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting ordered set operations and multi-core parallel frequently-accessed item caching in real-time in-memory databases and concurrent key-value indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Splay Tree, leveraging atomic CAS primitives for pointer manipulation and root rotation-swinging. It enables high-throughput self-adjusting ordered set operations and locality-based caching across multiple cores without traditional locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to implement lock-free tree modifications and node rotations.",
+        "Employs access-splaying heuristics to dynamically move frequently accessed elements closer to the root for accelerated subsequent lookups.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent ABA problems during concurrent structural changes.",
+        "Ensures thread safety and high throughput in multi-core parallel environments without relying on global mutexes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of atomic node access-splaying and hazard pointer registration in a concurrent environment",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazards = {}\n    def protect(self, thread_id, node):\n        self.hazards[thread_id] = node\n\nclass ConcurrentSplayNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.left = None\n        self.right = None\n\ndef atomic_splay_access(root, key, hazard_mgr, tid):\n    # Simplified conceptual access loop with hazard protection\n    while True:\n        curr = root\n        hazard_mgr.protect(tid, curr)\n        if curr is None or curr.key == key:\n            return curr\n        if key < curr.key:\n            root = curr.left\n        else:\n            root = curr.right",
+        "wrong": "def unsafe_splay_access(root, key):\n    # Modifying pointers without atomic operations or hazard pointers causes race conditions\n    curr = root\n    while curr:\n        if curr.key == key:\n            return curr\n        curr = curr.left if key < curr.key else curr.right\n    return None"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to use-after-free bugs when another thread deletes a node.",
+        "Attempting multi-step structural splay transformations with a single CAS instead of breaking them down into atomic, repeatable sub-steps."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing child pointers during concurrent tree traversal.",
+        "Design splay restructuring steps to be idempotent or robust against concurrent interruptions by other worker threads."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caching systems or key-value indexes where temporal locality of reference is high and thread contention must be minimized.",
+      "when_not_to_use": "Avoid in purely read-once or uniformly distributed lookup workloads where simpler lock-free structures like skip lists or basic BSTs offer lower algorithmic overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent structural modifications in a lock-free Splay Tree?",
+          "answer": "Hazard pointers allow threads to temporarily register which nodes they are actively accessing, preventing other threads from prematurely freeing or recycling those memory blocks until the access completes."
+        },
+        {
+          "question": "What is the primary synchronization challenge when implementing node rotations in a lock-free Splay Tree?",
+          "answer": "The multi-pointer update requirement (changing parent, child, and grandparent pointers) cannot be done atomically in a single instruction, requiring careful use of CAS loops and intermediate states."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap Synchronization Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T06:25:58.656913+00:00",
+      "run_number": 3821
     }
   ]
 }
