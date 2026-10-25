@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3797,
-    "last_updated": "2026-10-25T00:59:54.187807+00:00",
-    "total_topics_learned": 3797
+    "total_runs": 3798,
+    "last_updated": "2026-10-25T01:03:10.446191+00:00",
+    "total_topics_learned": 3798
   },
   "entries": [
     {
@@ -180741,6 +180741,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T00:59:54.187787+00:00",
       "run_number": 3797
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cascading and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task dispatching and multi-core parallel job scheduling in real-time execution engines and concurrent task processing frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent priority queue utilizing atomic heap-node-cascading and index-swapping Compare-And-Swap (CAS) operations alongside hazard pointers. It ensures thread-safe, high-throughput task dispatching and job scheduling across multi-core systems without traditional mutex overhead.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for heap node cascading and index swapping to manage concurrent insertions and extractions.",
+        "Employs hazard pointer memory reclamation to safely defer deallocation and prevent the ABA problem without blocking reader or writer threads.",
+        "Maintains priority-ordered data integrity across multi-core processors, maximizing throughput for high-demand task schedulers.",
+        "Eliminates lock contention bottlenecks typical of lock-based priority queues in real-time execution environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of atomic CAS-based priority updates and hazard pointer protection during queue node extraction.",
+        "correct": "bool try_extract_min(std::atomic<Node*>& root, HazardPointerRegistry& hp_reg) {\n    HazardPointer* hp = hp_reg.acquire();\n    while (true) {\n        Node* curr = root.load();\n        if (!curr) { hp_reg.release(hp); return false; }\n        hp->set(curr);\n        if (root.load() != curr) continue;\n        if (root.compare_exchange_weak(curr, get_next_node(curr))) {\n            hp_reg.retire(curr);\n            hp_reg.release(hp);\n            return true;\n        }\n    }\n}",
+        "wrong": "Node* extract_min(std::atomic<Node*>& root) {\n    // Missing hazard pointers and non-atomic checks lead to race conditions and memory corruption\n    Node* curr = root.load();\n    root.store(curr->next);\n    delete curr;\n    return curr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Ignoring the ABA problem during index-swapping and heap-node-cascading CAS operations."
+      ],
+      "best_practices": [
+        "Always wrap memory reclamation in a well-tested hazard pointer or epoch-based garbage collection framework.",
+        "Minimize CAS retry loops by batching operations or designing finer-grained locking/atomic structures where applicable."
+      ],
+      "when_to_use": "Use when building high-performance real-time execution engines, task dispatchers, or job schedulers requiring high-throughput concurrent priority ordering across many threads.",
+      "when_not_to_use": "Avoid in low-concurrency environments or simple applications where standard mutex-protected priority queues provide sufficient performance with significantly less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free priority queue without using locks?",
+          "answer": "Hazard pointers allow threads to announce which nodes they are currently accessing. When another thread wants to delete a node, it checks if any hazard pointer references it; if so, deletion is deferred until no thread holds a hazard pointer to that node."
+        },
+        {
+          "question": "What is the primary challenge when implementing a lock-free heap-based priority queue compared to a lock-free stack or queue?",
+          "answer": "Maintaining global or structural properties like complete binary tree invariants or strict heap ordering requires coordinating multiple nodes simultaneously, which cannot be trivially achieved with single-word CAS operations without complex cascading or auxiliary state."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip List",
+        "Hazard Pointers",
+        "Concurrent Job Scheduling"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T01:03:10.446171+00:00",
+      "run_number": 3798
     }
   ]
 }
