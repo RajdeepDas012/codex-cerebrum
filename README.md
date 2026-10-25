@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3846** |
-| Last Updated | `2026-10-25T16:08:46.276939+00:00` |
-| Dataset Size | `3846 entries` |
+| Total Topics Learned | **3847** |
+| Last Updated | `2026-10-25T16:11:56.278680+00:00` |
+| Dataset Size | `3847 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2596 |
+| data-structures | 2597 |
 | algorithms | 236 |
 | trading-strategies | 228 |
 | crypto-blockchain | 169 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-linking and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event notification in real-time operating systems and concurrent job scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel full-text search in real-time document search engines and concurrent log analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and node-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching in real-time software-defined networking platforms and concurrent packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set Union using atomic rank-merging and path-halving CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component analysis and multi-core parallel equivalence relation tracking in real-time network topology discovery platforms and concurrent graph clustering engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-swinging and high-key-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent record locking and multi-core parallel index traversals in real-time enterprise database engines and concurrent transactional storage systems`
-- `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel prefix sum updates in real-time streaming analytics platforms and concurrent database metric tracking engines`
 
 <!-- STATS_END -->
 
