@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3827,
-    "last_updated": "2026-10-25T11:07:37.188402+00:00",
-    "total_topics_learned": 3827
+    "total_runs": 3828,
+    "last_updated": "2026-10-25T11:10:48.323971+00:00",
+    "total_topics_learned": 3828
   },
   "entries": [
     {
@@ -182160,6 +182160,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T11:07:37.188384+00:00",
       "run_number": 3827
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent R-Tree uses atomic compare-and-swap (CAS) primitives to safely manage bounding-box expansions and node splits without blocking threads. By incorporating hazard pointers, it ensures safe memory reclamation, enabling high-throughput spatial indexing and multi-core parallel geometric queries in real-time spatial databases.",
+      "key_points": [
+        "Utilizes atomic bounding-box-expanding and node-splitting CAS primitives to achieve lock-free thread safety during spatial updates.",
+        "Employs hazard pointers to track active references and prevent premature memory deallocation of tree nodes by concurrent writers.",
+        "Maximizes multi-core parallel efficiency for geometric range queries and spatial bounding-box intersections.",
+        "Eliminates global lock contention, ensuring predictable latency profiles in high-throughput geographic information systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bounding-box expansion for an R-Tree node using CAS operations.",
+        "correct": "bool expandBoundingBox(std::atomic<BoundingBox*>& current_box, const BoundingBox& new_rect) {\n    BoundingBox* old_box = current_box.load();\n    BoundingBox* updated_box;\n    do {\n        updated_box = new BoundingBox(*old_box);\n        updated_box->merge(new_rect);\n    } while (!current_box.compare_exchange_weak(old_box, updated_box));\n    return true;\n}",
+        "wrong": "BoundingBox* box = current_box.load();\nbox->merge(new_rect); // Non-atomic update prone to severe race conditions across concurrent threads."
+      },
+      "common_mistakes": [
+        "Forgetting to register accessed nodes in hazard pointer domains before reading child pointers, leading to use-after-free bugs.",
+        "Failing to handle cascading node splits properly under heavy concurrent insertion workloads, resulting in lost updates."
+      ],
+      "best_practices": [
+        "Retire memory nodes safely using deferred reclamation queues coupled with active hazard pointer protection sets.",
+        "Minimize retry loops during heavy contention by incorporating exponential backoff or yielding strategies inside CAS loops."
+      ],
+      "when_to_use": "Use when building high-performance spatial databases or real-time GIS platforms that require massive multi-core parallel reads and writes on multidimensional geometric data.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity and overhead of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when freeing nodes in a lock-free R-Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, blocking other threads from reclaiming or freeing those memory blocks until all hazard references are cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splits in an R-Tree?",
+          "answer": "Ensuring atomic visibility of the parent pointer update and the newly split child nodes so that concurrent query threads do not miss data or traverse inconsistent tree topologies."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Concurrent Interval Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-25T11:10:48.323954+00:00",
+      "run_number": 3828
     }
   ]
 }
