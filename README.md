@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3830** |
-| Last Updated | `2026-10-25T11:17:09.139413+00:00` |
-| Dataset Size | `3830 entries` |
+| Total Topics Learned | **3831** |
+| Last Updated | `2026-10-25T11:20:19.711659+00:00` |
+| Dataset Size | `3831 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2581 |
+| data-structures | 2582 |
 | algorithms | 235 |
 | trading-strategies | 228 |
 | crypto-blockchain | 169 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted index searching in real-time relational databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane-splitting and node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor queries and multi-core parallel spatial coordinate indexing in real-time robotics navigation platforms and concurrent point cloud processing engines`
 - `Implementation of a lock-free thread-safe concurrent Cover Tree using atomic distance-scaling and level-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-scale nearest neighbor searches and multi-core parallel high-dimensional metric space indexing in real-time machine learning inference platforms and concurrent similarity search engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expanding and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-splicing and forward-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel sorted map access in real-time in-memory databases and concurrent key-value storage engines`
-- `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and slot-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency tracking and multi-core parallel event stream analysis in real-time network monitoring platforms and concurrent telemetry aggregation engines`
 
 <!-- STATS_END -->
 
