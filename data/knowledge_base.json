@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3817,
-    "last_updated": "2026-10-25T06:13:08.991940+00:00",
-    "total_topics_learned": 3817
+    "total_runs": 3818,
+    "last_updated": "2026-10-25T06:16:19.686810+00:00",
+    "total_topics_learned": 3818
   },
   "entries": [
     {
@@ -181684,6 +181684,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T06:13:08.991916+00:00",
       "run_number": 3817
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and partial-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-balancing ordered set operations and multi-core parallel dynamic dictionary maintenance in real-time in-memory caching systems and concurrent transactional databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Scapegoat Tree achieves self-balancing ordered set operations without global locks by combining atomic subtree-weight tracking and partial-rebuilding primitives with hazard pointers. It is crucial for high-throughput multi-core environments where traditional lock-based tree balancing introduces severe bottlenecks and latency spikes.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage subtree weight invariants and execute partial tree rebuilds safely across multiple threads.",
+        "Employs hazard pointers to defer memory reclamation of nodes detached during partial rebuilding, preventing use-after-free race conditions.",
+        "Eliminates worst-case structural update locks by trading strict per-operation balancing for relaxed, amortized weight-balanced invariants.",
+        "Enables high-throughput concurrent insertions, deletions, and lookups for in-memory caching layers and transactional databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic verification of subtree weight balance and triggering a partial rebuild via CAS.",
+        "correct": "bool check_and_rebalance(Node* parent, Node* scapegoat) {\n    if (!is_weight_balanced(scapegoat)) {\n        Node* new_subtree = build_balanced_tree(flatten_subtree(scapegoat));\n        return atomic_compare_exchange_strong(&(parent->child), &scapegoat, new_subtree);\n    }\n    return false;\n}",
+        "wrong": "bool check_and_rebalance(Node* parent, Node* scapegoat) {\n    if (!is_weight_balanced(scapegoat)) {\n        Node* new_subtree = build_balanced_tree(flatten_subtree(scapegoat));\n        parent->child = new_subtree; // Unsafe non-atomic write leading to data races\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during the flattening and rebuilding phase, resulting in premature memory deallocation.",
+        "Attempting to enforce strict balance constraints via CAS on every single mutation, which degrades performance and increases CAS retry contention."
+      ],
+      "best_practices": [
+        "Design weight-balance criteria and depth limits carefully to minimize the frequency of expensive partial subtree rebuilds.",
+        "Integrate epoch-based reclamation or hazard pointers correctly to handle memory safety during large structural replacements."
+      ],
+      "when_to_use": "Use when building high-throughput concurrent in-memory key-value stores or ordered indexes that require predictable latency without coarse-grained locking.",
+      "when_not_to_use": "Avoid in systems with extremely constrained memory where hazard pointer overhead or temporary node duplication during rebuilds is unacceptable.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when an entire subtree is detached and replaced during a scapegoat tree partial rebuild?",
+          "answer": "You register the root of the detached subtree with hazard pointers and defer its deallocation until all concurrent reader and modifier threads have released references to nodes within that subtree."
+        },
+        {
+          "question": "Why is a Scapegoat Tree particularly attractive for lock-free concurrency compared to AVL or Red-Black trees?",
+          "answer": "Scapegoat trees do not require strict local rotations on every insertion or deletion; instead, they rely on relaxed weight-balancing invariants that permit deferred, bulk structural rebuilds via atomic CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Binary Search Trees",
+        "Compare-And-Swap (CAS) Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T06:16:19.686789+00:00",
+      "run_number": 3818
     }
   ]
 }
