@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3828,
-    "last_updated": "2026-10-25T11:10:48.323971+00:00",
-    "total_topics_learned": 3828
+    "total_runs": 3829,
+    "last_updated": "2026-10-25T11:13:58.010572+00:00",
+    "total_topics_learned": 3829
   },
   "entries": [
     {
@@ -182207,6 +182207,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-25T11:10:48.323954+00:00",
       "run_number": 3828
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cover Tree using atomic distance-scaling and level-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-scale nearest neighbor searches and multi-core parallel high-dimensional metric space indexing in real-time machine learning inference platforms and concurrent similarity search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Cover Tree leverages atomic primitives and hazard pointers to safely index high-dimensional metric spaces without global locking bottlenecks. It provides robust multi-scale nearest neighbor queries, essential for real-time machine learning and similarity search engines running across multiple cores.",
+      "key_points": [
+        "Utilizes atomic distance-scaling and level-linking CAS operations to modify tree topology without global locks.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and safely free nodes removed concurrently.",
+        "Maintains structural invariants across hierarchical levels to bound the search complexity for nearest neighbor queries.",
+        "Ensures thread-safe insertions and searches for high-throughput multi-core machine learning inference workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion via atomic CAS operations in a concurrent Cover Tree.",
+        "correct": "bool CoverTree::lockFreeInsert(Node* root, Point p) {\n    while (true) {\n        Node* target = findBestParent(root, p);\n        Node* newNode = new Node(p);\n        if (atomic_compare_exchange_weak(&target->children, &old_children, new_children)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool CoverTree::unsafeInsert(Node* root, Point p) {\n    std::lock_guard<std::mutex> lock(global_mutex);\n    root->addChild(new Node(p));\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free bugs when concurrent deletions occur.",
+        "Relying on coarse-grained global locks instead of fine-grained atomic CAS primitives, which bottlenecks multi-core performance."
+      ],
+      "best_practices": [
+        "Retain hazard pointers for all nodes currently accessed during tree traversal before validating pointers.",
+        "Design atomic state transitions to handle ABA problems using versioned pointers or tagged CAS references."
+      ],
+      "when_to_use": "When building high-throughput machine learning inference pipelines or similarity search engines requiring real-time, multi-core nearest neighbor searches in high-dimensional spaces.",
+      "when_not_to_use": "For low-throughput applications, low-dimensional data where simpler spatial indexes suffice, or environments without native atomic primitives.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free Cover Tree?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing, preventing the memory reclamation system from freeing those nodes until all referencing threads have unlinked their hazard pointers."
+        },
+        {
+          "question": "What is the primary advantage of using atomic level-linking CAS primitives over a global read-write lock in metric space indexing?",
+          "answer": "Atomic level-linking CAS primitives allow multiple threads to modify tree levels concurrently without blocking, eliminating the serialization bottleneck inherent in global locks."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip List",
+        "lock-free R-Tree",
+        "hazard pointer memory management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T11:13:58.010554+00:00",
+      "run_number": 3829
     }
   ]
 }
