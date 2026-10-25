@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3840,
-    "last_updated": "2026-10-25T11:48:52.496656+00:00",
-    "total_topics_learned": 3840
+    "total_runs": 3841,
+    "last_updated": "2026-10-25T15:52:52.661135+00:00",
+    "total_topics_learned": 3841
   },
   "entries": [
     {
@@ -182772,6 +182772,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T11:48:52.496638+00:00",
       "run_number": 3840
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core parallel data integrity checking in real-time distributed ledger platforms and concurrent blockchain storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Merkle Tree leverages lock-free compare-and-swap (CAS) primitives and hazard pointer memory management to enable high-throughput parallel cryptographic hashing and data integrity verification. It allows multi-core systems to update leaf nodes and propagate hash changes upward simultaneously without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic hash-propagating and node-updating CAS primitives to modify tree nodes safely across multiple threads without locks.",
+        "Employs hazard pointer memory reclamation to securely free or reuse old tree nodes during structural updates without risking use-after-free bugs.",
+        "Ensures high-throughput cryptographic verification and multi-core parallel data integrity checking suitable for distributed ledger architectures.",
+        "Maintains structural integrity by handling cascading hash updates up to the root node gracefully under high contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node updating and hash propagation using CAS in a concurrent Merkle tree context.",
+        "correct": "bool update_leaf_and_propagate(Node* leaf, const Hash& new_hash, HazardPointerManager& hp_mgr) {\n    Hash old_hash = leaf->hash.load();\n    while (!leaf->hash.compare_exchange_weak(old_hash, new_hash)) {\n        // Retry CAS until successful\n    }\n    propagate_upwards(leaf, hp_mgr);\n    return true;\n}",
+        "wrong": "bool update_leaf_and_propagate(Node* leaf, const Hash& new_hash) {\n    leaf->hash = new_hash; // Non-atomic update causes data races\n    propagate_upwards(leaf);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, resulting in race conditions when another thread frees or reuses nodes.",
+        "Ignoring ABA problems during CAS-based pointer or hash updates.",
+        "Creating deadlocks or excessive contention by failing to handle multi-level hash propagation efficiently."
+      ],
+      "best_practices": [
+        "Protect all shared node access paths using thread-local hazard pointers before reading child or parent pointers.",
+        "Keep atomic sections small and combine hash calculations locally before executing the CAS operation.",
+        "Benchmark contention levels to decide between optimistic retry loops and back-off strategies."
+      ],
+      "when_to_use": "Use when building high-throughput distributed ledgers, blockchain storage engines, or parallel systems requiring real-time cryptographic integrity proofs across multiple CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-contention scenarios where standard pointer manipulation and simple mutexes offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in lock-free tree structures?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing, preventing other threads from immediately reclaiming those nodes' memory until the hazard pointer is cleared."
+        },
+        {
+          "question": "What is the primary challenge when propagating hash values upward in a lock-free Merkle tree?",
+          "answer": "Ensuring that concurrent updates to sibling or parent nodes do not result in stale hashes or inconsistent tree states due to race conditions during multi-level traversal."
+        }
+      ],
+      "related_topics": [
+        "Lock-free AVL Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Cryptographic Accumulators"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-25T15:52:52.661117+00:00",
+      "run_number": 3841
     }
   ]
 }
