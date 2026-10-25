@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3874,
-    "last_updated": "2026-10-25T21:44:25.204157+00:00",
-    "total_topics_learned": 3874
+    "total_runs": 3875,
+    "last_updated": "2026-10-25T21:47:35.141457+00:00",
+    "total_topics_learned": 3875
   },
   "entries": [
     {
@@ -184381,6 +184381,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T21:44:25.204134+00:00",
       "run_number": 3874
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree using atomic compaction-triggering and memtable-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy ingestion and multi-core parallel sorted string table lookups in real-time distributed key-value stores and concurrent NoSQL storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free Log-Structured Merge-Tree (LSM-Tree) utilizing atomic memtable swapping and compaction triggers. It matters because it enables massively parallel, non-blocking write-heavy operations and efficient multi-core range lookups without thread contention.",
+      "key_points": [
+        "Atomic memtable-swapping via Compare-And-Swap (CAS) enables zero-lock transitions from active writes to immutable flushes.",
+        "Hazard pointer memory reclamation ensures safe memory reuse of retired memtables and SST index nodes without blocking readers.",
+        "Lock-free compaction-triggering allows background threads to coordinate sorted string table (SSTable) merging without locking active data paths.",
+        "Multi-core parallel SST lookups coordinate concurrent binary searches and Bloom filter checks across layered storage levels."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic memtable swapping using compare-and-swap primitives for lock-free ingestion.",
+        "correct": "class ConcurrentLSMTree:\n    def __init__(self):\n        self.active_memtable = AtomicReference(MemTable())\n        self.immutable_memtable = None\n\n    def put(self, key, value):\n        while True:\n            current = self.active_memtable.get()\n            if current.is_full():\n                self.trigger_swap(current)\n                continue\n            if current.try_insert(key, value):\n                break",
+        "wrong": "class LockedLSMTree:\n    def __init__(self):\n        self.lock = threading.Lock()\n        self.memtable = MemTable()\n\n    def put(self, key, value):\n        with self.lock:\n            self.memtable.insert(key, value)"
+      },
+      "common_mistakes": [
+        "Failing to protect retired memtable nodes with hazard pointers, leading to use-after-free bugs during concurrent reader sweeps.",
+        "Triggering heavy background compactions inside the critical path of the write thread instead of using non-blocking atomic flags."
+      ],
+      "best_practices": [
+        "Use epoch-based memory reclamation or hazard pointers to manage memory safely across concurrent memtable swaps.",
+        "Keep atomic pointer swings lightweight to minimize CAS retry loops under heavy multi-core write contention."
+      ],
+      "when_to_use": "Use when building high-throughput distributed key-value stores and write-heavy NoSQL database engines requiring predictable sub-millisecond latencies.",
+      "when_not_to_use": "Avoid when application workloads are heavily read-bound with strict point-lookup latency guarantees, where B-Trees or Hash Indexes may perform better.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve lock-free memtable swapping in a concurrent LSM-Tree?",
+          "answer": "By using atomic CAS operations on pointers referencing the active memtable, allowing writers to redirect insertions to a fresh memtable while the old one becomes immutable."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free components in storage engines?",
+          "answer": "Hazard pointers prevent reader threads from accessing memory blocks that have been retired and scheduled for reclamation by modifier threads during structural changes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Link Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent SSTable Compaction Strategies"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T21:47:35.141438+00:00",
+      "run_number": 3875
     }
   ]
 }
