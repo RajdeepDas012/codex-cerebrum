@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3811,
-    "last_updated": "2026-10-25T05:54:09.923951+00:00",
-    "total_topics_learned": 3811
+    "total_runs": 3812,
+    "last_updated": "2026-10-25T05:57:19.325934+00:00",
+    "total_topics_learned": 3812
   },
   "entries": [
     {
@@ -181402,6 +181402,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T05:54:09.923928+00:00",
       "run_number": 3811
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component analysis and multi-core parallel equivalence relation tracking in real-time network connectivity platforms and concurrent graph clustering engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Union-Find data structure using atomic operations and hazard pointers. It enables high-throughput concurrent equivalence queries and set unions without global locks, critical for parallel graph processing and network analysis.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free node merging and parent pointer updates.",
+        "Implements atomic path-halving to flatten trees dynamically during lookups, minimizing contention and traversal depth.",
+        "Employs rank-combining strategies to deterministically balance tree height under high multi-threaded contention.",
+        "Integrates hazard pointer memory reclamation to safely manage node lifecycles without incurring garbage collection pauses."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of atomic path-halving using compare-and-swap loops.",
+        "correct": "def find_halving(nodes, i):\n    while True:\n        parent = nodes[i].parent\n        if parent == i:\n            return i\n        grandparent = nodes[parent].parent\n        if grandparent == parent:\n            return parent\n        if nodes[i].cas_parent(parent, grandparent):\n            i = grandparent\n        else:\n            i = parent",
+        "wrong": "def find_unsafe(nodes, i):\n    while nodes[i].parent != i:\n        nodes[i].parent = nodes[nodes[i].parent].parent  # Non-atomic modification causes race conditions\n        i = nodes[i].parent\n    return i"
+      },
+      "common_mistakes": [
+        "Failing to handle intermediate state transitions when multiple threads concurrently attempt path compression and unions.",
+        "Neglecting safe memory reclamation, leading to use-after-free vulnerabilities when nodes are reorganized or deleted concurrently."
+      ],
+      "best_practices": [
+        "Use path-halving instead of full path-compression in concurrent environments to bound the number of CAS steps per traversal.",
+        "Protect node references with hazard pointers before reading parent pointers to ensure memory safety in dynamic concurrent workloads."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform parallel equivalence queries, dynamic connectivity checks, or graph clustering over massive datasets.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency environments where standard coarse-grained locking or simple sequential arrays yield lower overhead.",
+      "interview_questions": [
+        {
+          "question": "Why is path-halving generally preferred over full path-compression in lock-free concurrent Union-Find implementations?",
+          "answer": "Path-halving updates parent pointers only halfway up the tree during a single traversal, reducing the frequency and complexity of CAS retries compared to completely flattening the tree."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node re-parenting?",
+          "answer": "Hazard pointers explicitly mark nodes as currently accessed by a specific thread, ensuring that memory allocators do not reclaim or recycle those nodes until all referencing threads release their hazards."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent hash maps",
+        "Hazard pointer memory management",
+        "Parallel graph processing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T05:57:19.325913+00:00",
+      "run_number": 3812
     }
   ]
 }
