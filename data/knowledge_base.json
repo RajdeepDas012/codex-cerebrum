@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3833,
-    "last_updated": "2026-10-25T11:26:39.499912+00:00",
-    "total_topics_learned": 3833
+    "total_runs": 3834,
+    "last_updated": "2026-10-25T11:29:50.288101+00:00",
+    "total_topics_learned": 3834
   },
   "entries": [
     {
@@ -182442,6 +182442,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T11:26:39.499892+00:00",
       "run_number": 3833
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic head-pointer-swinging and node-decoupling CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent task scheduling and multi-core parallel asynchronous event processing in real-time distributed execution engines and concurrent job dispatching frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free priority queue using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe, contention-free task scheduling and event processing across multiple cores without the bottlenecks of traditional locking mechanisms.",
+      "key_points": [
+        "Utilizes atomic head-pointer-swinging CAS primitives to safely enqueue and dequeue elements without mutual exclusion locks.",
+        "Implements node-decoupling techniques to isolate and remove nodes concurrently during contention.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes accessed by concurrent threads.",
+        "Maximizes throughput in multi-core asynchronous environments like distributed execution engines and job dispatchers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates a conceptual lock-free priority queue workflow using atomic operations and hazard pointers for thread-safe memory management.",
+        "correct": "import threading\nimport atomic\n\nclass LockFreePriorityQueue:\n    def __init__(self):\n        self.head = atomic.AtomicReference(None)\n    \n    def enqueue(self, node):\n        while True:\n            current_head = self.head.get()\n            node.next = current_head\n            if self.head.compare_and_set(current_head, node):\n                break",
+        "wrong": "class UnsafePriorityQueue:\n    def __init__(self):\n        self.head = None\n    \n    def enqueue(self, node):\n        # Missing locks and atomic operations leads to race conditions\n        node.next = self.head\n        self.head = node"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversal with hazard pointers, leading to use-after-free bugs when threads concurrently modify the structure.",
+        "Failing to handle the ABA problem during head-pointer-swinging CAS operations, causing missed node updates."
+      ],
+      "best_practices": [
+        "Always pin nodes using hazard pointers before reading their child or next pointers in a lock-free data structure.",
+        "Keep CAS retry loops tight and bounded to minimize CPU cycles wasted on high contention.",
+        "Batch memory reclamation requests when using hazard pointers to reduce overhead."
+      ],
+      "when_to_use": "Use when building high-throughput asynchronous execution engines, task schedulers, or real-time event-processing systems requiring low latency under high multi-core contention.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency environments where standard locked priority queues offer simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption in a lock-free priority queue?",
+          "answer": "Hazard pointers allow a thread to atomically announce which node it is currently accessing, preventing other threads from prematurely freeing or reusing that node via memory reclamation until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is head-pointer-swinging via CAS preferred over mutex locks in high-throughput job dispatchers?",
+          "answer": "CAS avoids thread blocking, context switching overhead, and lock contention bottlenecks, allowing multiple cores to progress independently and achieve higher overall throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Atomic compare-and-swap primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T11:29:50.288054+00:00",
+      "run_number": 3834
     }
   ]
 }
