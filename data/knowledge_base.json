@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3814,
-    "last_updated": "2026-10-25T06:03:39.767913+00:00",
-    "total_topics_learned": 3814
+    "total_runs": 3815,
+    "last_updated": "2026-10-25T06:06:49.590522+00:00",
+    "total_topics_learned": 3815
   },
   "entries": [
     {
@@ -181543,6 +181543,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T06:03:39.767891+00:00",
       "run_number": 3814
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra shortest path computations and multi-core parallel network routing optimization in real-time geographic mapping platforms and concurrent graph processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Fibonacci Heap, utilizing atomic compare-and-swap (CAS) primitives for thread-safe root list updates and minimum pointer updates. It employs hazard pointers to safely manage memory reclamation in dynamic multi-threaded graph routing systems without blocking.",
+      "key_points": [
+        "Uses atomic root-list-splicing and minimum-pointer-swinging via CAS operations to maintain heap invariants without global locks.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely free nodes during concurrent node extraction.",
+        "Optimizes priority queue operations like decrease-key and merge for high-throughput parallel Dijkstra algorithm executions.",
+        "Avoids thread contention by leveraging fine-grained pointer manipulation over traditional mutex-based synchronization blocks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node access via hazard pointers and atomic CAS root insertion in a concurrent heap.",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\n\nstruct Node {\n    int key;\n    std::atomic<Node*> next;\n};\n\nvoid insert_root(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head;\n    do {\n        old_head = root_list.load(std::memory_order_relaxed);\n        new_node->next.store(old_head, std::memory_order_relaxed);\n    } while (!root_list.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_root(Node*& root_list, Node* new_node) {\n    // Lacks thread safety entirely, subject to race conditions\n    new_node->next = root_list;\n    root_list = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free bugs when other threads access modified trees.",
+        "Incorrect memory order specifications during atomic CAS operations, introducing race conditions on the minimum pointer."
+      ],
+      "best_practices": [
+        "Pair every dynamic node removal with hazard pointer protection epochs before reading pointers.",
+        "Use acquire-release memory semantics consistently to guarantee visibility of tree structural updates across cores."
+      ],
+      "when_to_use": "Use when building highly concurrent pathfinding engines or real-time routing tables requiring frequent decrease-key and merge operations across many threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity and memory overhead of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating the minimum pointer in a lock-free Fibonacci heap?",
+          "answer": "By pairing pointers with monotonically increasing version counters or by utilizing hazard pointers and epoch-based reclamation to ensure nodes aren't reused while a thread holds a reference."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free data structures?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times or overhead associated with full tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Priority Queues",
+        "Concurrent Graph Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T06:06:49.590502+00:00",
+      "run_number": 3815
     }
   ]
 }
