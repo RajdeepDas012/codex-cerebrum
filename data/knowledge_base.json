@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3883,
-    "last_updated": "2026-10-25T22:12:54.921818+00:00",
-    "total_topics_learned": 3883
+    "total_runs": 3884,
+    "last_updated": "2026-10-25T22:16:05.249497+00:00",
+    "total_topics_learned": 3884
   },
   "entries": [
     {
@@ -184806,6 +184806,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T22:12:54.921799+00:00",
       "run_number": 3883
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-resizing and scapegoat-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized balanced search operations and multi-core parallel dynamic set maintenance in real-time in-memory caching platforms and concurrent transactional database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Scapegoat Tree that achieves balance through periodic complete subtree rebuilds rather than local rotations. By utilizing atomic compare-and-swap (CAS) primitives and hazard pointers, it supports high-throughput amortized balanced search operations and dynamic set maintenance across multiple threads without explicit locking.",
+      "key_points": [
+        "Employs atomic subtree-resizing and scapegoat-rebuilding CAS primitives to guarantee thread-safe structural modifications without global mutexes.",
+        "Uses hazard pointer memory reclamation to safely manage node deallocation and prevent ABA problems during concurrent structural rebuilds.",
+        "Maintains amortized balance constraints without storing explicit per-node balance factors, reducing memory overhead.",
+        "Optimized for high-throughput in-memory caching platforms and concurrent transactional database engines requiring dynamic set maintenance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion and hazard pointer acquisition in a lock-free scapegoat tree environment.",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\nstruct Node { int key; std::atomic<Node*> left, right; };\nvoid insert_node(std::atomic<Node*>& root, int val) {\n    Node* new_node = new Node{val, nullptr, nullptr};\n    Node* curr = root.load();\n    while (!root.compare_exchange_weak(curr, new_node)) {}\n}",
+        "wrong": "Node* curr = root.load(); delete root; root.store(new_node); // Causes race conditions and memory corruption"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during major subtree rebuilding operations, leading to use-after-free bugs.",
+        "Ignoring the amortized cost of global rebuilds when multiple threads trigger structural rebalancing simultaneously."
+      ],
+      "best_practices": [
+        "Isolate heavy scapegoat rebuilding phases using fine-grained task delegation or epoch-based coordination.",
+        "Validate subtree size metrics atomically to prevent race conditions during weight-balance checks."
+      ],
+      "when_to_use": "Use when building high-throughput concurrent in-memory caches or transactional databases that require predictable amortized search performance without lock contention.",
+      "when_not_to_use": "Avoid when strict worst-case latency bounds are mandatory per operation, as periodic full subtree rebuilding introduces latency spikes.",
+      "interview_questions": [
+        {
+          "question": "How does a Scapegoat Tree maintain balance without explicit color or height fields in every node, and how is this parallelized lock-free?",
+          "answer": "It tracks subtree sizes dynamically and triggers a complete rebuild of the unbalanced subtree (the scapegoat) when a weight-balance alpha criterion is violated. In a lock-free setting, atomic CAS is used to swap out the entire subtree root with a freshly built, perfectly balanced tree."
+        },
+        {
+          "question": "Why are hazard pointers essential when rebuilding a subtree in a lock-free Scapegoat Tree?",
+          "answer": "Hazard pointers prevent other threads from accessing or freeing nodes that are currently being disconnected and rearranged during the scapegoat rebuilding phase, avoiding race conditions and use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Treaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Weight-Balanced Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T22:16:05.249480+00:00",
+      "run_number": 3884
     }
   ]
 }
