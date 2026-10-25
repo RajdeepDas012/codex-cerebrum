@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3877,
-    "last_updated": "2026-10-25T21:53:54.579515+00:00",
-    "total_topics_learned": 3877
+    "total_runs": 3878,
+    "last_updated": "2026-10-25T21:57:04.242309+00:00",
+    "total_topics_learned": 3878
   },
   "entries": [
     {
@@ -184522,6 +184522,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-25T21:53:54.579496+00:00",
       "run_number": 3877
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking in real-time autocomplete engines and concurrent dictionary storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent BK-Tree (Burkhard-Keller Tree) leverages atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely insert and query string metric spaces without global locks. It enables scalable, multi-core approximate string matching based on Levenshtein distance, vital for real-time autocomplete systems.",
+      "key_points": [
+        "Utilizes atomic child-pointer linking via CAS to integrate new metric-space nodes into a concurrent BK-Tree branch safely.",
+        "Employs hazard pointers to protect nodes from premature memory reclamation during concurrent traversal and edit-distance calculation.",
+        "Supports high-throughput approximate string matching by pruning search spaces based on the triangle inequality of metric spaces.",
+        "Prevents race conditions during concurrent node insertions where multiple threads might simultaneously append children for the same edit distance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic pointer CAS update for adding a child node in a concurrent BK-Tree",
+        "correct": "bool link_child(Node* parent, int distance, Node* new_child) {\n    return parent->children[distance].compare_exchange_strong(new_child->next, new_child);\n}",
+        "wrong": "Node* current = parent->children[distance];\nparent->children[distance] = new_child; // Non-atomic update causing data races"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to use-after-free bugs during concurrent mutations.",
+        "Assuming edit distance calculations are side-effect free and ignoring potential thread contention on shared string buffers."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer reclamation schemes to safely free deleted BK-Tree node structures in lock-free designs.",
+        "Bound the maximum expected Levenshtein distance array size to optimize child pointer lookup times per tree node."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive autocomplete or spell-checking systems that require multi-threaded approximate string matching.",
+      "when_not_to_use": "Avoid when datasets are static and read-only, where simpler read-optimized data structures or traditional coarse-grained locking suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when two threads attempt to insert child nodes with the same edit distance simultaneously in a lock-free BK-Tree?",
+          "answer": "You use a Compare-And-Swap (CAS) loop on the child slot; if the CAS fails because another thread updated it, you fetch the existing child and continue the search down that subtree."
+        },
+        {
+          "question": "Why are hazard pointers necessary when traversing a concurrent BK-Tree for approximate string matching?",
+          "answer": "They ensure that nodes being traversed are not concurrently reclaimed or freed by another thread performing structural modifications."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Radix Trees",
+        "Concurrent Metric Spaces",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T21:57:04.242290+00:00",
+      "run_number": 3878
     }
   ]
 }
