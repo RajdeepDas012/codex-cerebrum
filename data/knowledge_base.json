@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3842,
-    "last_updated": "2026-10-25T15:56:06.166900+00:00",
-    "total_topics_learned": 3842
+    "total_runs": 3843,
+    "last_updated": "2026-10-25T15:59:16.053287+00:00",
+    "total_topics_learned": 3843
   },
   "entries": [
     {
@@ -182868,6 +182868,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T15:56:06.166878+00:00",
       "run_number": 3842
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-swinging and high-key-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent record locking and multi-core parallel index traversals in real-time enterprise database engines and concurrent transactional storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-link Tree extends the classic B-tree by adding right-links to sibling nodes, allowing readers and writers to navigate safely without global locks or expensive latch crabbing. By employing atomic compare-and-swap (CAS) primitives and hazard pointer memory management, it achieves high throughput and low latency for multi-core enterprise databases.",
+      "key_points": [
+        "Utilizes right-links on tree nodes to guide concurrent traversals when node splits occur mid-operation.",
+        "Employs atomic CAS primitives for updating pointers, managing high keys, and modifying child pointers safely.",
+        "Integrates hazard pointers to guarantee safe memory reclamation and prevent premature deallocation during concurrent access.",
+        "Eliminates traditional latch crabbing bottlenecks, significantly scaling index operations across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node traversal using right-links and hazard pointers.",
+        "correct": "Node* traverse(Node* root, K key) {\n    Node* curr = acquire_hazard(root);\n    while (!curr->is_leaf) {\n        curr = navigate_right(curr, key);\n        curr = find_child(curr, key);\n    }\n    return curr;\n}",
+        "wrong": "Node* traverse(Node* root, K key) {\n    Node* curr = root;\n    while (!curr->is_leaf) {\n        curr = curr->child[0]; // Missing right-link check and hazard protection\n    }\n    return curr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free race conditions.",
+        "Neglecting to check right-links when a concurrent thread splits a node, causing traversals to miss target keys."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer reference before reading node contents or following child pointers in concurrent structures.",
+        "Ensure right-link updates are atomically published before updating parent nodes to maintain structural consistency."
+      ],
+      "when_to_use": "Use when building high-performance transactional database indexes that require maximum read/write concurrency and minimal lock contention across many cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking B-trees or memory-simpler structures provide adequate performance.",
+      "interview_questions": [
+        {
+          "question": "How do right-links prevent deadlocks and missed updates during concurrent node splits in a B-link tree?",
+          "answer": "Right-links provide an alternative path for traversals if a node splits while being accessed, allowing threads to redirect to the correct sibling without acquiring exclusive locks on the parent."
+        },
+        {
+          "question": "Why are hazard pointers necessary alongside atomic CAS operations in a lock-free B-link tree?",
+          "answer": "While CAS ensures atomic pointer updates, it does not manage memory reclamation. Hazard pointers prevent another thread from freeing a node while it is actively being traversed by a reader."
+        }
+      ],
+      "related_topics": [
+        "B-Tree",
+        "Hazard Pointers",
+        "Lock-Free Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T15:59:16.053228+00:00",
+      "run_number": 3843
     }
   ]
 }
