@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3855,
-    "last_updated": "2026-10-25T16:37:22.916295+00:00",
-    "total_topics_learned": 3855
+    "total_runs": 3856,
+    "last_updated": "2026-10-25T18:49:52.676606+00:00",
+    "total_topics_learned": 3856
   },
   "entries": [
     {
@@ -183483,6 +183483,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T16:37:22.916274+00:00",
       "run_number": 3855
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and interval-overlapping CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range queries and multi-core parallel event scheduling in real-time calendar management systems and concurrent timeline processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Interval Tree that utilizes atomic primitives for endpoint updates and overlap checks, paired with hazard pointers for safe memory reclamation. It enables high-throughput temporal range queries and multi-core parallel event scheduling without thread contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for managing interval endpoints and node insertions without locks.",
+        "Employs hazard pointers to safely track and reclaim memory for nodes removed during concurrent tree rotations and structural updates.",
+        "Optimizes interval-overlapping queries across multiple threads for high-throughput temporal and scheduling workloads.",
+        "Maintains structural balance and maximum endpoint metadata atomically to preserve correct range query semantics."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of atomic endpoint updates and hazard pointer protection during concurrent interval tree node access.",
+        "correct": "template<typename T> void safe_query(Node<T>* root, Interval<T> target, HazardPointerRegistry<T>& registry) {\n    HazardPointer<T>* hp = registry.acquire();\n    Node<T>* current;\n    do {\n        current = hp->protect(root);\n        if (!current) break;\n        if (current->interval.overlaps(target)) {\n            process_overlap(current);\n        }\n    } while (hp->is_stale());\n    registry.release(hp);\n}",
+        "wrong": "template<typename T> void unsafe_query(Node<T>* root, Interval<T> target) {\n    // Accessing shared pointers without hazard protection leads to use-after-free bugs in lock-free trees\n    if (root->interval.overlaps(target)) {\n        process_overlap(root);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to race conditions and use-after-free crashes.",
+        "Updating node maximum endpoints non-atomically relative to tree rotations, causing missed intervals during concurrent range queries."
+      ],
+      "best_practices": [
+        "Always register active nodes with the hazard pointer subsystem prior to reading node fields in lock-free traversals.",
+        "Keep atomic read-modify-write loops tight and bounded to prevent excessive CPU contention under heavy multi-core write loads."
+      ],
+      "when_to_use": "Use when building high-performance real-time calendar systems, timeline processors, or geospatial/temporal engines requiring frequent concurrent range queries and updates with minimal latency.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency, where traditional lock-based interval trees provide simpler implementation and debugging.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in a lock-free interval tree?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are currently accessing, blocking other threads from freeing that node until the reader unpublishes the pointer."
+        },
+        {
+          "question": "What is the primary challenge when updating maximum endpoint fields atomically during concurrent insertions in an interval tree?",
+          "answer": "Ensuring that propagated changes to parent nodes do not overwrite concurrent updates made by other threads, typically solved using multi-word CAS or retry loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-free BKD-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T18:49:52.676587+00:00",
+      "run_number": 3856
     }
   ]
 }
