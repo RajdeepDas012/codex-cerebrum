@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3798,
-    "last_updated": "2026-10-25T01:03:10.446191+00:00",
-    "total_topics_learned": 3798
+    "total_runs": 3799,
+    "last_updated": "2026-10-25T01:06:21.621912+00:00",
+    "total_topics_learned": 3799
   },
   "entries": [
     {
@@ -180788,6 +180788,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T01:03:10.446171+00:00",
       "run_number": 3798
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic hyper-plane-splitting and coordinate-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searches and multi-core parallel spatial point location in real-time robotics perception platforms and concurrent computer graphics acceleration engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free KD-Tree using advanced atomic primitives like Compare-And-Swap (CAS) for node updates, hyper-plane splitting, and coordinate bounding. It leverages hazard pointers to safely manage dynamic memory reclamation without global locks, enabling high-performance multi-dimensional spatial queries on multi-core systems.",
+      "key_points": [
+        "Utilizes atomic hyper-plane-splitting and coordinate-bounding CAS operations to safely update tree structures across threads.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during concurrent node deletions or structural modifications.",
+        "Optimizes multi-dimensional nearest neighbor searches and spatial point location for real-time robotics and computer graphics workloads.",
+        "Eliminates locking bottlenecks, achieving near-linear scalability on multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion using atomic CAS for hyper-plane boundaries and hazard pointers for safe memory access.",
+        "correct": "bool insert_point(KDNode*& root, const Point& pt, int depth) {\n    KDNode* new_node = new KDNode(pt);\n    while (true) {\n        KDNode* curr = hazard_protect(root);\n        if (!curr) {\n            if (cas(&root, nullptr, new_node)) { release_hazard(); return true; }\n            continue;\n        }\n        int axis = depth % K;\n        if (pt.coords[axis] < curr->point.coords[axis]) {\n            if (cas(&curr->left, curr->left, new_node)) { release_hazard(); return true; }\n        } else {\n            if (cas(&curr->right, curr->right, new_node)) { release_hazard(); return true; }\n        }\n        release_hazard();\n    }\n}",
+        "wrong": "bool insert_point(KDNode* root, const Point& pt, int depth) {\n    // Missing synchronization and hazard pointers leads to race conditions and memory corruption\n    mutex.lock();\n    // ... unprotected traversal and raw pointer manipulation ...\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Using blocking synchronization primitives (like std::mutex) inside high-frequency spatial queries, degrading multi-core throughput."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer dereferences in a hazard pointer framework before performing read-modify-write validation.",
+        "Keep spatial bounding boxes tightly coupled with atomic node states to minimize CAS retry contention during tree expansion."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-critical spatial index systems, such as real-time collision detection in game engines or nearest-neighbor classification in robotics perception running on many-core processors.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with infrequent spatial queries, where simpler pointer-based KD-Trees or standard libraries offer better maintainability and lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free KD-Tree?",
+          "answer": "Hazard pointers announce which nodes a thread is currently reading, preventing other threads from reclaiming or freeing those memory addresses until the reader thread unprotects them."
+        },
+        {
+          "question": "Why is structural modification in a lock-free KD-Tree significantly harder than in a lock-free stack or queue?",
+          "answer": "Because KD-Trees involve multi-node topological changes, hyper-plane splits, and bounding box recalculations that cannot always be atomicized with a single CAS instruction, requiring careful coordination and retry loops."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free R-Trees and Spatial Indexes",
+        "Atomic Compare-And-Swap (CAS) Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T01:06:21.621892+00:00",
+      "run_number": 3799
     }
   ]
 }
