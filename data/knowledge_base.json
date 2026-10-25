@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3821,
-    "last_updated": "2026-10-25T06:25:58.656933+00:00",
-    "total_topics_learned": 3821
+    "total_runs": 3822,
+    "last_updated": "2026-10-25T06:29:08.590484+00:00",
+    "total_topics_learned": 3822
   },
   "entries": [
     {
@@ -181874,6 +181874,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T06:25:58.656913+00:00",
       "run_number": 3821
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic child-pointer-swinging and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed data retrieval and multi-core parallel sorted record searching in real-time enterprise databases and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and execution of a lock-free concurrent B-Tree data structure engineered for high-throughput multi-core systems. It leverages atomic child-pointer-swinging and node-splitting operations alongside hazard pointers to guarantee safe memory reclamation without heavy blocking locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe child pointer updates and structural node splitting.",
+        "Employs hazard pointer memory management to securely defer deletion of nodes actively traversed by concurrent reader threads.",
+        "Maintains multi-way tree balance properties concurrently to ensure optimal logarithmic search depth under intense read-write workloads.",
+        "Eliminates global lock contention, enabling scalable multi-core performance for enterprise database indexes and transactional stores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer swapping via CAS during concurrent node traversal.",
+        "correct": "bool updateChildPointer(std::atomic<Node*>& parentPtr, Node* expectedChild, Node* newChild) {\n    return parentPtr.compare_exchange_strong(expectedChild, newChild, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* parentPtr = expectedChild;\nparentPtr = newChild; // Not atomic, introduces race conditions and data corruption"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free bugs when another thread splits or removes the node.",
+        "Neglecting proper memory ordering semantics (acquire-release) on atomic operations, causing stale or inconsistent child pointer states across threads."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with local hazard pointer thread domains before dereferencing internal keys or child pointers.",
+        "Adopt cooperative splitting protocols where helper threads assist in completing pending structural modifications before proceeding with their own inserts."
+      ],
+      "when_to_use": "Ideal for high-concurrency enterprise databases, in-memory indexing engines, and real-time storage systems experiencing heavy multi-threaded read and write traffic.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free primitives outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node reclamation in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently visiting, ensuring that background memory reclamation engines defer freeing those nodes until no thread holds an active hazard pointer referencing them."
+        },
+        {
+          "question": "What is the role of atomic child-pointer-swinging in lock-free B-Tree node insertions?",
+          "answer": "It allows a thread to atomically replace an existing child reference in a parent node with a newly created split child node via a CAS operation, ensuring that concurrent operations observe either the old or new valid pointer state without intermediate corruption."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-25T06:29:08.590463+00:00",
+      "run_number": 3822
     }
   ]
 }
