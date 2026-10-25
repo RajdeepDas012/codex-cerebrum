@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3881** |
-| Last Updated | `2026-10-25T22:06:34.540100+00:00` |
-| Dataset Size | `3881 entries` |
+| Total Topics Learned | **3882** |
+| Last Updated | `2026-10-25T22:09:45.096477+00:00` |
+| Dataset Size | `3882 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2627 |
+| data-structures | 2628 |
 | algorithms | 237 |
 | trading-strategies | 228 |
 | crypto-blockchain | 170 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multipass-linking and root-deleting CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel event scheduling in real-time simulation engines and concurrent task execution platforms`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-root-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel shortest path graph algorithms in real-time network routing engines and concurrent pathfinding systems`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time distributed execution platforms and concurrent job processing engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced search operations and multi-core parallel dynamic set maintenance in real-time in-memory caching platforms and concurrent transactional database engines`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking in real-time autocomplete engines and concurrent dictionary storage systems`
-- `Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class merging and multi-core parallel connected components analysis in real-time network clustering platforms and concurrent graph processing engines`
 
 <!-- STATS_END -->
 
