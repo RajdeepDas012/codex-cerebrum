@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3800,
-    "last_updated": "2026-10-25T01:09:31.154193+00:00",
-    "total_topics_learned": 3800
+    "total_runs": 3801,
+    "last_updated": "2026-10-25T01:12:48.984756+00:00",
+    "total_topics_learned": 3801
   },
   "entries": [
     {
@@ -180882,6 +180882,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-25T01:09:31.154173+00:00",
       "run_number": 3800
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and weight-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate quantile estimation and multi-core parallel percentile calculation in real-time performance monitoring platforms and concurrent telemetry analytics engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent T-Digest data structure utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointer memory management. It enables high-throughput, highly accurate percentile calculations and streaming quantile estimations across multiple CPU cores without lock contention.",
+      "key_points": [
+        "Utilizes atomic centroid-merging and weight-compressing CAS primitives to safely modify shared quantile distributions without global locks.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free bugs during concurrent node updates and compressions.",
+        "Achieves high accuracy at the extreme tails of distributions (e.g., p99, p99.9) while keeping memory footprints bounded.",
+        "Enables parallel telemetry stream merging for real-time observability pipelines operating under massive thread concurrency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based centroid merge operation for concurrent T-Digest updates.",
+        "correct": "bool merge_centroids(std::atomic<Centroid*>& head, Centroid* new_node) {\n    Centroid* old_head = head.load();\n    do {\n        new_node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_node));\n    return true;\n}",
+        "wrong": "Centroid* old_head = head.load();\nnew_node->next = old_head;\nhead.store(new_node); // Non-atomic update prone to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted compressed centroid nodes with hazard pointers, leading to use-after-free crashes under heavy multi-threaded ingestion.",
+        "Using heavy-weight mutexes for compression phases which destroys the throughput benefits of the lock-free design."
+      ],
+      "best_practices": [
+        "Design scale factors and compression parameters (delta) to balance memory consumption with tail-latency quantile accuracy.",
+        "Batch local thread updates into thread-local buffers before pushing compressed mini-digests into the global concurrent structure to reduce CAS contention."
+      ],
+      "when_to_use": "Use when you need real-time, highly accurate percentile tracking (like p99 or p999 latencies) across massive multi-threaded metric collection streams.",
+      "when_not_to_use": "Avoid when exact quantiles are strictly required over streaming estimates, or when working with small, low-concurrency datasets where simpler sorting approaches suffice.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives prevent race conditions during concurrent centroid insertions in a T-Digest?",
+          "answer": "CAS operations allow threads to attempt updating the pointer to a centroid list by verifying that the expected old state hasn't changed, retrying atomically if another thread modified it in the interim."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free streaming algorithms?",
+          "answer": "Hazard pointers avoid atomic read-modify-write cache line contention on shared reference count variables, scaling much better across high core counts."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Skip Lists",
+        "Hazard pointer memory reclamation",
+        "Streaming quantile algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-25T01:12:48.984734+00:00",
+      "run_number": 3801
     }
   ]
 }
