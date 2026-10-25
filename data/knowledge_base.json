@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3812,
-    "last_updated": "2026-10-25T05:57:19.325934+00:00",
-    "total_topics_learned": 3812
+    "total_runs": 3813,
+    "last_updated": "2026-10-25T06:00:29.834073+00:00",
+    "total_topics_learned": 3813
   },
   "entries": [
     {
@@ -181449,6 +181449,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T05:57:19.325913+00:00",
       "run_number": 3812
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and prefix-doubling CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic sequence searching and multi-core parallel full-text indexing in real-time bioinformatics analysis platforms and concurrent search engine text processing systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent Suffix Array architecture designed to perform high-throughput text indexing and genomic pattern matching across multiple CPU cores without lock contention. It uses atomic index-sorting, prefix-doubling operations via Compare-And-Swap (CAS), and hazard pointers to safely manage shared memory reclamation in real-time data processing pipelines.",
+      "key_points": [
+        "Leverages atomic Compare-And-Swap (CAS) primitives for safe, lock-free parallel index sorting and prefix doubling during array construction.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of shared text and index buffers accessed concurrently by multiple threads.",
+        "Enables high-throughput genomic sequence alignment and fast substring searches across multi-core systems without blocking thread execution.",
+        "Optimizes cache locality and memory layout to reduce contention overhead inherent in parallel string-sorting algorithms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent acquisition of suffix array nodes using hazard pointers to protect against race conditions during parallel reads.",
+        "correct": "template <typename T>\nvoid* acquire_safe_node(std::atomic<T*>& node_ptr, HazardPointerList& hp_list) {\n    T* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hp_list.protect(ptr);\n    } while (node_ptr.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "template <typename T>\nT* unsafe_read(std::atomic<T*>& node_ptr) {\n    return node_ptr.load(); // Risk of use-after-free if another thread frees this node immediately\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly publish hazard pointers before validating the stability of shared nodes, leading to race conditions and memory corruption.",
+        "Using overly strong memory ordering constraints everywhere instead of properly balancing acquire-release semantics, degrading multi-core scaling performance."
+      ],
+      "best_practices": [
+        "Rigorously register and clear hazard pointers within thread-local storage blocks to minimize global contention.",
+        "Implement generational or epoch-based fallback mechanisms when prefix-doubling collision rates spike under heavy multi-threaded writes."
+      ],
+      "when_to_use": "Ideal for high-throughput text retrieval systems, real-time genomic sequence aligners, and concurrent search engines requiring low-latency parallel pattern matching.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers and atomic CAS retry loops outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free suffix array?",
+          "answer": "Hazard pointers explicitly mark shared nodes as currently accessed by a specific thread, preventing reclamation or reuse by memory free lists until all referencing threads unprotect them."
+        },
+        {
+          "question": "Why is prefix-doubling difficult to parallelize lock-free, and how do atomic CAS primitives help?",
+          "answer": "Prefix-doubling requires sorting suffixes based on increasingly longer prefixes, causing thread contention on shared rank tables; atomic CAS primitives allow threads to safely propose and commit rank updates without acquiring global mutual exclusion locks."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Parallel String Sorting Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-25T06:00:29.834051+00:00",
+      "run_number": 3813
     }
   ]
 }
