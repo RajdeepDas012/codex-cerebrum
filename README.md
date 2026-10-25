@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3853** |
-| Last Updated | `2026-10-25T16:30:58.689894+00:00` |
-| Dataset Size | `3853 entries` |
+| Total Topics Learned | **3854** |
+| Last Updated | `2026-10-25T16:34:12.968560+00:00` |
+| Dataset Size | `3854 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2603 |
+| data-structures | 2604 |
 | algorithms | 236 |
 | trading-strategies | 228 |
 | crypto-blockchain | 169 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic leaf-partitioning and bounding-box-adjusting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point queries and multi-core parallel spatial database indexing in real-time geospatial analytics platforms and concurrent geographic information systems`
 - `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-rebalancing and node-migration CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized balanced search operations and multi-core parallel dynamic set maintenance in real-time in-memory caching platforms and concurrent transactional database engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput meldable priority queue operations and multi-core parallel task scheduling in real-time distributed execution platforms and concurrent job processing engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multi-child-linking and pass-two-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel discrete event simulation in real-time gaming server frameworks and concurrent task scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-bucketing and range-filtering CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range-max queries and multi-core parallel spatial-temporal data indexing in real-time geographic tracking platforms and concurrent spatial database engines`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-cascading and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel shortest path graph algorithms in real-time network routing engines and concurrent network optimization platforms`
 
 <!-- STATS_END -->
 
