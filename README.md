@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3937** |
-| Last Updated | `2026-10-26T17:37:12.356810+00:00` |
-| Dataset Size | `3937 entries` |
+| Total Topics Learned | **3938** |
+| Last Updated | `2026-10-26T17:41:30.208150+00:00` |
+| Dataset Size | `3938 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2677 |
+| data-structures | 2678 |
 | algorithms | 240 |
 | trading-strategies | 228 |
 | crypto-blockchain | 172 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-swapping and node-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing lookups and multi-core parallel IP routing table updates in real-time software-defined networking platforms and concurrent packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-splicing and self-adjusting-access CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently accessed key lookups and multi-core parallel dynamic restructuring in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range queries and multi-core parallel sorted index scans in real-time transactional database systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel streaming rank tracking in real-time analytics platforms and concurrent metrics streaming engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-combining and branch-node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput verifiable data integrity proofs and multi-core parallel state synchronization in real-time blockchain node architectures and concurrent distributed ledger engines`
-- `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit-manipulation and run-clustering CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core parallel set filtering in real-time distributed caching systems and concurrent database storage engines`
 
 <!-- STATS_END -->
 
