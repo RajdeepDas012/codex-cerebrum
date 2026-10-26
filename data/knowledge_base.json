@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3927,
-    "last_updated": "2026-10-26T11:30:09.054348+00:00",
-    "total_topics_learned": 3927
+    "total_runs": 3928,
+    "last_updated": "2026-10-26T11:33:27.521137+00:00",
+    "total_topics_learned": 3928
   },
   "entries": [
     {
@@ -186885,6 +186885,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T11:30:09.054325+00:00",
       "run_number": 3927
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-updating and delta-chain-installing CAS primitives alongside hazard pointer memory reclamation for high-throughput latch-free memory-optimized index updates and multi-core parallel transaction processing in real-time in-memory database systems and concurrent storage engines",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bw-Tree optimizes in-memory index updates by replacing traditional latches with compare-and-swap (CAS) operations on an indirection mapping table and delta chains. This architecture eliminates write stalls and lock contention, making it ideal for high-throughput multi-core transaction processing engines.",
+      "key_points": [
+        "Utilizes a logical-to-physical mapping table updated atomically via CAS to allow node locations to change without global synchronization.",
+        "Applies modifications as a chain of delta records (inserts, deletes, updates) instead of rewriting entire pages immediately.",
+        "Employs hazard pointer memory reclamation to safely manage memory deallocation of obsolete delta chains and consolidated nodes without race conditions.",
+        "Performs periodic structural consolidation to compress long delta chains into clean base pages when update lengths exceed predefined thresholds."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic delta chain installation on a Bw-Tree node mapping entry using CAS.",
+        "correct": "bool install_delta(std::atomic<MappingEntry*>& mapping_slot, MappingEntry* expected, MappingEntry* new_delta) {\n    return mapping_slot.compare_exchange_strong(expected, new_delta);\n}",
+        "wrong": "MappingEntry* current = mapping_slot.load();\nmapping_slot.store(new_delta); // Non-atomic read-modify-write causes lost updates"
+      },
+      "common_mistakes": [
+        "Failing to bound delta chain lengths, leading to deep traversal overhead during read operations (the read amplification problem).",
+        "Incorrectly ordering memory fences during mapping table updates, causing threads to read inconsistent or partially constructed delta nodes."
+      ],
+      "best_practices": [
+        "Trigger background consolidation tasks when delta chain lengths exceed a fixed threshold to bound read latency.",
+        "Pair hazard pointer protection strictly around mapping table lookups and pointer traversals to ensure safe asynchronous memory reclamation."
+      ],
+      "when_to_use": "High-concurrency in-memory database systems requiring heavy write throughput and minimal latency variance across multi-core architectures.",
+      "when_not_to_use": "Disk-bound databases with limited RAM or single-threaded workloads where simpler latch-based B+Trees or traditional lock structures avoid unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How does the Bw-Tree eliminate the need for traditional node latches during structural modifications?",
+          "answer": "It uses an indirection mapping table combined with atomic CAS operations, allowing threads to swap pointer references to delta records or consolidated nodes atomically."
+        },
+        {
+          "question": "What is the purpose of consolidation in a Bw-Tree and when should it be triggered?",
+          "answer": "Consolidation merges a base node with its accumulated delta chain into a single new base page to prevent read performance degradation caused by long traversal chains, typically triggered when delta count exceeds a threshold."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers",
+        "In-memory database engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T11:33:27.521116+00:00",
+      "run_number": 3928
     }
   ]
 }
