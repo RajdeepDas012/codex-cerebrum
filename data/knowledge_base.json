@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3911,
-    "last_updated": "2026-10-26T05:06:52.441300+00:00",
-    "total_topics_learned": 3911
+    "total_runs": 3912,
+    "last_updated": "2026-10-26T05:10:01.842104+00:00",
+    "total_topics_learned": 3912
   },
   "entries": [
     {
@@ -186126,6 +186126,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T05:06:52.441278+00:00",
       "run_number": 3911
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic node-linking and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent discrete event simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Binomial Heap that leverages atomic compare-and-swap (CAS) primitives for node linking and rank merging, paired with hazard pointers to ensure safe memory reclamation. It enables high-throughput mergeable priority queue operations and parallel task scheduling without locking overhead. This structure is essential for high-performance multi-threaded environments requiring efficient heap merges and scheduling guarantees.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage root lists and binomial tree node links lock-free.",
+        "Employs hazard pointers to safely track and reclaim memory of dynamically unlinked nodes in concurrent environments.",
+        "Implements rank-merging logic to combine binomial trees of equal degrees during heap union operations atomically.",
+        "Optimizes multi-core task scheduling and discrete event simulation engines by allowing non-blocking priority queue modifications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of atomic node-linking in a concurrent binomial heap using C++ atomics",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int key;\n    int degree;\n    std::atomic<Node*> child;\n    std::atomic<Node*> sibling;\n};\n\nbool linkNodes(std::atomic<Node*>& parentRoot, Node* childNode) {\n    Node* currentChild = parentRoot.load();\n    childNode->sibling.store(currentChild);\n    return parentRoot.compare_exchange_strong(currentChild, childNode);\n}",
+        "wrong": "#include <atomic>\n\nstruct Node { int key; Node* child; Node* sibling; };\n\nvoid linkNodes(Node* parent, Node* child) {\n    // Missing atomics and synchronization causes race conditions in multi-threaded environments\n    child->sibling = parent->child;\n    parent->child = child;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or unlinked nodes with hazard pointers, leading to severe use-after-free race conditions.",
+        "Using traditional locks inside high-throughput heap merge pathways, introducing convoy effects and reducing scalability."
+      ],
+      "best_practices": [
+        "Protect read and traversal operations on concurrent node pointers using properly scoped hazard pointer protection records.",
+        "Keep atomic retry loops concise and well-bounded to minimize performance degradation under high thread contention."
+      ],
+      "when_to_use": "Use when building multi-threaded real-time task schedulers or concurrent event simulation engines that demand high-throughput, non-blocking priority queue merging capabilities.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency systems where standard mutex-backed heaps or simple binary heaps offer lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory corruption during lock-free binomial heap node reclamation?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing so that reclaiming threads know not to free those memory addresses until all threads have released their protection guards."
+        },
+        {
+          "question": "What is the primary advantage of a binomial heap over a binary heap in concurrent task scheduling architectures?",
+          "answer": "Binomial heaps support efficient $O(\\log n)$ merge (union) operations of two priority queues, making them ideal for dynamic task distribution across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heap",
+        "Concurrent Pairing Heap",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T05:10:01.842081+00:00",
+      "run_number": 3912
     }
   ]
 }
