@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3907,
-    "last_updated": "2026-10-26T04:54:13.963013+00:00",
-    "total_topics_learned": 3907
+    "total_runs": 3908,
+    "last_updated": "2026-10-26T04:57:23.700811+00:00",
+    "total_topics_learned": 3908
   },
   "entries": [
     {
@@ -185938,6 +185938,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T04:54:13.962992+00:00",
       "run_number": 3907
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core parallel connected components analysis in real-time social network graph partitioning and concurrent cycle detection engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure enables lock-free parallel execution of find and union operations using atomic Compare-And-Swap (CAS) instructions. By integrating hazard pointers for safe memory management, it prevents race conditions during path compression and rank-based union updates across multiple cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage parent pointer updates without global locks.",
+        "Implements lock-free path compression to flatten tree depths atomically during concurrent find operations.",
+        "Employs lock-free rank unions to merge disjoint sets while preventing race conditions on tree heights.",
+        "Integrates hazard pointers to safely defer memory reclamation and prevent ABA problems in dynamic topologies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based find operation with path compression using hazard pointers.",
+        "correct": "Node* find(Node* x, HazardPointerRegistry& hp) {\n  while (true) {\n    Node* p = hp.protect(x->parent);\n    if (p == x) return x;\n    Node* pp = hp.protect(p->parent);\n    // Atomic path compression\n    if (x->parent.compare_exchange_weak(p, pp)) {\n      x = pp;\n    } else {\n      x = p;\n    }\n  }\n}",
+        "wrong": "Node* find(Node* x) {\n  if (x->parent == x) return x;\n  return x->parent = find(x->parent); // Non-atomic race condition and missing memory reclamation\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointers with hazard pointers, leading to use-after-free vulnerabilities during concurrent mutations.",
+        "Using standard locking mechanisms inside union-find routines which introduces bottlenecks under high contention."
+      ],
+      "best_practices": [
+        "Always wrap shared node references with hazard pointers prior to reading parent relationships in a concurrent context.",
+        "Employ retry loops with exponential backoff or randomized jitter on CAS failures to minimize bus contention under heavy multi-core load."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput distributed systems, real-time social network graph partitioners, or concurrent cycle detection engines requiring massive multi-core parallelism.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of atomic primitives and hazard pointer management outweighs the benefits of concurrent execution.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem during lock-free union operations in a Disjoint-Set data structure?",
+          "answer": "By using hazard pointers or tagged pointers (version counts) alongside CAS primitives to ensure that node reuse does not go undetected by concurrent threads."
+        },
+        {
+          "question": "Why is path compression challenging in a lock-free concurrent Union-Find implementation?",
+          "answer": "Because multiple threads may simultaneously attempt to update parent pointers of the same node chain, requiring careful atomic CAS loops and safe memory management to avoid data corruption."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Data Structures",
+        "Parallel Graph Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T04:57:23.700789+00:00",
+      "run_number": 3908
     }
   ]
 }
