@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3889,
-    "last_updated": "2026-10-26T00:09:35.634566+00:00",
-    "total_topics_learned": 3889
+    "total_runs": 3890,
+    "last_updated": "2026-10-26T00:12:55.328430+00:00",
+    "total_topics_learned": 3890
   },
   "entries": [
     {
@@ -185089,6 +185089,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-26T00:09:35.634543+00:00",
       "run_number": 3889
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel genome indexing in real-time bioinformatics analysis platforms and concurrent text search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent suffix array enables multi-core threads to build and query sorted suffix indices simultaneously without mutual exclusion locks. By employing atomic index-sorting and rank-updating compare-and-swap (CAS) primitives paired with hazard pointers, it ensures safe memory reclamation and high-throughput parallel string matching for large-scale data.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to coordinate multi-threaded suffix index-sorting and rank updates.",
+        "Employs hazard pointers to track active thread references and safely reclaim memory of transient sorting structures without blocking.",
+        "Achieves high-throughput parallel substring searches by dividing the suffix array space across multiple concurrent CPU cores.",
+        "Prevents priority inversion and deadlock overhead by eliminating traditional mutex locks and critical sections."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic rank update and hazard pointer registration for suffix array sorting.",
+        "correct": "void update_suffix_rank(std::atomic<int>& rank_slot, int new_rank, HazardPointer& hp, Node* ptr) {\n    hp.protect(ptr);\n    int current = rank_slot.load();\n    while (new_rank < current && !rank_slot.compare_exchange_weak(current, new_rank)) {\n        // retry CAS loop\n    }\n    hp.clear();\n}",
+        "wrong": "void update_suffix_rank(int& rank_slot, int new_rank) {\n    rank_slot = new_rank; // Non-atomic update prone to race conditions in multi-threaded suffix arrays\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate suffix pointers with hazard pointers before performing CAS operations, leading to ABA problems and use-after-free bugs.",
+        "Using expensive global locks for coordinate sorting steps instead of fine-grained atomic rank-updating primitives."
+      ],
+      "best_practices": [
+        "Keep critical CAS loops compact and use exponential backoff or yields during high-contention sorting phases.",
+        "Ensure retired suffix nodes are safely queued in a thread-local deferred reclamation list managed by hazard pointer epochs."
+      ],
+      "when_to_use": "Use when building real-time text search engines or bioinformatics analysis pipelines that demand extreme concurrent query throughput and multi-core genome indexing.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers and lock-free atomic tracking outweighs parallelism benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent suffix array rank modifications?",
+          "answer": "Hazard pointers publish a thread's intent to access a specific memory node, preventing the memory reclamation subsystem from freeing or recycling that node while another thread's CAS operation is pending."
+        },
+        {
+          "question": "Why are lock-free suffix arrays difficult to implement compared to hash maps?",
+          "answer": "Suffix arrays rely heavily on global relative order and contiguous index sorting, making localized atomic updates significantly more complex due to cascading rank adjustments."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T00:12:55.328408+00:00",
+      "run_number": 3890
     }
   ]
 }
