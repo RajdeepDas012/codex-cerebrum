@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3930,
-    "last_updated": "2026-10-26T11:39:54.820723+00:00",
-    "total_topics_learned": 3930
+    "total_runs": 3931,
+    "last_updated": "2026-10-26T17:14:23.047855+00:00",
+    "total_topics_learned": 3931
   },
   "entries": [
     {
@@ -187027,6 +187027,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T11:39:54.820702+00:00",
       "run_number": 3930
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core parallel set filtering in real-time distributed caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Bloom filter optimized for multi-core processors. It relies on atomic bit-manipulation primitives and hazard pointers to guarantee safe memory reclamation and high-throughput approximate membership queries under heavy contention.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) operations for lock-free bit-setting across shared filter arrays.",
+        "Employs hazard pointers to safely manage memory reclamation without locking during dynamic resizing or node transitions.",
+        "Provides high-throughput approximate membership testing to optimize caching systems and database engines by avoiding costly disk or remote lookups.",
+        "Enables safe multi-core parallel set filtering without risking race conditions or inconsistent bit states."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free bit-setting using atomic fetch-or operations for a concurrent Bloom filter.",
+        "correct": "void add_element(std::atomic<size_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    size_t bit_offset = bit_index % 64;\n    uint64_t mask = 1ULL << bit_offset;\n    bit_array[word_idx].fetch_or(mask, std::memory_order_relaxed);\n}",
+        "wrong": "void add_element(std::vector<uint64_t>& bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    size_t bit_offset = bit_index % 64;\n    bit_array[word_idx] |= (1ULL << bit_offset); // Non-atomic read-modify-write causes race conditions\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations on shared bit arrays, causing lost updates under high concurrency.",
+        "Failing to use appropriate memory orderings (such as relaxed or acquire-release), leading to unnecessary synchronization overhead or visibility issues."
+      ],
+      "best_practices": [
+        "Use atomic bitwise operations (like fetch_or) instead of raw CAS loops when setting independent bits in the bit array.",
+        "Integrate hazard pointers or epoch-based memory reclamation when supporting dynamic filter scaling or pointer-based structures."
+      ],
+      "when_to_use": "Use when building high-throughput distributed caching systems or database engines that require multi-core parallel set membership queries with minimal latency.",
+      "when_not_to_use": "Avoid when false positives are completely unacceptable or when data sets are small enough that exact set data structures fit comfortably in L1/L2 CPU caches.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent lost updates when multiple threads try to set bits in a shared Bloom filter bit-vector simultaneously?",
+          "answer": "By using atomic bitwise operations like fetch_or with appropriate memory orderings or a CAS loop to ensure bit-setting is atomic."
+        },
+        {
+          "question": "Why are hazard pointers useful when implementing concurrent data structures like Bloom filters?",
+          "answer": "Hazard pointers allow threads to safely announce which memory nodes they are currently accessing, preventing other threads from prematurely freeing or reclaiming that memory."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent HyperLogLog",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic Bit-Vector Operations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T17:14:23.047834+00:00",
+      "run_number": 3931
     }
   ]
 }
