@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3885** |
-| Last Updated | `2026-10-25T22:19:18.753424+00:00` |
-| Dataset Size | `3885 entries` |
+| Total Topics Learned | **3886** |
+| Last Updated | `2026-10-26T00:00:07.452404+00:00` |
+| Dataset Size | `3886 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2631 |
+| data-structures | 2632 |
 | algorithms | 237 |
 | trading-strategies | 228 |
 | crypto-blockchain | 170 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic hazard-pointer reclamation and FAA-based (Fetch-And-Add) enqueue-dequeue CAS primitives for high-throughput task scheduling and multi-core parallel job dispatching in real-time asynchronous execution engines and concurrent task-based runtime systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database indexing and parallel sorted data retrieval in real-time transactional storage engines and concurrent key-value repositories`
 - `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-resizing and scapegoat-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized balanced search operations and multi-core parallel dynamic set maintenance in real-time in-memory caching platforms and concurrent transactional database engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel job scheduling in real-time task execution platforms and concurrent distributed processing engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic multipass-linking and root-deleting CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel event scheduling in real-time simulation engines and concurrent task execution platforms`
-- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-root-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel shortest path graph algorithms in real-time network routing engines and concurrent pathfinding systems`
 
 <!-- STATS_END -->
 

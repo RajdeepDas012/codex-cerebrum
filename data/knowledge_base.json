@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3885,
-    "last_updated": "2026-10-25T22:19:18.753424+00:00",
-    "total_topics_learned": 3885
+    "total_runs": 3886,
+    "last_updated": "2026-10-26T00:00:07.452404+00:00",
+    "total_topics_learned": 3886
   },
   "entries": [
     {
@@ -184900,6 +184900,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-25T22:19:18.753404+00:00",
       "run_number": 3885
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic hazard-pointer reclamation and FAA-based (Fetch-And-Add) enqueue-dequeue CAS primitives for high-throughput task scheduling and multi-core parallel job dispatching in real-time asynchronous execution engines and concurrent task-based runtime systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly scalable concurrent priority queue designed to handle intense multi-threaded workloads without locking. By utilizing Fetch-And-Add (FAA) primitives alongside hazard pointers, it ensures safe memory reclamation and atomic queue operations for real-time task schedulers.",
+      "key_points": [
+        "Utilizes atomic Fetch-And-Add (FAA) instructions to minimize contention during concurrent enqueues and dequeues.",
+        "Employs hazard pointers to safely manage memory reclamation in lock-free data structures without incurring garbage collection overhead.",
+        "Maintains priority ordering concurrently across multiple execution cores without relying on global mutex locks.",
+        "Optimized for real-time asynchronous execution engines requiring predictable low-latency task dispatching."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic enqueue operation using FAA and compare-and-swap primitives.",
+        "correct": "void enqueue(Node* newNode) {\n    int idx = ticket_counter.fetch_add(1, std::memory_order_relaxed);\n    // Atomic placement into lock-free ring buffer array\n    while (!buffer[idx % CAPACITY].compare_exchange_weak(nullptr, newNode)) {\n        // Retry logic or backing off\n    }\n}",
+        "wrong": "void enqueue(Node* newNode) {\n    std::lock_guard<std::mutex> lock(mu);\n    queue.push(newNode); // Uses a blocking mutex, destroying lock-free properties\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading pointers, leading to ABA problems or use-after-free bugs.",
+        "Over-relying on heavy CAS retry loops under high contention instead of backing off or using FAA scaling techniques."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer memory management to safely free nodes removed by parallel worker threads.",
+        "Design queue slots using bounded arrays with atomic state indicators to optimize cache locality and reduce memory fragmentation."
+      ],
+      "when_to_use": "When building high-throughput asynchronous runtimes, task schedulers, or real-time event loops where dozens of threads simultaneously push and pop prioritized tasks.",
+      "when_not_to_use": "In single-threaded applications or environments with low concurrency where simple std::priority_queue with a mutex offers better simplicity and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "Why use Fetch-And-Add (FAA) instead of pure CAS loops for queue enqueue operations?",
+          "answer": "FAA allows threads to atomically reserve a unique slot index without contention loops, dramatically reducing cache thrashing compared to repeatedly failing CAS operations on a single tail pointer."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem in lock-free priority queues?",
+          "answer": "Hazard pointers explicitly publish which node a thread is currently accessing, preventing other threads from reclaiming or recycling that memory address until the referencing thread clears its hazard pointer."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Concurrent ring buffers"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-10-26T00:00:07.452382+00:00",
+      "run_number": 3886
     }
   ]
 }
