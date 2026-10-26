@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3890** |
-| Last Updated | `2026-10-26T00:12:55.328430+00:00` |
-| Dataset Size | `3890 entries` |
+| Total Topics Learned | **3891** |
+| Last Updated | `2026-10-26T00:16:14.803525+00:00` |
+| Dataset Size | `3891 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2636 |
+| data-structures | 2637 |
 | algorithms | 237 |
 | trading-strategies | 228 |
 | crypto-blockchain | 170 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic semi-splaying and root-pivoting CAS primitives alongside hazard pointer memory reclamation for high-throughput recently-accessed key-value lookups and multi-core parallel self-adjusting search operations in real-time in-memory caching platforms and concurrent transactional database systems`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel genome indexing in real-time bioinformatics analysis platforms and concurrent text search engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-level-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered multi-core key-value lookups and parallel range queries in real-time in-memory databases and concurrent caching engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic leaf-extending and edge-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel pattern matching in real-time genomic sequence analysis platforms and concurrent bioinformatics database engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and node-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core parallel in-memory state management in real-time distributed caching systems and concurrent transactional databases`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic hazard-pointer reclamation and FAA-based (Fetch-And-Add) enqueue-dequeue CAS primitives for high-throughput task scheduling and multi-core parallel job dispatching in real-time asynchronous execution engines and concurrent task-based runtime systems`
 
 <!-- STATS_END -->
 
