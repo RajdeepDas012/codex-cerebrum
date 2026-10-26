@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3954,
-    "last_updated": "2026-10-26T22:56:29.287156+00:00",
-    "total_topics_learned": 3954
+    "total_runs": 3955,
+    "last_updated": "2026-10-26T22:59:39.050118+00:00",
+    "total_topics_learned": 3955
   },
   "entries": [
     {
@@ -188158,6 +188158,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T22:56:29.287138+00:00",
       "run_number": 3954
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-Lookup Tree using atomic bit-array-merging and branch-node-filtering CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set indexing and multi-core parallel membership verification in real-time distributed key-value stores and concurrent caching database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent Bloom-Lookup Tree that integrates probabilistic membership structures within tree branches using atomic operations and hazard pointers. It enables high-throughput multi-core parallel membership verification without lock contention, ideal for modern caching database engines.",
+      "key_points": [
+        "Utilizes atomic bit-array-merging CAS primitives to combine child filter states safely across threads.",
+        "Employs branch-node-filtering to prune search paths early without acquiring locks.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation of dynamic tree nodes.",
+        "Maximizes query throughput in distributed key-value stores by reducing disk or remote lookups for missing keys."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free bit array merging using compare-and-swap operations for concurrent filter updates.",
+        "correct": "bool update_filter(std::atomic<uint64_t>& target, uint64_t mask) {\n    uint64_t current = target.load(std::memory_order_relaxed);\n    while (!target.compare_exchange_weak(current, current | mask, std::memory_order_release, std::memory_order_relaxed)) {}\n    return true;\n}",
+        "wrong": "bool update_filter(uint64_t& target, uint64_t mask) {\n    target |= mask; // Non-atomic update leading to data races\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to use acquire-release memory orderings when modifying shared bit-arrays atomically.",
+        "Failing to protect freed tree nodes with hazard pointers, leading to ABA problems or use-after-free crashes."
+      ],
+      "best_practices": [
+        "Keep bit-array segments aligned to cache lines to minimize false sharing across concurrent CPU cores.",
+        "Batch hazard pointer unlinks and defer reclamation epochs to reduce atomic overhead."
+      ],
+      "when_to_use": "Use when building high-throughput distributed key-value stores or caching systems that require fast, parallel negative lookups across deep hierarchical data structures.",
+      "when_not_to_use": "Avoid when memory usage is tightly constrained or when exact set membership with frequent deletions is mandatory, due to probabilistic false positives and deletion complexities in Bloom filters.",
+      "interview_questions": [
+        {
+          "question": "How do atomic bit-array-merging CAS primitives prevent race conditions during concurrent filter updates?",
+          "answer": "They ensure that bitwise modifications to shared filter words are applied atomically using loop-based compare-and-swap primitives, retrying if another thread modifies the target concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Bloom-Lookup Tree?",
+          "answer": "Hazard pointers protect dynamically freed tree nodes from being prematurely reclaimed by the memory allocator while other threads are still traversing or reading them."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Concurrent Count-Min Sketches",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T22:59:39.050098+00:00",
+      "run_number": 3955
     }
   ]
 }
