@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3908,
-    "last_updated": "2026-10-26T04:57:23.700811+00:00",
-    "total_topics_learned": 3908
+    "total_runs": 3909,
+    "last_updated": "2026-10-26T05:00:33.641871+00:00",
+    "total_topics_learned": 3909
   },
   "entries": [
     {
@@ -185985,6 +185985,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T04:57:23.700789+00:00",
       "run_number": 3908
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and weight-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate quantile estimation and multi-core parallel streaming percentile calculation in real-time APM telemetry monitoring platforms and concurrent performance metrics engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent T-Digest data structure using atomic operations and hazard pointers for real-time quantile tracking. It enables multiple threads to insert streaming metrics and calculate accurate percentiles simultaneously without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic centroid-merging and weight-compressing CAS primitives to manage state transitions across concurrent threads safely.",
+        "Employs hazard pointers for safe memory reclamation of dynamically allocated centroids without blocking reader or writer threads.",
+        "Optimizes accuracy at extreme tails (p99, p999) by allocating smaller centroid compression scales near the distribution boundaries.",
+        "Eliminates global mutexes to sustain high-throughput ingestion of high-frequency APM telemetry metrics across multi-core systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual atomic loop for adding a weighted value into a lock-free T-Digest centroid structure.",
+        "correct": "void insert_centroid(std::atomic<Centroid*>& head, double mean, double weight) {\n    Centroid* old_head = head.load();\n    Centroid* new_head = new Centroid(mean, weight);\n    do {\n        new_head->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_head));\n}",
+        "wrong": "void insert_centroid(std::atomic<Centroid*>& head, double mean, double weight) {\n    // Missing loop and atomic check; causes race conditions and lost updates\n    head.store(new Centroid(mean, weight));\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect read references with hazard pointers, leading to use-after-free race conditions during centroid compression sweeps.",
+        "Applying overly aggressive size compression globally which degrades the tail accuracy of the quantile estimates."
+      ],
+      "best_practices": [
+        "Batch incoming telemetry data locally per-thread before pushing updates to the shared concurrent T-Digest structure to reduce contention.",
+        "Periodically trigger background merging passes to compress centroid lists and maintain bounded memory bounds."
+      ],
+      "when_to_use": "Use when building high-throughput real-time monitoring systems requiring accurate tail-latency (p99/p99.9) percentile calculations across multiple concurrent data streams.",
+      "when_not_to_use": "Avoid when exact percentiles over static datasets are required and simple sorting or exact tree-based structures can fit within memory constraints.",
+      "interview_questions": [
+        {
+          "question": "Why are standard mutex-based T-Digests insufficient for high-throughput APM telemetry systems?",
+          "answer": "Global or coarse-grained locking creates heavy thread contention and serialization bottlenecks when thousands of concurrent threads report metrics simultaneously."
+        },
+        {
+          "question": "How do hazard pointers prevent memory leaks and race conditions during concurrent centroid merging?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading, preventing other threads from reclaiming or freeing those memory addresses until the read reference is released."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers",
+        "Streaming algorithms for quantile estimation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T05:00:33.641849+00:00",
+      "run_number": 3909
     }
   ]
 }
