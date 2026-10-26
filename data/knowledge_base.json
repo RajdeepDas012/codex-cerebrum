@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3906,
-    "last_updated": "2026-10-26T04:51:04.583316+00:00",
-    "total_topics_learned": 3906
+    "total_runs": 3907,
+    "last_updated": "2026-10-26T04:54:13.963013+00:00",
+    "total_topics_learned": 3907
   },
   "entries": [
     {
@@ -185891,6 +185891,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-26T04:51:04.583295+00:00",
       "run_number": 3906
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-matching and child-node-allocating CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string key-value storage in real-time telecommunications gateways and concurrent networking engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Radix Tree utilizing atomic prefix-matching and child-node-allocating Compare-And-Swap (CAS) primitives combined with hazard pointers for memory safety. It enables high-throughput, non-blocking string lookups and prefix searches vital for modern networking and routing workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely modify child pointers and string prefix edges without locks.",
+        "Employs hazard pointers to defer memory reclamation of deleted or split nodes until concurrent reader threads finish accessing them.",
+        "Supports lock-free prefix matching and traversal, making it ideal for fast IP routing table lookups and longest-prefix-matching algorithms.",
+        "Prevents race conditions during concurrent node allocations and child-slot insertions across multiple execution threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child allocation and CAS-based insertion in a concurrent radix tree node.",
+        "correct": "bool insert_child(std::atomic<Node*>& slot, Node* new_node) {\n    Node* expected = nullptr;\n    return slot.compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = slot.load();\nif (current == nullptr) {\n    slot = new_node; // Race condition: non-atomic check-then-act\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect tree traversal paths with hazard pointers, leading to use-after-free vulnerabilities when another thread deletes or splits a node.",
+        "Using weak memory orderings incorrectly during child-node installation, causing memory visibility issues on weakly-ordered architectures like ARM."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer for any child node before reading its internal prefix or child pointers during traversal.",
+        "Keep node splitting and merging logic atomic by packaging pointer updates into single CAS loops or using descriptive state flags."
+      ],
+      "when_to_use": "Use this structure when building high-performance networking routers, IP address lookup engines, or concurrent string key-value stores requiring high read concurrency and low latency.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking data structures provide sufficient throughput and avoid the high implementation complexity of lock-free memory management.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing in a global list, ensuring that memory allocators do not reclaim or reuse nodes until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "What is the primary synchronization challenge when two threads attempt to insert divergent child prefixes into the same Radix Tree node simultaneously?",
+          "answer": "The challenge is managing concurrent modifications to the child pointer array or map, which must be resolved using atomic CAS primitives to ensure only one thread successfully installs its child node while the other retries."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Tries",
+        "Longest Prefix Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T04:54:13.962992+00:00",
+      "run_number": 3907
     }
   ]
 }
