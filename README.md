@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3919** |
-| Last Updated | `2026-10-26T11:03:36.628684+00:00` |
-| Dataset Size | `3919 entries` |
+| Total Topics Learned | **3920** |
+| Last Updated | `2026-10-26T11:06:48.548510+00:00` |
+| Dataset Size | `3920 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2662 |
+| data-structures | 2663 |
 | algorithms | 239 |
 | trading-strategies | 228 |
 | crypto-blockchain | 171 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core parallel probabilistic balancing in real-time in-memory caching platforms and concurrent transactional database systems`
 - `Implementation of a lock-free thread-safe concurrent Cover Tree using atomic distance-scaling and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searches and multi-core parallel machine learning k-NN classification in real-time recommendation platforms and concurrent vector similarity search engines`
 - `Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic distance-partitioning and radius-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest neighbor searches and multi-core parallel similarity indexing in real-time computer vision feature matching platforms and concurrent multimedia retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversing and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent range scans and multi-core parallel page management in real-time transactional database systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core parallel randomized balancing in real-time in-memory caching platforms and concurrent transactional database systems`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and skew-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent task execution engines`
 
 <!-- STATS_END -->
 
