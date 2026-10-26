@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3894,
-    "last_updated": "2026-10-26T00:25:41.156592+00:00",
-    "total_topics_learned": 3894
+    "total_runs": 3895,
+    "last_updated": "2026-10-26T00:28:51.406120+00:00",
+    "total_topics_learned": 3895
   },
   "entries": [
     {
@@ -185324,6 +185324,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T00:25:41.156567+00:00",
       "run_number": 3894
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range queries and multi-core parallel time-interval scheduling in real-time calendar management systems and concurrent interval-based event processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Interval Tree using atomic primitives and hazard pointers. It enables high-throughput overlapping range queries and robust multi-core interval scheduling without traditional locks.",
+      "key_points": [
+        "Utilizes atomic endpoint-updating and max-high-cascading CAS primitives to manage interval modifications concurrently.",
+        "Employs hazard pointer memory reclamation to safely free deleted nodes without blocking active reader threads.",
+        "Maximizes throughput for multi-core parallel time-interval scheduling and overlapping range checks.",
+        "Eliminates global lock contention found in standard synchronized interval trees, reducing latency spikes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection during an atomic interval tree node traversal and query.",
+        "correct": "void* hazard_query(std::atomic<Node*>& root, int low, int high, HazardPointer& hp) {\n    Node* node;\n    do {\n        node = root.load();\n        hp.protect(node);\n    } while (node != root.load());\n    // safe to inspect node->low, node->high, node->max_high\n    return evaluate_overlap(node, low, high);\n}",
+        "wrong": "void* unsafe_query(std::atomic<Node*>& root, int low, int high) {\n    Node* node = root.load();\n    // node could be deleted and freed here by another thread!\n    return evaluate_overlap(node, low, high);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before accessing child pointers, leading to use-after-free bugs.",
+        "Neglecting to cascade max-high values correctly during concurrent insertions, causing missed overlap ranges."
+      ],
+      "best_practices": [
+        "Always acquire and register hazard pointers prior to dereferencing any potentially mutable node pointers.",
+        "Ensure max-high values are updated using atomic compare-and-swap loops to maintain interval invariant properties."
+      ],
+      "when_to_use": "Use when multiple threads frequently query and modify overlapping intervals concurrently under high load.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems where simple fine-grained locking provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the 'max high' invariant in a lock-free interval tree without global locks?",
+          "answer": "By using atomic CAS loops to bubble up max-high values along ancestor paths whenever a node with a higher endpoint is inserted or updated."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures like an interval tree?",
+          "answer": "They prevent the ABA problem and safe-guard memory reclamation by ensuring a thread's actively referenced nodes are not freed by concurrent deleter threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bw-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Segment Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T00:28:51.406098+00:00",
+      "run_number": 3895
     }
   ]
 }
