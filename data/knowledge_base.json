@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3950,
-    "last_updated": "2026-10-26T22:43:49.699452+00:00",
-    "total_topics_learned": 3950
+    "total_runs": 3951,
+    "last_updated": "2026-10-26T22:46:59.664057+00:00",
+    "total_topics_learned": 3951
   },
   "entries": [
     {
@@ -187970,6 +187970,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T22:43:49.699432+00:00",
       "run_number": 3950
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and tower-height-expanding CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookups and multi-core parallel sorted map operations in real-time in-memory caching platforms and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) primitives and multi-level forward pointers to support high-throughput, thread-safe ordered dictionary operations without blocking. By integrating hazard pointers, it ensures safe memory reclamation for deleted nodes, making it ideal for high-performance in-memory databases and caching layers.",
+      "key_points": [
+        "Employs probabilistic multi-level tower structures to achieve $O(\\log n)$ search, insertion, and deletion complexity.",
+        "Uses atomic forward-pointer-linking CAS primitives to safely splice new nodes into multiple levels concurrently.",
+        "Handles height expansion dynamically using thread-safe random level generation coupled with atomic tower height updates.",
+        "Applies hazard pointer memory reclamation to prevent ABA problems and safely free nodes unlinked by concurrent threads."
+      ],
+      "code_example": {
+        "language": "pseudocode",
+        "description": "Demonstrates thread-safe node insertion in a lock-free skip list using atomic CAS operations.",
+        "correct": "function insert(key, value):\n    while true:\n        preds, succs = find(key)\n        newNode = Node(key, value, randomLevel())\n        for level from 0 to newNode.topLevel:\n            newNode.next[level] = succs[level]\n        if preds[0].next[0].CAS(succs[0], newNode):\n            // Link remaining levels\n            completeInsert(newNode, preds, succs)\n            return true",
+        "wrong": "function insert(key, value):\n    lock(globalMutex)\n    // Modifying pointers without CAS in a lock-free context leads to race conditions\n    skipList.standardInsert(key, value)\n    unlock(globalMutex)"
+      },
+      "common_mistakes": [
+        "Failing to protect unlinked nodes with hazard pointers, leading to premature deallocation and segmentation faults in reader threads.",
+        "Neglecting to handle partially linked nodes inserted by halted or delayed threads during traversal."
+      ],
+      "best_practices": [
+        "Validate pointer consistency across all levels during search operations to gracefully handle concurrent modifications.",
+        "Reuse hazard pointer slots efficiently to minimize thread synchronization overhead during high-frequency lookups."
+      ],
+      "when_to_use": "Use when building high-concurrency sorted maps, in-memory databases, or real-time caching systems requiring frequent point lookups and range queries under heavy contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory architectures where the pointer overhead per node and hazard pointer tracking add unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How does a lock-free skip list avoid the locking overhead of traditional balanced trees while maintaining thread safety?",
+          "answer": "It uses atomic CAS operations to modify forward pointers at individual levels, allowing multiple threads to modify distinct parts of the list concurrently without global locks."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a concurrent skip list?",
+          "answer": "They prevent the ABA problem and ensure that memory reclaimed by one thread while being unlinked is not freed until all concurrently traversing reader threads have released their references."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Hash Tables",
+        "Concurrent B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T22:46:59.664039+00:00",
+      "run_number": 3951
     }
   ]
 }
