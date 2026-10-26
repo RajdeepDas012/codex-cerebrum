@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3904,
-    "last_updated": "2026-10-26T04:44:45.622154+00:00",
-    "total_topics_learned": 3904
+    "total_runs": 3905,
+    "last_updated": "2026-10-26T04:47:54.814846+00:00",
+    "total_topics_learned": 3905
   },
   "entries": [
     {
@@ -185797,6 +185797,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T04:44:45.622129+00:00",
       "run_number": 3904
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted record retrieval in real-time transactional database systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free B+ Tree optimized for modern multi-core processors. By leveraging atomic primitives (CAS) for leaf-sibling linking and node-merging, combined with hazard pointers for safe memory reclamation, it enables high-throughput, non-blocking range scans and sorted record retrieval essential for real-time transactional systems.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage structural modifications without coarse-grained locking.",
+        "Maintains concurrent leaf-sibling pointers to facilitate efficient, lock-free forward and backward range scans.",
+        "Employs hazard pointers to track thread-local active references and safely reclaim memory of deleted nodes.",
+        "Balances high-throughput parallel record retrieval with strict consistency for real-time database transactions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-merging and CAS-based pointer updates for concurrent B+ Tree nodes.",
+        "correct": "bool CASUpdateChild(std::atomic<Node*>& child_ptr, Node* expected, Node* desired) {\n    return child_ptr.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool BadUpdateChild(Node*& child_ptr, Node* desired) {\n    child_ptr = desired; // Non-atomic update prone to data races in concurrent B+ Trees\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted leaf and internal nodes with hazard pointers, leading to use-after-free bugs during concurrent range scans.",
+        "Neglecting the ABA problem during structural modification operations like leaf splitting and node merging."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer memory reclamation schemes specifically tailored for hierarchical tree structures.",
+        "Keep critical sections minimal by performing split and merge logic out-of-place before applying a single atomic CAS pointer swap."
+      ],
+      "when_to_use": "Use when building high-performance storage engines, in-memory databases, or real-time analytics platforms requiring massive parallel range queries and sorted data access.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler systems where the immense implementation complexity of lock-free tree synchronization outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+ Tree when a node is deleted during structural merging?",
+          "answer": "Hazard pointers are used to register references to nodes currently being accessed by threads. A node can only be safely reclaimed and freed to the memory allocator once no active hazard pointers reference it."
+        },
+        {
+          "question": "Why are leaf-sibling pointers crucial for lock-free B+ Tree range scans?",
+          "answer": "They allow threads to traverse horizontally across leaves without re-traversing the root and internal nodes, avoiding recursive locking bottlenecks and maintaining thread safety during concurrent modifications."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent B-Trees and Massively Parallel Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T04:47:54.814825+00:00",
+      "run_number": 3905
     }
   ]
 }
