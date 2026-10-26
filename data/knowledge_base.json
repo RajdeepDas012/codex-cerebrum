@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3910,
-    "last_updated": "2026-10-26T05:03:42.993703+00:00",
-    "total_topics_learned": 3910
+    "total_runs": 3911,
+    "last_updated": "2026-10-26T05:06:52.441300+00:00",
+    "total_topics_learned": 3911
   },
   "entries": [
     {
@@ -186079,6 +186079,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-26T05:03:42.993680+00:00",
       "run_number": 3910
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer-linking and fractional-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer routing and multi-core parallel approximate name service lookups in real-time decentralized cloud platforms and concurrent distributed hash tables",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip Graph leveraging atomic peer-pointer-linking and fractional-cascading Compare-And-Swap (CAS) operations, secured by hazard pointers. It enables high-throughput peer-to-peer routing and parallel approximate name service lookups without traditional coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic peer-pointer-linking CAS primitives to dynamically insert and connect nodes across multiple hierarchical levels without global locks.",
+        "Employs fractional-cascading principles via atomic updates to optimize multi-level neighbor traversal and search time complexities.",
+        "Integrates hazard pointer memory reclamation to safely manage retired memory nodes in highly concurrent multi-threaded environments.",
+        "Provides deterministic log-sized lookup structures ideal for decentralized distributed hash tables and real-time cloud name services."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS and hazard pointer protection for skip graph level traversal",
+        "correct": "bool link_peer_level(SkipNode* node, SkipNode* neighbor, int level) {\n    HazardPointerGuard guard(hazard_mgr);\n    while (true) {\n        SkipNode* old_next = node->next[level].load(std::memory_order_acquire);\n        guard.protect(old_next);\n        neighbor->next[level].store(old_next, std::memory_order_relaxed);\n        if (node->next[level].compare_exchange_weak(old_next, neighbor, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool link_peer_level(SkipNode* node, SkipNode* neighbor, int level) {\n    node->next[level] = neighbor; // Missing CAS synchronization and hazard pointer protection\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to ABA problems and use-after-free crashes.",
+        "Updating skip graph levels top-down without considering atomic ordering consistency across distributed search paths."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing any neighbor or peer pointers during graph traversal.",
+        "Design atomic state flags for nodes to ensure that incomplete multi-level insertions are safely bypassed by concurrent readers."
+      ],
+      "when_to_use": "When building decentralized peer-to-peer routing layers or concurrent distributed hash tables requiring scalable name service lookups under intense multi-core contention.",
+      "when_not_to_use": "For simple single-threaded applications or small-scale datasets where standard linked lists or traditional hash maps offer superior cache locality and simplicity.",
+      "interview_questions": [
+        {
+          "question": "How does a Skip Graph differ from a standard Skip List in a concurrent environment?",
+          "answer": "A Skip Graph maintains membership vectors and allows peer-to-peer routing based on arbitrary search keys across multiple nodes, whereas a Skip List relies strictly on a linear total ordering of elements with probabilistic vertical towers."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free skip graphs using CAS operations?",
+          "answer": "Hazard pointers prevent other threads from prematurely freeing memory of nodes that are actively being traversed or manipulated during atomic pointer updates, avoiding use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Distributed Hash Tables",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-26T05:06:52.441278+00:00",
+      "run_number": 3911
     }
   ]
 }
