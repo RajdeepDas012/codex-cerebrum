@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3914** |
-| Last Updated | `2026-10-26T05:16:22.244728+00:00` |
-| Dataset Size | `3914 entries` |
+| Total Topics Learned | **3915** |
+| Last Updated | `2026-10-26T05:19:31.216831+00:00` |
+| Dataset Size | `3915 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2657 |
+| data-structures | 2658 |
 | algorithms | 239 |
 | trading-strategies | 228 |
 | crypto-blockchain | 171 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and skew-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent task execution engines`
 - `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and child-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent task execution engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel graph algorithm execution in real-time network routing platforms and concurrent optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic node-linking and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent discrete event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer-linking and fractional-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer routing and multi-core parallel approximate name service lookups in real-time decentralized cloud platforms and concurrent distributed hash tables`
-- `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel pattern matching in real-time text analysis platforms and concurrent bioinformatics search engines`
 
 <!-- STATS_END -->
 
