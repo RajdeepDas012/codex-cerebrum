@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4038,
-    "last_updated": "2026-10-27T23:49:11.809389+00:00",
-    "total_topics_learned": 4038
+    "total_runs": 4039,
+    "last_updated": "2026-10-27T23:52:22.120704+00:00",
+    "total_topics_learned": 4039
   },
   "entries": [
     {
@@ -192139,6 +192139,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T23:49:11.809366+00:00",
       "run_number": 4038
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic refit-propagating and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection testing and multi-core parallel spatial collision detection in real-time computer graphics rendering platforms and concurrent physics simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) enables high-throughput spatial queries and ray tracing across multiple CPU cores without lock contention. By leveraging atomic refitting, tree rotation CAS primitives, and hazard pointers, it ensures safe dynamic updates and memory reclamation during real-time physics simulations and graphics rendering.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for refitting bounding volumes and executing structural tree rotations safely across concurrent threads.",
+        "Employs hazard pointers to safely manage dynamic node allocations and prevent premature memory deallocation during parallel refit and traversal operations.",
+        "Accelerates real-time ray-triangle intersection testing and spatial collision detection in multi-core graphic rendering and physics engine workloads.",
+        "Eliminates global lock bottlenecks, allowing high scalability and contention-free traversal for dynamic scenes with shifting geometry."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual lock-free node refit propagation using atomic pointer loading and CAS primitives with hazard pointers.",
+        "correct": "void refit_node_atomically(BVHNode* node, const BoundingBox& new_box, HazardPointerList& hp_list, std::atomic<int>& thread_id) {\n    HazardPointer* hp = hp_list.acquire(thread_id);\n    while (node != nullptr) {\n        hp->protect(node);\n        BoundingBox old_box = node->bounding_box.load();\n        BoundingBox expanded_box = old_box.merge(new_box);\n        if (node->bounding_box.compare_exchange_weak(old_box, expanded_box)) {\n            node = node->parent;\n        } else {\n            std::this_thread::yield();\n        }\n    }\n    hp_list.release(hp);\n}",
+        "wrong": "void refit_node_unsafe(BVHNode* node, const BoundingBox& new_box) {\n    while (node != nullptr) {\n        node->bounding_box = node->bounding_box.merge(new_box);\n        node = node->parent;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, leading to use-after-free bugs when another thread restructures the tree.",
+        "Using naive lock-based tree updates that degrade performance and cause severe contention under heavy multi-core simulation loads."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to manage node lifecycle safety safely during parallel updates.",
+        "Keep atomic sections small and utilize bounded retry loops with exponential backoff or thread yielding to mitigate CAS contention."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or physics engines requiring high-frequency dynamic object updates and collision detection across many CPU cores.",
+      "when_not_to_use": "Avoid when geometries are completely static, as simpler pre-built static BVHs offer better traversal efficiency without synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during concurrent node refitting in a lock-free BVH?",
+          "answer": "By using atomic CAS operations to update bounding boxes and hazard pointers to safely manage node memory during parallel upward propagation."
+        },
+        {
+          "question": "Why are traditional locking mechanisms suboptimal for dynamic BVHs in real-time ray tracing?",
+          "answer": "Global or coarse-grained locks introduce high contention and pipeline stalls, severely limiting multi-core scaling during heavy ray traversal and geometry updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-List",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Spatial Partitioning Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T23:52:22.120686+00:00",
+      "run_number": 4039
     }
   ]
 }
