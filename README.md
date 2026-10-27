@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3968** |
-| Last Updated | `2026-10-27T01:56:04.515857+00:00` |
-| Dataset Size | `3968 entries` |
+| Total Topics Learned | **3969** |
+| Last Updated | `2026-10-27T01:57:18.537149+00:00` |
+| Dataset Size | `3969 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2705 |
+| data-structures | 2706 |
 | algorithms | 242 |
 | trading-strategies | 228 |
 | crypto-blockchain | 173 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-splitting and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing table lookups and multi-core parallel IP packet classification in real-time software-defined networking platforms and concurrent packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted record retrieval in real-time enterprise database management systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-advancing and ring-buffer-wrapping CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer messaging and multi-core parallel work-stealing queues in real-time trading platforms and concurrent event-driven server engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel prefix sum updates in real-time analytics platforms and concurrent stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-combining and branch-root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core parallel blockchain state validation in real-time distributed ledger platforms and concurrent trustless verification engines`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and root-coalescing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent record lookups and multi-core parallel dynamic sorting in real-time transactional database systems and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 
