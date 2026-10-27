@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3994,
-    "last_updated": "2026-10-27T07:48:25.775810+00:00",
-    "total_topics_learned": 3994
+    "total_runs": 3995,
+    "last_updated": "2026-10-27T07:51:35.675037+00:00",
+    "total_topics_learned": 3995
   },
   "entries": [
     {
@@ -190052,6 +190052,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T07:48:25.775789+00:00",
       "run_number": 3994
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and key-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core parallel sorted record retrieval in real-time enterprise database management systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent B-Tree provides high-throughput sorted record management across multiple execution threads without coarse-grained locking. By leveraging atomic node-splitting and key-merging CAS primitives along with hazard pointer memory management, it safely scales multi-core database workloads.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node navigation, splitting, and merging.",
+        "Employs hazard pointers to securely manage memory reclamation of deleted or split tree nodes without premature freeing.",
+        "Ensures balanced multi-way tree properties under high-contention concurrent inserts and deletes.",
+        "Optimizes cache locality and parallel traversal for large-scale sorted range queries and record retrieval."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and hazard pointer protection during concurrent B-Tree node navigation.",
+        "correct": "bool navigate_and_protect(std::atomic<Node*>& child_ptr, HazardPointerRecord* hp_rec) {\n    Node* node;\n    do {\n        node = child_ptr.load(std::memory_order_acquire);\n        hp_rec->protect(node);\n    } while (child_ptr.load(std::memory_order_relaxed) != node);\n    return node != nullptr;\n}",
+        "wrong": "Node* node = child_ptr.load();\n// Missing hazard pointer protection and validation loop leads to use-after-free during concurrent splits."
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing down split-in-progress child pointers.",
+        "Ignoring ABA problems when executing compare-and-swap operations on volatile node pointers during restructuring."
+      ],
+      "best_practices": [
+        "Stricly couple hazard pointer registration with pointer load sequences to prevent concurrent reclamation races.",
+        "Design explicit transactional state flags within nodes to coordinate multi-step node splits and merges safely."
+      ],
+      "when_to_use": "Ideal for high-concurrency enterprise database engines and transactional storage systems requiring frequent sorted range queries and high read/write throughput.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-concurrency environments where simpler locking or standard lock-based B-Trees provide better baseline performance and lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors during lock-free B-Tree node restructuring?",
+          "answer": "Hazard pointers explicitly mark nodes as actively accessed by specific threads before pointer reads, deferring memory reclamation until no thread registers the node as a hazard."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic node splits in a lock-free B-Tree?",
+          "answer": "Coordinating the insertion of new child pointers into the parent node atomically while other threads are simultaneously searching or modifying the same subtree region."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Transactional Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T07:51:35.675018+00:00",
+      "run_number": 3995
     }
   ]
 }
