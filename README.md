@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **3981** |
-| Last Updated | `2026-10-27T02:16:25.822820+00:00` |
-| Dataset Size | `3981 entries` |
+| Total Topics Learned | **3982** |
+| Last Updated | `2026-10-27T02:18:20.282960+00:00` |
+| Dataset Size | `3982 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2718 |
+| data-structures | 2719 |
 | algorithms | 242 |
 | trading-strategies | 228 |
 | crypto-blockchain | 173 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-cas and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted map operations in real-time in-memory databases and concurrent caching storage engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and interval-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core parallel schedule overlapping analysis in real-time calendar management platforms and concurrent reservation engine systems`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search operations and multi-core parallel sorted map maintenance in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Quadtree using atomic quadrant-splitting and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial point indexing and multi-core parallel dynamic collision detection in real-time gaming server platforms and concurrent simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and skewed-node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event-driven simulation in real-time gaming platforms and concurrent task scheduling engines`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic min-pointer-linking and multipass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent task execution engines`
 
 <!-- STATS_END -->
 
