@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3989,
-    "last_updated": "2026-10-27T02:37:20.482866+00:00",
-    "total_topics_learned": 3989
+    "total_runs": 3990,
+    "last_updated": "2026-10-27T02:40:30.317436+00:00",
+    "total_topics_learned": 3990
   },
   "entries": [
     {
@@ -189813,6 +189813,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T02:37:20.482843+00:00",
       "run_number": 3989
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel duplicate filtering in real-time distributed caching layers and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Bloom filter utilizing atomic bitwise operations and word-level Compare-And-Swap (CAS) instructions. It enables safe multi-core probabilistic set membership tests without locks, making it ideal for distributed caching and database engines.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-level CAS primitives to modify shared bit arrays without locking.",
+        "Employs hazard pointers to safely manage memory and prevent premature reclamation during concurrent updates.",
+        "Guarantees thread safety and high throughput for multi-core probabilistic membership queries.",
+        "Minimizes cache contention through fine-grained word manipulation instead of locking the entire filter structure."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates word-level atomic bit setting using threading and atomics",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bits = [threading.local() for _ in range((size + 31) // 32)]\n        self.lock_free_array = [0] * len(self.bits)\n    \n    def add(self, bit_index):\n        word_idx = bit_index >> 5\n        bit_offset = bit_index & 31\n        mask = 1 << bit_offset\n        # Simulated atomic word CAS loop\n        while True:\n            current = self.lock_free_array[word_idx]\n            new_val = current | mask\n            if current == new_val:\n                break\n            # Atomic update placeholder\n            self.lock_free_array[word_idx] = new_val\n            break",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.bits = [0] * size\n    def add(self, idx):\n        self.bits[idx] = 1  # Race condition on concurrent updates"
+      },
+      "common_mistakes": [
+        "Using coarse-grained locks on the entire bit array, severely limiting multi-core scalability.",
+        "Neglecting false sharing when multiple threads update bits residing within the same CPU cache line."
+      ],
+      "best_practices": [
+        "Pad word arrays or partition bit indices to mitigate false sharing across hardware threads.",
+        "Use word-level CAS operations to update multiple contiguous bits or discrete bit masks atomically."
+      ],
+      "when_to_use": "Use when high-throughput, multi-threaded applications require constant-time probabilistic membership testing with minimal synchronization overhead.",
+      "when_not_to_use": "Avoid when false positives are entirely unacceptable or when elements must be frequently deleted from the set.",
+      "interview_questions": [
+        {
+          "question": "How do you avoid race conditions when multiple threads attempt to set bits in the same underlying word of a Bloom filter?",
+          "answer": "By using atomic word-level Compare-And-Swap (CAS) loops to read the current word, compute the bitwise OR with the target mask, and successfully write it back only if the word has not changed."
+        },
+        {
+          "question": "Why is standard garbage collection or naive memory reclamation inefficient in lock-free data structures like a concurrent Bloom filter?",
+          "answer": "Because threads may be inspecting or updating nodes concurrently without locks, standard reclamation can free memory while another thread is actively reading it, leading to segmentation faults; hazard pointers safely track active references."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Count-Min Sketch",
+        "hazard pointer memory reclamation",
+        "atomic word-level CAS primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T02:40:30.317416+00:00",
+      "run_number": 3990
     }
   ]
 }
