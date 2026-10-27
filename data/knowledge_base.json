@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4036,
-    "last_updated": "2026-10-27T23:42:45.222642+00:00",
-    "total_topics_learned": 4036
+    "total_runs": 4037,
+    "last_updated": "2026-10-27T23:45:59.538911+00:00",
+    "total_topics_learned": 4037
   },
   "entries": [
     {
@@ -192044,6 +192044,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T23:42:45.222621+00:00",
       "run_number": 4036
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-cas-linking primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel shortest-path graph calculations in real-time route optimization platforms and concurrent network routing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Fibonacci Heap designed for multi-threaded environments. It leverages atomic primitives like CAS and hazard pointers to safely manage node links and memory without traditional mutex bottlenecks, enabling high-performance priority updates and graph traversals.",
+      "key_points": [
+        "Utilizes atomic min-pointer-updating and node-CAS-linking primitives to allow multiple threads to modify heap roots and child lists simultaneously.",
+        "Employs hazard pointer memory reclamation to securely free nodes deleted during extract-min operations without risking use-after-free bugs.",
+        "Supports amortized $O(1)$ decrease-key and insert operations crucial for fast multi-core Dijkstra's algorithm variants.",
+        "Maintains structural integrity across concurrent structural modifications (such as cascading cuts and root list consolidations) using fine-grained synchronization."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS for concurrent heap insertion.",
+        "correct": "bool link_node(std::atomic<Node*>& parent_child_ptr, Node* new_node) {\n    Node* current = parent_child_ptr.load();\n    do {\n        new_node->right = current;\n    } while (!parent_child_ptr.compare_exchange_weak(current, new_node));\n    return true;\n}",
+        "wrong": "bool link_node(Node* parent, Node* new_node) {\n    parent->child = new_node; // Missing synchronization causes race conditions in multi-threaded heaps\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes targeted for root-list consolidation with hazard pointers, leading to memory corruption.",
+        "Attempting to maintain strict sequential cascading cut guarantees without atomic state rollbacks, resulting in lost updates."
+      ],
+      "best_practices": [
+        "Batch atomic reference updates where possible to minimize CAS retry contention under heavy thread load.",
+        "Integrate epoch-based or hazard-pointer-based reclamation carefully to prevent memory leaks during rapid extract-min cycles."
+      ],
+      "when_to_use": "Use when scaling parallel graph shortest-path algorithms or real-time routing engines where priority queue throughput is a primary bottleneck.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler architectures where the heavy synchronization overhead of lock-free primitives outweighs their parallelism benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation for nodes removed during a concurrent extract-min operation in a lock-free Fibonacci Heap?",
+          "answer": "By employing hazard pointers to register threads' active traversal nodes, deferring actual node deallocation until no active thread holds a reference to the target node."
+        },
+        {
+          "question": "Why are standard mutex-based locks problematic when implementing Fibonacci Heaps for multi-core Dijkstra's algorithm?",
+          "answer": "Mutexes cause severe thread contention during frequent decrease-key and extract-min operations, neutralizing the parallel execution gains across multi-core processors."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip-List",
+        "hazard pointer memory reclamation",
+        "concurrent priority queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T23:45:59.538894+00:00",
+      "run_number": 4037
     }
   ]
 }
