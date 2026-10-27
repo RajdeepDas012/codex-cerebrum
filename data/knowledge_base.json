@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4035,
-    "last_updated": "2026-10-27T20:42:55.055683+00:00",
-    "total_topics_learned": 4035
+    "total_runs": 4036,
+    "last_updated": "2026-10-27T23:42:45.222642+00:00",
+    "total_topics_learned": 4036
   },
   "entries": [
     {
@@ -191997,6 +191997,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T20:42:55.055662+00:00",
       "run_number": 4035
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-splicing CAS primitives alongside epoch-based memory reclamation for high-throughput ordered key-value insertions and multi-core parallel range queries in real-time in-memory caching systems and concurrent transactional database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a lock-free, concurrent skip-list using atomic compare-and-swap (CAS) primitives and epoch-based memory reclamation. It enables high-throughput ordered key-value insertions and parallel range queries without thread blocking, making it ideal for high-performance in-memory caches and transactional databases.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-linking and node-splicing CAS primitives to modify multi-level skip-list structures safely across threads without locks.",
+        "Employs epoch-based memory reclamation (EMR) to safely free deleted nodes only after all concurrent threads have exited the active epoch.",
+        "Maintains probabilistic logarithmic search and insertion performance O(log n) while scaling efficiently across multiple CPU cores.",
+        "Supports lock-free concurrent range queries by navigating lower-level forward pointers while structural modifications are ongoing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion into a lock-free skip-list level using compare-and-swap.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level].store(curr, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(curr, newNode, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool insert_level_wrong(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level] = curr;\n    pred->next[level] = newNode;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark deleted nodes with a logical deletion bit, leading to inconsistent structural updates and race conditions during concurrent traversal.",
+        "Improper memory reclamation order, causing use-after-free bugs when another thread reads a pointer to a node being deallocated."
+      ],
+      "best_practices": [
+        "Always mark nodes as logically deleted at the base level before attempting physical pointer splicing at higher levels.",
+        "Integrate epoch-based or hazard pointer reclamation mechanisms to safely defer physical node deallocation until references drop."
+      ],
+      "when_to_use": "Use when building high-concurrency in-memory data stores, caching layers, or transactional database engines requiring sorted data access with heavy multi-threaded workloads.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of probabilistic multi-level pointers and safe memory reclamation outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing atomic pointer updates in a lock-free skip-list?",
+          "answer": "By using tagged pointers (combining the memory address with a version counter) or by leveraging epoch-based memory reclamation which delays node reuse."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical deletion in a concurrent skip-list?",
+          "answer": "Logical deletion sets a bit indicating the node is removed, preventing other threads from inserting new nodes immediately after a deleted predecessor during concurrent traversals."
+        }
+      ],
+      "related_topics": [
+        "Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Bx-Tree",
+        "Atomic Compare-And-Swap Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T23:42:45.222621+00:00",
+      "run_number": 4036
     }
   ]
 }
