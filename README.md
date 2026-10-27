@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4012** |
-| Last Updated | `2026-10-27T14:37:39.487426+00:00` |
-| Dataset Size | `4012 entries` |
+| Total Topics Learned | **4013** |
+| Last Updated | `2026-10-27T14:40:56.554498+00:00` |
+| Dataset Size | `4013 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2747 |
+| data-structures | 2748 |
 | algorithms | 243 |
 | trading-strategies | 228 |
 | crypto-blockchain | 174 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value insertions and multi-core parallel range queries in real-time in-memory caching systems and concurrent transactional database engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core parallel priority-ordered key-value storage in real-time in-memory caching systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Scs-Tree using atomic string-compression and node-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel pattern matching in real-time document search platforms and concurrent log analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic parent-pointer-compression and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence relation querying and multi-core parallel connected components analysis in real-time social network graph partitioning platforms and concurrent compiler type inference engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel job scheduling in real-time task execution platforms and concurrent job processing engines`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time simulation platforms and concurrent task execution engines`
 
 <!-- STATS_END -->
 
