@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4015,
-    "last_updated": "2026-10-27T14:47:26.201295+00:00",
-    "total_topics_learned": 4015
+    "total_runs": 4016,
+    "last_updated": "2026-10-27T14:50:47.597850+00:00",
+    "total_topics_learned": 4016
   },
   "entries": [
     {
@@ -191047,6 +191047,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:47:26.201277+00:00",
       "run_number": 4015
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSH (Locality-Sensitive Hashing) Index using atomic bucket-merging and hash-table-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor searches and multi-core parallel similarity matching in real-time recommendation systems and concurrent vector database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Locality-Sensitive Hashing (LSH) index, leveraging atomic operations like bucket-merging and resizing CAS primitives alongside hazard pointers. It enables high-throughput approximate nearest neighbor (ANN) searches and multi-core parallel similarity matching without thread contention. This pattern is crucial for scalable vector databases and real-time recommendation engines.",
+      "key_points": [
+        "Utilizes atomic bucket-merging and table-resizing CAS primitives to eliminate mutual exclusion locks during dynamic index growth.",
+        "Employs hazard pointer memory reclamation to safely manage deleted or reallocated hash buckets across concurrent reader and writer threads.",
+        "Maximizes throughput for approximate nearest neighbor searches through multi-core parallel similarity matching on high-dimensional vectors.",
+        "Balances load distribution across buckets to prevent hotspots during concurrent insertion and query workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual thread-safe bucket insertion pattern for a concurrent LSH index using atomic variables and safe pointer management.",
+        "correct": "import threading\nfrom atomicwrites import atomic_write\n\nclass ConcurrentLSHBucket:\n    def __init__(self):\n        self.lock_free_head = None\n        self.version = threading.local()\n        \n    def insert_vector(self, vector_id, embedding):\n        # Conceptual lock-free CAS loop representation\n        while True:\n            old_head = self.lock_free_head\n            new_node = {'id': vector_id, 'data': embedding, 'next': old_head}\n            # Simulated atomic CAS operation on bucket head pointer\n            if self._compare_and_swap(old_head, new_node):\n                break\n                \n    def _compare_and_swap(self, expected, desired):\n        # Placeholder for actual atomic CAS primitive\n        if self.lock_free_head == expected:\n            self.lock_free_head = desired\n            return True\n        return False",
+        "wrong": "class UnsafeLSHBucket:\n    def __init__(self):\n        self.head = None\n        self.mutex = threading.Lock()\n\n    def insert_vector(self, vector_id, embedding):\n        with self.mutex:\n            # Using coarse-grained locks defeats the lock-free high-throughput design\n            self.head = {'id': vector_id, 'data': embedding, 'next': self.head}"
+      },
+      "common_mistakes": [
+        "Relying on heavy mutexes or spinlocks for bucket modifications, which destroys parallel scaling in high-core systems.",
+        "Failing to implement proper memory reclamation like hazard pointers or epoch-based reclamation, leading to memory leaks or use-after-free bugs during resizing."
+      ],
+      "best_practices": [
+        "Use hazard pointers to track threads actively reading specific hash buckets before executing atomic resize or bucket-merge operations.",
+        "Design hash projection functions to evenly distribute high-dimensional vectors, minimizing collision clustering and CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-throughput vector databases, real-time recommendation platforms, or similarity search engines that require low-latency approximate nearest neighbor queries under heavy concurrent multi-core loads.",
+      "when_not_to_use": "Avoid when exact nearest neighbor guarantees are strictly required, dataset sizes are small enough to fit within single-threaded memory structures, or hardware lacks robust atomic CAS primitives.",
+      "interview_questions": [
+        {
+          "question": "How do atomic bucket-merging and table-resizing CAS primitives prevent race conditions in a lock-free LSH index?",
+          "answer": "They allow threads to attempt updates or structural transitions on buckets and tables atomically. If another thread modifies the pointer first, the CAS fails, triggering a retry without blocking."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a lock-free LSH index with dynamic resizing?",
+          "answer": "Hazard pointers protect readers by registering which bucket nodes are currently in use, preventing other threads from freeing or reallocating that memory until the read operation completes."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip-Lists",
+        "Hazard Pointer Memory Reclamation",
+        "Approximate Nearest Neighbor Vector Search"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:50:47.597831+00:00",
+      "run_number": 4016
     }
   ]
 }
