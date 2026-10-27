@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4016,
-    "last_updated": "2026-10-27T14:50:47.597850+00:00",
-    "total_topics_learned": 4016
+    "total_runs": 4017,
+    "last_updated": "2026-10-27T14:54:03.147301+00:00",
+    "total_topics_learned": 4017
   },
   "entries": [
     {
@@ -191094,6 +191094,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:50:47.597831+00:00",
       "run_number": 4016
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-optimization CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element retrieval and multi-core parallel dynamic restructuring in real-time in-memory caching platforms and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "Building a lock-free concurrent Splay Tree enables high-throughput self-adjusting binary search tree operations where frequently accessed nodes move toward the root via atomic Compare-And-Swap (CAS) primitives. Utilizing hazard pointers ensures safe memory reclamation without blocking threads, making it ideal for multi-core real-time caching platforms and database engines.",
+      "key_points": [
+        "Leverages atomic root-rotation and self-optimization CAS primitives to restructure the tree dynamically without coarse-grained locking.",
+        "Employs hazard pointer memory reclamation to safely manage deleted or rotated nodes in a multi-threaded, lock-free environment.",
+        "Optimizes access times for skewed workloads by bringing frequently retrieved keys closer to the root node concurrently.",
+        "Mitigates memory safety hazards like ABA problems and use-after-free bugs common in lock-free pointer manipulations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and hazard pointer protection during a lock-free tree restructuring operation",
+        "correct": "bool compare_and_set_child(std::atomic<Node*>& parent_ptr, Node* old_node, Node* new_node, HazardPointer& hp) {\n    hp.protect(old_node);\n    return parent_ptr.compare_exchange_strong(old_node, new_node);\n}",
+        "wrong": "Node* child = parent_ptr.load();\n// Missing hazard protection and atomic CAS step\nparent_ptr = new_node;\ndelete child;"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free conditions.",
+        "Attempting full multi-node splay operations atomically in a single CAS, which is practically impossible due to pointer-width constraints."
+      ],
+      "best_practices": [
+        "Break complex multi-node splay rotations down into smaller, atomic, two-node local restructuring steps.",
+        "Stash retired nodes in thread-local deferred reclamation lists until no hazard pointers reference them."
+      ],
+      "when_to_use": "Use this when workloads exhibit high temporal locality (hot keys) and require extreme concurrency without lock contention in in-memory caching systems.",
+      "when_not_to_use": "Avoid when workloads are uniformly distributed or when strict deterministic worst-case balance guarantees are required over self-optimization.",
+      "interview_questions": [
+        {
+          "question": "Why is implementing a complete multi-step splay operation using a single CAS instruction impractical?",
+          "answer": "CAS instructions are typically limited to single pointer-width or double-pointer-width memory locations, whereas a splay operation modifies multiple pointers across several hierarchical levels simultaneously."
+        },
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent tree rotations?",
+          "answer": "Hazard pointers explicitly publish references to nodes that threads are currently inspecting, preventing memory allocators from recycling or freeing those nodes until all thread references are dropped."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip-Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Treaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:54:03.147282+00:00",
+      "run_number": 4017
     }
   ]
 }
