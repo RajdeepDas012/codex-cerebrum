@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4032,
-    "last_updated": "2026-10-27T20:33:23.488266+00:00",
-    "total_topics_learned": 4032
+    "total_runs": 4033,
+    "last_updated": "2026-10-27T20:36:34.392162+00:00",
+    "total_topics_learned": 4033
   },
   "entries": [
     {
@@ -191855,6 +191855,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T20:33:23.488246+00:00",
       "run_number": 4032
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and node-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-version concurrency control and multi-core parallel key-value indexing in real-time enterprise database systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of lock-free Bx-Trees tailored for high-throughput multi-version concurrency control (MVCC). It employs atomic compare-and-swap (CAS) primitives for leaf merging and node redistribution, combined with hazard pointers to ensure safe memory reclamation under intense multi-core contention.",
+      "key_points": [
+        "Utilizes atomic CAS primitives for lock-free structural modifications including leaf merging and node redistribution.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs during concurrent node modifications and deletions.",
+        "Supports multi-version concurrency control (MVCC) to enable non-blocking reads alongside concurrent writes in transactional engines.",
+        "Optimizes multi-core parallel key-value indexing for enterprise database systems requiring extreme concurrency and low latency."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for node redistribution in a lock-free Bx-Tree",
+        "correct": "bool redistribute_nodes(std::atomic<Node*>& parent, Node* old_node, Node* new_node) {\n    Node* current = parent.load(std::memory_order_acquire);\n    while (!parent.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        // retry loop\n    }\n    return true;\n}",
+        "wrong": "bool redistribute_nodes(Node* parent, Node* old_node, Node* new_node) {\n    parent->child = new_node; // Missing atomic CAS and memory ordering guarantees\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to premature memory deallocation and race conditions.",
+        "Using weak memory orderings without proper synchronizations during pointer updates, causing stale reads in MVCC transactions."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to traversing or reading nodes that are subject to concurrent modifications or deletions.",
+        "Design tree nodes with version stamps or epoch counters to safely detect structural changes during multi-step CAS operations.",
+        "Thoroughly test concurrent insert, delete, and MVCC read workloads under high thread counts using thread sanitizers."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded enterprise databases or transactional storage engines requiring intensive MVCC and low-latency concurrent key-value lookups.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or memory-constrained embedded systems where the overhead of hazard pointers and lock-free primitives outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing globally, ensuring that a memory block cannot be reclaimed or freed by any thread until all readers have un-registered their hazard pointers."
+        },
+        {
+          "question": "Why is multi-version concurrency control (MVCC) harder to implement in a lock-free Bx-Tree compared to a standard mutex-backed tree?",
+          "answer": "Because multiple threads can simultaneously update, split, or merge nodes without global locks, managing historical version chains and visibility checks requires careful atomic state transitions and snapshot isolation protocols."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Multi-Version Concurrency Control (MVCC)",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T20:36:34.392142+00:00",
+      "run_number": 4033
     }
   ]
 }
