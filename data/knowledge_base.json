@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4017,
-    "last_updated": "2026-10-27T14:54:03.147301+00:00",
-    "total_topics_learned": 4017
+    "total_runs": 4018,
+    "last_updated": "2026-10-27T14:57:15.521488+00:00",
+    "total_topics_learned": 4018
   },
   "entries": [
     {
@@ -191141,6 +191141,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:54:03.147282+00:00",
       "run_number": 4017
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-expansion and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range queries in real-time geographic information systems and concurrent location-based service engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure implements a concurrent R-Tree using atomic CAS primitives for bounding box expansions and node splits, coupled with hazard pointers to ensure safe memory reclamation. It enables high-throughput spatial indexing and multi-core parallel geometric queries without global locks. This is critical for scaling real-time geographic systems and location-based services under heavy concurrent workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage bounding-box expansions and structural node splits safely across multiple threads without explicit mutual exclusion locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe-free race conditions when concurrent readers access nodes undergoing restructuring or deletion.",
+        "Optimizes spatial partitioning for multi-core processors, enabling parallel geometric range and nearest-neighbor queries with low contention overhead.",
+        "Maintains hierarchical Minimum Bounding Rectangles (MBRs) to prune large portions of the search space during concurrent traversal and point-location queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-splitting and hazard pointer protected insertion step for a concurrent R-Tree node.",
+        "correct": "bool insert_rect(Node* root, const Rect& item, HazardPointerRegistry& hp) {\n    Node* current = root;\n    while (true) {\n        HazardPointer hp_guard = hp.protect(current);\n        if (current != *hp_guard) continue;\n        if (current->is_leaf()) {\n            if (current->try_add_rect_cas(item)) return true;\n            if (current->split_and_propagate_cas()) {\n                // Retry traversal from root after structural change\n                current = root;\n                continue;\n            }\n        } else {\n            current = current->select_best_child_bbox(item);\n        }\n    }\n}",
+        "wrong": "bool insert_rect_wrong(Node* root, const Rect& item) {\n    // Missing synchronization and memory reclamation leads to race conditions and use-after-free bugs\n    Node* current = root;\n    if (current->is_leaf()) {\n        current->rects.push_back(item);\n    }\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to re-read or re-validate root traversal pointers after encountering a node split, leading to stale pointer dereferences.",
+        "Reclaiming memory immediately upon node splitting or deletion without checking active hazard pointers, resulting in use-after-free faults.",
+        "Over-contending on higher-level tree nodes during high-volume concurrent bounding-box expansions instead of utilizing fine-grained locking or optimistic retry loops."
+      ],
+      "best_practices": [
+        "Integrate a robust hazard pointer or epoch-based memory management scheme to track threads reading active spatial tree nodes.",
+        "Design node-splitting algorithms to minimize structural modifications that propagate upward to avoid cascading contention storms.",
+        "Implement back-off strategies within retry loops when CAS operations fail repeatedly due to high write concurrency on the same MBR node."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded geospatial applications, location-based tracking engines, or spatial databases requiring massive parallel range and intersection queries.",
+      "when_not_to_use": "Avoid when workloads are primarily single-threaded, when spatial data is entirely static and pre-indexed, or when simpler concurrent linear structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the race condition where one thread splits an R-Tree node while another thread is simultaneously trying to insert a child into that exact node?",
+          "answer": "By using atomic CAS operations to swap the node pointer and checking version tags or pointers against a hazard pointer registry. If the CAS fails due to an intervening split, the inserting thread detects the state change and retries its traversal or insertion from the parent level."
+        },
+        {
+          "question": "Why are traditional mutual exclusion locks inefficient for high-throughput concurrent R-Trees, and how do lock-free primitives resolve this?",
+          "answer": "Traditional global or coarse-grained locks create bottlenecks during traversal and frequent updates. Lock-free primitives like CAS allow fine-grained atomic updates to bounding boxes and pointer linkages, letting multiple threads make progress simultaneously without blocking."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free B+ Trees and Concurrent Skip-Lists",
+        "Spatial Indexing and Minimum Bounding Rectangle (MBR) Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:57:15.521469+00:00",
+      "run_number": 4018
     }
   ]
 }
