@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4014,
-    "last_updated": "2026-10-27T14:44:10.571432+00:00",
-    "total_topics_learned": 4014
+    "total_runs": 4015,
+    "last_updated": "2026-10-27T14:47:26.201295+00:00",
+    "total_topics_learned": 4015
   },
   "entries": [
     {
@@ -191000,6 +191000,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:44:10.571412+00:00",
       "run_number": 4014
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-query CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range overlapping lookups and multi-core parallel event scheduling in real-time financial order-matching platforms and concurrent task execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Interval Tree using atomic primitives and hazard pointers. It enables high-throughput multi-core interval overlapping operations without locking, which is critical for real-time financial order books and timeline event schedulers.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free node insertion, deletion, and augmentation updates.",
+        "Maintains max-endpoints in each node atomically to efficiently guide concurrent interval overlap queries.",
+        "Employs hazard pointers to safely manage memory reclamation in dynamic concurrent trees without blocking readers.",
+        "Ensures linearizable execution of overlapping range searches across multiple concurrent reader and writer threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-augmentation for tracking max endpoints in a concurrent interval tree node.",
+        "correct": "struct IntervalNode {\n    int low, high, max_end;\n    std::atomic<IntervalNode*> left, right;\n    bool CASMaxEnd(int expected, int desired) {\n        return std::atomic_compare_exchange_weak(&max_end, &expected, desired);\n    }\n};",
+        "wrong": "struct IntervalNode {\n    int low, high, max_end;\n    IntervalNode* left, right;\n    // Non-atomic modification causes race conditions during concurrent overlap queries\n    void updateMax(int val) { max_end = std::max(max_end, val); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers during tree traversals, leading to use-after-free bugs when another thread deletes overlapping nodes.",
+        "Updating augmented max-endpoint values non-atomically, causing incorrect range query routing in multi-threaded environments."
+      ],
+      "best_practices": [
+        "Retire deleted nodes safely using epoch-based reclamation or hazard pointers to prevent premature memory reuse.",
+        "Keep atomic operations fine-grained to minimize transaction retries and reduce CAS contention under heavy write loads."
+      ],
+      "when_to_use": "Use when multiple threads frequently query and modify overlapping time-ranges or numerical intervals under strict latency requirements.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems where simpler lock-based segment trees or mutex-protected interval lists suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when a concurrent thread deletes an interval node while another thread is traversing through it?",
+          "answer": "By using hazard pointers to register the node being accessed before traversal, ensuring it is not freed until all referencing threads release their hazard pointers."
+        },
+        {
+          "question": "Why is node augmentation necessary in a concurrent interval tree, and how do you update it lock-free?",
+          "answer": "Node augmentation (storing the maximum endpoint in the subtree) allows queries to prune branches efficiently. It is updated lock-free using atomic CAS loops to recalculate and propagate max values up the tree path."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Segment Trees",
+        "Hazard Pointers and Memory Management",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:47:26.201277+00:00",
+      "run_number": 4015
     }
   ]
 }
