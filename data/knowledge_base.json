@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4011,
-    "last_updated": "2026-10-27T14:34:26.065880+00:00",
-    "total_topics_learned": 4011
+    "total_runs": 4012,
+    "last_updated": "2026-10-27T14:37:39.487426+00:00",
+    "total_topics_learned": 4012
   },
   "entries": [
     {
@@ -190859,6 +190859,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:34:26.065861+00:00",
       "run_number": 4011
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core parallel priority-ordered key-value storage in real-time in-memory caching systems and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Treap combines binary search tree ordering on keys with heap ordering on randomly assigned priorities, maintaining balance probabilistically without global locks. Implementing it lock-free requires atomic tree rotations and pointer updates managed via Compare-And-Swap (CAS) primitives and hazard pointers to ensure thread-safe memory reclamation under high-contention multi-core execution.",
+      "key_points": [
+        "Dual-property structure satisfying BST order on keys and heap order on random priorities.",
+        "Eliminates global locking by using atomic Compare-And-Swap (CAS) for node insertions, deletions, and tree rotations.",
+        "Employs hazard pointers to safely defer memory reclamation of nodes detached during concurrent rotations or structural updates.",
+        "Achieves probabilistic logarithmic height and high throughput under heavy multi-threaded workloads."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the atomic node rotation and conditional priority adjustment logic for a lock-free Treap structure.",
+        "correct": "class ConcurrentTreapNode:\n    def __init__(self, key, priority):\n        self.key = key\n        self.priority = priority\n        self.left = None\n        self.right = None\n        self.deleted = False\n\ndef rotate_left(node, parent_child_ref, cas_func):\n    right_child = node.right\n    if not right_child:\n        return False\n    node.right = right_child.left\n    right_child.left = node\n    return cas_func(parent_child_ref, node, right_child)",
+        "wrong": "def unsafe_rotate(node):\n    # Modifying pointers without CAS or hazard pointers in a multi-threaded context\n    temp = node.right\n    node.right = temp.left\n    temp.left = node\n    return temp"
+      },
+      "common_mistakes": [
+        "Failing to protect detached subtrees with hazard pointers during concurrent rotations, leading to use-after-free bugs.",
+        "Performing multi-word atomic operations without a descriptor-based protocol, causing inconsistent intermediate states visible to other threads."
+      ],
+      "best_practices": [
+        "Use descriptor blocks (operation descriptors) to execute multi-step structural changes like rotations atomically.",
+        "Integrate epoch-based or hazard pointer memory reclamation to prevent premature freeing of nodes actively traversed by other threads."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory caches or database indexes requiring ordered range queries and probabilistic balancing under heavy multi-core contention.",
+      "when_not_to_use": "Avoid when strictly deterministic worst-case balance guarantees are required, or when single-threaded simplicity and low memory overhead are prioritized over concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do you handle structural consistency during concurrent tree rotations in a lock-free Treap?",
+          "answer": "By utilizing multi-word CAS operation descriptors or explicit versioning on nodes to ensure threads complete or help pending operations before applying new modifications."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Treap?",
+          "answer": "Hazard pointers protect nodes that are temporarily unlinked during tree rotations from being reclaimed by the memory allocator while other threads are still traversing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Concurrent AVL Tree",
+        "Hazard Pointers and Epoch-based Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:37:39.487407+00:00",
+      "run_number": 4012
     }
   ]
 }
