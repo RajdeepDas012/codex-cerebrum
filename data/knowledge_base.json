@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3966,
-    "last_updated": "2026-10-27T01:50:56.458265+00:00",
-    "total_topics_learned": 3966
+    "total_runs": 3967,
+    "last_updated": "2026-10-27T01:54:06.941984+00:00",
+    "total_topics_learned": 3967
   },
   "entries": [
     {
@@ -188726,6 +188726,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T01:50:56.458244+00:00",
       "run_number": 3966
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-advancing and ring-buffer-wrapping CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer messaging and multi-core parallel work-stealing queues in real-time trading platforms and concurrent event-driven server engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent bounded queue that utilizes atomic head-tail advancement and ring-buffer wrapping CAS operations combined with hazard pointers. It enables safe, high-throughput message passing and work-stealing across multiple cores without utilizing blocking synchronization primitives.",
+      "key_points": [
+        "Utilizes atomic head-tail-advancing and ring-buffer-wrapping CAS primitives to safely manage queue pointers without mutexes.",
+        "Employs hazard pointer memory reclamation to ensure safe deferred memory deallocation in concurrent environments.",
+        "Optimized for high-throughput single-producer single-consumer (SPSC) or multi-producer multi-consumer (MPMC) messaging pipelines.",
+        "Prevents race conditions on fixed-size ring buffers in real-time trading and event-driven server architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head and tail index manipulation for a lock-free bounded ring buffer queue",
+        "correct": "template <typename T, size_t Capacity>\nclass LockFreeBoundedQueue {\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\n    T buffer[Capacity];\npublic:\n    bool enqueue(const T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if ((current_tail - current_head) >= Capacity) return false;\n        buffer[current_tail % Capacity] = item;\n        tail.store(current_tail + 1, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "class UnsafeQueue {\n    int head = 0, tail = 0;\n    int buffer[100];\npublic:\n    void enqueue(int item) { buffer[tail++] = item; } // Non-atomic and unbounded risk\n};"
+      },
+      "common_mistakes": [
+        "Failing to handle memory ordering correctly, resulting in stale reads of head and tail pointers across threads.",
+        "Neglecting proper queue capacity checks, which can lead to silent buffer overflows and memory corruption in fixed-size arrays."
+      ],
+      "best_practices": [
+        "Use appropriate memory barriers (acquire-release semantics) when loading and storing atomic head/tail indices.",
+        "Integrate hazard pointers or epoch-based reclamation safely if nodes require dynamic memory allocation instead of static arrays."
+      ],
+      "when_to_use": "When implementing low-latency inter-thread communication, message passing, or work-stealing schedulers where blocking locks introduce unacceptable latency.",
+      "when_not_to_use": "When the queue size must be dynamically unbounded and memory overhead of pre-allocated buffers is unacceptable.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating head and tail pointers in a lock-free ring buffer queue?",
+          "answer": "By using monotonically increasing sequence numbers or indices combined with atomic compare-and-swap (CAS) operations."
+        },
+        {
+          "question": "Why are acquire-release memory semantics crucial when implementing concurrent bounded queues?",
+          "answer": "They ensure that writes to the buffer elements are visible to consumer threads before the tail pointer update is observed."
+        }
+      ],
+      "related_topics": [
+        "Lock-free ring buffers",
+        "Hazard pointers and memory reclamation",
+        "Work-stealing schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T01:54:06.941969+00:00",
+      "run_number": 3967
     }
   ]
 }
