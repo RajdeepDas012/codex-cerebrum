@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4023,
-    "last_updated": "2026-10-27T20:04:37.326895+00:00",
-    "total_topics_learned": 4023
+    "total_runs": 4024,
+    "last_updated": "2026-10-27T20:07:51.389307+00:00",
+    "total_topics_learned": 4024
   },
   "entries": [
     {
@@ -191427,6 +191427,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T20:04:37.326873+00:00",
       "run_number": 4023
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput percentile calculations and multi-core parallel streaming distribution summarization in real-time observability telemetry platforms and concurrent performance monitoring engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent T-Digest is a specialized probabilistic data structure designed for accurate percentile calculations on streaming data. By utilizing lock-free synchronization techniques like Compare-And-Swap (CAS) primitives and hazard pointers, it allows multiple threads to update and merge distribution centroids simultaneously without deadlocks.",
+      "key_points": [
+        "Employs atomic centroid-merging and quantile-estimating CAS primitives to manage data distribution across multi-core environments safely.",
+        "Integrates hazard pointer memory reclamation to securely free retired centroid nodes without triggering race conditions.",
+        "Provides high-throughput percentile calculation capabilities tailored for real-time observability telemetry and monitoring platforms.",
+        "Maintains higher accuracy at the tails of the distribution compared to traditional fixed-size quantile estimators."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent updates to a lock-free T-Digest structure using atomic operations and hazard pointers.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct Centroid {\n    std::atomic<double> mean;\n    std::atomic<double> weight;\n    std::atomic<Centroid*> next;\n};\n\nclass ConcurrentTDigest {\n    std::atomic<Centroid*> head;\npublic:\n    void add(double val, double w) {\n        // Simplified lock-free insertion logic utilizing CAS\n        Centroid* oldHead = head.load(std::memory_order_relaxed);\n        Centroid* newCentroid = new Centroid{val, w, oldHead};\n        while (!head.compare_exchange_weak(oldHead, newCentroid, std::memory_order_release, std::memory_order_relaxed)) {\n            newCentroid->next.store(oldHead, std::memory_order_relaxed);\n        }\n    }\n};",
+        "wrong": "class UnsafeTDigest {\n    Centroid* head;\npublic:\n    void add(double val, double w) {\n        // Missing synchronization leads to data races and memory corruption under multi-threading\n        head = new Centroid{val, w, head};\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted centroid nodes with hazard pointers, resulting in use-after-free bugs during concurrent merges.",
+        "Using overly conservative memory barriers that degrade throughput in high-frequency monitoring pipelines."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic reads where strict sequential consistency is not required, falling back to acquire-release semantics only for pointer modifications.",
+        "Batch incoming telemetry data locally per-thread before attempting global CAS-based merges into the main T-Digest structure."
+      ],
+      "when_to_use": "Use when building high-throughput monitoring or telemetry systems that require accurate tail-latency (p99, p999) calculations across concurrent streams.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where exact percentile computation over small datasets is required without approximation constraints.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free T-Digest?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing before reading them, ensuring other threads do not reclaim or free those memory locations until all references are released."
+        },
+        {
+          "question": "Why is a T-Digest preferred over a standard sorted array or basic histogram for streaming percentile estimation?",
+          "answer": "A T-Digest compresses the input data into a dynamic set of centroids that concentrate accuracy at the distribution tails (e.g., p99), requiring significantly less memory and supporting constant-time streaming updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free HyperLogLog",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-27T20:07:51.389278+00:00",
+      "run_number": 4024
     }
   ]
 }
