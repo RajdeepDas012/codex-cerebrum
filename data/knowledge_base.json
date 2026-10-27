@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4003,
-    "last_updated": "2026-10-27T08:17:04.365085+00:00",
-    "total_topics_learned": 4003
+    "total_runs": 4004,
+    "last_updated": "2026-10-27T08:20:14.373319+00:00",
+    "total_topics_learned": 4004
   },
   "entries": [
     {
@@ -190479,6 +190479,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T08:17:04.365066+00:00",
       "run_number": 4003
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic Levenshtein-distance-partitioning and child-node-routing CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking in real-time text processing platforms and concurrent dictionary search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Burkhard-Keller (BK) tree that utilizes atomic primitives and hazard pointers. It enables high-throughput approximate string matching and parallel spell checking across multiple cores without utilizing blocking synchronization mechanisms.",
+      "key_points": [
+        "Utilizes atomic Levenshtein-distance-partitioning for concurrent child bucket assignment.",
+        "Employs compare-and-swap (CAS) primitives for lock-free node insertion and child-node-routing updates.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safely manage deleted or split nodes.",
+        "Optimizes multi-core parallel execution for high-throughput dictionary queries and fuzzy string searches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of reading a child pointer using hazard pointers and attempting a lock-free CAS insertion.",
+        "correct": "bool insert(Node* root, const std::string& word) {\n    // Simplified atomic hazard pointer pattern for BK-Tree child routing\n    while (true) {\n        int dist = compute_levenshtein(root->word, word);\n        Node* child = hazard_ptr_protect(&root->children[dist]);\n        if (!child) {\n            Node* new_node = new Node(word);\n            if (atomic_compare_exchange_strong(&root->children[dist], &child, new_node)) {\n                hazard_ptr_release();\n                return true;\n            }\n            delete new_node;\n        } else {\n            hazard_ptr_release();\n            root = child;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* root, const std::string& word) {\n    // Missing thread safety and hazard pointer protection\n    int dist = compute_levenshtein(root->word, word);\n    if (root->children[dist] == nullptr) {\n        root->children[dist] = new Node(word);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register pointers with hazard management subsystems, leading to use-after-free race conditions.",
+        "Assuming Levenshtein distance calculations are pure and free of side effects, which can degrade multi-core performance if cache lines are aggressively bounced."
+      ],
+      "best_practices": [
+        "Pair every node traversal step with an active hazard pointer acquisition to ensure safe reclamation under heavy concurrent updates.",
+        "Batch distance evaluations where possible and minimize contention on high-level root branches by introducing dynamic sub-tree sharding."
+      ],
+      "when_to_use": "Use this structure when building real-time collaborative text editors, autocorrect pipelines, or distributed search systems that require high concurrency for approximate string lookups.",
+      "when_not_to_use": "Avoid this when working with exact-match string lookups where traditional Hash Maps or Tries provide superior time complexity and simpler implementations.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing a lock-free child pointer update in a concurrent BK-Tree?",
+          "answer": "By leveraging hazard pointers or tagged pointers (version counts) combined with atomic CAS operations to ensure the node reference has not changed state between validation and update."
+        },
+        {
+          "question": "Why is Levenshtein-distance-partitioning critical for concurrent BK-Tree traversal?",
+          "answer": "It acts as a metric space partitioning key that safely routes concurrent threads down distinct, non-overlapping child branches, minimizing thread contention during approximate searches."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Radix Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Metric Space Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T08:20:14.373299+00:00",
+      "run_number": 4004
     }
   ]
 }
