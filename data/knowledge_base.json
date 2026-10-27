@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4013,
-    "last_updated": "2026-10-27T14:40:56.554498+00:00",
-    "total_topics_learned": 4013
+    "total_runs": 4014,
+    "last_updated": "2026-10-27T14:44:10.571432+00:00",
+    "total_topics_learned": 4014
   },
   "entries": [
     {
@@ -190953,6 +190953,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-27T14:40:56.554479+00:00",
       "run_number": 4013
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and back-off-strategy primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event dispatching in real-time game server platforms and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue utilizing atomic primitives like heap-node compare-and-swap (CAS) and adaptive back-off strategies, combined with hazard pointers for safe memory reclamation. It enables high-throughput task scheduling and low-latency event dispatching across multiple CPU cores without thread blocking.",
+      "key_points": [
+        "Uses atomic heap-node-cas operations to modify queue structures safely without global locks.",
+        "Employs exponential or linear back-off strategies to reduce memory bus contention during high thread contention.",
+        "Integrates hazard pointers to safely defer memory reclamation of deleted nodes until no active threads reference them.",
+        "Optimized for real-time game server platforms and multi-core parallel job execution engines requiring strict order execution."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of atomic node insertion using CAS with a hazard pointer protected target.",
+        "correct": "bool push(Node* newNode) {\n    Node* oldHead;\n    do {\n        oldHead = head.load(std::memory_order_relaxed);\n        newNode->next = oldHead;\n    } while (!head.compare_exchange_weak(oldHead, newNode, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool push(Node* newNode) {\n    Node* oldHead = head.load();\n    newNode->next = oldHead;\n    head.store(newNode); // Not atomic against concurrent modifications!\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed pointers with hazard pointers, leading to ABA problems or use-after-free crashes.",
+        "Using aggressive busy-waiting in CAS loops without back-off strategies, causing severe CPU cache line bouncing and performance degradation."
+      ],
+      "best_practices": [
+        "Implement localized exponential back-off inside failed CAS retry loops to alleviate memory subsystem congestion.",
+        "Thoroughly audit hazard pointer acquisition and release lifecycle to prevent memory leaks and premature reclamation."
+      ],
+      "when_to_use": "Use when building high-performance real-time applications like game servers or parallel job engines where thousands of concurrent threads compete to enqueue and dequeue prioritized tasks.",
+      "when_not_to_use": "Avoid when simple coarse-grained locking suffices due to low thread contention, or when memory overhead constraints prohibit hazard pointer tracking tables.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in lock-free data structures compared to garbage collection?",
+          "answer": "Hazard pointers allow threads to publish pointers they are currently accessing in a globally visible list, so other threads know safely when a deleted node's memory can be reclaimed without relying on a runtime GC."
+        },
+        {
+          "question": "Why is a back-off strategy critical when implementing lock-free data structures under high thread contention?",
+          "answer": "Without back-off, concurrent threads continuously hammer memory locations with failed CAS operations, saturating the cache coherency protocol and wasting massive CPU cycles."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip-Lists",
+        "Atomic Compare-And-Swap Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T14:44:10.571412+00:00",
+      "run_number": 4014
     }
   ]
 }
