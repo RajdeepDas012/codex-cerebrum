@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 3969,
-    "last_updated": "2026-10-27T01:57:18.537149+00:00",
-    "total_topics_learned": 3969
+    "total_runs": 3970,
+    "last_updated": "2026-10-27T01:59:14.515426+00:00",
+    "total_topics_learned": 3970
   },
   "entries": [
     {
@@ -188867,6 +188867,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-27T01:57:18.537135+00:00",
       "run_number": 3969
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class merging and multi-core parallel connected component analysis in real-time social network graph partitioning platforms and concurrent image segmentation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Disjoint-Set data structure. It uses atomic compare-and-swap (CAS) primitives for path-halving and rank-based union operations, paired with hazard pointers to ensure safe memory reclamation under heavy multi-threaded contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to update parent pointers and ranks safely without coarse-grained locking.",
+        "Implements lock-free path-halving to flatten trees during lookups, minimizing future traversal depths concurrently.",
+        "Employs hazard pointers to protect nodes from premature deallocation while other threads traverse or update them.",
+        "Achieves high throughput for parallel connected component analysis in large-scale graphs and image segmentation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based find operation with path-halving using hazard pointers.",
+        "correct": "Node* find(Node* x, HazardPointerRegistry& hp) {\n    HazardHandle h = hp.protect(x);\n    while (true) {\n        Node* parent = x->parent.load();\n        if (parent == x) return x;\n        Node* gparent = parent->parent.load();\n        if (x->parent.compare_exchange_weak(parent, gparent)) {\n            x = gparent;\n            hp.update(h, x);\n        } else {\n            parent = x->parent.load();\n            hp.update(h, parent);\n        }\n    }\n}",
+        "wrong": "Node* find(Node* x) {\n    if (x->parent == x) return x;\n    return x->parent = find(x->parent); // Non-atomic, race conditions will corrupt tree structure\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during atomic pointer updates, leading to ABA problems and use-after-free bugs.",
+        "Attempting to implement full path compression concurrently, which causes severe CAS contention and high retry overhead compared to path-halving or path-splitting."
+      ],
+      "best_practices": [
+        "Prefer path-halving or path-splitting over full path compression in concurrent environments to reduce CAS contention depth.",
+        "Ensure hazard pointers are retired and reclaimed safely only after confirming no concurrent threads reference the deleted nodes."
+      ],
+      "when_to_use": "Use when multiple threads concurrently query and merge equivalence classes or connected components, such as in parallel graph algorithms and real-time clustering.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency systems where standard pointer-based Disjoint-Set structures with simple path compression offer lower overhead.",
+      "interview_questions": [
+        {
+          "question": "Why is path-halving preferred over full path compression in lock-free Disjoint-Set implementations?",
+          "answer": "Path-halving updates every other node along the path using single-step CAS operations, avoiding the deep cascading updates and severe CAS contention that full path compression introduces in concurrent environments."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent union and find operations?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing, preventing other threads from reclaiming or freeing those memory addresses until the reader safely unprotects them."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent B+ Trees",
+        "Parallel Graph Connected Components Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T01:59:14.515374+00:00",
+      "run_number": 3970
     }
   ]
 }
