@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4026,
-    "last_updated": "2026-10-27T20:14:21.268896+00:00",
-    "total_topics_learned": 4026
+    "total_runs": 4027,
+    "last_updated": "2026-10-27T20:17:30.924622+00:00",
+    "total_topics_learned": 4027
   },
   "entries": [
     {
@@ -191570,6 +191570,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-27T20:14:21.268882+00:00",
       "run_number": 4026
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-swapping and kick-out-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership queries and multi-core parallel fingerprint deduplication in real-time distributed storage systems and concurrent caching layer engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Cuckoo Filter utilizing atomic primitives and hazard pointers. It enables high-throughput, thread-safe probabilistic membership checking and deletion without traditional mutex bottlenecks, making it ideal for high-performance multi-core caching layers.",
+      "key_points": [
+        "Uses atomic bucket-swapping and kick-out-resolving Compare-And-Swap (CAS) primitives to safely manage concurrent fingerprint insertions and displacements.",
+        "Employs hazard pointer memory reclamation to securely free or reuse bucket entries without inducing ABA problems or race conditions.",
+        "Provides constant-time probabilistic set membership queries with support for dynamic deletion, outperforming standard Bloom filters in space and deletion flexibility.",
+        "Ensures linearizability across multi-core execution paths in high-throughput distributed caching and storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bucket-swapping using CAS for concurrent Cuckoo Filter insertions",
+        "correct": "bool insert_fingerprint(BucketTable* table, size_t index, uint8_t fp) {\n    while (true) {\n        Bucket old_bucket = table->buckets[index].load(std::memory_order_acquire);\n        if (old_bucket.is_full()) return false;\n        Bucket new_bucket = old_bucket.insert(fp);\n        if (table->buckets[index].compare_exchange_weak(old_bucket, new_bucket, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_fingerprint(BucketTable* table, size_t index, uint8_t fp) {\n    std::lock_guard<std::mutex> lock(table->mtx);\n    return table->buckets[index].insert(fp);\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely handle the kick-out chain loop under high concurrency, leading to infinite displacement loops.",
+        "Neglecting proper memory ordering semantics (acquire-release) when loading and swapping bucket entries with CAS.",
+        "Forgetting to protect traversed buckets with hazard pointers during concurrent resizing or massive deletions."
+      ],
+      "best_practices": [
+        "Use bounded kick-out loops with a predefined maximum displacement threshold to prevent deadlocks or livelocks.",
+        "Leverage hazard pointers for thread-safe memory management during concurrent filter resizing operations.",
+        "Tune fingerprint sizes and bucket associativity parameters carefully to balance false positive rates and memory footprint."
+      ],
+      "when_to_use": "Use when you need high-throughput probabilistic set membership queries with dynamic deletion support across numerous concurrent threads in distributed storage systems.",
+      "when_not_to_use": "Avoid when zero false positives are required, or when single-threaded simplicity and standard library containers suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the kick-out mechanism in a lock-free Cuckoo Filter without using global locks?",
+          "answer": "By using fine-grained atomic CAS operations on individual buckets and retry loops that safely detect concurrent modifications and re-read state before attempting displacement."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing a concurrent Cuckoo Filter?",
+          "answer": "Hazard pointers prevent other threads from freeing or modifying bucket memory while a reader or mutator thread is actively traversing or updating an entry, avoiding use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Lock-free HyperLogLog",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Bloom and Quotient Filters"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-27T20:17:30.924600+00:00",
+      "run_number": 4027
     }
   ]
 }
