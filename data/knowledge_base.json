@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4041,
-    "last_updated": "2026-10-27T23:58:43.146053+00:00",
-    "total_topics_learned": 4041
+    "total_runs": 4042,
+    "last_updated": "2026-10-28T00:01:53.252899+00:00",
+    "total_topics_learned": 4042
   },
   "entries": [
     {
@@ -192281,6 +192281,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-27T23:58:43.146036+00:00",
       "run_number": 4041
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected components computation and multi-core parallel equivalence relation tracking in real-time network connectivity analysis platforms and concurrent image segmentation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking Disjoint-Set data structure utilizing atomic compare-and-swap (CAS) operations for lock-free union and find procedures. It leverages hazard pointers to safely manage dynamic memory reclamation across multiple competing threads without traditional mutex bottlenecks.",
+      "key_points": [
+        "Utilizes atomic pointers and state fields to achieve lock-free thread-safe operations.",
+        "Implements atomic path compression during the find operation to flatten tree structures safely under concurrency.",
+        "Uses rank-based union linked via CAS to merge subset trees without race conditions.",
+        "Employs hazard pointers to prevent premature memory deallocation of nodes concurrently accessed by multiple threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node representation and a lock-free find operation with path compression.",
+        "correct": "struct Node { std::atomic<Node*> parent; std::atomic<int> rank; }; Node* find(Node* node) { Node* curr = node; while (true) { Node* p = curr->parent.load(std::memory_order_acquire); if (p == curr) return curr; Node* pp = p->parent.load(std::memory_order_acquire); curr->parent.compare_exchange_weak(p, pp, std::memory_order_release); curr = p; } }",
+        "wrong": "Node* find(Node* node) { if (node->parent == node) return node; return node->parent = find(node->parent); }"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to use-after-free bugs.",
+        "Using blocking synchronization primitives inside high-throughput paths instead of pure atomic CAS loops."
+      ],
+      "best_practices": [
+        "Ensure memory order semantics (acquire-release) are correctly paired with atomic pointer loads and stores.",
+        "Bound thread-local hazard pointer arrays to avoid excessive overhead during high-contention memory reclamation."
+      ],
+      "when_to_use": "When multiple concurrent threads must dynamically query and merge equivalence classes or connected components at ultra-low latency.",
+      "when_not_to_use": "In single-threaded applications where traditional sequential Union-Find with path compression offers superior simplicity and performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic pointer updates during path compression?",
+          "answer": "By using tagged pointers containing a version counter or by employing hazard pointers that prevent nodes from being recycled while a thread holds a reference."
+        },
+        {
+          "question": "Why is lock-free path compression harder than standard sequential path compression?",
+          "answer": "Because multiple threads can simultaneously attempt to update the parent pointer of the same node, requiring loop-based CAS retries to ensure consistency."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Hazard pointer memory management",
+        "Concurrent graph algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T00:01:53.252879+00:00",
+      "run_number": 4042
     }
   ]
 }
