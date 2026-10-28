@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4098** |
-| Last Updated | `2026-10-28T23:09:47.596841+00:00` |
-| Dataset Size | `4098 entries` |
+| Total Topics Learned | **4099** |
+| Last Updated | `2026-10-28T23:12:57.956888+00:00` |
+| Dataset Size | `4099 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2819 |
+| data-structures | 2820 |
 | algorithms | 248 |
 | trading-strategies | 228 |
 | crypto-blockchain | 178 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and degree-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path computation and multi-core parallel graph algorithm execution in real-time network routing platforms and concurrent optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic rank-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating system kernels and concurrent event notification engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-balancing and merge-operation CAS primitives alongside hazard pointer memory reclamation for high-throughput priority task routing and multi-core parallel mergeable heap operations in real-time job scheduling platforms and concurrent event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and multi-parent-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event processing in real-time asynchronous execution platforms and concurrent job dispatch engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and peer-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer lookups and multi-core parallel decentralized routing in real-time content delivery networks and concurrent distributed file sharing systems`
-- `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core parallel range queries in real-time relational database management systems and concurrent storage engines`
 
 <!-- STATS_END -->
 
