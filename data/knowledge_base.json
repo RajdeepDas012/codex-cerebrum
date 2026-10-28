@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4109,
-    "last_updated": "2026-10-28T23:44:48.533752+00:00",
-    "total_topics_learned": 4109
+    "total_runs": 4110,
+    "last_updated": "2026-10-28T23:47:59.138636+00:00",
+    "total_topics_learned": 4110
   },
   "entries": [
     {
@@ -195510,6 +195510,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-28T23:44:48.533732+00:00",
       "run_number": 4109
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-interval-merging and max-endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping interval queries and multi-core parallel schedule collision detection in real-time calendar management systems and concurrent database range-lock indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Interval Tree without locks, leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe, scalable, and wait-free memory reclamation while managing overlapping intervals and max endpoints across multiple threads.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS for node-interval-merging and max-endpoint-updating to prevent data races.",
+        "Employs hazard pointers for safe memory management, protecting nodes actively read by threads from premature reclamation.",
+        "Optimizes multi-core parallel schedule collision detection and high-throughput overlapping interval queries.",
+        "Addresses the inherent complexities of maintaining tree balance and metadata consistency under concurrent mutations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of updating node intervals and max endpoints using atomic CAS loops.",
+        "correct": "bool updateMaxEndpoint(std::atomic<int>& max_end, int new_val) {\n    int current = max_end.load();\n    while (new_val > current) {\n        if (max_end.compare_exchange_weak(current, new_val)) return true;\n    }\n    return false;\n}",
+        "wrong": "void updateMaxEndpoint(std::atomic<int>& max_end, int new_val) {\n    if (new_val > max_end.load()) {\n        max_end.store(new_val);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic check-then-act sequences instead of atomic CAS loops for updating max endpoints.",
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free errors during concurrent deletions.",
+        "Neglecting the cascading updates required up the tree when a node's max endpoint changes."
+      ],
+      "best_practices": [
+        "Always wrap node access pointers in hazard pointer scopes before performing traversals or reads.",
+        "Keep CAS retry loops tight and bounded to prevent excessive CPU contention under high thread concurrency.",
+        "Validate tree invariants periodically or design updates to be locally valid to avoid global lock acquisitions."
+      ],
+      "when_to_use": "Use when building high-performance systems requiring simultaneous range queries and updates across multiple threads, such as database range-lock managers or real-time scheduling engines.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free programming and hazard pointers outweighs the throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory leaks and use-after-free bugs in a lock-free interval tree?",
+          "answer": "Hazard pointers allow a thread to atomically publish a reference to a node it is currently reading, ensuring that concurrent deletion threads defer actual memory reclamation until no other thread holds a hazard pointer to that node."
+        },
+        {
+          "question": "Why is a standard locking mechanism inefficient for high-throughput interval queries in real-time calendar systems?",
+          "answer": "Global or coarse-grained locks cause thread contention and serialization, drastically reducing throughput when many threads concurrently query or modify overlapping time intervals."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Concurrent Segment Trees",
+        "Lock-Free Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T23:47:59.138619+00:00",
+      "run_number": 4110
     }
   ]
 }
