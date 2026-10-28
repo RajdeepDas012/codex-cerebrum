@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4099,
-    "last_updated": "2026-10-28T23:12:57.956888+00:00",
-    "total_topics_learned": 4099
+    "total_runs": 4100,
+    "last_updated": "2026-10-28T23:16:11.724199+00:00",
+    "total_topics_learned": 4100
   },
   "entries": [
     {
@@ -195037,6 +195037,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T23:12:57.956869+00:00",
       "run_number": 4099
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range scanning in real-time in-memory database engines and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Skip List optimized for multi-core environments. It leverages atomic Compare-And-Swap (CAS) operations for pointer splicing and tower height adjustments, combined with hazard pointers to guarantee safe memory reclamation without blocking readers or writers.",
+      "key_points": [
+        "Utilizes atomic forward-pointer-splicing CAS primitives to insert and delete nodes across multiple probabilistic height levels without coarse-grained locks.",
+        "Employs hazard pointers to securely track threads accessing specific skip list nodes, preventing premature deallocation and ABA problems.",
+        "Enables high-throughput concurrent operations, allowing concurrent searches, insertions, and deletions with minimal contention.",
+        "Facilitates efficient multi-core parallel range scanning for in-memory databases and key-value storage engines maintaining sorted order."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion in a lock-free skip list using CAS primitives",
+        "correct": "bool insert(Node* new_node) {\n    Node* preds[MAX_LEVEL];\n    Node* succs[MAX_LEVEL];\n    while (true) {\n        if (find(key, preds, succs)) return false;\n        for (int i = 0; i < new_node->height; ++i) {\n            new_node->forward[i].store(succs[i], std::memory_order_relaxed);\n        }\n        if (preds[0]->forward[0].compare_exchange_weak(succs[0], new_node)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(Node* new_node) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Using mutexes defeats the lock-free design and hurts scaling\n    head->insert(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to handle the marked state of nodes during deletion, which can lead to incomplete pointer unlinking and corrupted skip list paths.",
+        "Failing to protect concurrently accessed traversal nodes with hazard pointers, resulting in use-after-free bugs when another thread unlinks and frees the node."
+      ],
+      "best_practices": [
+        "Ensure memory order semantics (acquire-release) are correctly paired with atomic operations to guarantee visibility of updated forward pointers across cores.",
+        "Batch hazard pointer releases or recycle node memory via epoch-based reclamation or hazard pointer domains to reduce atomic overhead."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, concurrent key-value stores, or real-time indexing systems that require high write concurrency and sorted range queries.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simpler lock-based data structures provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic pointer updates in a lock-free skip list?",
+          "answer": "By pairing pointers with version counts or tags in a double-word CAS (DCAS), or by utilizing safe memory reclamation schemes like hazard pointers and epoch-based garbage collection that prevent node reuse while pointers are active."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free skip lists?",
+          "answer": "Standard reference counting introduces significant atomic read-modify-write contention on the reference count variable for every traversal step, whereas hazard pointers are thread-local and incur zero write contention during lookups."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-data-structures",
+        "epoch-based-reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-28T23:16:11.724179+00:00",
+      "run_number": 4100
     }
   ]
 }
