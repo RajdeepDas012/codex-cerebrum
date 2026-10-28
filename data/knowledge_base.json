@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4087,
-    "last_updated": "2026-10-28T19:04:35.945300+00:00",
-    "total_topics_learned": 4087
+    "total_runs": 4088,
+    "last_updated": "2026-10-28T19:07:47.408814+00:00",
+    "total_topics_learned": 4088
   },
   "entries": [
     {
@@ -194464,6 +194464,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T19:04:35.945280+00:00",
       "run_number": 4087
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic suffix-link-extension and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring matching and multi-core parallel bioinformatics sequence alignment in real-time genome analysis platforms and concurrent text indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Suffix Tree utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput substring queries and parallel pattern matching across multiple CPU cores without lock contention.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free node insertion, suffix link extension, and node splitting under concurrent writer threads.",
+        "Employs hazard pointers to safely manage node memory reclamation and prevent ABA problems during concurrent structural modifications.",
+        "Optimizes multi-core scaling for parallel bioinformatics sequence alignments and large-scale text searching pipelines.",
+        "Balances memory overhead and read/write performance by carefully orchestrating pointer updates on shared tree nodes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer updates via CAS and safe memory tracking using hazard pointers for a suffix tree node.",
+        "correct": "#include <atomic>\n\nstruct Node {\n    std::atomic<Node*> child;\n    char edge_char;\n};\n\nbool CASChild(Node* parent, Node* expected, Node* desired) {\n    return parent->child.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "#include <atomic>\n\nstruct Node {\n    Node* child;\n};\n\nvoid UnsafeUpdate(Node* parent, Node* new_child) {\n    parent->child = new_child; // Non-atomic update leading to data races\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted suffix tree nodes with hazard pointers, leading to premature deallocation and segmentation faults.",
+        "Ignoring the ABA problem when performing CAS operations on shared child pointers or sibling links.",
+        "Overlooking memory ordering constraints (e.g., using sequentially consistent memory orders unnecessarily, which degrades multi-core throughput)."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics for hazard pointer protection and pointer publication to ensure visibility across threads.",
+        "Batch retired node deletions to minimize the overhead of hazard pointer scans.",
+        "Design explicit node-splitting protocols that handle intermediate inconsistent tree states gracefully for reader threads."
+      ],
+      "when_to_use": "Use when building high-throughput real-time genomic analysis platforms or concurrent search engines requiring intensive multi-threaded substring matching without lock bottlenecks.",
+      "when_not_to_use": "Avoid when memory usage is severely constrained or when workloads are primarily single-threaded, as the overhead of lock-free primitives and hazard pointers outweighs the benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic node splitting and pointer updates in a lock-free suffix tree?",
+          "answer": "You can use pointer-tagging (combining a version counter with the node pointer) or utilize hazard pointers combined with epoch-based reclamation to ensure nodes are not recycled while other threads hold references."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free tree structures?",
+          "answer": "Standard reference counting introduces significant atomic RMW overhead on every read traversal, whereas hazard pointers allow lock-free, zero-cost read traversals by only writing to thread-local hazard records when protecting specific nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Suffix Array",
+        "Hazard Pointer Memory Management",
+        "Concurrent Directed Acyclic Word Graphs (DAWG)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T19:07:47.408795+00:00",
+      "run_number": 4088
     }
   ]
 }
