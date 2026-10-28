@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4066** |
-| Last Updated | `2026-10-28T12:29:53.945648+00:00` |
-| Dataset Size | `4066 entries` |
+| Total Topics Learned | **4067** |
+| Last Updated | `2026-10-28T12:33:07.233787+00:00` |
+| Dataset Size | `4067 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2792 |
+| data-structures | 2793 |
 | algorithms | 245 |
 | trading-strategies | 228 |
 | crypto-blockchain | 177 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-scaling and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range iteration in real-time in-memory key-value stores and concurrent transactional database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search queries and multi-core parallel frequently-accessed node optimization in real-time caching proxies and concurrent memory management systems`
 - `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-merging and range-filtering CAS primitives alongside hazard pointer memory reclamation for high-throughput two-dimensional orthogonal range queries and multi-core parallel spatial database indexing in real-time geographic positioning platforms and concurrent GIS spatial analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Quadtree using atomic quad-node-splitting and bounding-box-intersecting CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D spatial indexing and multi-core parallel point-location queries in real-time geospatial information systems and concurrent location-based gaming engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic sibling-pointer-linking and leaf-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed range queries and multi-core parallel sorted data access in real-time relational database systems and concurrent transactional storage engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-pointer-linking and node-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing lookups and multi-core parallel IP address matching in real-time software-defined networking gateways and concurrent network address translation tables`
 
 <!-- STATS_END -->
 
