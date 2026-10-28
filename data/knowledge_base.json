@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4100,
-    "last_updated": "2026-10-28T23:16:11.724199+00:00",
-    "total_topics_learned": 4100
+    "total_runs": 4101,
+    "last_updated": "2026-10-28T23:19:22.460307+00:00",
+    "total_topics_learned": 4101
   },
   "entries": [
     {
@@ -195084,6 +195084,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-28T23:16:11.724179+00:00",
       "run_number": 4100
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel point lookups in real-time in-memory database systems and concurrent index-storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture and construction of a lock-free concurrent B+ Tree utilizing atomic operations for node splitting and leaf linking. It ensures high-throughput point lookups and efficient ordered range scans across multi-core systems without traditional mutex locks.",
+      "key_points": [
+        "Employs atomic CAS primitives to execute structural modifications like node splitting and pointer updates safely without blocking.",
+        "Uses hazard pointer memory reclamation to securely manage dynamically deallocated nodes while readers traverse concurrent updates.",
+        "Maintains leaf-node links to enable fast, lock-free parallel range scans directly across leaf pages.",
+        "Optimizes multi-core parallel point lookups by minimizing contention on internal routing nodes during traversal."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting and leaf-node linking in a lock-free B+ Tree context",
+        "correct": "bool link_leaf_nodes(std::atomic<Node*>& left_leaf, Node* new_right_leaf) {\n    Node* expected = left_leaf.load(std::memory_order_acquire);\n    new_right_leaf->next.store(expected, std::memory_order_relaxed);\n    return left_leaf.compare_exchange_strong(expected, new_right_leaf, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = left_leaf;\nleft_leaf = new_right_leaf;\nnew_right_leaf->next = current;"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during structural modifications.",
+        "Ignoring the ABA problem when updating pointer references via standard single-word CAS operations."
+      ],
+      "best_practices": [
+        "Integrate epoch-based or hazard pointer memory management to safely reclaim memory in high-concurrency environments.",
+        "Keep atomic operation granularity fine-tuned to reduce bus contention and cache-line bouncing on heavily shared internal nodes."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases or concurrent key-value storage engines requiring massive read/write concurrency and efficient range queries.",
+      "when_not_to_use": "Avoid in single-threaded applications or low-memory embedded systems where lock-free overhead and complex memory reclamation introduce unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits in a lock-free B+ Tree without blocking concurrent readers?",
+          "answer": "By using atomic CAS operations to install split markers or new child pointers incrementally, allowing readers to traverse old or new paths safely via hazard pointers."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B+ Tree?",
+          "answer": "Hazard pointers prevent a thread from freeing a node while another thread is actively reading or traversing it, avoiding race conditions and use-after-free faults."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip List",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Index-Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T23:19:22.460257+00:00",
+      "run_number": 4101
     }
   ]
 }

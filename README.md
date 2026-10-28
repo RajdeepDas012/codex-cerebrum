@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4100** |
-| Last Updated | `2026-10-28T23:16:11.724199+00:00` |
-| Dataset Size | `4100 entries` |
+| Total Topics Learned | **4101** |
+| Last Updated | `2026-10-28T23:19:22.460307+00:00` |
+| Dataset Size | `4101 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2821 |
+| data-structures | 2822 |
 | algorithms | 248 |
 | trading-strategies | 228 |
 | crypto-blockchain | 178 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel point lookups in real-time in-memory database systems and concurrent index-storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-splicing and tower-height-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel range scanning in real-time in-memory database engines and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and degree-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra's shortest path computation and multi-core parallel graph algorithm execution in real-time network routing platforms and concurrent optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic rank-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating system kernels and concurrent event notification engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-balancing and merge-operation CAS primitives alongside hazard pointer memory reclamation for high-throughput priority task routing and multi-core parallel mergeable heap operations in real-time job scheduling platforms and concurrent event-driven simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and multi-parent-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event processing in real-time asynchronous execution platforms and concurrent job dispatch engines`
 
 <!-- STATS_END -->
 
