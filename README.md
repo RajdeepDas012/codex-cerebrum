@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4096** |
-| Last Updated | `2026-10-28T23:03:25.948873+00:00` |
-| Dataset Size | `4096 entries` |
+| Total Topics Learned | **4097** |
+| Last Updated | `2026-10-28T23:06:36.583031+00:00` |
+| Dataset Size | `4097 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2817 |
+| data-structures | 2818 |
 | algorithms | 248 |
 | trading-strategies | 228 |
 | crypto-blockchain | 178 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-balancing and merge-operation CAS primitives alongside hazard pointer memory reclamation for high-throughput priority task routing and multi-core parallel mergeable heap operations in real-time job scheduling platforms and concurrent event-driven simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and multi-parent-cas primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event processing in real-time asynchronous execution platforms and concurrent job dispatch engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and peer-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer lookups and multi-core parallel decentralized routing in real-time content delivery networks and concurrent distributed file sharing systems`
 - `Implementation of a lock-free thread-safe concurrent B-tree using atomic node-splitting and structural-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core parallel range queries in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocation and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string key-value storage in real-time software-defined networking platforms and concurrent network routing engines`
-- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel point update operations in real-time streaming analytics platforms and concurrent leaderboard ranking engines`
 
 <!-- STATS_END -->
 
