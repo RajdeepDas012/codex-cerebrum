@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4043,
-    "last_updated": "2026-10-28T00:05:03.262325+00:00",
-    "total_topics_learned": 4043
+    "total_runs": 4044,
+    "last_updated": "2026-10-28T00:08:13.830758+00:00",
+    "total_topics_learned": 4044
   },
   "entries": [
     {
@@ -192375,6 +192375,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T00:05:03.262306+00:00",
       "run_number": 4043
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-box-splitting and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial searches and multi-core parallel nearest-neighbor queries in real-time robotics perception platforms and concurrent computer vision database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent multi-dimensional binary space-partitioning KD-Tree utilizing atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables lock-free spatial indexing and high-throughput nearest-neighbor queries critical for real-time robotics and computer vision workloads.",
+      "key_points": [
+        "Utilizes atomic bounding-box-splitting and point-insertion CAS operations to allow multiple threads to mutate the spatial tree structure simultaneously.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe asynchronous deallocation of nodes restructured during splits.",
+        "Supports high-throughput multi-dimensional spatial searches and low-latency parallel $k$-nearest neighbor (k-NN) queries.",
+        "Eliminates global lock contention, ensuring scalable performance across multi-core systems in real-time robotic perception pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion via atomic compare-and-swap operations protected by hazard pointers.",
+        "correct": "bool insert_node(KDNode*& root, Point p, int depth) {\n    KDNode* new_node = new KDNode(p);\n    while (true) {\n        KDNode* current = hazard_protect(&root);\n        if (!current) {\n            if (__atomic_compare_exchange_n(&root, &current, new_node, true, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)) {\n                release_hazard_pointer();\n                return true;\n            }\n        } else {\n            // Traverse and apply child CAS logic\n            break;\n        }\n    }\n    release_hazard_pointer();\n    return false;\n}",
+        "wrong": "bool insert_node(KDNode*& root, Point p) {\n    // Missing hazard pointers and atomic CAS leads to race conditions and memory corruption\n    if (root == nullptr) {\n        root = new KDNode(p);\n    } else {\n        insert_node(root->child, p);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free vulnerabilities during concurrent structural rebalancing.",
+        "Assuming standard atomic read-modify-write operations are sufficient without properly managing multi-word atomic operations for tree branches."
+      ],
+      "best_practices": [
+        "Retire replaced tree nodes safely using hazard pointer epoch-based or reference-counted delayed reclamation lists.",
+        "Keep atomic sections small and restrict CAS loops to local subtree updates to minimize cache line bouncing."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent insertions and high-frequency spatial queries on multi-dimensional point clouds in low-latency systems.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with frequent dynamic structural re-balancing where coarse-grained locking or static spatial hashes perform better.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free KD-Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing before reading them, ensuring that other threads delaying or performing garbage collection will not free those nodes until no hazard pointers reference them."
+        },
+        {
+          "question": "Why is structural modification (like splitting bounding boxes) difficult to implement atomically in a KD-Tree?",
+          "answer": "Because structural changes often require updating multiple pointers atomically (multi-word updates), which standard hardware CAS primitives do not support directly, requiring careful design of node states or cooperative multi-step CAS primitives."
+        }
+      ],
+      "related_topics": [
+        "Bounding Volume Hierarchy (BVH)",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T00:08:13.830739+00:00",
+      "run_number": 4044
     }
   ]
 }
