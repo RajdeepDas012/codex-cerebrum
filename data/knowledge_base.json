@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4090,
-    "last_updated": "2026-10-28T19:14:23.819411+00:00",
-    "total_topics_learned": 4090
+    "total_runs": 4091,
+    "last_updated": "2026-10-28T19:17:36.959027+00:00",
+    "total_topics_learned": 4091
   },
   "entries": [
     {
@@ -194611,6 +194611,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T19:14:23.819392+00:00",
       "run_number": 4090
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic child-node-swapping and ray-box-intersection CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core parallel collision detection in real-time computer graphics rendering engines and concurrent physics simulation platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Bounding Volume Hierarchy (BVH) using atomic compare-and-swap (CAS) operations and hazard pointers. It enables high-throughput ray tracing and parallel collision detection across multiple CPU cores without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic child-node-swapping and ray-box-intersection CAS primitives for safe concurrent tree modifications.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe asynchronous node deallocation.",
+        "Maximizes multi-core utilization for real-time computer graphics rendering and parallel physics simulations.",
+        "Eliminates global lock contention, ensuring scalable throughput during dynamic scene updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child node swapping within a lock-free BVH node using compare_exchange_strong.",
+        "correct": "bool updateChild(std::atomic<BVHNode*>& target, BVHNode* expected, BVHNode* desired) {\n    return target.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "BVHNode* updateChild(std::atomic<BVHNode*>& target, BVHNode* desired) {\n    BVHNode* current = target.load();\n    target.store(desired);\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer reads with hazard pointers, leading to use-after-free race conditions during structural tree modifications.",
+        "Ignoring memory ordering constraints, which can cause out-of-order execution and stale bounding box coordinate reads across threads."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics on atomic pointer exchanges to ensure visibility of child node bounding boxes.",
+        "Batch hazard pointer acquisitions where possible to reduce synchronization overhead during deep traversal queries."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or dynamic physics engines requiring frequent concurrent tree refitting and ray queries across many cores.",
+      "when_not_to_use": "Avoid in static scenes where a read-only, perfectly balanced BVH built once sequentially will yield superior traversal performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node replacement in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing so that reclaiming threads know not to free those memory addresses until traversal completes."
+        },
+        {
+          "question": "Why is compare_exchange_strong preferred over non-atomic assignments when updating BVH pointers?",
+          "answer": "It guarantees that the pointer has not been modified by another thread since it was last read, preventing lost updates during parallel node insertions or splits."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Skip Lists",
+        "Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T19:17:36.959006+00:00",
+      "run_number": 4091
     }
   ]
 }
