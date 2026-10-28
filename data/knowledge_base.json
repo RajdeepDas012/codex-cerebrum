@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4047,
-    "last_updated": "2026-10-28T00:17:45.541587+00:00",
-    "total_topics_learned": 4047
+    "total_runs": 4048,
+    "last_updated": "2026-10-28T00:21:00.394294+00:00",
+    "total_topics_learned": 4048
   },
   "entries": [
     {
@@ -192563,6 +192563,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T00:17:45.541536+00:00",
       "run_number": 4047
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index Grid using atomic cell-allocation and dynamic bucket-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput broad-phase collision detection and multi-core parallel object tracking in real-time gaming engines and concurrent simulation platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free spatial hash grid optimized for multi-threaded environments, using atomic operations and hazard pointers to safely manage dynamic object buckets without mutex contention. It is vital for accelerating broad-phase collision detection and spatial queries across multiple CPU cores in high-performance engines.",
+      "key_points": [
+        "Utilizes atomic cell-allocation and CAS primitives to manage spatial grid buckets lock-free.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free bugs during concurrent bucket resizing and object insertion.",
+        "Maps multi-dimensional continuous coordinates to discrete grid cells via spatial hashing functions.",
+        "Enables high-throughput broad-phase collision checks by minimizing inter-thread synchronization overhead in parallel physics loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic cell allocation and hazard pointer protection for inserting an object into a spatial grid bucket.",
+        "correct": "bool insert_object(SpatialGrid* grid, int cell_id, GameObject* obj) {\n    HazardPointer hp;\n    while (true) {\n        Cell* cell = hp.protect(grid->cells[cell_id]);\n        if (!cell) {\n            Cell* new_cell = new Cell();\n            if (atomic_compare_exchange_strong(&grid->cells[cell_id], &cell, new_cell)) {\n                cell = new_cell;\n            } else {\n                delete new_cell;\n                continue;\n            }\n        }\n        if (cell->add_object_lockfree(obj)) break;\n    }\n    hp.clear();\n    return true;\n}",
+        "wrong": "bool insert_object_wrong(SpatialGrid* grid, int cell_id, GameObject* obj) {\n    if (grid->cells[cell_id] == nullptr) {\n        grid->cells[cell_id] = new Cell();\n    }\n    grid->cells[cell_id]->objects.push_back(obj);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect memory reclaimed during bucket resizing, leading to severe use-after-free race conditions.",
+        "Using coarse-grained locking on individual buckets which degrades multi-core scalability under heavy collision loads."
+      ],
+      "best_practices": [
+        "Pre-allocate grid cell structures or utilize a lock-free memory pool to minimize dynamic allocation overhead during high-frequency object updates.",
+        "Design the spatial hash function to minimize hash collisions for uniformly distributed entities in the simulation space."
+      ],
+      "when_to_use": "Use when thousands of dynamic entities require real-time spatial queries or broad-phase collision checks across many CPU cores without lock contention.",
+      "when_not_to_use": "Avoid when the dataset is static, small, or when memory overhead from grid cells and hazard pointer tracking outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when dynamically resizing a spatial grid's bucket array?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing, blocking garbage collection or memory reclamation from freeing those nodes until all referencing threads have released their protection."
+        },
+        {
+          "question": "What are the trade-offs between using a spatial hash grid versus a lock-free KD-Tree for broad-phase collision detection?",
+          "answer": "A spatial hash grid offers $O(1)$ expected insertion and lookup times and is simpler to implement lock-free, but struggles with sparse or clustered distributions compared to hierarchical structures like KD-Trees."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free KD-Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Broad-Phase Collision Detection Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T00:21:00.394276+00:00",
+      "run_number": 4048
     }
   ]
 }
