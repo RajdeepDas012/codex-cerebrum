@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4073,
-    "last_updated": "2026-10-28T12:53:30.950805+00:00",
-    "total_topics_learned": 4073
+    "total_runs": 4074,
+    "last_updated": "2026-10-28T12:56:57.041133+00:00",
+    "total_topics_learned": 4074
   },
   "entries": [
     {
@@ -193796,6 +193796,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T12:53:30.950783+00:00",
       "run_number": 4073
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected-component analysis and multi-core parallel equivalence relation tracking in real-time social network graph partitioning platforms and concurrent image segmentation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Disjoint-Set data structure using atomic operations and hazard pointers. It allows multiple threads to concurrently perform union and find operations safely without coarse-grained locking, maximizing performance on multi-core systems for graph and image tasks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely perform pointer updates during find path compression and rank-based union operations.",
+        "Employs hazard pointer memory reclamation to securely manage node lifecycles and prevent ABA problems or use-after-free races in concurrent environments.",
+        "Achieves near-constant amortized time complexity for equivalence relation queries while ensuring high-throughput parallel execution across multiple CPU cores.",
+        "Prevents thread contention bottlenecks by eliminating global locks, allowing scalable performance in dense social network partitioning and image segmentation workflows."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based find operation with path compression using hazard pointers.",
+        "correct": "Node* find(Node* node) {\n    HazardPointerGuard g;\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grand_parent = parent->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(parent, grand_parent, std::memory_order_release);\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic and unsafe for concurrent updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when updating parent pointers via CAS, leading to silent memory corruption.",
+        "Omitting hazard pointer protection during multi-step traversal, risking use-after-free errors when another thread frees or reassigns nodes."
+      ],
+      "best_practices": [
+        "Use acquire-release memory ordering consistently to ensure visibility of pointer modifications across threads.",
+        "Integrate hazard pointers or epoch-based reclamation to safely defer memory deallocation in lock-free graph structures."
+      ],
+      "when_to_use": "Use this when building high-throughput parallel systems that require frequent, concurrent equivalence queries and set unions, such as real-time social network analysis or parallel image segmentation.",
+      "when_not_to_use": "Avoid this for single-threaded applications or lightweight workloads where the overhead of atomics and hazard pointers outweighs the benefits of lock-free concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when implementing a lock-free Union-Find data structure?",
+          "answer": "You can use hazard pointers combined with version counters embedded within pointer values or utilize multi-word CAS (DCAS) to ensure pointer identity and state have not changed between reads and writes."
+        },
+        {
+          "question": "Why are standard recursive path compression algorithms unsafe in lock-free concurrent Disjoint-Set implementations?",
+          "answer": "Standard recursion performs non-atomic reads and writes to parent pointers, which can result in race conditions where concurrent threads overwrite intermediate compression steps or cause structural cycles."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Graph Algorithms",
+        "Atomic Compare-And-Swap Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-28T12:56:57.041111+00:00",
+      "run_number": 4074
     }
   ]
 }
