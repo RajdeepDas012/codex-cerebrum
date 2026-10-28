@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4071,
-    "last_updated": "2026-10-28T12:46:34.632221+00:00",
-    "total_topics_learned": 4071
+    "total_runs": 4072,
+    "last_updated": "2026-10-28T12:50:00.929983+00:00",
+    "total_topics_learned": 4072
   },
   "entries": [
     {
@@ -193701,6 +193701,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-28T12:46:34.632200+00:00",
       "run_number": 4071
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy storage and multi-core parallel key-value range queries in real-time distributed database systems and concurrent analytical storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Log-Structured Merge-Tree that handles intensive write workloads and parallel range queries via atomic memtable swapping, SSTable compaction CAS primitives, and hazard pointers. It is critical for scaling high-throughput modern database engines without lock contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to orchestrate safe memtable swapping without global write locks.",
+        "Employs hazard pointer memory reclamation to manage concurrent access and safe deletion of immutable SSTable structures and node pointers.",
+        "Implements background SSTable compaction algorithms safely alongside active reader threads via multi-version concurrency control.",
+        "Achieves high-throughput write-heavy storage by converting random disk I/O into sequential append-only operations."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic memtable swapping and thread-safe compaction tracking using CAS loops and hazard pointers.",
+        "correct": "class ConcurrentLSMTree:\n    def __init__(self):\n        self.active_memtable = AtomicReference(MemTable())\n        self.immutable_memtables = ConcurrentList()\n    def put(self, key, value):\n        while True:\n            current = self.active_memtable.get()\n            if current.is_full():\n                new_mem = MemTable()\n                if self.active_memtable.compare_and_set(current, new_mem):\n                    self.immutable_memtables.append(current)\n                    break\n            elif current.insert(key, value):\n                break",
+        "wrong": "def put(self, key, value):\n    with self.lock:\n        self.active_memtable.insert(key, value)"
+      },
+      "common_mistakes": [
+        "Failing to safely protect old SSTable file handles and block caches with hazard pointers during background compaction cycles.",
+        "Relying on coarse-grained mutexes for memtable switching, which degrades write-heavy multi-core throughput."
+      ],
+      "best_practices": [
+        "Use epoch-based memory management or hazard pointers to prevent use-after-free bugs during lock-free SSTable structural modifications.",
+        "Design read paths to gracefully merge results across the active memtable, immutable memtables, and leveled disk SSTables."
+      ],
+      "when_to_use": "Ideal for write-heavy workloads, append-only logging systems, and modern multi-core distributed key-value storage architectures requiring low latency.",
+      "when_not_to_use": "Avoid when read-heavy operations with low-latency point lookups dominate and memory overhead for multi-level caching is prohibitive.",
+      "interview_questions": [
+        {
+          "question": "How do you safely swap an active memtable with an immutable memtable in a lock-free LSM-Tree without losing concurrent writes?",
+          "answer": "By using a Compare-And-Swap (CAS) loop on the active memtable pointer reference, ensuring writes target the newly allocated memtable if the swap succeeds."
+        },
+        {
+          "question": "Why are hazard pointers essential when executing background SSTable compaction in a concurrent database engine?",
+          "answer": "They protect reader threads from accessing memory belonging to old SSTables that are being deleted or merged out of existence by compaction workers."
+        }
+      ],
+      "related_topics": [
+        "Skip List",
+        "Hazard Pointers",
+        "SSTables",
+        "Write-Ahead Logging"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-28T12:50:00.929960+00:00",
+      "run_number": 4072
     }
   ]
 }
