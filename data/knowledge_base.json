@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4167,
-    "last_updated": "2026-10-29T23:46:44.796833+00:00",
-    "total_topics_learned": 4167
+    "total_runs": 4168,
+    "last_updated": "2026-10-29T23:49:55.304978+00:00",
+    "total_topics_learned": 4168
   },
   "entries": [
     {
@@ -198259,6 +198259,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T23:46:44.796815+00:00",
       "run_number": 4167
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-degree-linking and tree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel discrete event simulation in real-time simulation frameworks and concurrent task scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Binomial Heap that supports efficient mergeable priority queue operations using atomic root-degree-linking and tree-merging Compare-And-Swap (CAS) primitives. It leverages hazard pointers for safe, lock-free memory reclamation, ensuring high throughput and thread safety across multi-core systems without traditional mutex bottlenecks.",
+      "key_points": [
+        "Utilizes atomic root-degree-linking and tree-merging CAS primitives to manipulate binomial tree structures safely without coarse-grained locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes while concurrent threads access them.",
+        "Provides efficient merge operations alongside standard priority queue functions, making it ideal for multi-core parallel discrete event simulation.",
+        "Maintains heap properties under high-contention environments through fine-grained atomic pointer updates on binomial tree roots."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root linking and hazard pointer protection for a lock-free binomial heap node merge.",
+        "correct": "bool link_binomial_roots(std::atomic<Node*>& root1, Node* root2, HazardPointerRegistry& hp) {\n    HazardGuard guard(hp, root1);\n    if (root1.load() != guard.get()) return false;\n    return root1.compare_exchange_weak(root2, merged_node);\n}",
+        "wrong": "Node* current = root1;\nif (current->key > root2->key) {\n    root1 = merge_trees(current, root2);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during CAS operations, leading to use-after-free vulnerabilities.",
+        "Neglecting the ABA problem on root-pointer updates during concurrent tree merging phases."
+      ],
+      "best_practices": [
+        "Always register accessed heap nodes into hazard pointer local threads before reading child or sibling pointers.",
+        "Design tree-merging logic to be side-effect free until the final CAS primitive successfully swings the root pointer."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform mergeable priority queue operations under high-contention multi-core execution environments like discrete event simulations.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple binary heaps or standard mutex-backed priority queues provide sufficient throughput with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do atomic CAS primitives facilitate safe root-degree linking in a lock-free Binomial Heap?",
+          "answer": "CAS primitives ensure that a thread updates the root pointer of binomial trees only if the pointer has not changed since it was last read, preventing race conditions during structural modifications."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures like binomial heaps?",
+          "answer": "Hazard pointers protect dynamically allocated nodes from being prematurely reclaimed by the memory manager while other concurrent threads are actively traversing or referencing them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Fibonacci Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Mergeable Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T23:49:55.304960+00:00",
+      "run_number": 4168
     }
   ]
 }
