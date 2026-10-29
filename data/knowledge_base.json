@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4155,
-    "last_updated": "2026-10-29T19:38:52.752104+00:00",
-    "total_topics_learned": 4155
+    "total_runs": 4156,
+    "last_updated": "2026-10-29T23:11:38.754894+00:00",
+    "total_topics_learned": 4156
   },
   "entries": [
     {
@@ -197691,6 +197691,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T19:38:52.752083+00:00",
       "run_number": 4155
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic edge-compression and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel prefix-matching in real-time software-defined networking switches and concurrent cloud routing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a concurrent, lock-free Radix Tree tailored for high-speed IP routing and prefix lookups. It utilizes atomic compare-and-swap (CAS) primitives for safe concurrent edge compression and node splitting, combined with hazard pointers to guarantee safe memory reclamation without blocking readers.",
+      "key_points": [
+        "Uses atomic CAS operations to implement lock-free edge-compression and node-splitting during concurrent insertions.",
+        "Employs hazard pointers to protect nodes from premature deallocation while active threads traverse or query them.",
+        "Optimizes memory layout and search paths for fast longest-prefix-matching operations essential in network routing tables.",
+        "Eliminates global locks entirely, ensuring linearizable multi-core scaling for high-throughput packet processing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting and hazard pointer protection during concurrent Radix Tree insertions",
+        "correct": "bool insert(RadixNode* root, const Key& key, const Value& val) {\n    HazardPointer hp;\n    while (true) {\n        RadixNode* curr = hp.protect(root);\n        // Perform atomic CAS-based edge compression and node splitting\n        if (atomic_compare_exchange_weak(&curr->child, &old_child, new_node)) {\n            break;\n        }\n    }\n    return true;\n}",
+        "wrong": "bool insert_unsafe(RadixNode* root, const Key& key, const Value& val) {\n    // Modifying tree pointers without synchronization or hazard protection causes race conditions\n    root->child = new RadixNode(key, val);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register threads with the hazard pointer manager, leading to memory leaks or use-after-free bugs.",
+        "Failing to handle ABA problems correctly when performing atomic updates on shared tree pointers."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer before dereferencing any potentially mutable child pointer in the Radix tree.",
+        "Batch retired memory nodes and reclaim them asynchronously using epoch-based or hazard-pointer-driven reclamation queues."
+      ],
+      "when_to_use": "Ideal for software-defined networking (SDN) routing tables, cloud-scale edge routers, and packet inspection engines requiring ultra-low latency concurrent prefix lookups.",
+      "when_not_to_use": "Avoid in systems with infrequent read workloads or where simple hash maps or single-threaded search structures suffice without complex synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node splits in a lock-free Radix Tree?",
+          "answer": "By using tagged pointers (combining a node pointer with an incrementing version counter) or leveraging hazard pointers that track exact reader references to prevent premature recycling."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-throughput lock-free routing tables?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation without the unpredictable pause times and overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Trie Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T23:11:38.754876+00:00",
+      "run_number": 4156
     }
   ]
 }
