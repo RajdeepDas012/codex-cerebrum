@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4148,
-    "last_updated": "2026-10-29T19:16:04.278668+00:00",
-    "total_topics_learned": 4148
+    "total_runs": 4149,
+    "last_updated": "2026-10-29T19:19:26.928810+00:00",
+    "total_topics_learned": 4149
   },
   "entries": [
     {
@@ -197358,6 +197358,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-29T19:16:04.278646+00:00",
       "run_number": 4148
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic key-range-splitting and leaf-coalescing CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal data indexing and multi-core parallel time-series query execution in real-time financial trading platforms and concurrent analytical database systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bx-Tree leverages lock-free atomic operations like compare-and-swap (CAS) for key-range-splitting and leaf-coalescing, avoiding global locks during tree rebalancing. By pairing these primitives with hazard pointers for safe memory reclamation, it enables high-throughput multi-core execution for temporal data indexing and time-series analytical databases.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for concurrent node splitting and merging without coarse-grained locking.",
+        "Employs hazard pointers to track threads actively reading nodes, preventing premature memory deallocation.",
+        "Optimized for high-throughput temporal and time-series data indexing in low-latency financial systems.",
+        "Maintains lock-free progress guarantees (at least lock-free or obstruction-free) across concurrent updates and range queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting with hazard pointer protection in a concurrent Bx-Tree.",
+        "correct": "bool split_leaf_node(BxNode* node, Key split_key, BxNode* new_node) {\n    HazardPointerGuard guard(hazard_mgr, node);\n    if (node->is_obsolete()) return false;\n    return node->cas_split_pointer(split_key, new_node);\n}",
+        "wrong": "bool split_leaf_node(BxNode* node, Key split_key, BxNode* new_node) {\n    std::lock_guard<std::mutex> lock(node->mtx);\n    return node->unsafe_split(split_key, new_node);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs.",
+        "Using blocking mutexes within the core path, destroying the lock-free throughput advantages of the Bx-Tree."
+      ],
+      "best_practices": [
+        "Always acquire a hazard pointer reference before traversing or reading any node pointer that may be concurrently modified.",
+        "Batch memory reclamation requests to reduce synchronization overhead when utilizing hazard pointer domains."
+      ],
+      "when_to_use": "Use when building ultra-low-latency financial trading systems or analytical databases requiring high-concurrency time-series ingestion and range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where standard locking B-Trees provide sufficient performance with drastically lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in lock-free Bx-Trees?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that deleting threads know to defer memory freeing until no thread holds a hazard pointer to that target node."
+        },
+        {
+          "question": "Why are lock-free key-range-splitting and leaf-coalescing more complex in Bx-Trees compared to standard hash maps?",
+          "answer": "Because Bx-Trees maintain sorted order and structural invariants across multi-level hierarchies, requiring atomic coordination across parent and child nodes during splits and merges."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Time-Series Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T19:19:26.928789+00:00",
+      "run_number": 4149
     }
   ]
 }
