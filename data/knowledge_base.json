@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4124,
-    "last_updated": "2026-10-29T05:58:37.353473+00:00",
-    "total_topics_learned": 4124
+    "total_runs": 4125,
+    "last_updated": "2026-10-29T06:01:48.473291+00:00",
+    "total_topics_learned": 4125
   },
   "entries": [
     {
@@ -196219,6 +196219,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-29T05:58:37.353454+00:00",
       "run_number": 4124
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-merging and range-query CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial-key retrieval and multi-core parallel window-query execution in real-time geographic mapping platforms and concurrent location-based service engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Priority Search Tree combines a priority queue on one coordinate with a search tree on the other, allowing efficient orthogonal range searches without coarse-grained locks. Using atomic compare-and-swap (CAS) primitives and hazard pointers, it prevents race conditions and memory leaks during multi-threaded spatial data access.",
+      "key_points": [
+        "Merges heap-ordered priorities on one dimension with binary search tree properties on the other for optimal orthogonal range searching.",
+        "Employs atomic coordinate-merging and range-query CAS primitives to handle concurrent insertions and node traversals without blocking.",
+        "Utilizes hazard pointers to safely manage dynamic memory reclamation in a lock-free environment where nodes can be concurrently unlinked.",
+        "Delivers high-throughput spatial-key retrieval and low-latency window-query execution for multi-core location-based architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion and hazard pointer protection in a lock-free Priority Search Tree.",
+        "correct": "bool insert(Node*& root, int x, int y) {\n    Node* newNode = new Node(x, y);\n    while (true) {\n        Node* curr = hazard_protect(root);\n        if (compare_and_swap(&root, curr, newNode)) {\n            hazard_release();\n            return true;\n        }\n        hazard_release();\n    }\n}",
+        "wrong": "bool insert(Node*& root, int x, int y) {\n    lock.lock();\n    root = new Node(x, y, root);\n    lock.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect accessed nodes with hazard pointers, leading to use-after-free bugs when concurrent threads delete nodes.",
+        "Applying coarse-grained locking on subtrees during range queries, which degrades scalability on multi-core systems.",
+        "Incorrectly ordering priority and coordinate constraints during concurrent restructuring operations."
+      ],
+      "best_practices": [
+        "Design fine-grained atomic validation steps to guarantee that coordinate updates and range traversals observe consistent tree states.",
+        "Reuse hazard pointer slots efficiently across thread pools to minimize overhead during intense spatial query workloads.",
+        "Thoroughly stress-test concurrent window queries under high contention to detect elusive ABA problems and memory reclamation races."
+      ],
+      "when_to_use": "Use when building real-time geographic mapping systems or location-based services that demand concurrent, high-frequency orthogonal window queries and spatial updates.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where standard pointer-based trees and simple locking introduce lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a Priority Search Tree differ structurally from a standard Binary Search Tree?",
+          "answer": "A Priority Search Tree orders nodes by priority along one coordinate axis (acting like a heap) and by standard search key ordering along the orthogonal axis, optimizing it specifically for orthogonal range queries."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Priority Search Tree?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently reading, preventing other threads from prematurely freeing or recycling those memory blocks via garbage collection or memory pools."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent k-d trees",
+        "hazard pointer memory management",
+        "non-blocking orthogonal range query algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T06:01:48.473270+00:00",
+      "run_number": 4125
     }
   ]
 }
