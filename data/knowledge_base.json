@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4114,
-    "last_updated": "2026-10-29T05:26:38.055900+00:00",
-    "total_topics_learned": 4114
+    "total_runs": 4115,
+    "last_updated": "2026-10-29T05:29:49.041215+00:00",
+    "total_topics_learned": 4115
   },
   "entries": [
     {
@@ -195747,6 +195747,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T05:26:38.055881+00:00",
       "run_number": 4114
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and min-value-aggregating CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core parallel heavy-hitters identification in real-time stream processing platforms and concurrent network flow monitoring engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Count-Min Sketch that uses atomic compare-and-swap (CAS) operations to safely increment frequency cells and aggregate minimum estimates across hash functions without locks. It utilizes hazard pointers for safe memory management, making it ideal for high-throughput stream processing and network telemetry.",
+      "key_points": [
+        "Employs atomic frequency-cell-incrementing and min-value-aggregating CAS primitives to maintain correctness under high thread contention.",
+        "Utilizes hazard pointers to prevent premature memory reclamation and avoid the memory footprint bloat of garbage collection.",
+        "Provides a space-efficient probabilistic data structure for frequency estimation bounded by user-defined error parameters.",
+        "Enables multi-core parallel heavy-hitters identification in real-time network flow monitoring and stream processors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency cell incrementing using a compare-and-swap loop in a concurrent sketch matrix.",
+        "correct": "bool increment_cell(std::atomic<uint32_t>& cell) {\n    uint32_t current = cell.load(std::memory_order_relaxed);\n    while (!cell.compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed)) {}\n    return true;\n}",
+        "wrong": "bool increment_cell(std::atomic<uint32_t>& cell) {\n    uint32_t current = cell.load();\n    cell.store(current + 1); // Not atomic; suffers from race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use relaxed memory orders for the initial load inside a CAS retry loop, reducing overall throughput.",
+        "Neglecting hazard pointer protection during dynamic sketch resizing or row reallocation phases."
+      ],
+      "best_practices": [
+        "Use distinct hash seeds for each row in the Count-Min Sketch to minimize correlated hash collisions.",
+        "Leverage thread-local batch updates when possible to reduce atomic instruction contention on hot frequency cells."
+      ],
+      "when_to_use": "Use when you need high-throughput, multi-threaded frequency estimation over massive data streams where bounded overestimation error is acceptable.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory or when the alphabet size is small enough to fit a standard exact hash map efficiently.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions when estimating item frequencies in a Count-Min Sketch?",
+          "answer": "By using multiple independent hash functions to map an item to different counters and taking the minimum value across those counters to bound the overestimation error."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over lock-based approaches in a concurrent Count-Min Sketch?",
+          "answer": "Hazard pointers allow lock-free reading and safe deferred deletion without global lock bottlenecks or stop-the-world garbage collection pauses, ensuring high throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bloom Filters",
+        "Concurrent HyperLogLog",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T05:29:49.041194+00:00",
+      "run_number": 4115
     }
   ]
 }
