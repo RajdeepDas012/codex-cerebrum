@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4122** |
-| Last Updated | `2026-10-29T05:52:14.185286+00:00` |
-| Dataset Size | `4122 entries` |
+| Total Topics Learned | **4123** |
+| Last Updated | `2026-10-29T05:55:26.908294+00:00` |
+| Dataset Size | `4123 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2840 |
+| data-structures | 2841 |
 | algorithms | 251 |
 | trading-strategies | 228 |
 | crypto-blockchain | 178 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel point-update stream processing in real-time telemetry analytics platforms and concurrent metrics aggregation engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic node-cloning and version-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range queries and multi-core parallel time-travel debugging in real-time functional data processing platforms and concurrent version-controlled database engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-linking and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring pattern matching and multi-core parallel biological sequence analysis in real-time genome annotation platforms and concurrent text mining engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput deletion-supported approximate membership queries and multi-core parallel set verification in real-time database filtering layers and concurrent storage engine deduplication systems`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookup and multi-core parallel dynamic restructuring in real-time caching systems and concurrent memory management engines`
-- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversal and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index maintenance and multi-core parallel point and range queries in real-time in-memory database systems and high-frequency storage engines`
 
 <!-- STATS_END -->
 
