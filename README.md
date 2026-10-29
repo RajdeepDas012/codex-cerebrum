@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4164** |
-| Last Updated | `2026-10-29T23:37:11.825194+00:00` |
-| Dataset Size | `4164 entries` |
+| Total Topics Learned | **4165** |
+| Last Updated | `2026-10-29T23:40:22.616363+00:00` |
+| Dataset Size | `4165 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2875 |
+| data-structures | 2876 |
 | algorithms | 254 |
 | trading-strategies | 228 |
 | crypto-blockchain | 180 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task dispatching and multi-core parallel job scheduling in real-time asynchronous execution engines and concurrent task processing frameworks`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node-linking and branch-re-rooting CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core parallel state synchronization in real-time distributed ledger systems and concurrent blockchain validation engines`
 - `Implementation of a lock-free thread-safe concurrent B-Plus Tree using atomic leaf-node-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range queries and multi-core parallel database indexing in real-time transactional database systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-tower-height CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent ordered map operations and multi-core parallel range querying in real-time in-memory database systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy point updates and multi-core parallel range scans in real-time distributed storage engines and concurrent database write-amplification reduction systems`
-- `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic character-ranking and bit-vector-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel rank-select query execution in real-time genomic data platforms and concurrent analytical search engines`
 
 <!-- STATS_END -->
 
