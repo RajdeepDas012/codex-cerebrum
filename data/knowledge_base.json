@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4160,
-    "last_updated": "2026-10-29T23:24:23.541363+00:00",
-    "total_topics_learned": 4160
+    "total_runs": 4161,
+    "last_updated": "2026-10-29T23:27:34.459097+00:00",
+    "total_topics_learned": 4161
   },
   "entries": [
     {
@@ -197928,6 +197928,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T23:24:23.541345+00:00",
       "run_number": 4160
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy point updates and multi-core parallel range scans in real-time distributed storage engines and concurrent database write-amplification reduction systems",
+      "category": "databases",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An LSM-Tree optimizes write-heavy workloads by buffering mutations in an in-memory memtable before flushing them to immutable, disk-backed SSTables. Implementing it lock-free using atomic CAS operations and hazard pointers eliminates contention during high-throughput concurrent point writes and parallel range scans.",
+      "key_points": [
+        "Utilizes atomic memtable-swapping via Compare-And-Swap (CAS) to seamlessly transition active write buffers to immutable read-only memtables without blocking concurrent threads.",
+        "Employs hazard pointer memory reclamation to safely manage memory deallocation of volatile memtable nodes and SSTable index structures accessed by concurrent reader threads.",
+        "Facilitates background SSTable compaction loops that merge overlapping key ranges across levels to bound read amplification and reclaim deleted space.",
+        "Combines lock-free point updates with parallel multi-version concurrency control (MVCC) range scans to ensure consistent analytical reads under heavy write loads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic memtable swapping using atomic pointer exchange in a concurrent LSM-Tree architecture.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct MemTable {\n    // Memtable internal skip-list or map representation\n};\n\nclass ConcurrentLSMTree {\n    std::atomic<MemTable*> active_memtable;\npublic:\n    ConcurrentLSMTree() : active_memtable(new MemTable()) {}\n    void rotate_memtable(MemTable* new_table) {\n        MemTable* old_table = active_memtable.load(std::memory_order_relaxed);\n        while (!active_memtable.compare_exchange_weak(old_table, new_table,\n            std::memory_order_release, std::memory_order_relaxed));\n    }\n};",
+        "wrong": "class UnsafeLSMTree {\n    MemTable* active_memtable;\npublic:\n    void rotate_memtable(MemTable* new_table) {\n        // Missing synchronization leads to race conditions during pointer updates\n        active_memtable = new_table;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use proper memory ordering (e.g., acquire-release semantics) during atomic pointer swaps, leading to stale memtable reads.",
+        "Ignoring ABA problems or memory reclamation hazards when concurrent threads traverse older SSTable metadata structures during compaction."
+      ],
+      "best_practices": [
+        "Pair atomic pointer exchanges with robust memory reclamation schemes like hazard pointers or epoch-based reclamation to prevent memory leaks and use-after-free bugs.",
+        "Decouple the write path from background compaction workers by utilizing lock-free queues for handoff tasks."
+      ],
+      "when_to_use": "Ideal for high-throughput distributed databases, log aggregation platforms, and key-value stores experiencing extreme write-heavy point updates and append-only workloads.",
+      "when_not_to_use": "Inappropriate for memory-constrained embedded systems or read-heavy applications requiring strict low-latency point lookups without the overhead of multi-level file scans.",
+      "interview_questions": [
+        {
+          "question": "How does an atomic memtable swap prevent write stalls in a concurrent LSM-Tree?",
+          "answer": "By using Compare-And-Swap (CAS) to atomically redirect incoming write traffic to a newly allocated memtable instance while the old memtable is asynchronously scheduled for flushing to disk."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent range scans over LSM-Tree SSTables?",
+          "answer": "They protect reader threads from accessing SSTable index blocks or memtable nodes that are actively being unlinked or garbage collected by background compaction threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free skip lists",
+        "Multi-Version Concurrency Control (MVCC)",
+        "Hazard pointers and epoch-based reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T23:27:34.459080+00:00",
+      "run_number": 4161
     }
   ]
 }
