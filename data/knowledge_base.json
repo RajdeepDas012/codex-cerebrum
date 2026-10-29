@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4166,
-    "last_updated": "2026-10-29T23:43:33.613239+00:00",
-    "total_topics_learned": 4166
+    "total_runs": 4167,
+    "last_updated": "2026-10-29T23:46:44.796833+00:00",
+    "total_topics_learned": 4167
   },
   "entries": [
     {
@@ -198210,6 +198210,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T23:43:33.613221+00:00",
       "run_number": 4166
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and root-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel graph algorithm execution in real-time network optimization systems and concurrent pathfinding engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Fibonacci Heap, utilizing atomic min-pointer updates and root-list splicing via Compare-And-Swap (CAS) primitives. It leverages hazard pointers for safe memory reclamation, enabling high-throughput parallel graph algorithms and network pathfinding across multiple CPU cores.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to manage pointer updates for concurrent root-list splicing and minimum tracking without locks.",
+        "Employs hazard pointers to track active reader threads and safely reclaim memory of deleted nodes without race conditions.",
+        "Optimizes amortized priority queue operations like decrease-key and merge for high-concurrency multi-threaded environments.",
+        "Essential for scaling parallel graph algorithms such as Dijkstra's algorithm in real-time routing and network optimization systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion into a concurrent Fibonacci heap using atomic operations and hazard pointers.",
+        "correct": "#include <atomic>\n#include <hazard_pointer.h>\n\ntemplate <typename T>\nclass ConcurrentFibonacciHeap {\n    struct Node {\n        T key;\n        std::atomic<Node*> next;\n        std::atomic<Node*> parent;\n        std::atomic<bool> marked;\n    };\n    std::atomic<Node*> min_node;\npublic:\n    void insert(T key) {\n        Node* new_node = new Node{key, nullptr, nullptr, false};\n        Node* current_min;\n        do {\n            current_min = min_node.load();\n            new_node->next.store(current_min);\n        } while (!min_node.compare_exchange_weak(current_min, new_node));\n    }\n};",
+        "wrong": "void insert(T key) {\n    Node* new_node = new Node{key};\n    new_node->next = min_node;\n    min_node = new_node; // Missing synchronization and atomic CAS allows race conditions and dropped nodes.\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem during concurrent root-list manipulation and CAS operations.",
+        "Reclaiming deleted heap node memory immediately without hazard pointers or epoch-based reclamation, causing use-after-free bugs.",
+        "Neglecting contention bottlenecks on the global minimum pointer during massive parallel insertions."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory management to safely defer deletion until all referencing threads complete.",
+        "Minimize CAS retry loops by utilizing backoff strategies under heavy multi-core contention.",
+        "Decouple structural restructuring (like consolidation) from critical path insertions using background worker threads or lazy evaluation."
+      ],
+      "when_to_use": "Use when implementing high-performance parallel graph algorithms like Dijkstra or Prim across multi-core systems where low-latency priority queue updates are critical.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the constant overhead of atomic operations, CAS loops, and hazard pointer management outweighs the concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads attempt to update the minimum pointer of a Fibonacci Heap simultaneously?",
+          "answer": "By using a Compare-And-Swap (CAS) loop on the atomic min-pointer variable, retrying if another thread modifies it concurrently."
+        },
+        {
+          "question": "Why are hazard pointers required in a lock-free Fibonacci Heap implementation instead of standard garbage collection or manual deletion?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing other threads from prematurely freeing or reclaiming those memory addresses while concurrent operations are in flight."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Priority Queue",
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T23:46:44.796815+00:00",
+      "run_number": 4167
     }
   ]
 }
