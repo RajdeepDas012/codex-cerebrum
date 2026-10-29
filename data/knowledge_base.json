@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4111,
-    "last_updated": "2026-10-29T05:15:42.271709+00:00",
-    "total_topics_learned": 4111
+    "total_runs": 4112,
+    "last_updated": "2026-10-29T05:20:04.502459+00:00",
+    "total_topics_learned": 4112
   },
   "entries": [
     {
@@ -195606,6 +195606,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T05:15:42.271688+00:00",
       "run_number": 4111
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-ranking and doubling-algorithm CAS primitives alongside hazard pointer memory reclamation for high-throughput genome sequencing and multi-core parallel full-text search in real-time document analysis platforms and concurrent bioinformatics query engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Suffix Array utilizing atomic suffix-ranking, doubling algorithms, and Compare-And-Swap (CAS) primitives. It leverages hazard pointers for memory safety, enabling high-throughput pattern matching and genome sequence analysis across multi-core systems without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic primitives and CAS operations to manage suffix rankings and index shifts without blocking.",
+        "Employs the prefix doubling algorithm concurrently to sort suffixes efficiently in parallel phases.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation of dynamically reallocated rank arrays.",
+        "Optimizes multi-core throughput for bioinformatics pipelines, full-text searches, and genomic pattern matching."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual concurrent suffix ranking step using atomic operations and hazard pointers.",
+        "correct": "template <typename T>\nvoid updateSuffixRank(std::atomic<int>* ranks, int idx, int val, HazardPointer<int>& hp) {\n    int* current = hp.protect(&ranks[idx]);\n    while (!ranks[idx].compare_exchange_weak(current, val)) {\n        current = hp.protect(&ranks[idx]);\n    }\n    hp.clear();\n}",
+        "wrong": "void updateSuffixRank(int* ranks, int idx, int val) {\n    ranks[idx] = val; // Lacks atomicity and thread safety, causing race conditions in multi-threaded suffix sorting\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate ranking arrays with hazard pointers during parallel prefix doubling passes, leading to use-after-free bugs.",
+        "Relying on coarse-grained locks during the index reorganization phase, which degrades scalability and defeats the lock-free design."
+      ],
+      "best_practices": [
+        "Strictly adhere to hazard pointer protocols before reading or modifying shared ranking nodes in multi-core environments.",
+        "Minimize atomic contention by batching local prefix comparison results before committing rank updates via CAS."
+      ],
+      "when_to_use": "When building high-throughput genomic search tools, real-time log analysis systems, or search engines requiring parallel text pattern matching under heavy concurrency.",
+      "when_not_to_use": "For small datasets, single-threaded applications, or environments where simple string matching algorithms or standard trie structures suffice without the overhead of lock-free design.",
+      "interview_questions": [
+        {
+          "question": "How does the prefix doubling algorithm function in a concurrent context when constructing a suffix array?",
+          "answer": "It iteratively doubles the comparison length ($2^k$) of suffixes, utilizing atomic CAS operations to update rank arrays safely across multiple threads without global locking."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free suffix arrays with dynamic memory reallocations?",
+          "answer": "Hazard pointers safely track threads actively accessing shared nodes or rank arrays, preventing premature reclamation and use-after-free errors while avoiding the performance bottlenecks of garbage collection."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Suffix Trees",
+        "Parallel Burrows-Wheeler Transform",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-29T05:20:04.502439+00:00",
+      "run_number": 4112
     }
   ]
 }
