@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4118** |
-| Last Updated | `2026-10-29T05:39:30.072592+00:00` |
-| Dataset Size | `4118 entries` |
+| Total Topics Learned | **4119** |
+| Last Updated | `2026-10-29T05:42:40.867619+00:00` |
+| Dataset Size | `4119 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2836 |
+| data-structures | 2837 |
 | algorithms | 251 |
 | trading-strategies | 228 |
 | crypto-blockchain | 178 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookup and multi-core parallel dynamic restructuring in real-time caching systems and concurrent memory management engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-traversal and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index maintenance and multi-core parallel point and range queries in real-time in-memory database systems and high-frequency storage engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-node-linking and root-hash-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic data verification and multi-core parallel audit trail generation in real-time distributed ledger platforms and concurrent data integrity verification engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting in real-time analytics dashboards and concurrent big data streaming engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and min-value-aggregating CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core parallel heavy-hitters identification in real-time stream processing platforms and concurrent network flow monitoring engines`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership queries and multi-core parallel duplicate filtering in real-time web crawlers and concurrent distributed caching systems`
 
 <!-- STATS_END -->
 
