@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4125,
-    "last_updated": "2026-10-29T06:01:48.473291+00:00",
-    "total_topics_learned": 4125
+    "total_runs": 4126,
+    "last_updated": "2026-10-29T12:41:34.895681+00:00",
+    "total_topics_learned": 4126
   },
   "entries": [
     {
@@ -196268,6 +196268,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T06:01:48.473270+00:00",
       "run_number": 4125
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent Hash Map using atomic bucket-resizing and hopscotch-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core parallel lookups in real-time distributed caching systems and concurrent in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent hash map enables high-throughput key-value operations across multiple CPU cores without thread contention or blocking locks. By combining atomic bucket resizing, hopscotch hashing neighborhoods, and hazard pointer memory reclamation, it guarantees safe concurrent mutations and reads.",
+      "key_points": [
+        "Utilizes compare-and-swap (CAS) primitives for lock-free bucket modifications and entry insertions.",
+        "Employs hopscotch hashing to maintain locality and bound the probe sequence length for parallel lookups.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation without suffering from the ABA problem during concurrent resizes.",
+        "Achieves high scalability in distributed caching systems and in-memory databases by eliminating global mutex locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bucket updates using a CAS-based insertion loop.",
+        "correct": "bool insert(K key, V val) {\n    while (true) {\n        Bucket* b = find_bucket(key);\n        if (b->is_locked.compare_exchange_weak(false, true)) {\n            if (b->key == nullptr) {\n                b->key = key;\n                b->value = val;\n                b->is_locked.store(false);\n                return true;\n            }\n            b->is_locked.store(false);\n        }\n    }\n}",
+        "wrong": "bool insert(K key, V val) {\n    mutex.lock();\n    map[key] = val;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes with hazard pointers, leading to use-after-free race conditions during concurrent re-hashing.",
+        "Ignoring the ABA problem when performing atomic pointer updates on bucket chains."
+      ],
+      "best_practices": [
+        "Always protect thread-local shared pointers with hazard pointers before traversing linked bucket entries.",
+        "Keep hopscotch neighborhood bounds optimized for the target cache-line size to minimize cache misses during concurrent access."
+      ],
+      "when_to_use": "Use when building ultra-low-latency distributed caches or in-memory databases requiring high parallel throughput with minimal contention.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained embedded environments where lock-free primitives and hazard tracking overhead outweigh benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free hash map?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory addresses until the read reference is released."
+        },
+        {
+          "question": "Why is hopscotch hashing advantageous in concurrent hash maps compared to standard linear probing?",
+          "answer": "Hopscotch hashing uses a neighborhood constraint based on CPU cache lines, ensuring that lookups can quickly scan a bounded neighborhood concurrently without excessive lock acquisitions."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Hopscotch Hashing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-29T12:41:34.895665+00:00",
+      "run_number": 4126
     }
   ]
 }
