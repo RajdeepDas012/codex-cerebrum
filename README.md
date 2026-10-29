@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4138** |
-| Last Updated | `2026-10-29T13:28:28.669812+00:00` |
-| Dataset Size | `4138 entries` |
+| Total Topics Learned | **4139** |
+| Last Updated | `2026-10-29T13:32:42.615246+00:00` |
+| Dataset Size | `4139 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2854 |
+| data-structures | 2855 |
 | algorithms | 252 |
 | trading-strategies | 228 |
 | crypto-blockchain | 179 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assignment and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search tree operations and multi-core parallel dynamic set manipulation in real-time in-memory database systems and concurrent key-value indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority-based message routing and multi-core parallel event-driven task scheduling in real-time operating system schedulers and concurrent asynchronous execution engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-linking and degree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling in real-time operating system kernels and concurrent discrete-event simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority-based task scheduling and multi-core parallel graph algorithm execution in real-time network routing engines and concurrent pathfinding systems`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core parallel spell-correction querying in real-time dictionary lookup services and concurrent spell-checking engines`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-routing-table-updating and randomized-membership-vector CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer lookups and multi-core parallel decentralized key routing in real-time content delivery networks and concurrent distributed hash table engines`
 
 <!-- STATS_END -->
 
