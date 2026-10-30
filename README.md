@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4226** |
-| Last Updated | `2026-10-30T23:25:12.936923+00:00` |
-| Dataset Size | `4226 entries` |
+| Total Topics Learned | **4227** |
+| Last Updated | `2026-10-30T23:28:23.724106+00:00` |
+| Dataset Size | `4227 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | data-structures | 2935 |
 | algorithms | 255 |
 | trading-strategies | 228 |
-| crypto-blockchain | 181 |
+| crypto-blockchain | 182 |
 | technical-analysis | 147 |
 | system-design | 120 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-propagation and node-version-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput verifiable state tracking and multi-core parallel cryptographic proof generation in real-time blockchain verification systems and concurrent decentralized ledger platforms`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-tagging and range-minimum-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput interval query aggregation and multi-core parallel dynamic range updating in real-time financial analytics systems and concurrent gaming state management engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and leaf-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core parallel range query execution in real-time transactional database systems and concurrent file storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-adjustment and forward-pointer-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted data insertion in real-time in-memory database indexing systems and concurrent key-value caching platforms`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-array-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic pattern matching and multi-core parallel full-text search execution in real-time bioinformatics software and concurrent document retrieval systems`
-- `Implementation of a lock-free thread-safe concurrent T-Tree using atomic balance-factor-adjusting and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory database indexing and multi-core parallel range query execution in real-time relational storage systems and concurrent transactional database engines`
 
 <!-- STATS_END -->
 
