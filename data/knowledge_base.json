@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4190,
-    "last_updated": "2026-10-30T12:45:47.906371+00:00",
-    "total_topics_learned": 4190
+    "total_runs": 4191,
+    "last_updated": "2026-10-30T12:48:59.780466+00:00",
+    "total_topics_learned": 4191
   },
   "entries": [
     {
@@ -199348,6 +199348,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-30T12:45:47.906352+00:00",
       "run_number": 4190
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B*-Tree using atomic sibling-node-redistribution and node-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput node occupancy optimization and multi-core parallel high-concurrency database indexing in real-time enterprise storage systems and concurrent transactional database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent B*-Tree that ensures high node occupancy and minimizes tree height through atomic sibling redistribution and balancing primitives. Utilizing hazard pointers prevents memory reclamation races, guaranteeing safe concurrent multi-core access in demanding enterprise storage and transactional environments.",
+      "key_points": [
+        "Applies atomic Compare-And-Swap (CAS) primitives for lock-free node-balancing and sibling-node-redistribution operations.",
+        "Maintains high node occupancy (typically ~66% or higher) by forcing key redistribution with adjacent siblings before splitting.",
+        "Employs hazard pointers to safely track and reclaim memory without locks during high-concurrency structural modifications.",
+        "Enables scalable, parallel multi-core index lookups and insertions for high-throughput transactional database engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node pointer acquisition using hazard pointers in a lock-free B*-Tree context.",
+        "correct": "Node* acquire_node(std::atomic<Node*>& ptr, HazardPointer& hp) {\n    Node* node;\n    do {\n        node = ptr.load(std::memory_order_acquire);\n        hp.protect(node);\n    } while (ptr.load(std::memory_order_acquire) != node);\n    return node;\n}",
+        "wrong": "Node* acquire_node(std::atomic<Node*>& ptr) {\n    return ptr.load(std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading child pointers, leading to use-after-free bugs.",
+        "Neglecting memory ordering semantics (using relaxed instead of acquire/release), causing stale node state reads."
+      ],
+      "best_practices": [
+        "Always clear and retire hazard pointers promptly after completing access to a tree node.",
+        "Ensure atomic sibling redistribution checks are idempotent to handle concurrent modification retries gracefully."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded storage systems and transactional databases requiring extreme concurrency, high read/write throughput, and strict space efficiency.",
+      "when_not_to_use": "Avoid in single-threaded applications, simple key-value stores where standard mutex-backed trees suffice, or embedded environments with strict memory footprints.",
+      "interview_questions": [
+        {
+          "question": "How does a B*-Tree differ from a standard B+-Tree regarding node splits, and how does it benefit concurrency?",
+          "answer": "A B*-Tree delays node splitting by redistributing keys to adjacent sibling nodes first, maintaining higher node occupancy and reducing tree height, which minimizes lock contention and traversal depth."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free tree structure?",
+          "answer": "Hazard pointers provide a lock-free mechanism to safely announce which nodes a thread is currently accessing, preventing other threads from prematurely freeing or reusing those memory locations."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T12:48:59.780448+00:00",
+      "run_number": 4191
     }
   ]
 }
