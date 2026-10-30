@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4222,
-    "last_updated": "2026-10-30T23:12:29.221237+00:00",
-    "total_topics_learned": 4222
+    "total_runs": 4223,
+    "last_updated": "2026-10-30T23:15:39.722436+00:00",
+    "total_topics_learned": 4223
   },
   "entries": [
     {
@@ -200863,6 +200863,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-30T23:12:29.221215+00:00",
       "run_number": 4222
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-array-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic pattern matching and multi-core parallel full-text search execution in real-time bioinformatics software and concurrent document retrieval systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent suffix array leverages atomic Compare-And-Swap (CAS) operations for index sorting and rank updating, combined with hazard pointers to safely manage memory reclamation without blocking threads. This architecture enables ultra-fast string matching, substring queries, and full-text searches across multiple CPU cores without thread contention.",
+      "key_points": [
+        "Utilizes atomic primitives to coordinate concurrent index-sorting and rank-array modifications safely.",
+        "Employs hazard pointers to track active reader threads and reclaim memory from deleted or updated suffix arrays without data races.",
+        "Facilitates highly parallel pattern matching for genomic sequences and large-scale document corpuses.",
+        "Prevents priority inversion and convoy effects inherent in traditional lock-based suffix array structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe hazard pointer acquisition and atomic rank updates during concurrent suffix array access.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct HazardPointer {\n    std::atomic<void*> ptr;\n};\n\nclass ConcurrentSuffixArray {\n    std::atomic<int*> rank_array;\npublic:\n    void update_rank(int* new_ranks, int* old_ranks) {\n        while (!rank_array.compare_exchange_weak(old_ranks, new_ranks));\n    }\n};",
+        "wrong": "class ConcurrentSuffixArray {\n    int* rank_array;\npublic:\n    void update_rank(int* new_ranks) {\n        rank_array = new_ranks; // Unsynchronized write causing race conditions\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before reading shared suffix array references, leading to premature memory reclamation.",
+        "Using weak CAS loops without exponential backoff, causing excessive CPU cache line bouncing and bus contention under high thread counts."
+      ],
+      "best_practices": [
+        "Integrate thread-local hazard pointer pools to minimize synchronization overhead during high-frequency read operations.",
+        "Employ optimized parallel sorting algorithms (e.g., parallel multi-key quicksort or DC3/SA-IS variants) adapted for atomic execution contexts."
+      ],
+      "when_to_use": "Ideal for read-heavy, low-latency bioinformatics pipelines and concurrent document search engines requiring constant multi-core query execution over shared text corpuses.",
+      "when_not_to_use": "Avoid in systems with frequent text mutations, as full suffix array rebuilding or incremental updates under lock-free constraints introduce immense computational overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free suffix array?",
+          "answer": "Hazard pointers allow threads to register ownership of a memory node before reading it. Reclaimers scan all active hazard pointer lists and defer deletion until no thread holds a reference to the targeted node."
+        },
+        {
+          "question": "Why is standard locking inefficient for concurrent suffix array rank updates?",
+          "answer": "Locks cause thread serialization, blocking parallel pattern matching queries and creating severe bottlenecks during high-throughput string searches across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Parallel SA-IS Suffix Array Construction"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T23:15:39.722414+00:00",
+      "run_number": 4223
     }
   ]
 }
