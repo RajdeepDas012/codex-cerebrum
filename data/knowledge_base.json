@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4221,
-    "last_updated": "2026-10-30T23:09:18.677843+00:00",
-    "total_topics_learned": 4221
+    "total_runs": 4222,
+    "last_updated": "2026-10-30T23:12:29.221237+00:00",
+    "total_topics_learned": 4222
   },
   "entries": [
     {
@@ -200816,6 +200816,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-30T23:09:18.677820+00:00",
       "run_number": 4221
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Tree using atomic balance-factor-adjusting and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput in-memory database indexing and multi-core parallel range query execution in real-time relational storage systems and concurrent transactional database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent T-Tree index structure combining AVL-tree balancing with B-tree node optimization. By utilizing atomic Compare-And-Swap (CAS) operations for node updates and hazard pointers for safe memory reclamation, it achieves high-throughput multi-core scaling for in-memory relational databases.",
+      "key_points": [
+        "Utilizes atomic balance-factor adjustments and node rotation CAS primitives to maintain tree invariants without global locks.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent the ABA problem during concurrent node modifications.",
+        "Optimizes memory layout by storing multiple sorted keys per tree node, bridging the gap between binary search trees and B-trees.",
+        "Enables high-throughput parallel range queries and transactional indexing ideal for multi-core relational storage systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a lock-free T-Tree node update using atomic operations and hazard pointers.",
+        "correct": "template <typename T> void update_node(TNode<T>* node, const T& key) {\n    HazardPointerGuard hp;\n    while (true) {\n        auto* current = hp.protect(node->child);\n        if (atomic_compare_exchange_weak(&node->child, &current, new_node)) {\n            break;\n        }\n    }\n}",
+        "wrong": "template <typename T> void update_node(TNode<T>* node, const T& key) {\n    node->child = new_node; // Missing synchronization, CAS primitives, and hazard pointer protection\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Using weak CAS loops incorrectly without checking return values, causing infinite retry loops or missed updates."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with thread-local hazard pointer structures before traversing child pointers.",
+        "Batch memory retirement calls to minimize the performance overhead of deferred reclamation."
+      ],
+      "when_to_use": "Use when building high-performance, in-memory relational databases requiring frequent, concurrent range queries and multi-core updates.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free synchronization and hazard pointers outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free conditions in a lock-free T-Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently accessing, preventing other threads from prematurely freeing or recycling those memory locations until no thread holds a reference to them."
+        },
+        {
+          "question": "Why is a T-Tree often preferred over standard binary search trees in in-memory database indexing?",
+          "answer": "T-Trees combine the storage efficiency of B-trees (storing multiple keys per node to reduce pointer overhead and cache misses) with the search characteristics of AVL trees."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bw-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent AVL Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T23:12:29.221215+00:00",
+      "run_number": 4222
     }
   ]
 }
