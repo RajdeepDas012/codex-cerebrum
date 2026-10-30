@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4192,
-    "last_updated": "2026-10-30T12:52:10.691690+00:00",
-    "total_topics_learned": 4192
+    "total_runs": 4193,
+    "last_updated": "2026-10-30T12:55:27.983948+00:00",
+    "total_topics_learned": 4193
   },
   "entries": [
     {
@@ -199442,6 +199442,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-30T12:52:10.691672+00:00",
       "run_number": 4192
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-level-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted set operations in real-time in-memory databases and concurrent caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent skip list is a probabilistic data structure that maintains ordered key-value data with logarithmic search performance, allowing lock-free thread safety via atomic Compare-And-Swap (CAS) operations. By utilizing hazard pointers, it safely reclaims memory without blocking readers or writers, enabling scalable high-throughput operations in multi-core environments.",
+      "key_points": [
+        "Uses atomic forward-pointer-linking and node-level-splicing CAS primitives to achieve lock-free node insertion and deletion.",
+        "Employs hazard pointers to track active threads accessing specific nodes, preventing premature memory deallocation and ABA problems.",
+        "Maintains probabilistic multi-level towers to provide $O(\\log n)$ expected time complexity for search, insert, and delete operations.",
+        "Eliminates global locks entirely, maximizing throughput and reducing latency variance in highly concurrent multi-core applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic hazard pointer protection during lock-free skip list node traversal.",
+        "correct": "void* hazard_ptr = hazard_mgr.protect(node->forward[level], thread_id);\nif (node->forward[level].load() == hazard_ptr) {\n    // Safe to access node contents\n}",
+        "wrong": "node_t* next = node->forward[level].load();\n// Node could be freed here by another thread before usage\nprocess(next->value);"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes as logically deleted before attempting physical unlinking via CAS, leading to inconsistent state across threads.",
+        "Neglecting hazard pointer protection during multi-level pointer traversal, resulting in use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Always separate logical deletion (setting a delete mark bit on the pointer) from physical unlinking to maintain data structure integrity.",
+        "Regularly scan and retire hazard pointers to bound memory usage and prevent memory leaks in long-running concurrent systems."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory databases, priority queues, or sorted sets requiring frequent concurrent reads, inserts, and deletes without global lock contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of probabilistic pointer towers and hazard management outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing a CAS operation to insert a node into a concurrent skip list?",
+          "answer": "By embedding a version stamp, tag, or utilizing hazard pointers and marked reference pointers that change alongside the pointer address during state transitions."
+        },
+        {
+          "question": "Why is logical deletion required before physical unlinking in a lock-free skip list?",
+          "answer": "Logical deletion marks the node as deleted so concurrent inserters know to bypass it, preventing new forward pointers from being anchored to a node about to be unlinked."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Linked Lists",
+        "ABA Problem Mitigation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T12:55:27.983926+00:00",
+      "run_number": 4193
     }
   ]
 }
