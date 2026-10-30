@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4219,
-    "last_updated": "2026-10-30T23:02:55.317091+00:00",
-    "total_topics_learned": 4219
+    "total_runs": 4220,
+    "last_updated": "2026-10-30T23:06:08.352132+00:00",
+    "total_topics_learned": 4220
   },
   "entries": [
     {
@@ -200720,6 +200720,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-30T23:02:55.317069+00:00",
       "run_number": 4219
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-swapping and delta-chain-consolidation CAS primitives alongside hazard pointer memory reclamation for high-throughput latch-free storage engine updates and multi-core parallel in-memory database indexing in real-time transactional systems and concurrent key-value storage platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bw-Tree utilizes atomic mapping table updates and delta records to enable latch-free structural modifications for high-throughput database systems. By replacing in-place node modifications with append-only delta chains and mapping table indirection, it minimizes contention and eliminates traditional locking overhead across multi-core architectures.",
+      "key_points": [
+        "Employs a logical mapping table that translates physical node IDs to actual memory addresses using atomic Compare-And-Swap (CAS) operations.",
+        "Applies updates via append-only delta chains (insertions, deletions, updates) instead of rewriting entire internal nodes in place.",
+        "Performs background or on-demand delta chain consolidation to merge chains back into base nodes when they grow too long.",
+        "Utilizes hazard pointers to safely reclaim memory of consolidated nodes and old delta records without blocking concurrent readers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic mapping table redirection and delta record appending for a lock-free node update.",
+        "correct": "import threading\n\nclass MappingTable:\n    def __init__(self):\n        self.table = {}\n        self.lock = threading.Lock() # Simulated atomic ref\n\n    def cas(self, pid, old_addr, new_addr):\n        with self.lock:\n            if self.table.get(pid, None) == old_addr:\n                self.table[pid] = new_addr\n                return True\n            return False\n\nclass BwTreeNode:\n    def __init__(self, data, delta=None):\n        self.data = data\n        self.delta = delta\n\n# Usage pattern for updating a node via delta and mapping table swap\nmapping = MappingTable()\npid = 101\nbase_node = BwTreeNode({'a': 1})\nmapping.table[pid] = base_node\n\n# Append delta update\nnew_base = mapping.table[pid]\ndelta_node = BwTreeNode({'b': 2}, delta=new_base)\nsuccess = mapping.cas(pid, new_base, delta_node)",
+        "wrong": "def unsafe_update(mapping, pid, data):\n    node = mapping.table[pid]\n    node.data.update(data) # Direct in-place mutation without CAS causes race conditions"
+      },
+      "common_mistakes": [
+        "Mutating base nodes or delta records in place instead of treating them as immutable append-only structures.",
+        "Failing to safely manage memory reclamation, leading to use-after-free bugs when threads traverse long delta chains.",
+        "Neglecting periodic delta chain consolidation, which results in performance degradation due to long traversal chains during reads."
+      ],
+      "best_practices": [
+        "Design all node updates and delta records to be strictly immutable to guarantee thread safety during concurrent reads.",
+        "Implement robust hazard pointer or epoch-based memory reclamation schemes to safely free old mapping table entries and consolidated nodes.",
+        "Trigger consolidation triggers proactively when delta chain length exceeds a defined threshold to bound lookup latency."
+      ],
+      "when_to_use": "Use when building high-performance in-memory database storage engines or transactional key-value stores that require massive multi-core scalability and zero latch contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where the complexity of lock-free memory management and delta-chain traversal outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How does the Bw-Tree avoid latch contention during node updates compared to a standard B+ Tree?",
+          "answer": "It uses an indirection layer via a mapping table and appends updates as immutable delta records using atomic CAS operations, eliminating the need for write latches on nodes."
+        },
+        {
+          "question": "What is the purpose of delta chain consolidation in a Bw-Tree?",
+          "answer": "Consolidation merges accumulated delta records back into a single new base node to shorten traversal lengths and improve read performance."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Hazard Pointers and Memory Reclamation",
+        "Latch-free Database Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T23:06:08.352110+00:00",
+      "run_number": 4220
     }
   ]
 }
