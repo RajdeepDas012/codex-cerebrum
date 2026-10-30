@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4170,
-    "last_updated": "2026-10-29T23:56:29.401917+00:00",
-    "total_topics_learned": 4170
+    "total_runs": 4171,
+    "last_updated": "2026-10-30T05:15:20.077675+00:00",
+    "total_topics_learned": 4171
   },
   "entries": [
     {
@@ -198400,6 +198400,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-29T23:56:29.401897+00:00",
       "run_number": 4170
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key lookup and multi-core parallel self-adjusting search tree operations in real-time in-memory caching platforms and concurrent database indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Splay Tree utilizing atomic Compare-And-Swap (CAS) primitives for pointer-based root-rotations and self-balancing heuristic adjustments. By integrating hazard pointers, it ensures safe memory reclamation under intense multi-core contention, making it ideal for high-throughput caching and self-adjusting search applications.",
+      "key_points": [
+        "Employs atomic CAS primitives to execute structural tree rotations (zig, zag, zig-zig, zig-zag) without global locks.",
+        "Utilizes hazard pointers to safely manage memory reclamation for nodes unlinked or modified during concurrent splay operations.",
+        "Maximizes cache locality and lookup efficiency for frequently accessed items by moving target nodes to the root dynamically.",
+        "Handles concurrent modifications gracefully by allowing optimistic traversal with validation checks before performing structural updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection around a concurrent node access during splay tree traversal.",
+        "correct": "Node* hazard_ptr = protect_node(node_atom.load(std::memory_order_acquire));\nif (validate_node(hazard_ptr)) {\n    // Perform read or splay operation safely\n}\nrelease_hazard_ptr(hazard_ptr);",
+        "wrong": "Node* node = node_atom.load(std::memory_order_relaxed);\n// Another thread might free 'node' here before access\naccess(node);"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate nodes with hazard pointers during multi-step splay rotations, leading to use-after-free bugs.",
+        "Attempting to implement strict top-down or bottom-up splay operations via CAS without handling interleaved structural modifications by concurrent threads."
+      ],
+      "best_practices": [
+        "Ensure memory ordering constraints (acquire-release) are correctly paired with atomic pointer updates during rotations.",
+        "Keep critical sections inside optimistic traversals as short as possible to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when workloads exhibit high temporal locality where recently accessed keys are likely to be accessed again quickly in a multi-threaded environment.",
+      "when_not_to_use": "Avoid in read-heavy scenarios with uniform random access patterns where strict balancing or simple lock-free binary search trees offer better predictable performance.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during a multi-step splay rotation using only CAS primitives?",
+          "answer": "By validating that pointer links remain unchanged throughout the rotation sequence, and retrying the operation using optimistic concurrency control if a conflict is detected."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Splay Tree?",
+          "answer": "Hazard pointers prevent a thread from freeing memory of a node that another thread is currently inspecting or repositioning during a concurrent splay rotation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Treap",
+        "Concurrent Skip Graph",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-30T05:15:20.077655+00:00",
+      "run_number": 4171
     }
   ]
 }
