@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4260,
-    "last_updated": "2026-10-31T10:12:39.823602+00:00",
-    "total_topics_learned": 4260
+    "total_runs": 4261,
+    "last_updated": "2026-10-31T15:40:20.013557+00:00",
+    "total_topics_learned": 4261
   },
   "entries": [
     {
@@ -202662,6 +202662,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T10:12:39.823579+00:00",
       "run_number": 4260
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic node-linking and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Binomial Heap that uses atomic node-linking and rank-merging via Compare-And-Swap (CAS) instructions combined with hazard pointers for safe memory management. It enables high-throughput, thread-safe mergeable priority queue operations suitable for multi-core parallel task scheduling in real-time systems.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to handle concurrent tree links and rank-based heap merging without locks.",
+        "Employs hazard pointers to track threads accessing specific heap nodes, preventing premature memory reclamation and ABA problems.",
+        "Manages a collection of binomial trees of binomial orders where each tree satisfies the min-heap property.",
+        "Optimizes concurrent merge operations allowing multiple threads to combine priority queues efficiently in multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic linking of two binomial trees of equal rank using CAS operations with hazard pointers.",
+        "correct": "std::atomic<Node*> parent;\nbool link_trees(std::atomic<Node*>& root_slot, Node* new_child, HazardPointerList& hp_list) {\n    Node* current = root_slot.load();\n    hp_list.protect(0, current);\n    if (root_slot.load() != current) return false;\n    new_child->left_child = current;\n    return root_slot.compare_exchange_strong(current, new_child);\n}",
+        "wrong": "Node* parent = root_slot;\nif (parent->rank == new_child->rank) {\n    root_slot = new_child; // Non-atomic update prone to race conditions and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed heap nodes with hazard pointers before performing structural modifications, leading to use-after-free bugs.",
+        "Handling root list updates with standard assignments rather than atomic CAS loops, causing lost updates during concurrent insertions and merges."
+      ],
+      "best_practices": [
+        "Always validate hazard pointer protections by re-checking pointer values after acquisition to ensure nodes were not concurrently deleted.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize contention and failed CAS retries across multiple cores."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded task schedulers or priority queues where merging separate priority queues concurrently is a frequent operation.",
+      "when_not_to_use": "Avoid when single-threaded simplicity is preferred, or when simple binary heaps or standard locking data structures provide sufficient performance without the complexity of hazard pointers.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing lock-free node-linking and rank-merging in a concurrent binomial heap?",
+          "answer": "By using hazard pointers or tagged pointers (version counters combined with the memory address) in the CAS operations to ensure state changes are accurately detected."
+        },
+        {
+          "question": "What is the primary advantage of a binomial heap over a binary heap in concurrent systems?",
+          "answer": "Binomial heaps support efficient merge (union) operations in O(log n) time (or O(1) amortized), making them superior when multiple threads frequently combine separate priority queues."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leftist Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T15:40:20.013533+00:00",
+      "run_number": 4261
     }
   ]
 }
