@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4278** |
-| Last Updated | `2026-10-31T19:56:52.851549+00:00` |
-| Dataset Size | `4278 entries` |
+| Total Topics Learned | **4279** |
+| Last Updated | `2026-10-31T20:00:03.565783+00:00` |
+| Dataset Size | `4279 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2984 |
+| data-structures | 2985 |
 | algorithms | 255 |
 | trading-strategies | 228 |
 | crypto-blockchain | 183 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assignment and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced indexing and multi-core parallel sorted set execution in real-time in-memory databases and concurrent caching platforms`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-thresholding and child-node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core parallel spell-checking execution in real-time text processing platforms and concurrent natural language search engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition and link-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring frequency counting and multi-core parallel directed acyclic word graph pattern matching execution in real-time text mining systems and concurrent natural language processing engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-extension and leaf-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel bioinformatics pattern discovery execution in real-time genome analysis platforms and concurrent text retrieval engines`
 - `Implementation of a lock-free thread-safe concurrent Persistent Trie using atomic node-versioning and path-cloning CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable key-value snapshotting and multi-core parallel transactional state isolation in real-time functional database systems and concurrent stream processing engines`
-- `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-merging and leaf-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput memory-optimized indexing and multi-core parallel key-value lookup execution in real-time key-value stores and concurrent in-memory database engines`
 
 <!-- STATS_END -->
 
