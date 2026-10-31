@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4286,
-    "last_updated": "2026-10-31T20:22:17.393463+00:00",
-    "total_topics_learned": 4286
+    "total_runs": 4287,
+    "last_updated": "2026-10-31T20:25:28.329334+00:00",
+    "total_topics_learned": 4287
   },
   "entries": [
     {
@@ -203896,6 +203896,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-10-31T20:22:17.393445+00:00",
       "run_number": 4286
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic semi-splay-restructuring and root-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting access indexing and multi-core parallel frequently-accessed-key query execution in real-time caching systems and concurrent memory-mapped database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Splay Tree utilizing atomic semi-splay-restructuring and root-rotation compare-and-swap (CAS) primitives. It leverages hazard pointers to manage dynamic node reorganization safely, maximizing throughput for self-adjusting data access patterns in parallel database engines.",
+      "key_points": [
+        "Employs atomic semi-splay-restructuring and root-rotation CAS primitives to perform thread-safe structural adjustments without global locks.",
+        "Integrates hazard pointer memory reclamation to securely manage deferred memory deallocation during concurrent restructuring steps.",
+        "Optimizes self-adjusting access indexing to rapidly bring frequently accessed keys closer to the root for parallel query execution.",
+        "Handles complex multi-node pointer manipulations while maintaining safety and avoiding deadlocks or race conditions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of hazard pointers and atomic CAS operations for node restructuring in a lock-free tree.",
+        "correct": "#include <atomic>\n#include <iostream>\n\nstruct Node {\n    int key;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n};\n\nbool atomic_rotate_root(std::atomic<Node*>& root, Node* old_root, Node* new_root) {\n    return root.compare_exchange_weak(old_root, new_root);\n}",
+        "wrong": "Node* unsafe_rotate(Node* root) {\n    Node* temp = root->left;\n    root->left = temp->right;\n    temp->right = root;\n    return temp;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate tree pointers with hazard pointers, leading to use-after-free bugs during concurrent rotations.",
+        "Attempting to implement full multi-step top-down splaying atomically in a single CAS without breaking it down into smaller, safe semi-splay steps."
+      ],
+      "best_practices": [
+        "Break down complex tree restructuring into localized, atomic CAS operations that modify a minimal number of parent-child pointers.",
+        "Retire nodes safely using hazard pointer epoch-based or protection-slot mechanisms to prevent premature memory recycling."
+      ],
+      "when_to_use": "Use when building high-throughput, real-time caching systems or memory-mapped database engines where hot items benefit from self-adjusting tree structures under heavy concurrency.",
+      "when_not_to_use": "Avoid in systems with low core counts or uniform read-write distributions where simpler lock-based trees or standard locks incur less complexity overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node reclamation safely when concurrent threads are restructuring a Splay Tree?",
+          "answer": "By using hazard pointers to register nodes currently being accessed or modified, ensuring memory is only reclaimed after all active references have dropped."
+        },
+        {
+          "question": "Why is standard full splay restructuring difficult to implement in a lock-free manner?",
+          "answer": "Because full splaying requires modifying multiple distant ancestor and descendant pointers atomically, which exceeds the capability of single-word CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bx-Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Cuckoo Filter"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T20:25:28.329316+00:00",
+      "run_number": 4287
     }
   ]
 }

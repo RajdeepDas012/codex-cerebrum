@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4286** |
-| Last Updated | `2026-10-31T20:22:17.393463+00:00` |
-| Dataset Size | `4286 entries` |
+| Total Topics Learned | **4287** |
+| Last Updated | `2026-10-31T20:25:28.329334+00:00` |
+| Dataset Size | `4287 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2991 |
+| data-structures | 2992 |
 | algorithms | 255 |
 | trading-strategies | 228 |
 | crypto-blockchain | 183 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic semi-splay-restructuring and root-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting access indexing and multi-core parallel frequently-accessed-key query execution in real-time caching systems and concurrent memory-mapped database engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient dynamic set deletion and multi-core parallel approximate membership querying in real-time distributed caching systems and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic key-redistribution and delta-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal database indexing and multi-core parallel snapshot isolation query execution in real-time versioned storage systems and concurrent time-series database engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval collision detection execution in real-time calendar scheduling systems and concurrent database query optimization engines`
 - `Implementation of a lock-free thread-safe concurrent Link-Cut Tree using atomic path-splicing and preferred-child-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic tree operations and multi-core parallel network flow optimization execution in real-time network routing systems and concurrent graph algorithm engines`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic peer-pointer-updating and node-routing CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core parallel distributed lookup execution in real-time peer-to-peer overlay networks and concurrent distributed hash table storage engines`
 
 <!-- STATS_END -->
 
