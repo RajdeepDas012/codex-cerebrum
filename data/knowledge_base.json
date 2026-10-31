@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4293,
-    "last_updated": "2026-10-31T23:21:11.238629+00:00",
-    "total_topics_learned": 4293
+    "total_runs": 4294,
+    "last_updated": "2026-10-31T23:24:21.760350+00:00",
+    "total_topics_learned": 4294
   },
   "entries": [
     {
@@ -204228,6 +204228,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T23:21:11.238611+00:00",
       "run_number": 4293
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane-splitting and leaf-node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial indexing and multi-core parallel nearest-neighbor query execution in real-time robotics perception systems and concurrent computer vision engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free, multi-threaded KD-Tree designed for high-performance spatial partitioning. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it enables parallel updates and low-latency nearest-neighbor searches without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic bounding-hyperplane-splitting to divide multi-dimensional spaces safely across competing threads.",
+        "Employs leaf-node-allocation CAS primitives to guarantee consistent node insertion without deadlocks.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs during concurrent structural modifications.",
+        "Optimizes multi-core parallel nearest-neighbor queries for real-time robotics and computer vision workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic pointer updates for dynamic spatial indexing",
+        "correct": "bool insertPoint(std::atomic<Node*>& root, Point pt) {\n    Node* newNode = new Node(pt);\n    while (true) {\n        Node* current = root.load();\n        if (!current) {\n            if (root.compare_exchange_weak(current, newNode)) return true;\n        } else {\n            // Navigate subspace and attempt CAS link\n            break;\n        }\n    }\n    delete newNode;\n    return false;\n}",
+        "wrong": "Node* current = root;\nif (!current) {\n    root = new Node(pt); // Race condition: not atomic, causes memory leaks and lost updates\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes from concurrent readers, resulting in use-after-free vulnerabilities.",
+        "Using locks during tree traversal or splitting phases, which degrades multi-core scaling."
+      ],
+      "best_practices": [
+        "Protect all shared pointer reads with hazard pointers before traversing pointer chains.",
+        "Keep node-splitting logic deterministic and tightly scoped to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously query and update spatial coordinate data with strict latency guarantees, such as in autonomous vehicle LiDAR processing.",
+      "when_not_to_use": "Avoid when data dimensionality is exceptionally high (curse of dimensionality) or when workloads are purely read-only, where static structures outperform dynamic ones.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free KD-Tree?",
+          "answer": "Hazard pointers allow a thread to atomically declare its intent to access a specific node, blocking other threads from reclaiming that memory via free() or delete until the reader releases the hazard pointer."
+        },
+        {
+          "question": "Why are standard mutexes suboptimal for high-throughput spatial indexing trees in robotics perception?",
+          "answer": "Mutexes introduce thread contention, context-switch overhead, and potential deadlocks during frequent parallel updates from multiple sensor streams."
+        }
+      ],
+      "related_topics": [
+        "lock-free programming",
+        "spatial indexing",
+        "hazard pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T23:24:21.760331+00:00",
+      "run_number": 4294
     }
   ]
 }
