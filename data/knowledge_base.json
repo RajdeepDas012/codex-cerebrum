@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4274,
-    "last_updated": "2026-10-31T16:22:28.425421+00:00",
-    "total_topics_learned": 4274
+    "total_runs": 4275,
+    "last_updated": "2026-10-31T16:25:37.619838+00:00",
+    "total_topics_learned": 4275
   },
   "entries": [
     {
@@ -203325,6 +203325,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T16:22:28.425400+00:00",
       "run_number": 4274
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent Trie using atomic node-versioning and path-cloning CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable key-value snapshotting and multi-core parallel transactional state isolation in real-time functional database systems and concurrent stream processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe persistent trie that leverages atomic node-versioning and path-cloning CAS primitives. Combined with hazard pointer memory reclamation, it enables high-throughput immutable snapshotting and multi-core transactional state isolation.",
+      "key_points": [
+        "Utilizes atomic node-versioning and path-cloning CAS operations to achieve lock-free writes without blocking concurrent readers.",
+        "Implements hazard pointers to safely manage and reclaim memory of retired trie nodes in a concurrent multithreaded environment.",
+        "Provides persistent data structures characteristics, offering full transactional state isolation and cheap immutable snapshots.",
+        "Optimizes throughput for multi-core parallel read and write operations in functional databases and stream processors."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic path-cloning using CAS for a persistent trie node insertion.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    std::atomic<Node*> children[256];\n    bool is_end;\n};\n\nbool cas_update(std::atomic<Node*>& target, Node* expected, Node* desired) {\n    return target.compare_exchange_weak(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* unsafe_insert(Node* root, const char* key) {\n    root->children[key[0]] = new Node(); // Not thread-safe, no CAS or cloning\n    return root;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed retired nodes with hazard pointers, leading to use-after-free bugs.",
+        "Using expensive global mutexes instead of atomic path-cloning CAS primitives, destroying multi-core scalability."
+      ],
+      "best_practices": [
+        "Always publish cloned paths using release-acquire memory ordering semantics to guarantee visibility across threads.",
+        "Batch hazard pointer retire operations to reduce synchronization overhead in high-throughput workloads."
+      ],
+      "when_to_use": "Use when you need high-performance immutable snapshots, historical versioning, and thread-safe concurrent prefix tree operations.",
+      "when_not_to_use": "Avoid in memory-constrained environments where path-cloning overhead and hazard pointer tracking introduce excessive memory bloat.",
+      "interview_questions": [
+        {
+          "question": "How do path-cloning and CAS primitives allow for lock-free updates in a persistent trie?",
+          "answer": "Path-cloning creates modified copies of nodes along the access path rather than mutating in place, and CAS ensures that the pointer to the newly cloned subtree is atomically swapped in safely."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free persistent data structure?",
+          "answer": "Hazard pointers prevent other threads from freeing memory of nodes currently being traversed or modified, avoiding use-after-free race conditions without requiring heavy locks."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Persistent Segment Tree",
+        "Hazard Pointer Memory Management",
+        "Functional Data Structures and Transactional Isolation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-10-31T16:25:37.619814+00:00",
+      "run_number": 4275
     }
   ]
 }
