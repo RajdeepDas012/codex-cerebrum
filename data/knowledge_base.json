@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4300,
-    "last_updated": "2026-10-31T23:43:40.168997+00:00",
-    "total_topics_learned": 4300
+    "total_runs": 4301,
+    "last_updated": "2026-10-31T23:46:50.151925+00:00",
+    "total_topics_learned": 4301
   },
   "entries": [
     {
@@ -204559,6 +204559,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T23:43:40.168979+00:00",
       "run_number": 4300
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-increment and hash-bucket-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter detection and multi-core parallel approximate frequency counting in real-time stream processing engines and concurrent network traffic monitoring systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free Count-Min Sketch uses atomic Compare-And-Swap (CAS) operations to allow multiple threads to concurrently increment frequency counters across multiple hash tables without locking overhead. Hazard pointers ensure safe memory management and reclamation during dynamic resizing or stream processing updates.",
+      "key_points": [
+        "Utilizes multiple independent hash functions to map incoming data elements to specific counters in a 2D matrix.",
+        "Employs atomic frequency increments via CAS primitives to guarantee thread safety without blocking reader or writer threads.",
+        "Integrates hazard pointers to track active threads accessing specific buckets, preventing premature memory deallocation during concurrent updates.",
+        "Provides sub-linear space complexity at the cost of slight over-estimation errors due to hash collisions in heavy-hitter detection."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency increment using a CAS loop for a Count-Min Sketch bucket.",
+        "correct": "void increment_bucket(std::atomic<uint32_t>& bucket, uint32_t count) {\n    uint32_t current = bucket.load(std::memory_order_relaxed);\n    while (!bucket.compare_exchange_weak(current, current + count,\n                                         std::memory_order_release,\n                                         std::memory_order_relaxed)) {}\n}",
+        "wrong": "void increment_bucket(std::atomic<uint32_t>& bucket, uint32_t count) {\n    uint32_t current = bucket.load();\n    bucket.store(current + count); // Non-atomic read-modify-write race condition\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared hash counters, leading to lost updates under high concurrency.",
+        "Failing to use proper memory ordering constraints (e.g., sequentially consistent everywhere instead of acquire-release), degrading performance."
+      ],
+      "best_practices": [
+        "Leverage relaxed memory ordering for load operations in CAS retry loops while utilizing release-acquire semantics for successful updates.",
+        "Pre-allocate the fixed-size 2D sketch matrix to completely eliminate dynamic allocation overhead during high-throughput stream ingestion."
+      ],
+      "when_to_use": "When you need to process massive streams of data concurrently across multiple CPU cores to track frequencies or heavy hitters where bounded memory and approximate answers are acceptable.",
+      "when_not_to_use": "When exact frequency counts are strictly required for every unique element without any possibility of collision-induced over-estimation.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads increment the same counter in a Count-Min Sketch without using heavy mutex locks?",
+          "answer": "By using atomic compare-and-swap (CAS) loops to safely update the counter values in place."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation beneficial when implementing concurrent probabilistic data structures?",
+          "answer": "Hazard pointers allow threads to safely announce which memory nodes they are currently reading, preventing other threads from freeing those nodes prematurely in lock-free designs."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "probabilistic data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T23:46:50.151908+00:00",
+      "run_number": 4301
     }
   ]
 }
