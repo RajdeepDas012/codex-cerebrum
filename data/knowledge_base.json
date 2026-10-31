@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4284,
-    "last_updated": "2026-10-31T20:15:55.849214+00:00",
-    "total_topics_learned": 4284
+    "total_runs": 4285,
+    "last_updated": "2026-10-31T20:19:06.468065+00:00",
+    "total_topics_learned": 4285
   },
   "entries": [
     {
@@ -203800,6 +203800,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T20:15:55.849195+00:00",
       "run_number": 4284
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic key-redistribution and delta-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal database indexing and multi-core parallel snapshot isolation query execution in real-time versioned storage systems and concurrent time-series database engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bx-Tree implementation enables lock-free spatial-temporal indexing by using atomic key-redistribution and delta-updating CAS primitives. This approach ensures high-throughput versioned data access and multi-core parallel snapshot isolation without blocking writer or reader threads.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for lock-free node updates and key redistribution across b-tree nodes.",
+        "Employs delta-updating techniques to store temporal versions efficiently without duplicating entire node structures for every modification.",
+        "Integrates hazard pointer memory reclamation to safely manage node deallocations and prevent ABA problems in multi-threaded environments.",
+        "Supports multi-core parallel snapshot isolation queries by navigating time-strained pointers safely across concurrent modification states."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic key insertion and delta updating using CAS loops in a lock-free Bx-Tree node.",
+        "correct": "bool insert_delta(Node* node, Key k, Value v, Timestamp ts) {\n    while (true) {\n        DeltaRecord* old_head = node->delta_head.load(std::memory_order_acquire);\n        DeltaRecord* new_head = new DeltaRecord(k, v, ts, old_head);\n        if (node->delta_head.compare_exchange_weak(old_head, new_head, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n        delete new_head;\n    }\n}",
+        "wrong": "bool insert_delta(Node* node, Key k, Value v, Timestamp ts) {\n    mutex.lock();\n    node->deltas.push_back(DeltaRecord(k, v, ts));\n    mutex.unlock();\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversal pointers with hazard pointers, leading to use-after-free bugs when concurrent threads split or merge nodes.",
+        "Applying complex structural modifications without bounded chain lengths for delta updates, causing severe read performance degradation."
+      ],
+      "best_practices": [
+        "Periodically checkpoint or consolidate delta chains into base nodes to bound traversal times during snapshot isolation queries.",
+        "Design memory reclamation schemes using hazard pointers specifically tailored to track active readers accessing historical database states."
+      ],
+      "when_to_use": "Use this pattern when building high-throughput temporal databases, versioned key-value stores, or real-time time-series engines requiring extreme multi-core parallelism and lock-free snapshot reads.",
+      "when_not_to_use": "Avoid in low-concurrency workloads, simple single-threaded applications, or memory-constrained embedded systems where the overhead of hazard pointers and delta chains outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node reallocation in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing before performing operations, ensuring that memory allocators and reclaimers cannot reuse or free a node until no thread holds a hazard pointer to it."
+        },
+        {
+          "question": "Why are delta-updating primitives preferred over full-node copying in concurrent temporal index structures?",
+          "answer": "Delta-updating records only the changes (inserts, updates, deletes) atomically via CAS, reducing memory overhead, lowering contention on the base node, and allowing efficient reconstruction of historical snapshots."
+        }
+      ],
+      "related_topics": [
+        "B-Tree Indexing",
+        "Lock-Free Data Structures",
+        "Hazard Pointers",
+        "Snapshot Isolation",
+        "Temporal Databases"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T20:19:06.468044+00:00",
+      "run_number": 4285
     }
   ]
 }
