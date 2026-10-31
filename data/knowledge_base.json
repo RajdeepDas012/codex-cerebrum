@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4292,
-    "last_updated": "2026-10-31T23:18:01.444497+00:00",
-    "total_topics_learned": 4292
+    "total_runs": 4293,
+    "last_updated": "2026-10-31T23:21:11.238629+00:00",
+    "total_topics_learned": 4293
   },
   "entries": [
     {
@@ -204181,6 +204181,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T23:18:01.444478+00:00",
       "run_number": 4292
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel shortest-path graph algorithm execution in real-time network routing engines and concurrent graph processing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking Fibonacci Heap leveraging atomic compare-and-swap (CAS) operations and hazard pointers for safe memory management. It enables high-throughput priority queue transformations and parallel graph traversal without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic min-pointer-updating and node-linking CAS primitives to manage heap roots and tree mergers lock-free.",
+        "Employs hazard pointers to prevent the ABA problem and safely reclaim memory of deleted nodes in concurrent execution environments.",
+        "Supports amortized O(1) insertions and decrease-key operations across multiple concurrent worker threads.",
+        "Crucial for high-throughput graph processing algorithms like parallel Dijkstra's algorithm in real-time routing engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS for concurrent Fibonacci Heap root insertion",
+        "correct": "bool link_nodes(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head = root_list.load();\n    new_node->next = old_head;\n    return root_list.compare_exchange_weak(old_head, new_node);\n}",
+        "wrong": "Node* link_nodes(std::atomic<Node*>& root_list, Node* new_node) {\n    // Missing CAS loop and hazard pointer protection leads to race conditions\n    Node* old_head = root_list.load();\n    root_list.store(new_node);\n    return old_head;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, resulting in use-after-free errors under multi-threaded execution.",
+        "Overlooking the ABA problem during atomic pointer updates on shared root lists or minimum node references."
+      ],
+      "best_practices": [
+        "Pair every dynamic node deallocation with a robust hazard pointer retirement and deferred reclamation strategy.",
+        "Minimize CAS retry loops by combining pointer updates and state flags into single double-word CAS (DCAS) or tagged pointers."
+      ],
+      "when_to_use": "Use when implementing high-concurrency priority queues or parallel shortest-path graph algorithms where thread contention on locks becomes a throughput bottleneck.",
+      "when_not_to_use": "Avoid in single-threaded applications or scenarios with low concurrency where the memory overhead and complexity of lock-free primitives outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node extraction in a lock-free heap?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory addresses until all hazard pointers are cleared."
+        },
+        {
+          "question": "Why is implementing a lock-free decrease-key operation in a Fibonacci Heap exceptionally challenging?",
+          "answer": "It requires cascading cuts across multiple parent pointers simultaneously, which are hard to atomically link and update via basic CAS primitives without introducing extensive locking or complex validation loops."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T23:21:11.238611+00:00",
+      "run_number": 4293
     }
   ]
 }
