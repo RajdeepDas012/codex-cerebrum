@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4262,
-    "last_updated": "2026-10-31T15:43:30.542144+00:00",
-    "total_topics_learned": 4262
+    "total_runs": 4263,
+    "last_updated": "2026-10-31T15:46:41.472951+00:00",
+    "total_topics_learned": 4263
   },
   "entries": [
     {
@@ -202756,6 +202756,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-10-31T15:43:30.542122+00:00",
       "run_number": 4262
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent k-d Tree using atomic bounding-hyperplane-partitioning and node-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial point indexing and multi-core parallel nearest-neighbor query execution in real-time geographic recommendation systems and concurrent robotics motion planning engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free k-d tree that utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage memory and coordinate concurrent multi-core spatial queries. It enables high-throughput multi-dimensional point indexing and fast nearest-neighbor searches without locking overhead, making it essential for real-time geographic and robotics systems.",
+      "key_points": [
+        "Utilizes atomic bounding-hyperplane-partitioning to correctly place spatial coordinates across concurrent insertions without global locks.",
+        "Employs hazard pointer memory reclamation to securely free nodes during concurrent node restructuring and splitting.",
+        "Enables multi-core parallel nearest-neighbor query execution by traversing split dimensions safely in concurrent execution contexts.",
+        "Prevents race conditions in spatial partitioning hierarchies through fine-grained compare-and-swap (CAS) primitives."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free node insertion into a concurrent k-d tree using atomic operations.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct KDNode {\n    std::vector<double> point;\n    std::atomic<KDNode*> left{nullptr};\n    std::atomic<KDNode*> right{nullptr};\n    KDNode(const std::vector<double>& p) : point(p) {}\n};\n\nbool insertNode(std::atomic<KDNode*>& root, const std::vector<double>& pt, int depth) {\n    int k = pt.size();\n    int axis = depth % k;\n    KDNode* current = root.load();\n    while (current != nullptr) {\n        if (pt[axis] < current->point[axis]) {\n            if (current->left.compare_exchange_weak(current->left, new KDNode(pt))) return true;\n            current = current->left.load();\n        } else {\n            if (current->right.compare_exchange_weak(current->right, new KDNode(pt))) return true;\n            current = current->right.load();\n        }\n    }\n    return false;\n}",
+        "wrong": "#include <atomic>\n#include <vector>\n\nstruct KDNode {\n    std::vector<double> point;\n    KDNode* left;\n    KDNode* right;\n};\n\nvoid unsafeInsert(KDNode* root, std::vector<double> pt) {\n    // Missing atomics and CAS leads to race conditions and corruption\n    root->left = new KDNode{pt, nullptr, nullptr};\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free bugs during concurrent tree restructuring.",
+        "Using non-atomic traversal checks on partitioning dimensions during parallel updates."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointers before reading child pointers in lock-free spatial structures.",
+        "Ensure dimension cycling rules remain consistent across all threads performing concurrent updates and queries."
+      ],
+      "when_to_use": "Use when high-throughput multi-dimensional point indexing and real-time parallel nearest-neighbor queries are required across numerous concurrent worker threads.",
+      "when_not_to_use": "Avoid when dataset dimensions are extremely high (the curse of dimensionality) or when a simple single-threaded spatial index suffices.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node reclamation safely in a lock-free k-d tree without garbage collection?",
+          "answer": "By using hazard pointers to track threads currently referencing specific nodes, ensuring nodes are only reclaimed after all threads have released their hazards."
+        },
+        {
+          "question": "Why is standard mutex locking inefficient for high-throughput geographic recommendation systems using k-d trees?",
+          "answer": "Global or coarse-grained mutex locking causes thread contention and bottlenecks during heavy concurrent updates and frequent nearest-neighbor search operations."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent B+ Tree",
+        "hazard pointer memory reclamation",
+        "spatial indexing algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-10-31T15:46:41.472930+00:00",
+      "run_number": 4263
     }
   ]
 }

@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4262** |
-| Last Updated | `2026-10-31T15:43:30.542144+00:00` |
-| Dataset Size | `4262 entries` |
+| Total Topics Learned | **4263** |
+| Last Updated | `2026-10-31T15:46:41.472951+00:00` |
+| Dataset Size | `4263 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 2968 |
+| data-structures | 2969 |
 | algorithms | 255 |
 | trading-strategies | 228 |
 | crypto-blockchain | 183 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent k-d Tree using atomic bounding-hyperplane-partitioning and node-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial point indexing and multi-core parallel nearest-neighbor query execution in real-time geographic recommendation systems and concurrent robotics motion planning engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and min-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel shortest path graph algorithm execution in real-time network routing systems and concurrent graph processing engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic node-linking and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling in real-time operating systems and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic rank-updating and leftist-property-restoring CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event-driven task scheduling in real-time operating systems and concurrent job execution engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput relational database indexing and multi-core parallel point-range query execution in real-time transactional storage systems and concurrent database engines`
-- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hash-propagation and node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput verifiable state synchronization and multi-core parallel cryptographic proof generation in real-time blockchain validation nodes and concurrent distributed ledger platforms`
 
 <!-- STATS_END -->
 
