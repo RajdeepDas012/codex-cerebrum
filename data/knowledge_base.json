@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4338,
-    "last_updated": "2026-11-01T18:31:00.889762+00:00",
-    "total_topics_learned": 4338
+    "total_runs": 4339,
+    "last_updated": "2026-11-01T18:34:11.113232+00:00",
+    "total_topics_learned": 4339
   },
   "entries": [
     {
@@ -206364,6 +206364,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T18:31:00.889746+00:00",
       "run_number": 4338
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel pattern search execution in real-time text processing systems and concurrent bioinformatic sequence analysis engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a concurrent Suffix Tree utilizing atomic node-splitting and suffix-link-updating compare-and-swap (CAS) primitives combined with hazard pointers for safe memory management. It enables high-throughput multi-core substring indexing and parallel pattern searching without explicit lock contention, critical for real-time text analysis and bioinformatics.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives for thread-safe node splitting and pointer updates.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation without blocking concurrent readers and writers.",
+        "Facilitates parallel multi-core pattern matching and exact substring queries over massive text corpora.",
+        "Avoids global locks, reducing thread contention and latency overhead in high-throughput environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic node-splitting attempt using a compare-and-swap operation within a concurrent suffix tree traversal.",
+        "correct": "bool splitNodeAtomic(Node* parent, Node* oldChild, Node* newChild, std::atomic<Node*>& edge) {\n    return edge.compare_exchange_strong(oldChild, newChild, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool splitNodeNonAtomic(Node* parent, Node* oldChild, Node* newChild, Node*& edge) {\n    if (edge == oldChild) {\n        edge = newChild;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node references with hazard pointers, leading to use-after-free bugs during node splitting.",
+        "Using incorrect memory ordering constraints (e.g., sequentially consistent everywhere instead of acquire-release), which degrades multi-core scalability."
+      ],
+      "best_practices": [
+        "Always register newly traversed nodes with the thread-local hazard pointer registry before reading their internal child pointers.",
+        "Keep critical CAS retry loops tight and bounded to prevent excessive CPU cache invalidation traffic across multiple cores."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously insert, update, and search complex string patterns over massive datasets with minimal latency.",
+      "when_not_to_use": "Avoid when data fits comfortably in static read-only structures or when simpler concurrent maps (like concurrent hash maps) suffice for exact-match string storage.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free conditions during concurrent node splitting in a lock-free Suffix Tree?",
+          "answer": "Hazard pointers protect nodes currently being accessed by a thread by publishing their addresses to a thread-local record, preventing the memory reclamation subsystem from freeing them until all referencing threads have unpinned them."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for scaling a high-throughput parallel bioinformatics sequence analysis engine?",
+          "answer": "Standard mutexes introduce blocking, thread context-switching overhead, and lock contention bottlenecks under high concurrency, whereas lock-free CAS primitives allow threads to make progress independently."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Aho-Corasick automaton",
+        "hazard pointer memory reclamation",
+        "concurrent Patricia tries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T18:34:11.113211+00:00",
+      "run_number": 4339
     }
   ]
 }
