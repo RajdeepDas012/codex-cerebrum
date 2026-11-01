@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4360,
-    "last_updated": "2026-11-01T23:08:11.184675+00:00",
-    "total_topics_learned": 4360
+    "total_runs": 4361,
+    "last_updated": "2026-11-01T23:11:21.809956+00:00",
+    "total_topics_learned": 4361
   },
   "entries": [
     {
@@ -207409,6 +207409,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T23:08:11.184656+00:00",
       "run_number": 4360
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Octree using atomic octant-subdivision and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial indexing and multi-core parallel point-cloud query execution in real-time autonomous driving perception systems and concurrent robotics simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Skip-Octree that merges probabilistic skip-list routing with 3D octree spatial partitioning. It utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage node memory and execute parallel point-cloud queries without lock contention.",
+      "key_points": [
+        "Combines multi-level skip lists with octant-based 3D spatial decomposition for logarithmic search depth and high concurrency.",
+        "Employs atomic octant-subdivision and bounding-box-merging CAS operations to safely modify node structures across threads without blocking.",
+        "Uses hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of dynamically split or merged nodes.",
+        "Optimizes throughput for real-time autonomous driving perception systems handling dense, concurrent 3D lidar point streams."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe CAS-based insertion pattern using hazard pointers in a concurrent skip-octree.",
+        "correct": "bool insertPoint(HazardPointerManager& hpm, AtomicOctreeNode* root, Point3D p) {\n    HazardPointer hp = hpm.protect(root);\n    while (true) {\n        // Perform atomic octant subdivision and CAS insertion\n        if (root->tryInsertAtomic(p, hp)) return true;\n    }\n}",
+        "wrong": "bool insertPoint(AtomicOctreeNode* root, Point3D p) {\n    // Missing hazard pointer protection leads to use-after-free races during concurrent splits\n    return root->unsafelyInsert(p);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect traversed nodes with hazard pointers, risking memory reclamation races.",
+        "Failing to handle the ABA problem during concurrent octant-subdivision CAS updates."
+      ],
+      "best_practices": [
+        "Always wrap node pointer reads in hazard pointer protection blocks before traversing children.",
+        "Keep atomic operation payloads small to minimize retry loops under heavy multi-core contention."
+      ],
+      "when_to_use": "Use when building ultra-low-latency 3D spatial applications with high concurrency requirements, such as real-time LiDAR processing in autonomous vehicles.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low core counts where standard locking octrees provide simpler maintenance and comparable performance.",
+      "interview_questions": [
+        {
+          "question": "How does combining a skip list with an octree improve multi-threaded performance over a standard lock-based octree?",
+          "answer": "It reduces global lock contention by blending probabilistic skip pointers for fast traversal with lock-free atomic CAS primitives on local octants."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Skip-Octree?",
+          "answer": "They ensure that nodes being concurrently split or removed by other threads are not prematurely freed while a thread is actively traversing or referencing them."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Trees",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Skip Graphs"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T23:11:21.809938+00:00",
+      "run_number": 4361
     }
   ]
 }
