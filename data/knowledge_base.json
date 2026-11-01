@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4335,
-    "last_updated": "2026-11-01T13:44:15.752558+00:00",
-    "total_topics_learned": 4335
+    "total_runs": 4336,
+    "last_updated": "2026-11-01T18:23:28.227293+00:00",
+    "total_topics_learned": 4336
   },
   "entries": [
     {
@@ -206221,6 +206221,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T13:44:15.752539+00:00",
       "run_number": 4335
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversal and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core parallel keyword search execution in real-time intrusion detection systems and concurrent log analysis engines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An Aho-Corasick automaton performs efficient multi-pattern string matching by combining a trie with failure links. Making it lock-free and thread-safe involves using atomic Compare-And-Swap (CAS) primitives for dynamic node allocation and failure link resolution, supported by hazard pointers to safely manage memory reclamation across concurrent reader and writer threads.",
+      "key_points": [
+        "Utilizes atomic pointer updates for thread-safe trie expansion and dynamic child insertion.",
+        "Implements hazard pointers to protect nodes during concurrent traversal, failure link updates, and memory deallocation.",
+        "Enables simultaneous multi-core pattern searching and dictionary additions without global locking overhead.",
+        "Maintains correctness of failure links under race conditions via optimistic concurrency control and retry loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node transition resolution using atomic CAS operations and hazard pointers.",
+        "correct": "Node* get_or_create_child(Node* parent, char c, HazardPointer& hp) {\n    while (true) {\n        Node* child = parent->children[c].load(std::memory_order_acquire);\n        if (child) {\n            hp.protect(child);\n            if (parent->children[c].load(std::memory_order_relaxed) == child) return child;\n        } else {\n            Node* new_node = new Node(c);\n            if (parent->children[c].compare_exchange_strong(child, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n                hp.protect(new_node);\n                return new_node;\n            }\n            delete new_node;\n        }\n    }\n}",
+        "wrong": "Node* get_or_create_child(Node* parent, char c) {\n    if (!parent->children[c]) {\n        parent->children[c] = new Node(c);\n    }\n    return parent->children[c];\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing failure links, leading to use-after-free vulnerabilities during concurrent mutations.",
+        "Assuming failure links are immutable and can be traversed without atomic load semantics in a dynamic dictionary."
+      ],
+      "best_practices": [
+        "Retire nodes safely to a deferred reclamation list protected by hazard pointers rather than freeing them immediately.",
+        "Keep CAS retry loops bounded and handle contention gracefully to prevent starvation under heavy concurrent updates."
+      ],
+      "when_to_use": "When building high-throughput real-time security systems or log parsers that require inserting new search keywords while concurrently scanning massive data streams across multiple threads.",
+      "when_not_to_use": "When the set of patterns is entirely static and known in advance, where standard read-only lock-free structures or simple read-write locks would suffice with less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread traverses a failure link while another thread deletes a node?",
+          "answer": "Hazard pointers allow a thread to announce which node it is currently inspecting. Reclamation mechanisms check these announcements and defer actual memory deallocation until no active thread holds a hazard pointer to the target node."
+        },
+        {
+          "question": "What is the primary challenge when implementing dynamic failure links in a concurrent Aho-Corasick automaton?",
+          "answer": "Ensuring that failure links resolve correctly even if nodes are added or removed concurrently, requiring atomic reads and robust CAS retry loops to handle structural changes safely."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent Trie",
+        "Hazard Pointer Memory Management",
+        "Concurrent String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T18:23:28.227273+00:00",
+      "run_number": 4336
     }
   ]
 }
