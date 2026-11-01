@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4351,
-    "last_updated": "2026-11-01T22:39:34.566973+00:00",
-    "total_topics_learned": 4351
+    "total_runs": 4352,
+    "last_updated": "2026-11-01T22:42:45.570139+00:00",
+    "total_topics_learned": 4352
   },
   "entries": [
     {
@@ -206982,6 +206982,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T22:39:34.566954+00:00",
       "run_number": 4351
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and wrap-around-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer streaming and multi-core parallel inter-thread messaging execution in real-time high-frequency trading systems and concurrent audio processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer leverages atomic head and tail pointers combined with wrap-around indexing to enable high-throughput inter-thread communication without blocking locks. By utilizing hazard pointers or atomic CAS primitives, it safely manages concurrent enqueue and dequeue operations, making it ideal for low-latency domains like high-frequency trading and real-time audio streaming.",
+      "key_points": [
+        "Utilizes atomic operations for head and tail pointer updates to avoid heavyweight mutex locks.",
+        "Implements wrap-around indexing to map linear memory efficiently to a fixed-size circular buffer.",
+        "Employs memory reclamation techniques such as hazard pointers to securely manage dynamically allocated buffer slots.",
+        "Provides predictable, low-latency execution paths critical for high-frequency trading and real-time audio pipelines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic head-tail index advancement for a concurrent lock-free ring buffer.",
+        "correct": "import threading\nimport ctypes\n\nclass LockFreeRingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.head = threading.local()\n        self.tail = 0\n        self._head_val = 0\n        self.lock = threading.Lock() # Conceptual placeholder for atomic CAS\n\n    def enqueue(self, item):\n        with self.lock:\n            next_tail = (self.tail + 1) % self.capacity\n            self.buffer[self.tail] = item\n            self.tail = next_tail\n            return True",
+        "wrong": "def enqueue(self, item):\n    # Missing synchronization causes race conditions on tail pointer update\n    self.buffer[self.tail] = item\n    self.tail = (self.tail + 1) % self.capacity"
+      },
+      "common_mistakes": [
+        "Failing to account for false sharing between producer and consumer threads by failing to pad cache lines for head and tail indices.",
+        "Incorrectly handling wrap-around logic, leading to off-by-one errors and buffer corruption or data overwrites."
+      ],
+      "best_practices": [
+        "Pad cache lines around atomic head and tail counters to eliminate CPU cache invalidation bottlenecks.",
+        "Pre-allocate memory blocks during initialization to completely eliminate dynamic memory allocations in the hot path.",
+        "Ensure strict adherence to acquire-release memory ordering semantics on multi-core architectures."
+      ],
+      "when_to_use": "Use when you require ultra-low latency, deterministic inter-thread communication, or streaming data processing between fixed producer and consumer threads.",
+      "when_not_to_use": "Avoid when buffer size cannot be bounded in advance or when workloads involve many arbitrary producers and consumers requiring complex multi-producer synchronization.",
+      "interview_questions": [
+        {
+          "question": "How do you distinguish between a full ring buffer and an empty ring buffer in a lock-free implementation?",
+          "answer": "By either reserving one slot as empty, keeping an explicit atomic counter of elements, or utilizing generation/sequence tags alongside indices."
+        },
+        {
+          "question": "Why is cache line bouncing a major concern in lock-free ring buffers, and how do you mitigate it?",
+          "answer": "Cache line bouncing occurs when producer and consumer continuously update variables residing on the same cache line. It is mitigated by padding the head and tail variables to separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Queues",
+        "Memory Ordering Semantics",
+        "Hazard Pointers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T22:42:45.570116+00:00",
+      "run_number": 4352
     }
   ]
 }
