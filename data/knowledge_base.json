@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4315,
-    "last_updated": "2026-11-01T05:57:39.474054+00:00",
-    "total_topics_learned": 4315
+    "total_runs": 4316,
+    "last_updated": "2026-11-01T06:00:52.426364+00:00",
+    "total_topics_learned": 4316
   },
   "entries": [
     {
@@ -205273,6 +205273,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-01T05:57:39.474035+00:00",
       "run_number": 4315
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence relation querying and multi-core parallel connected-component analysis execution in real-time network topology discovery systems and concurrent social graph clustering engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent Disjoint-Set data structure supports parallel equivalence relation queries and set unions using atomic compare-and-swap (CAS) primitives and path-compression. It prevents data races across multiple threads without lock contention, utilizing hazard pointers for safe memory reclamation in dynamic graph processing engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely modify parent pointers and ranks without global locks.",
+        "Implements lock-free path compression during find operations to flatten tree depths under heavy multi-threaded access.",
+        "Applies rank-based union heuristics to ensure balanced tree structures and logarithmic upper bounds on operation times.",
+        "Integrates hazard pointers to safely manage node retirements and prevent use-after-free bugs in dynamic concurrent environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic find operation with lock-free path compression using CAS primitives",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release);\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic modification causes race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle intermediate state changes during multi-step CAS operations, leading to infinite loops or incorrect tree roots.",
+        "Neglecting memory reclamation safeguards like hazard pointers, which results in severe memory leaks or dangling pointer crashes."
+      ],
+      "best_practices": [
+        "Always use weak CAS operations inside loops to handle spurious hardware thread failures efficiently.",
+        "Employ acquire-release memory ordering semantics carefully to guarantee visibility of parent and rank changes across threads."
+      ],
+      "when_to_use": "Use when performing high-throughput parallel connected-component analysis, real-time network topology discovery, or concurrent social graph clustering.",
+      "when_not_to_use": "Avoid in single-threaded contexts or small workloads where the overhead of atomic primitives and hazard pointers outweighs lock-free concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing lock-free parent updates in a concurrent Disjoint-Set structure?",
+          "answer": "By using tagged pointers (version counts combined with the node address) or hazard pointers to ensure that a node's reference has not been recycled or modified by another thread mid-operation."
+        },
+        {
+          "question": "Why is lock-free path compression challenging to implement correctly?",
+          "answer": "Because multiple threads may simultaneously attempt to compress paths on overlapping subtrees, requiring optimistic CAS loops that gracefully handle interleaved updates without corrupting the tree structure."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Algorithms and CAS Primitives",
+        "Concurrent Graph Processing Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T06:00:52.426345+00:00",
+      "run_number": 4316
     }
   ]
 }
