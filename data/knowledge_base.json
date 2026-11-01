@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4353,
-    "last_updated": "2026-11-01T22:45:56.129639+00:00",
-    "total_topics_learned": 4353
+    "total_runs": 4354,
+    "last_updated": "2026-11-01T22:49:06.478302+00:00",
+    "total_topics_learned": 4354
   },
   "entries": [
     {
@@ -207077,6 +207077,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-01T22:45:56.129621+00:00",
       "run_number": 4353
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-doubling CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed genome indexing and multi-core parallel exact-match pattern search execution in real-time bioinformatics analysis platforms and concurrent text search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent suffix array utilizes atomic index sorting and parallel rank-doubling primitives combined with hazard pointers to safely manipulate text suffix indices across multiple cores without locking. This architecture is vital for scaling high-throughput string matching and genomic sequence analysis by eliminating lock contention during multi-threaded index reads and writes.",
+      "key_points": [
+        "Employs atomic index-sorting and rank-doubling compare-and-swap (CAS) operations to construct suffix arrays concurrently across threads.",
+        "Utilizes hazard pointers for safe memory reclamation, preventing use-after-free race conditions when suffix array pointers are updated in flight.",
+        "Enables high-throughput binary searches over sorted suffixes for exact-match pattern retrieval without serial bottleneck regions.",
+        "Maximizes multi-core utilization for real-time bioinformatics workloads such as massive genome sequencing and text-searching applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent thread updates and hazard pointer protection during parallel suffix array rank computation",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct SuffixNode {\n    std::atomic<int> rank;\n    std::atomic<int> index;\n};\n\nvoid updateSuffixRank(SuffixNode& node, int expected_rank, int new_rank) {\n    int current = expected_rank;\n    while (!node.rank.compare_exchange_weak(current, new_rank)) {\n        // Retry until CAS succeeds under thread contention\n    }\n}",
+        "wrong": "void updateSuffixRank(SuffixNode& node, int new_rank) {\n    node.rank = new_rank; // Non-atomic write causing data races across threads\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate rank-doubling pointer structures with hazard pointers, leading to premature memory deallocation.",
+        "Relying on coarse-grained mutexes during parallel suffix sorting, which destroys multi-core scalability."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer registration loops to dedicated thread-local storage blocks to minimize cache-line bouncing.",
+        "Implement exponential backoff strategies inside the atomic CAS retry loops during heavy concurrent updates."
+      ],
+      "when_to_use": "Use when building real-time bioinformatics sequence-alignment tools or massive concurrent text search engines that demand lock-free read-write scalability.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple scripts where standard, sequential sorting algorithms offer significantly lower overhead and complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation races during concurrent updates to a lock-free suffix array?",
+          "answer": "Hazard pointers allow threads to publish a reference to a shared node they are currently accessing, blocking other threads from freeing that memory until the reference is cleared."
+        },
+        {
+          "question": "Why is rank-doubling challenging to implement in a lock-free concurrent data structure?",
+          "answer": "Rank-doubling requires atomic updates to multiple interdependent indices simultaneously, forcing the use of careful CAS loops or intermediate version stamping to avoid partial-state reads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Concurrent Hash Map",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-01T22:49:06.478282+00:00",
+      "run_number": 4354
     }
   ]
 }
