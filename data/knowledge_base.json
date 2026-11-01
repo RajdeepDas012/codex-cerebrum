@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4324,
-    "last_updated": "2026-11-01T13:09:22.184835+00:00",
-    "total_topics_learned": 4324
+    "total_runs": 4325,
+    "last_updated": "2026-11-01T13:12:31.851202+00:00",
+    "total_topics_learned": 4325
   },
   "entries": [
     {
@@ -205699,6 +205699,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T13:09:22.184816+00:00",
       "run_number": 4324
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-box-splitting and node-allocation CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional spatial partitioning and multi-core parallel nearest-neighbor query execution in real-time point cloud processing systems and concurrent ray-tracing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent K-D Tree without locks, leveraging atomic operations for multi-dimensional spatial partitioning and safe memory management via hazard pointers. It is crucial for high-performance geometric computations where thread contention would otherwise degrade scalability.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free node allocation and bounding box partitioning.",
+        "Employs hazard pointers to safely reclaim memory in a lock-free environment without premature deallocation.",
+        "Enables high-throughput multi-core parallel execution for nearest-neighbor and range searches in spatial data.",
+        "AddressesABA problem scenarios inherent in multi-threaded pointer manipulation within hierarchical spatial structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS and hazard pointer protection.",
+        "correct": "bool insert_node(std::atomic<Node*>& root, Point p) { Node* new_node = new Node(p); while(true) { Node* current = root.load(); hazard_pointer hp(current); if (root.load() != current) continue; if (cas(&root, current, new_node)) return true; } }",
+        "wrong": "bool insert_node(Node*& root, Point p) { Node* new_node = new Node(p); new_node->left = root; root = new_node; return true; }"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Ignoring the ABA problem during atomic updates of tree pointers in high-contention environments."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointer domains before reading node children or bounding box limits.",
+        "Keep critical sections inside lock-free loops as short as possible to minimize CAS retry overhead.",
+        "Align node structures to cache lines to prevent false sharing across multiple processing cores."
+      ],
+      "when_to_use": "Use when multiple threads frequently read and update a multi-dimensional spatial index simultaneously, such as in real-time point cloud registration or concurrent ray tracing.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where hazard pointer overhead and cache-line bouncing outweigh lock-free concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in a lock-free K-D Tree?",
+          "answer": "Hazard pointers allow a thread to atomically announce which nodes it is currently accessing, ensuring that garbage collection threads do not reclaim those nodes until all references are dropped."
+        },
+        {
+          "question": "Why is standard locking suboptimal for dynamic K-D Trees in real-time ray tracing?",
+          "answer": "Coarse-grained locking creates massive bottlenecks during traversal and updates, while fine-grained locks introduce high overhead and deadlock risks due to complex traversal patterns across branches."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Interval Tree",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T13:12:31.851182+00:00",
+      "run_number": 4325
     }
   ]
 }
