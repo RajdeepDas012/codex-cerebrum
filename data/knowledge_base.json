@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4325,
-    "last_updated": "2026-11-01T13:12:31.851202+00:00",
-    "total_topics_learned": 4325
+    "total_runs": 4326,
+    "last_updated": "2026-11-01T13:15:41.692465+00:00",
+    "total_topics_learned": 4326
   },
   "entries": [
     {
@@ -205747,6 +205747,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T13:12:31.851182+00:00",
       "run_number": 4325
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and node-branch-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core parallel spell-checking execution in real-time auto-complete systems and concurrent dictionary search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe BK-Tree designed for high-concurrency string distance queries. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and non-blocking multi-core execution for spell-checking and auto-complete workloads.",
+      "key_points": [
+        "Utilizes atomic pointer-swapping and node-branch-swapping CAS primitives to manage tree modifications without mutex locks.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of deleted tree nodes.",
+        "Optimizes multi-core parallel spell-checking execution for high-throughput fuzzy string matching.",
+        "Supports concurrent insertions and distance-bounded searches across distributed auto-complete systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child branch insertion in a concurrent BK-Tree node using CAS primitives.",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    Node* expected = parent->children[distance].load(std::memory_order_relaxed);\n    while (true) {\n        new_child->next = expected;\n        if (parent->children[distance].compare_exchange_weak(expected, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    // Missing lock or CAS loop causes race conditions and lost updates\n    parent->children[distance] = new_child;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting hazard pointer protection during child traversal, leading to use-after-free bugs when another thread unlinks nodes.",
+        "Failing to handle the ABA problem when updating child pointers via CAS."
+      ],
+      "best_practices": [
+        "Always register threads and acquire hazard pointers before traversing dynamically allocated tree nodes.",
+        "Use appropriate memory ordering fences (acquire-release semantics) around atomic operations to ensure visibility of tree node payloads."
+      ],
+      "when_to_use": "Ideal for high-throughput applications requiring parallel fuzzy string matching and real-time auto-complete services under heavy concurrent write and read loads.",
+      "when_not_to_use": "Avoid when memory overhead of hazard pointers is prohibitive or when standard read-write locks provide sufficient throughput for low-concurrency environments.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing a CAS-based insertion on a concurrent BK-Tree node?",
+          "answer": "By using tagged pointers that combine the memory address with a monotonically increasing version counter or by leveraging hazard pointers coupled with epoch-based reclamation."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free tree structures?",
+          "answer": "Hazard pointers avoid the high cache-contention and atomic overhead associated with updating shared reference counters on every read traversal."
+        }
+      ],
+      "related_topics": [
+        "concurrent-hash-map",
+        "lock-free-trie",
+        "hazard-pointers"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-01T13:15:41.692446+00:00",
+      "run_number": 4326
     }
   ]
 }
