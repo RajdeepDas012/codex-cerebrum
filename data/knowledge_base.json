@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4354,
-    "last_updated": "2026-11-01T22:49:06.478302+00:00",
-    "total_topics_learned": 4354
+    "total_runs": 4355,
+    "last_updated": "2026-11-01T22:52:16.999428+00:00",
+    "total_topics_learned": 4355
   },
   "entries": [
     {
@@ -207124,6 +207124,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-01T22:49:06.478282+00:00",
       "run_number": 4354
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detection and node-augmentation CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Interval Tree allows multiple threads to perform insertions, deletions, and overlapping range queries simultaneously without traditional locking bottlenecks. By combining atomic compare-and-swap (CAS) primitives for structural modifications with hazard pointers for safe memory reclamation, it guarantees high throughput and low latency in multi-core temporal systems.",
+      "key_points": [
+        "Utilizes atomic overlap-detection and node-augmentation CAS primitives to safely manage structural updates and max-endpoint tracking across concurrent threads.",
+        "Employs hazard pointer memory reclamation to prevent premature freeing of nodes actively traversed during multi-core parallel range queries.",
+        "Maintains max-value augmentations in nodes atomically to allow fast pruning of non-overlapping subtrees during temporal searches.",
+        "Eliminates convoy effects and deadlock vulnerabilities inherent in fine-grained lock-based interval trees."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node insertion and hazard pointer acquisition in a lock-free interval tree.",
+        "correct": "bool insert_interval(IntervalNode*& root, Interval new_val) {\n    HazardPointerGuard g;\n    while (true) {\n        IntervalNode* current = g.protect(root);\n        // Atomic overlap detection and CAS insertion\n        if (atomic_compare_exchange_weak(&root, &current, new_node)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_interval(IntervalNode*& root, Interval new_val) {\n    mutex.lock();\n    root->insert(new_val); // Using a global or coarse lock defeats lock-free concurrency\n    mutex.unlock();\n}\n"
+      },
+      "common_mistakes": [
+        "Failing to update augmented max-endpoints atomically, leading to missed overlapping intervals during concurrent range searches.",
+        "Reclaiming node memory immediately upon deletion without hazard pointer protection, resulting in use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Ensure max-endpoint augmentation fields are updated via atomic operations or integrated into the CAS validation token of the node.",
+        "Keep hazard pointer protection active for the entire duration of tree traversal operations before unpinning pointers."
+      ],
+      "when_to_use": "Use when building high-throughput real-time scheduling, calendar management, or resource allocation engines requiring intense multi-core parallel range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the complexity of lock-free atomics and hazard pointers outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node-augmentation values like max-endpoints safely during concurrent insertions without locks?",
+          "answer": "By recomputing the augmented value and executing a Compare-And-Swap (CAS) loop that validates both the pointer and the augmentation consistency before committing."
+        },
+        {
+          "question": "Why are hazard pointers necessary when deleting a node in a lock-free interval tree?",
+          "answer": "Hazard pointers prevent another thread currently traversing or reading a subtree containing that node from accessing freed memory, resolving the ABA and deferred reclamation problem safely."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Skip List",
+        "Atomic CAS Primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-01T22:52:16.999410+00:00",
+      "run_number": 4355
     }
   ]
 }
