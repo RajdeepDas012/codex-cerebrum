@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4310,
-    "last_updated": "2026-11-01T05:41:49.672745+00:00",
-    "total_topics_learned": 4310
+    "total_runs": 4311,
+    "last_updated": "2026-11-01T05:44:59.562354+00:00",
+    "total_topics_learned": 4311
   },
   "entries": [
     {
@@ -205036,6 +205036,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T05:41:49.672724+00:00",
       "run_number": 4310
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-linking and degree-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event notification execution in real-time operating system schedulers and concurrent asynchronous task processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a thread-safe binomial heap utilizing lock-free atomic primitives (CAS) for root-list manipulation and tree linking, paired with hazard pointers to safely manage memory reclamation. It enables ultra-high-throughput concurrent priority merging and multi-core task scheduling without the bottlenecks of mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage root-list pointers and link binomial trees of identical degrees without locks.",
+        "Employs hazard pointers to track active threads reading node references, preventing premature memory deallocation during concurrent merging.",
+        "Guarantees efficient merge, insert, and delete-min operations scaled across multiple cores for real-time operating system schedulers.",
+        "Maintains structural invariants of binomial trees under high contention through optimistic concurrency control and retry loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free root linking step using atomic CAS for a binomial tree node.",
+        "correct": "bool link_roots(std::atomic<Node*>& root_ptr, Node* expected, Node* desired) {\n    return root_ptr.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = root_ptr.load();\nroot_ptr = desired; // Not thread-safe, vulnerable to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to use-after-free bugs when another thread unlinks and frees a binomial tree node.",
+        "Neglecting exponential backoff strategies in CAS retry loops under high contention, causing CPU cache thrashing."
+      ],
+      "best_practices": [
+        "Integrate hazard pointer protection domains around any critical section that traverses child pointers or sibling links in the binomial forest.",
+        "Order memory fences correctly (e.g., acquire-release semantics) to ensure visibility of node structural updates across threads."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to frequently merge large priority queues and schedule asynchronous tasks with minimal lock contention.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency environments where standard locking binomial heaps offer lower instruction overhead and simplicity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free binomial heap?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing other threads from reclaiming or freeing those memory blocks until all hazard pointers pointing to them are cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing concurrent degree merging in a lock-free binomial tree forest?",
+          "answer": "The main challenge is handling concurrent updates to the root list where multiple threads attempt to link trees of the same degree simultaneously, requiring robust CAS retry loops and state validation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leftist Heaps",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T05:44:59.562336+00:00",
+      "run_number": 4311
     }
   ]
 }
