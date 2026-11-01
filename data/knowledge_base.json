@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4327,
-    "last_updated": "2026-11-01T13:18:51.732755+00:00",
-    "total_topics_learned": 4327
+    "total_runs": 4328,
+    "last_updated": "2026-11-01T13:22:02.330686+00:00",
+    "total_topics_learned": 4328
   },
   "entries": [
     {
@@ -205841,6 +205841,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-01T13:18:51.732736+00:00",
       "run_number": 4327
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and decrease-key CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized graph algorithm operations and multi-core parallel shortest path execution in real-time network routing engines and concurrent graph processing systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent, lock-free Fibonacci Heap, leveraging atomic compare-and-swap (CAS) operations for thread-safe root-list updates and key decreases. By incorporating hazard pointers, it safe-guards memory reclamation against race conditions, enabling high-throughput parallel graph algorithms like Dijkstra's shortest path computation.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to manage concurrent root-list splicing without coarse-grained locking.",
+        "Implements atomic decrease-key operations to maintain heap invariants under multi-threaded contention.",
+        "Employs hazard pointers to safely defer memory deallocation of nodes currently accessed by concurrent threads.",
+        "Optimizes throughput for graph algorithms requiring efficient merge and extract-min operations across multiple cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe node pointer swap using atomic CAS operations and hazard pointer protection.",
+        "correct": "bool CASRootSplicing(std::atomic<Node*>& root_ptr, Node* expected, Node* desired, HazardPointerRecord* hp) {\n    hp->protect(desired);\n    return root_ptr.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* temp = root_ptr.load(); root_ptr.store(desired); // Non-atomic and prone to race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading their child or sibling pointers, leading to use-after-free bugs.",
+        "Attempting to maintain strict structural cascading cuts lock-free, which often introduces excessive CAS retries and high contention."
+      ],
+      "best_practices": [
+        "Keep critical sections inside atomic loops small to minimize CAS retry overhead under high thread contention.",
+        "Batch hazard pointer retirements to amortize the cost of memory reclamation sweeps.",
+        "Design fallback strategies or use epoch-based reclamation if hazard pointer overhead becomes a bottleneck."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive concurrent graph algorithms or network routing engines that require frequent parallel priority queue modifications.",
+      "when_not_to_use": "Avoid in simple applications where coarse-grained locking provides adequate performance, or where the constant factor overhead of lock-free CAS loops outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "Why are standard pointer updates insufficient in a lock-free Fibonacci Heap?",
+          "answer": "Standard non-atomic pointer updates can cause race conditions where multiple threads concurrently modify root lists or node parent pointers, leading to lost updates or corrupted heap structures."
+        },
+        {
+          "question": "How do hazard pointers prevent memory corruption during concurrent node extraction?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing, preventing other threads from prematurely freeing or recycling those memory addresses until the reader releases its protection."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Priority Queues",
+        "Concurrent Graph Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T13:22:02.330666+00:00",
+      "run_number": 4328
     }
   ]
 }
