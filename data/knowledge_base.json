@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4344,
-    "last_updated": "2026-11-01T18:50:02.622847+00:00",
-    "total_topics_learned": 4344
+    "total_runs": 4345,
+    "last_updated": "2026-11-01T18:53:12.959131+00:00",
+    "total_topics_learned": 4345
   },
   "entries": [
     {
@@ -206649,6 +206649,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-01T18:50:02.622826+00:00",
       "run_number": 4344
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and back-off-strategy primitives alongside hazard pointer memory reclamation for high-throughput concurrent task scheduling and multi-core parallel work-stealing execution in real-time asynchronous execution systems and concurrent thread pool engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a non-blocking, concurrent priority queue tailored for multi-core thread pools and asynchronous work-stealing execution. It leverages atomic heap-node Compare-And-Swap (CAS) primitives and exponential back-off strategies to reduce contention, while utilizing hazard pointers to achieve safe memory reclamation without garbage collection overhead.",
+      "key_points": [
+        "Utilizes atomic heap-node CAS operations to safely modify priority queue structures without conventional mutual exclusion locks.",
+        "Employs exponential back-off strategies to mitigate high memory contention and hardware cache-line bouncing under heavy multi-threaded loads.",
+        "Integrates hazard pointer memory reclamation to securely free deleted node memory without suffering from the ABA problem or premature deallocation.",
+        "Enables high-throughput task scheduling and efficient work-stealing execution pipelines in real-time concurrent thread pool architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of a hazard pointer protected node update using atomic CAS operations.",
+        "correct": "template<typename T>\nbool try_push(std::atomic<Node<T>*>& head, Node<T>* new_node) {\n    Node<T>* old_head = head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = old_head;\n    } while (!head.compare_exchange_weak(old_head, new_node,\n                                         std::memory_order_release,\n                                         std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "template<typename T>\nbool bad_push(Node<T>*& head, Node<T>* new_node) {\n    // Missing atomics and memory ordering leading to race conditions\n    new_node->next = head;\n    head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when performing CAS operations on shared heap nodes.",
+        "Neglecting proper memory barriers and memory ordering constraints, resulting in inconsistent view states across CPU cores.",
+        "Improper management of hazard pointer domain registries leading to memory leaks or dangling pointer crashes."
+      ],
+      "best_practices": [
+        "Use acquire-release memory semantics carefully to balance performance and strict synchronization requirements.",
+        "Implement adaptive back-off delays during high contention phases to reduce interconnect and cache-coherency traffic.",
+        "Regularly scan and retire hazard pointers in dedicated reclamation epochs to bound overall memory consumption."
+      ],
+      "when_to_use": "Use when building high-performance real-time execution engines, concurrent thread pools, or task-based schedulers requiring lock-free priority management across numerous CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded applications, memory-constrained embedded systems where hazard pointer overhead is prohibitive, or environments with native garbage collection.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to locally register pointers they are currently accessing so that concurrent reclamation threads know not to free those memory addresses until the references are cleared."
+        },
+        {
+          "question": "Why is an exponential back-off strategy critical when scaling lock-free priority queues on many-core processors?",
+          "answer": "It reduces the frequency of failed CAS retries under high contention, preventing massive cache-line invalidation storms and conserving memory bus bandwidth."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Work-Stealing Task Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-01T18:53:12.959110+00:00",
+      "run_number": 4345
     }
   ]
 }
