@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4406,
-    "last_updated": "2026-11-02T21:14:29.711686+00:00",
-    "total_topics_learned": 4406
+    "total_runs": 4407,
+    "last_updated": "2026-11-02T21:17:41.481672+00:00",
+    "total_topics_learned": 4407
   },
   "entries": [
     {
@@ -209590,6 +209590,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-02T21:14:29.711662+00:00",
       "run_number": 4406
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core parallel distributed lookup execution in real-time peer-to-peer overlay networks and concurrent decentralized storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent skip graph that enables lock-free, multi-core parallel lookups and decentralized search queries. By leveraging atomic compare-and-swap (CAS) primitives for pointer routing and membership vector updates, along with hazard pointers for safe memory reclamation, it guarantees high-throughput operations in dynamic distributed overlay networks.",
+      "key_points": [
+        "Utilizes atomic pointer-routing CAS primitives to manage multi-level forward pointers without global locks.",
+        "Employs membership-vector-updating logic to handle distributed peer IDs and partial lookup matching efficiently.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation of deleted skip graph nodes under high contention.",
+        "Achieves logarithmic search performance and logarithmic insertion/deletion bounds in a multi-core parallel environment."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS primitives in a concurrent Skip Graph layer",
+        "correct": "bool insert_node(SkipNode* head, SkipNode* new_node) {\n    while (true) {\n        SkipNode* succ = head->next[0].load(std::memory_order_acquire);\n        new_node->next[0].store(succ, std::memory_order_relaxed);\n        if (head->next[0].compare_exchange_weak(succ, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_node(SkipNode* head, SkipNode* new_node) {\n    // Missing loop and atomic verification, leading to race conditions\n    new_node->next[0] = head->next[0];\n    head->next[0] = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, causing ABA problems and use-after-free crashes.",
+        "Updating membership vectors non-atomically, leading to inconsistent neighbor pointers during concurrent searches."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers prior to traversing references in lock-free multi-threaded data structures.",
+        "Keep membership vector transitions minimal and validate them through atomic CAS loops."
+      ],
+      "when_to_use": "Use when building high-throughput peer-to-peer overlay networks, decentralized key-value stores, or concurrent distributed lookup engines requiring fine-grained parallelism.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free CAS loops and hazard pointer management outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing lock-free pointer updates in a concurrent skip graph?",
+          "answer": "By pairing pointers with version tags or using hazard pointers combined with epoch-based reclamation to ensure nodes are not recycled while threads hold active references."
+        },
+        {
+          "question": "Why use membership vectors in a skip graph compared to standard skip lists?",
+          "answer": "Membership vectors allow nodes to participate in multiple distinct lists at each level based on identifier prefixes, enabling decentralized routing without a strict total ordering constraint."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Distributed Peer-to-Peer Overlay Networks"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-02T21:17:41.481650+00:00",
+      "run_number": 4407
     }
   ]
 }
