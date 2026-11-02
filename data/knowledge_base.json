@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4384,
-    "last_updated": "2026-11-02T10:57:45.970635+00:00",
-    "total_topics_learned": 4384
+    "total_runs": 4385,
+    "last_updated": "2026-11-02T11:01:26.945988+00:00",
+    "total_topics_learned": 4385
   },
   "entries": [
     {
@@ -208549,6 +208549,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-02T10:57:45.970615+00:00",
       "run_number": 4384
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel Huffman coding execution in real-time data compression systems and concurrent task scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Leftist Heap leveraging atomic null-path-length (NPL) updates and heap-merging CAS operations. It ensures safe memory reclamation via hazard pointers, enabling high-performance parallel priority queue management and concurrent Huffman tree construction.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe leftist heap merging and null-path-length updates.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent the ABA problem during concurrent node reallocation.",
+        "Maintains leftist tree properties where the null path length of the left child is at least as large as that of the right child.",
+        "Facilitates high-throughput parallel priority queue operations suitable for real-time task schedulers and parallel Huffman coding."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for merging leftist heap nodes safely across threads.",
+        "correct": "bool merge_nodes(Node*& root, Node* other) {\n    while (true) {\n        Node* current = atomic_load(&root);\n        Node* merged = leftist_merge(current, other);\n        if (atomic_compare_exchange_weak(&root, &current, merged)) return true;\n    }\n}",
+        "wrong": "bool merge_nodes(Node*& root, Node* other) {\n    root = leftist_merge(root, other); // Non-atomic update leads to race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or re-linked nodes with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting to recalculate and validate null-path lengths atomically during concurrent structural modifications."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in hazard pointer domains before reading child pointers in traversal and merge routines.",
+        "Keep critical sections inside the CAS retry loops minimal to reduce thread contention and cache thrashing."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded priority queues or parallel compression engines that require fast, lock-free heap merging capabilities.",
+      "when_not_to_use": "Avoid in single-threaded contexts or scenarios where simple mutex-locked heaps provide sufficient performance without unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property (null-path length invariant) in a lock-free concurrent heap environment?",
+          "answer": "By computing the prospective merged tree structure locally and committing the root pointer update atomically using a CAS loop that re-checks validity if a conflict occurs."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free leftist heaps?",
+          "answer": "They prevent other threads from freeing or reusing memory nodes currently being traversed or merged by an active thread, avoiding memory corruption and use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Binomial Heap",
+        "Lock-free Skip List",
+        "Hazard Pointers",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-02T11:01:26.945968+00:00",
+      "run_number": 4385
     }
   ]
 }
