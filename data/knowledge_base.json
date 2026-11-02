@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4379,
-    "last_updated": "2026-11-02T02:56:30.200376+00:00",
-    "total_topics_learned": 4379
+    "total_runs": 4380,
+    "last_updated": "2026-11-02T02:59:40.733119+00:00",
+    "total_topics_learned": 4380
   },
   "entries": [
     {
@@ -208312,6 +208312,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-02T02:56:30.200356+00:00",
       "run_number": 4379
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient set membership querying and multi-core parallel approximate-matching execution in real-time caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Cuckoo Filter replaces traditional Bloom filters with space-efficient fingerprints and cuckoo hashing, allowing deletions and high-throughput membership queries. Implementing it lock-free via atomic Compare-And-Swap (CAS) operations and hazard pointers avoids global locking bottlenecks during bucket relocations.",
+      "key_points": [
+        "Uses fingerprints derived from hash values instead of storing entire keys, drastically reducing memory footprints.",
+        "Employs dual alternative candidate buckets calculated via partial-key cuckoo hashing for each fingerprint.",
+        "Utilizes atomic CAS primitives to safely execute concurrent fingerprint insertions and bucket relocations without blocking threads.",
+        "Integrates hazard pointers to safely manage memory reclamation for dynamically resized filter tables in multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bucket relocation and fingerprint swapping using CAS loops.",
+        "correct": "bool insert_fingerprint(BucketTable* table, size_t b1, size_t b2, uint8_t fp) {\n    if (try_insert_bucket(table, b1, fp)) return true;\n    if (try_insert_bucket(table, b2, fp)) return true;\n    return relocate_and_insert(table, b1, fp);\n}",
+        "wrong": "bool insert_fingerprint(BucketTable* table, size_t b1, size_t b2, uint8_t fp) {\n    table->lock();\n    // non-atomic check and insert\n    table->unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to bound cuckoo kick-out loops, leading to potential infinite loops when the filter approaches full capacity.",
+        "Ignoring ABA problems during atomic bucket modifications and fingerprint swaps without proper version stamping or hazard pointers."
+      ],
+      "best_practices": [
+        "Keep fingerprint sizes small (e.g., 8 to 16 bits) to maximize cache efficiency and filter capacity.",
+        "Protect concurrent entry migrations and resizes using hazard pointers to prevent premature memory deallocation."
+      ],
+      "when_to_use": "Use when you need high-throughput, thread-safe approximate set membership queries that also support efficient item deletion and space-constrained environments.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required, or when memory overhead is completely unrestricted and standard lock-free hash sets suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter improve upon a standard Bloom Filter?",
+          "answer": "A Cuckoo Filter supports dynamic deletion of items and typically offers better space efficiency for low false-positive rates by storing compact fingerprints."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent Cuckoo Filter?",
+          "answer": "They prevent threads from freeing or reusing bucket memory while other concurrent threads are actively reading or migrating fingerprints across those buckets."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Tables",
+        "Bloom Filters",
+        "Hazard Pointers and Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-02T02:59:40.733093+00:00",
+      "run_number": 4380
     }
   ]
 }
