@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4387,
-    "last_updated": "2026-11-02T11:07:54.031771+00:00",
-    "total_topics_learned": 4387
+    "total_runs": 4388,
+    "last_updated": "2026-11-02T11:11:05.157313+00:00",
+    "total_topics_learned": 4388
   },
   "entries": [
     {
@@ -208691,6 +208691,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-02T11:07:54.031731+00:00",
       "run_number": 4387
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-endpoint-propagating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel event scheduling execution in real-time calendar systems and concurrent genomic overlap analysis engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Interval Tree leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput multi-core querying of overlapping ranges and parallel event scheduling without thread blocking.",
+      "key_points": [
+        "Utilizes atomic endpoint-updating and max-endpoint-propagating CAS operations to manage concurrent structural modifications.",
+        "Employs hazard pointers to safely reclaim memory in a lock-free environment without incurring global garbage collection pauses.",
+        "Maintains augmented node metadata (maximum endpoints) concurrently to prune search spaces efficiently during range queries.",
+        "Ensures linearizability for insertions, deletions, and overlapping range searches across multiple concurrent threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual node structure and atomic max-endpoint propagation for a lock-free interval tree node.",
+        "correct": "struct Node {\n    int low, high, max_end;\n    std::atomic<Node*> left, right;\n    bool cas_max_end(int expected, int desired) {\n        return std::atomic_compare_exchange_weak(&max_end, &expected, desired);\n    }\n};",
+        "wrong": "struct Node {\n    int low, high, max_end;\n    Node* left, right;\n    void update_max(int val) { max_end = val; }\n};"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers during traversal, leading to use-after-free race conditions.",
+        "Updating max-endpoint propagation values non-atomically, which results in missed overlapping intervals during concurrent traversals."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with the thread-local hazard pointer domain before reading child pointers.",
+        "Propagate maximum endpoint changes bottom-up or via cooperative CAS loops to preserve tree augmentation consistency."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping range queries and dynamic interval insertions/deletions under high contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free primitives and hazard pointers outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle max-endpoint propagation atomically in a concurrent interval tree without using global locks?",
+          "answer": "By using a combination of atomic CAS loops that re-evaluate child max endpoints and propagate changes upward only if the expected values match."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free interval tree memory management?",
+          "answer": "Hazard pointers avoid the heavy atomic write contention on reference counters associated with every node read during traversal."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "augmented search trees",
+        "concurrent range queries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-02T11:11:05.157294+00:00",
+      "run_number": 4388
     }
   ]
 }
