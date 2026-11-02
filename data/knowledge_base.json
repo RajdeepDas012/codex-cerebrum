@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4395,
-    "last_updated": "2026-11-02T11:33:27.177393+00:00",
-    "total_topics_learned": 4395
+    "total_runs": 4396,
+    "last_updated": "2026-11-02T20:42:13.876556+00:00",
+    "total_topics_learned": 4396
   },
   "entries": [
     {
@@ -209072,6 +209072,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-02T11:33:27.177373+00:00",
       "run_number": 4395
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership querying and multi-core parallel approximate-matching execution in real-time distributed caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter leverages atomic bit-setting operations and word-level compare-and-swap (CAS) primitives to allow multiple threads to simultaneously insert elements and query membership without lock contention. By integrating hazard pointer memory management, it safely handles dynamic bit-array resizing and segment reallocation under heavy concurrent access in high-performance caching layers.",
+      "key_points": [
+        "Utilizes atomic bit-wise operations (such as fetch_or) on word-sized chunks to modify multiple bits simultaneously and safely across threads.",
+        "Employs word-CAS primitives to manage state transitions and coordinate structural updates without blocking threads.",
+        "Integrates hazard pointers to safely defer reclamation of memory blocks during dynamic filter expansion or reconfiguration.",
+        "Delivers high-throughput probabilistic set membership tests with zero false negatives and tunable false-positive rates for distributed caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit setting using word-level CAS operations for a concurrent Bloom filter segment.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilterSegment {\n    std::vector<std::atomic<uint64_t>> words;\npublic:\n    ConcurrentBloomFilterSegment(size_t word_count) : words(word_count) {\n        for (auto& w : words) w.store(0, std::memory_order_relaxed);\n    }\n    void set_bit(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        uint64_t bit_mask = 1ULL << (bit_index % 64);\n        words[word_idx].fetch_or(bit_mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\n\nclass UnsafeBloomFilterSegment {\n    std::vector<uint64_t> words;\npublic:\n    void set_bit(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        uint64_t bit_mask = 1ULL << (bit_index % 64);\n        words[word_idx] |= bit_mask; // Data race on non-atomic read-modify-write\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared filter words, leading to lost bit updates under high thread contention.",
+        "Failing to use appropriate memory ordering semantics (like acquire-release or relaxed when sequentially consistent ordering is unnecessary), causing performance bottlenecks."
+      ],
+      "best_practices": [
+        "Use atomic fetch_or instructions on word boundaries instead of individual bit-level CAS loops to maximize throughput.",
+        "Pre-allocate sufficient bit-array capacity to minimize expensive dynamic resizing operations during peak workloads."
+      ],
+      "when_to_use": "When building high-throughput distributed caching systems or database storage engines that require fast, concurrent probabilistic membership tests across multiple cores.",
+      "when_not_to_use": "When exact set membership verification is strictly required or when memory footprint constraints disallow probabilistic false positives.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent data races when multiple threads try to set bits in the same 64-bit word simultaneously?",
+          "answer": "By using atomic fetch_or operations on the target 64-bit word, which guarantees that bitwise modifications are performed atomically at the hardware level."
+        },
+        {
+          "question": "Why are hazard pointers useful when implementing a dynamically resizable concurrent Bloom filter?",
+          "answer": "Hazard pointers allow threads to safely access older filter segments during a resize operation without risking premature memory deallocation or use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Count-Min Sketch",
+        "HyperLogLog",
+        "Lock-Free Skip List"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-02T20:42:13.876532+00:00",
+      "run_number": 4396
     }
   ]
 }
