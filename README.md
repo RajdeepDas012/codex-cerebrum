@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4444** |
-| Last Updated | `2026-11-03T18:30:03.098690+00:00` |
-| Dataset Size | `4444 entries` |
+| Total Topics Learned | **4445** |
+| Last Updated | `2026-11-03T18:33:31.534616+00:00` |
+| Dataset Size | `4445 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3132 |
+| data-structures | 3133 |
 | algorithms | 263 |
 | trading-strategies | 228 |
 | crypto-blockchain | 188 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree operations and multi-core parallel dynamic key-value querying execution in real-time in-memory caching systems and concurrent dictionary storage engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and page-latch-free CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed database indexing and multi-core parallel key-value storage execution in real-time enterprise storage systems and concurrent database engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic tower-height-generation and forward-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value lookup and multi-core parallel sorted-range-scan execution in real-time in-memory database systems and concurrent transaction engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel dynamic item insertion execution in real-time distributed caching systems and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative interval querying and multi-core parallel range computation execution in real-time financial analytics systems and concurrent computational geometry engines`
-- `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core parallel connected-components execution in real-time social network analysis systems and concurrent graph processing engines`
 
 <!-- STATS_END -->
 
