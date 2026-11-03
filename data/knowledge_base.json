@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4445,
-    "last_updated": "2026-11-03T18:33:31.534616+00:00",
-    "total_topics_learned": 4445
+    "total_runs": 4446,
+    "last_updated": "2026-11-03T18:37:05.924641+00:00",
+    "total_topics_learned": 4446
   },
   "entries": [
     {
@@ -211443,6 +211443,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-03T18:33:31.534565+00:00",
       "run_number": 4445
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-list-linking and multipass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time simulation systems and concurrent task execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent Pairing Heap utilizing atomic primitives like root-list linking and multipass merging combined with hazard pointers for safe memory management. It enables high-throughput, thread-safe mergeable priority queue operations for multi-core parallel event-driven systems.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) operations to safely link root nodes without global locks.",
+        "Implements multipass merging strategies concurrently to balance subtrees during extraction operations.",
+        "Employs hazard pointers to track thread access and safely reclaim memory of deleted nodes without race conditions.",
+        "Optimizes throughput for multi-core parallel event scheduling and concurrent task execution engines."
+      ],
+      "code_example": {
+        "language": "C++",
+        "description": "Demonstrates the safe atomic linking of a new node into the pairing heap root list using hazard pointers.",
+        "correct": "void insert(Node* new_node) {\n    Node* old_root;\n    do {\n        old_root = root.load(std::memory_order_acquire);\n        new_node->next_sibling = old_root;\n    } while (!root.compare_exchange_weak(old_root, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert(Node* new_node) {\n    new_node->next_sibling = root.load();\n    root.store(new_node); // Non-atomic check-then-act leading to data races\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during multipass merges.",
+        "Using non-atomic modifications on sibling and child pointers during heap restructuring steps."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing child or sibling pointers in a concurrent environment.",
+        "Keep critical sections inside atomic loops as tight as possible to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when you need high-throughput, lock-free priority queue merging and task scheduling across many concurrent threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of hazard pointers and atomic CAS loops outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free pairing heap?",
+          "answer": "Hazard pointers allow threads to register which nodes they are currently reading, preventing the memory reclamation system from freeing or recycling those nodes until all threads release their hazard references."
+        },
+        {
+          "question": "Why is multipass merging challenging to implement in a lock-free setting compared to sequential pairing heaps?",
+          "answer": "Because multiple threads can concurrently execute deletions and merges, restructuring pointers via CAS requires careful validation to ensure subtrees are not dropped or corrupted mid-operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-03T18:37:05.924617+00:00",
+      "run_number": 4446
     }
   ]
 }
