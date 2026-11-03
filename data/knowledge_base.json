@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4412,
-    "last_updated": "2026-11-03T02:53:46.441453+00:00",
-    "total_topics_learned": 4412
+    "total_runs": 4413,
+    "last_updated": "2026-11-03T02:56:57.485763+00:00",
+    "total_topics_learned": 4413
   },
   "entries": [
     {
@@ -209876,6 +209876,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-03T02:53:46.441433+00:00",
       "run_number": 4412
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link-traversing and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core in-memory database indexing and parallel range-scan execution in real-time transaction processing systems and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A B-Link Tree is an extension of the classic B-Tree that adds right-pointers to nodes, enabling lock-free concurrent traversals and node splits without global locking. By combining atomic compare-and-swap (CAS) primitives for node modification and hazard pointers for safe memory reclamation, it achieves extreme throughput for parallel range scans in in-memory databases.",
+      "key_points": [
+        "Utilizes right-link pointers within tree levels to gracefully handle concurrent node splits without deadlocks or extensive locking.",
+        "Employs atomic CAS primitives for updating child pointers and executing structural modifications safely across multiple threads.",
+        "Integrates hazard pointers to manage memory reclamation, preventing use-after-free bugs during concurrent node splits and deletions.",
+        "Optimizes multi-core parallel range scans by allowing readers to traverse horizontally using right-links when a concurrent split shifts keys."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe right-link navigation during concurrent node modification using hazard pointers.",
+        "correct": "Node* traverse_right(Node* current, Key key, HazardPointer& hp) {\n    while (current->right != nullptr && key >= current->high_key) {\n        Node* next = hp.protect(current->right);\n        if (current->right != next) continue; // re-check consistency\n        current = next;\n    }\n    return current;\n}",
+        "wrong": "Node* traverse_right(Node* current, Key key) {\n    while (current->right != nullptr && key >= current->high_key) {\n        current = current->right; // Unprotected traversal leading to potential use-after-free\n    }\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate node references with hazard pointers during horizontal right-link traversal.",
+        "Neglecting to update high-key bounds atomically during node splitting, causing readers to miss or duplicate keys.",
+        "Reclaiming memory of split nodes immediately without waiting for concurrent reader threads to clear their hazard pointers."
+      ],
+      "best_practices": [
+        "Always re-verify node pointers after acquiring hazard pointer protection to ensure the node has not been concurrently unlinked.",
+        "Ensure node-splitting operations update child pointers and right links in a strict, well-defined partial order.",
+        "Bound the maximum retry count on CAS loops to prevent indefinite starvation under extreme write contention."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory database indexes or transaction processing engines that require massive parallelism for both point lookups and range scans.",
+      "when_not_to_use": "Avoid in single-threaded environments or resource-constrained embedded systems where the overhead of hazard pointers and complex synchronization outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do right-links in a B-Link Tree prevent the need for global locks during concurrent node splits?",
+          "answer": "Right-links allow reader threads that encounter a node being split to safely navigate horizontally to the newly created sibling node without needing to acquire locks on ancestors or restart the search from the root."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B-Link Tree?",
+          "answer": "Hazard pointers protect dynamically freed nodes from being reclaimed by the memory allocator while other concurrent reader or writer threads are still traversing or modifying them."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bx-Tree",
+        "Hazard Pointers",
+        "Lock-free Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-03T02:56:57.485743+00:00",
+      "run_number": 4413
     }
   ]
 }
