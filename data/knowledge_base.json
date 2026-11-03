@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4426,
-    "last_updated": "2026-11-03T10:39:36.029446+00:00",
-    "total_topics_learned": 4426
+    "total_runs": 4427,
+    "last_updated": "2026-11-03T10:42:47.228084+00:00",
+    "total_topics_learned": 4427
   },
   "entries": [
     {
@@ -210546,6 +210546,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-03T10:39:36.029416+00:00",
       "run_number": 4426
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas primitives alongside hazard pointer memory reclamation for high-throughput approximate membership testing and multi-core parallel duplicate URL filtering execution in real-time web crawler systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Bloom Filter leveraging atomic bit-setting operations and word-level Compare-And-Swap (CAS) primitives. By eliminating traditional mutual exclusion locks and utilizing hazard pointers for safe memory management, it enables high-throughput approximate membership querying and parallelized duplicate detection across multi-core systems.",
+      "key_points": [
+        "Uses atomic bitwise operations (such as bitwise OR via CAS loops) on underlying word arrays to safely modify bits without locking.",
+        "Employs multiple hash functions (e.g., MurmurHash or CityHash) to map keys to multiple bit positions efficiently.",
+        "Integrates hazard pointers to safely manage dynamic resizing or underlying storage reclamation in concurrent environments.",
+        "Provides O(k) time complexity for both insertions and approximate membership tests, where k is the number of hash functions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-setting on a shared word using a CAS loop for thread-safe concurrent updates.",
+        "correct": "void atomic_set_bit(std::atomic<uint64_t>* words, size_t bit_index) {\n    size_t word_idx = bit_index >> 6;\n    uint64_t bit_mask = 1ULL << (bit_index & 63);\n    uint64_t old_val = words[word_idx].load(std::memory_order_relaxed);\n    while (!words[word_idx].compare_exchange_weak(old_val, old_val | bit_mask, std::memory_order_release, std::memory_order_relaxed)) {\n        // old_val is automatically updated by compare_exchange_weak on failure\n    }\n}",
+        "wrong": "void unsafe_set_bit(uint64_t* words, size_t bit_index) {\n    size_t word_idx = bit_index >> 6;\n    uint64_t bit_mask = 1ULL << (bit_index & 63);\n    words[word_idx] |= bit_mask; // Race condition: non-atomic read-modify-write causes lost updates\n}"
+      },
+      "common_mistakes": [
+        "Performing non-atomic read-modify-write operations on shared words containing multiple filter bits, leading to lost bit-set updates.",
+        "Failing to handle false positives correctly in application logic, assuming an element is definitively present when membership test returns true."
+      ],
+      "best_practices": [
+        "Use word-level CAS operations to update blocks of bits simultaneously, reducing cache contention compared to byte-level or bit-level locking.",
+        "Size the underlying bit array and select the optimal number of hash functions based on the expected maximum number of elements and acceptable false positive rate."
+      ],
+      "when_to_use": "Ideal for high-throughput multi-threaded environments requiring fast approximate membership checks and duplicate prevention, such as web crawlers and database join optimizations.",
+      "when_not_to_use": "Avoid when 100% accuracy is required (false positives are unacceptable) or when items must be frequently deleted from the set (standard Bloom filters do not support deletion).",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread-safe bit setting in a concurrent Bloom filter without using mutexes?",
+          "answer": "By using word-level atomic primitives like compare-and-swap (CAS) in a retry loop to apply bitwise OR masks to the target word containing the specific bit index."
+        },
+        {
+          "question": "Why can standard Bloom filters suffer from lost updates in multi-threaded scenarios if updates are not atomic?",
+          "answer": "Because multiple threads may read the same underlying storage word simultaneously, compute their respective bit masks, and write back their modified values, overwriting each other's changes."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-03T10:42:47.228061+00:00",
+      "run_number": 4427
     }
   ]
 }
