@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4431,
-    "last_updated": "2026-11-03T10:55:33.371967+00:00",
-    "total_topics_learned": 4431
+    "total_runs": 4432,
+    "last_updated": "2026-11-03T10:58:45.230124+00:00",
+    "total_topics_learned": 4432
   },
   "entries": [
     {
@@ -210781,6 +210781,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-03T10:55:33.371948+00:00",
       "run_number": 4431
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-concatenation and cascading-cut CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel Dijkstra's algorithm execution in real-time graph routing systems and concurrent network optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Fibonacci Heap using atomic primitives like CAS and hazard pointers for safe memory management. It enables high-throughput priority queue operations across multiple cores, optimizing performance for real-time parallel graph algorithms like Dijkstra's.",
+      "key_points": [
+        "Utilizes atomic root-list concatenation for lock-free node insertion and heap merging.",
+        "Employs atomic cascading-cut primitives to maintain structural invariants without global locks.",
+        "Integrates hazard pointers to safely manage memory reclamation in concurrent node deletions and extractions.",
+        "Provides amortized $O(1)$ decrease-key and insert operations to accelerate multi-core parallel shortest path algorithms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic root-list node linking using Compare-And-Swap (CAS) in a concurrent Fibonacci Heap.",
+        "correct": "bool link_roots(std::atomic<Node*>& root_list, Node* new_node) {\n    Node* old_head;\n    do {\n        old_head = root_list.load(std::memory_order_relaxed);\n        new_node->right = old_head;\n    } while (!root_list.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool link_roots_wrong(Node*& root_list, Node* new_node) {\n    // Missing atomicity and CAS loop causes race conditions and lost updates\n    new_node->right = root_list;\n    root_list = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Neglecting hazard pointer protection during multi-threaded node extraction, leading to use-after-free bugs.",
+        "Applying non-atomic updates to node marks and parent pointers during cascading cuts, breaking concurrent tree invariants."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing or reading shared node pointers in concurrent heap operations.",
+        "Leverage memory_order_acquire and memory_order_release semantics correctly around atomic pointer swaps to ensure visibility of heap node metadata."
+      ],
+      "when_to_use": "Use when implementing high-throughput priority queues requiring constant-time amortized insertions and decrease-key operations shared across many worker threads, such as parallel graph routing.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where the pointer overhead and synchronization complexity of hazard pointers outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when multiple threads concurrently extract the minimum node from a Fibonacci Heap?",
+          "answer": "By using hazard pointers to register nodes currently being accessed by threads before performing a lock-free CAS to unlink them, delaying actual deallocation until no thread holds a hazard reference."
+        },
+        {
+          "question": "Why is implementing a lock-free decrease-key operation in a Fibonacci Heap significantly more complex than in a binary heap?",
+          "answer": "Because it requires atomic cascading cuts that can recursively modify parent pointers, marks, and root lists across multiple nodes without locking, demanding careful CAS retry loops and memory ordering."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Binary Heaps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-03T10:58:45.230104+00:00",
+      "run_number": 4432
     }
   ]
 }
