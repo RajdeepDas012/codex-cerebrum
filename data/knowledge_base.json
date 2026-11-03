@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4453,
-    "last_updated": "2026-11-03T19:01:35.325606+00:00",
-    "total_topics_learned": 4453
+    "total_runs": 4454,
+    "last_updated": "2026-11-03T19:06:20.987034+00:00",
+    "total_topics_learned": 4454
   },
   "entries": [
     {
@@ -211820,6 +211820,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-03T19:01:35.325558+00:00",
       "run_number": 4453
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC (Multi-Producer Single-Consumer) Queue using atomic ring-buffer head-tail pointer CAS primitives alongside hazard pointer memory reclamation for high-throughput actor message passing and multi-core parallel asynchronous task dispatch execution in real-time asynchronous runtime systems and concurrent event loop engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance lock-free Bounded Multi-Producer Single-Consumer queue utilizing atomic ring-buffer head and tail pointer CAS operations combined with hazard pointers. It enables multiple concurrent producer threads to safely push messages without contention bottlenecks while a single consumer extracts them efficiently, making it ideal for low-latency asynchronous runtime event loops.",
+      "key_points": [
+        "Utilizes a fixed-size contiguous ring buffer to optimize cache line locality and eliminate dynamic memory allocation overhead during steady-state operations.",
+        "Employs atomic Compare-And-Swap (CAS) primitives on producer write pointers to safely coordinate concurrent pushes from multiple threads without locks.",
+        "Restricts consumer operations to a single thread, simplifying the consumer pointer management and eliminating multi-consumer coordination overhead.",
+        "Integrates hazard pointers or sequence-lock state tracking to safely manage buffer slots and prevent stale reads or race conditions during wrap-around."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual atomic head-tail slot reservation logic in a bounded ring buffer.",
+        "correct": "import threading\nimport atomic\n\nclass MPSCQueue:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = [None] * capacity\n        self.head = 0\n        self.tail = 0\n\n    def push(self, item):\n        while True:\n            current_tail = self.tail\n            next_tail = (current_tail + 1) % self.capacity\n            if next_tail == self.head:\n                return False  # Queue Full\n            if self._cas_tail(current_tail, next_tail):\n                self.buffer[current_tail] = item\n                return True",
+        "wrong": "    def push(self, item):\n        # Missing atomics and CAS loop causes race conditions under multi-threading\n        self.buffer[self.tail] = item\n        self.tail += 1"
+      },
+      "common_mistakes": [
+        "Failing to handle the full-queue condition correctly when multiple producers race to claim the same ring buffer slot.",
+        "Ignoring memory barriers and ordering semantics (e.g., using relaxed memory order where acquire-release semantics are mandatory)."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail pointers to distinct cache lines to prevent false sharing between competing producer cores.",
+        "Use power-of-two capacity sizing to replace expensive modulo operations with fast bitwise masking."
+      ],
+      "when_to_use": "Use when you have a high volume of concurrent worker threads dispatching tasks or messages to a single dedicated event loop or thread worker.",
+      "when_not_to_use": "Do not use when multiple threads need to consume items concurrently, as this structure is strictly optimized for a single consumer.",
+      "interview_questions": [
+        {
+          "question": "Why is a bounded MPSC queue easier to implement lock-free than an MPMC queue?",
+          "answer": "Because there is only a single consumer thread, the tail or head pointer manipulated by the consumer requires no CAS synchronization, eliminating the complex two-pointer coordination needed in multi-consumer designs."
+        },
+        {
+          "question": "How do you prevent producers from overwriting unconsumed slots in a bounded ring buffer?",
+          "answer": "By checking that the next tail pointer does not equal the current head pointer (adjusted for capacity wrap-around), indicating the buffer is completely full."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Single-Producer Single-Consumer (SPSC) Ring Buffers",
+        "Hazard Pointer Memory Management",
+        "False Sharing and Cache Line Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-03T19:06:20.987013+00:00",
+      "run_number": 4454
     }
   ]
 }
