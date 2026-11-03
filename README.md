@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4411** |
-| Last Updated | `2026-11-03T02:50:35.376695+00:00` |
-| Dataset Size | `4411 entries` |
+| Total Topics Learned | **4412** |
+| Last Updated | `2026-11-03T02:53:46.441453+00:00` |
+| Dataset Size | `4412 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3102 |
+| data-structures | 3103 |
 | algorithms | 262 |
 | trading-strategies | 228 |
 | crypto-blockchain | 187 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-cas and node-level-splicing primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value storage and multi-core parallel sorted-map execution in real-time in-memory database systems and concurrent cache storage engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic fingerprint-swapping and kick-out-path CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel set deletion execution in real-time distributed caching systems and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and branch-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core in-memory database indexing and parallel range-scan execution in real-time transaction processing systems and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput connected-component querying and multi-core parallel Kruskal's algorithm execution in real-time social network analysis systems and concurrent graph processing engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-splitting and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest-prefix-matching execution in real-time software-defined networking systems and concurrent packet-forwarding engines`
-- `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and membership-vector-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized searching and multi-core parallel distributed lookup execution in real-time peer-to-peer overlay networks and concurrent decentralized storage engines`
 
 <!-- STATS_END -->
 
