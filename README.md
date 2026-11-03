@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4418** |
-| Last Updated | `2026-11-03T03:12:50.216663+00:00` |
-| Dataset Size | `4418 entries` |
+| Total Topics Learned | **4419** |
+| Last Updated | `2026-11-03T03:16:01.497681+00:00` |
+| Dataset Size | `4419 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3108 |
+| data-structures | 3109 |
 | algorithms | 263 |
 | trading-strategies | 228 |
 | crypto-blockchain | 187 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range overlapping lookups and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent financial trading engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and LCP-array-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput pattern matching and multi-core parallel bioinformatics sequence alignment execution in real-time genomic analytics systems and concurrent full-text search indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time simulation systems and concurrent task execution engines`
 - `Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic binomial-tree-linking and root-list-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time simulation systems and concurrent task execution engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel transaction processing execution in real-time relational database systems and concurrent storage engines`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-cas primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core parallel priority-based element retrieval execution in real-time caching systems and concurrent in-memory database engines`
 
 <!-- STATS_END -->
 
