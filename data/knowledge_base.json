@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4420,
-    "last_updated": "2026-11-03T03:19:12.322740+00:00",
-    "total_topics_learned": 4420
+    "total_runs": 4421,
+    "last_updated": "2026-11-03T03:22:23.355162+00:00",
+    "total_topics_learned": 4421
   },
   "entries": [
     {
@@ -210261,6 +210261,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-03T03:19:12.322721+00:00",
       "run_number": 4420
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BFD (Binary Decision Diagram) using atomic node-canonicalization and reduction CAS primitives alongside hazard pointer memory reclamation for high-throughput Boolean formula manipulation and multi-core parallel symbolic verification execution in real-time hardware synthesis systems and concurrent formal verification engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Binary Decision Diagram (BDD) data structure that utilizes atomic compare-and-swap (CAS) operations for node canonicalization and graph reduction. It incorporates hazard pointers to guarantee safe memory reclamation in highly concurrent environments, enabling efficient multi-core symbolic execution and formal verification.",
+      "key_points": [
+        "Utilizes atomic node-canonicalization to ensure unique table entries without global locking bottlenecks.",
+        "Employs atomic reduction primitives to safely collapse isomorphic subgraphs during parallel Boolean manipulations.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free errors in lock-free node deletion and pointer traversal.",
+        "Optimized for high-throughput formal verification, model checking, and hardware synthesis engines running across multiple CPU cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic node lookup and insertion into a unique table using hazard pointers.",
+        "correct": "shared_ptr<Node> ConcurrentBDD::find_or_insert(int var, Node* low, Node* high) {\n    while (true) {\n        HazardPointerGuard guard;\n        auto key = make_tuple(var, low, high);\n        if (auto existing = unique_table.find(key)) {\n            if (guard.protect(existing)) return existing;\n        } else {\n            auto new_node = make_shared<Node>(var, low, high);\n            if (unique_table.cas(key, nullptr, new_node)) return new_node;\n        }\n    }\n}",
+        "wrong": "Node* node = new Node(var, low, high);\nif (!unique_table.insert(node)) delete node;\nreturn node;"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Neglecting proper memory ordering constraints during atomic cache lookups, causing stale reads in the unique table."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing nodes retrieved from shared hash tables.",
+        "Keep critical sections inside atomic loops as short as possible to minimize retry contention under heavy multi-threaded loads."
+      ],
+      "when_to_use": "Use when performing intensive parallel Boolean formula manipulations, hardware verification, or symbolic model checking across many threads.",
+      "when_not_to_use": "Avoid in single-threaded applications or small-scale logic problems where the overhead of lock-free atomics and hazard pointers outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent memory leaks and dangling pointers in a lock-free BDD unique table without using garbage collection?",
+          "answer": "By using hazard pointers to track active thread references to nodes before safely deferring deallocation to an epoch-based or hazard-managed reclamation queue."
+        },
+        {
+          "question": "Why is node canonicalization crucial for Binary Decision Diagrams, and how does a lock-free implementation handle concurrent insertions?",
+          "answer": "Canonicalization ensures every distinct Boolean function has a unique representation. A lock-free implementation uses atomic CAS operations on a unique hash table to safely reconcile concurrent attempts to insert identical nodes."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Hash Tables",
+        "Symbolic Model Checking and Formal Verification"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-03T03:22:23.355143+00:00",
+      "run_number": 4421
     }
   ]
 }
