@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4503,
-    "last_updated": "2026-11-04T21:17:26.137736+00:00",
-    "total_topics_learned": 4503
+    "total_runs": 4504,
+    "last_updated": "2026-11-04T21:20:38.376169+00:00",
+    "total_topics_learned": 4504
   },
   "entries": [
     {
@@ -214200,6 +214200,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-04T21:17:26.137718+00:00",
       "run_number": 4503
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput connected component analysis and multi-core parallel cycle detection execution in real-time social network graph partitioning systems and concurrent compiler type inference engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Disjoint-Set data structure that eliminates global locks by utilizing atomic Compare-And-Swap (CAS) operations for path-halving and rank-combining. It incorporates hazard pointers to safely manage dynamic memory reclamation without standard garbage collection overhead, enabling scalable parallel processing for graph connectivity queries and type unification.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) to update parent pointers and rank attributes without blocking reader or writer threads.",
+        "Implements atomic path-halving during the Find operation to flatten tree structures concurrently and reduce future traversal depths.",
+        "Employs hazard pointers to protect nodes from premature deallocation while other threads traverse or update them.",
+        "Ensures linearizability for Union operations by safely combining ranks using atomic loops to resolve race conditions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based parent update during a lock-free Find operation with path-halving.",
+        "correct": "std::atomic<Node*> parent;\nNode* current = this;\nwhile (true) {\n    Node* p = current->parent.load();\n    Node* gp = p->parent.load();\n    if (p == gp) return p;\n    if (current->parent.compare_exchange_weak(p, gp)) {\n        current = gp;\n    } else {\n        current = current->parent.load();\n    }\n}",
+        "wrong": "Node* p = parent;\nparent = p->parent;\nreturn parent;"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when updating parent pointers via CAS.",
+        "Reclaiming memory of merged tree roots immediately without tracking active hazard pointers, leading to use-after-free bugs.",
+        "Using naive sequential union-find heuristics that race and create orphan subtrees under heavy multithreaded contention."
+      ],
+      "best_practices": [
+        "Integrate a robust hazard pointer or epoch-based reclamation scheme before introducing lock-free node mutations.",
+        "Design Find operations with non-blocking path-halving or path-splitting to balance tree flatness against CAS retry overhead.",
+        "Profile contention levels on hot roots and use backoff strategies inside retry loops to reduce cache-coherency traffic."
+      ],
+      "when_to_use": "When building massively parallel graph algorithms, real-time social network component analysis, or concurrent type checkers requiring high-throughput disjoint set operations across many cores.",
+      "when_not_to_use": "In single-threaded applications or systems with low concurrency requirements where standard, simpler pointer-based disjoint sets with path compression suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when executing a CAS-based parent pointer update in a lock-free Union-Find data structure?",
+          "answer": "You can combine version tags or epoch counts within the pointer word, or leverage hazard pointer protection frameworks that guarantee nodes are not recycled while referenced."
+        },
+        {
+          "question": "Why is path-halving preferred over full path-compression in lock-free concurrent Disjoint-Set implementations?",
+          "answer": "Path-halving only modifies pointers locally during traversal without completely flattening the tree in a single non-atomic pass, reducing the window for conflicting concurrent CAS updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Concurrent Graphs",
+        "Parallel Minimum Spanning Tree Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T21:20:38.376138+00:00",
+      "run_number": 4504
     }
   ]
 }
