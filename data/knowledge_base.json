@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4495,
-    "last_updated": "2026-11-04T14:46:06.314973+00:00",
-    "total_topics_learned": 4495
+    "total_runs": 4496,
+    "last_updated": "2026-11-04T14:49:57.614381+00:00",
+    "total_topics_learned": 4496
   },
   "entries": [
     {
@@ -213821,6 +213821,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-04T14:46:06.314950+00:00",
       "run_number": 4495
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-endpoint-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval scheduling execution in real-time calendar management systems and concurrent event-driven scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent Interval Tree uses atomic endpoint-updating and max-endpoint-propagation CAS primitives alongside hazard pointers to manage overlapping intervals safely across multiple cores. It ensures high-throughput range queries and modifications without traditional mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic primitives for updating low/high endpoints and propagating maximum endpoints upwards without global locks.",
+        "Employs hazard pointer memory reclamation to safely free tree node structures during concurrent mutations.",
+        "Supports high-throughput overlapping range queries and time-interval scheduling for multi-threaded applications.",
+        "Prevents priority inversion and convoy effects common in lock-based interval structures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concurrent insertion of an interval with atomic max-endpoint propagation using CAS operations.",
+        "correct": "bool insertInterval(Node* root, Interval item) {\n    Node* newNode = new Node(item);\n    while (true) {\n        Node* curr = root;\n        // Atomic traversal and insertion logic using CAS for child pointers and max endpoints\n        if (atomic_compare_exchange_weak(&curr->right, &nullptr, newNode)) {\n            propagateMaxEndpoint(newNode);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insertInterval(Node* root, Interval item) {\n    std::lock_guard<std::mutex> lock(treeMutex); // Defeats the lock-free design\n    root->insert(item);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to propagate maximum endpoint changes up to parent nodes safely under concurrent updates.",
+        "Failing to protect deleted nodes with hazard pointers, leading to use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Ensure max-endpoint propagation paths are retry-safe in lock-free loops.",
+        "Carefully manage thread-local hazard pointer registries to prevent memory leaks."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping interval searches and modifications concurrently, such as in high-performance calendar scheduling engines.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where simpler lock-based interval trees provide better maintainability.",
+      "interview_questions": [
+        {
+          "question": "How do you handle max-endpoint propagation without locks during concurrent interval insertions?",
+          "answer": "By using compare-and-swap (CAS) loops to update the maximum endpoint fields atomically while navigating up the tree ancestors, retrying if concurrent modifications alter the subtree."
+        },
+        {
+          "question": "Why are hazard pointers required in a lock-free Interval Tree implementation?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory allocator while another thread is concurrently traversing or reading pointers within those nodes, preventing use-after-free bugs."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Segment Trees",
+        "Lock-Free Priority Queues",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T14:49:57.614362+00:00",
+      "run_number": 4496
     }
   ]
 }
