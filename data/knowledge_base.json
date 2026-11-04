@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4510,
-    "last_updated": "2026-11-04T21:39:51.010492+00:00",
-    "total_topics_learned": 4510
+    "total_runs": 4511,
+    "last_updated": "2026-11-04T21:43:02.796913+00:00",
+    "total_topics_learned": 4511
   },
   "entries": [
     {
@@ -214532,6 +214532,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-04T21:39:51.010473+00:00",
       "run_number": 4510
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-degree-linking and carry-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel discrete event simulation execution in real-time simulation platforms and concurrent task scheduling engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent binomial heap, utilizing atomic root-degree linking, carry propagation via compare-and-swap (CAS), and hazard pointers for safe memory management. It enables high-throughput, thread-safe mergeable priority queue operations essential for multi-core discrete event simulation and scheduling.",
+      "key_points": [
+        "Uses atomic CAS primitives for root-degree-linking and carry propagation to handle concurrent structural modifications without global locks.",
+        "Employs hazard pointer memory reclamation to safely free binomial tree nodes while preventing memory corruption from concurrent readers and writers.",
+        "Supports efficient merge operations by logically combining lists of binomial trees of varying degrees across threads.",
+        "Optimized for high-throughput multi-core workloads such as parallel task schedulers and real-time discrete event simulation platforms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking using CAS for thread-safe binomial tree degree combination",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int key;\n    int degree;\n    std::atomic<Node*> parent;\n    std::atomic<Node*> child;\n    std::atomic<Node*> sibling;\n};\n\nbool link_binomial_trees(std::atomic<Node*>& root_slot, Node* new_tree) {\n    Node* current = root_slot.load(std::memory_order_acquire);\n    while (true) {\n        new_tree->sibling.store(current, std::memory_order_relaxed);\n        if (root_slot.compare_exchange_weak(current, new_tree, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "Node* link_binomial_trees(Node* root_slot, Node* new_tree) {\n    new_tree->sibling = root_slot;\n    root_slot = new_tree; // Non-atomic update prone to data races and lost updates under concurrency\n    return root_slot;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted or restructured binomial tree nodes with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting ABA problems during carry propagation and pointer swapping on root lists.",
+        "Using coarse-grained locking on the entire binomial forest rather than fine-grained atomic root-list modifications."
+      ],
+      "best_practices": [
+        "Always wrap dynamic memory reclamation in a robust hazard pointer or epoch-based garbage collection framework.",
+        "Order atomic memory accesses strictly using acquire-release semantics to guarantee visibility of tree node linkages.",
+        "Implement exponential backoff during CAS contention loops on heavily contested binomial forest roots."
+      ],
+      "when_to_use": "Use when building multi-threaded priority queue systems that require frequent, high-performance heap merging (meld) operations across multiple concurrent worker threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications where simple binary heaps or standard thread-safe blocking priority queues provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent structural modifications during a binomial heap merge without using locks?",
+          "answer": "By using atomic compare-and-swap (CAS) operations on root list pointers and propagating carries iteratively, combined with hazard pointers to safely manage node lifecycles."
+        },
+        {
+          "question": "What is the role of hazard pointers in a lock-free binomial heap implementation?",
+          "answer": "Hazard pointers protect dynamically allocated nodes from being prematurely reclaimed by the memory allocator while other threads are traversing or modifying pointers to those nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Leftist Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T21:43:02.796894+00:00",
+      "run_number": 4511
     }
   ]
 }
