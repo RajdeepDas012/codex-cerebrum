@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4457,
-    "last_updated": "2026-11-03T23:58:42.401224+00:00",
-    "total_topics_learned": 4457
+    "total_runs": 4458,
+    "last_updated": "2026-11-04T00:01:59.527384+00:00",
+    "total_topics_learned": 4458
   },
   "entries": [
     {
@@ -212011,6 +212011,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-11-03T23:58:42.401202+00:00",
       "run_number": 4457
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-setting and word-level-cas primitives alongside hazard pointer memory reclamation for high-throughput approximate membership checking and multi-core parallel duplicate filtering execution in real-time web crawling systems and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom Filter leverages atomic bit-vector updates (using word-level compare-and-swap operations) and hazard pointers to allow multiple threads to safely insert elements and query membership without locks. This architecture maximizes throughput in multi-core systems by eliminating lock contention during parallel data inspection and duplicate filtering.",
+      "key_points": [
+        "Utilizes word-level atomic CAS primitives to update distinct bits within a shared bit-vector safely across threads.",
+        "Employs hazard pointer memory management to track thread-safe access and reclamation of underlying filter structures.",
+        "Provides O(k) time complexity for both insertions and approximate membership queries, where k is the number of hash functions.",
+        "Guarantees zero false negatives with a configurable false positive rate determined by bit-array size and hash function count."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates thread-safe concurrent bit setting using atomic bitwise OR operations with word-level compare-and-swap semantics.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilterWord:\n    def __init__(self, size_in_words):\n        self.words = [0] * size_in_words\n        self.lock = threading.Lock() # Conceptual stand-in for atomic word-level CAS\n\n    def add_bit(self, word_index, bit_mask):\n        with self.lock:\n            self.words[word_index] |= bit_mask",
+        "wrong": "class UnsafeBloomFilter:\n    def __init__(self, size):\n        self.bits = [0] * size\n\n    def add_bit(self, index):\n        self.bits[index] = 1 # Non-atomic read-modify-write causes lost updates across threads"
+      },
+      "common_mistakes": [
+        "Performing non-atomic read-modify-write operations on bit-vector words, leading to lost bit-set updates under high thread contention.",
+        "Failing to safely manage memory reclamation for dynamically resized filter expansions, resulting in use-after-free bugs."
+      ],
+      "best_practices": [
+        "Group multiple adjacent bits into larger word primitives (e.g., 64-bit integers) to minimize cache line bouncing and optimize word-level CAS operations.",
+        "Pre-allocate the entire bit-vector capacity during initialization to avoid expensive resizing operations during peak parallel ingestion."
+      ],
+      "when_to_use": "Use when multiple worker threads must concurrently check for data duplication or perform approximate membership lookups against a massive shared dataset with minimal latency.",
+      "when_not_to_use": "Avoid when exact membership queries are mandatory, or when deletion of elements is required, as standard Bloom filters do not support item removal.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread-safe bit-setting in a shared array without using heavy mutual exclusion locks?",
+          "answer": "By packing bits into words and using atomic word-level Compare-And-Swap (CAS) loops to apply bitwise OR masks."
+        },
+        {
+          "question": "Why can standard Bloom filters not support item deletions natively?",
+          "answer": "Because clearing a bit hash position may inadvertently unset a bit shared by another validly inserted element, introducing false negatives."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Count-Min Sketch",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic Compare-And-Swap Primitives"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-04T00:01:59.527363+00:00",
+      "run_number": 4458
     }
   ]
 }
