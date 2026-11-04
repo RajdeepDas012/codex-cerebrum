@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4478,
-    "last_updated": "2026-11-04T06:07:19.567892+00:00",
-    "total_topics_learned": 4478
+    "total_runs": 4479,
+    "last_updated": "2026-11-04T06:10:36.118548+00:00",
+    "total_topics_learned": 4479
   },
   "entries": [
     {
@@ -213010,6 +213010,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-04T06:07:19.567870+00:00",
       "run_number": 4478
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel job scheduling execution in real-time task distribution systems and concurrent workflow orchestration engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Leftist Heap uses atomic operations and null-path-length (NPL) maintenance to provide lock-free, highly parallel mergeable priority queue operations. It leverages hazard pointers for safe memory management, ensuring fast, contention-resilient task distribution across multiple processing cores.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for thread-safe heap merging and structural updates without traditional locks.",
+        "Maintains leftist properties via null-path-length (NPL) calculations to guarantee logarithmic height bounds for efficient merging.",
+        "Employs hazard pointers to securely track and reclaim dynamically allocated memory without incurring garbage collection pauses.",
+        "Optimized for high-throughput multi-core job scheduling and real-time distributed task orchestration engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent node merging and null-path-length maintenance in a lock-free leftist heap architecture",
+        "correct": "class LeftistNode:\n    def __init__(self, val, npl=1):\n        self.val = val\n        self.npl = npl\n        self.left = None\n        self.right = None\n\ndef merge_heaps(h1, h2):\n    if not h1: return h2\n    if not h2: return h1\n    if h1.val > h2.val:\n        h1, h2 = h2, h1\n    h1.right = merge_heaps(h1.right, h2)\n    if not h1.left or h1.left.npl < h1.right.npl:\n        h1.left, h1.right = h1.right, h1.left\n    h1.npl = (h1.right.npl + 1) if h1.right else 1\n    return h1",
+        "wrong": "def unsafe_merge(h1, h2):\n    # Modifying shared mutable nodes without atomic CAS or hazard pointers leads to race conditions\n    h1.right = h2\n    return h1"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed heap nodes with hazard pointers, leading to use-after-free bugs during parallel merges.",
+        "Neglecting to properly recalculate and swap children based on null-path-length (NPL) values, degrading heap balance guarantees."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointers before traversing or modifying pointers via CAS.",
+        "Keep critical sections and retry loops lean to minimize contention overhead in high-concurrency environments."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded task schedulers or priority queues that require frequent merging of separate priority queues under heavy contention.",
+      "when_not_to_use": "Avoid in single-threaded applications or scenarios where standard binary heaps or simpler locking mutexes provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How does the null-path-length (NPL) property benefit a leftist heap compared to standard binary heaps during merging operations?",
+          "answer": "NPL ensures that the right spine of the leftist heap is always short (at most logarithmic with respect to the number of nodes), allowing fast logarithmic-time merging by recursively combining right spines."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent leftist heap?",
+          "answer": "Hazard pointers prevent other threads from freeing or reusing node memory while a thread is actively traversing or modifying pointers via CAS, eliminating memory corruption and use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Binomial Heap",
+        "Hazard Pointer Memory Management",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T06:10:36.118527+00:00",
+      "run_number": 4479
     }
   ]
 }
