@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4479,
-    "last_updated": "2026-11-04T06:10:36.118548+00:00",
-    "total_topics_learned": 4479
+    "total_runs": 4480,
+    "last_updated": "2026-11-04T06:13:51.096595+00:00",
+    "total_topics_learned": 4480
   },
   "entries": [
     {
@@ -213057,6 +213057,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-04T06:10:36.118527+00:00",
       "run_number": 4479
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel database index execution in real-time relational storage systems and concurrent database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent B+ Tree optimized for high-throughput range scans and multi-core execution. It employs atomic leaf-sibling linking and split-propagation CAS operations alongside hazard pointers to manage safe memory reclamation without traditional mutex locks.",
+      "key_points": [
+        "Utilizes atomic leaf-sibling-linking to enable non-blocking concurrent forward and backward range scans across leaf nodes.",
+        "Implements split-propagation CAS primitives to propagate node splits up the tree structure safely under heavy multi-threaded contention.",
+        "Applies hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of deleted tree nodes without locking.",
+        "Maximizes throughput for multi-core relational database storage engines requiring concurrent reads, updates, and range queries."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual skeleton of atomic node linking and hazard pointer protection during traversal and splits.",
+        "correct": "class Node:\n    def __init__(self, keys, children):\n        self.keys = keys\n        self.children = children\n        self.next_leaf = None\n        self.is_leaf = False\n\nclass ConcurrentBPlusTree:\n    def __init__(self):\n        self.root = Node([], [])\n        \n    def safe_range_scan(self, start_key):\n        curr = self.root\n        while not curr.is_leaf:\n            # Traverse down based on key boundaries\n            curr = curr.children[0]\n        results = []\n        while curr:\n            for k in curr.keys:\n                if k >= start_key:\n                    results.append(k)\n            curr = curr.next_leaf\n        return results",
+        "wrong": "def unsafe_range_scan(tree, start_key):\n    # Modifying or traversing leaf nodes without hazard pointers or sibling links leads to race conditions and segmentation faults\n    curr = tree.root\n    while curr.next_leaf:\n        pass"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during traversal, causing use-after-free errors when concurrent threads split or delete nodes.",
+        "Neglecting memory barriers around atomic leaf-sibling pointer updates, resulting in stale visibility of newly split leaf nodes during range scans."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with a thread-local hazard pointer domain before reading child pointers or sibling links.",
+        "Ensure node split propagation handles multi-parent updates atomically using compare-and-swap primitives to avoid orphaned subtrees."
+      ],
+      "when_to_use": "Use this architecture when building high-performance in-memory or distributed database engines that require heavy concurrent range scans and low-latency multi-core writes.",
+      "when_not_to_use": "Avoid this in single-threaded applications, simple key-value stores, or environments where the immense complexity of lock-free memory reclamation outweighs throughput gains.",
+      "interview_questions": [
+        {
+          "question": "How do atomic leaf-sibling links assist in achieving lock-free range scans in a concurrent B+ Tree?",
+          "answer": "They allow scanner threads to traverse horizontally across leaf nodes without acquiring locks on parent internal nodes, even if structural splits are happening concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B+ Tree instead of relying purely on garbage collection?",
+          "answer": "Hazard pointers provide immediate, deterministic memory reclamation safety for lock-free data structures without incurring the latency overhead or unpredictability of stop-the-world garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "lock-free B-Tree",
+        "hazard pointer memory management",
+        "concurrent skip list"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T06:13:51.096574+00:00",
+      "run_number": 4480
     }
   ]
 }
