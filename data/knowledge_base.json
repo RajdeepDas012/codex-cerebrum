@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4502,
-    "last_updated": "2026-11-04T21:14:12.905173+00:00",
-    "total_topics_learned": 4502
+    "total_runs": 4503,
+    "last_updated": "2026-11-04T21:17:26.137736+00:00",
+    "total_topics_learned": 4503
   },
   "entries": [
     {
@@ -214151,6 +214151,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-04T21:14:12.905153+00:00",
       "run_number": 4502
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic branch-node-hashing and root-hash-cas primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core parallel data integrity proof execution in real-time distributed ledger systems and concurrent verifiable storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Merkle Tree utilizes atomic primitives and hazard pointers to safely allow multiple threads to insert data and recalculate cryptographic hashes in parallel. This design eliminates lock contention, ensuring high-throughput data integrity proofs in distributed ledgers and storage systems.",
+      "key_points": [
+        "Employs atomic branch-node-hashing and root-hash CAS operations to update cryptographic roots without coarse-grained locking.",
+        "Utilizes hazard pointers for safe memory reclamation of dynamic nodes modified concurrently across threads.",
+        "Enables multi-core parallel execution of inclusion and consistency proofs for high-throughput verifiable storage.",
+        "Prevents race conditions during simultaneous leaf insertions and path hash propagations up to the root."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent thread execution updating a shared hash root via atomic verification steps.",
+        "correct": "import threading\nimport hashlib\n\nclass ConcurrentMerkleNode:\n    def __init__(self, left=None, right=None, data=None):\n        self.left = left\n        self.right = right\n        self.data = data\n        self.hash = self._compute_hash()\n\n    def _compute_hash(self):\n        hasher = hashlib.sha256()\n        if self.data:\n            hasher.update(self.data)\n        else:\n            if self.left: hasher.update(self.left.hash)\n            if self.right: hasher.update(self.right.hash)\n        return hasher.digest()",
+        "wrong": "def update_tree(node, new_data):\n    # Modifying state without locks or atomic primitives leads to corrupted tree hashes\n    node.data = new_data\n    node.hash = node._compute_hash()"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes targeted for deletion or path updates, leading to use-after-free bugs.",
+        "Recalculating hashes sequentially from leaves to root in a single locked block, defeating concurrency.",
+        "Ignoring ABA problems when updating parent node references during asynchronous tree restructuring."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based reclamation to safely manage memory freed during concurrent tree mutations.",
+        "Keep critical sections minimal by performing heavy cryptographic hashing outside the atomic CAS retry loops.",
+        "Structure tree updates to propagate upwards using localized compare-and-swap loops on individual parent nodes."
+      ],
+      "when_to_use": "Use when building high-throughput distributed ledgers, blockchain systems, or concurrent verifiable databases requiring frequent parallel updates and cryptographic proofs.",
+      "when_not_to_use": "Avoid in single-threaded applications or memory-constrained environments where the overhead of hazard pointers and atomic operations outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash propagation up to the root safely in a lock-free Merkle tree without global locks?",
+          "answer": "By using localized Compare-And-Swap (CAS) loops on parent nodes, retrying when concurrent modifications alter sibling nodes along the update path."
+        },
+        {
+          "question": "Why are hazard pointers necessary when updating nodes in a concurrent Merkle tree?",
+          "answer": "Hazard pointers prevent a thread from freeing or reusing node memory while another concurrent thread is traversing or reading hashes along that path."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Cryptographic Accumulators"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T21:17:26.137718+00:00",
+      "run_number": 4503
     }
   ]
 }
