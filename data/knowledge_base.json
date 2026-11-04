@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4489,
-    "last_updated": "2026-11-04T14:20:45.698949+00:00",
-    "total_topics_learned": 4489
+    "total_runs": 4490,
+    "last_updated": "2026-11-04T14:25:14.396729+00:00",
+    "total_topics_learned": 4490
   },
   "entries": [
     {
@@ -213535,6 +213535,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-04T14:20:45.698925+00:00",
       "run_number": 4489
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent point updates and multi-core parallel range query execution in real-time in-memory database systems and concurrent key-value indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Bx-Tree that uses atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely manage leaf merges and range-based concurrency. It matters because it enables high-throughput, contention-free point updates and parallel range queries without sacrificing memory safety in multi-threaded in-memory databases.",
+      "key_points": [
+        "Utilizes atomic leaf-merging and range-locking CAS primitives to coordinate structural modifications without global locks.",
+        "Employs hazard pointer memory reclamation to safely defer deallocation of nodes until concurrent reader threads release access.",
+        "Optimizes multi-core parallel range query execution by avoiding blocking synchronization overheads common in traditional B-Tree variants.",
+        "Ensures high-throughput concurrent point updates via fine-grained node-level versioning and state transitions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection pattern during atomic node access in a lock-free index",
+        "correct": "template <typename T>\nvoid* safeReadNode(std::atomic<T*>& nodePtr, HazardPointerRecord* hpRec) {\n    T* ptr;\n    do {\n        ptr = nodePtr.load(std::memory_order_acquire);\n        hpRec->protect(ptr);\n    } while (nodePtr.load(std::memory_order_acquire) != ptr);\n    return ptr;\n}",
+        "wrong": "void* unsafeReadNode(std::atomic<void*>& nodePtr) {\n    return nodePtr.load(std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to establish proper memory ordering (acquire-release semantics) around CAS operations on leaf-merging pointers.",
+        "Forgetting to clear hazard pointers before executing memory reclamation sweeps, leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Pair every hazard pointer acquisition explicitly with thread-local protection registration before traversing child pointers.",
+        "Use epoch-based or hazard pointer schemes consistently to manage memory lifetimes of nodes subjected to concurrent structural merges."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases or key-value storage engines requiring heavy concurrent point updates alongside frequent multi-core range scans.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or low-concurrency environments where standard lock-based B+Trees provide simpler implementation and lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent leaf-merging operations in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers protect specific node references currently read by threads, ensuring that memory cannot be reclaimed or reused via ABA cycles until all referencing threads drop their hazard pointer protection."
+        },
+        {
+          "question": "Why are standard mutex-based range locks insufficient for high-throughput parallel range queries in modern multi-core in-memory databases?",
+          "answer": "Mutexes introduce serialization bottlenecks and thread contention during heavy traversal and scanning, whereas lock-free designs with atomic CAS primitives allow non-blocking progression across multiple cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Hazard Pointers Memory Management",
+        "Concurrent Range Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-04T14:25:14.396707+00:00",
+      "run_number": 4490
     }
   ]
 }
