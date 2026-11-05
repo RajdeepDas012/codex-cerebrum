@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4529** |
-| Last Updated | `2026-11-05T15:32:21.173675+00:00` |
-| Dataset Size | `4529 entries` |
+| Total Topics Learned | **4530** |
+| Last Updated | `2026-11-05T18:37:55.594092+00:00` |
+| Dataset Size | `4530 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3207 |
+| data-structures | 3208 |
 | algorithms | 269 |
 | trading-strategies | 228 |
 | crypto-blockchain | 190 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-hyperplane-partitioning and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional point searching and multi-core parallel nearest-neighbor querying execution in real-time computer graphics rendering systems and concurrent spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent BK-Tree (Burkhard-Keller Tree) using atomic metric-space-partitioning and child-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core parallel approximate dictionary lookup execution in real-time spell-checking systems and concurrent error-tolerant database search engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and bounding-interval-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping-interval querying and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent database range-query engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-update-cas primitives alongside hazard pointer memory reclamation for high-throughput interval query processing and multi-core parallel range aggregation execution in real-time financial trading systems and concurrent analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and node-value-cas primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency querying and multi-core parallel range update execution in real-time stream aggregation systems and concurrent statistical tracking engines`
-- `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic state-transition-cas and writer-preference-queuing primitives alongside hazard pointer memory reclamation for high-throughput shared resource access and multi-core parallel concurrency control execution in real-time multi-threaded web server systems and concurrent database transaction engines`
 
 <!-- STATS_END -->
 
