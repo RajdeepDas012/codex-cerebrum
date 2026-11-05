@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4517,
-    "last_updated": "2026-11-05T02:10:09.167396+00:00",
-    "total_topics_learned": 4517
+    "total_runs": 4518,
+    "last_updated": "2026-11-05T02:13:20.808703+00:00",
+    "total_topics_learned": 4518
   },
   "entries": [
     {
@@ -214868,6 +214868,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-05T02:10:09.167376+00:00",
       "run_number": 4517
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and multi-hash-matrix CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel event occurrence counting execution in real-time network telemetry monitoring systems and concurrent stream processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Count-Min Sketch utilizes atomic operations and hazard pointers to maintain a probabilistic frequency table across multiple threads without locking. It enables high-throughput heavy-hitter identification and event occurrence counting in massive streaming telemetry environments.",
+      "key_points": [
+        "Employs a 2D matrix of frequency cells updated concurrently via atomic fetch-and-add or CAS loop primitives.",
+        "Utilizes multiple independent hash functions to map incoming stream elements to distinct columns across different rows.",
+        "Integrates hazard pointers to safely manage dynamic resizing or memory reclamation of matrix rows without blocked reader-writer contention.",
+        "Provides sub-linear space bounds to estimate heavy hitters and frequency bounds with predictable error guarantees in real-time systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic frequency incrementing across multiple hash functions for a Count-Min Sketch cell.",
+        "correct": "void increment(const std::string& key, int count) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t idx = hash(i, key) % width;\n        matrix[i][idx].fetch_add(count, std::memory_order_relaxed);\n    }\n}",
+        "wrong": "void increment(const std::string& key, int count) {\n    std::lock_guard<std::mutex> lock(mtx);\n    for (size_t i = 0; i < depth; ++i) {\n        size_t idx = hash(i, key) % width;\n        matrix[i][idx] += count;\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic integer increments, leading to lost updates under multi-core concurrency.",
+        "Failing to use appropriate memory orderings (like relaxed or acquire-release) when reading and writing sketch cells.",
+        "Overlooking hash collision distributions that skew frequency estimates in narrow width configurations."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for increments when absolute immediate global synchronization across all cells is not required.",
+        "Pre-allocate matrix memory contiguously to maximize cache locality during multi-hash matrix traversals.",
+        "Incorporate fast non-cryptographic hash functions like MurmurHash3 or WyHash to minimize ingestion latency."
+      ],
+      "when_to_use": "Use when you need real-time, memory-efficient frequency estimation and heavy-hitter detection across high-throughput concurrent data streams.",
+      "when_not_to_use": "Avoid when exact frequency counts are required without any probabilistic overestimation errors.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads increment the same frequency cell simultaneously in a Count-Min Sketch?",
+          "answer": "By using atomic fetch-and-add operations or Compare-And-Swap (CAS) loops on individual matrix cells rather than acquiring a global or row-level mutex."
+        },
+        {
+          "question": "Why does a Count-Min Sketch overestimate frequencies rather than underestimate them?",
+          "answer": "Because hash collisions map multiple distinct keys to the same matrix cells, accumulating counts from unrelated keys into the queried cell value."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filter",
+        "HyperLogLog",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-05T02:13:20.808685+00:00",
+      "run_number": 4518
     }
   ]
 }
