@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4524,
-    "last_updated": "2026-11-05T10:44:15.881869+00:00",
-    "total_topics_learned": 4524
+    "total_runs": 4525,
+    "last_updated": "2026-11-05T10:48:19.772394+00:00",
+    "total_topics_learned": 4525
   },
   "entries": [
     {
@@ -215207,6 +215207,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-05T10:44:15.881852+00:00",
       "run_number": 4524
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic state-transition-cas and writer-preference-queuing primitives alongside hazard pointer memory reclamation for high-throughput shared resource access and multi-core parallel concurrency control execution in real-time multi-threaded web server systems and concurrent database transaction engines",
+      "category": "system-design",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Read-Write Lock leveraging atomic compare-and-swap operations, hazard pointers, and writer-preference queues. It maximizes concurrency by allowing multiple readers or a single writer while preventing thread starvation in high-throughput multi-core environments.",
+      "key_points": [
+        "Utilizes atomic state-transition CAS primitives to manage shared-state bits for concurrent readers and exclusive writers.",
+        "Implements a writer-preference queuing mechanism to prevent writer starvation under heavy read loads.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic lock node allocations without classic ABA or use-after-free bugs.",
+        "Provides scoped locking guarantees to ensure automatic cleanup and release of lock ownership when execution scopes exit."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates acquiring a lock-free scoped read lock safely using hazard pointers and atomic state transitions",
+        "correct": "class ScopedReadLock {\n    AtomicState& state;\n    HazardPointerGuard hp;\npublic:\n    explicit ScopedReadLock(AtomicState& s) : state(s), hp() {\n        while (!state.try_lock_shared(hp)) { /* spin or yield */ }\n    }\n    ~ScopedReadLock() { state.unlock_shared(); }\n};",
+        "wrong": "class BadReadLock {\n    AtomicState& state;\npublic:\n    BadReadLock(AtomicState& s) : state(s) {\n        state.fetch_add(1); // Unsafe without hazard pointers or verification, causing race conditions\n    }\n    ~BadReadLock() { state.fetch_sub(1); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to prevent writer starvation by allowing continuous incoming readers to indefinitely block waiting writers.",
+        "Neglecting hazard pointer protection during state node traversal, leading to use-after-free anomalies in concurrent memory reclamation."
+      ],
+      "best_practices": [
+        "Incorporate exponential backoff strategies in spinloops during high contention to reduce CPU cache-coherency traffic.",
+        "Strictly separate reader counts and writer flags within a single packed atomic word to enable single-instruction CAS state transitions."
+      ],
+      "when_to_use": "Ideal for high-throughput multi-threaded systems with frequent read operations and strict latency requirements where traditional OS mutexes introduce unacceptable context-switching overhead.",
+      "when_not_to_use": "Avoid in low-contention scenarios or simple single-threaded applications where the complexity and memory overhead of lock-free atomics and hazard pointers outweigh performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent writer starvation in a lock-free read-write lock implementation?",
+          "answer": "By maintaining an explicit atomic writer-preference queue or setting a pending-writer flag that blocks new incoming readers from acquiring the lock once a writer is queued."
+        },
+        {
+          "question": "Why are hazard pointers required when managing dynamic nodes in a lock-free synchronization primitive?",
+          "answer": "Hazard pointers protect threads from accessing memory reclaimed or freed by another concurrent thread, safely deferring deletion until no active references remain."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-free Data Structures and Atomic Primitives",
+        "Reader-Writer Synchronization and Concurrency Control"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-05T10:48:19.772374+00:00",
+      "run_number": 4525
     }
   ]
 }

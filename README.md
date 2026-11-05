@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4524** |
-| Last Updated | `2026-11-05T10:44:15.881869+00:00` |
-| Dataset Size | `4524 entries` |
+| Total Topics Learned | **4525** |
+| Last Updated | `2026-11-05T10:48:19.772394+00:00` |
+| Dataset Size | `4525 entries` |
 
 ## 📂 Categories Learned
 
@@ -22,7 +22,7 @@
 | trading-strategies | 228 |
 | crypto-blockchain | 190 |
 | technical-analysis | 147 |
-| system-design | 120 |
+| system-design | 121 |
 | market-analysis | 114 |
 | stocks-markets | 71 |
 | databases | 48 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Scoped Read-Write Lock using atomic state-transition-cas and writer-preference-queuing primitives alongside hazard pointer memory reclamation for high-throughput shared resource access and multi-core parallel concurrency control execution in real-time multi-threaded web server systems and concurrent database transaction engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit-shifting and remainder-fingerprint CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel quotient-slot resizing execution in real-time distributed caching systems and concurrent database storage engines`
 - `Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic multi-dimensional-bucket-splitting and point-partitioning CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial-temporal querying and multi-core parallel large-scale spatial indexing execution in real-time geospatial database systems and concurrent location-based service engines`
 - `Implementation of a lock-free thread-safe concurrent BFD-Tree (Best-Fit Decreasing) using atomic block-allocation and bin-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput memory block management and multi-core parallel dynamic fragmentation reduction execution in real-time embedded systems and concurrent memory-allocator engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-updating and state-transition-cas primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string matching and multi-core parallel keyword search execution in real-time intrusion detection systems and concurrent log analysis engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and hazard-pointer-based memory reclamation for high-throughput task scheduling and multi-core parallel work-stealing execution in real-time asynchronous processing systems and concurrent job dispatching engines`
 
 <!-- STATS_END -->
 
