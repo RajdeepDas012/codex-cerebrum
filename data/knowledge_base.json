@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4567,
-    "last_updated": "2026-11-06T15:26:20.302679+00:00",
-    "total_topics_learned": 4567
+    "total_runs": 4568,
+    "last_updated": "2026-11-06T15:29:32.173986+00:00",
+    "total_topics_learned": 4568
   },
   "entries": [
     {
@@ -217249,6 +217249,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-06T15:26:20.302657+00:00",
       "run_number": 4567
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-cas and node-tower-splicing primitives alongside hazard pointer memory reclamation for high-throughput ordered key-value map operations and multi-core parallel sorted range query execution in real-time in-memory database systems and concurrent cache storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic forward-pointer CAS operations and hazard pointer memory reclamation to maintain probabilistic logarithmic search depths across multi-threaded environments. It enables high-throughput ordered key-value operations and parallel sorted range queries without locking overhead, making it ideal for real-time in-memory databases and concurrent caching engines.",
+      "key_points": [
+        "Utilizes multi-level forward pointers with probabilistic tower heights to achieve O(log n) expected search, insertion, and deletion complexity.",
+        "Employs atomic Compare-And-Swap (CAS) primitives on forward pointers to achieve lock-free thread safety during concurrent modifications.",
+        "Integrates hazard pointer memory reclamation to safely manage node deletions and prevent memory leaks without blocking reader threads.",
+        "Supports parallel sorted range queries by traversing bottom-level linked list segments safely in the presence of concurrent insertions and deletions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free node insertion in a concurrent skip list using atomic pointer updates.",
+        "correct": "bool insert(const K& key, const V& value) {\n    Node* preds[MAX_LEVEL];\n    Node* succs[MAX_LEVEL];\n    while (true) {\n        if (find(key, preds, succs)) return false;\n        int topLevel = randomLevel();\n        Node* newNode = new Node(key, value, topLevel);\n        for (int i = 0; i < topLevel; ++i) {\n            newNode->next[i].store(succs[i], std::memory_order_relaxed);\n        }\n        if (preds[0]->next[0].compare_exchange_weak(succs[0], newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n        delete newNode;\n    }\n}",
+        "wrong": "bool insert(const K& key, const V& value) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Mutex locking defeats the lock-free design and degrades multi-core throughput\n    return unsafeInsert(key, value);\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly manage retired node memory, leading to severe memory leaks or use-after-free bugs during concurrent traversals.",
+        "Updating skip list tower levels bottom-up without ensuring that bottom-level insertion succeeds first, causing orphaned nodes."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based memory reclamation to defer node destruction until all concurrent readers have finished traversal.",
+        "Ensure memory ordering constraints (acquire-release semantics) are rigorously applied to pointer CAS operations to maintain visibility across threads."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory databases, concurrent caches, or streaming systems that require fast ordered key-value lookups and frequent range queries under heavy multi-threaded contention.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when a simple single-threaded map suffices, as skip lists consume extra memory for tower pointers and require complex lock-free logic.",
+      "interview_questions": [
+        {
+          "question": "How does a lock-free skip list ensure thread safety during node insertion without using mutual exclusion locks?",
+          "answer": "It uses atomic Compare-And-Swap (CAS) primitives on forward pointers, specifically ensuring bottom-level insertion succeeds first before splicing higher tower levels."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free skip list in languages like C++?",
+          "answer": "Hazard pointers prevent other threads from accessing a deleted node's memory while a traversal is in progress, safely deferring reclamation until no threads reference the node."
+        }
+      ],
+      "related_topics": [
+        "hazard pointers",
+        "lock-free data structures",
+        "concurrent hash maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T15:29:32.173964+00:00",
+      "run_number": 4568
     }
   ]
 }
