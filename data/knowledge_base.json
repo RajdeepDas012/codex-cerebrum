@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4553,
-    "last_updated": "2026-11-06T06:49:19.365977+00:00",
-    "total_topics_learned": 4553
+    "total_runs": 4554,
+    "last_updated": "2026-11-06T06:52:30.160922+00:00",
+    "total_topics_learned": 4554
   },
   "entries": [
     {
@@ -216583,6 +216583,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T06:49:19.365953+00:00",
       "run_number": 4553
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-wrapping and ring-slot-cas primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer or multi-producer multi-consumer message passing and multi-core parallel producer-consumer execution in real-time low-latency financial trading systems and concurrent stream processing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent bounded queue operations without blocking locks by leveraging atomic head-tail-wrapping and ring-slot-cas primitives. Combined with hazard pointers, it enables high-throughput multi-producer multi-consumer message passing essential for low-latency financial exchanges and real-time event processing.",
+      "key_points": [
+        "Utilizes atomic head and tail pointers with modulo wrapping to index circular buffer slots safely across threads.",
+        "Employs ring-slot compare-and-swap (CAS) primitives to claim buffer entries without acquiring mutual exclusion locks.",
+        "Integrates hazard pointer memory reclamation to manage dynamic node states safely without costly garbage collection pauses.",
+        "Minimizes cache contention and synchronization overhead for high-throughput message passing in ultra-low-latency environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic slot reservation pattern for a lock-free ring buffer producer",
+        "correct": "bool push(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        size_t current_head = head.load(std::memory_order_acquire);\n        if (current_tail - current_head >= CAPACITY) return false; // Full\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            slots[current_tail % CAPACITY].store(item, std::memory_order_release);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool push(T item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle memory ordering correctly, resulting in stale visibility of slot contents across CPU cores.",
+        "Using blocking synchronization primitives inside tight loops, defeating the lock-free design goals of the buffer."
+      ],
+      "best_practices": [
+        "Align head and tail atomic variables to distinct cache lines to completely prevent false sharing between producers and consumers.",
+        "Choose power-of-two buffer capacities to allow fast bitwise masking instead of slow modulo arithmetic during index wrapping."
+      ],
+      "when_to_use": "Ideal for high-frequency trading platforms and streaming telemetry pipelines requiring ultra-low latency inter-thread communication.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained and unbounded dynamic queuing with simple locks is acceptable.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent false sharing between producers and consumers on head and tail pointers?",
+          "answer": "By padding the atomic variables to ensure they reside on separate CPU cache lines."
+        },
+        {
+          "question": "Why use power-of-two capacities in ring buffers?",
+          "answer": "It allows replacing expensive division-based modulo operations with fast bitwise AND masking."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-queues",
+        "memory-barriers"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-06T06:52:30.160899+00:00",
+      "run_number": 4554
     }
   ]
 }
