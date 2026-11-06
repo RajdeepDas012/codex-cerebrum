@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4548,
-    "last_updated": "2026-11-06T06:33:12.872085+00:00",
-    "total_topics_learned": 4548
+    "total_runs": 4549,
+    "last_updated": "2026-11-06T06:36:24.483380+00:00",
+    "total_topics_learned": 4549
   },
   "entries": [
     {
@@ -216345,6 +216345,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T06:33:12.872065+00:00",
       "run_number": 4548
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and multi-hash-matrix-cas primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel item occurrence tracking execution in real-time network traffic monitoring systems and concurrent stream processing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Count-Min Sketch utilizing atomic cell increments and hash matrix CAS operations protected by hazard pointers. It is essential for high-throughput frequency estimation and heavy-hitter tracking in multi-core stream processing environments.",
+      "key_points": [
+        "Utilizes multi-hash matrix structures mapped atomically across multiple rows and columns.",
+        "Employs atomic frequency-cell-incrementing primitives to safely update counters without mutex bottlenecks.",
+        "Integrates hazard pointers to safely manage dynamic memory reclamation under high concurrency.",
+        "Delivers sub-linear space complexity for probabilistic frequency queries over massive data streams."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic frequency cell incrementing in a concurrent Count-Min Sketch using CAS loops.",
+        "correct": "void increment(const std::string& item, uint32_t seed_base) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t col = hash(item, seed_base + i) % width;\n        uint64_t* cell = &matrix[i][col];\n        uint64_t current = __atomic_load_n(cell, __ATOMIC_RELAXED);\n        while (!__atomic_compare_exchange_n(cell, &current, current + 1, true, __ATOMIC_ACQ_REL, __ATOMIC_RELAXED)) {\n            // Retries until successful CAS\n        }\n    }\n}",
+        "wrong": "void increment(const std::string& item) {\n    for (size_t i = 0; i < depth; ++i) {\n        size_t col = hash(item, i) % width;\n        matrix[i][col]++; // Non-atomic increment causes data races\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic variable increments inside hash matrix cells, leading to lost updates under multi-threaded contention.",
+        "Failing to implement proper memory reclamation like hazard pointers when resizing or clearing underlying sketch tables."
+      ],
+      "best_practices": [
+        "Use relaxed memory ordering for atomic loads where immediate strict synchronization is not required, falling back to acquire-release for CAS loops.",
+        "Keep hash functions lightweight and independent across matrix rows to avoid predictable collision patterns."
+      ],
+      "when_to_use": "Use when you need to process massive streams of events concurrently across multiple cores and estimate item frequencies with bounded error guarantees.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory or when the input stream size is small enough to fit comfortably in exact hash maps.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions when multiple threads increment the same frequency cell simultaneously in a Count-Min Sketch?",
+          "answer": "By employing atomic compare-and-swap (CAS) loops on the specific matrix cell to ensure that increments are not overwritten."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation useful in a concurrent lock-free Count-Min Sketch implementation?",
+          "answer": "It allows threads to safely read and update matrix rows without blocking, ensuring memory is only reclaimed after all referencing threads have detached."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Bloom Filters",
+        "HyperLogLog",
+        "Lock-free Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T06:36:24.483358+00:00",
+      "run_number": 4549
     }
   ]
 }
