@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4555** |
-| Last Updated | `2026-11-06T06:55:40.818962+00:00` |
-| Dataset Size | `4555 entries` |
+| Total Topics Learned | **4556** |
+| Last Updated | `2026-11-06T06:58:51.989145+00:00` |
+| Dataset Size | `4556 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3230 |
+| data-structures | 3231 |
 | algorithms | 271 |
 | trading-strategies | 228 |
 | crypto-blockchain | 191 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-splitting and node-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core database indexing and parallel range-scan query execution in real-time transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-bit-shifting and run-cluster-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel dynamic filter compaction execution in real-time distributed storage systems and concurrent database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-wrapping and ring-slot-cas primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer or multi-producer multi-consumer message passing and multi-core parallel producer-consumer execution in real-time low-latency financial trading systems and concurrent stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent Spatial Min-Max Priority Queue using atomic bounding-box-merging and dual-heap-cas primitives alongside hazard pointer memory reclamation for high-throughput spatial prioritization and multi-core parallel nearest-neighbor task scheduling execution in real-time geographic routing systems and concurrent spatial simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-linking and pattern-matching-transition CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string searching and multi-core parallel keyword extraction execution in real-time intrusion detection systems and concurrent log analysis engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and back-array-resizing primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event dispatch execution in real-time operating system kernels and concurrent task-based runtime engines`
 
 <!-- STATS_END -->
 
