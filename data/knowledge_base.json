@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4558,
-    "last_updated": "2026-11-06T14:57:27.312236+00:00",
-    "total_topics_learned": 4558
+    "total_runs": 4559,
+    "last_updated": "2026-11-06T15:00:39.384656+00:00",
+    "total_topics_learned": 4559
   },
   "entries": [
     {
@@ -216821,6 +216821,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T14:57:27.312213+00:00",
       "run_number": 4558
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detection and endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range querying and multi-core parallel schedule-overlap execution in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent interval tree utilizing atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage dynamic range insertions and overlapping queries without locking. This architecture allows multiple threads to read and mutate temporal intervals simultaneously, eliminating thread contention bottlenecks in high-frequency resource scheduling environments.",
+      "key_points": [
+        "Employs atomic overlap-detection and endpoint-updating CAS primitives to modify interval boundaries safely across threads.",
+        "Integrates hazard pointers to track active node traversals and prevent premature memory deallocation during concurrent mutations.",
+        "Optimizes multi-core parallel schedule-overlap execution, maximizing throughput in high-demand temporal query engines.",
+        "Ensures thread safety and non-blocking progress guarantees without standard mutual exclusion locks like mutexes or spinlocks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion with CAS for concurrent interval management.",
+        "correct": "bool insert_interval(Node*& root, Interval val) {\n    Node* new_node = new Node(val);\n    while (true) {\n        Node* current = hazard_pointer_protect(&root);\n        if (!current) {\n            if (atomic_compare_exchange_strong(&root, &current, new_node)) return true;\n        } else {\n            // Traverse and update max endpoints atomically\n            if (val.low < current->interval.low) {\n                if (atomic_compare_exchange_strong(&current->left, &current->left_ptr, new_node)) return true;\n            } else {\n                if (atomic_compare_exchange_strong(&current->right, &current->right_ptr, new_node)) return true;\n            }\n        }\n    }\n}",
+        "wrong": "bool insert_interval_unsafe(Node* root, Interval val) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Missing atomic guarantees and hazard pointers leads to race conditions and dangling pointers\n    Node* curr = root;\n    while(curr->left) curr = curr->left;\n    curr->left = new Node(val);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers, leading to use-after-free errors when another thread deletes a node.",
+        "Ignoring the propagation of maximum high endpoints up the tree during concurrent node insertions, causing incorrect range query results."
+      ],
+      "best_practices": [
+        "Always register threads and acquire hazard pointers before dereferencing any potentially mutable node pointers in the tree.",
+        "Batch retired memory nodes in a thread-local deferred reclamation list to reduce atomic overhead associated with hazard pointer scans."
+      ],
+      "when_to_use": "Use when building high-throughput real-time calendar systems, meeting schedulers, or concurrent resource allocation engines requiring continuous, low-latency interval tracking across numerous parallel threads.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the overhead of lock-free mechanics and hazard pointers outweighs the benefits of concurrent execution.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when deleting a node in a lock-free interval tree?",
+          "answer": "You use hazard pointers to ensure that no concurrent thread is currently reading the target node during traversal before safely moving the node to a deferred retirement list for later deallocation."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for high-throughput temporal range querying systems?",
+          "answer": "Mutexes introduce thread contention, context-switching overhead, and potential priority inversions, whereas lock-free designs using CAS primitives ensure system-wide progress and superior parallel throughput."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Binary Search Trees",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T15:00:39.384622+00:00",
+      "run_number": 4559
     }
   ]
 }
