@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4577,
-    "last_updated": "2026-11-06T21:02:37.022252+00:00",
-    "total_topics_learned": 4577
+    "total_runs": 4578,
+    "last_updated": "2026-11-06T21:05:48.177914+00:00",
+    "total_topics_learned": 4578
   },
   "entries": [
     {
@@ -217726,6 +217726,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T21:02:37.022242+00:00",
       "run_number": 4577
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-updating and multi-hash-bit-setting CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate membership querying and multi-core parallel duplicate filtering execution in real-time distributed caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a highly concurrent, lock-free Bloom filter engineered for multi-threaded environments. By utilizing atomic bit-vector updates and compare-and-swap (CAS) operations across multiple hash indices, it achieves high-throughput approximate membership tests without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic bitwise operations (such as atomic OR or iterative CAS loops) to set multiple hash-derived bit positions in a shared array.",
+        "Eliminates global locks or mutexes entirely, allowing multiple threads to insert and query items simultaneously with minimal contention.",
+        "Employs hazard pointers or epoch-based memory reclamation for safe dynamic resizing or safe pointer-based auxiliary metadata management.",
+        "Optimized for read-heavy and write-heavy workloads in distributed caching tiers and databases where false positives are acceptable for massive performance gains."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates an atomic bit-setting logic using threading and atomic operations for concurrent filter insertions.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bit_array = [0] * ((size + 31) // 32)\n        self.lock_free_lock = threading.Lock() # conceptual stand-in for atomic CAS on words\n        \n    def add(self, bit_index):\n        word_idx = bit_index >> 5\n        bit_offset = bit_index & 31\n        with self.lock_free_lock:\n            self.bit_array[word_idx] |= (1 << bit_offset)",
+        "wrong": "class BadBloomFilter:\n    def __init__(self):\n        self.set = set()\n    def add(self, item):\n        self.set.add(item)"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write sequences (like `bits[i] |= mask`) which lead to lost updates under multi-threaded concurrency.",
+        "Failing to account for cache-line bouncing when multiple threads contend to update bits within the exact same underlying 64-bit word."
+      ],
+      "best_practices": [
+        "Group bit vectors into larger atomic words (e.g., 64-bit integers) and use hardware-supported atomic bitwise instructions or CAS loops.",
+        "Size the bit array appropriately based on expected capacity and false-positive tolerance to minimize word-level contention."
+      ],
+      "when_to_use": "When building high-throughput distributed caches or database storage engines that require fast approximate membership checks to avoid expensive disk or network lookups under heavy concurrency.",
+      "when_not_to_use": "When absolute zero false positives are required or when the dataset is too small to justify the memory and algorithmic overhead of a probabilistic data structure.",
+      "interview_questions": [
+        {
+          "question": "How do you handle concurrent updates to a shared bit array in a lock-free Bloom filter without losing updates?",
+          "answer": "By using atomic bitwise operations or Compare-And-Swap (CAS) loops on the target words of the bit array to safely apply bit masks."
+        },
+        {
+          "question": "What is the primary scalability bottleneck when multiple threads insert items into a concurrent Bloom filter simultaneously?",
+          "answer": "False sharing and cache-line contention, which occur when multiple threads attempt to modify bits residing on the exact same CPU cache line."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Lock-free Skip List",
+        "Scalable Bloom Filters"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-06T21:05:48.177903+00:00",
+      "run_number": 4578
     }
   ]
 }
