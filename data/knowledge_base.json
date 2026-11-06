@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4575,
-    "last_updated": "2026-11-06T20:56:17.383409+00:00",
-    "total_topics_learned": 4575
+    "total_runs": 4576,
+    "last_updated": "2026-11-06T20:59:27.018935+00:00",
+    "total_topics_learned": 4576
   },
   "entries": [
     {
@@ -217629,6 +217629,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T20:56:17.383399+00:00",
       "run_number": 4575
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation-cas and self-adjustment primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key-value operations and multi-core parallel local caching execution in real-time memory management systems and concurrent cache-oblivious storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Splay Tree adapts self-adjusting binary search tree properties for multi-core environments using atomic Compare-And-Swap (CAS) operations for root rotations and hazard pointers for safe memory reclamation. It optimizes high-throughput systems by bringing frequently accessed items closer to the root without traditional coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic root-rotation-cas primitives to execute zig, zag, and splay operations concurrently across multiple threads without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage node allocations and deallocations during aggressive self-adjustment structural changes.",
+        "Maximizes throughput for workloads with temporal locality by moving accessed elements toward the root dynamically.",
+        "Ensures thread safety and linearizability under heavy concurrent insertions, deletions, and lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard-pointer protected node access during a concurrent splay operation",
+        "correct": "Node* current = hazard_pointer.protect(&root);\nif (compare_exchange_strong(&root, &current, new_root)) {\n    hazard_pointer.retire(current);\n}",
+        "wrong": "Node* current = root;\nif (compare_exchange_strong(&root, &current, new_root)) {\n    delete current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers, leading to use-after-free bugs due to concurrent rotations.",
+        "Assuming standard single-threaded splay tree restructuring algorithms are safe for atomic execution without careful handling of intermediate structural states."
+      ],
+      "best_practices": [
+        "Always bind hazard pointers to traversed nodes prior to reading child references in a lock-free traversal.",
+        "Design rotation primitives to gracefully handle intermediate inconsistent states by leveraging retry loops with exponential backoff.",
+        "Batch retired nodes to minimize atomic contention on the global memory reclamation descriptor list."
+      ],
+      "when_to_use": "Use when building high-throughput key-value stores or local caching layers where workloads exhibit heavy temporal locality and thread contention is severe.",
+      "when_not_to_use": "Avoid when memory usage overhead from hazard pointers is prohibitive or when workloads lack temporal locality, making self-adjustment overhead unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems and use-after-free conditions during concurrent splay tree rotations?",
+          "answer": "By combining hazard pointers for safe memory retirement with atomic version counters or tagged pointers within the node references."
+        },
+        {
+          "question": "Why is implementing a lock-free splay tree significantly harder than a lock-free stack or queue?",
+          "answer": "Because splay trees require non-local structural modifications (rotations that alter deep ancestor and descendant pointers) which cannot easily be encapsulated in a single atomic CAS operation."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Treaps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Cache-Oblivious Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-06T20:59:27.018924+00:00",
+      "run_number": 4576
     }
   ]
 }
