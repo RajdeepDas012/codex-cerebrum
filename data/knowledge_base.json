@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4568,
-    "last_updated": "2026-11-06T15:29:32.173986+00:00",
-    "total_topics_learned": 4568
+    "total_runs": 4569,
+    "last_updated": "2026-11-06T15:32:43.228009+00:00",
+    "total_topics_learned": 4569
   },
   "entries": [
     {
@@ -217296,6 +217296,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T15:29:32.173964+00:00",
       "run_number": 4568
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-slot-swapping and kick-out-path CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership checking and multi-core parallel item deletion execution in real-time distributed caching systems and concurrent database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Cuckoo Filter, replacing traditional blocking synchronization with atomic bucket-slot swapping and kick-out path CAS operations. It leverages hazard pointers for safe memory reclamation, enabling high-throughput approximate membership queries and item deletions across multiple CPU cores.",
+      "key_points": [
+        "Utilizes atomic bucket-slot-swapping and kick-out-path CAS primitives to manage concurrent insertions and evictions without global locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or bucket allocation in multi-threaded environments.",
+        "Delivers high space efficiency and supports item deletion—an advantage over standard Bloom filters.",
+        "Optimizes multi-core parallel lookup and deletion paths for real-time distributed caching and high-performance storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic bucket-slot swap logic for lock-free Cuckoo Filter insertions.",
+        "correct": "bool cuckoo_insert(BucketTable* table, uint32_t fp, size_t index) {\n    for (int attempt = 0; attempt < MAX_KICKS; ++attempt) {\n        for (int slot = 0; slot < SLOTS_PER_BUCKET; ++slot) {\n            uint64_t expected = 0;\n            if (table[index].slots[slot].compare_exchange_strong(expected, fp)) {\n                return true;\n            }\n        }\n        // Kick out existing item and swap\n        size_t victim_slot = rand() % SLOTS_PER_BUCKET;\n        fp = table[index].slots[victim_slot].exchange(fp);\n        index = alt_index(index, fp);\n    }\n    return false;\n}",
+        "wrong": "bool cuckoo_insert_bad(BucketTable* table, uint32_t fp, size_t index) {\n    // Mutex locking the entire table during kick-out paths\n    std::lock_guard<std::mutex> lock(table->mu);\n    table->insert_unsafe(fp, index);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect kick-out chains with proper hazard pointers, leading to use-after-free race conditions during concurrent re-hashing.",
+        "Deadlocking or creating infinite loops when cyclic kick-out paths are not bounded by a maximum iteration threshold."
+      ],
+      "best_practices": [
+        "Strictly bound the maximum kick-out count during insertions to gracefully handle filter saturation.",
+        "Integrate hazard pointers or epoch-based reclamation to cleanly track threads traversing alternative bucket indexes."
+      ],
+      "when_to_use": "Use when you need high-throughput, space-efficient approximate membership testing that also requires support for item deletion in multi-threaded systems.",
+      "when_not_to_use": "Avoid when false positives are entirely unacceptable or when memory footprint is negligible and exact data structures like hash sets suffice.",
+      "interview_questions": [
+        {
+          "question": "How does a Cuckoo Filter handle concurrent insertions when multiple threads trigger kick-out paths simultaneously?",
+          "answer": "It relies on atomic compare-and-swap (CAS) primitives on individual bucket slots and uses bounded loops to re-place displaced fingerprints into alternative index positions."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free concurrent Cuckoo Filter?",
+          "answer": "Hazard pointers ensure that memory associated with buckets or resized tables cannot be reclaimed while other concurrent threads are actively traversing or modifying kick-out paths."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Lists",
+        "Concurrent Bloom Filters",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T15:32:43.227987+00:00",
+      "run_number": 4569
     }
   ]
 }
