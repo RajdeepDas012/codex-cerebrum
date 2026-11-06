@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4561,
-    "last_updated": "2026-11-06T15:07:08.536615+00:00",
-    "total_topics_learned": 4561
+    "total_runs": 4562,
+    "last_updated": "2026-11-06T15:10:19.166263+00:00",
+    "total_topics_learned": 4562
   },
   "entries": [
     {
@@ -216962,6 +216962,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T15:07:08.536593+00:00",
       "run_number": 4561
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-splitting and rank-select CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel range quantile query execution in real-time bioinformatics sequence analysis systems and concurrent analytical database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Wavelet Tree utilizes atomic bitmap-splitting and rank-select operations with hazard pointer protection to deliver lock-free performance for multi-core text indexing and range quantile queries. This structure enables efficient storage and querying of compressed alphabets and sequences without locking overhead, making it ideal for high-throughput bioinformatics tools.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives for lock-free bitmap node splitting and tree expansion.",
+        "Uses rank-select operations on bit vectors for navigation and character frequency extraction without global locks.",
+        "Integrates hazard pointers to safely manage node memory reclamation across concurrent reader and writer threads.",
+        "Supports high-throughput multi-core parallel range quantile queries for bioinformatics sequence analysis and analytical databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the safe traversal and node acquisition of a lock-free Wavelet Tree using hazard pointers.",
+        "correct": "WaveletNode* acquire_node_safe(std::atomic<WaveletNode*>& node_ptr, HazardPointerList& hp_list, int thread_id) {\n    WaveletNode* node;\n    do {\n        node = node_ptr.load(std::memory_order_acquire);\n        hp_list.protect(thread_id, node);\n    } while (node != node_ptr.load(std::memory_order_relaxed));\n    return node;\n}",
+        "wrong": "WaveletNode* acquire_node_unsafe(std::atomic<WaveletNode*>& node_ptr) {\n    return node_ptr.load();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to use-after-free bugs during concurrent tree updates.",
+        "Using sequential bottleneck locks for rank-select updates instead of atomic bitwise CAS operations."
+      ],
+      "best_practices": [
+        "Always pair every hazard pointer registration with a corresponding verification check against the source atomic pointer.",
+        "Leverage memory_order_acquire and memory_order_release semantics correctly to ensure visibility of split child nodes across threads."
+      ],
+      "when_to_use": "Use this structure when building concurrent analytical databases or bioinformatics pipelines requiring intensive multi-core range quantile queries and compressed sequence matching.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained or when workloads consist entirely of single-threaded, immutable text searches where simpler static structures suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread deletes a node in a concurrent Wavelet Tree?",
+          "answer": "Hazard pointers allow a reader thread to publish which node it is currently accessing. When a writer thread wants to delete or split a node, it scans the active hazard pointers and defers physical memory reclamation until no thread references that node."
+        },
+        {
+          "question": "Why are standard mutexes inefficient for implementing dynamic rank-select operations in a high-throughput Wavelet Tree?",
+          "answer": "Global or node-level mutexes introduce serialization bottlenecks and thread contention during rapid parallel updates and queries, whereas lock-free CAS primitives allow multiple threads to progress concurrently."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Automaton",
+        "Succinct Data Structures",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T15:10:19.166241+00:00",
+      "run_number": 4562
     }
   ]
 }
