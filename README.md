@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4552** |
-| Last Updated | `2026-11-06T06:46:05.742848+00:00` |
-| Dataset Size | `4552 entries` |
+| Total Topics Learned | **4553** |
+| Last Updated | `2026-11-06T06:49:19.365977+00:00` |
+| Dataset Size | `4553 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3227 |
+| data-structures | 3228 |
 | algorithms | 271 |
 | trading-strategies | 228 |
 | crypto-blockchain | 191 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Spatial Min-Max Priority Queue using atomic bounding-box-merging and dual-heap-cas primitives alongside hazard pointer memory reclamation for high-throughput spatial prioritization and multi-core parallel nearest-neighbor task scheduling execution in real-time geographic routing systems and concurrent spatial simulation engines`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-linking and pattern-matching-transition CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-pattern string searching and multi-core parallel keyword extraction execution in real-time intrusion detection systems and concurrent log analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-cas and back-array-resizing primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel event dispatch execution in real-time operating system kernels and concurrent task-based runtime engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-cas primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct count execution in real-time stream analytics systems and concurrent big data processing engines`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and multi-hash-matrix-cas primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel item occurrence tracking execution in real-time network traffic monitoring systems and concurrent stream processing engines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-updating and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range query execution in real-time geographic information systems and concurrent spatial database engines`
 
 <!-- STATS_END -->
 
