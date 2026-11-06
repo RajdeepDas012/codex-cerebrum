@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4573,
-    "last_updated": "2026-11-06T20:49:56.649114+00:00",
-    "total_topics_learned": 4573
+    "total_runs": 4574,
+    "last_updated": "2026-11-06T20:53:07.015756+00:00",
+    "total_topics_learned": 4574
   },
   "entries": [
     {
@@ -217535,6 +217535,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T20:49:56.649099+00:00",
       "run_number": 4573
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-updating and child-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput multi-core database indexing and parallel point-lookup execution in real-time transactional database systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-link Tree extends standard B-trees by adding right-links to internal and leaf nodes, enabling threads to navigate safely across node splits without coarse-grained locking. Utilizing atomic compare-and-swap (CAS) primitives and hazard pointers ensures high-throughput safe memory management for multi-core database engines.",
+      "key_points": [
+        "Right-link pointers allow navigating threads to safely cross split boundaries even if a structural modification is incomplete.",
+        "Atomic CAS primitives handle child pointer updates and node expansions without blocking concurrent reader threads.",
+        "Hazard pointers protect nodes from premature reclamation by actively tracking thread references during concurrent traversals.",
+        "High-throughput multi-core database indexing benefits immensely from lock-free synchronization, removing lock contention bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic right-link updates and child-pointer CAS primitives in a concurrent B-link Tree node.",
+        "correct": "bool update_child_pointer(std::atomic<Node*>& child_slot, Node* expected, Node* desired) {\n    return child_slot.compare_exchange_weak(expected, desired);\n}",
+        "wrong": "Node* update_child_pointer(Node* child_slot, Node* desired) {\n    Node* old = child_slot;\n    child_slot = desired;\n    return old;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to update the high-key or right-link pointer before splitting a node, trapping traversals in infinite loops.",
+        "Reclaiming node memory without hazard pointers or epoch-based reclamation, causing use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are registered and cleared deterministically around every node traversal step.",
+        "Perform structural splits from bottom-up or top-down consistently with retry loops on failed CAS operations."
+      ],
+      "when_to_use": "Ideal for high-concurrency storage engines and transactional databases requiring intensive parallel point lookups and range scans.",
+      "when_not_to_use": "Avoid in simple applications where single-threaded performance or straightforward mutex-based locking suffices due to implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do right-links prevent deadlocks and incorrect traversals during concurrent node splits in a B-link Tree?",
+          "answer": "Right-links allow a thread that arrives at a node during an ongoing split to follow the link to the newly created sibling node, bypassing the need to re-traverse from the root."
+        },
+        {
+          "question": "Why are hazard pointers required instead of standard garbage collection in lock-free tree structures?",
+          "answer": "Hazard pointers allow threads to safely announce which nodes they are currently accessing, preventing concurrent reclamation threads from freeing memory mid-traversal without heavy runtime garbage collection pauses."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Skip Graph",
+        "Hazard Pointer Memory Reclamation",
+        "Concurrent B+ Tree Indexes"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T20:53:07.015746+00:00",
+      "run_number": 4574
     }
   ]
 }
