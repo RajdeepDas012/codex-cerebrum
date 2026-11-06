@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4562,
-    "last_updated": "2026-11-06T15:10:19.166263+00:00",
-    "total_topics_learned": 4562
+    "total_runs": 4563,
+    "last_updated": "2026-11-06T15:13:37.095264+00:00",
+    "total_topics_learned": 4563
   },
   "entries": [
     {
@@ -217009,6 +217009,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T15:10:19.166241+00:00",
       "run_number": 4562
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput decrease-key operations and multi-core parallel Dijkstra's algorithm execution in real-time network routing systems and concurrent graph analysis engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a non-blocking concurrent Fibonacci Heap that utilizes atomic CAS operations for root-list splicing and minimum pointer updates, protected by hazard pointers. It enables extremely efficient decrease-key operations crucial for scaling multi-core parallel Dijkstra's algorithms in real-time routing systems.",
+      "key_points": [
+        "Leverages atomic root-list splicing and minimum-pointer CAS primitives to coordinate structural modifications across threads without coarse-grained locking.",
+        "Employs hazard pointers to safely reclaim memory of deleted or consolidated nodes without premature deallocation racing against concurrent traversals.",
+        "Optimizes the amortized $O(1)$ decrease-key operation for parallel graph algorithms like multi-core Dijkstra's shortest path routing.",
+        "Manages lazy consolidation concurrently to minimize contention overhead during high-throughput priority queue operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic CAS-based updates to the minimum pointer of a concurrent Fibonacci Heap structure.",
+        "correct": "bool update_min(std::atomic<Node*>& min_ptr, Node* expected, Node* desired) {\n    return min_ptr.compare_exchange_strong(expected, desired);\n}",
+        "wrong": "Node* current_min = min_ptr.load();\n// Thread interruption or race condition occurs here\nmin_ptr.store(new_min); // Not atomic relative to expected"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem when performing compare-and-swap operations on node pointers in the root list.",
+        "Neglecting hazard pointer protection during node extraction, resulting in use-after-free errors when concurrent threads attempt decrease-key operations.",
+        "Over-synchronizing lazy consolidation phases, which destroys the lock-free concurrency benefits."
+      ],
+      "best_practices": [
+        "Pair every dynamic node pointer access with a hazard pointer registration block to ensure safe memory reclamation.",
+        "Utilize tagged pointers or version counters alongside CAS operations to mitigate ABA risks during root list restructuring.",
+        "Keep critical sections inside thread routines minimal by deferring structural cleanups to epoch-based or hazard-backed cleanup phases."
+      ],
+      "when_to_use": "Use when building high-throughput real-time routing engines or parallel graph processors that execute massive amounts of concurrent decrease-key operations under high thread contention.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler workloads where the constant overhead of hazard pointers and atomic primitives outweighs the concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when implementing a lock-free Fibonacci Heap root list update using CAS?",
+          "answer": "By utilizing tagged pointers that combine the memory address with a monotonically increasing sequence counter, ensuring that a CAS operation fails if the pointer was modified and restored to the same address."
+        },
+        {
+          "question": "Why are hazard pointers preferred over traditional garbage collection in lock-free concurrent priority queues?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation with lower latency overhead compared to tracing garbage collectors, which is critical for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "lock-free Binomial Heap",
+        "hazard pointer memory management",
+        "parallel Dijkstra's algorithm optimization"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-06T15:13:37.095241+00:00",
+      "run_number": 4563
     }
   ]
 }
