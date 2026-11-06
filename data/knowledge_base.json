@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4560,
-    "last_updated": "2026-11-06T15:03:53.216980+00:00",
-    "total_topics_learned": 4560
+    "total_runs": 4561,
+    "last_updated": "2026-11-06T15:07:08.536615+00:00",
+    "total_topics_learned": 4561
   },
   "entries": [
     {
@@ -216915,6 +216915,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-06T15:03:53.216957+00:00",
       "run_number": 4560
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Binomial Heap using atomic root-list-merging and binomial-tree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling execution in real-time operating system kernels and concurrent event-driven simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Binomial Heap leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe, high-throughput mergeable priority queue operations across multiple cores without utilizing blocking locks.",
+      "key_points": [
+        "Utilizes atomic root-list-merging via CAS to link separate binomial tree collections without global locks.",
+        "Implements binomial-tree-linking operations atomically to combine trees of equal degree during insertions and merges.",
+        "Employs hazard pointer memory reclamation to securely free deleted or coalesced nodes without premature memory reuse vulnerabilities.",
+        "Provides efficient mergeable priority queue capabilities ideal for real-time task schedulers and simulation engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS for a concurrent binomial heap structure",
+        "correct": "bool linkTrees(Node*& rootList, Node* child, Node* parent) {\n    child->sibling = parent->child;\n    parent->child = child;\n    parent->degree++;\n    return atomic_compare_exchange_weak(&rootList, &(parent->sibling), parent);\n}",
+        "wrong": "Node* linkTrees(Node* rootList, Node* child, Node* parent) {\n    parent->degree++;\n    parent->child = child;\n    rootList = parent; // Non-atomic update prone to race conditions\n    return rootList;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointers with hazard pointers, leading to ABA problems and use-after-free bugs.",
+        "Updating tree degrees and child pointers non-atomically, causing inconsistent heap states visible to concurrent threads."
+      ],
+      "best_practices": [
+        "Pin hazard pointers before traversing or modifying dynamically shared binomial tree nodes.",
+        "Keep atomic retry loops compact to minimize contention during heavy concurrent root-list merges."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform high-throughput priority queue merges, insertions, and minimum-extractions under heavy contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple scenarios where standard lock-based binary heaps offer simpler maintenance and lower memory overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you safely handle memory reclamation in a lock-free binomial heap without incurring garbage collection overhead?",
+          "answer": "By using hazard pointers to register nodes currently being accessed by threads before performing unsafe memory deletions or structural updates."
+        },
+        {
+          "question": "Why is CAS insufficient on its own when merging binomial heaps concurrently?",
+          "answer": "Because structural changes involve modifying multiple pointers (parent, child, sibling, degree) which cannot be changed atomically together with a single CAS, requiring careful linearization strategies or epoch-based/hazard pointer protections."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointers",
+        "mergeable heaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T15:07:08.536593+00:00",
+      "run_number": 4561
     }
   ]
 }
