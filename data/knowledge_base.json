@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4578,
-    "last_updated": "2026-11-06T21:05:48.177914+00:00",
-    "total_topics_learned": 4578
+    "total_runs": 4579,
+    "last_updated": "2026-11-06T21:08:58.451754+00:00",
+    "total_topics_learned": 4579
   },
   "entries": [
     {
@@ -217773,6 +217773,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-06T21:05:48.177903+00:00",
       "run_number": 4578
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-splitting and node-overlap-minimization CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range query execution in real-time geographic information systems and concurrent spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent R-Tree designed for high-throughput spatial indexing in multi-core database engines. By utilizing atomic bounding-box-splitting, node-overlap-minimization CAS primitives, and hazard pointers, it safely manages concurrent geometric range queries without thread contention or memory corruption.",
+      "key_points": [
+        "Employs atomic compare-and-swap (CAS) primitives for thread-safe structural modifications like bounding-box splits and node insertions.",
+        "Minimizes node overlap during concurrent updates to maintain efficient bounding volumes and keep spatial query times optimal.",
+        "Utilizes hazard pointers for safe, lock-free memory reclamation, preventing use-after-free bugs when nodes are split or removed concurrently.",
+        "Optimizes multi-core execution for geometric range queries in real-time geographic information systems (GIS) and spatial databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of hazard pointers to safely traverse and access a concurrent R-Tree node.",
+        "correct": "Node* node = hazard_ptr.protect(root_node.load());\nif (node && node->bbox.contains(query_box)) {\n    // safely process node data\n}",
+        "wrong": "Node* node = root_node.load();\n// Another thread deletes node here\nif (node->bbox.contains(query_box)) { /* undefined behavior */ }"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to race conditions and use-after-free errors during concurrent splits.",
+        "Applying naive point-lock strategies inside node-splitting routines, which reintroduces lock contention and violates lock-free progress guarantees."
+      ],
+      "best_practices": [
+        "Publish thread-local hazard pointers before dereferencing any shared R-Tree node pointer during concurrent traversals.",
+        "Design node-split algorithms to be idempotent or retry-safe under multi-threaded CAS contention to ensure lock-free progress.",
+        "Periodically batch and reclaim retired nodes only after verifying no active hazard pointers reference them."
+      ],
+      "when_to_use": "Use this when building high-throughput spatial databases, real-time tracking platforms, or GIS engines requiring massive concurrent multi-core geometric queries.",
+      "when_not_to_use": "Avoid this in single-threaded applications or low-concurrency environments where the overhead of hazard pointers and atomic CAS retry loops outweighs the performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation races during concurrent R-Tree node splits?",
+          "answer": "Threads register nodes they are currently accessing in a thread-local hazard pointer list, signaling the memory allocator not to free or reuse those node addresses until the traversal completes."
+        },
+        {
+          "question": "Why is minimizing node overlap critical for concurrent R-Tree performance?",
+          "answer": "High node overlap forces spatial queries to traverse multiple subtrees, reducing pruning efficiency and increasing the contention footprint across concurrent worker threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree indexing",
+        "Hazard pointer memory management",
+        "Spatial database query optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-06T21:08:58.451744+00:00",
+      "run_number": 4579
     }
   ]
 }
