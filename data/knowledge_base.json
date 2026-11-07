@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4637,
-    "last_updated": "2026-11-07T22:46:24.880238+00:00",
-    "total_topics_learned": 4637
+    "total_runs": 4638,
+    "last_updated": "2026-11-07T22:49:42.823460+00:00",
+    "total_topics_learned": 4638
   },
   "entries": [
     {
@@ -220579,6 +220579,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T22:46:24.880216+00:00",
       "run_number": 4637
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chain-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value lookups and multi-core parallel dynamic table resizing execution in real-time distributed caching systems and concurrent in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent hash map utilizes atomic Compare-And-Swap (CAS) primitives and hazard pointers to safely handle concurrent bucket resizing, key insertions, and collision chain updates without traditional blocking locks. This architecture guarantees high throughput, thread safety, and minimal latency across multi-core systems, making it ideal for high-performance in-memory databases and distributed caches.",
+      "key_points": [
+        "Employs atomic bucket-resizing and collision-chain-splicing CAS primitives to ensure thread safety without lock contention.",
+        "Utilizes hazard pointers for safe, lock-free memory reclamation of deleted buckets or old hash tables during expansion.",
+        "Supports high-throughput concurrent key-value lookups and parallel dynamic table resizing across multiple CPU cores.",
+        "Prevents priority inversion and deadlocks common in lock-based hash maps by using non-blocking synchronization."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion into a hash bucket using a compare-and-swap loop.",
+        "correct": "bool insert(std::atomic<Node*>& bucket_head, Node* new_node) {\n    Node* current = bucket_head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = current;\n    } while (!bucket_head.compare_exchange_weak(current, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool insert(Node*& bucket_head, Node* new_node) {\n    // Missing atomicity and CAS loop causes race conditions and lost updates\n    new_node->next = bucket_head;\n    bucket_head = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use memory barriers and appropriate memory orderings (e.g., acquire-release semantics) during CAS operations.",
+        "Neglecting safe memory reclamation (like hazard pointers or epoch-based GC), leading to the ABA problem or use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based reclamation to safely defer freeing memory until all concurrent readers have finished traversing the bucket.",
+        "Design resizing algorithms to be incremental or cooperative, allowing multiple threads to assist in migrating entries to the new table.",
+        "Carefully choose hash functions that distribute keys uniformly to minimize long collision chains and reduce CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-performance multi-threaded applications, distributed caches, or in-memory databases that experience heavy read-write contention and require predictable low-latency scaling.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained or when simpler lock-based maps or single-threaded maps suffice due to low concurrency requirements.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating collision chains in a lock-free hash map?",
+          "answer": "By using tagged pointers (combining the node pointer with a version counter) or hazard pointers that ensure memory is not recycled while a thread holds a reference to it."
+        },
+        {
+          "question": "Why is dynamic table resizing challenging in a lock-free hash map, and how is it typically solved?",
+          "answer": "Resizing requires moving all entries to a larger table atomically, which a single thread cannot do under lock-free constraints without blocking others. It is solved using cooperative resizing where multiple threads assist in migrating buckets using atomic flags."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Compare-And-Swap (CAS) Synchronization",
+        "Lock-Free Concurrent Skip List"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-07T22:49:42.823442+00:00",
+      "run_number": 4638
     }
   ]
 }
