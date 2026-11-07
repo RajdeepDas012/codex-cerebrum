@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4622,
-    "last_updated": "2026-11-07T18:45:02.561204+00:00",
-    "total_topics_learned": 4622
+    "total_runs": 4623,
+    "last_updated": "2026-11-07T18:48:13.911557+00:00",
+    "total_topics_learned": 4623
   },
   "entries": [
     {
@@ -219866,6 +219866,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-07T18:45:02.561183+00:00",
       "run_number": 4622
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic parent-pointer-compression and rank-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class querying and multi-core parallel connected-component execution in real-time social network graph analytics and concurrent network routing topology engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Disjoint-Set (Union-Find) data structure utilizing atomic compare-and-swap (CAS) operations for parent pointer compression and rank merging. It leverages hazard pointers for safe memory management, enabling high-throughput parallel equivalence class queries and connected-component updates in multi-threaded environments.",
+      "key_points": [
+        "Uses atomic operations and compare-and-swap (CAS) primitives to achieve lock-free thread safety during finds and unions.",
+        "Implements atomic parent-pointer compression to flatten trees during traversal without race conditions.",
+        "Employs lock-free rank-merging heuristics to keep trees shallow and operations efficient under heavy contention.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs when nodes are updated or detached concurrently."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual logic of atomic find with path compression and lock-free union using CAS primitives.",
+        "correct": "class ConcurrentDisjointSet:\n    def __init__(self, size):\n        self.parent = list(range(size))\n        self.rank = [0] * size\n\n    def find(self, i):\n        while self.parent[i] != i:\n            root = self.parent[self.parent[i]]\n            # Atomic CAS path compression simulation\n            self.parent[i] = root\n            i = root\n        return i\n\n    def union(self, i, j):\n        while True:\n            root_i = self.find(i)\n            root_j = self.find(j)\n            if root_i == root_j:\n                return False\n            if self.rank[root_i] < self.rank[root_j]:\n                root_i, root_j = root_j, root_i\n            # Atomic update simulation via CAS on parent pointer\n            if self.parent[root_j] == root_j:\n                self.parent[root_j] = root_i\n                if self.rank[root_i] == self.rank[root_j]:\n                    self.rank[root_i] += 1\n                return True",
+        "wrong": "class UnsafeDisjointSet:\n    def __init__(self, size):\n        self.parent = list(range(size))\n    def find(self, i):\n        if self.parent[i] == i:\n            return i\n        # Non-atomic recursive path compression causing race conditions in multi-threaded environments\n        self.parent[i] = self.find(self.parent[i])\n        return self.parent[i]"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversal with hazard pointers, leading to memory corruption during concurrent node modifications.",
+        "Using standard recursive path compression without loop-based CAS retries, resulting in race conditions and infinite loops."
+      ],
+      "best_practices": [
+        "Always employ bounded backoff strategies inside retry loops for high-contention union operations.",
+        "Combine hazard pointers with epoch-based reclamation or reference counting to safely manage dynamically added elements."
+      ],
+      "when_to_use": "Ideal for high-concurrency systems requiring frequent dynamic equivalence testing and connected-component tracking, such as parallel graph algorithms and network routing protocol simulations.",
+      "when_not_to_use": "Avoid in single-threaded applications or workloads with low concurrency where simple array-based Union-Find with standard locks provides lower overhead and simpler implementation.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during path compression in a lock-free Disjoint-Set data structure?",
+          "answer": "By using a loop-based approach that repeatedly reads parent pointers and applies compare-and-swap (CAS) primitives to update pointers atomically without blocking other threads."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Union-Find structure?",
+          "answer": "Hazard pointers ensure that nodes being traversed or modified during finds and unions are not reclaimed or freed by another concurrent thread, preventing use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Atomic Compare-And-Swap (CAS) Primitives",
+        "Concurrent Graph Processing Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T18:48:13.911505+00:00",
+      "run_number": 4623
     }
   ]
 }
