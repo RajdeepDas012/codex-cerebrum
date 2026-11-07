@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4610,
-    "last_updated": "2026-11-07T14:12:10.689437+00:00",
-    "total_topics_learned": 4610
+    "total_runs": 4611,
+    "last_updated": "2026-11-07T14:15:22.533082+00:00",
+    "total_topics_learned": 4611
   },
   "entries": [
     {
@@ -219295,6 +219295,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T14:12:10.689415+00:00",
       "run_number": 4610
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy transaction processing and multi-core parallel background compaction execution in real-time distributed key-value storage systems and concurrent database engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Log-Structured Merge-Tree optimizes write-heavy workloads by buffering inserts in a lock-free active memtable and periodically flushing them to immutable SSTables via compare-and-swap primitives. Utilizing hazard pointers ensures safe memory reclamation for concurrent readers during atomic memtable swaps and background compactions without stopping the world.",
+      "key_points": [
+        "Atomic memtable swapping facilitates lock-free transitions between active write buffers and immutable flush targets.",
+        "Hazard pointers protect concurrent read transactions from prematurely freeing memory during node reallocations or SSTable merges.",
+        "CAS-based SSTable compaction enables multiple background worker threads to merge sorted files safely without global locking overhead.",
+        "High-throughput write paths append sequentially to commit logs while deferring random disk I/O to background compaction phases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based pointer swap for transitioning an active memtable to an immutable state using memory ordering guarantees.",
+        "correct": "std::shared_ptr<MemTable> old_mem = active_memtable.load(std::memory_order_acquire);\nauto new_mem = std::make_shared<MemTable>();\nwhile (!active_memtable.compare_exchange_weak(old_mem, new_mem, std::memory_order_release, std::memory_order_relaxed)) {\n    // Retry swap loop\n}\nimmut_memtables.push_back(old_mem);",
+        "wrong": "std::shared_ptr<MemTable> old_mem = active_memtable;\nactive_memtable = std::make_shared<MemTable>();\nimmut_memtables.push_back(old_mem);"
+      },
+      "common_mistakes": [
+        "Failing to protect old memtable pointers with hazard pointers during reader lookups, resulting in use-after-free race conditions.",
+        "Using heavy mutual exclusion mutexes on the write path instead of atomic CAS primitives, choking multi-core scalability."
+      ],
+      "best_practices": [
+        "Employ hazard pointer epochs to periodically reclaim memory blocks from retired immutable memtables and compacted SSTables.",
+        "Design background compaction tasks to operate on isolated snapshots using copy-on-write pointer updates to prevent read-write conflicts."
+      ],
+      "when_to_use": "Use when building ultra-high-throughput write-intensive distributed key-value stores, time-series databases, or transactional storage engines requiring minimal read latencies and consistent write scaling.",
+      "when_not_to_use": "Avoid when workloads are heavily read-bound with point updates or when strict low-latency point query performance without multi-level cache traversal is required.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during an atomic memtable swap in a lock-free LSM-Tree?",
+          "answer": "Hazard pointers allow reader threads to publish a reference to the active memtable they are currently querying, ensuring that background swappers and reclaimers cannot deallocate or free the memory until all registered hazard pointers clear."
+        },
+        {
+          "question": "What is the primary advantage of using atomic CAS primitives for SSTable compaction coordination?",
+          "answer": "Atomic CAS operations allow multiple background worker threads to claim and merge non-overlapping SSTable ranges concurrently without requiring global coarse-grained locks that block the front-end write pipeline."
+        }
+      ],
+      "related_topics": [
+        "B+ Tree",
+        "Concurrent Skip List",
+        "Hazard Pointers",
+        "SSTable Compaction Strategies"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-07T14:15:22.533059+00:00",
+      "run_number": 4611
     }
   ]
 }
