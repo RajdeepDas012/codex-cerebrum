@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4608,
-    "last_updated": "2026-11-07T14:05:46.188811+00:00",
-    "total_topics_learned": 4608
+    "total_runs": 4609,
+    "last_updated": "2026-11-07T14:09:00.049773+00:00",
+    "total_topics_learned": 4609
   },
   "entries": [
     {
@@ -219201,6 +219201,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-07T14:05:46.188789+00:00",
       "run_number": 4608
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel filter updates execution in real-time caching systems and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free, thread-safe concurrent Bloom Filter. It utilizes atomic bit manipulation and compare-and-swap (CAS) primitives along with hazard pointers to deliver high-throughput probabilistic set-membership queries and parallel updates across multi-core systems without locks.",
+      "key_points": [
+        "Uses atomic operations to set specific bits in a shared bit-array without mutual exclusion locks.",
+        "Employs multiple independent hash functions to map elements to multiple bit indices, minimizing false positive rates.",
+        "Utilizes hazard pointers or epoch-based memory reclamation to safely manage dynamic resizing or memory deallocation.",
+        "Achieves high scalability in multi-core environments, critical for high-throughput caching and database engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-setting using fetch_or for lock-free updates on a bit array segment.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_4>> bit_array;\npublic:\n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        uint64_t mask = 1ULL << bit_offset;\n        bit_array[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\n// Non-atomic bit setting leading to race conditions\nclass UnsafeBloomFilter {\n    std::vector<uint64_t> bit_array;\npublic:\n    void add(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        bit_array[word_idx] |= (1ULL << bit_offset); // Race condition here!\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic bit-wise operators on shared bit arrays, leading to lost updates.",
+        "Failing to use appropriate memory orderings (e.g., relying on sequential consistency everywhere and hurting performance)."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for independent bit modifications where strict synchronization is not required.",
+        "Pre-calculate optimal bit-array size and hash function count based on expected item volume and target false-positive rate."
+      ],
+      "when_to_use": "When you need extremely high-throughput set membership testing with concurrent writes across multiple threads, and a small false-positive rate is acceptable.",
+      "when_not_to_use": "When false positives are entirely unacceptable, or when items must be frequently deleted from the set without rebuilding the filter.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread-safe bit setting without using heavy mutex locks?",
+          "answer": "By using atomic bitwise operations such as atomic::fetch_or with appropriate memory orderings on word-aligned segments of the bit array."
+        },
+        {
+          "question": "Why are standard Bloom filters difficult to make lock-free when supporting dynamic resizing?",
+          "answer": "Resizing requires allocating a new array and migrating bits or hashes, which introduces race conditions with concurrent inserts requiring cooperative migration or hazard pointers."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Graph",
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-07T14:09:00.049751+00:00",
+      "run_number": 4609
     }
   ]
 }
