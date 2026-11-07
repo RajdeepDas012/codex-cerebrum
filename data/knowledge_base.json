@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4635,
-    "last_updated": "2026-11-07T22:40:00.110738+00:00",
-    "total_topics_learned": 4635
+    "total_runs": 4636,
+    "last_updated": "2026-11-07T22:43:10.623024+00:00",
+    "total_topics_learned": 4636
   },
   "entries": [
     {
@@ -220485,6 +220485,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T22:40:00.110706+00:00",
       "run_number": 4635
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic node-splitting and axis-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel geometric point-location execution in real-time robotics perception systems and concurrent spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent KD-Tree utilizing atomic operations and hazard pointers for safe memory management. It enables high-throughput spatial indexing and nearest neighbor queries across multiple threads without lock contention.",
+      "key_points": [
+        "Utilizes atomic node-splitting to divide spatial regions without blocking concurrent updates.",
+        "Employs axis-bounding CAS primitives to dynamically update bounding boxes of multi-dimensional nodes.",
+        "Integrates hazard pointers to safely reclaim memory of deleted or split nodes without use-after-free bugs.",
+        "Optimizes multi-core parallel geometric point-location and nearest neighbor search operations for spatial databases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic pointer updates for thread-safe KD-Tree node insertion using compare-and-swap.",
+        "correct": "bool insert(std::atomic<Node*>& root, Point p) {\n    Node* newNode = new Node(p);\n    while (true) {\n        Node* curr = root.load();\n        if (!curr) {\n            if (root.compare_exchange_weak(curr, newNode)) return true;\n        } else {\n            // Traverse and split atomically\n            break;\n        }\n    }\n    delete newNode;\n    return false;\n}",
+        "wrong": "bool insert(Node*& root, Point p) {\n    // Missing synchronization leading to race conditions during simultaneous spatial splits\n    if (!root) {\n        root = new Node(p);\n        return true;\n    }\n    return insertRecursive(root->left, p);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node traversal paths with hazard pointers, leading to memory corruption when another thread splits a node.",
+        "Using coarse-grained locks on sub-trees, which bottleneck parallel insertion and query throughput."
+      ],
+      "best_practices": [
+        "Implement epoch-based or hazard-pointer-based memory reclamation to manage multi-threaded node recycling.",
+        "Keep atomic comparison domains focused strictly on pointers and bounding-box coordinate boundaries to reduce CAS failure rates."
+      ],
+      "when_to_use": "Use when building high-performance spatial databases, robotics perception mapping engines, or real-time simulation software requiring heavy concurrent multi-dimensional point searches.",
+      "when_not_to_use": "Avoid when data dimensions are excessively high (the curse of dimensionality renders KD-Trees inefficient) or when workloads consist entirely of single-threaded sequential scripts.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free KD-Tree?",
+          "answer": "Hazard pointers allow threads to declare which nodes they are currently accessing, ensuring that memory allocators do not reuse or free a node until all traversing threads have unlinked their hazard references."
+        },
+        {
+          "question": "Why is structural modification (like node splitting) challenging to implement lock-free in hierarchical spatial trees?",
+          "answer": "Because modifying a parent node requires atomically updating child pointers while maintaining consistent spatial bounds across distributed worker threads, often requiring multi-word CAS or careful atomic state validation."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Tree spatial index",
+        "Hazard pointer memory management patterns",
+        "Concurrent Quadtree point location structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T22:43:10.623004+00:00",
+      "run_number": 4636
     }
   ]
 }
