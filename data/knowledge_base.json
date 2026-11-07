@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4638,
-    "last_updated": "2026-11-07T22:49:42.823460+00:00",
-    "total_topics_learned": 4638
+    "total_runs": 4639,
+    "last_updated": "2026-11-07T22:52:55.677029+00:00",
+    "total_topics_learned": 4639
   },
   "entries": [
     {
@@ -220627,6 +220627,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-07T22:49:42.823442+00:00",
       "run_number": 4638
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-modification-operation (SMO) descriptor CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed data retrieval and multi-core parallel range scan execution in real-time database management systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B-Tree utilizing atomic Structural Modification Operation (SMO) descriptors and Compare-And-Swap (CAS) primitives. By leveraging hazard pointers for safe memory reclamation, it enables multi-core systems to perform high-throughput indexing and parallel range scans without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Structural Modification Operation (SMO) descriptors to make multi-step node splits and merges appear atomic to concurrent threads.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of nodes freed during structural modifications.",
+        "Enables high-throughput concurrent indexed data lookups and lock-free parallel range scans via cooperative helper threads.",
+        "Avoids coarse-grained locking or reader-writer locks, significantly reducing contention on multi-core database engines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an SMO descriptor and atomic CAS update for concurrent B-Tree node operations.",
+        "correct": "class SMODescriptor:\n    def __init__(self, node, split_key, left_child, right_child):\n        self.node = node\n        self.split_key = split_key\n        self.left_child = left_child\n        self.right_child = right_child\n        self.in_progress = True\n\nclass LockFreeBTreeNode:\n    def __init__(self, keys, children):\n        self.keys = keys\n        self.children = children\n        self.smo_descriptor = None\n\ndef try_complete_smo(node, descriptor):\n    # Cooperative help mechanism for pending SMOs\n    if descriptor and descriptor.in_progress:\n        # Atomically apply split effects\n        pass",
+        "wrong": "def unsafe_split(node, key):\n    # Modifying node pointers without an atomic SMO descriptor or hazard pointers\n    node.keys.append(key)\n    node.children.append(newNode())"
+      },
+      "common_mistakes": [
+        "Failing to implement cooperative helping, where a thread encountering an incomplete SMO does not help finish it, leading to stalled operations.",
+        "Reclaiming memory of nodes removed during an SMO immediately without hazard pointers, causing use-after-free errors for concurrent readers."
+      ],
+      "best_practices": [
+        "Always wrap node access patterns in hazard pointer protect and release blocks to guarantee safe memory reclamation.",
+        "Design SMO descriptors to be idempotent so multiple helper threads can safely attempt to finalize the same structural change."
+      ],
+      "when_to_use": "Use when building high-performance, multi-threaded database management systems or in-memory storage engines requiring massive parallel read and write throughput on indexed data.",
+      "when_not_to_use": "Avoid in single-threaded applications, embedded systems with strict memory limits, or scenarios where simple coarse-grained locking provides adequate performance.",
+      "interview_questions": [
+        {
+          "question": "How do Structural Modification Operation (SMO) descriptors help achieve lock-free execution in a concurrent B-Tree?",
+          "answer": "SMO descriptors encapsulate the state of a complex multi-step modification (like a split or merge). If a thread encounters an incomplete operation, it can cooperatively help finish it using atomic primitives before proceeding with its own operation."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing lock-free data structures like a concurrent B-Tree?",
+          "answer": "Hazard pointers safely manage memory reclamation by allowing threads to register references to nodes they are currently accessing, preventing other threads from prematurely freeing or reusing that memory."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip List",
+        "Hazard Pointer Memory Management",
+        "Concurrent Transactional Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T22:52:55.677011+00:00",
+      "run_number": 4639
     }
   ]
 }
