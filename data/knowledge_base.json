@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4591,
-    "last_updated": "2026-11-07T07:03:28.132800+00:00",
-    "total_topics_learned": 4591
+    "total_runs": 4592,
+    "last_updated": "2026-11-07T07:06:38.936943+00:00",
+    "total_topics_learned": 4592
   },
   "entries": [
     {
@@ -218391,6 +218391,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T07:03:28.132781+00:00",
       "run_number": 4591
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Min-Max Octree using atomic voxel-subdivision and point-insertion CAS primitives alongside hazard pointer memory reclamation for high-throughput 3D spatial partitioning and multi-core parallel collision detection execution in real-time game physics engines and concurrent simulation software",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Spatial Min-Max Octree tailored for multi-core 3D environments. By leveraging atomic primitives (CAS) for voxel subdivision and point insertion alongside hazard pointers, it prevents race conditions and memory leaks during parallel collision checks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely subdivide voxels without blocking reader or writer threads.",
+        "Employs hazard pointers to securely manage memory reclamation, preventing use-after-free bugs in a lock-free landscape.",
+        "Maintains min-max bounds at internal nodes to aggressively prune empty or non-intersecting regions during parallel queries.",
+        "Optimized for multi-core environments, drastically reducing contention compared to coarse-grained lock-based spatial indices."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic node insertion using CAS and hazard pointers.",
+        "correct": "bool insert_point(OctreeNode* root, Point3D p) {\n    HazardPointer hp;\n    while (true) {\n        OctreeNode* leaf = find_leaf(root, p, hp);\n        if (try_subdivide_and_insert(leaf, p)) return true;\n    }\n}",
+        "wrong": "bool insert_point(OctreeNode* root, Point3D p) {\n    std::lock_guard<std::mutex> lock(root->mu);\n    root->find_leaf(p)->insert(p);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect traversal pointers with hazard pointers, leading to memory corruption when another thread frees a node.",
+        "Using heavy global locks for voxel subdivision, which completely destroys multi-core scalability.",
+        "Failing to handle ABA problems during atomic pointer updates on tree nodes."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer reads in a hazard pointer domain to guarantee safe retirement and reclamation.",
+        "Design fine-grained spatial bounds update operations to minimize the scope of atomic retries.",
+        "Keep node payload footprints small to fit within cache lines and reduce cache thrashing across multiple cores."
+      ],
+      "when_to_use": "When you need extremely high-throughput 3D spatial partitioning and collision detection across many concurrent threads without locking overhead.",
+      "when_not_to_use": "When working in single-threaded environments or constrained memory systems where simpler grid-based or single-lock structures are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues in a lock-free octree?",
+          "answer": "Hazard pointers allow threads to declare which nodes they are currently accessing, preventing other threads from prematurely freeing those memory addresses until no thread references them."
+        },
+        {
+          "question": "Why is a min-max bounding strategy beneficial for parallel collision detection algorithms?",
+          "answer": "It allows worker threads to rapidly prune large subtrees that do not intersect with query volumes, drastically reducing the search space and synchronization overhead."
+        }
+      ],
+      "related_topics": [
+        "lock-free Bounding Volume Hierarchy",
+        "hazard pointer memory management",
+        "concurrent spatial indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T07:06:38.936923+00:00",
+      "run_number": 4592
     }
   ]
 }
