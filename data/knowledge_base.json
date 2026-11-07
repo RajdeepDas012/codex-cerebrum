@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4602,
-    "last_updated": "2026-11-07T07:39:03.929509+00:00",
-    "total_topics_learned": 4602
+    "total_runs": 4603,
+    "last_updated": "2026-11-07T07:42:20.094625+00:00",
+    "total_topics_learned": 4603
   },
   "entries": [
     {
@@ -218915,6 +218915,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T07:39:03.929489+00:00",
       "run_number": 4602
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent-Read-Concurrent-Write (CRCW) hash table using atomic slot-probing and key-tombstone-cas primitives alongside hazard pointer memory reclamation for high-throughput fine-grained multi-core record updates and parallel thread execution in real-time high-frequency trading platforms and concurrent in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free CRCW hash table enables multiple threads to read and write to the same table slots simultaneously without blocking, using low-level atomic operations like Compare-And-Swap (CAS) and tombstones for deletions. It is essential for high-throughput, low-latency environments such as real-time financial trading systems and parallel in-memory databases where lock contention would otherwise bottleneck performance.",
+      "key_points": [
+        "Utilizes atomic slot-probing and key-tombstone-cas primitives to manage concurrent insertions, updates, and logical deletions without traditional mutex locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic memory and prevent use-after-free bugs during concurrent resizing or slot reallocation.",
+        "Supports Concurrent-Read-Concurrent-Write (CRCW) semantics, allowing multiple threads to access and mutate overlapping memory locations safely.",
+        "Provides extreme throughput and predictable tail-latencies required by real-time high-frequency trading systems and concurrent analytics engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic slot probing and tombstone CAS operations in a lock-free hash table.",
+        "correct": "bool insert(std::atomic<uint64_t>& slot, uint64_t expected_key, uint64_t new_value) {\n    return slot.compare_exchange_strong(expected_key, new_value, std::memory_order_acq_rel);\n}",
+        "wrong": "bool insert(uint64_t& slot, uint64_t key, uint64_t value) {\n    if (slot == 0) { slot = value; return true; }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during atomic state transitions on table slots and tombstones.",
+        "Neglecting proper memory ordering semantics, which can lead to stale reads or out-of-order writes across multi-core processors.",
+        "Incorrectly managing hazard pointers leading to memory leaks or premature reclamation of active table nodes."
+      ],
+      "best_practices": [
+        "Use Acquire-Release memory ordering semantics to establish necessary happens-before relationships between concurrent slot updates.",
+        "Employ epoch-based memory reclamation or hazard pointers to bound memory consumption and avoid locking overhead.",
+        "Design hash table probes with linear probing or quadratic probing patterns that handle concurrent deletions safely via explicit tombstone states."
+      ],
+      "when_to_use": "Use this structure when building high-performance, ultra-low-latency concurrent systems like high-frequency trading matching engines or multi-core in-memory databases.",
+      "when_not_to_use": "Avoid when standard lock-based maps are sufficient, or in environments with low concurrency where the complexity of lock-free primitives outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe deletion of keys in a lock-free hash table without causing race conditions with active readers?",
+          "answer": "By using atomic tombstone markers via CAS operations to logically remove entries, paired with hazard pointers or epoch-based reclamation to safely free physical memory after all referencing threads have progressed."
+        },
+        {
+          "question": "What is the primary risk of using simple load-and-store patterns instead of CAS primitives in a CRCW hash table?",
+          "answer": "Data races and lost updates occur because non-atomic check-then-act sequences allow interleaving threads to overwrite changes made by others without detection."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Skip Lists",
+        "Concurrent Data Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-07T07:42:20.094606+00:00",
+      "run_number": 4603
     }
   ]
 }
