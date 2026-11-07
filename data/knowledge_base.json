@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4588,
-    "last_updated": "2026-11-07T00:50:31.251067+00:00",
-    "total_topics_learned": 4588
+    "total_runs": 4589,
+    "last_updated": "2026-11-07T06:56:52.713110+00:00",
+    "total_topics_learned": 4589
   },
   "entries": [
     {
@@ -218250,6 +218250,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-07T00:50:31.251050+00:00",
       "run_number": 4588
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-splitting and triangle-refitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection querying and multi-core parallel real-time ray tracing execution in real-time computer graphics rendering systems and concurrent physics simulation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) leverages atomic CAS operations for node splitting and triangle refitting to enable high-throughput ray-triangle intersections across multiple CPU cores. By utilizing hazard pointers, it ensures safe memory reclamation without traditional locking overhead, making it ideal for real-time ray tracing and dynamic physics engines.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node splitting and structural updates during dynamic geometry changes.",
+        "Employs hazard pointers to safely manage and reclaim memory for nodes replaced during parallel refitting operations.",
+        "Accelerates multi-core ray-triangle intersection queries by maintaining a spatially partitioned hierarchical bounding volume structure.",
+        "Eliminates thread contention and lock convoy effects common in coarse-grained locking approaches for graphics pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of hazard pointers during concurrent BVH node traversal and safe pointer acquisition.",
+        "correct": "template<typename T>\nvoid* traverse_bvh_safe(std::atomic<BVHNode*>& root, HazardPointerContext& hp_ctx) {\n    BVHNode* current;\n    do {\n        current = root.load(std::memory_order_acquire);\n        hp_ctx.protect(current);\n    } while (current != root.load(std::memory_order_relaxed));\n    return current;\n}",
+        "wrong": "void* traverse_bvh_unsafe(BVHNode* root) {\n    return root->left; // Lacks hazard pointer protection, prone to use-after-free if another thread deletes the node.\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing, leading to race conditions and use-after-free memory corruption.",
+        "Using expensive global locks for tree updates instead of fine-grained atomic CAS primitives, choking multi-core scalability."
+      ],
+      "best_practices": [
+        "Always acquire and publish hazard pointers prior to reading child pointers in a lock-free traversal.",
+        "Batch retired nodes into a thread-local deferred reclamation list to minimize the overhead of atomic reference checks."
+      ],
+      "when_to_use": "Use when building real-time ray tracers, path tracers, or physics simulation engines requiring high-frequency dynamic spatial queries across numerous concurrent threads.",
+      "when_not_to_use": "Avoid when the geometry is completely static and can be built once with a simple read-only tree, or when target hardware lacks robust atomic compare-and-swap instructions.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation race conditions in a lock-free BVH?",
+          "answer": "Hazard pointers allow a thread to atomically register which node it is currently reading, signaling memory reclamation mechanisms (like epoch-based or hazard pointer lists) to defer freeing that node until no thread holds a hazard pointer to it."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic node splitting in a concurrent BVH?",
+          "answer": "Ensuring that reader threads traversing the tree do not observe partially linked or invalid subtrees while a parent node is being split and updated via CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Real-Time Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T06:56:52.713093+00:00",
+      "run_number": 4589
     }
   ]
 }
