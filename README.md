@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4603** |
-| Last Updated | `2026-11-07T07:42:20.094625+00:00` |
-| Dataset Size | `4603 entries` |
+| Total Topics Learned | **4604** |
+| Last Updated | `2026-11-07T13:52:57.838794+00:00` |
+| Dataset Size | `4604 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3270 |
+| data-structures | 3271 |
 | algorithms | 276 |
 | trading-strategies | 228 |
 | crypto-blockchain | 193 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-swapping and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized balanced search tree operations and multi-core parallel dynamic set execution in real-time in-memory databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Concurrent-Read-Concurrent-Write (CRCW) hash table using atomic slot-probing and key-tombstone-cas primitives alongside hazard pointer memory reclamation for high-throughput fine-grained multi-core record updates and parallel thread execution in real-time high-frequency trading platforms and concurrent in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-degree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel Dijkstra's algorithm execution in real-time network routing systems and concurrent graph analytics engines`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-swapping and tower-level-cas primitives alongside hazard pointer memory reclamation for high-throughput ordered map operations and multi-core parallel sorted data execution in real-time in-memory databases and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-fingerprint-swapping and kick-out-path CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel dynamic deletion execution in real-time distributed caching systems and concurrent database storage engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-merging and range-filtering CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range querying and multi-core parallel spatial database execution in real-time geographic information systems and concurrent geo-fencing engines`
 
 <!-- STATS_END -->
 
