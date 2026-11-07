@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4617,
-    "last_updated": "2026-11-07T14:34:44.155800+00:00",
-    "total_topics_learned": 4617
+    "total_runs": 4618,
+    "last_updated": "2026-11-07T14:37:54.511769+00:00",
+    "total_topics_learned": 4618
   },
   "entries": [
     {
@@ -219627,6 +219627,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T14:34:44.155778+00:00",
       "run_number": 4617
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed node optimization execution in real-time caching systems and concurrent in-memory database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Splay Tree employs atomic root-rotation and zig-zag-splicing CAS primitives to restructure nodes dynamically toward the root upon access, optimizing hot-spot lookups. Integrating hazard pointers ensures safe memory reclamation without traditional locking overhead, delivering extreme multi-core throughput for real-time caching and in-memory database systems.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to perform lock-free root rotations and tree restructuring.",
+        "Brings frequently accessed nodes to the root via splay operations, improving locality of reference in multi-threaded workflows.",
+        "Employs hazard pointers to safely manage node deletion and prevent memory corruption during concurrent structural modifications.",
+        "Eliminates global lock contention, enabling linearizable high-throughput operations across multiple execution cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic splay tree node pointer update using CAS for lock-free rotations.",
+        "correct": "bool rotate_right(std::atomic<Node*>& parent, Node* old_left) {\n    Node* new_left = old_left->right.load();\n    old_left->right.store(parent.load());\n    return parent.compare_exchange_strong(parent, old_left);\n}",
+        "wrong": "Node* rotate_right(Node* parent) {\n    // Missing thread safety: direct pointer manipulation without CAS leads to race conditions\n    Node* old_left = parent->left;\n    parent->left = old_left->right;\n    old_left->right = parent;\n    return old_left;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal pointers with hazard pointers, leading to use-after-free bugs during concurrent node splaying.",
+        "Over-splaying every single read operation without throttling, creating excessive write contention on cache lines for read-heavy workloads."
+      ],
+      "best_practices": [
+        "Batch or selectively apply splay operations on read-heavy streams to minimize atomic write amplification.",
+        "Ensure hazard pointers are registered and released locally within thread contexts to guarantee bounded memory reclamation latency."
+      ],
+      "when_to_use": "Use when building high-throughput concurrent in-memory databases or caching layers where access patterns exhibit strong temporal locality and low latency bounds are required.",
+      "when_not_to_use": "Avoid when access distribution is uniformly random, as the overhead of atomic splay restructuring negates any caching benefit compared to standard lock-free BSTs.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation when multiple threads concurrently modify parent-child pointers during a splay rotation?",
+          "answer": "By implementing hazard pointers to register nodes currently being accessed or modified by a thread, ensuring they are not reclaimed until all referencing threads drop their hazard guards."
+        },
+        {
+          "question": "What is the primary synchronization challenge when converting a standard sequential splay tree into a lock-free structure?",
+          "answer": "Sequential splaying changes tree topology from the bottom up or top down across multiple pointer links, which cannot be atomically modified in a single instruction; thus, multi-step CAS operations and optimistic validation loops are required."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "Concurrent Self-Balancing Binary Search Trees",
+        "Lock-Free Cache-Conscious Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T14:37:54.511748+00:00",
+      "run_number": 4618
     }
   ]
 }
