@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4628,
-    "last_updated": "2026-11-07T19:04:10.425007+00:00",
-    "total_topics_learned": 4628
+    "total_runs": 4629,
+    "last_updated": "2026-11-07T19:07:20.991226+00:00",
+    "total_topics_learned": 4629
   },
   "entries": [
     {
@@ -220151,6 +220151,56 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-07T19:04:10.424985+00:00",
       "run_number": 4628
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval scheduling execution in real-time calendar management systems and concurrent resource allocation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent Interval Tree leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It ensures safe, high-throughput multi-core execution for interval-based queries and time-slot scheduling without relying on global mutexes.",
+      "key_points": [
+        "Utilizes atomic endpoint updates and maximum subtree high tracking via CAS operations to manage dynamic interval ranges concurrently.",
+        "Integrates hazard pointers to safely reclaim memory of deleted nodes without triggering use-after-free race conditions.",
+        "Ensures lock-free progress guarantees, avoiding thread deadlocks and priority inversions in real-time scheduling tasks.",
+        "Optimizes multi-core performance for parallel overlap searches and dynamic resource allocation updates."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an atomic interval node modification using a mock hazard pointer and CAS loop.",
+        "correct": "class IntervalNode:\n    def __init__(self, low, high):\n        self.low = low\n        self.high = high\n        self.max_high = high\n        self.next = None\n\ndef atomic_update_max_high(node, new_high):\n    while True:\n        current_max = node.max_high\n        if new_high <= current_max:\n            break\n        # Simulated atomic CAS update\n        if node.max_high == current_max:\n            node.max_high = new_high\n            break",
+        "wrong": "def unsafe_update_max_high(node, new_high):\n    # Missing atomicity and thread synchronization causes lost updates\n    if new_high > node.max_high:\n        node.max_high = new_high"
+      },
+      "common_mistakes": [
+        "Failing to update parent max-high values upward when inserting or mutating intervals concurrently.",
+        "Neglecting hazard pointer registration before traversing dynamically unlinked child nodes.",
+        "Using blocking locks within inner CAS retry loops, inadvertently destroying lock-free properties."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer acquisition logic into RAII wrappers or clear try-finally scopes to prevent pointer leaks.",
+        "Minimize CAS retry contention by utilizing backoff strategies during high-frequency parallel scheduling phases.",
+        "Validate interval boundary invariants strictly prior to executing multi-word atomic operations."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent, high-frequency reads and writes on overlapping interval datasets, such as in distributed calendar scheduling and resource allocation.",
+      "when_not_to_use": "Avoid when data access patterns are single-threaded or coarse-grained locking suffices, as hazard pointers and lock-free CAS loops introduce unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the max-high invariant in a lock-free interval tree when concurrent threads are modifying adjacent nodes?",
+          "answer": "By using multi-word or cascading atomic CAS operations to propagate maximum high updates upward through ancestor chains whenever a new interval expands the boundary."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in high-throughput lock-free interval trees?",
+          "answer": "Hazard pointers provide predictable, lock-free memory reclamation overhead without the pause times of tracing GCs or the severe cache contention of atomic reference counters."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "CAS Primitives",
+        "Segment Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T19:07:20.991205+00:00",
+      "run_number": 4629
     }
   ]
 }
