@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4630** |
-| Last Updated | `2026-11-07T19:10:32.105126+00:00` |
-| Dataset Size | `4630 entries` |
+| Total Topics Learned | **4631** |
+| Last Updated | `2026-11-07T19:13:43.019085+00:00` |
+| Dataset Size | `4631 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3292 |
+| data-structures | 3293 |
 | algorithms | 279 |
 | trading-strategies | 228 |
 | crypto-blockchain | 194 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job execution in real-time operating systems and concurrent task-based runtime engines`
 - `Implementation of a lock-free thread-safe concurrent Bipartite Matching graph algorithm using atomic augmenting-path-discovery and edge-reversal CAS primitives alongside hazard pointer memory reclamation for high-throughput job assignment and multi-core parallel resource allocation execution in real-time cloud scheduling systems and concurrent matching market engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-high-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval scheduling execution in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation-updating and node-range-overlapping CAS primitives alongside hazard pointer memory reclamation for high-throughput interval querying and multi-core parallel range update execution in real-time financial trading systems and concurrent analytics engines`
 - `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-updating and node-consolidation CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent page indexing and multi-core parallel sorted record searching execution in real-time database management systems and concurrent transactional storage engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic path-compression and branch-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing and multi-core parallel longest-prefix-match execution in real-time cloud networking routers and concurrent IP lookup engines`
 
 <!-- STATS_END -->
 
