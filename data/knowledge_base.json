@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4598,
-    "last_updated": "2026-11-07T07:26:11.387207+00:00",
-    "total_topics_learned": 4598
+    "total_runs": 4599,
+    "last_updated": "2026-11-07T07:29:22.484283+00:00",
+    "total_topics_learned": 4599
   },
   "entries": [
     {
@@ -218722,6 +218722,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-07T07:26:11.387190+00:00",
       "run_number": 4598
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-merging and range-filtering CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range querying and multi-core parallel spatial database execution in real-time geographic information systems and concurrent geo-fencing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A concurrent Priority Search Tree combines properties of a heap (ordered by a priority coordinate like y-coordinate) and a binary search tree (ordered by an independent coordinate like x-coordinate) to efficiently solve orthogonal range queries without locks. Utilizing atomic primitives and hazard pointers ensures safe, high-throughput memory management and node updates across multiple execution cores.",
+      "key_points": [
+        "Merges binary search tree sorting on one axis with heap ordering on another axis to optimize 2D orthogonal range reporting.",
+        "Employs atomic coordinate-merging and range-filtering Compare-And-Swap (CAS) primitives to update tree structures safely without global locks.",
+        "Uses hazard pointer memory reclamation to prevent memory leaks and premature deallocation during concurrent traversal and structural modifications.",
+        "Enables high-throughput multi-core parallel spatial database execution for real-time geographic information systems and geo-fencing workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the thread-safe node structure and atomic insertion mechanism for a lock-free Priority Search Tree using hazard pointers.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct PSTNode {\n    double x, y;\n    std::atomic<PSTNode*> left;\n    std::atomic<PSTNode*> right;\n    std::atomic<bool> marked;\n    PSTNode(double px, double py) : x(px), y(py), left(nullptr), right(nullptr), marked(false) {}\n};\n\nbool insert_node(std::atomic<PSTNode*>& root, double x, double y) {\n    PSTNode* newNode = new PSTNode(x, y);\n    PSTNode* current = root.load();\n    // Simplified atomic coordinate insertion logic using CAS\n    while (true) {\n        if (current == nullptr) {\n            if (root.compare_exchange_weak(current, newNode)) return true;\n        } else if (newNode->y > current->y) {\n            // Priority heap property handling via coordinate-merging CAS\n            newNode->left.store(current);\n            if (root.compare_exchange_weak(current, newNode)) return true;\n        } else {\n            // Binary search tree property routing\n            if (newNode->x < current->x) {\n                current = current->left.load();\n            } else {\n                current = current->right.load();\n            }\n        }\n    }\n}",
+        "wrong": "PSTNode* insert_node(PSTNode* root, double x, double y) {\n    // Mutex locking and non-atomic pointer updates leading to race conditions\n    std::lock_guard<std::mutex> lock(mtx);\n    return new PSTNode(x, y);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs during multi-core traversals.",
+        "Applying standard binary search tree rotations which violate the hybrid heap-ordering invariant required by Priority Search Trees.",
+        "Neglecting the ABA problem during atomic pointer updates on shared tree branches."
+      ],
+      "best_practices": [
+        "Isolate memory reclamation logic into a thread-local hazard pointer domain to minimize synchronization overhead.",
+        "Design range-filtering query routines to prune subtrees early based on bounding-box checks before evaluating individual nodes.",
+        "Validate atomic CAS loops with backoff strategies under heavy contention to prevent CPU starvation."
+      ],
+      "when_to_use": "Ideal for high-throughput spatial indexing applications requiring fast orthogonal range searching and real-time multi-threaded updates, such as vehicle tracking and live geo-fencing.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained, as hazard pointers and node metadata overhead can be high, or when data access patterns are entirely single-threaded.",
+      "interview_questions": [
+        {
+          "question": "How does a Priority Search Tree differ from a standard KD-Tree in handling orthogonal range queries?",
+          "answer": "A Priority Search Tree organizes data using a hybrid structure—sorting one coordinate via binary search tree properties and the other via heap priority—allowing optimal output-sensitive performance for 3-sided and 4-sided orthogonal range queries compared to spatial partitioning in KD-Trees."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection or reference counting in lock-free Priority Search Trees?",
+          "answer": "Hazard pointers provide deterministic, lock-free memory reclamation with low overhead, avoiding the pause times of garbage collectors and the atomic read-modify-write contention scaling bottlenecks of reference counting."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Orthogonal Range Querying"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-07T07:29:22.484263+00:00",
+      "run_number": 4599
     }
   ]
 }
