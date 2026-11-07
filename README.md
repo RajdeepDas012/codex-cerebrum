@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4612** |
-| Last Updated | `2026-11-07T14:18:39.051638+00:00` |
-| Dataset Size | `4612 entries` |
+| Total Topics Learned | **4613** |
+| Last Updated | `2026-11-07T14:21:49.556173+00:00` |
+| Dataset Size | `4613 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3277 |
+| data-structures | 3278 |
 | algorithms | 277 |
 | trading-strategies | 228 |
 | crypto-blockchain | 193 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-cell-incrementing and multi-hash-probing CAS primitives alongside hazard pointer memory reclamation for high-throughput stream frequency estimation and multi-core parallel heavy-hitter detection execution in real-time network traffic monitoring systems and concurrent stream processing engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-bucket-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting execution in real-time streaming analytics systems and concurrent big data processing engines`
 - `Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy transaction processing and multi-core parallel background compaction execution in real-time distributed key-value storage systems and concurrent database engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-overflow-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range query execution in real-time geographic information systems and concurrent spatial database engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel filter updates execution in real-time caching systems and concurrent database query optimization engines`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic node-splitting and leaf-sibling-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index execution in real-time relational database systems and concurrent transactional storage engines`
 
 <!-- STATS_END -->
 
