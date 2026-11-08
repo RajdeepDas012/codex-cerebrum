@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4672,
-    "last_updated": "2026-11-08T10:27:48.138579+00:00",
-    "total_topics_learned": 4672
+    "total_runs": 4673,
+    "last_updated": "2026-11-08T10:30:59.396751+00:00",
+    "total_topics_learned": 4673
   },
   "entries": [
     {
@@ -222240,6 +222240,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-08T10:27:48.138557+00:00",
       "run_number": 4672
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-vector-setting and word-level CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership and multi-core parallel duplicate checking execution in real-time web crawlers and concurrent caching layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Bloom filter that utilizes atomic bit manipulation and word-level Compare-And-Swap (CAS) instructions. It enables multiple threads to simultaneously query and insert items with probabilistic guarantees without incurring lock contention overhead.",
+      "key_points": [
+        "Utilizes atomic bit-vector-setting and word-level CAS primitives to modify underlying storage without mutual exclusion locks.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing or underlying memory allocation in a lock-free manner.",
+        "Provides high-throughput probabilistic set membership tests suitable for massively parallel multi-core workloads.",
+        "Eliminates false negatives entirely while bounding the false positive rate determined by bit-vector size and hash function count."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic word-level bit setting using fetch_or operations for thread-safe concurrent insertions.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> table;\npublic:\n    ConcurrentBloomFilter(size_t words) : table(words) {\n        for(auto& w : table) w.store(0, std::memory_order_relaxed);\n    }\n    void insert(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        uint64_t mask = 1ULL << bit_offset;\n        table[word_idx].fetch_or(mask, std::memory_order_relaxed);\n    }\n};",
+        "wrong": "#include <vector>\n\nclass UnsafeBloomFilter {\n    std::vector<uint64_t> table;\npublic:\n    void insert(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        size_t bit_offset = bit_index % 64;\n        table[word_idx] |= (1ULL << bit_offset); // Data race across threads!\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared machine words which leads to lost bit updates.",
+        "Failing to account for cache-line bouncing when multiple threads concurrently modify bits residing in the exact same 64-bit word."
+      ],
+      "best_practices": [
+        "Leverage relaxed memory ordering where strict sequential consistency is unnecessary for setting independent indicator bits.",
+        "Pad underlying words or partition bit-vectors to minimize false sharing across distinct concurrent execution cores."
+      ],
+      "when_to_use": "When building high-throughput parallel data processing pipelines, web crawlers, or distributed caches requiring ultra-fast duplicate detection with minimal memory footprint.",
+      "when_not_to_use": "When absolute zero false positives are required, or when applications require item deletion capabilities without resorting to counting filters.",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom filter without using standard mutexes?",
+          "answer": "By mapping items to specific bit offsets and using atomic word-level operations like fetch_or or Compare-And-Swap (CAS) loops."
+        },
+        {
+          "question": "Why can standard bitwise OR operations lead to lost updates in a concurrent multi-threaded environment?",
+          "answer": "Because a read-modify-write sequence is non-atomic; one thread may read an old word state, modify it, and overwrite a concurrent update made by another thread."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Cuckoo Filter",
+        "Atomic Bitmaps and Bit-Vectors",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-08T10:30:59.396731+00:00",
+      "run_number": 4673
     }
   ]
 }
