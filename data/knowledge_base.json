@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4656,
-    "last_updated": "2026-11-08T02:34:36.972443+00:00",
-    "total_topics_learned": 4656
+    "total_runs": 4657,
+    "last_updated": "2026-11-08T02:37:47.592176+00:00",
+    "total_topics_learned": 4657
   },
   "entries": [
     {
@@ -221479,6 +221479,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-08T02:34:36.972422+00:00",
       "run_number": 4656
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-node-splitting and bit-stride-indexing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching execution in real-time software-defined networking switches and concurrent packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Radix Tree (Patricia Trie) optimized for multi-core packet routing engines. It leverages atomic Compare-And-Swap (CAS) operations for prefix-node-splitting and bit-stride-indexing, combined with hazard pointers for safe memory reclamation without global locks.",
+      "key_points": [
+        "Utilizes atomic prefix-node-splitting and bit-stride-indexing CAS primitives to allow multiple threads to insert and query routing paths concurrently.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free retired trie nodes without incurring lock contention.",
+        "Optimized for longest prefix matching (LPM) operations required in high-throughput Software-Defined Networking (SDN) switches and routers.",
+        "Eliminates mutual exclusion bottlenecks by structuring trie mutations as optimistic concurrency control loops."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion attempt in a lock-free concurrent radix tree node structure.",
+        "correct": "bool insert_child(std::atomic<Node*>& child_ptr, Node* expected, Node* new_node) {\n    return child_ptr.compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* child = child_ptr.load();\nif (child == nullptr) {\n    child_ptr.store(new_node); // Non-atomic check-then-act race condition across threads\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs when nodes are split or removed.",
+        "Using sequential consistency everywhere instead of fine-grained memory ordering (acquire-release) which degrades multi-core performance."
+      ],
+      "best_practices": [
+        "Wrap all traversal pointer dereferences in hazard pointer protection domains before reading node bit-strides or child lists.",
+        "Design node splitting logic to be idempotent so that failed CAS attempts can retry safely without corrupting the trie structure."
+      ],
+      "when_to_use": "Use when building ultra-high-performance networking infrastructure, packet classification pipelines, or routing tables that demand lock-free horizontal scalability across dozens of CPU cores.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when workloads are predominantly single-threaded, as hazard pointers and atomic CAS loops add unnecessary complexity and overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during simultaneous node-splitting and searching in a lock-free Radix Tree?",
+          "answer": "By using atomic CAS operations to update child pointers and hazard pointers to safely track nodes currently being traversed or modified by worker threads."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in lock-free routing tables?",
+          "answer": "Hazard pointers avoid the synchronization overhead of atomic reference count increments on every single read operation, which is critical for maintaining high packet-forwarding throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Hazard Pointers and Memory Management",
+        "Longest Prefix Matching Algorithms in SDN"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-08T02:37:47.592151+00:00",
+      "run_number": 4657
     }
   ]
 }
