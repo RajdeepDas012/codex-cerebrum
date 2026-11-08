@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4670,
-    "last_updated": "2026-11-08T10:21:25.058038+00:00",
-    "total_topics_learned": 4670
+    "total_runs": 4671,
+    "last_updated": "2026-11-08T10:24:36.159035+00:00",
+    "total_topics_learned": 4671
   },
   "entries": [
     {
@@ -222146,6 +222146,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T10:21:25.058017+00:00",
       "run_number": 4670
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Work-Stealing Deque using atomic tail-pointer-decrementing and head-CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel asynchronous execution in real-time actor systems and concurrent thread pool engines",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the implementation of an advanced lock-free Chase-Lev work-stealing deque designed for efficient task scheduling across multiple threads. By utilizing atomic tail pointer updates for owner operations and Compare-And-Swap (CAS) primitives on the head pointer for concurrent stealers, it minimizes synchronization overhead while ensuring memory safety via hazard pointers.",
+      "key_points": [
+        "Owner thread pushes and pops tasks exclusively from the bottom (tail) of the deque with minimal atomic overhead.",
+        "Stealing threads attempt to acquire tasks from the top (head) of the deque using atomic CAS operations.",
+        "Hazard pointers protect concurrently freed memory blocks from being reclaimed while other threads maintain references to them.",
+        "Circular array allocation allows dynamic resizing when capacity is exceeded without introducing locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic tail update and head CAS structure for a lock-free work-stealing deque",
+        "correct": "struct Node { Task* task; };\nclass WorkStealingDeque {\n  std::atomic<long> head;\n  std::atomic<long> tail;\n  std::atomic<Node*>* buffer;\npublic:\n  bool steal(Node*& res) {\n    long h = head.load(std::memory_order_relaxed);\n    long t = tail.load(std::memory_order_acquire);\n    if (h >= t) return false;\n    res = buffer[h % capacity].load(std::memory_order_relaxed);\n    return head.compare_exchange_strong(h, h + 1, std::memory_order_seq_cst, std::memory_order_relaxed);\n  }\n};",
+        "wrong": "class WorkStealingDeque {\n  std::mutex mtx;\n  void push(Task t) { mtx.lock(); deque.push_back(t); mtx.unlock(); }\n};"
+      },
+      "common_mistakes": [
+        "Failing to enforce proper memory ordering (e.g., missing acquire-release semantics), leading to stale reads of tasks.",
+        "Neglecting ABA problem mitigation when multiple stealers execute concurrent CAS instructions on the head pointer."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings where synchronization is not strictly required to maximize multi-core execution throughput.",
+        "Incorporate hazard pointers or epoch-based garbage collection to manage node lifetimes safely in lock-free memory structures."
+      ],
+      "when_to_use": "Use when building high-performance work-stealing thread pools or actor runtimes where tasks are frequently generated and executed across numerous worker cores.",
+      "when_not_to_use": "Avoid in single-threaded applications or scenarios with low concurrency where standard mutex-backed deques provide simpler and sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How does the Chase-Lev work-stealing deque avoid contention between the owner thread and stealing threads?",
+          "answer": "The owner thread operates on the tail exclusively using relaxed or release operations, while stealers contend on the head via atomic CAS, minimizing cache line bouncing."
+        },
+        {
+          "question": "Why is a memory reclamation scheme like hazard pointers necessary in this lock-free data structure?",
+          "answer": "It ensures that dynamically resized circular buffers or popped nodes are not prematurely deallocated while another thread is reading them."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Algorithms",
+        "Work-Stealing Schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T10:24:36.159014+00:00",
+      "run_number": 4671
     }
   ]
 }
