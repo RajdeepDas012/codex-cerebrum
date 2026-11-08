@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4665,
-    "last_updated": "2026-11-08T10:05:26.968408+00:00",
-    "total_topics_learned": 4665
+    "total_runs": 4666,
+    "last_updated": "2026-11-08T10:08:38.874343+00:00",
+    "total_topics_learned": 4666
   },
   "entries": [
     {
@@ -221906,6 +221906,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T10:05:26.968345+00:00",
       "run_number": 4665
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU (Least Recently Used) Cache using atomic doubly-linked-list-splicing and hash-index-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core parallel hit-ratio optimization execution in real-time web application servers and concurrent in-memory storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent LRU cache uses atomic compare-and-swap (CAS) operations to manipulate a shared doubly-linked list and a hash index without blocking threads. Hazard pointers safely manage memory reclamation by preventing nodes from being freed while other threads are accessing them, ensuring high-throughput cache eviction and optimal hit ratios in multi-threaded web servers.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free updates to the doubly-linked list and hash map index.",
+        "Employs hazard pointers to defer memory deallocation and safely handle safe memory reclamation (SMR) under concurrency.",
+        "Eliminates thread contention and deadlocks associated with global mutex locks in high-throughput workloads.",
+        "Maintains an optimal O(1) time complexity for both lookups and cache evictions across multiple concurrent cores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual usage of hazard pointers to protect shared cache nodes during concurrent access and updates.",
+        "correct": "void* ptr = atomic_load(&node_ptr);\nwhile (ptr) {\n    hazard_pointer_protect(0, ptr);\n    if (atomic_load(&node_ptr) == ptr) break;\n    ptr = atomic_load(&node_ptr);\n}\n// Safe to read node contents here\nhazard_pointer_clear(0);",
+        "wrong": "node* n = atomic_load(&node_ptr);\nfree(n); // Unsafe: another thread might access n concurrently"
+      },
+      "common_mistakes": [
+        "Freeing or mutating doubly-linked list pointers without hazard pointer protection, causing use-after-free bugs.",
+        "Failing to handle the ABA problem during CAS operations on list head and tail pointers.",
+        "Introducing bottlenecks by synchronizing the entire hash map table instead of using fine-grained atomic operations."
+      ],
+      "best_practices": [
+        "Always bind hazard pointers to thread-local storage slots before reading shared pointer references.",
+        "Implement exponential backoff or retry loops for CAS failures to reduce CPU cache-coherency traffic under high contention.",
+        "Batch memory reclamation requests to amortize the overhead of checking active hazard pointers."
+      ],
+      "when_to_use": "Use when building ultra-low-latency web application servers, in-memory caches (like Redis alternatives), or parallel stream processors where lock contention severely limits scaling.",
+      "when_not_to_use": "Avoid in low-resource embedded environments or simple single-threaded applications where a standard mutex-protected LRU cache provides sufficient performance with significantly lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to publish references they are currently accessing to a globally visible thread-local array, informing other threads that these memory blocks cannot be safely freed until the hazard pointer is cleared."
+        },
+        {
+          "question": "What is the primary challenge when implementing a concurrent doubly-linked list using only CAS primitives?",
+          "answer": "The primary challenge is updating both the 'next' and 'prev' pointers of adjacent nodes atomically, which typically requires multi-word CAS (DCAS) or careful tagging mechanisms to avoid inconsistent intermediate states."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Safe Memory Reclamation",
+        "Lock-free Skip Lists",
+        "Lock-free Hash Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T10:08:38.874323+00:00",
+      "run_number": 4666
     }
   ]
 }
