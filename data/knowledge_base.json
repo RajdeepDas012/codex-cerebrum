@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4662,
-    "last_updated": "2026-11-08T02:53:40.120680+00:00",
-    "total_topics_learned": 4662
+    "total_runs": 4663,
+    "last_updated": "2026-11-08T02:56:50.470325+00:00",
+    "total_topics_learned": 4663
   },
   "entries": [
     {
@@ -221765,6 +221765,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T02:53:40.120660+00:00",
       "run_number": 4662
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU (Least Frequently Used) Cache using atomic frequency-list-splicing and min-frequency-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput cache eviction and multi-core parallel hot-item tracking execution in real-time web application servers and concurrent in-memory storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Least Frequently Used (LFU) cache designed for multi-threaded environments. It leverages atomic Compare-And-Swap (CAS) operations for frequency list splicing and minimum frequency tracking, paired with hazard pointers to ensure memory safety without heavy locks.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to modify frequency lists and update pointers without blocking threads.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free bugs during concurrent node eviction and restructuring.",
+        "Maintains a global or distributed minimum frequency tracker to facilitate $O(1)$ amortized evictions under high contention.",
+        "Optimizes throughput for multi-core parallel hot-item tracking in real-time application servers and in-memory caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic frequency list node update via CAS.",
+        "correct": "bool update_frequency(std::atomic<Node*>& head, Node* old_node, Node* new_node) {\n    return head.compare_exchange_weak(old_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = head.load();\ncurrent->next = new_node;\nhead.store(current); // Not thread-safe, race condition on write"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem when updating frequency-list pointers via CAS.",
+        "Overlooking memory reclamation timing, leading to premature deletion of nodes actively traversed by concurrent reader threads."
+      ],
+      "best_practices": [
+        "Pair every lock-free pointer modification with hazard pointers to securely track threads accessing shared cache nodes.",
+        "Decouple the hash map lookup from the doubly-linked frequency list traversal to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded caching layers where lock contention becomes a bottleneck for eviction workloads.",
+      "when_not_to_use": "Avoid when a simpler synchronized map with coarse-grained locking suffices due to low concurrency or strict simplicity requirements.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing CAS operations on frequency list nodes in a lock-free LFU cache?",
+          "answer": "By using tagged pointers (incorporating a version count alongside the memory address) or utilizing hazard pointers combined with epoch-based or reference-counted reclamation."
+        },
+        {
+          "question": "Why is tracking the minimum frequency efficiently a challenge in a lock-free LFU cache, and how is it addressed?",
+          "answer": "Multiple threads might evict or promote items concurrently, invalidating a locally cached min-frequency. It is addressed by optimistically decrementing/incrementing via CAS and falling back to a scan or relaxed tracking when contention fails."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Priority Queue",
+        "Hazard Pointers",
+        "Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T02:56:50.470306+00:00",
+      "run_number": 4663
     }
   ]
 }
