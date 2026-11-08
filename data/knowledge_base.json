@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4697,
-    "last_updated": "2026-11-08T21:13:25.422681+00:00",
-    "total_topics_learned": 4697
+    "total_runs": 4698,
+    "last_updated": "2026-11-08T21:16:35.875268+00:00",
+    "total_topics_learned": 4698
   },
   "entries": [
     {
@@ -223427,6 +223427,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T21:13:25.422662+00:00",
       "run_number": 4697
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-map-bucket-linking and doubly-linked-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-capacity caching and multi-core parallel item eviction execution in real-time key-value stores and concurrent application caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free Least Recently Used (LRU) cache combining concurrent hash maps with doubly-linked lists via atomic compare-and-swap (CAS) primitives. It utilizes hazard pointers to safely manage memory reclamation under high-contention multi-core eviction workflows without locking.",
+      "key_points": [
+        "Uses atomic hash-map-bucket-linking CAS primitives to manage parallel key-value insertions and lookups without global locks.",
+        "Employs doubly-linked-list-splicing CAS operations to update item recency order safely during concurrent hits and misses.",
+        "Integrates hazard pointer memory reclamation to prevent use-after-free bugs during concurrent node eviction and unlinking.",
+        "Maintains strict bounded capacity under high-throughput conditions by synchronizing eviction threads via atomic state transitions."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of a lock-free LRU node access with atomic markers and hazard pointer protection.",
+        "correct": "class HazardPointerLRUNode:\n    def __init__(self, key, value):\n        self.key = key\n        self.value = value\n        self.next = None\n        self.prev = None\n        self.is_deleted = False\n\ndef acquire_hazard_pointer(node_ref, hazard_slot):\n    while True:\n        ptr = node_ref.load()\n        hazard_slot.store(ptr)\n        if node_ref.load() == ptr:\n            return ptr",
+        "wrong": "def unsafe_evict(cache, node):\n    # Fails to protect against concurrent reads during deallocation\n    del cache[node.key]"
+      },
+      "common_mistakes": [
+        "Failing to protect list node pointers with hazard pointers, leading to race conditions where evicted nodes are freed while another thread dereferences them.",
+        "Attempting to update the hash map and the doubly-linked list in a single non-atomic step, causing data structure inconsistency."
+      ],
+      "best_practices": [
+        "Protect all shared pointer traversals by registering references in thread-local hazard pointer slots before dereferencing.",
+        "Design atomic CAS loops with backoff strategies to mitigate contention during high-frequency updates on hot cache keys."
+      ],
+      "when_to_use": "Use when building high-performance, low-latency in-memory caches or database storage layers that experience massive concurrent reads and writes across multiple cores.",
+      "when_not_to_use": "Avoid in simpler applications where standard synchronized or mutex-protected LRU caches provide sufficient throughput with drastically lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when updating pointers in a lock-free doubly-linked list for an LRU cache?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives, ensuring that pointer updates detect if an intermediate node modification occurred."
+        },
+        {
+          "question": "Why are hazard pointers necessary when evicting nodes from a concurrent lock-free LRU cache?",
+          "answer": "They prevent the memory allocator from reclaiming a node's memory while another concurrent thread is still holding a reference to traverse or read that node."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointer memory management",
+        "concurrent hash maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T21:16:35.875249+00:00",
+      "run_number": 4698
     }
   ]
 }
