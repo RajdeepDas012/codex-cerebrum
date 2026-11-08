@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4687,
-    "last_updated": "2026-11-08T17:24:02.405837+00:00",
-    "total_topics_learned": 4687
+    "total_runs": 4688,
+    "last_updated": "2026-11-08T17:27:12.987753+00:00",
+    "total_topics_learned": 4688
   },
   "entries": [
     {
@@ -222953,6 +222953,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T17:24:02.405816+00:00",
       "run_number": 4687
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocation and prefix-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookup and multi-core parallel longest prefix matching execution in real-time software-defined networking routers and concurrent packet forwarding engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Radix Tree utilizing atomic compare-and-swap (CAS) operations for node allocation and prefix compression, protected by hazard pointers. It is critical for high-throughput software-defined networking (SDN) routers performing parallel longest prefix matching (LPM) on IP routing tables without locking bottlenecks.",
+      "key_points": [
+        "Uses atomic child-node-allocation and prefix-compression CAS operations to allow multiple threads to safely insert or update routing keys simultaneously.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted nodes in a lock-free manner without incurring high garbage collection overhead.",
+        "Optimizes memory layout and traversal paths for high-throughput IP routing table lookups and parallel longest prefix matching (LPM).",
+        "Prevents race conditions during concurrent node splitting and bitwise branching operations in multi-core packet forwarding engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of attempting an atomic child allocation via CAS on a Radix Tree node pointer.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    RadixNode* expected = nullptr;\n    return parent->children[bit].compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "RadixNode* expected = parent->children[bit];\nif (expected == nullptr) {\n    parent->children[bit] = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs when another thread unlinks a node.",
+        "Using incorrect memory ordering constraints (e.g., sequentially consistent everywhere when acquire-release semantics suffice), which degrades hardware execution performance."
+      ],
+      "best_practices": [
+        "Always register traversed nodes with the thread-local hazard pointer domain before reading child pointers to prevent premature reclamation.",
+        "Design compressed prefix blocks with immutable data layouts so that read-only lookup threads can traverse without synchronization overhead."
+      ],
+      "when_to_use": "Ideal for software-defined networking routers, high-speed packet classification engines, and multi-threaded routing table lookups where read contention is extremely high.",
+      "when_not_to_use": "Avoid when memory footprint is severely constrained or when write operations vastly outnumber read lookups, as lock-free overhead and prefix fragmentation can increase complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing. A node unlinked by a writer cannot be freed until no thread has a hazard pointer referencing it, preventing premature deallocation and use-after-free errors."
+        },
+        {
+          "question": "Why is prefix compression crucial for concurrent Radix Trees used in IP routing tables?",
+          "answer": "Prefix compression collapses single-child chains into a single node containing a bit string, reducing tree depth, memory overhead, and the number of atomic CAS steps required during traversal and lookup."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B-Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Quotient Filter"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T17:27:12.987734+00:00",
+      "run_number": 4688
     }
   ]
 }
