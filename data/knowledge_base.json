@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4690,
-    "last_updated": "2026-11-08T17:33:39.797608+00:00",
-    "total_topics_learned": 4690
+    "total_runs": 4691,
+    "last_updated": "2026-11-08T17:37:03.589778+00:00",
+    "total_topics_learned": 4691
   },
   "entries": [
     {
@@ -223094,6 +223094,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-08T17:33:39.797587+00:00",
       "run_number": 4690
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-augmentation and overlap-detection CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Interval Tree that uses atomic primitives (like Compare-And-Swap) for node augmentation and overlap detection, combined with hazard pointers to safely manage dynamic memory. It enables high-throughput temporal range queries and multi-core parallel event scheduling without traditional blocking mutexes.",
+      "key_points": [
+        "Utilizes atomic node-augmentation to track maximum endpoint values across subtrees without locking.",
+        "Employs compare-and-swap (CAS) primitives for safe, concurrent insertions and structural modifications.",
+        "Integrates hazard pointers to guarantee thread-safe memory reclamation during concurrent node traversal and deletion.",
+        "Optimizes multi-core parallel execution for real-time temporal range overlapping queries and scheduling workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node update and hazard pointer protection pattern for a lock-free interval node.",
+        "correct": "void* hazard_ptr = hazard_mgr.protect(node_ptr);\nif (node_ptr->load() == hazard_ptr) {\n    // Safely read augmented max value and check overlap\n    if (node->max_endpoint >= query_low && node->low <= query_high) {\n        results.add(node);\n    }\n}\nhazard_mgr.clear(hazard_ptr);",
+        "wrong": "// Modifying or deleting node pointers without protecting them via hazard pointers first\nfree(node_ptr);\nnode_ptr->max_endpoint = new_max;"
+      },
+      "common_mistakes": [
+        "Failing to update augmented maximum endpoints atomically when new intervals are inserted, leading to missed range overlaps.",
+        "Neglecting hazard pointer protection during traversal, resulting in use-after-free race conditions under high thread contention.",
+        "Using coarse-grained locks internally while claiming the overall structure is lock-free."
+      ],
+      "best_practices": [
+        "Keep atomic metadata (like max endpoints) tightly coupled with node pointers to minimize multi-word CAS overhead.",
+        "Thoroughly benchmark hazard pointer retirement queues under heavy thread contention to prevent excessive memory latency.",
+        "Ensure lock-free retry loops gracefully handle high-conflict scenarios using exponential backoff."
+      ],
+      "when_to_use": "Use when building high-performance systems like calendar scheduling engines or real-time spatial/temporal databases that require frequent concurrent range queries under heavy multi-core contention.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free atomics and hazard pointers outweighs the performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the augmented maximum endpoint value in a lock-free interval tree without using global locks?",
+          "answer": "By using multi-word CAS or embedding the maximum endpoint value directly alongside the pointer in a single atomically updatable structure, propagating changes upward during node insertion and rebalancing."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures like an interval tree?",
+          "answer": "Hazard pointers allow threads to safely declare which nodes they are currently accessing, preventing other threads from prematurely freeing or recycling those memory addresses while traversal or query operations are in flight."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-08T17:37:03.589757+00:00",
+      "run_number": 4691
     }
   ]
 }
