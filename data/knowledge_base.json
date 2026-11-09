@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4711,
-    "last_updated": "2026-11-09T01:39:48.630162+00:00",
-    "total_topics_learned": 4711
+    "total_runs": 4712,
+    "last_updated": "2026-11-09T01:42:59.464562+00:00",
+    "total_topics_learned": 4712
   },
   "entries": [
     {
@@ -224092,6 +224092,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-09T01:39:48.630141+00:00",
       "run_number": 4711
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Merkle Patricia Trie using atomic branch-node-splicing and cryptographic-hash-mutation CAS primitives alongside hazard pointer memory reclamation for high-throughput state storage and multi-core parallel blockchain world-state verification execution in real-time Ethereum-compatible smart contract execution engines and concurrent distributed ledger databases",
+      "category": "crypto-blockchain",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent Merkle Patricia Trie, combining atomic CAS-based branch-node-splicing with hazard pointers to securely manage distributed ledger state updates. It enables high-throughput multi-core parallel smart contract execution by safely modifying cryptographic state roots without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for branch-node-splicing and cryptographic-hash-mutation to safely handle concurrent modifications.",
+        "Employs hazard pointer memory reclamation to prevent use-after-free bugs when threads concurrently traverse and modify trie nodes.",
+        "Maintains cryptographic integrity of the world-state by dynamically updating Merkle hashes bottom-up during parallel state transitions.",
+        "Eliminates global lock contention, scaling blockchain transaction processing across multiple CPU cores in Ethereum-compatible execution environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic branch node mutation using hazard pointers in a concurrent Merkle Patricia Trie",
+        "correct": "bool update_trie_node(AtomicNodePtr& parent, const Key& key, const Hash& new_hash, HazardTracker& tracker) {\n    Node* current = tracker.protect(parent);\n    while (current) {\n        Node* next = get_child_by_key(current, key);\n        Node* protected_next = tracker.protect(next);\n        Node* replacement = clone_and_mutate(protected_next, new_hash);\n        if (parent.compare_exchange_weak(current, replacement)) {\n            tracker.retire(current);\n            return true;\n        }\n        current = tracker.protect(parent);\n    }\n    return false;\n}",
+        "wrong": "bool update_trie_node(Node* parent, const Key& key, const Hash& new_hash) {\n    std::lock_guard<std::mutex> lock(parent->mtx);\n    parent->child = clone_and_mutate(parent->child, new_hash);\n    delete parent->old_child;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate child pointers with hazard pointers before reading node data, leading to race conditions and use-after-free errors.",
+        "Forgetting to propagate hash mutations upward to parent nodes, resulting in corrupted Merkle roots and invalid state proofs."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with the thread-local hazard pointer registry before dereferencing child pointers.",
+        "Batch memory reclamation of retired nodes using deferred deletion epochs to minimize contention on memory allocators."
+      ],
+      "when_to_use": "Use when building high-throughput blockchain state databases and smart contract execution engines that require multi-core parallelism and strict cryptographic verifiability.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple key-value stores where the overhead of cryptographic hashing, CAS retries, and hazard pointer management outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread deletes a node in a lock-free Merkle Patricia Trie?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently reading. When another thread wants to free a node, it checks the active hazard pointers and defers deletion until no thread references that node."
+        },
+        {
+          "question": "Why is standard garbage collection (like reference counting) challenging in a high-throughput lock-free Merkle Patricia Trie?",
+          "answer": "Atomic reference counting introduces significant cache-line bouncing across multi-core systems under high contention, degrading scaling performance compared to epoch-based reclamation or hazard pointers."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Ethereum State Trie Architecture"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-09T01:42:59.464544+00:00",
+      "run_number": 4712
     }
   ]
 }
