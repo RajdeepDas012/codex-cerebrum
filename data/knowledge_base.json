@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4738,
-    "last_updated": "2026-11-09T21:15:35.853596+00:00",
-    "total_topics_learned": 4738
+    "total_runs": 4739,
+    "last_updated": "2026-11-09T21:18:47.834674+00:00",
+    "total_topics_learned": 4739
   },
   "entries": [
     {
@@ -225377,6 +225377,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-09T21:15:35.853576+00:00",
       "run_number": 4738
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic node-splitting and hyperrectangle-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput nearest-neighbor searching and multi-core parallel spatial point execution in real-time robotics perception systems and concurrent geographic database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This advanced topic covers the design of a lock-free concurrent K-D Tree tailored for multi-dimensional point indexing. By leveraging atomic node-splitting and hyperrectangle-bounding primitives paired with hazard pointers, it guarantees safe memory reclamation and high throughput during parallel nearest-neighbor queries.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to handle concurrent node insertions and multidimensional space partitioning without global locks.",
+        "Employs hazard pointers to safely manage and reclaim memory of dynamically split nodes accessed by concurrent reader and writer threads.",
+        "Maintains explicit hyperrectangle boundaries at each node to optimize pruning during multi-core parallel nearest-neighbor searches.",
+        "Delivers deterministic scalability for multi-core architectures in real-time robotics perception and spatial database pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting and hazard pointer protection during concurrent spatial insertions in a K-D Tree.",
+        "correct": "template <typename T>\nvoid KDTree<T>::insert(Node*& root, const Point<T>& point, int depth) {\n    Node* newNode = new Node(point);\n    while (true) {\n        Node* curr = hazard_ptr.protect(root);\n        if (curr == nullptr) {\n            if (CAS(&root, nullptr, newNode)) break;\n        } else {\n            int axis = depth % K;\n            if (point[axis] < curr->point[axis]) {\n                if (CAS(&curr->left, curr->left, newNode)) break;\n            } else {\n                if (CAS(&curr->right, curr->right, newNode)) break;\n            }\n        }\n    }\n}",
+        "wrong": "void KDTree<T>::insert(Node* root, const Point<T>& point) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Mutex-based insertion that destroys lock-free throughput scaling\n    unsafe_insert_recursive(root, point, 0);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free vulnerabilities when another thread concurrently splits or removes a subtree.",
+        "Ignoring ABA problems on atomic pointer fields during node restructuring steps.",
+        "Incorrectly updating hyperrectangle bounding constraints during split operations, resulting in missed nearest-neighbor candidates."
+      ],
+      "best_practices": [
+        "Retire memory nodes exclusively through a deferred reclamation epoch or hazard pointer list once no active reader references them.",
+        "Minimize atomic contention by caching immutable bounding boxes locally during search traversal iterations.",
+        "Perform rigorous stress testing with thread sanitizers to catch subtle memory ordering flaws in lock-free routines."
+      ],
+      "when_to_use": "Use this structure when building high-performance geographic database engines or robotics perception systems that require sustained multi-core parallel spatial queries and nearest-neighbor lookups with minimal latency variance.",
+      "when_not_to_use": "Avoid when working in single-threaded environments, constrained memory architectures, or when simple coarse-grained locking provides adequate throughput without the implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory corruption in a lock-free K-D Tree during node splitting?",
+          "answer": "Hazard pointers allow threads to atomically register nodes they are currently accessing, preventing the reclamation or deallocation of those nodes by writer threads until the hazard reference is cleared."
+        },
+        {
+          "question": "What is the primary challenge of maintaining hyperrectangle bounds in a lock-free multi-threaded K-D Tree?",
+          "answer": "Ensuring that updates to bounding boxes propagate consistently across concurrent reader threads without introducing locking overhead or race conditions that could invalidate nearest-neighbor pruning."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-09T21:18:47.834655+00:00",
+      "run_number": 4739
     }
   ]
 }
