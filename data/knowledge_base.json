@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4723,
-    "last_updated": "2026-11-09T02:18:03.817529+00:00",
-    "total_topics_learned": 4723
+    "total_runs": 4724,
+    "last_updated": "2026-11-09T09:29:56.263176+00:00",
+    "total_topics_learned": 4724
   },
   "entries": [
     {
@@ -224667,6 +224667,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-09T02:18:03.817509+00:00",
       "run_number": 4723
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-Cascaded LSM-tree compaction layer using atomic SSTable-merging and tombstone-propagation CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy key-value storage and multi-core parallel background compaction execution in real-time distributed database systems and concurrent storage engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced database architecture integrates lock-free concurrent execution principles into a Log-Structured Merge-tree compaction background engine. By using atomic Compare-And-Swap (CAS) operations for SSTable merging and tombstone propagation, along with hazard pointers for safe memory reclamation, it enables high-throughput write-heavy workloads without thread contention.",
+      "key_points": [
+        "Utilizes atomic CAS primitives to coordinate parallel SSTable merging operations across multiple background worker threads.",
+        "Implements bloom filter cascade layers to eliminate unnecessary disk reads during range queries and compaction lookups.",
+        "Applies hazard pointers to manage safe memory reclamation of retired SSTable index nodes without incurring garbage collection pauses.",
+        "Propagates deletion tombstones atomically to ensure data consistency across cascading levels in high-throughput key-value stores."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free CAS-based compaction state transition for concurrent SSTable nodes.",
+        "correct": "bool try_merge_sstables(std::atomic<SSTableNode*>& target, SSTableNode* expected, SSTableNode* merged) {\n    return target.compare_exchange_strong(expected, merged, std::memory_order_acq_rel);\n}",
+        "wrong": "bool unsafe_merge(SSTableNode*& target, SSTableNode* merged) {\n    target = merged; // Non-atomic update causes race conditions and data corruption\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle hazard pointer registration before traversing mutable SSTable pointers, leading to use-after-free bugs.",
+        "Over-compaction caused by uncoordinated worker threads attempting to merge the same levels simultaneously without fine-grained locks or atomic guards."
+      ],
+      "best_practices": [
+        "Pair every memory reclamation action with an explicit hazard pointer protection scope to guarantee safe concurrent reads.",
+        "Design cascading bloom filters with optimal bit-array sizing per level to minimize false positive rates during compaction checks."
+      ],
+      "when_to_use": "Ideal for high-throughput, write-heavy distributed storage systems requiring predictable low-latency background compaction and multi-core scalability.",
+      "when_not_to_use": "Avoid in read-heavy applications where traditional B-Trees or specialized index structures offer lower read latency without compaction overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent LSM-tree compaction?",
+          "answer": "Hazard pointers allow threads to register ownership of a node they are actively reading, preventing other threads from reclaiming or deleting that node until the reader unregisters its hazard pointer."
+        },
+        {
+          "question": "Why are atomic CAS primitives essential when merging SSTables in a multi-threaded compaction engine?",
+          "answer": "CAS primitives ensure that pointer updates to newly merged SSTable levels happen atomically, preventing lost updates or race conditions when multiple worker threads try to modify the tree structure concurrently."
+        }
+      ],
+      "related_topics": [
+        "Log-Structured Merge-tree Compaction Strategies",
+        "Lock-Free Data Structures and Memory Reclamation",
+        "Concurrent Bloom Filter Optimizations"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-09T09:29:56.263156+00:00",
+      "run_number": 4724
     }
   ]
 }
