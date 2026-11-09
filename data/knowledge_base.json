@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4728,
-    "last_updated": "2026-11-09T20:43:41.426596+00:00",
-    "total_topics_learned": 4728
+    "total_runs": 4729,
+    "last_updated": "2026-11-09T20:46:53.334782+00:00",
+    "total_topics_learned": 4729
   },
   "entries": [
     {
@@ -224903,6 +224903,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-09T20:43:41.426576+00:00",
       "run_number": 4728
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-node-cloning and structural-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core parallel time-travel analytics execution in real-time functional database systems and concurrent transactional versioning engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent persistent segment tree enables multiple threads to query and update historical snapshots of interval data without explicit locking. By combining atomic version-node cloning, structural sharing, and hazard pointer memory reclamation, it delivers high throughput for multi-core time-travel analytics and transactional versioning.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for lock-free multi-version node creation and structural sharing.",
+        "Employs hazard pointers to safely manage memory reclamation for nodes shared across multiple historical versions without risking use-after-free bugs.",
+        "Facilitates efficient point updates and range queries across arbitrary historical timestamps with logarithmic space and time overhead.",
+        "Optimized for high-throughput, concurrent execution in modern multi-core transactional databases and functional version-control layers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic version-node cloning and structural sharing via CAS for a persistent segment tree node.",
+        "correct": "shared_ptr<Node> update(shared_ptr<Node> root, int tl, int tr, int idx, int val) {\n    if (tl == tr) return make_shared<Node>(val);\n    int tm = tl + (tr - tl) / 2;\n    auto new_node = make_shared<Node>(*root);\n    if (idx <= tm) {\n        new_node->left = update(root->left, tl, tm, idx, val);\n    } else {\n        new_node->right = update(root->right, tm + 1, tr, idx, val);\n    }\n    new_node->sum = new_node->left->sum + new_node->right->sum;\n    return new_node;\n}",
+        "wrong": "Node* update(Node* root, int tl, int tr, int idx, int val) {\n    root->val = val; // Mutates shared state in-place, breaking persistence and thread safety\n    return root;\n}"
+      },
+      "common_mistakes": [
+        "Mutating existing segment tree nodes in-place instead of creating cloned copies for new versions, which destroys historical persistence.",
+        "Failing to use hazard pointers or epoch-based reclamation, leading to premature memory deallocation of shared nodes accessed concurrently by other reader threads."
+      ],
+      "best_practices": [
+        "Always perform copy-on-write structural sharing, reusing unmodified subtrees across successive version roots to minimize memory overhead.",
+        "Protect read operations and pointer traversals using hazard pointers to guarantee safe concurrent traversal during active modifications."
+      ],
+      "when_to_use": "Use when building concurrent transactional storage engines or time-series databases that require high-throughput historical range queries and multi-version concurrency control.",
+      "when_not_to_use": "Avoid in low-memory embedded environments or simple single-threaded applications where standard mutable segment trees or basic arrays suffice.",
+      "interview_questions": [
+        {
+          "question": "How do structural sharing and CAS primitives enable lock-free persistence in a segment tree?",
+          "answer": "Structural sharing copies only the path from the root to the modified leaf, while CAS ensures atomic installation of the new version root pointer without requiring global or fine-grained locks."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free persistent segment tree?",
+          "answer": "Hazard pointers protect nodes shared across multiple historical versions from being prematurely reclaimed by the memory allocator while other threads are actively traversing them."
+        }
+      ],
+      "related_topics": [
+        "Persistent Segment Tree",
+        "Hazard Pointers",
+        "Lock-Free Data Structures",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-09T20:46:53.334762+00:00",
+      "run_number": 4729
     }
   ]
 }
