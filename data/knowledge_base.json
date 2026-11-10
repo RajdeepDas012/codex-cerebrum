@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4752,
-    "last_updated": "2026-11-10T20:32:41.832199+00:00",
-    "total_topics_learned": 4752
+    "total_runs": 4753,
+    "last_updated": "2026-11-10T20:35:55.205320+00:00",
+    "total_topics_learned": 4753
   },
   "entries": [
     {
@@ -226047,6 +226047,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-10T20:32:41.832178+00:00",
       "run_number": 4752
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Concurrent Hash-Array Mapped Trie (HAMT) using atomic node-expansion and structural-path-CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable-style structural sharing and multi-core parallel persistent key-value map updating execution in real-time functional programming runtimes and concurrent distributed state stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Hash-Array Mapped Trie (HAMT) utilizing atomic node expansion and structural path Compare-And-Swap (CAS) primitives paired with hazard pointers. It enables high-throughput, lock-free structural sharing and parallel persistent key-value updates critical for functional runtimes and distributed state management.",
+      "key_points": [
+        "Utilizes structural path CAS primitives to securely modify branches of the trie without global locks.",
+        "Employs bitmap-indexed sparse nodes to optimize memory footprint and cache locality during high-dimensional hashing.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation of superseded trie nodes under heavy concurrent write loads.",
+        "Supports persistent, immutable-style structural sharing allowing multiple threads to safely read historical snapshots while mutations occur."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node-expansion and structural path CAS updating for a HAMT branch node.",
+        "correct": "bool update_hamt_node(std::atomic<Node*>& current_ref, Key k, Value v, ThreadState* ts) {\n    while (true) {\n        Node* old_node = hazard_protect(current_ref, ts);\n        Node* new_node = clone_and_insert(old_node, k, v);\n        if (current_ref.compare_exchange_weak(old_node, new_node)) {\n            retire_node(old_node, ts);\n            return true;\n        }\n    }\n}",
+        "wrong": "bool update_hamt_node_unsafe(Node* current, Key k, Value v) {\n    current->children[hash(k)] = new Node(v); // Missing atomic CAS and hazard pointer protection, leading to race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate shared nodes with hazard pointers prior to executing structural path CAS operations, causing use-after-free bugs.",
+        "Reclaiming old trie nodes immediately after a successful CAS instead of deferring deletion until all concurrent hazard pointers release references."
+      ],
+      "best_practices": [
+        "Keep bitmap indexes tightly packed within sparse node headers to accelerate bit-manipulation and child lookup performance.",
+        "Ensure hazard pointer registries scale per-thread to avoid contended global locking bottlenecks during thread acquisition and release."
+      ],
+      "when_to_use": "Use when building concurrent distributed state stores or functional programming runtimes requiring high-throughput, lock-free parallel key-value map updates with structural sharing.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or environments where standard mutex-backed hash maps provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do bitmap-indexed sparse nodes in a HAMT reduce memory waste compared to standard multi-way trees?",
+          "answer": "Instead of allocating fixed-size arrays for all possible child pointers at a given level, sparse nodes use a bitmask where the $i$-th bit indicates whether a child exists, storing only the present children compactly in a contiguous array."
+        },
+        {
+          "question": "Why are hazard pointers necessary when performing structural path updates via CAS in a lock-free HAMT?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while another thread is traversing or modifying paths through them, preventing classic ABA and use-after-free race conditions."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Radix Trees",
+        "Hazard Pointer Memory Management",
+        "Persistent Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-10T20:35:55.205300+00:00",
+      "run_number": 4753
     }
   ]
 }
