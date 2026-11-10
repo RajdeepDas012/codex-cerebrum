@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4742,
-    "last_updated": "2026-11-10T12:22:48.270486+00:00",
-    "total_topics_learned": 4742
+    "total_runs": 4743,
+    "last_updated": "2026-11-10T12:26:05.764266+00:00",
+    "total_topics_learned": 4743
   },
   "entries": [
     {
@@ -225571,6 +225571,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-10T12:22:48.270469+00:00",
       "run_number": 4742
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic pointer-swapping and prefix-length-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core parallel route lookup execution in real-time software-defined networking (SDN) edge routers and concurrent telecommunication switching systems",
+      "category": "networking",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent trie (radix tree) optimized for IP routing tables. It leverages atomic compare-and-swap (CAS) primitives and hazard pointers to handle dynamic route insertions and parallel lookups without global locks, ensuring low-latency packet forwarding in multi-core networking gear.",
+      "key_points": [
+        "Utilizes atomic pointer-swapping to safely graft or prune trie branches during runtime updates without blocking reader threads.",
+        "Applies prefix-length-masking logic to identify the longest matching prefix (LMP) during high-speed packet classification.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of orphaned nodes.",
+        "Scales linearly across multi-core architectures for concurrent route table lookups in SDN edge routers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a conceptual lock-free node insertion step using atomic compare_exchange_strong in a trie route table.",
+        "correct": "bool insert_child(std::atomic<Node*>& parent_link, uint32_t bit, Node* new_node) {\n    Node* expected = parent_link.load(std::memory_order_acquire);\n    new_node->next[bit] = expected;\n    return parent_link.compare_exchange_strong(expected, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* current = parent_link.load();\ncurrent->next[bit] = new_node;\nparent_link.store(current); // Race condition and not thread-safe!"
+      },
+      "common_mistakes": [
+        "Forgetting to guard freed route nodes with hazard pointers, leading to use-after-free race conditions during concurrent deletions.",
+        "Failing to handle memory ordering correctly (using sequential consistency everywhere unnecessarily, or relaxed where acquire/release is mandatory)."
+      ],
+      "best_practices": [
+        "Always register reader threads to a hazard pointer domain before executing a packet lookup path.",
+        "Keep node granularity optimized to balance memory footprint against tree depth during long prefix lookups."
+      ],
+      "when_to_use": "High-performance network routing engines and SDN switches requiring millions of parallel packet classifications with frequent dynamic route updates.",
+      "when_not_to_use": "Simple static routing environments or single-threaded embedded networking applications where traditional mutex-backed hash tables or flat arrays suffice.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic updates on a lock-free routing trie node?",
+          "answer": "By using hazard pointers or tagged pointers that incorporate a version counter incremented on every CAS modification."
+        },
+        {
+          "question": "Why is a Trie preferred over a standard hash map for IP route lookups?",
+          "answer": "Because standard hash maps only support exact matches, whereas IP routing requires Longest Prefix Matching (LMP), which Tries naturally support."
+        }
+      ],
+      "related_topics": [
+        "Longest Prefix Matching Algorithms",
+        "Hazard Pointer Memory Management",
+        "Software-Defined Networking Data Planes"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-10T12:26:05.764246+00:00",
+      "run_number": 4743
     }
   ]
 }
