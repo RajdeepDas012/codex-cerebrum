@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4784,
-    "last_updated": "2026-11-11T18:06:01.415593+00:00",
-    "total_topics_learned": 4784
+    "total_runs": 4785,
+    "last_updated": "2026-11-11T18:09:14.866404+00:00",
+    "total_topics_learned": 4785
   },
   "entries": [
     {
@@ -227568,6 +227568,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-11T18:06:01.415574+00:00",
       "run_number": 4784
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and sequence-number-validating CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread messaging and multi-core parallel event processing execution in real-time telemetry streaming systems and concurrent producer-consumer pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent producers and consumers over a fixed-size circular array without blocking locks. It leverages atomic compare-and-swap (CAS) primitives and sequence numbers to safely publish and consume entries, maximizing throughput in multi-core message-passing pipelines.",
+      "key_points": [
+        "Utilizes a fixed-size circular array to eliminate dynamic memory allocation overhead during steady-state operation.",
+        "Employs atomic head and tail pointer advancements alongside sequence numbers to resolve race conditions between multiple producers and consumers.",
+        "Prevents ABA problems and data corruption by validating cell ownership through per-slot generation or sequence tags.",
+        "Scales linearly across multi-core architectures by avoiding kernel-level thread blocking or mutex contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic sequence validation for a lock-free ring buffer producer cell acquisition.",
+        "correct": "bool enqueue(T item) {\n    Cell* cell;\n    size_t pos = tail_.load(std::memory_order_relaxed);\n    for (;;) {\n        cell = &buffer_[pos & mask_];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n        if (dif == 0) {\n            if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed)) break;\n        } else if (dif < 0) {\n            return false;\n        } else {\n            pos = tail_.load(std::memory_order_relaxed);\n        }\n    }\n    cell->data = item;\n    cell->sequence.store(pos + 1, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool enqueue(T item) {\n    size_t pos = tail_;\n    buffer_[pos % capacity] = item;\n    tail_ = pos + 1;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to enforce proper memory ordering (acquire-release semantics), leading to stale reads and out-of-order execution visibility.",
+        "Neglecting the sequence validation check, which causes concurrent producers to overwrite unconsumed entries."
+      ],
+      "best_practices": [
+        "Design the ring buffer size to be a power of two so that modulo operations can be replaced with fast bitwise masking.",
+        "Padding atomic variables to match the CPU cache line size prevents false sharing degradation across multiple core threads."
+      ],
+      "when_to_use": "Use when implementing high-frequency inter-thread communication, trading systems, or telemetry streaming pipelines where latency must remain strictly bounded.",
+      "when_not_to_use": "Avoid when data volumes are unpredictable and unbounded, as fixed-size buffers will either overflow or require complex resizing logic.",
+      "interview_questions": [
+        {
+          "question": "How do sequence numbers prevent race conditions in a lock-free ring buffer?",
+          "answer": "Sequence numbers track the generation or round-trip count for each slot, ensuring that producers only write to slots fully consumed by the reader and consumers only read from slots fully written by the producer."
+        },
+        {
+          "question": "Why are power-of-two sizes preferred for ring buffer implementations?",
+          "answer": "They allow the use of a bitwise mask (size - 1) instead of an expensive modulo arithmetic instruction to wrap index pointers around the buffer array."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Memory Ordering and Barriers",
+        "Lock-Free Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-11T18:09:14.866385+00:00",
+      "run_number": 4785
     }
   ]
 }
