@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4764,
-    "last_updated": "2026-11-11T09:06:12.289758+00:00",
-    "total_topics_learned": 4764
+    "total_runs": 4765,
+    "last_updated": "2026-11-11T09:09:36.984679+00:00",
+    "total_topics_learned": 4765
   },
   "entries": [
     {
@@ -226615,6 +226615,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-11T09:06:12.289736+00:00",
       "run_number": 4764
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-merging and node-overflow-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range query execution in real-time geographic information systems (GIS) and concurrent spatial database engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free spatial indexing structure called an R-Tree, leveraging atomic Compare-And-Swap (CAS) operations for bounding-box merging and node-overflow splitting. It utilizes hazard pointers for safe memory reclamation, enabling high-throughput multi-core parallel spatial queries without the bottlenecks of global locks.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node updates and structural modifications.",
+        "Employs bounding-box-merging and node-overflow-splitting algorithms designed for concurrent execution threads.",
+        "Integrates hazard pointers to safely manage memory reclamation and prevent use-after-free bugs in a dynamic tree topology.",
+        "Optimizes multi-core parallel geometric range queries for real-time geographic information systems (GIS) and spatial engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection around concurrent node pointer traversal in a lock-free R-Tree",
+        "correct": "HazardPointer hp;\nNode* node = hazard_ptr_protect(&root, hp);\nwhile (node && !compare_and_swap_bbox(&node->bbox, old_box, new_box)) {\n    hazard_ptr_release(hp);\n    node = hazard_ptr_protect(&root, hp);\n}",
+        "wrong": "Node* node = root.load();\n// Missing hazard pointer protection leads to use-after-free if another thread deletes 'node'\ncompare_and_swap_bbox(&node->bbox, old_box, new_box);"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption during splits.",
+        "Relying on coarse-grained locking during node-overflow splits which degrades multi-core throughput."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers before traversing down dynamically changing tree structures.",
+        "Batch minor bounding-box updates where possible to minimize CAS retry contention under high thread counts."
+      ],
+      "when_to_use": "Use when building high-throughput spatial databases or real-time GIS platforms requiring concurrent multi-core reads and writes on geometric data.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with extremely low write contention, where standard synchronized pointer-based R-Trees are simpler.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation issues during a concurrent R-Tree node split?",
+          "answer": "Hazard pointers mark specific nodes as 'in-use' by a thread before reading pointers, ensuring garbage collectors or deferred reclamation mechanisms do not free the memory until all referencing threads release their hazard pointers."
+        },
+        {
+          "question": "What is the primary challenge when implementing atomic bounding-box-merging in an R-Tree?",
+          "answer": "The primary challenge is handling structural modifications where multiple threads attempt to update overlapping parent bounding boxes simultaneously, requiring careful CAS loops and retry logic to maintain spatial hierarchy consistency."
+        }
+      ],
+      "related_topics": [
+        "concurrent B+ Tree",
+        "hazard pointers",
+        "spatial indexing algorithms",
+        "lock-free data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-11T09:09:36.984654+00:00",
+      "run_number": 4765
     }
   ]
 }
