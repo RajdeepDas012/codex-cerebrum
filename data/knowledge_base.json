@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4836,
-    "last_updated": "2026-11-12T23:51:01.253944+00:00",
-    "total_topics_learned": 4836
+    "total_runs": 4837,
+    "last_updated": "2026-11-12T23:54:11.722583+00:00",
+    "total_topics_learned": 4837
   },
   "entries": [
     {
@@ -230034,6 +230034,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-12T23:51:01.253925+00:00",
       "run_number": 4836
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership and multi-core parallel duplicate filtering execution in real-time web crawler URL deduplication engines and concurrent distributed cache routing layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free, thread-safe concurrent Bloom filter that uses atomic bit manipulation and compare-and-swap (CAS) primitives to support high-throughput parallel insertions and queries without traditional mutex bottlenecks. It leverages hazard pointers and word-level masking to safely manage bitarray updates across multiple threads, achieving scalable probabilistic set membership for modern multi-core workloads.",
+      "key_points": [
+        "Utilizes atomic bit-setting operations and word-cas-masking to update shared bit arrays safely across concurrent threads without locks.",
+        "Employs multiple independent hash functions (such as MurmurHash or CityHash) to map keys to bit indices within the shared bitarray.",
+        "Integrates hazard pointer memory reclamation patterns to safely track and manage dynamic structural expansions or memory layouts if resizing is supported.",
+        "Provides high-throughput probabilistic set membership suitable for parallel duplicate filtering and fast preliminary inclusion checks."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates word-level atomic bit masking via simulation for concurrent bit setting",
+        "correct": "import threading\n\nclass ConcurrentWordBitSet:\n    def __init__(self, size_in_words):\n        self.words = [0] * size_in_words\n        self.lock_free_mock_lock = threading.Lock() # Conceptual atomic representation\n\n    def set_bit(self, bit_index):\n        word_idx = bit_index >> 6\n        bit_offset = bit_index & 63\n        mask = 1 << bit_offset\n        with self.lock_free_mock_lock:\n            self.words[word_idx] |= mask",
+        "wrong": "def set_bit_unsafe(words, bit_index):\n    word_idx = bit_index >> 6\n    bit_offset = bit_index & 63\n    words[word_idx] |= (1 << bit_offset) # Race condition on read-modify-write"
+      },
+      "common_mistakes": [
+        "Performing non-atomic read-modify-write sequences on shared words, leading to lost bit updates from concurrent threads.",
+        "Failing to account for false positive probabilities when sizing the bit array and determining the optimal number of hash functions."
+      ],
+      "best_practices": [
+        "Align word modifications to machine-word boundaries to allow native atomic CAS instructions (like atomic_fetch_or) on target architectures.",
+        "Pre-allocate the entire bitarray capacity to avoid synchronization overhead associated with dynamic resizing under high concurrency."
+      ],
+      "when_to_use": "Use when you require extremely high-throughput set membership testing across multiple worker threads with acceptable, bounded false-positive rates and zero tolerance for lock contention.",
+      "when_not_to_use": "Do not use when absolute accuracy (zero false positives) is mandatory, or when deletion of elements is required without resorting to complex counting variants.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to set different bits within the same underlying machine word simultaneously?",
+          "answer": "By using atomic bitwise-OR operations (such as atomic fetch-or or a CAS loop) at the word level rather than modifying individual bits independently."
+        },
+        {
+          "question": "Why is standard Bloom filter deletion difficult to implement in a lock-free concurrent context?",
+          "answer": "Because clearing a bit that might be shared by multiple keys can inadvertently delete other active elements, requiring expensive synchronization or a counting Bloom filter structure."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Cuckoo Filter",
+        "Lock-free Concurrent Skip List",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-12T23:54:11.722565+00:00",
+      "run_number": 4837
     }
   ]
 }
