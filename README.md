@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4831** |
-| Last Updated | `2026-11-12T23:35:06.573779+00:00` |
-| Dataset Size | `4831 entries` |
+| Total Topics Learned | **4832** |
+| Last Updated | `2026-11-12T23:38:16.896455+00:00` |
+| Dataset Size | `4832 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3461 |
+| data-structures | 3462 |
 | algorithms | 299 |
 | trading-strategies | 228 |
 | crypto-blockchain | 200 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent KD-Tree using atomic bounding-hyperplane-splitting and axis-cycling CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel spatial point query execution in real-time robotics perception systems and concurrent geographic information databases`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic bitmap-splitting and rank-select-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel succinct data structure execution in real-time bioinformatics sequence analysis engines and concurrent compressed column store databases`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and counter-matrix-hashing CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel approximate event tracking execution in real-time network traffic monitoring systems and concurrent stream processing analytics engines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct count execution in real-time big data analytics pipelines and concurrent distributed database telemetry engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job execution in real-time asynchronous processing systems and concurrent thread pool engines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric query execution in real-time geographic information systems and concurrent location-aware database engines`
 
 <!-- STATS_END -->
 
