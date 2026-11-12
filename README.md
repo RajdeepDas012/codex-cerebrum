@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4827** |
-| Last Updated | `2026-11-12T18:11:52.394131+00:00` |
-| Dataset Size | `4827 entries` |
+| Total Topics Learned | **4828** |
+| Last Updated | `2026-11-12T23:25:19.844022+00:00` |
+| Dataset Size | `4828 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3458 |
+| data-structures | 3459 |
 | algorithms | 298 |
 | trading-strategies | 228 |
 | crypto-blockchain | 200 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job execution in real-time asynchronous processing systems and concurrent thread pool engines`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric query execution in real-time geographic information systems and concurrent location-aware database engines`
 - `Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and ray-box-intersection CAS primitives alongside hazard pointer memory reclamation for high-throughput ray tracing and multi-core parallel geometric collision detection execution in real-time computer graphics rendering engines and concurrent physics simulation pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and key-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-threaded indexing and multi-core parallel sorted database query execution in real-time transactional storage engines and concurrent in-memory database systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and max-right-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval intersection execution in real-time calendar scheduling systems and concurrent event-driven simulation engines`
-- `Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic distance-partitioning and metric-radius-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput similarity searching and multi-core parallel high-dimensional metric space query execution in real-time multimedia retrieval systems and concurrent computer vision feature matching engines`
 
 <!-- STATS_END -->
 
