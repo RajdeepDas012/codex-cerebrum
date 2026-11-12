@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4824,
-    "last_updated": "2026-11-12T17:54:22.621664+00:00",
-    "total_topics_learned": 4824
+    "total_runs": 4825,
+    "last_updated": "2026-11-12T18:01:49.345728+00:00",
+    "total_topics_learned": 4825
   },
   "entries": [
     {
@@ -229465,6 +229465,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-12T17:54:22.621643+00:00",
       "run_number": 4824
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and key-redistribution CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-threaded indexing and multi-core parallel sorted database query execution in real-time transactional storage engines and concurrent in-memory database systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree utilizes atomic Compare-And-Swap (CAS) primitives for node splitting and key redistribution without mutex locks, enabling high-throughput multi-threaded database indexing. Hazard pointers are integrated to safely manage memory reclamation, avoiding the ABA problem and race conditions during concurrent modifications.",
+      "key_points": [
+        "Uses atomic node-splitting and key-redistribution via CAS primitives to ensure thread-safe structure modifications without blocking.",
+        "Employs hazard pointer memory reclamation to safely defer node deallocation until all concurrent reader threads have detached.",
+        "Maximizes multi-core parallel performance for sorted database range queries and transactional indexing workloads.",
+        "Prevents thread contention by keeping structural adjustments localized and lock-free across distributed tree nodes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates hazard pointer registration pattern for lock-free node access in a concurrent tree",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazard_pointers = {}\n    def protect(self, thread_id, node):\n        self.hazard_pointers[thread_id] = node\n    def retire(self, node, active_hazards):\n        if node not in active_hazards:\n            del node",
+        "wrong": "def unsafe_delete(node):\n    # Deleting node immediately without checking active reader threads causes segmentation faults\n    del node"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing child pointers, leading to use-after-free bugs.",
+        "Attempting to perform structural updates like node splitting without validating that parent pointers have not changed mid-operation."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection for any node before reading its child pointers or key arrays.",
+        "Batch retired nodes in local thread lists and reclaim them only after global hazard pointer validation passes.",
+        "Design key-redistribution and node-splitting routines to be fully idempotent or retryable via CAS loops."
+      ],
+      "when_to_use": "When building high-throughput transactional storage engines or in-memory databases requiring extreme read/write concurrency and minimal lock contention.",
+      "when_not_to_use": "In single-threaded applications or systems with low concurrency where standard lock-based B-Trees offer simpler implementation and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are currently accessing, preventing other threads from freeing that memory until all hazard pointers pointing to it have been cleared."
+        },
+        {
+          "question": "Why are standard lock-based approaches sub-optimal for high-throughput multi-core B-Trees?",
+          "answer": "Lock-based approaches suffer from thread contention, lock convoying, and high context-switching overhead under heavy multi-core concurrent write workloads."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Concurrent Transactional Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-12T18:01:49.345708+00:00",
+      "run_number": 4825
     }
   ]
 }
