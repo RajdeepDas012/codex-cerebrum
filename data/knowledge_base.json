@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4862,
-    "last_updated": "2026-11-13T14:41:37.092760+00:00",
-    "total_topics_learned": 4862
+    "total_runs": 4863,
+    "last_updated": "2026-11-13T14:44:49.597536+00:00",
+    "total_topics_learned": 4863
   },
   "entries": [
     {
@@ -231269,6 +231269,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T14:41:37.092738+00:00",
       "run_number": 4862
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-child-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel event-driven task execution in real-time operating system schedulers and concurrent simulation engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a concurrent Pairing Heap, leveraging atomic compare-and-swap (CAS) primitives and hazard pointers to guarantee safe lock-free memory reclamation during multi-core insertions and amortized root extractions. It is crucial for high-throughput priority queues where threads concurrently manipulate heap structures without coarse-grained locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic root-linking to attach new nodes and subheaps without blocking parallel worker threads.",
+        "Employs multi-child-splicing CAS operations during delete-min passes to reorganize subtrees safely in a lock-free manner.",
+        "Integrates hazard pointers to track active references, preventing premature node deallocation and memory corruption by competing threads.",
+        "Delivers high amortized performance suitable for parallel event-driven simulation engines and task scheduling systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking and hazard pointer protection for concurrent pairing heap operations.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct Node {\n    int priority;\n    std::atomic<Node*> child;\n    std::atomic<Node*> next;\n    Node(int p) : priority(p), child(nullptr), next(nullptr) {}\n};\n\nclass LockFreePairingHeap {\n    std::atomic<Node*> root;\npublic:\n    void insert(Node* newNode) {\n        Node* oldRoot;\n        do {\n            oldRoot = root.load();\n            newNode->child.store(oldRoot);\n        } while (!root.compare_exchange_weak(oldRoot, newNode));\n    }\n};",
+        "wrong": "void insert(Node* newNode) {\n    newNode->child = root;\n    root = newNode; // Non-atomic write causes race conditions and data corruption across threads.\n}"
+      },
+      "common_mistakes": [
+        "Modifying child and sibling pointers without loop-retry CAS blocks, leading to lost updates under high contention.",
+        "Failing to protect nodes traversed during multi-pass consolidation phases with hazard pointers, causing use-after-free bugs.",
+        "Ignoring the memory layout and false sharing across closely allocated nodes in multi-core NUMA architectures."
+      ],
+      "best_practices": [
+        "Ensure hazard pointers are published before reading pointer fields that can be concurrently unlinked or modified.",
+        "Batch memory reclamation requests in thread-local retirement lists to reduce atomic hazard pointer registry overhead.",
+        "Keep critical sections of pointer splicing small and strictly bound to lock-free retry loops."
+      ],
+      "when_to_use": "Use when multiple concurrent threads require high-throughput priority queue operations with excellent amortized complexity and non-blocking execution guarantees.",
+      "when_not_to_use": "Avoid when strict worst-case latency bounds are required per operation, or when a simple mutex-protected binary heap satisfies throughput constraints with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free conditions in a concurrent Pairing Heap?",
+          "answer": "Hazard pointers allow threads to publish ownership of nodes they are currently accessing, preventing any other thread from reclaiming those memory addresses until the hazard pointer is cleared."
+        },
+        {
+          "question": "Why is multi-child-splicing in a lock-free pairing heap more challenging to implement than a standard leftist or binary heap?",
+          "answer": "Pairing heaps rely on multi-pass consolidation of child lists during delete-min operations, requiring complex atomic CAS chains to safely link and merge subtrees across multiple concurrent threads without losing references."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Leftist Heap",
+        "Concurrent Priority Queue Design"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T14:44:49.597511+00:00",
+      "run_number": 4863
     }
   ]
 }
