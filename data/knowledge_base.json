@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4877,
-    "last_updated": "2026-11-13T21:32:52.361889+00:00",
-    "total_topics_learned": 4877
+    "total_runs": 4878,
+    "last_updated": "2026-11-13T21:36:04.875478+00:00",
+    "total_topics_learned": 4878
   },
   "entries": [
     {
@@ -231979,6 +231979,56 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T21:32:52.361871+00:00",
       "run_number": 4877
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Array using atomic index-sorting and rank-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel full-text indexing execution in real-time document search engines and concurrent genomic sequence alignment pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe concurrent Suffix Array optimized for parallel full-text indexing and substring searches. By employing atomic index sorting, rank updating via Compare-And-Swap (CAS) primitives, and hazard pointers for safe memory management, it enables high-throughput text and sequence querying on multi-core systems without traditional lock contention.",
+      "key_points": [
+        "Utilizes atomic index-sorting and rank-updating CAS operations to safely modify array pointers and suffixes in parallel.",
+        "Integrates hazard pointers to manage safe memory reclamation of dynamically resized text blocks and index structures without locking.",
+        "Facilitates high-throughput substring searching through parallel binary searches across sorted suffix intervals.",
+        "Optimizes multi-core parallel full-text indexing and genomic sequence alignment pipelines in real-time environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of atomic index sorting and hazard pointer protection for concurrent suffix array entries.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct HazardPointer {\n    std::atomic<void*> ptr;\n};\n\nclass ConcurrentSuffixArray {\n    std::vector<std::atomic<int>> indices;\npublic:\n    void updateRank(size_t pos, int new_rank, HazardPointer& hp) {\n        hp.ptr.store(&indices[pos], std::memory_order_release);\n        int expected = indices[pos].load(std::memory_order_relaxed);\n        while (!indices[pos].compare_exchange_weak(expected, new_rank, std::memory_order_acq_rel)) {\n            hp.ptr.store(&indices[pos], std::memory_order_release);\n        }\n        hp.ptr.store(nullptr, std::memory_order_release);\n    }\n};",
+        "wrong": "#include <vector>\n// Incorrectly using standard non-atomic assignment in a multi-threaded environment\nclass ConcurrentSuffixArray {\n    std::vector<int> indices;\npublic:\n    void updateRank(size_t pos, int new_rank) {\n        indices[pos] = new_rank; // Data race hazard\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to properly protect shared suffix array pointers with hazard pointers during concurrent index re-sorting.",
+        "Relying on coarse-grained locks instead of atomic CAS primitives, leading to severe pipeline bottlenecks during genomic alignment.",
+        "Neglecting ABA problems during rank updates and atomic index modifications."
+      ],
+      "best_practices": [
+        "Use robust memory ordering fences (acquire-release semantics) alongside atomic operations to maintain consistency across worker threads.",
+        "Implement localized batching for parallel sorting phases to minimize excessive CAS retry loops.",
+        "Employ thread-local hazard pointer pools to reduce synchronization overhead during high-frequency garbage collection."
+      ],
+      "when_to_use": "Use when building real-time document search engines or genomic alignment pipelines requiring massive concurrent read-heavy operations on static or semi-static large text corpora.",
+      "when_not_to_use": "Avoid when the underlying text undergoes frequent, large-scale mutations, as rebuilding and re-sorting suffix arrays concurrently incurs significant computational overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free suffix array?",
+          "answer": "Hazard pointers allow a thread to atomically publish a pointer it is about to access. Reclaiming threads check these published pointers and defer actual memory deallocation until no active thread references the target node."
+        },
+        {
+          "question": "Why is parallelizing a suffix array construction and search challenging with lock-free techniques?",
+          "answer": "Suffix arrays require global relative ordering of suffixes. Achieving this lock-free demands complex concurrent sorting networks or iterative rank refinement using CAS, which can suffer from high contention during write-heavy workloads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Radix Trees for IP Routing",
+        "Parallel Suffix Tree Construction"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-13T21:36:04.875460+00:00",
+      "run_number": 4878
     }
   ]
 }
