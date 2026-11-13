@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4840,
-    "last_updated": "2026-11-13T00:03:45.715445+00:00",
-    "total_topics_learned": 4840
+    "total_runs": 4841,
+    "last_updated": "2026-11-13T00:06:56.879212+00:00",
+    "total_topics_learned": 4841
   },
   "entries": [
     {
@@ -230223,6 +230223,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T00:03:45.715426+00:00",
       "run_number": 4840
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy logging and multi-core parallel sorted string table execution in real-time key-value storage engines and concurrent distributed database commit logs",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Log-Structured Merge-Tree (LSM-Tree) combines write-optimized memtables with immutable Sorted String Tables (SSTables) to achieve high-throughput ingestion in distributed databases. Utilizing atomic CAS primitives for memtable swapping and hazard pointers for safe memory reclamation ensures thread safety without traditional lock contention.",
+      "key_points": [
+        "Employs atomic memtable-swapping via Compare-And-Swap (CAS) to seamlessly transition active write buffers to immutable flush states.",
+        "Utilizes hazard pointer memory reclamation to safely manage memory deallocation of old memtables and SSTable metadata nodes accessed by concurrent readers.",
+        "Optimizes write-heavy workloads by converting random disk I/O into sequential append-only disk logging and background sorted string table compactions.",
+        "Enables multi-core parallel sorted string table execution to maintain read performance across tiered levels without blocking active writer threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic memtable swapping using CAS pointers and hazard pointer registration for lock-free reads",
+        "correct": "struct MemTable { std::atomic<bool> active{true}; SkipList data; };\nstd::atomic<MemTable*> active_memtable;\nvoid insert(Key k, Value v) {\n    MemTable* mt;\n    hazard_pointer hp;\n    do {\n        mt = active_memtable.load(std::memory_order_acquire);\n        hp.protect(mt);\n    } while (mt != active_memtable.load(std::memory_order_relaxed));\n    mt->data.insert(k, v);\n}",
+        "wrong": "void insert(Key k, Value v) {\n    std::lock_guard<std::mutex> lock(mtx);\n    active_memtable->data.insert(k, v);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect obsolete memtables with hazard pointers during background compactions, leading to use-after-free race conditions.",
+        "Using heavy mutual exclusion locks for memtable switching, which creates severe bottlenecks during write-heavy ingestion spikes."
+      ],
+      "best_practices": [
+        "Pair atomic pointer swaps with rigorous epoch-based or hazard-pointer memory management to guarantee safe asynchronous reclamation.",
+        "Offload intensive SSTable compaction routines to dedicated background thread pools to prevent read and write latency spikes."
+      ],
+      "when_to_use": "Ideal for write-heavy workloads, append-only commit logs, and modern high-throughput key-value storage engines requiring predictable low-latency ingestion.",
+      "when_not_to_use": "Avoid for read-heavy applications with strict point-lookup SLAs where traditional B-Trees or cached indexes provide lower read amplification.",
+      "interview_questions": [
+        {
+          "question": "How do you safely reclaim memory of an active memtable swapped out via an atomic CAS operation in a lock-free LSM-Tree?",
+          "answer": "By using hazard pointers or epoch-based memory reclamation to ensure no active threads are reading from the old memtable before deallocating its memory."
+        },
+        {
+          "question": "What is the primary purpose of background SSTable compaction in an LSM-Tree architecture?",
+          "answer": "To merge sorted string files across levels, remove deleted or overwritten keys (tombstones), and bound read amplification."
+        }
+      ],
+      "related_topics": [
+        "lock-free B+ Tree indexing",
+        "hazard pointer memory management",
+        "distributed database commit logs"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T00:06:56.879192+00:00",
+      "run_number": 4841
     }
   ]
 }

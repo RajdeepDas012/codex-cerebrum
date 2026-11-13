@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4840** |
-| Last Updated | `2026-11-13T00:03:45.715445+00:00` |
-| Dataset Size | `4840 entries` |
+| Total Topics Learned | **4841** |
+| Last Updated | `2026-11-13T00:06:56.879212+00:00` |
+| Dataset Size | `4841 entries` |
 
 ## 📂 Categories Learned
 
@@ -25,7 +25,7 @@
 | system-design | 121 |
 | market-analysis | 114 |
 | stocks-markets | 71 |
-| databases | 50 |
+| databases | 51 |
 | security | 40 |
 | probability-math | 27 |
 | networking | 23 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent LSM-Tree using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy logging and multi-core parallel sorted string table execution in real-time key-value storage engines and concurrent distributed database commit logs`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and root-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput range-scan indexing and multi-core parallel sorted database query execution in real-time in-memory storage engines and concurrent relational database indexing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-degree-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput Dijkstra shortest path execution and multi-core parallel priority queue merging in real-time network routing engines and concurrent graph optimization pipelines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency querying and multi-core parallel prefix sum execution in real-time streaming analytics systems and concurrent cumulative distribution engines`
 - `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cas-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership and multi-core parallel duplicate filtering execution in real-time web crawler URL deduplication engines and concurrent distributed cache routing layers`
-- `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced binary search tree indexing and multi-core parallel sorted map execution in real-time in-memory databases and concurrent dynamic priority queuing engines`
 
 <!-- STATS_END -->
 
