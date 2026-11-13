@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4857** |
-| Last Updated | `2026-11-13T06:46:05.444957+00:00` |
-| Dataset Size | `4857 entries` |
+| Total Topics Learned | **4858** |
+| Last Updated | `2026-11-13T14:28:41.833813+00:00` |
+| Dataset Size | `4858 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3484 |
+| data-structures | 3485 |
 | algorithms | 300 |
 | trading-strategies | 228 |
 | crypto-blockchain | 201 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B-link Tree using atomic right-link-updating and concurrent-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index traversal and multi-core parallel database searching execution in real-time in-memory database management systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Priority Deque using atomic head-tail-swapping and dual-ended-pointer-cas primitives alongside hazard pointer memory reclamation for high-throughput double-ended task scheduling and multi-core parallel job stealing execution in real-time asynchronous processing frameworks and concurrent work-stealing thread pool engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chain-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value storage and multi-core parallel lookup execution in real-time in-memory caching systems and concurrent distributed database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Vector (Growable Array) using atomic capacity-doubling and descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic list indexing and multi-core parallel append execution in real-time stream processing engines and concurrent data collection frameworks`
 - `Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (Disruptor pattern) using atomic sequence-barrier-updating and cursor-advancing CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread messaging and multi-core parallel event processing execution in real-time low-latency financial exchange trading platforms and concurrent telemetry ingestion pipelines`
-- `Implementation of a lock-free thread-safe concurrent Graph (CSR format) using atomic edge-insertion and vertex-degree-scaling CAS primitives alongside hazard pointer memory reclamation for high-throughput social network traversal and multi-core parallel graph analytics execution in real-time recommendation engines and concurrent distributed graph processing pipelines`
 
 <!-- STATS_END -->
 
