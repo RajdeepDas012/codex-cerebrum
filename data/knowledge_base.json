@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4861,
-    "last_updated": "2026-11-13T14:38:24.770907+00:00",
-    "total_topics_learned": 4861
+    "total_runs": 4862,
+    "last_updated": "2026-11-13T14:41:37.092760+00:00",
+    "total_topics_learned": 4862
   },
   "entries": [
     {
@@ -231222,6 +231222,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T14:38:24.770880+00:00",
       "run_number": 4861
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel task scheduling execution in real-time cloud resource allocation systems and concurrent job execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Leftist Heap utilizing atomic operations, null-path-length (NPL) updates, and heap-merging Compare-And-Swap primitives. It ensures safe memory reclamation via hazard pointers, enabling high-throughput mergeable priority queue operations in multi-core cloud environments.",
+      "key_points": [
+        "Utilizes atomic primitives and CAS loops to safely merge leftist heap subtrees without traditional global locks.",
+        "Maintains leftist tree invariants and null-path-length (NPL) properties concurrently under contention.",
+        "Employs hazard pointers to prevent premature memory reclamation and secure thread-safe node traversal.",
+        "Optimized for high-throughput mergeable priority queue operations in distributed cloud task scheduling."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic node merging operation for a lock-free leftist heap.",
+        "correct": "bool merge_nodes(std::atomic<Node*>& dest, Node* src) {\n    Node* current = dest.load();\n    while (!dest.compare_exchange_weak(current, leftist_merge(current, src))) {\n        // retries via CAS loop\n    }\n    return true;\n}",
+        "wrong": "bool merge_nodes(Node*& dest, Node* src) {\n    std::lock_guard<std::mutex> lock(mtx);\n    dest = leftist_merge(dest, src); // Uses blocking mutex instead of lock-free CAS\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting the invariant checks for null-path-length values during concurrent tree structural modifications."
+      ],
+      "best_practices": [
+        "Always register nodes with the hazard pointer manager before traversing or modifying heap pointers.",
+        "Keep CAS retry loops tight and bounded to avoid excessive CPU cycles wasted under high thread contention."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform merge and priority extraction operations on a shared priority queue in low-latency systems.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where simple blocking mutex-based heaps provide sufficient performance with lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the leftist property (NPL invariant) in a lock-free concurrent heap environment?",
+          "answer": "By recalculating the null-path-length during the merge phase and updating node pointers atomically using CAS loops that validate structural integrity before committing."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Leftist Heap?",
+          "answer": "Hazard pointers protect nodes from being reclaimed by the memory manager while another thread is actively traversing or modifying their child pointers during a merge or extraction."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Priority Deques",
+        "Hazard Pointer Memory Management",
+        "Concurrent Mergeable Heaps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T14:41:37.092738+00:00",
+      "run_number": 4862
     }
   ]
 }
