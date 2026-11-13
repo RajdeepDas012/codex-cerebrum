@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4873** |
-| Last Updated | `2026-11-13T21:20:07.861679+00:00` |
-| Dataset Size | `4873 entries` |
+| Total Topics Learned | **4874** |
+| Last Updated | `2026-11-13T21:23:19.081362+00:00` |
+| Dataset Size | `4874 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3500 |
+| data-structures | 3501 |
 | algorithms | 300 |
 | trading-strategies | 228 |
 | crypto-blockchain | 201 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation and bit-wise-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching execution in real-time software-defined networking switches and concurrent telecom packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and root-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput range-scan indexing and multi-core parallel sorted-key query execution in real-time in-memory database management systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and peer-level-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized distributed searching and multi-core parallel peer-to-peer routing execution in real-time distributed hash table networks and concurrent cloud overlay storage engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and point-incrementing CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency tracking and multi-core parallel range sum query execution in real-time stream aggregation engines and concurrent financial ledger auditing pipelines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-list-splicing and minimum-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput decrease-key priority queue operations and multi-core parallel shortest path graph algorithm execution in real-time network routing engines and concurrent Dijkstra optimization pipelines`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric querying execution in real-time geographic information systems and concurrent location-based service routing engines`
 
 <!-- STATS_END -->
 

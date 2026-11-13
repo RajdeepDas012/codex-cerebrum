@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4873,
-    "last_updated": "2026-11-13T21:20:07.861679+00:00",
-    "total_topics_learned": 4873
+    "total_runs": 4874,
+    "last_updated": "2026-11-13T21:23:19.081362+00:00",
+    "total_topics_learned": 4874
   },
   "entries": [
     {
@@ -231791,6 +231791,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-13T21:20:07.861661+00:00",
       "run_number": 4873
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic node-allocation and bit-wise-branching CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel longest prefix matching execution in real-time software-defined networking switches and concurrent telecom packet forwarding engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree enables high-throughput, thread-safe string and prefix lookups without lock contention by utilizing atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management. It is foundational for multi-core packet forwarding engines and IP routing table lookups where lowest latency and scale are critical.",
+      "key_points": [
+        "Uses atomic node allocation and bit-wise branching CAS primitives to manipulate tree paths without global locks.",
+        "Employs hazard pointers to safely defer memory reclamation of deleted nodes until concurrent reader threads release their references.",
+        "Facilitates ultra-fast longest prefix matching for software-defined networking (SDN) and telecommunications applications.",
+        "Prevents priority inversion and deadlocks common in lock-based tree implementations under heavy write contention."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Conceptual illustration of atomic node branching and hazard pointer protection during parallel Radix Tree lookups.",
+        "correct": "class HazardPointerManager:\n    def __init__(self):\n        self.hazard_ptr = None\n    def acquire(self, node):\n        self.hazard_ptr = node\n    def release(self):\n        self.hazard_ptr = None\n\ndef safe_lookup(root, key, hp_mgr):\n    current = root\n    while current:\n        hp_mgr.acquire(current)\n        if current != root and hp_mgr.hazard_ptr != current:\n            continue # Re-validate due to concurrent modification\n        if current.is_end_of_key(key):\n            return current.value\n        current = current.get_child_by_bit(key)\n    return None",
+        "wrong": "def unsafe_lookup(root, key):\n    current = root\n    while current:\n        if current.is_end_of_key(key): return current.value\n        current = current.get_child_by_bit(key) # Vulnerable to use-after-free if another thread frees this node"
+      },
+      "common_mistakes": [
+        "Forgetting to publish hazard pointers prior to reading child pointers, leading to race conditions and use-after-free segmentation faults.",
+        "Failing to handle intermediate node compression and expansion safely during concurrent insertions and deletions."
+      ],
+      "best_practices": [
+        "Always validate hazard pointer protection checks immediately after assigning nodes to thread-local contexts.",
+        "Batch retired nodes in thread-local retirement lists and reclaim memory only when hazard pointer scans confirm no thread references them."
+      ],
+      "when_to_use": "Use when building high-performance networking routing tables, packet inspection engines, or concurrent routing caches requiring massive read-write concurrency.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained or when standard lock-based maps provide sufficient throughput for low-concurrency environments.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during node deletion in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow reader threads to publicly register which node they are currently accessing, ensuring that a writing thread defer-frees nodes until no hazard pointers point to them."
+        },
+        {
+          "question": "Why are bit-wise branching CAS primitives preferred over mutexes in multi-core packet forwarding systems?",
+          "answer": "They avoid kernel context switches, thread blocking, convoy effects, and deadlocks, delivering predictable, low-latency execution scaling linearly with available CPU cores."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Longest Prefix Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T21:23:19.081337+00:00",
+      "run_number": 4874
     }
   ]
 }
