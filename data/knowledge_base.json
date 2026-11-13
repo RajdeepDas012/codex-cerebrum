@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4855,
-    "last_updated": "2026-11-13T06:39:44.144442+00:00",
-    "total_topics_learned": 4855
+    "total_runs": 4856,
+    "last_updated": "2026-11-13T06:42:54.707819+00:00",
+    "total_topics_learned": 4856
   },
   "entries": [
     {
@@ -230935,6 +230935,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-13T06:39:44.144423+00:00",
       "run_number": 4855
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and collision-chain-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value storage and multi-core parallel lookup execution in real-time in-memory caching systems and concurrent distributed database indexing engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free hash map that leverages atomic primitives such as bucket-resizing and collision-chain-splicing CAS operations to manage concurrent access without global locks. By incorporating hazard pointers, it ensures safe memory reclamation for nodes that are concurrently unlinked and deleted during high-throughput operations.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for lock-free bucket resizing and collision chain node splicing.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safe asynchronous deletion of unlinked key-value nodes.",
+        "Maximizes multi-core parallel lookup and mutation throughput in real-time in-memory caching systems.",
+        "Maintains concurrent consistency without acquiring coarse-grained mutexes or read-write locks across threads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splicing into a hash bucket collision chain using CAS operations.",
+        "correct": "bool insert(K key, V val) {\n    Node* newNode = new Node(key, val);\n    size_t idx = hash(key) % capacity;\n    while(true) {\n        Node* oldHead = buckets[idx].load(std::memory_order_acquire);\n        newNode->next = oldHead;\n        if (buckets[idx].compare_exchange_weak(oldHead, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert(K key, V val) {\n    Node* newNode = new Node(key, val);\n    size_t idx = hash(key) % capacity;\n    Node* oldHead = buckets[idx].load();\n    newNode->next = oldHead;\n    buckets[idx].store(newNode); // Missing CAS loop, leading to race conditions and lost updates\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs when another thread unlinks and deletes a node.",
+        "Using naive atomic stores instead of CAS loops for bucket head updates, resulting in lost updates under high thread contention."
+      ],
+      "best_practices": [
+        "Wrap node pointers in hazard pointers before traversing collision chains to guarantee that memory is not reclaimed prematurely.",
+        "Ensure proper memory ordering semantics (acquire-release) on atomic variables to maintain visibility across threads."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory caches or distributed database indexing engines where thread contention on key-value lookups must be minimized.",
+      "when_not_to_use": "Avoid when memory overhead from hazard pointers is prohibitive or when workload is single-threaded, where standard lock-based maps are simpler and faster.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing collision chain splicing via CAS in a concurrent hash map?",
+          "answer": "By using tagged pointers that combine the node address with a monotonically increasing version counter, or by employing hazard pointers that protect the node from being immediately reused or freed."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection or reference counting in lock-free hash maps?",
+          "answer": "Hazard pointers offer deterministic, lock-free memory reclamation with low overhead, avoiding the pause times of tracing GCs and the atomic overhead of reference counting on every traversal."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T06:42:54.707800+00:00",
+      "run_number": 4856
     }
   ]
 }
