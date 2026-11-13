@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4841,
-    "last_updated": "2026-11-13T00:06:56.879212+00:00",
-    "total_topics_learned": 4841
+    "total_runs": 4842,
+    "last_updated": "2026-11-13T00:10:08.178960+00:00",
+    "total_topics_learned": 4842
   },
   "entries": [
     {
@@ -230270,6 +230270,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T00:06:56.879192+00:00",
       "run_number": 4841
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Index using atomic cell-bucketing and grid-re-sizing CAS primitives alongside hazard pointer memory reclamation for high-throughput collision detection and multi-core parallel spatial partitioning execution in real-time multiplayer game servers and concurrent location-based tracking engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent spatial index using atomic grid cell bucketing, dynamic resizing primitives, and hazard pointer memory reclamation. It enables high-throughput multi-core spatial partitioning, critical for low-latency collision detection in multiplayer gaming and live tracking systems without lock contention.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free updates to spatial grid cells and coordinate buckets.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted grid nodes and dynamic resizing buffers without race conditions.",
+        "Supports high-throughput multi-core parallel execution for dynamic object insertion, query, and boundary collision detection.",
+        "Prevents thread contention bottlenecks in write-heavy distributed simulation environments and location-based engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic cell insertion using a Compare-And-Swap loop with hazard pointers.",
+        "correct": "bool insert_object(GridCell* cell, Object* obj) {\n    HazardPointerGuard g;\n    while (true) {\n        Object* old_head = g.protect(cell->head);\n        obj->next = old_head;\n        if (atomic_compare_exchange_weak(&cell->head, &old_head, obj)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_object(GridCell* cell, Object* obj) {\n    // Missing lock-free CAS loop and hazard pointer protection causes race conditions and use-after-free\n    cell->head = obj;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed pointers with hazard pointers, leading to use-after-free errors during grid resizing.",
+        "Using blocking locks (like mutexes) inside spatial update loops, causing severe thread contention under dense entity clustering."
+      ],
+      "best_practices": [
+        "Integrate hazard pointer epochs carefully to balance memory reclamation latency with throughput.",
+        "Design spatial hash bucketing functions that minimize hash collisions for uniformly distributed entities."
+      ],
+      "when_to_use": "Use when building low-latency, highly concurrent spatial simulations, game servers, or real-time geolocation tracking engines requiring lock-free multi-core scaling.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with very low entity density where simple array storage and standard locking overhead are more than sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing lock-free updates on spatial grid cell pointers?",
+          "answer": "By using tagged pointers or hazard pointers that track thread-specific reference states, ensuring nodes aren't reclaimed while another thread is reading them."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over reference counting in lock-free spatial indices?",
+          "answer": "Hazard pointers avoid the continuous atomic write overhead on shared reference counters, reducing cache line bouncing across multiple CPU cores."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Quadtrees",
+        "Lock-Free R-Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-13T00:10:08.178934+00:00",
+      "run_number": 4842
     }
   ]
 }
