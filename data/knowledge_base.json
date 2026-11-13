@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4886,
-    "last_updated": "2026-11-13T22:01:36.411787+00:00",
-    "total_topics_learned": 4886
+    "total_runs": 4887,
+    "last_updated": "2026-11-13T22:04:47.767511+00:00",
+    "total_topics_learned": 4887
   },
   "entries": [
     {
@@ -232408,6 +232408,58 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-13T22:01:36.411769+00:00",
       "run_number": 4886
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-linking and fuzzy-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate string matching and multi-core parallel spell checking execution in real-time auto-correction systems and concurrent dictionary search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, concurrent Burkhard-Keller (BK) tree that utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to manage dynamic edit-distance links safely across multiple threads. It enables high-throughput approximate string matching and parallel spell checking without locking overhead.",
+      "key_points": [
+        "Utilizes atomic primitives to link nodes based on Levenshtein or other edit distances without global locks.",
+        "Employs hazard pointers to safely reclaim memory of deleted or unlinked nodes in concurrent environments.",
+        "Supports multi-core parallel fuzzy-matching for fast approximate lookups in dictionaries and spell checkers.",
+        "Prevents race conditions during simultaneous tree insertions and traversals using lock-free node extension."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node insertion for a concurrent BK-Tree distance bucket.",
+        "correct": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        new_child->next.store(current, std::memory_order_relaxed);\n        if (parent->children[distance].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, int distance, Node* new_child) {\n    parent->children[distance] = new_child; // Non-atomic assignment causes data races\n}"
+      },
+      "common_mistakes": [
+        {
+          "mistake": "Failing to protect tree traversal nodes with hazard pointers, leading to use-after-free vulnerabilities during concurrent mutations."
+        },
+        {
+          "mistake": "Using blocking synchronization primitives like mutexes inside inner approximate-matching loops, destroying multi-core scalability."
+        }
+      ],
+      "best_practices": [
+        "Always register threads with the hazard pointer manager before traversing or modifying the concurrent BK-Tree.",
+        "Keep edit distance calculations lightweight and separate from the atomic structural modification phases.",
+        "Bound maximum tree depth and handle high-collision distance buckets efficiently to prevent long traversal chains."
+      ],
+      "when_to_use": "Ideal for high-concurrency applications requiring real-time spell checking, fuzzy string matching, and auto-correction under heavy multi-threaded workloads.",
+      "when_not_to_use": "Avoid in single-threaded systems or scenarios requiring exact string lookups where simpler structures like Hash Maps or Tries are more efficient.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node reclamation safely in a lock-free BK-Tree without causing use-after-free bugs during concurrent traversals?",
+          "answer": "By implementing hazard pointers that allow threads to temporarily register active nodes they are reading, deferring memory deallocation until no thread holds a hazard reference to the target node."
+        },
+        {
+          "question": "Why is CAS-based bucket linking preferred over fine-grained locking for concurrent BK-Tree insertions?",
+          "answer": "CAS eliminates lock contention, deadlock risks, and thread suspension overhead, providing superior throughput and scalability on multi-core systems."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Suffix Automaton",
+        "Hazard Pointer Memory Management",
+        "Approximate String Matching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-13T22:04:47.767492+00:00",
+      "run_number": 4887
     }
   ]
 }
