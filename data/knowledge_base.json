@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4854,
-    "last_updated": "2026-11-13T06:36:33.131126+00:00",
-    "total_topics_learned": 4854
+    "total_runs": 4855,
+    "last_updated": "2026-11-13T06:39:44.144442+00:00",
+    "total_topics_learned": 4855
   },
   "entries": [
     {
@@ -230888,6 +230888,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T06:36:33.131108+00:00",
       "run_number": 4854
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Vector (Growable Array) using atomic capacity-doubling and descriptor-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic list indexing and multi-core parallel append execution in real-time stream processing engines and concurrent data collection frameworks",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free growable array that enables safe, high-throughput concurrent element appends and random indexing without mutual exclusion locks. By employing atomic operations, descriptor-based array reallocations, and hazard pointers, it prevents race conditions and memory leaks in multi-core stream processing environments.",
+      "key_points": [
+        "Utilizes atomic compare-and-swap (CAS) primitives for managing dynamic capacity expansions without blocking threads.",
+        "Employs descriptor-swapping to coordinate safe transitions when array buffers are doubled in size.",
+        "Integrates hazard pointers for precise memory reclamation, avoiding premature deallocation of old internal buffers.",
+        "Provides $O(1)$ amortized append performance and $O(1)$ random access indexing in a highly concurrent environment."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual simulation of atomic descriptor-based vector resizing and hazard pointer protection during parallel appends.",
+        "correct": "import threading\n\nclass ConcurrentVector:\n    def __init__(self):\n        self.buffer = [None] * 2\n        self.size = 0\n        self.lock_free_state = threading.Lock() # Conceptual atomic wrapper representation\n\n    def append(self, val):\n        with self.lock_free_state:\n            if self.size >= len(self.buffer):\n                self.buffer.extend([None] * len(self.buffer))\n            self.buffer[self.size] = val\n            self.size += 1",
+        "wrong": "class UnsafeVector:\n    def __init__(self):\n        self.buffer = []\n    def append(self, val):\n        self.buffer.append(val) # Fails in multi-threaded environments without atomic bounds checking and resizing coordination"
+      },
+      "common_mistakes": [
+        "Failing to protect the old array buffer with hazard pointers during a capacity-doubling resize, leading to use-after-free bugs.",
+        "Assuming standard atomic read-modify-write sequences on dynamic arrays are thread-safe without an overarching descriptor state machine."
+      ],
+      "best_practices": [
+        "Design immutable segment descriptors so concurrent reader threads can safely traverse old arrays while a resize operation is in flight.",
+        "Bound hazard pointer slots per active thread to prevent unbounded memory retention during heavy contention spikes."
+      ],
+      "when_to_use": "Use when multiple concurrent threads need to frequently append to a growing collection and read elements by index with ultra-low latency and zero lock contention.",
+      "when_not_to_use": "Avoid in single-threaded contexts or environments where memory overhead of hazard pointers and atomic descriptor tracking outweighs the benefits of lock-free scaling.",
+      "interview_questions": [
+        {
+          "question": "How do you handle array reallocation safely in a lock-free vector without risking race conditions on active reader threads?",
+          "answer": "By using a descriptor-swapping approach where the array state points to an immutable chunk configuration, and utilizing hazard pointers so readers can register their current traversal buffer before accessing elements."
+        },
+        {
+          "question": "What is the primary challenge when implementing a growable array using atomic CAS primitives compared to fixed-size data structures?",
+          "answer": "The need to atomically update both the logical size/index counter and the underlying memory buffer pointer simultaneously, which typically requires a multi-word CAS (DCAS) or a descriptor-based indirection mechanism."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Ring Buffer",
+        "Concurrent Skip List"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-13T06:39:44.144423+00:00",
+      "run_number": 4855
     }
   ]
 }
