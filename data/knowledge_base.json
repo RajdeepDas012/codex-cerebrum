@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4887,
-    "last_updated": "2026-11-13T22:04:47.767511+00:00",
-    "total_topics_learned": 4887
+    "total_runs": 4888,
+    "last_updated": "2026-11-14T02:08:14.922555+00:00",
+    "total_topics_learned": 4888
   },
   "entries": [
     {
@@ -232460,6 +232460,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-13T22:04:47.767492+00:00",
       "run_number": 4887
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPSC Queue using atomic head-tail-advancing and ring-buffer-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-producer single-consumer message passing and multi-core parallel event dispatching execution in real-time actor framework messaging engines and concurrent asynchronous logging pipelines",
+      "category": "data-structures",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, multi-producer single-consumer bounded queue using a ring buffer backed by atomic CAS primitives. It enables multiple producer threads to safely enqueue items concurrently without blocking, while a single consumer extracts them efficiently, making it crucial for high-performance asynchronous messaging and logging systems.",
+      "key_points": [
+        "Utilizes a fixed-size ring buffer array to avoid dynamic allocation overhead during steady-state operations.",
+        "Employs atomic fetch-and-add or CAS operations for producers to claim slots in the ring buffer safely.",
+        "Restricts consumption to a single thread to completely eliminate synchronization overhead on the dequeue path.",
+        "Integrates hazard pointers or sequence numbers per slot to prevent race conditions where producers overwrite unread data."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent slot claiming and enqueueing in a bounded MPSC ring buffer using atomics.",
+        "correct": "template<typename T, size_t Capacity>\nclass MPSCQueue {\n    struct Node { std::atomic<size_t> sequence; T data; };\n    std::array<Node, Capacity> buffer_;\n    std::atomic<size_t> head_{0};\n    std::atomic<size_t> tail_{0};\npublic:\n    bool enqueue(const T& item) {\n        size_t pos = tail_.load(std::memory_order_relaxed);\n        for (;;) {\n            Node& node = buffer_[pos % Capacity];\n            size_t seq = node.sequence.load(std::memory_order_acquire);\n            intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n            if (dif == 0) {\n                if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed))\n                    break;\n            } else if (dif < 0) {\n                return false;\n            } else {\n                pos = tail_.load(std::memory_order_relaxed);\n            }\n        }\n        return true;\n    }\n};",
+        "wrong": "template<typename T>\nclass BadMPSCQueue {\n    std::queue<T> q;\n    std::mutex mtx;\npublic:\n    bool enqueue(const T& item) {\n        std::lock_guard<std::mutex> lock(mtx);\n        q.push(item);\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to track sequence numbers per slot, leading to slow producers overwriting data before the single consumer has read it.",
+        "Using sequential consistency everywhere, which hurts cache coherence and reduces multi-core producer throughput."
+      ],
+      "best_practices": [
+        "Use acquire-release memory ordering on slot sequence numbers to safely synchronize state between producers and the consumer.",
+        "Design the ring buffer capacity as a power of two to optimize modulo index wrapping using fast bitwise masking."
+      ],
+      "when_to_use": "Use when multiple concurrent worker threads need to push telemetry, events, or messages to a single dedicated processing thread with minimal overhead.",
+      "when_not_to_use": "Avoid when there are multiple consumer threads, as this data structure assumes and requires exactly one consumer thread.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unread slots in a bounded lock-free MPSC ring buffer?",
+          "answer": "By using an atomic sequence number on each buffer slot that tracks the number of times the slot has been cycled through, allowing producers to verify that the consumer has finished reading the previous value."
+        },
+        {
+          "question": "Why is the dequeue operation in an MPSC queue simpler and faster than in an SPMC or MPMC queue?",
+          "answer": "Since there is only one consumer thread, the dequeue path requires no atomic synchronization or CAS loops with other consumers, only local head updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free SPSC Ring Buffer",
+        "Memory Barriers and Orderings",
+        "Hazard Pointers and Safe Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T02:08:14.922539+00:00",
+      "run_number": 4888
     }
   ]
 }
