@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4894** |
-| Last Updated | `2026-11-14T02:27:18.413674+00:00` |
-| Dataset Size | `4894 entries` |
+| Total Topics Learned | **4895** |
+| Last Updated | `2026-11-14T02:30:28.581484+00:00` |
+| Dataset Size | `4895 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3519 |
+| data-structures | 3520 |
 | algorithms | 301 |
 | trading-strategies | 228 |
 | crypto-blockchain | 202 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and node-chaining CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value mutations and multi-core parallel lookups execution in real-time distributed caching systems and concurrent in-memory database engines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed indexing and multi-core parallel large-scale database query execution in real-time relational database management systems and concurrent transactional storage backends`
 - `Implementation of a lock-free thread-safe concurrent Tries (Prefix Tree) using atomic node-allocation and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput string key-value lookup and multi-core parallel dictionary routing execution in real-time DNS server resolution engines and concurrent configuration management platforms`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel event stream processing execution in real-time network traffic monitoring engines and concurrent telemetry analytics pipelines`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-value-bounding CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct counting execution in real-time web analytics engines and concurrent big data streaming telemetry pipelines`
-- `Implementation of a lock-free thread-safe concurrent Priority Search Tree using atomic coordinate-pairing and branch-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput orthogonal range searching and multi-core parallel spatial database querying execution in real-time geographic information systems and concurrent spatial indexing engines`
 
 <!-- STATS_END -->
 
