@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4937,
-    "last_updated": "2026-11-14T21:27:41.198195+00:00",
-    "total_topics_learned": 4937
+    "total_runs": 4938,
+    "last_updated": "2026-11-14T21:30:55.380955+00:00",
+    "total_topics_learned": 4938
   },
   "entries": [
     {
@@ -234825,6 +234825,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T21:27:41.198172+00:00",
       "run_number": 4937
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and array-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core parallel job scheduling execution in real-time asynchronous execution frameworks and concurrent background worker pools",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue (min-heap) backed by dynamic arrays utilizing atomic Compare-And-Swap (CAS) instructions for heap-node promotions and resizing. Hazard pointers are integrated to safely manage memory reclamation without locking, ensuring optimal throughput under high contention in multi-core job scheduling systems.",
+      "key_points": [
+        "Utilizes atomic primitives (CAS) for lock-free node insertion and heap-node-promoting structural updates.",
+        "Employs hazard pointers to track thread access and safely reclaim memory of deleted or resized heap nodes without triggering deadlocks.",
+        "Handles dynamic array resizing gracefully under concurrent execution by atomically swapping descriptor states.",
+        "Optimized for high-throughput task prioritization and parallel background worker task extraction."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic heap node updates using compare-and-swap operations",
+        "correct": "bool promoteNode(std::atomic<Node*>& current, Node* expected, Node* desired) {\n    return current.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool promoteNode(Node* current, Node* desired) {\n    // Missing atomicity and thread safety, prone to race conditions\n    current = desired;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent node promotions and array resizes.",
+        "Improper memory ordering with atomic operations, leading to out-of-order visibility of heap elements across cores.",
+        "Leaking memory or triggering use-after-free bugs by failing to properly register hazard pointers during node traversal."
+      ],
+      "best_practices": [
+        "Always pair lock-free data structure updates with a robust epoch-based or hazard-pointer-based memory reclamation scheme.",
+        "Use sequential consistency or acquire-release memory semantics on atomic variables to ensure safety across multi-core processors.",
+        "Design resizing algorithms to be non-blocking or use cooperative completion models to prevent single threads from stalling the entire queue."
+      ],
+      "when_to_use": "When building high-performance asynchronous execution frameworks, multi-core job schedulers, or real-time event loops where thread contention is extreme and lock-based priority queues become a bottleneck.",
+      "when_not_to_use": "In single-threaded environments or low-throughput applications where simpler lock-based priority queues or standard library containers offer better maintainability and lower code complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in lock-free heaps?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing. Before a thread frees a node, it scans the hazard pointer list to ensure no other thread holds a reference to it, deferring deletion until it is safe while avoiding global locks."
+        },
+        {
+          "question": "What is the primary challenge when implementing dynamic array resizing in a lock-free priority queue?",
+          "answer": "The challenge is ensuring that concurrent insertions or extractions do not read from or write to a stale or deallocated array buffer. This is solved by using atomic array descriptors that coordinate migration to a larger array cooperatively."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Atomic Compare-And-Swap (CAS) Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T21:30:55.380938+00:00",
+      "run_number": 4938
     }
   ]
 }
