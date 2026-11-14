@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4935,
-    "last_updated": "2026-11-14T21:21:15.922297+00:00",
-    "total_topics_learned": 4935
+    "total_runs": 4936,
+    "last_updated": "2026-11-14T21:24:27.394010+00:00",
+    "total_topics_learned": 4936
   },
   "entries": [
     {
@@ -234731,6 +234731,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-14T21:21:15.922277+00:00",
       "run_number": 4935
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel prefix-matching execution in real-time software-defined networking switches and concurrent distributed key-value storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Radix Tree utilizing atomic compare-and-swap (CAS) operations for node allocation and path compression, combined with hazard pointers for safe memory reclamation. It enables high-throughput IP routing and parallel prefix-matching without thread contention or deadlocks.",
+      "key_points": [
+        "Utilizes atomic child-node allocation and path compression via CAS primitives to maintain tree structure safely across multiple threads.",
+        "Employs hazard pointer memory reclamation to prevent premature freeing of nodes actively traversed by concurrent reader threads.",
+        "Delivers high-throughput lookups essential for real-time software-defined networking (SDN) routing tables.",
+        "Supports multi-core parallel prefix matching and insertions without acquiring global locks."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual traversal and atomic-like node insertion logic of a concurrent Radix Tree node.",
+        "correct": "class RadixNode:\n    def __init__(self, prefix):\n        self.prefix = prefix\n        self.children = {}\n        self.is_end = False\n\ndef insert(root, key, value):\n    curr = root\n    while key:\n        matched = longest_prefix_match(curr.prefix, key)\n        if matched == len(curr.prefix):\n            key = key[matched:]\n            if key not in curr.children:\n                curr.children[key] = RadixNode(key)\n            curr = curr.children[key]\n        else:\n            # Split node logic (atomic CAS simulation)\n            break\n    curr.is_end = True",
+        "wrong": "def unsafe_insert(root, key):\n    # Modifying shared dictionary without synchronization or CAS causes data races\n    root.children[key] = RadixNode(key)"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes from concurrent readers, leading to segmentation faults or use-after-free bugs.",
+        "Performing naive node splits that leave intermediate states exposed to concurrent threads without proper atomic marking."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory management to safely defer reclamation of split or deleted nodes.",
+        "Keep path compression logic concise to minimize the grain size of atomic operations and reduce CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-throughput network packet routers, SDN switches, or distributed key-value stores requiring massive concurrent read and prefix-matching workloads.",
+      "when_not_to_use": "Avoid in low-concurrency environments or memory-constrained embedded systems where simpler synchronized trie structures or standard hash maps suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free Radix Tree?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, blocking other threads from immediately reclaiming memory until no thread registers that node as a hazard."
+        },
+        {
+          "question": "Why is path compression combined with CAS operations challenging in a concurrent Radix Tree?",
+          "answer": "Because structural modifications like merging or splitting compressed edges affect multiple pointers, requiring careful atomic sequencing or transactional memory primitives to avoid partial updates visible to other threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Suffix Tree",
+        "Hazard Pointer Memory Management",
+        "Software-Defined Networking IP Routing Tables"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T21:24:27.393990+00:00",
+      "run_number": 4936
     }
   ]
 }
