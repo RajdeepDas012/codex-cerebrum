@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4941,
-    "last_updated": "2026-11-14T21:40:34.777574+00:00",
-    "total_topics_learned": 4941
+    "total_runs": 4942,
+    "last_updated": "2026-11-14T21:43:45.876552+00:00",
+    "total_topics_learned": 4942
   },
   "entries": [
     {
@@ -235016,6 +235016,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T21:40:34.777556+00:00",
       "run_number": 4941
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU Cache using atomic frequency-list-splicing and node-aging CAS primitives alongside hazard pointer memory reclamation for high-throughput eviction policy management and multi-core parallel hot-key caching execution in real-time web application database caching layers and concurrent distributed memory stores",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free Least Frequently Used (LFU) cache designed for multi-threaded environments. It leverages atomic Compare-And-Swap (CAS) operations for frequency list splicing and node aging, combined with hazard pointers to guarantee safe memory reclamation without global locks.",
+      "key_points": [
+        "Utilizes atomic frequency-list-splicing CAS primitives to update access frequencies without blocking concurrent readers or writers.",
+        "Implements node-aging mechanisms to prevent cache pollution and handle frequency staleness over prolonged execution.",
+        "Employs hazard pointer memory reclamation to safely free evicted or updated cache nodes in lock-free concurrency.",
+        "Delivers high-throughput eviction policy management suitable for multi-core parallel hot-key caching workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node frequency increment using atomic operations and hazard pointers.",
+        "correct": "void increment_frequency(HazardPointer& hp, CacheNode* node) {\n    while (true) {\n        hp.protect(node);\n        if (node->is_deleted()) { hp.clear(); break; }\n        uint64_t old_freq = node->frequency.load();\n        if (node->frequency.compare_exchange_weak(old_freq, old_freq + 1)) {\n            splicer.move_to_next_frequency_list(node, old_freq);\n            hp.clear();\n            break;\n        }\n    }\n}",
+        "wrong": "void increment_frequency(CacheNode* node) {\n    node->frequency++; // Not atomic; causes race conditions and data corruption\n}"
+      },
+      "common_mistakes": [
+        "Relying on standard mutex locks inside high-frequency access paths, leading to thread contention bottlenecks.",
+        "Forgetting to protect nodes with hazard pointers before traversing frequency lists, causing use-after-free bugs during concurrent evictions."
+      ],
+      "best_practices": [
+        "Always pair every memory retirement action with proper hazard pointer epoch tracking to prevent premature deallocation.",
+        "Minimize CAS retry loops by employing backoff strategies or optimized fine-grained structural splicing algorithms."
+      ],
+      "when_to_use": "Ideal for high-concurrency web application caching layers and distributed memory stores where hot-key identification via access frequency is critical and lock contention must be minimized.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications with simple recency-based eviction needs where an LRU cache or standard lock-based map offers lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during node frequency updates in a lock-free LFU cache?",
+          "answer": "By using atomic compare-and-swap (CAS) operations on the frequency counters combined with lock-free frequency-list-splicing primitives."
+        },
+        {
+          "question": "Why are hazard pointers preferred over garbage collection in high-throughput lock-free caches?",
+          "answer": "Hazard pointers allow deterministic, lock-free memory reclamation without the pause times and overhead associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Concurrent Data Structures",
+        "Cache Eviction Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T21:43:45.876533+00:00",
+      "run_number": 4942
     }
   ]
 }
