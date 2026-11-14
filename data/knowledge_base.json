@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4939,
-    "last_updated": "2026-11-14T21:34:09.851554+00:00",
-    "total_topics_learned": 4939
+    "total_runs": 4940,
+    "last_updated": "2026-11-14T21:37:22.655822+00:00",
+    "total_topics_learned": 4940
   },
   "entries": [
     {
@@ -234921,6 +234921,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T21:34:09.851532+00:00",
       "run_number": 4939
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Vantage-Point Tree using atomic metric-partitioning and vantage-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest neighbor searches and multi-core parallel high-dimensional similarity query execution in real-time computer vision feature matching engines and concurrent multimedia retrieval databases",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free Vantage-Point Tree that coordinates multi-core metric space queries using atomic CAS primitives and hazard pointers. It enables safe concurrent node partitioning and vantage swapping without explicit lock contention, making it ideal for high-throughput similarity searches.",
+      "key_points": [
+        "Utilizes atomic metric-partitioning and vantage-swapping Compare-And-Swap (CAS) primitives to manage tree mutations without locks.",
+        "Employs hazard pointer memory reclamation to securely defer node deallocations during concurrent nearest neighbor traversals.",
+        "Optimizes high-dimensional similarity search throughput by recursively partitioning metric spaces using a chosen vantage point and a median distance threshold.",
+        "Ensures thread safety and linearizability across multi-core architectures during dynamic insertions and structural rebalancing operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node insertion using an atomic CAS loop and hazard pointer registration in a concurrent VP-Tree.",
+        "correct": "bool insert_node(std::atomic<Node*>& root, Point new_pt, HazardPointerList& hp_list) {\n    HazardPointer* hp = hp_list.acquire();\n    while (true) {\n        Node* curr = hp->protect(root);\n        if (!curr) {\n            Node* new_node = new Node(new_pt);\n            if (root.compare_exchange_weak(curr, new_node)) {\n                hp_list.release(hp);\n                return true;\n            }\n            delete new_node;\n        } else {\n            // Traverse or delegate partition logic atomically\n            break;\n        }\n    }\n    hp_list.release(hp);\n    return false;\n}",
+        "wrong": "bool insert_node_unsafe(Node* root, Point new_pt) {\n    // Missing synchronization and hazard protection leads to race conditions\n    if (!root) {\n        root = new Node(new_pt);\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, leading to use-after-free bugs during structural modifications.",
+        "Using naive locking mechanisms that create thread bottlenecks during high-frequency nearest neighbor metric evaluations."
+      ],
+      "best_practices": [
+        "Always register threads and acquire hazard pointers prior to reading dynamically allocated nodes in search traversals.",
+        "Keep atomic sections small and tightly bound to tree pointer modifications to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded systems requiring real-time nearest neighbor queries over non-Euclidean or high-dimensional metric spaces, such as computer vision descriptor matching and multimedia retrieval engines.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where simple locked structures or standard flat arrays provide sufficient query performance without the implementation complexity of hazard pointers.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory reclamation races in a lock-free Vantage-Point Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are currently reading, ensuring that a memory block is only reclaimed by the garbage collector after no thread holds a protecting reference to it."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free metric partitioning in a tree structure?",
+          "answer": "The main challenge is safely updating parent-child relationships and median distance thresholds concurrently without introducing deadlocks or inconsistent view states for threads executing nearest neighbor lookups."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Management",
+        "Lock-Free Data Structures",
+        "Metric Space Indexing and VP-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T21:37:22.655802+00:00",
+      "run_number": 4940
     }
   ]
 }
