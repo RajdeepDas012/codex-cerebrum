@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4904** |
-| Last Updated | `2026-11-14T10:03:20.931518+00:00` |
-| Dataset Size | `4904 entries` |
+| Total Topics Learned | **4905** |
+| Last Updated | `2026-11-14T10:06:31.537274+00:00` |
+| Dataset Size | `4905 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3528 |
+| data-structures | 3529 |
 | algorithms | 302 |
 | trading-strategies | 228 |
 | crypto-blockchain | 202 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-matching and node-compression CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel string prefix searching execution in real-time software-defined networking routers and concurrent cloud-native load balancing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-linking and logarithmic-search CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized peer-to-peer routing and multi-core parallel distributed node discovery execution in real-time cloud-native overlay networks and concurrent decentralized storage systems`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-assigning and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search tree operations and multi-core parallel probabilistic priority queue execution in real-time in-memory databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree (Binary Indexed Tree) using atomic prefix-sum-updating and index-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency calculations and multi-core parallel streaming prefix query execution in real-time online statistics computation engines and concurrent financial ticker aggregation platforms`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core parallel self-adjusting search execution in real-time memory management systems and concurrent router lookup tables`
-- `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric query execution in real-time geographic information systems and concurrent location-based service platforms`
 
 <!-- STATS_END -->
 
