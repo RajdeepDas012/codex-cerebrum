@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4900,
-    "last_updated": "2026-11-14T02:46:19.437423+00:00",
-    "total_topics_learned": 4900
+    "total_runs": 4901,
+    "last_updated": "2026-11-14T02:49:30.551714+00:00",
+    "total_topics_learned": 4901
   },
   "entries": [
     {
@@ -233076,6 +233076,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T02:46:19.437412+00:00",
       "run_number": 4900
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-balancing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed key caching and multi-core parallel self-adjusting search execution in real-time memory management systems and concurrent router lookup tables",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a concurrent, lock-free Splay Tree leveraging atomic compare-and-swap (CAS) operations for root rotations and self-balancing mechanics, paired with hazard pointers for safe memory reclamation. It enables high-throughput, multi-core parallel self-adjusting searches for frequently accessed keys without global locking bottlenecks.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to handle concurrent structural modifications like zig-zag and zig-zig rotations safely without global mutexes.",
+        "Integrates hazard pointers to track threads actively reading nodes, preventing premature deallocation during concurrent splay restructuring.",
+        "Provides self-adjusting tree properties where recently accessed elements are moved closer to the root, optimizing workloads with skewed access distributions.",
+        "Ensures lock-free progress guarantees, allowing multiple threads to execute lookups, insertions, and deletions concurrently without blocking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates during a concurrent splay tree rotation using CAS loops.",
+        "correct": "bool rotate_left(Node* parent, Node* child) {\n    Node* grand_parent = parent->parent.load();\n    if (parent->right.compare_exchange_strong(child->left, parent)) {\n        child->parent.store(grand_parent);\n        return true;\n    }\n    return false;\n}",
+        "wrong": "bool rotate_left(Node* parent, Node* child) {\n    parent->right = child->left;\n    child->left = parent;\n    // Missing atomic operations and thread safety checks lead to race conditions\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate tree pointers with hazard pointers during multi-step splay rotations, leading to ABA problems or use-after-free faults.",
+        "Attempting to implement strict balancing without accounting for intermediate states visible to other threads during concurrent updates."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointers on traversed nodes before attempting any structural CAS modifications.",
+        "Design rotation routines to be idempotent or robust against failed CAS attempts by retrying with fresh node snapshots."
+      ],
+      "when_to_use": "Use when building high-throughput caching layers, network routing tables, or real-time memory management systems where access patterns are heavily skewed and lock contention must be minimized across multiple cores.",
+      "when_not_to_use": "Avoid in scenarios requiring strict worst-case $O(\\log n)$ bounds for every single operation, or when workloads exhibit uniformly random access distributions where splaying overhead outweighs caching benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node rotations in a lock-free splay tree?",
+          "answer": "Hazard pointers register which nodes a thread is currently accessing, preventing memory allocators from recycling or freeing those node addresses until all threads drop their hazard references, thus ensuring safe pointer validation during CAS operations."
+        },
+        {
+          "question": "What is the primary synchronization challenge when implementing self-adjusting rotations in a lock-free tree compared to a static balanced tree?",
+          "answer": "Self-adjusting trees change the paths and parent pointers of nodes frequently during lookups (not just writes), meaning read operations must also perform CAS modifications and contend with concurrent structural updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Concurrent Binary Search Trees",
+        "Atomic Compare-And-Swap (CAS) Design Patterns"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T02:49:30.551703+00:00",
+      "run_number": 4901
     }
   ]
 }
