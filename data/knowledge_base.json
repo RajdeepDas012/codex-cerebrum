@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4936,
-    "last_updated": "2026-11-14T21:24:27.394010+00:00",
-    "total_topics_learned": 4936
+    "total_runs": 4937,
+    "last_updated": "2026-11-14T21:27:41.198195+00:00",
+    "total_topics_learned": 4937
   },
   "entries": [
     {
@@ -234778,6 +234778,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T21:24:27.393990+00:00",
       "run_number": 4936
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Skip List using atomic tower-height-allocating and endpoint-crossing CAS primitives alongside hazard pointer memory reclamation for high-throughput range overlapping queries and multi-core parallel temporal interval indexing execution in real-time calendar scheduling engines and concurrent time-series database storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An Interval Skip List is an advanced probabilistic data structure that organizes overlapping intervals to support efficient range queries. By combining atomic Compare-And-Swap (CAS) primitives with hazard pointers, this concurrent implementation allows multiple threads to safely insert, delete, and query intervals without traditional locking overhead.",
+      "key_points": [
+        "Utilizes atomic tower-height-allocating CAS primitives to dynamically construct randomized multi-level skip list nodes without blocking.",
+        "Employs endpoint-crossing primitives to traverse and manage interval boundaries correctly in concurrent environments.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safe reclamation of deleted interval nodes.",
+        "Maximizes throughput for multi-core parallel temporal interval indexing in real-time scheduling and time-series pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the core pattern of atomic CAS node insertion in a lock-free interval skip list",
+        "correct": "bool insertInterval(Node* head, Interval val) { Node* newNode = new Node(val); while(true) { Node* pred = nullptr; Node* curr = findPosition(head, val.low, pred); if (curr && curr->interval == val) { delete newNode; return false; } newNode->next[0].store(curr); if (pred->next[0].compare_exchange_strong(curr, newNode)) { return true; } } }",
+        "wrong": "bool insertInterval(Node* head, Interval val) { mutex.lock(); Node* newNode = new Node(val); /* uncoordinated pointer assignment */ mutex.unlock(); }"
+      },
+      "common_mistakes": [
+        "Neglecting hazard pointer protection during multi-level pointer traversals, leading to use-after-free bugs.",
+        "Failing to handle concurrent deletions properly, which can corrupt forward pointers during lock-free traversal."
+      ],
+      "best_practices": [
+        "Always register active nodes with hazard pointers before reading through shared forward references.",
+        "Ensure memory ordering constraints (acquire-release semantics) are properly set on all atomic pointer updates."
+      ],
+      "when_to_use": "High-concurrency environments requiring rapid inserts, deletes, and overlapping range queries on temporal intervals, such as calendar schedulers.",
+      "when_not_to_use": "Single-threaded applications where simpler data structures or standard interval trees incur less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How does an Interval Skip List differ from a standard Skip List?",
+          "answer": "An Interval Skip List maintains augmented metadata at nodes (such as the maximum high endpoint in a sub-tree or span) to efficiently query interval overlaps rather than simple scalar point lookups."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free Interval Skip List?",
+          "answer": "Hazard pointers safely defer the memory reclamation of nodes deleted by concurrent threads, ensuring that another thread traversing the pointers won't encounter a use-after-free fault."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers",
+        "Interval trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T21:27:41.198172+00:00",
+      "run_number": 4937
     }
   ]
 }
