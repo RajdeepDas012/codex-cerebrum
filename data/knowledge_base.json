@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4929,
-    "last_updated": "2026-11-14T17:07:05.149303+00:00",
-    "total_topics_learned": 4929
+    "total_runs": 4930,
+    "last_updated": "2026-11-14T17:10:17.329662+00:00",
+    "total_topics_learned": 4930
   },
   "entries": [
     {
@@ -234447,6 +234447,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T17:07:05.149282+00:00",
       "run_number": 4929
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BFD (Binary Decision Diagram) using atomic node-sharing and hash-consing CAS primitives alongside hazard pointer memory reclamation for high-throughput boolean function manipulation and multi-core parallel formal verification execution in real-time hardware synthesis tools and concurrent model checking engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe Binary Decision Diagram (BDD) engine utilizing atomic compare-and-swap (CAS) primitives for hash-consing and node sharing. Hazard pointers are integrated to safely manage memory reclamation across multiple concurrent threads, enabling high-performance formal verification and boolean function manipulation.",
+      "key_points": [
+        "Utilizes hash-consing to ensure canonical representation and maximal subgraph sharing across threads.",
+        "Employs atomic CAS primitives for lock-free node insertion and management within the unique table.",
+        "Applies hazard pointers to track active threads safely referencing nodes before memory deallocation.",
+        "Enables scalable parallel execution for model checkers and hardware circuit synthesis pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic hash-consing lookup and insertion pattern for a lock-free BDD unique table.",
+        "correct": "std::shared_ptr<Node> unique_table_insert(UniqueTable& table, int var, Node* low, Node* high) {\n    NodeKey key{var, low, high};\n    while (true) {\n        Node* existing = table.find(key);\n        if (existing) return hazard_protect(existing);\n        Node* new_node = new Node(key);\n        if (table.cas_insert(key, new_node)) return std::shared_ptr<Node>(new_node);\n        delete new_node;\n    }\n}",
+        "wrong": "std::shared_ptr<Node> unique_table_insert(UniqueTable& table, int var, Node* low, Node* high) {\n    mutex.lock();\n    Node* node = table.get_or_create(var, low, high);\n    mutex.unlock();\n    return node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate pointer traversals with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting proper canonicalization during node creation, which breaks the unique table property and graph minimization."
+      ],
+      "best_practices": [
+        "Batch hazard pointer releases to reduce thread synchronization overhead during intense traversals.",
+        "Keep unique table bucket locking or lock-free collision lists small to minimize CAS retry contention."
+      ],
+      "when_to_use": "Use when performing intensive, multi-threaded boolean formula manipulation, symbolic model checking, or hardware equivalence checking where locking introduces severe bottlenecks.",
+      "when_not_to_use": "Avoid in single-threaded systems or small applications where standard mutex-protected BDD packages provide sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How does hash-consing benefit a concurrent Binary Decision Diagram implementation?",
+          "answer": "Hash-consing guarantees that every unique logical sub-function is represented by a single canonical node, enabling fast O(1) structural equality checks and maximized node sharing across parallel threads."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free BDD memory management?",
+          "answer": "Standard atomic reference counting can cause heavy cache-line bouncing and contention under high concurrency due to frequent updates to reference counts, whereas hazard pointers allow thread-local read tracking without modifying shared node headers."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Hash-Consing Algorithms",
+        "Symbolic Model Checking"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T17:10:17.329641+00:00",
+      "run_number": 4930
     }
   ]
 }
