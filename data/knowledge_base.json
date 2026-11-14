@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4891,
-    "last_updated": "2026-11-14T02:17:46.796879+00:00",
-    "total_topics_learned": 4891
+    "total_runs": 4892,
+    "last_updated": "2026-11-14T02:20:57.350482+00:00",
+    "total_topics_learned": 4892
   },
   "entries": [
     {
@@ -232651,6 +232651,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T02:17:46.796863+00:00",
       "run_number": 4891
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and multi-hash-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter stream frequency estimation and multi-core parallel event stream processing execution in real-time network traffic monitoring engines and concurrent telemetry analytics pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free, thread-safe Count-Min Sketch optimized for multi-core streaming environments. By leveraging atomic compare-and-swap (CAS) operations for frequency updates across multiple hash-mapped matrix cells and combining them with hazard pointers, it achieves high-throughput probabilistic frequency estimation without thread contention or locks.",
+      "key_points": [
+        "Employs a 2D array of counters coupled with multiple independent hash functions to map data streams into bounded matrix spaces.",
+        "Utilizes atomic frequency increment primitives (e.g., fetch-add or CAS loops) to safely update shared counter slots across concurrent execution threads.",
+        "Integrates hazard pointer memory reclamation to manage dynamic matrix resizing or node allocations safely in concurrent lock-free systems.",
+        "Provides constant time complexity O(d) for updates and point queries, where d is the number of hash functions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based counter increment pattern for a sketch cell.",
+        "correct": "void increment_cell(std::atomic<uint32_t>& cell) {\n    uint32_t current = cell.load(std::memory_order_relaxed);\n    while (!cell.compare_exchange_weak(current, current + 1, std::memory_order_release, std::memory_order_relaxed)) {\n        // Retry loop handled by CAS\n    }\n}",
+        "wrong": "void increment_cell(std::atomic<uint32_t>& cell) {\n    uint32_t val = cell.load();\n    cell.store(val + 1); // Race condition: non-atomic read-modify-write sequence\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write sequences on sketch cells, leading to lost updates under high concurrency.",
+        "Failing to use memory barriers or proper memory ordering semantics (like acquire-release), resulting in stale counter readings.",
+        "Ignoring the upper-bound error trade-offs governed by the sketch width and depth parameters."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for initial counter loads inside CAS retry loops, upgrading to release/acq_rel upon successful CAS execution.",
+        "Select independent, fast hash functions (such as MurmurHash or CityHash) to distribute stream keys evenly and minimize hash collisions.",
+        "Tune the matrix dimensions (width and depth) based on acceptable error bounds and memory budget constraints."
+      ],
+      "when_to_use": "Use when you need to process massive, high-throughput event streams or network telemetry across multiple threads to estimate item frequencies and find heavy hitters with a minimal memory footprint.",
+      "when_not_to_use": "Avoid when exact frequency counts are mandatory without any probabilistic overestimation errors, or when the data stream is small enough to fit into precise hash maps.",
+      "interview_questions": [
+        {
+          "question": "How do you handle counter updates in a concurrent Count-Min Sketch without using heavy mutex locks?",
+          "answer": "By using atomic operations like fetch-add or a compare-and-swap (CAS) retry loop on individual table cells combined with relaxed and release memory orderings."
+        },
+        {
+          "question": "What is the primary source of error in a Count-Min Sketch and how do you minimize it?",
+          "answer": "The primary error comes from hash collisions causing over-estimation. It is minimized by increasing the width (number of columns) to reduce collision probability and depth (number of hash functions) to reduce the magnitude of the error."
+        }
+      ],
+      "related_topics": [
+        "Concurrent HyperLogLog",
+        "Lock-Free Ring Buffer",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-14T02:20:57.350470+00:00",
+      "run_number": 4892
     }
   ]
 }
