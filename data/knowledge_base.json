@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4920,
-    "last_updated": "2026-11-14T16:38:12.933137+00:00",
-    "total_topics_learned": 4920
+    "total_runs": 4921,
+    "last_updated": "2026-11-14T16:41:24.542400+00:00",
+    "total_topics_learned": 4921
   },
   "entries": [
     {
@@ -234020,6 +234020,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T16:38:12.933116+00:00",
       "run_number": 4920
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Graph Coloring Engine using atomic conflict-detecting and color-assigning CAS primitives alongside hazard pointer memory reclamation for high-throughput register allocation and multi-core parallel resource scheduling execution in real-time compiler optimization frameworks and concurrent distributed task scheduling pipelines",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free graph coloring engine that safely assigns colors to vertices across multiple threads without locks. It utilizes compare-and-swap (CAS) primitives for atomic conflict detection and color assignment, paired with hazard pointers to guarantee safe memory reclamation in concurrent environments.",
+      "key_points": [
+        "Uses atomic CAS primitives to resolve race conditions during concurrent color assignment to neighboring vertices.",
+        "Employs hazard pointers to track active thread accesses and safely reclaim memory of deleted nodes or edges without garbage collection pauses.",
+        "Implements conflict detection mechanisms to instantly catch neighbor color clashes and retry assignments cleanly.",
+        "Enables high-throughput parallel resource scheduling and register allocation in multi-core execution frameworks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for assigning a color to a vertex while checking neighbor conflicts.",
+        "correct": "bool assign_color(Vertex* v, int color, std::vector<HazardPointer>& hp) {\n    while (true) {\n        int current_color = v->color.load(std::memory_order_acquire);\n        if (current_color != UNCOLORED) return false;\n        if (has_neighbor_conflict(v, color)) return false;\n        if (v->color.compare_exchange_weak(current_color, color, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool assign_color(Vertex* v, int color) {\n    if (v->color == UNCOLORED && !has_neighbor_conflict(v, color)) {\n        v->color = color;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically changing graph topology nodes with hazard pointers, leading to use-after-free bugs.",
+        "Using non-atomic checks followed by atomic writes (check-then-act race condition), which breaks thread safety."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before traversing adjacent vertices to check color conflicts.",
+        "Keep critical sections inside the retry loop as lightweight as possible to minimize contention on high-degree vertices."
+      ],
+      "when_to_use": "Use when coloring large dynamic graphs across multiple cores with strict latency requirements, such as in parallel compiler register allocation or distributed frequency assignment.",
+      "when_not_to_use": "Avoid when the graph is small, static, or single-threaded, where standard sequential greedy coloring algorithms provide lower overhead and simpler maintenance.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent two threads from assigning the same color to adjacent vertices simultaneously in a lock-free graph coloring algorithm?",
+          "answer": "By using a compare-and-swap (CAS) loop that atomically checks the vertex's current color and verifies neighbor constraints before successfully updating the color field."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent graph algorithms with dynamic memory?",
+          "answer": "Hazard pointers safely manage memory reclamation by allowing threads to register which nodes they are currently reading, preventing other threads from freeing those nodes prematurely and causing use-after-free errors."
+        }
+      ],
+      "related_topics": [
+        "lock-free data structures",
+        "hazard pointer memory management",
+        "parallel graph algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T16:41:24.542378+00:00",
+      "run_number": 4921
     }
   ]
 }
