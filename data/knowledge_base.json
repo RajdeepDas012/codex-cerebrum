@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4888,
-    "last_updated": "2026-11-14T02:08:14.922555+00:00",
-    "total_topics_learned": 4888
+    "total_runs": 4889,
+    "last_updated": "2026-11-14T02:11:25.797980+00:00",
+    "total_topics_learned": 4889
   },
   "entries": [
     {
@@ -232507,6 +232507,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-14T02:08:14.922539+00:00",
       "run_number": 4888
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer (SPSC) using atomic head-tail-load-acquire and store-release primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer byte streaming and multi-core parallel inter-thread communication execution in real-time audio processing pipelines and concurrent network packet buffering engines",
+      "category": "data-structures",
+      "language": "cpp",
+      "difficulty": "advanced",
+      "summary": "A Single-Producer Single-Consumer (SPSC) lock-free ring buffer utilizes memory ordering semantics (load-acquire and store-release) to enable synchronization-free communication between exactly two threads. It provides exceptional throughput for high-frequency byte-streaming applications without the overhead of mutexes or complex compare-and-swap loops.",
+      "key_points": [
+        "Leverages memory ordering semantics (acquire-release) to eliminate full memory barriers on sequentially consistent platforms.",
+        "Completely avoids locks, preventing priority inversion, context switching overhead, and thread contention.",
+        "Maintains distinct cache lines for head and tail pointers to prevent false sharing in multi-core processors.",
+        "Uses power-of-two buffer sizing to optimize modulo operations into efficient bitwise masking."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic pointer loading and storing with acquire-release semantics in an SPSC queue.",
+        "correct": "template <typename T, size_t Capacity>\nclass SPSCQueue {\n    alignas(64) std::atomic<size_t> head_{0};\n    alignas(64) std::atomic<size_t> tail_{0};\n    T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        size_t head = head_.load(std::memory_order_relaxed);\n        size_t tail = tail_.load(std::memory_order_acquire);\n        if ((tail - head) == Capacity) return false;\n        buffer_[tail % Capacity] = item;\n        tail_.store(tail + 1, std::memory_order_release);\n        return true;\n    }\n};",
+        "wrong": "template <typename T, size_t Capacity>\nclass BadQueue {\n    size_t head_ = 0, tail_ = 0;\n    T buffer_[Capacity];\npublic:\n    bool push(const T& item) {\n        buffer_[tail_ % Capacity] = item;\n        tail_++; // Non-atomic update causes severe race conditions across threads\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using sequential consistency (`memory_order_seq_cst`) everywhere unnecessarily, which degrades CPU pipeline optimization.",
+        "Failing to prevent false sharing by ensuring atomic head and tail counters reside on separate cache lines.",
+        "Using modulo arithmetic with non-power-of-two capacities, which incurs heavy CPU division instruction penalties."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail pointers using `alignas(hardware_destructive_interference_size)` to prevent cache bouncing.",
+        "Use `std::memory_order_relaxed` for operations where synchronization is not required, combined with acquire-release for inter-thread visibility.",
+        "Ensure buffer capacity is a power of two to substitute expensive modulo operators with fast bitwise AND masks."
+      ],
+      "when_to_use": "When passing continuous streams of data, audio buffers, or network packets strictly between one producer thread and one consumer thread with minimal latency.",
+      "when_not_to_use": "When there are multiple producer threads or multiple consumer threads interacting with the same buffer endpoints (use an MPMC queue instead).",
+      "interview_questions": [
+        {
+          "question": "Why is an SPSC queue significantly faster and simpler to implement than an MPMC queue?",
+          "answer": "Because there is only one writer and one reader, head and tail pointers can be loaded and stored atomically without needing CAS (Compare-And-Swap) retry loops, avoiding race conditions on pointer updates."
+        },
+        {
+          "question": "What is the role of memory order acquire and release in an SPSC ring buffer?",
+          "answer": "Store-release ensures that prior writes to the ring buffer data array are visible before the tail pointer update is published. Load-acquire ensures that reads of the ring buffer data do not execute until the updated pointer load is fully completed."
+        }
+      ],
+      "related_topics": [
+        "Lock-free MPMC Queue",
+        "Memory Barriers and CPU Caches",
+        "False Sharing in Multi-Core Systems"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-14T02:11:25.797961+00:00",
+      "run_number": 4889
     }
   ]
 }
