@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4994,
-    "last_updated": "2026-11-15T22:04:01.314234+00:00",
-    "total_topics_learned": 4994
+    "total_runs": 4995,
+    "last_updated": "2026-11-15T22:07:12.943196+00:00",
+    "total_topics_learned": 4995
   },
   "entries": [
     {
@@ -237528,6 +237528,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T22:04:01.314212+00:00",
       "run_number": 4994
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting execution in real-time web analytics tracking platforms and concurrent distributed database telemetry engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent HyperLogLog (HLL) sketch that uses atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage sparse and dense registers without coarse-grained locking. It matters for high-concurrency systems requiring real-time estimation of massive cardinalities under heavy multi-core thread contention.",
+      "key_points": [
+        "Utilizes atomic register-updating and max-val-swapping CAS operations to ensure lock-free concurrent updates to the stochastic approximation registers.",
+        "Employs hazard pointer memory reclamation to securely manage shared underlying byte-array representations or sparse list structures across competing threads.",
+        "Enables high-throughput distinct element counting and cardinality estimation for real-time web analytics and streaming telemetry data pipelines.",
+        "Balances memory efficiency and multi-core scalability by replacing global locks with fine-grained atomic operations on individual register indices."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic max-val-swapping using CAS for concurrent HLL register updates",
+        "correct": "void update_register(std::atomic<uint8_t>& reg, uint8_t val) {\n    uint8_t current = reg.load(std::memory_order_relaxed);\n    while (val > current && !reg.compare_exchange_weak(current, val, std::memory_order_release, std::memory_order_relaxed)) {\n        // Retry loop updates 'current' automatically on failure\n    }\n}",
+        "wrong": "void update_register(std::atomic<uint8_t>& reg, uint8_t val) {\n    if (val > reg.load()) {\n        reg.store(val);\n    }\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic check-then-store patterns leading to lost updates under high thread contention.",
+        "Failing to use acquire-release memory orderings, causing stale register reads or invisible updates across cores."
+      ],
+      "best_practices": [
+        "Apply retry loops with relaxed load semantics for the expected value check inside CAS loops to minimize cache-line bouncing.",
+        "Integrate hazard pointers or epoch-based memory reclamation if the HLL dynamically transitions between sparse and dense representations."
+      ],
+      "when_to_use": "When building real-time distributed telemetry engines or web analytics platforms that must concurrently estimate massive cardinalities across hundreds of worker threads with minimal synchronization overhead.",
+      "when_not_to_use": "When exact set cardinality is strictly required, or when single-threaded workloads make atomic overheads and hazard pointer management unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do you safely update a shared HyperLogLog register concurrently without using mutex locks?",
+          "answer": "By using a compare-and-swap (CAS) loop that checks if the new computed leading-zero count exceeds the current register value and atomically swaps it if unchanged."
+        },
+        {
+          "question": "Why is memory reclamation like hazard pointers relevant to concurrent HLL implementations?",
+          "answer": "Hazard pointers allow safe memory reclamation when the sketch dynamically resizes or switches between sparse list allocations and dense byte arrays under high concurrency."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Count-Min Sketch",
+        "Lock-free Memory Reclamation",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T22:07:12.943179+00:00",
+      "run_number": 4995
     }
   ]
 }
