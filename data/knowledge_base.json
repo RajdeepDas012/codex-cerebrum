@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4951,
-    "last_updated": "2026-11-15T01:49:21.226861+00:00",
-    "total_topics_learned": 4951
+    "total_runs": 4952,
+    "last_updated": "2026-11-15T01:52:31.011751+00:00",
+    "total_topics_learned": 4952
   },
   "entries": [
     {
@@ -235489,6 +235489,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T01:49:21.226840+00:00",
       "run_number": 4951
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput indexed data access and multi-core parallel range query execution in real-time database management systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree utilizes atomic Compare-And-Swap (CAS) primitives to safely manage node splits and structural rebalancing operations across multiple cores without utilizing blocking locks. By integrating hazard pointers, it ensures safe memory reclamation for nodes that are concurrently modified or removed, achieving high throughput in demanding database storage engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to handle concurrent node inserts, splits, and merges without thread contention.",
+        "Employs hazard pointers to track active threads reading specific tree nodes, preventing premature deallocation and use-after-free bugs.",
+        "Facilitates high-throughput indexed data access and lock-free parallel range queries for multi-core transactional storage architectures.",
+        "Maintains structural invariants dynamically through cooperative multi-thread assistance during complex structural rebalancing phases."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node pointer updates and hazard pointer protection during a lock-free B-Tree traversal and modification step.",
+        "correct": "bool insert_key(BTreeNode* root, int key) {\n    HazardPointerGuard hp;\n    BTreeNode* current = hp.protect(root);\n    // Perform atomic split and CAS insertion logic\n    return atomic_compare_exchange_strong(&current->keys, &old_keys, new_keys);\n}",
+        "wrong": "bool insert_key(BTreeNode* root, int key) {\n    // Directly modifying node pointers without hazard protection or atomic validation\n    root->keys.push_back(key);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register nodes under hazard pointers prior to reading traversal pointers, leading to race conditions and use-after-free errors.",
+        "Attempting to perform structural rebalancing (splits and merges) with simple single-word CAS instead of multi-word or cooperative descriptor-based operations."
+      ],
+      "best_practices": [
+        "Design tree nodes with version or state descriptors to allow helper threads to complete interrupted split or merge operations.",
+        "Batch hazard pointer retirements to minimize the synchronization overhead associated with memory reclamation sweeps."
+      ],
+      "when_to_use": "Use when building high-performance storage engines, in-memory databases, or real-time indexes that experience intense multi-threaded read/write contention and require strict latency guarantees.",
+      "when_not_to_use": "Avoid when simpler coarse-grained locking or single-threaded data structures provide sufficient throughput, as lock-free B-Trees introduce substantial algorithmic complexity and implementation overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when performing atomic node updates in a lock-free B-Tree?",
+          "answer": "By using tagged pointers or version counters combined with CAS primitives so that even if a node's address is reused, its version number changes, invalidating stale CAS operations."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B-Tree instead of standard garbage collection?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times of traditional tracing garbage collectors, which is critical for real-time database engines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip List",
+        "Hazard Pointers and Memory Reclamation",
+        "Cooperative Descriptor-Based Synchronization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T01:52:31.011729+00:00",
+      "run_number": 4952
     }
   ]
 }
