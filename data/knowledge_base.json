@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4975,
-    "last_updated": "2026-11-15T17:09:46.816700+00:00",
-    "total_topics_learned": 4975
+    "total_runs": 4976,
+    "last_updated": "2026-11-15T17:12:58.821940+00:00",
+    "total_topics_learned": 4976
   },
   "entries": [
     {
@@ -236627,6 +236627,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-15T17:09:46.816679+00:00",
       "run_number": 4975
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent in-memory indexing and multi-core parallel range query execution in real-time transactional database systems and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent Bx-Tree index structure designed to achieve high-throughput point and range queries across multiple CPU cores without lock contention. It leverages atomic primitives and hazard pointers to safely manage node updates, splits, merges, and memory reclamation in intense multi-threaded environments.",
+      "key_points": [
+        "Utilizes atomic leaf-merging and range-locking Compare-And-Swap (CAS) primitives to avoid global locks during structural modifications.",
+        "Implements hazard pointer memory reclamation to prevent the ABA problem and safe-free dead nodes accessed by concurrent readers.",
+        "Optimizes concurrent read-write access patterns specifically targeted for high-throughput in-memory database and key-value store backends.",
+        "Ensures linearizable range queries by combining fine-grained node latch-free protocols with atomic snapshot isolation techniques."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of executing an atomic leaf update via CAS alongside hazard pointer protection.",
+        "correct": "void* ptr;\ndo {\n    ptr = hazard_pointer_protect(&node->leaf_ptr);\n} while (!atomic_compare_exchange_weak(&node->leaf_ptr, &ptr, new_ptr));\nhazard_pointer_release(ptr);",
+        "wrong": "node->leaf_ptr = new_ptr; // Unsafe non-atomic assignment leading to race conditions and memory corruption"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed child pointers with hazard pointers, causing use-after-free bugs during structural modifications.",
+        "Overlooking the ABA problem on atomic pointer reads and writes without version counters or hazard protection."
+      ],
+      "best_practices": [
+        "Always register active reader threads to a central hazard pointer domain before traversing tree nodes.",
+        "Keep node granularity balanced to minimize CAS contention hot spots during high write concurrency."
+      ],
+      "when_to_use": "Ideal for high-concurrency in-memory transactional databases and key-value stores requiring high throughput on range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where simpler locking or standard lock-based B-Trees suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent memory leaks and use-after-free conditions in a lock-free Bx-Tree?",
+          "answer": "Hazard pointers allow threads to explicitly announce which nodes they are reading. When a node is unlinked by a writer, it is placed in a thread-local retirement list and only actually freed once no active hazard pointers reference it."
+        },
+        {
+          "question": "Why are standard lock-based approaches less efficient than atomic leaf-merging CAS primitives in high-core count systems?",
+          "answer": "Lock-based approaches suffer from lock contention, convoying, and thread suspension overheads, whereas lock-free CAS primitives enable optimistic concurrency and immediate retries."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Priority Queue",
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T17:12:58.821920+00:00",
+      "run_number": 4976
     }
   ]
 }
