@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4960,
-    "last_updated": "2026-11-15T02:17:51.456517+00:00",
-    "total_topics_learned": 4960
+    "total_runs": 4961,
+    "last_updated": "2026-11-15T02:21:01.310672+00:00",
+    "total_topics_learned": 4961
   },
   "entries": [
     {
@@ -235914,6 +235914,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T02:17:51.456495+00:00",
       "run_number": 4960
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-node-linking and internal-node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel database indexing execution in real-time relational storage engines and concurrent transactional data platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free B+ Tree optimized for modern multi-core processors. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers for safe memory management, it achieves high-throughput concurrent range queries and point lookups without deadlocks.",
+      "key_points": [
+        "Utilizes atomic leaf-node-linking to ensure safe, lock-free traversal across leaf nodes during range queries.",
+        "Employs internal-node-splitting CAS primitives to manage structural modifications without blocking concurrent readers or writers.",
+        "Integrates hazard pointers to safely reclaim memory of deleted nodes without triggering use-after-free race conditions.",
+        "Maximizes multi-core parallel database indexing performance by eliminating coarse-grained mutual exclusion locks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS during concurrent insertions.",
+        "correct": "bool link_leaves(Node* expected_next, Node* new_node, std::atomic<Node*>& next_ptr) {\n    return next_ptr.compare_exchange_weak(expected_next, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* next_ptr = node->next;\nnode->next = new_node; // Missing atomic synchronization causes race conditions"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers, leading to premature memory reclamation.",
+        "Using sequential consistency everywhere instead of carefully tuned memory ordering (acquire-release), degrading performance."
+      ],
+      "best_practices": [
+        "Pin threads to CPU cores when benchmarking fine-grained lock-free data structures to reduce cache thrashing.",
+        "Batch hazard pointer retirements to amortize the cost of memory reclamation sweeps.",
+        "Keep node splitting logic modular to simplify the verification of atomic state transitions."
+      ],
+      "when_to_use": "Use when building high-performance in-memory relational databases or transaction engines that experience heavy concurrent read-write workloads and range scans.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free synchronization outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free B+ Tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing. Before a thread frees a node, it verifies that no other thread holds a hazard pointer referencing it, deferring reclamation until it is safe."
+        },
+        {
+          "question": "What is the primary challenge when implementing lock-free node splits in a B+ Tree?",
+          "answer": "Ensuring that concurrent search and traversal operations do not fall out of sync or miss keys while an internal node is partially split and pointers are being swung atomically."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip Lists",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T02:21:01.310651+00:00",
+      "run_number": 4961
     }
   ]
 }
