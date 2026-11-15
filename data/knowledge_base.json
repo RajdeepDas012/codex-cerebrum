@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4976,
-    "last_updated": "2026-11-15T17:12:58.821940+00:00",
-    "total_topics_learned": 4976
+    "total_runs": 4977,
+    "last_updated": "2026-11-15T17:16:09.178591+00:00",
+    "total_topics_learned": 4977
   },
   "entries": [
     {
@@ -236674,6 +236674,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T17:12:58.821920+00:00",
       "run_number": 4976
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic priority-merging and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time discrete event simulation engines and concurrent task dispatching platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent leftist heap, utilizing atomic compare-and-swap (CAS) primitives and hazard pointers to safely manage node-swapping and priority-merging operations. It ensures high-throughput, thread-safe mergeable priority queue execution without locking overhead.",
+      "key_points": [
+        "Uses atomic operations to manage node pointers and maintain leftist heap properties without global locks.",
+        "Employs hazard pointers to safely track and reclaim memory for nodes removed or reorganized during concurrent merges.",
+        "Supports efficient meld (merge) operations, making it ideal for distributed event queues where heaps are frequently combined.",
+        "Guarantees logarithmic height characteristics via leftist ranks, ensuring bounded operational complexity under high thread contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node merging using atomic compare-and-swap and hazard pointers in a concurrent leftist heap.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int key;\n    int rank;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n};\n\nbool atomic_merge_nodes(std::atomic<Node*>& parent_link, Node* new_child, Node* expected) {\n    return parent_link.compare_exchange_weak(expected, new_child);\n}",
+        "wrong": "Node* unsafe_merge(Node* parent, Node* child) {\n    parent->right = child;\n    return parent;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to guard concurrent node access with hazard pointers, leading to use-after-free bugs during asynchronous modifications.",
+        "Failing to properly recalculate leftist ranks atomically during node-swapping operations, causing tree degradation.",
+        "Using blocking synchronization primitives (like std::mutex) instead of lock-free CAS loops."
+      ],
+      "best_practices": [
+        "Always register hazard pointers for any dynamically allocated nodes traversed during concurrent merge paths.",
+        "Keep memory reclamation deferred until all active threads drop their hazard references to the target nodes.",
+        "Use backoff strategies within CAS retry loops to minimize CPU cache contention under heavy multi-core concurrency."
+      ],
+      "when_to_use": "Use when you need high-throughput mergeable priority queue functionality across multiple threads without lock contention, such as in parallel event simulation engines.",
+      "when_not_to_use": "Avoid when standard single-threaded priority queues suffice or when memory overhead from hazard pointers and atomic node wrappers outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during memory reclamation in a lock-free leftist heap?",
+          "answer": "Hazard pointers allow threads to locally register nodes they are currently accessing, blocking other threads from freeing those specific memory locations until the references are cleared."
+        },
+        {
+          "question": "What is the primary advantage of a leftist heap over a binary heap in concurrent systems?",
+          "answer": "Leftist heaps support efficient logarithmic time merging (meld) of two separate heaps, which is significantly faster and cleaner to parallelize than merging two standard binary heaps."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Binomial Heaps",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T17:16:09.178571+00:00",
+      "run_number": 4977
     }
   ]
 }
