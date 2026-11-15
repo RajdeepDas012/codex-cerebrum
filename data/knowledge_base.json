@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4998,
-    "last_updated": "2026-11-15T22:16:44.849204+00:00",
-    "total_topics_learned": 4998
+    "total_runs": 4999,
+    "last_updated": "2026-11-15T22:19:55.168472+00:00",
+    "total_topics_learned": 4999
   },
   "entries": [
     {
@@ -237716,6 +237716,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T22:16:44.849186+00:00",
       "run_number": 4998
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-augmenting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent financial booking engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Interval Tree that uses atomic primitives and hazard pointers to safely manage insertions, deletions, and interval overlap queries. It is crucial for high-concurrency systems requiring simultaneous event scheduling and financial booking without lock contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives for overlap-detecting and node-augmenting updates without locks.",
+        "Employs hazard pointers for safe memory reclamation to prevent the ABA problem and premature deallocation in concurrent threads.",
+        "Maintains augmented maximum endpoint values at each node to efficiently prune search paths during parallel time-range queries.",
+        "Enables high-throughput multi-core execution optimized for real-time calendar management and concurrent financial booking systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion with augmented max-endpoint tracking using CAS primitives.",
+        "correct": "bool insert_interval(Node*& root, Interval newItem) {\n    Node* newNode = new Node(newItem);\n    while (true) {\n        Node* curr = hazard_protect(&root);\n        if (!curr) {\n            if (atomic_compare_exchange_strong(&root, &curr, newNode)) return true;\n        } else {\n            // Traverse and update augmented max value atomically\n            update_max_endpoint(curr, newNode->high);\n            if (insert_child_cas(curr, newNode)) return true;\n        }\n    }\n}",
+        "wrong": "bool insert_interval(Node* root, Interval newItem) {\n    mutex.lock();\n    root->insert(newItem);\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers before traversing, leading to use-after-free race conditions.",
+        "Forgetting to update the augmented maximum endpoints atomically during concurrent tree modifications, causing incorrect range query pruning."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection on parent and child pointers before reading or dereferencing them in lock-free traversals.",
+        "Ensure augmented tree properties (like maximum high values) are recalculated or safely CAS-updated alongside structural modifications."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping time-range queries and updates concurrently, such as in high-frequency trading booking engines or shared scheduling systems.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-concurrency settings where standard locking interval trees provide simpler code maintenance and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing CAS operations on interval tree nodes?",
+          "answer": "By using hazard pointers to protect nodes currently being accessed by threads, combined with version tags or epoch-based reclamation to ensure nodes are not reused while referenced."
+        },
+        {
+          "question": "Why is node augmentation necessary for an interval tree, and how does concurrent updates complicate it?",
+          "answer": "Augmentation stores the maximum endpoint in each subtree to prune search spaces from O(N) to O(log N + M). Concurrency complicates this because multiple threads updating subtrees can race when propagating new maximum values upward, requiring careful atomic updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Segment Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T22:19:55.168452+00:00",
+      "run_number": 4999
     }
   ]
 }
