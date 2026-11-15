@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4950,
-    "last_updated": "2026-11-15T01:46:10.714187+00:00",
-    "total_topics_learned": 4950
+    "total_runs": 4951,
+    "last_updated": "2026-11-15T01:49:21.226861+00:00",
+    "total_topics_learned": 4951
   },
   "entries": [
     {
@@ -235442,6 +235442,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T01:46:10.714163+00:00",
       "run_number": 4950
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-halving and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class management and multi-core parallel connected component execution in real-time social network analysis engines and concurrent image segmentation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free thread-safe concurrent Disjoint Set data structure utilizing atomic compare-and-swap (CAS) operations for path-halving and rank-combining. It incorporates hazard pointers to manage memory safely without locks, enabling high-throughput parallel union and find operations essential for real-time social network friend-recommendation systems and multi-core image segmentation pipelines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to safely update parent pointers and rank attributes without traditional locking mechanisms.",
+        "Implements atomic path-halving during the Find operation to flatten tree structures concurrently, ensuring future lookups remain efficient.",
+        "Applies hazard pointer memory reclamation to securely track thread access to nodes and prevent premature memory deallocation during concurrent structural modifications.",
+        "Achieves high-throughput parallel connected component computation suitable for massive real-time graph workloads and distributed clustering."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based find operation with path halving in a lock-free concurrent Disjoint Set.",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        if (grandparent == parent) return parent;\n        // Attempt path halving via CAS\n        if (node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release, std::memory_order_relaxed)) {\n            node = grandparent;\n        } else {\n            node = parent;\n        }\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    // Non-atomic recursive path compression prone to race conditions and data corruption\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node traversal with hazard pointers, leading to use-after-free bugs when another thread deletes or merges nodes.",
+        "Using full path compression instead of path splitting or path halving in a lock-free setting, which creates excessive deep reference updates causing CAS contention storms."
+      ],
+      "best_practices": [
+        "Pair hazard pointers with thread-local retirement lists to batch memory reclamation and minimize synchronization overhead.",
+        "Use relaxed memory ordering where appropriate but ensure acquire-load and release-store semantics guard shared pointer traversals."
+      ],
+      "when_to_use": "Use this structure when multiple threads must simultaneously perform millions of disjoint-set union and find queries on large dynamic graphs with minimal latency.",
+      "when_not_to_use": "Avoid this approach in single-threaded environments or lightweight applications where standard sequential Union-Find with path compression offers simpler and faster execution.",
+      "interview_questions": [
+        {
+          "question": "Why is standard full path compression difficult to implement in a lock-free concurrent Disjoint Set?",
+          "answer": "Full path compression updates every node along the path to point directly to the root, which causes immense CAS contention and complex race conditions when multiple threads concurrently modify overlapping paths."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node modifications in lock-free data structures?",
+          "answer": "Hazard pointers allow a thread to atomically publish a pointer it is currently accessing, signaling to other threads that the memory cannot be reclaimed or freed until the hazard pointer is cleared."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Parallel Graph Connected Components Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T01:49:21.226840+00:00",
+      "run_number": 4951
     }
   ]
 }
