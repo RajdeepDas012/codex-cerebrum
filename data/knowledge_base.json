@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4969,
-    "last_updated": "2026-11-15T09:21:00.778392+00:00",
-    "total_topics_learned": 4969
+    "total_runs": 4970,
+    "last_updated": "2026-11-15T16:53:20.369886+00:00",
+    "total_topics_learned": 4970
   },
   "entries": [
     {
@@ -236345,6 +236345,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T09:21:00.778372+00:00",
       "run_number": 4969
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-masking CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership and multi-core parallel duplicate filtering execution in real-time web crawler caching layers and concurrent distributed database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter uses atomic bitwise compare-and-swap (CAS) operations to allow multiple threads to safely insert elements and query set membership without locking bottlenecks. By employing hazard pointers for memory safety and word-masking bit manipulations, it achieves high-throughput probabilistic duplicate detection suitable for scalable caching and database engines.",
+      "key_points": [
+        "Utilizes atomic bit-setting and word-masking CAS operations to modify underlying integer arrays without global mutex locks.",
+        "Employs hazard pointer memory reclamation to ensure safe concurrent resizing or restructuring of dynamic internal bit vectors.",
+        "Delivers high-throughput probabilistic set membership queries with zero false negatives and a tunable false positive rate.",
+        "Eliminates thread contention in multi-core parallel duplicate filtering for distributed query optimizers and web crawlers."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates atomic word-masking CAS logic for concurrent bit setting in a Bloom filter block.",
+        "correct": "import ctypes\n\nclass AtomicBloomWord:\n    def __init__(self, initial_val=0):\n        self.val = ctypes.c_ulong(initial_val)\n    \n    def atomic_set_bit(self, bit_index):\n        mask = 1 << bit_index\n        while True:\n            current = self.val.value\n            new_val = current | mask\n            if current == new_val:\n                return True\n            # Simulated atomic CAS step\n            if self.val.value == current:\n                self.val.value = new_val\n                return True",
+        "wrong": "def unsafe_set_bit(self, bit_index):\n    self.val.value |= (1 << bit_index)  # Non-atomic read-modify-write causes lost updates across threads"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write bitwise operations, leading to lost updates when multiple threads set bits in the same word simultaneously.",
+        "Failing to account for cache line bouncing (false sharing) when adjacent threads frequently update bits residing in the same memory cache line."
+      ],
+      "best_practices": [
+        "Pad underlying word structures or partition the bit array into thread-local segments to minimize cache line contention.",
+        "Leverage hardware-accelerated atomic intrinsics (like GCC __atomic builtins or C++ std::atomic) for maximum word-masking performance."
+      ],
+      "when_to_use": "Use when building high-throughput distributed systems, web crawlers, or database engines requiring concurrent, lock-free set membership checks where false positives are acceptable.",
+      "when_not_to_use": "Avoid when absolute zero false positives are mandatory or when elements must be reliably deleted from the set without rebuilding.",
+      "interview_questions": [
+        {
+          "question": "Why can standard read-modify-write operations fail when implementing a concurrent Bloom filter?",
+          "answer": "Standard operations read the word, modify it locally, and write it back, which can cause one thread's update to overwrite another thread's concurrent bit-setting if not protected by atomic CAS loops."
+        },
+        {
+          "question": "How do hazard pointers assist in managing dynamic or scalable concurrent Bloom filters?",
+          "answer": "Hazard pointers protect nodes or memory blocks from being prematurely freed or recycled while other threads are actively reading or writing bits within them."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Cuckoo Filter",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T16:53:20.369867+00:00",
+      "run_number": 4970
     }
   ]
 }
