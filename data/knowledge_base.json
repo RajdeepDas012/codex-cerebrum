@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4980,
-    "last_updated": "2026-11-15T17:25:40.511198+00:00",
-    "total_topics_learned": 4980
+    "total_runs": 4981,
+    "last_updated": "2026-11-15T17:28:50.496481+00:00",
+    "total_topics_learned": 4981
   },
   "entries": [
     {
@@ -236864,6 +236864,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T17:25:40.511178+00:00",
       "run_number": 4980
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core parallel next-hop lookup execution in real-time software-defined networking routers and concurrent telecommunication core switching fabrics",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent trie-based routing table optimized for real-time packet classification. By utilizing atomic compare-and-swap (CAS) operations and hazard pointers, it enables multiple threads to perform high-throughput longest-prefix matching and next-hop lookups without global locks.",
+      "key_points": [
+        "Uses atomic pointer-swapping and prefix-matching CAS primitives to manipulate trie nodes safely under high contention.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes concurrently accessed by multiple threads.",
+        "Supports lock-free insert, delete, and lookup operations tailored for high-speed software-defined networking (SDN) data planes.",
+        "Maximizes multi-core parallel execution efficiency by eliminating lock bottlenecks during packet routing lookups."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS for a lock-free trie node child pointer.",
+        "correct": "bool insert_child(std::atomic<Node*>& parent_child_ptr, Node* new_node) {\n    Node* expected = parent_child_ptr.load(std::memory_order_acquire);\n    while (true) {\n        new_node->next = expected;\n        if (parent_child_ptr.compare_exchange_weak(expected, new_node,\n                std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_child(Node* parent, Node* new_node) {\n    // Missing atomicity and synchronization causes data races\n    new_node->next = parent->child;\n    parent->child = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently freed trie nodes, resulting in use-after-free bugs during multi-threaded traversals.",
+        "Using incorrect memory ordering constraints with CAS primitives, leading to stale prefix-matching states across CPU cores."
+      ],
+      "best_practices": [
+        "Protect every traversal pointer with hazard pointers before dereferencing child nodes in concurrent contexts.",
+        "Keep node payloads compact and cache-line aligned to optimize memory bandwidth during high-frequency routing lookups."
+      ],
+      "when_to_use": "Use when building high-performance networking routing tables, SDN switching fabrics, or concurrent IP lookup engines requiring ultra-low latency and high scalability.",
+      "when_not_to_use": "Avoid when memory footprint is extremely constrained and sequential coarse-grained locking overhead is acceptable.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers ensure safe memory reclamation in a lock-free concurrent trie?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently reading, ensuring that no other thread reclaims or frees those nodes until no hazard pointers reference them."
+        },
+        {
+          "question": "Why are lock-free trie-based routing tables preferred over mutex-protected hash maps for packet classification?",
+          "answer": "They support efficient longest-prefix matching (LPM) and avoid lock contention bottlenecks across multiple cores during concurrent packet forwarding."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip Graphs",
+        "Hazard Pointer Memory Management",
+        "Concurrent Radix Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T17:28:50.496461+00:00",
+      "run_number": 4981
     }
   ]
 }

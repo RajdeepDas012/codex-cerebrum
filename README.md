@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **4980** |
-| Last Updated | `2026-11-15T17:25:40.511198+00:00` |
-| Dataset Size | `4980 entries` |
+| Total Topics Learned | **4981** |
+| Last Updated | `2026-11-15T17:28:50.496481+00:00` |
+| Dataset Size | `4981 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3592 |
+| data-structures | 3593 |
 | algorithms | 310 |
 | trading-strategies | 228 |
 | crypto-blockchain | 205 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput packet classification and multi-core parallel next-hop lookup execution in real-time software-defined networking routers and concurrent telecommunication core switching fabrics`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate detection execution in real-time distributed stream processing platforms and concurrent database cache indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Skip Graph using atomic pointer-routing and neighborhood-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer routing and multi-core parallel decentralized searching execution in real-time distributed hash tables and concurrent cloud storage overlay networks`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic suffix-sorting and LCP-array-constructing CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel genome alignment execution in real-time bioinformatics sequence analysis pipelines and concurrent text search engines`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic priority-merging and node-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time discrete event simulation engines and concurrent task dispatching platforms`
-- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent in-memory indexing and multi-core parallel range query execution in real-time transactional database systems and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 
