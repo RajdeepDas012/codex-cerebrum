@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4996,
-    "last_updated": "2026-11-15T22:10:24.039932+00:00",
-    "total_topics_learned": 4996
+    "total_runs": 4997,
+    "last_updated": "2026-11-15T22:13:34.513108+00:00",
+    "total_topics_learned": 4997
   },
   "entries": [
     {
@@ -237622,6 +237622,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T22:10:24.039892+00:00",
       "run_number": 4996
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and split-coordination CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted index lookup execution in real-time relational database systems and concurrent transactional storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent B+ Tree tailored for high-throughput relational databases. It leverages atomic Compare-And-Swap (CAS) primitives for leaf-sibling linking and split coordination alongside hazard pointers to ensure safe memory reclamation during parallel range scans and index lookups.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to execute lock-free structural modifications like node splits and leaf-sibling-linking.",
+        "Employs hazard pointer memory reclamation to safely manage node deallocations without risking use-after-free bugs during concurrent traversals.",
+        "Maintains structural invariants in a B+ Tree where all actual data values reside in leaf nodes, optimizing multi-core parallel range scans.",
+        "Eliminates traditional mutex contention, enabling predictable high-throughput performance in real-time transactional storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based split coordination step for linking leaf node siblings in a concurrent B+ Tree",
+        "correct": "bool link_leaves(std::atomic<Node*>& left_next, Node* right_node, Node* expected_next) {\n    return left_next.compare_exchange_strong(expected_next, right_node);\n}",
+        "wrong": "bool link_leaves(Node* left, Node* right) {\n    left->next = right; // Non-atomic update causes race conditions and broken range scans\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to memory corruption or segmentation faults when another thread frees a node.",
+        "Neglecting to handle incomplete split operations left behind by preempted threads, which breaks tree traversal invariants."
+      ],
+      "best_practices": [
+        "Retire memory nodes via hazard pointer epoch-based or descriptor-based reclamation frameworks instead of immediate free operations.",
+        "Design split coordination protocols to be cooperative, allowing any traversing thread to help finish an incomplete split before proceeding."
+      ],
+      "when_to_use": "Use when building high-performance, disk-backed or in-memory relational databases that require intensive parallel read-write workloads and fast range scans across multiple CPU cores.",
+      "when_not_to_use": "Avoid when memory footprint must be kept strictly minimal or when target runtimes lack fine-grained atomic primitives and robust memory reclamation support.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free B+ tree without garbage collection?",
+          "answer": "By using hazard pointers or epoch-based memory reclamation (EMR) to ensure that a node is only freed after all threads traversing it have detached their pointers."
+        },
+        {
+          "question": "Why are leaf-sibling links critical in concurrent B+ Trees during structural modifications?",
+          "answer": "They allow reader threads to seamlessly navigate to newly split sibling nodes even if the parent index node has not yet been updated via CAS."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B-Trees",
+        "Hazard pointer memory reclamation",
+        "Compare-And-Swap (CAS) concurrency primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T22:13:34.513088+00:00",
+      "run_number": 4997
     }
   ]
 }
