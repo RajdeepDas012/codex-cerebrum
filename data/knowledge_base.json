@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4971,
-    "last_updated": "2026-11-15T16:56:30.602827+00:00",
-    "total_topics_learned": 4971
+    "total_runs": 4972,
+    "last_updated": "2026-11-15T17:00:01.473223+00:00",
+    "total_topics_learned": 4972
   },
   "entries": [
     {
@@ -236439,6 +236439,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T16:56:30.602808+00:00",
       "run_number": 4971
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Ring Buffer using atomic head-tail-advancing and memory-barrier-synchronizing CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer-multi-consumer stream processing and multi-core parallel message passing execution in real-time high-frequency trading execution engines and concurrent network packet capture pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a concurrent, lock-free ring buffer utilizing atomic primitives and hazard pointers to safely manage circular queue head and tail pointers across multiple threads. It is crucial for building ultra-low-latency, high-throughput stream processing systems and network packet capturing pipelines without lock contention bottlenecks.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) operations to advance head and tail pointers without blocking threads.",
+        "Employs memory barriers and acquire-release semantics to ensure proper visibility of ring buffer slots across cores.",
+        "Integrates hazard pointers for safe memory reclamation and preventing ABA problems in concurrent slot reuse.",
+        "Optimizes throughput for single-producer-multi-consumer (SPMC) or multi-producer-single-consumer (MPSC) data flow patterns."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement and slot writing for a lock-free ring buffer.",
+        "correct": "template <typename T, size_t Capacity>\nclass LockFreeRingBuffer {\n    std::atomic<size_t> head{0};\n    std::atomic<size_t> tail{0};\n    T buffer[Capacity];\npublic:\n    bool push(const T& item) {\n        size_t current_tail = tail.load(std::memory_order_relaxed);\n        size_t current_head = head.load(std::memory_order_acquire);\n        if ((current_tail - current_head) >= Capacity) return false;\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current_tail % Capacity] = item;\n            return true;\n        }\n        return false;\n    }\n};",
+        "wrong": "template <typename T, size_t Capacity>\nclass BadRingBuffer {\n    size_t head = 0, tail = 0;\n    T buffer[Capacity];\npublic:\n    bool push(T item) { // Missing atomics and thread safety entirely\n        buffer[tail++] = item;\n        return true;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to use correct memory ordering flags (like acquire-release), resulting in stale reads or out-of-order writes across cores.",
+        "Ignoring the ABA problem or buffer wrap-around edge cases when calculating occupancy capacity."
+      ],
+      "best_practices": [
+        "Align ring buffer control variables to CPU cache line boundaries (e.g., 64 bytes) to eliminate false sharing between producer and consumer threads.",
+        "Use relaxed memory orderings for operations that do not require synchronization, falling back to acquire-release only when coordinating cross-thread boundaries."
+      ],
+      "when_to_use": "Use when building ultra-low-latency systems like high-frequency trading execution pipelines, inter-thread messaging layers, and network packet capture buffers where blocking locks introduce unacceptable jitter.",
+      "when_not_to_use": "Avoid when memory usage must be strictly minimized and dynamic variable-sized queuing is required, as fixed-capacity ring buffers can drop messages or block if capacity is exceeded.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple producer threads attempt to claim the same slot in a lock-free ring buffer?",
+          "answer": "By using an atomic compare-and-swap (CAS) operation on the tail index pointer, ensuring only one thread successfully claims a specific slot increment."
+        },
+        {
+          "question": "Why are memory barriers and acquire-release semantics critical in lock-free ring buffer implementations?",
+          "answer": "They prevent the CPU or compiler from reordering read and write instructions across thread boundaries, ensuring that data written to a buffer slot is fully visible before the pointer update is published."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Queues",
+        "Memory Ordering Semantics"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T17:00:01.473204+00:00",
+      "run_number": 4972
     }
   ]
 }
