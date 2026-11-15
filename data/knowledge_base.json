@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 4973,
-    "last_updated": "2026-11-15T17:03:16.126618+00:00",
-    "total_topics_learned": 4973
+    "total_runs": 4974,
+    "last_updated": "2026-11-15T17:06:35.736773+00:00",
+    "total_topics_learned": 4974
   },
   "entries": [
     {
@@ -236533,6 +236533,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-15T17:03:16.126598+00:00",
       "run_number": 4973
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom-Cuckoo hybrid filter using atomic bucket-allocating and cascading-probe-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate filtering execution in real-time distributed stream processing platforms and concurrent database cache indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bloom-Cuckoo hybrid filter combines the space efficiency of Bloom filters with the constant-time lookups and deletion capabilities of Cuckoo hashing, implemented here without locks using atomic primitives and hazard pointers. This ensures high-throughput, thread-safe approximate membership querying suitable for heavy multi-core concurrent workloads.",
+      "key_points": [
+        "Utilizes atomic bucket-allocating and cascading-probe-updating CAS operations to manage concurrent insertions across buckets without blocking.",
+        "Employs hazard pointer memory reclamation to safely manage dynamic resizing and node displacement without memory leaks or premature freeing.",
+        "Balances the ultra-low false-positive probability of Bloom filters with the single-location lookup benefits of Cuckoo hashing.",
+        "Optimized for high-throughput multi-core execution environments like distributed stream processors and database cache indexes."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe insertion using atomic bucket slot updates with hazard pointers.",
+        "correct": "bool HybridFilter::insert(const std::string& item) {\n    HazardPointerGuard hp;\n    size_t h1 = hash1(item);\n    size_t h2 = hash2(item);\n    while (true) {\n        Bucket* b = hp.protect(buckets[h1]);\n        if (b->try_insert_atomic(item)) return true;\n        // Cascade to alternative bucket via Cuckoo displacement\n        if (b->cascade_probe(h2, item)) return true;\n    }\n}",
+        "wrong": "bool HybridFilter::insert(const std::string& item) {\n    mutex.lock();\n    buckets[hash1(item)].insert(item);\n    mutex.unlock();\n}\n// Fails to provide lock-free concurrency and introduces high lock contention."
+      },
+      "common_mistakes": [
+        "Failing to protect displaced buckets with hazard pointers during cuckoo cascade operations, leading to use-after-free race conditions.",
+        "Using blocking synchronization primitives (like std::mutex) inside high-throughput stream processing loops, destroying multi-core scalability."
+      ],
+      "best_practices": [
+        "Pin threads to CPU cores when executing tight concurrent CAS loops to minimize cache coherency traffic and bus lock contention.",
+        "Tune the bucket capacity and hash function parameters carefully to minimize cascading probe failures under high load factors."
+      ],
+      "when_to_use": "When building real-time distributed stream processors or database caches that require extreme read/write concurrency, low false-positive rates, and dynamic item deletion capabilities.",
+      "when_not_to_use": "In single-threaded applications or memory-constrained embedded systems where the overhead of hazard pointers and complex hybrid bucket structures outweighs performance benefits.",
+      "interview_questions": [
+        {
+          "question": "Why combine a Bloom filter with Cuckoo hashing in a concurrent hybrid filter?",
+          "answer": "Standard Bloom filters do not support item deletion and can suffer from high false-positive rates as they fill up. Cuckoo hashing supports constant-time lookups and deletions, and combining them offers space efficiency alongside dynamic mutability."
+        },
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent cuckoo displacement?",
+          "answer": "Hazard pointers allow threads to atomically declare which bucket or node they are currently accessing, preventing other threads from reclaiming or freeing that memory location while displacement or cascading updates are in progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Bloom Filters",
+        "Concurrent Cuckoo Hashing",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-15T17:06:35.736753+00:00",
+      "run_number": 4974
     }
   ]
 }
