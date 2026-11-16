@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5015,
-    "last_updated": "2026-11-16T09:19:11.763646+00:00",
-    "total_topics_learned": 5015
+    "total_runs": 5016,
+    "last_updated": "2026-11-16T09:22:35.899424+00:00",
+    "total_topics_learned": 5016
   },
   "entries": [
     {
@@ -238520,6 +238520,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-16T09:19:11.763628+00:00",
       "run_number": 5015
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-map-indexing and doubly-linked-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded memory eviction and multi-core parallel key-value retrieval execution in real-time in-memory caching layers and concurrent web service API gateways",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent Least Recently Used (LRU) cache that handles simultaneous reads and writes without locks by leveraging atomic operations and hazard pointers. It is crucial for high-throughput caching layers where traditional lock contention would otherwise create severe performance bottlenecks.",
+      "key_points": [
+        "Combines a lock-free hash map for $O(1)$ key lookup with a concurrent doubly-linked list for recency ordering.",
+        "Uses Compare-And-Swap (CAS) primitives to update pointers atomically during node splicing and map re-indexing.",
+        "Employs hazard pointers to safely manage memory reclamation and prevent use-after-free bugs in concurrent eviction.",
+        "Ensures bounded memory utilization by atomically evicting the tail element when capacity limits are reached."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node access using hazard pointers during a cache retrieval operation.",
+        "correct": "Node* hazard_ptr = acquire_hazard_pointer(thread_id);\nwhile (true) {\n    Node* head = atomic_head.load();\n    hazard_ptr->store(head);\n    if (atomic_head.load() == head) break;\n}\n// Safe to read head data here\nrelease_hazard_pointer(hazard_ptr);",
+        "wrong": "Node* node = atomic_head.load();\n// Another thread might free 'node' here before access\nprocess(node->value);"
+      },
+      "common_mistakes": [
+        "Failing to protect list traversal pointers with hazard pointers, leading to race conditions and segmentation faults during concurrent evictions.",
+        "Attempting to lock the entire hash map or linked list structure, defeating the purpose of a lock-free design."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer domains per thread to minimize synchronization overhead.",
+        "Batch memory deallocations via epoch-based reclamation or hazard pointer retirement lists to reduce atomic contention."
+      ],
+      "when_to_use": "Use when building high-performance in-memory caches, API rate limiters, or session stores that experience massive concurrent read/write workloads.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with low concurrency where standard synchronized locks offer simpler, more maintainable code.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing CAS operations on node pointers in a lock-free doubly-linked list?",
+          "answer": "By using tagged pointers (combining the memory address with a monotonically increasing version counter) or hazard pointers to ensure the node has not been recycled and reused."
+        },
+        {
+          "question": "Why is combining a hash map and a doubly-linked list lock-free implementation particularly challenging for an LRU cache?",
+          "answer": "Because updating the LRU order requires modifying both the hash map index and the doubly-linked list pointers atomically, requiring complex multi-step CAS sequences or deferred cleanups."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-16T09:22:35.899405+00:00",
+      "run_number": 5016
     }
   ]
 }
