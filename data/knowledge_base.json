@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5005,
-    "last_updated": "2026-11-16T01:59:03.994739+00:00",
-    "total_topics_learned": 5005
+    "total_runs": 5006,
+    "last_updated": "2026-11-16T02:02:15.620491+00:00",
+    "total_topics_learned": 5006
   },
   "entries": [
     {
@@ -238046,6 +238046,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-16T01:59:03.994719+00:00",
       "run_number": 5005
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel duplicate filtering execution in real-time web crawler caching systems and concurrent distributed database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Bloom filter enables high-performance, lock-free probabilistic membership testing across multiple processor cores by employing atomic bit-setting and word-cascading Compare-And-Swap (CAS) operations. This architecture eliminates coarse-grained locking bottlenecks, allowing multiple threads to simultaneously query and insert items while ensuring data integrity in high-throughput caching and distributed systems.",
+      "key_points": [
+        "Utilizes atomic bit-setting primitives (such as fetch-and-or or CAS loops) to modify underlying bit arrays safely without locks.",
+        "Employs word-cascading techniques to handle multi-word updates or synchronized block expansions gracefully under concurrent access.",
+        "Integrates hazard pointer memory reclamation to securely manage dynamic bit-array resizing and memory deallocation without risking use-after-free bugs.",
+        "Provides high-throughput probabilistic set-membership checks ideal for distributed databases and web crawler deduplication pipelines."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic bit manipulation using an atomic integer simulation for concurrent set operations.",
+        "correct": "import threading\n\nclass ConcurrentBloomFilterBitArray:\n    def __init__(self, size):\n        self.size = size\n        self.words = [threading.local() for _ in range((size + 63) // 64)]\n        self.lock_free_array = [0] * len(self.words)\n        self._lock = threading.Lock() # For demonstration wrapper of atomic update\n\n    def atomic_set(self, index):\n        word_idx = index // 64\n        bit_idx = index % 64\n        mask = 1 << bit_idx\n        with self._lock:\n            self.lock_free_array[word_idx] |= mask\n\n    def get(self, index):\n        word_idx = index // 64\n        bit_idx = index % 64\n        return (self.lock_free_array[word_idx] & (1 << bit_idx)) != 0",
+        "wrong": "def unsafe_set(array, index):\n    # Missing atomicity; read-modify-write race condition under concurrency\n    array[index // 64] = array[index // 64] | (1 << (index % 64))"
+      },
+      "common_mistakes": [
+        "Using standard non-atomic read-modify-write operations on shared words, leading to lost bit updates under heavy multi-threaded contention.",
+        "Failing to account for false positive rate degradation when the filter exceeds its pre-calculated capacity concurrently."
+      ],
+      "best_practices": [
+        "Design the bit array size and hash function count based on expected maximum insertion volume to maintain strict false-positive bounds.",
+        "Use hardware-accelerated atomic bit instructions (like atomic bit test-and-set) where available to minimize CPU cycle overhead."
+      ],
+      "when_to_use": "Use when building high-throughput multi-threaded systems that require fast membership queries with space efficiency, such as database query optimizers and network packet inspection engines.",
+      "when_not_to_use": "Avoid when zero false positives are required or when elements must be reliably deleted from the set without rebuilding the entire structure.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when two threads attempt to set different bits within the same underlying 64-bit word simultaneously?",
+          "answer": "By using atomic bitwise-OR operations or Compare-And-Swap (CAS) loops that retry until the target word successfully reflects the newly set bit without overwriting concurrent updates."
+        },
+        {
+          "question": "Why are standard lock-based approaches inefficient for high-throughput Bloom filters in web crawlers?",
+          "answer": "Locks introduce thread contention and context-switching overhead on every read and write operation, severely limiting scalability across multi-core processors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Hash Tables",
+        "Hazard Pointers",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-16T02:02:15.620471+00:00",
+      "run_number": 5006
     }
   ]
 }
