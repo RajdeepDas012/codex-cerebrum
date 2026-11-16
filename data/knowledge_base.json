@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5011,
-    "last_updated": "2026-11-16T02:18:15.626165+00:00",
-    "total_topics_learned": 5011
+    "total_runs": 5012,
+    "last_updated": "2026-11-16T02:21:42.503767+00:00",
+    "total_topics_learned": 5012
   },
   "entries": [
     {
@@ -238331,6 +238331,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-16T02:18:15.626143+00:00",
       "run_number": 5011
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and zig-zag-restructuring CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed item caching execution in real-time memory-mapped caches and concurrent key-value storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Splay Tree utilizing atomic Compare-And-Swap (CAS) primitives for restructuring operations and hazard pointers for safe memory reclamation. It enables high-throughput, self-adjusting tree access across multiple threads, optimizing for temporal locality in demanding multi-core applications.",
+      "key_points": [
+        "Utilizes atomic root-rotation and zig-zag-restructuring CAS primitives to safely modify tree topology without global locks.",
+        "Employs hazard pointer memory reclamation to securely manage node deletions and rotations in a lock-free environment.",
+        "Implements self-adjusting splay heuristics to bring frequently accessed items closer to the root for accelerated subsequent lookups.",
+        "Targeted at high-concurrency systems requiring real-time memory-mapped caches and concurrent key-value store performance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual thread-safe hazard pointer registration for node access during concurrent splay tree traversals.",
+        "correct": "void* acquire_node_safely(std::atomic<Node*>& node_ptr, HazardPointer& hp) {\n    Node* ptr;\n    do {\n        ptr = node_ptr.load();\n        hp.protect(ptr);\n    } while (node_ptr.load() != ptr);\n    return ptr;\n}",
+        "wrong": "Node* unsafe_access(std::atomic<Node*>& node_ptr) {\n    return node_ptr.load(); // Without hazard pointers, the node could be freed by another thread mid-operation\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate rotation nodes with hazard pointers, leading to use-after-free race conditions.",
+        "Attempting to implement full top-down splaying via multi-word CAS without handling ABA problems or deadlocks."
+      ],
+      "best_practices": [
+        "Isolate hazard pointer allocations per thread to avoid contention bottlenecks during high-frequency lookups.",
+        "Carefully sequence atomic pointer updates during zig, zag, and zig-zag rotations to maintain structural integrity under concurrency."
+      ],
+      "when_to_use": "Use when workload access patterns exhibit strong temporal locality and multi-core threads frequently read and update overlapping keys in a shared self-balancing tree.",
+      "when_not_to_use": "Avoid when memory allocation overhead of hazard pointers outweighs benefits, or when strict strict balance guarantees (like AVL or Red-Black trees) are required over self-adjusting heuristics.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the race condition where a thread attempts to splay a node that is simultaneously being deleted or rotated by another thread?",
+          "answer": "By leveraging hazard pointers to mark the nodes as active and using CAS-based validation loops to retry the operation if the pointer changes underneath."
+        },
+        {
+          "question": "Why are traditional lock-based splay tree algorithms unsuitable for highly concurrent lock-free systems?",
+          "answer": "Global or coarse-grained locking serializes accesses and causes high thread contention, destroying parallel scalability on modern multi-core processors."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free AVL Trees",
+        "Concurrent Skip Lists"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-16T02:21:42.503747+00:00",
+      "run_number": 5012
     }
   ]
 }
