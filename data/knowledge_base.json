@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5014,
-    "last_updated": "2026-11-16T02:28:04.447462+00:00",
-    "total_topics_learned": 5014
+    "total_runs": 5015,
+    "last_updated": "2026-11-16T09:19:11.763646+00:00",
+    "total_topics_learned": 5015
   },
   "entries": [
     {
@@ -238473,6 +238473,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-16T02:28:04.447443+00:00",
       "run_number": 5014
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Stack using atomic top-pointer-incrementing and node-recycling CAS primitives alongside hazard pointer memory reclamation for high-throughput LIFO object pooling and multi-core parallel resource allocation execution in real-time embedded systems and concurrent memory management libraries",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free bounded stack leveraging atomic compare-and-swap (CAS) operations and hazard pointers for safe memory management. It enables high-throughput Last-In-First-Out (LIFO) object reuse without the contention and deadlock risks associated with traditional mutex locks, making it ideal for low-latency resource allocation.",
+      "key_points": [
+        "Uses atomic operations and CAS primitives to manage the stack's top pointer safely across multiple threads without locks.",
+        "Implements hazard pointers to protect nodes from premature reclamation and prevent the ABA problem during concurrent pops and pushes.",
+        "Employs node recycling and a bounded capacity to strictly control memory usage and minimize allocation overhead in real-time environments.",
+        "Optimizes multi-core parallel resource pooling to maximize throughput for LIFO-access workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a lock-free push operation using atomic compare-and-swap and hazard pointers.",
+        "correct": "bool push(T* item) {\n    Node* new_node = allocate_node(item);\n    Node* old_top;\n    do {\n        old_top = top.load(std::memory_order_relaxed);\n        new_node->next = old_top;\n    } while (!top.compare_exchange_weak(old_top, new_node, std::memory_order_release, std::memory_order_relaxed));\n    return true;\n}",
+        "wrong": "bool push_unsafe(T* item) {\n    Node* new_node = new Node(item);\n    new_node->next = top;\n    top = new_node;\n}"
+      },
+      "common_mistakes": [
+        "Falling victim to the ABA problem where a pointer's value changes and returns to the original value between reads, bypassing naive CAS checks.",
+        "Forgetting to protect accessed pointers with hazard pointers, leading to use-after-free bugs when concurrent threads delete nodes."
+      ],
+      "best_practices": [
+        "Incorporate a tag or version counter into the top pointer representation or use hazard pointers to reliably mitigate the ABA problem.",
+        "Pre-allocate nodes or use a node recycling pool to eliminate runtime memory allocation overhead during critical execution paths."
+      ],
+      "when_to_use": "Use when building high-performance memory allocators, object pools, or real-time systems requiring low-latency, lock-free LIFO operations under high thread contention.",
+      "when_not_to_use": "Avoid when memory footprint must be entirely dynamic without an upper bound, or when simpler mutex-protected data structures suffice due to low thread contention.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free issues in lock-free data structures?",
+          "answer": "Hazard pointers allow a thread to atomically publish a pointer it is currently accessing, signaling to other threads that the referenced memory cannot be reclaimed until the hazard pointer is cleared."
+        },
+        {
+          "question": "What is the ABA problem in lock-free stacks and how can it be resolved?",
+          "answer": "The ABA problem occurs when a memory location is read as A, changed to B, and then changed back to A, causing a CAS operation to succeed erroneously. It can be resolved using version counts embedded with the pointer or via hazard pointers/epoch-based reclamation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "ABA Problem Mitigation Strategies",
+        "Lock-Free Concurrent Queue (Michael-Scott)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-16T09:19:11.763628+00:00",
+      "run_number": 5015
     }
   ]
 }
