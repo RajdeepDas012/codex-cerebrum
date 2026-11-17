@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5019,
-    "last_updated": "2026-11-17T03:35:12.430372+00:00",
-    "total_topics_learned": 5019
+    "total_runs": 5020,
+    "last_updated": "2026-11-17T03:38:23.139209+00:00",
+    "total_topics_learned": 5020
   },
   "entries": [
     {
@@ -238708,6 +238708,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T03:35:12.430352+00:00",
       "run_number": 5019
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and rank-union CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core parallel connected component analysis execution in real-time social network graph partitioning and concurrent network routing topology engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Disjoint Set data structure allows multiple threads to perform find and union operations simultaneously without global locks. By leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and high throughput during parallel graph processing.",
+      "key_points": [
+        "Utilizes atomic pointer updates via CAS to safely modify parent pointers during union and path compression operations.",
+        "Employs hazard pointers to prevent premature memory reclamation of nodes while concurrent threads are traversing them.",
+        "Implements atomic rank comparisons to ensure deterministic tree balancing without lock contention.",
+        "Enables high-throughput concurrent equivalence class tracking for multi-core graph algorithms and network routing."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a thread-safe atomic find operation with hazard pointer protection.",
+        "correct": "Node* find(Node* node, HazardPointerManager& hpm) {\n    while (true) {\n        HazardPointer hp = hpm.protect(node);\n        Node* parent = node->parent.load(std::memory_order_acquire);\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load(std::memory_order_acquire);\n        node->parent.compare_exchange_weak(parent, grandparent, std::memory_order_release);\n        node = parent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    while (node->parent != node) {\n        node->parent = node->parent->parent; // Non-atomic update causing race conditions\n        node = node->parent;\n    }\n    return node;\n}"
+      },
+      "common_mistakes": [
+        "Performing non-atomic pointer assignments during path compression which corrupts the tree structure under multi-threaded access.",
+        "Failing to protect nodes with hazard pointers before traversing parent pointers, leading to use-after-free bugs."
+      ],
+      "best_practices": [
+        "Always wrap node traversals with hazard pointer protection to safely manage memory reclamation in lock-free structures.",
+        "Use weak CAS loops for path compression and rank unions to handle concurrent interference gracefully."
+      ],
+      "when_to_use": "When building high-throughput parallel graph algorithms, real-time social network partitioning, or concurrent network routing engines requiring frequent equivalence queries.",
+      "when_not_to_use": "In single-threaded applications or environments where simpler lock-based Disjoint Sets provide sufficient performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating parent pointers in a lock-free Disjoint Set?",
+          "answer": "By combining the parent pointer with a version counter or sequence tag within an atomic word, or by ensuring nodes are managed via hazard pointers and node-recycling pools."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a concurrent Union-Find data structure?",
+          "answer": "Hazard pointers ensure that a node being traversed or modified during a find operation is not reclaimed or freed by another thread performing a concurrent union or deletion."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Concurrent Graph Processing Algorithms",
+        "Lock-Free Skip Lists"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-17T03:38:23.139188+00:00",
+      "run_number": 5020
     }
   ]
 }
