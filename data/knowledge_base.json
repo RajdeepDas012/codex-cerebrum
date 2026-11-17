@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5040,
-    "last_updated": "2026-11-17T13:39:11.780482+00:00",
-    "total_topics_learned": 5040
+    "total_runs": 5041,
+    "last_updated": "2026-11-17T21:40:54.587868+00:00",
+    "total_topics_learned": 5041
   },
   "entries": [
     {
@@ -239706,6 +239706,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T13:39:11.780465+00:00",
       "run_number": 5040
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Lock-Free Work-Stealing Deque using atomic top-bottom-pointer-manipulating and task-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel load balancing execution in real-time actor-model runtime engines and concurrent asynchronous task-based parallel computing frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free work-stealing deque is a specialized double-ended queue optimized for multi-threaded task parallelism where owner threads push and pop tasks from one end while idle thief threads steal tasks from the other end. Utilizing atomic pointer manipulations and hazard pointers, it minimizes synchronization overhead to maximize throughput in asynchronous execution runtimes.",
+      "key_points": [
+        "Implements single-producer (owner) push/pop operations at the bottom of the queue without heavy locking.",
+        "Enables multi-consumer (thief) operations at the top of the queue via atomic compare-and-swap (CAS) primitives.",
+        "Applies hazard pointers or epoch-based memory reclamation to safely manage memory deallocation without use-after-free bugs during contention.",
+        "Prevents thread starvation and balances load efficiently across heterogeneous multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent task pushing and stealing mechanics using atomic operations.",
+        "correct": "#include <atomic>\n#include <vector>\n\ntemplate<typename T>\nclass WorkStealingDeque {\n    struct Node { T data; };\n    std::atomic<long> top_{0};\n    std::atomic<long> bottom_{0};\npublic:\n    void push(T val) {\n        long b = bottom_.load(std::memory_order_relaxed);\n        long t = top_.load(std::memory_order_acquire);\n        // Push implementation logic\n        bottom_.store(b + 1, std::memory_order_release);\n    }\n};",
+        "wrong": "void push(T val) {\n    // Missing memory ordering and atomic updates can lead to race conditions\n    buffer[bottom++] = val;\n}"
+      },
+      "common_mistakes": [
+        "Using incorrect memory ordering constraints (e.g., relaxed stores where acquire-release is necessary) causing instruction reordering issues.",
+        "Failing to handle race conditions between a pop by the owner and a steal by a thief when the deque contains only one element."
+      ],
+      "best_practices": [
+        "Use sequential consistency or acquire-release memory semantics explicitly for pointers shared across thread boundaries.",
+        "Integrate hazard pointers or lock-free reference counting to safely reclaim nodes when queues undergo rapid dynamic resizing."
+      ],
+      "when_to_use": "Ideal for fork-join task execution frameworks, actor-model runtimes, and parallel processing libraries where tasks are dynamically spawned and balanced across CPU cores.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or low-concurrency systems where standard mutex-protected vectors or std::deque provide better simplicity and lower cognitive overhead.",
+      "interview_questions": [
+        {
+          "question": "How does a work-stealing deque resolve contention between the owner popping from the bottom and a thief stealing from the top?",
+          "answer": "The owner performs local operations on the bottom pointer with minimal overhead, while thieves use atomic CAS operations on the top pointer. A collision check is executed if the deque approaches empty to prevent dual-access race conditions on the final element."
+        },
+        {
+          "question": "Why are standard garbage collection or simple delete mechanisms problematic in lock-free deques?",
+          "answer": "Without hazard pointers or epoch-based reclamation, a thread might free memory that another concurrent thief thread is actively dereferencing, leading to segmentation faults and undefined behavior."
+        }
+      ],
+      "related_topics": [
+        "hazard-pointers",
+        "lock-free-queues",
+        "work-stealing-schedulers"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-17T21:40:54.587852+00:00",
+      "run_number": 5041
     }
   ]
 }
