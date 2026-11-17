@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5021,
-    "last_updated": "2026-11-17T03:41:54.194319+00:00",
-    "total_topics_learned": 5021
+    "total_runs": 5022,
+    "last_updated": "2026-11-17T03:45:04.959324+00:00",
+    "total_topics_learned": 5022
   },
   "entries": [
     {
@@ -238802,6 +238802,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T03:41:54.194300+00:00",
       "run_number": 5021
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Ring Buffer (Circular FIFO Queue) using atomic sequence-number-wrapping and slot-ownership-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput inter-thread packet streaming and multi-core parallel single-producer single-consumer data pipeline execution in real-time audio processing engines and concurrent network interface card drivers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free ring buffer coordinates concurrent producers and consumers over a fixed-size circular array without blocking locks. By utilizing atomic sequence wrapping and slot ownership CAS operations, it achieves high-throughput data transfer ideal for real-time streaming and network packet processing.",
+      "key_points": [
+        "Employs atomic sequence-number-wrapping to safely manage wrap-arounds in a fixed-size buffer.",
+        "Utilizes slot-ownership-claiming CAS primitives to ensure distinct threads exclusively claim read or write positions.",
+        "Integrates hazard pointer memory reclamation to securely track and retire dynamically allocated nodes or buffers without race conditions.",
+        "Delivers ultra-low latency and high throughput for single-producer single-consumer or multi-producer multi-consumer pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic slot acquisition mechanism for a lock-free ring buffer enqueue operation.",
+        "correct": "bool enqueue(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        Cell* cell = &buffer[current_tail & mask];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        intptr_t diff = (intptr_t)seq - (intptr_t)current_tail;\n        if (diff == 0) {\n            if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_relaxed)) {\n                cell->data = item;\n                cell->sequence.store(current_tail + 1, std::memory_order_release);\n                return true;\n            }\n        } else if (diff < 0) {\n            return false; // Buffer is full\n        } else {\n            current_tail = tail.load(std::memory_order_relaxed);\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    // Missing sequence checks and non-atomic state updates lead to data races and corruption\n    buffer[tail % capacity] = item;\n    tail++;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to enforce proper memory ordering (acquire/release semantics), leading to out-of-order reads and writes.",
+        "Neglecting sequence number wrapping checks, causing overwrites of unread slots in the ring buffer.",
+        "Using blocking synchronization primitives inside high-frequency data paths which defeat the lock-free design."
+      ],
+      "best_practices": [
+        "Align atomic head and tail pointers to cache line boundaries to prevent false sharing across CPU cores.",
+        "Use relaxed memory orderings where synchronization is not strictly required, falling back to acquire-release for synchronization points.",
+        "Size the ring buffer to a power of two to replace expensive modulo operations with rapid bitwise AND masking."
+      ],
+      "when_to_use": "Use when you need ultra-low latency, bounded memory usage, and high-throughput data streaming between concurrent threads or hardware interfaces.",
+      "when_not_to_use": "Avoid when the buffer size must be dynamically and infinitely extensible, or when workloads require complex blocking operations and priority queuing.",
+      "interview_questions": [
+        {
+          "question": "How do you handle buffer full and buffer empty conditions in a lock-free ring buffer without using locks?",
+          "answer": "By evaluating the difference between the cell's sequence number and the current pointer position using atomic loads with acquire memory ordering."
+        },
+        {
+          "question": "Why is it advantageous for the ring buffer capacity to be a power of two?",
+          "answer": "It allows replacing the slow modulo operator (%) with a fast bitwise AND operation (& (capacity - 1)) for index wrapping."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointers and Memory Reclamation",
+        "Single-Producer Single-Consumer Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-17T03:45:04.959304+00:00",
+      "run_number": 5022
     }
   ]
 }
