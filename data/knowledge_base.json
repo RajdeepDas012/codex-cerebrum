@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5046,
-    "last_updated": "2026-11-17T21:57:46.552516+00:00",
-    "total_topics_learned": 5046
+    "total_runs": 5047,
+    "last_updated": "2026-11-17T22:01:10.890977+00:00",
+    "total_topics_learned": 5047
   },
   "entries": [
     {
@@ -239990,6 +239990,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T21:57:46.552497+00:00",
       "run_number": 5046
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent KD-Tree using atomic coordinate-splitting and bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel spatial point query execution in real-time geographic recommendation systems and concurrent machine learning vector index search engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free multi-dimensional KD-Tree that uses atomic Compare-And-Swap (CAS) primitives for coordinate splitting and bounding box updates. It incorporates hazard pointer memory reclamation to ensure safe concurrent memory management during high-throughput multi-dimensional nearest neighbor searches and parallel vector index queries.",
+      "key_points": [
+        "Utilizes atomic coordinate-splitting and bounding-box-updating CAS primitives to safely manage node insertions and splits across multiple threads without locking.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes currently traversed by concurrent reader or writer threads.",
+        "Enables high-throughput multi-dimensional nearest neighbor searching and spatial point queries suited for intensive machine learning vector search workloads.",
+        "Minimizes thread contention and avoids priority inversion or deadlock vulnerabilities commonly associated with coarse-grained locking strategies."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic coordinate-split node and hazard pointer protection wrapper in a concurrent KD-Tree.",
+        "correct": "struct KDNode {\n    std::atomic<KDNode*> left{nullptr};\n    std::atomic<KDNode*> right{nullptr};\n    double split_value;\n    int axis;\n};\n\nvoid protect_and_traverse(std::atomic<KDNode*>& node_ptr, HazardPointerList& hp_list) {\n    KDNode* node;\n    do {\n        node = node_ptr.load(std::memory_order_acquire);\n        hp_list.protect(0, node);\n    } while (node != node_ptr.load(std::memory_order_relaxed));\n}",
+        "wrong": "KDNode* unsafe_traverse(KDNode* root) {\n    return root->left; // Lacks atomic loads and hazard pointer protection, risking use-after-free races\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during deep tree traversal, leading to use-after-free bugs when concurrent threads prune or split subtrees.",
+        "Updating bounding boxes non-atomically, which can corrupt spatial prune boundaries and cause incorrect nearest neighbor search results."
+      ],
+      "best_practices": [
+        "Always validate node pointers using a retry loop with hazard pointers after reading shared atomic references.",
+        "Carefully sequence memory acquisition and release barriers to ensure bounding box metrics are fully visible prior to child node linkage."
+      ],
+      "when_to_use": "Use when building high-performance vector databases, spatial indexing engines, or recommendation systems requiring parallel multi-dimensional point queries under heavy contention.",
+      "when_not_to_use": "Avoid in low-memory environments or simple single-threaded applications where the overhead of hazard pointers and atomic synchronization outweighs performance gains.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent node deletion in a lock-free KD-Tree?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are currently accessing, blocking other threads from reclaiming or freeing that memory until the reference is cleared."
+        },
+        {
+          "question": "Why are standard mutexes suboptimal for concurrent nearest neighbor searches in high-throughput KD-Trees?",
+          "answer": "Mutexes introduce thread blocking and context-switch overhead, creating bottlenecks during frequent multi-threaded read and write traversals across deep spatial subtrees."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Lock-free B+ Tree",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-17T22:01:10.890960+00:00",
+      "run_number": 5047
     }
   ]
 }
