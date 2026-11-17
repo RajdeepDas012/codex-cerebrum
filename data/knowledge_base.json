@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5033,
-    "last_updated": "2026-11-17T13:11:43.628058+00:00",
-    "total_topics_learned": 5033
+    "total_runs": 5034,
+    "last_updated": "2026-11-17T13:15:21.081529+00:00",
+    "total_topics_learned": 5034
   },
   "entries": [
     {
@@ -239374,6 +239374,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T13:11:43.628040+00:00",
       "run_number": 5033
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Suffix Tree using atomic node-splitting and suffix-link-establishing CAS primitives alongside hazard pointer memory reclamation for high-throughput genomic pattern matching and multi-core parallel bioinformatics sequence alignment execution in real-time DNA sequencing pipelines and concurrent text compression engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free Suffix Tree designed for parallel genomic pattern matching and sequence alignment. It utilizes atomic compare-and-swap (CAS) primitives for thread-safe node splitting and suffix link establishment, paired with hazard pointers to safely manage memory reclamation without blocking threads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely handle node-splitting and insertion in multi-threaded environments without coarse-grained locking.",
+        "Maintains explicit suffix links atomically to allow rapid traversal and sub-string search operations under high concurrency.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes removed during concurrent updates.",
+        "Enables high-throughput bioinformatics tasks such as parallel DNA reads processing, sequence alignment, and real-time text compression."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS loop for updating a suffix tree node child pointer safely across multiple threads.",
+        "correct": "bool update_child(Node* parent, char c, Node* old_node, Node* new_node) {\n    return __atomic_compare_exchange_n(&(parent->children[c]), &old_node, new_node, true,\n                                     __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);\n}",
+        "wrong": "Node* update_child(Node* parent, char c, Node* new_node) {\n    Node* old_node = parent->children[c];\n    parent->children[c] = new_node;\n    return old_node;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer reads with hazard pointers, leading to use-after-free errors when another thread concurrently deletes a node.",
+        "Ignoring the ABA problem during child pointer updates via CAS, which can corrupt the tree structure under intense contention."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with local hazard pointer records before reading their internal pointers or child mappings.",
+        "Carefully sequence atomic updates to ensure that suffix links are established before exposing newly split nodes to reader threads."
+      ],
+      "when_to_use": "Use when multiple threads need to concurrently query and insert strings into a massive suffix tree, such as in real-time genomic sequencing pipelines.",
+      "when_not_to_use": "Avoid in single-threaded environments or when memory overhead and implementation complexity of lock-free synchronization outweigh throughput requirements.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the use-after-free problem in a lock-free Suffix Tree?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently inspecting. Deletion routines check these announcements and defer actual memory deallocation until no thread holds a hazard pointer to the target node."
+        },
+        {
+          "question": "Why is structural modification of a Suffix Tree difficult to implement lock-free compared to a simple stack or queue?",
+          "answer": "A Suffix Tree requires atomic updates across multiple pointers simultaneously (e.g., updating child pointers, sibling lists, and suffix links), which cannot be done in a single atomic instruction without complex multi-word CAS or cooperative structural assistance."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Tree",
+        "Hazard Pointer Memory Management",
+        "Concurrent Radix Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-17T13:15:21.081508+00:00",
+      "run_number": 5034
     }
   ]
 }
