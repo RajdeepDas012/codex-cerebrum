@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5036,
-    "last_updated": "2026-11-17T13:24:02.135508+00:00",
-    "total_topics_learned": 5036
+    "total_runs": 5037,
+    "last_updated": "2026-11-17T13:27:32.076628+00:00",
+    "total_topics_learned": 5037
   },
   "entries": [
     {
@@ -239516,6 +239516,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-17T13:24:02.135488+00:00",
       "run_number": 5036
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-array-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core parallel duplicate filtering execution in real-time web crawler URL frontier systems and concurrent distributed cache routing layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bloom filter uses atomic operations like Compare-And-Swap (CAS) to allow multiple threads to safely insert elements and query set membership without blocking locks. By combining atomic bit-array modifications with hazard pointers, it achieves high throughput and safe memory reclamation, making it ideal for high-concurrency systems like web crawlers and distributed caches.",
+      "key_points": [
+        "Utilizes atomic bit-array-setting and hash-collision-resolving CAS primitives to safely execute concurrent modifications across multiple CPU cores.",
+        "Employs hazard pointer memory reclamation to ensure safe cleanup of dynamic filter structures without incurring the overhead of traditional locking mechanisms.",
+        "Provides probabilistic set membership testing with zero false negatives and a controlled probability of false positives depending on bit array size and hash function count.",
+        "Optimized for high-throughput environments such as real-time URL frontier duplicate filtering and concurrent distributed cache routing layers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit setting using a Compare-And-Swap loop for lock-free thread-safe filter updates.",
+        "correct": "void insert(std::atomic<uint64_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t bit_mask = 1ULL << (bit_index % 64);\n    uint64_t old_val = bit_array[word_idx].load(std::memory_order_relaxed);\n    while (!bit_array[word_idx].compare_exchange_weak(old_val, old_val | bit_mask, std::memory_order_release, std::memory_order_relaxed)) {\n        // Retry until successful CAS\n    }\n}",
+        "wrong": "void insert(uint64_t* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    bit_array[word_idx] |= (1ULL << (bit_index % 64)); // Non-atomic read-modify-write causes race conditions\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared bit words, leading to lost updates under high thread contention.",
+        "Failing to account for cache line bouncing when multiple threads concurrently modify bits falling within the same cache word."
+      ],
+      "best_practices": [
+        "Use relaxed memory orderings for initial loads within CAS retry loops and release/acquire orderings upon successful synchronization.",
+        "Pad bit array allocations or distribute hash values to minimize false sharing across CPU cores.",
+        "Pre-calculate optimal bit-array sizes and hash function counts based on expected peak insertion loads."
+      ],
+      "when_to_use": "When you need extremely high-throughput set membership testing with heavy multi-threading and can tolerate a bounded false positive probability.",
+      "when_not_to_use": "When false positives are completely unacceptable, or when items must be frequently deleted from the set (standard Bloom filters do not support deletion).",
+      "interview_questions": [
+        {
+          "question": "How do you achieve thread safety in a Bloom filter without using mutual exclusion locks?",
+          "answer": "By leveraging atomic bit-array updates combined with Compare-And-Swap (CAS) retry loops to ensure bit modifications occur safely and atomically across multiple threads."
+        },
+        {
+          "question": "Why are hazard pointers useful in dynamic lock-free data structures like concurrent filters or trees?",
+          "answer": "Hazard pointers provide a lock-free mechanism for safe memory reclamation, ensuring that a node or structure being freed is not currently being accessed by any other concurrent thread."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Radix Tree",
+        "Hazard Pointer Memory Reclamation",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-17T13:27:32.076609+00:00",
+      "run_number": 5037
     }
   ]
 }
