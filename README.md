@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5063** |
-| Last Updated | `2026-11-18T04:12:30.241542+00:00` |
-| Dataset Size | `5063 entries` |
+| Total Topics Learned | **5064** |
+| Last Updated | `2026-11-18T04:15:42.851414+00:00` |
+| Dataset Size | `5064 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3663 |
+| data-structures | 3664 |
 | algorithms | 317 |
 | trading-strategies | 228 |
 | crypto-blockchain | 208 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-rotation and self-adjustment CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently-accessed element lookups and multi-core parallel self-balancing search execution in real-time memory cache eviction systems and concurrent LRU cache management engines`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-adjusting and max-right-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput overlapping range querying and multi-core parallel time-interval scheduling execution in real-time calendar management systems and concurrent resource allocation engines`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-accumulating CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency queries and multi-core parallel prefix calculation execution in real-time streaming analytics counters and concurrent metric monitoring systems`
 - `Implementation of a lock-free thread-safe concurrent Aho-Corasick automaton using atomic failure-link-traversing and multi-pattern-matching CAS primitives alongside hazard pointer memory reclamation for high-throughput string scanning and multi-core parallel dictionary searching execution in real-time intrusion detection network security systems and concurrent log analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Array using atomic prefix-doubling and bucket-sorting CAS primitives alongside hazard pointer memory reclamation for high-throughput substring searching and multi-core parallel full-text indexing execution in real-time document search engines and concurrent bioinformatics analytics platforms`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted index lookup execution in real-time relational database management systems and concurrent storage engines`
 
 <!-- STATS_END -->
 
