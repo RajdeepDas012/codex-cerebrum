@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5058** |
-| Last Updated | `2026-11-18T03:56:10.571018+00:00` |
-| Dataset Size | `5058 entries` |
+| Total Topics Learned | **5059** |
+| Last Updated | `2026-11-18T03:59:23.410756+00:00` |
+| Dataset Size | `5059 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3660 |
+| data-structures | 3661 |
 | algorithms | 315 |
 | trading-strategies | 228 |
 | crypto-blockchain | 208 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range scans and multi-core parallel sorted index lookup execution in real-time relational database management systems and concurrent storage engines`
 - `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic cryptographic-hashing and branch-root-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput block verification and multi-core parallel state synchronization execution in real-time distributed ledger networks and concurrent decentralized storage verification platforms`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting execution in real-time streaming analytics pipelines and concurrent big data aggregation systems`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic frequency-incrementing and min-val-sampling CAS primitives alongside hazard pointer memory reclamation for high-throughput heavy-hitter identification and multi-core parallel frequency estimation execution in real-time network traffic monitoring systems and concurrent distributed streaming analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Tries-based routing table using atomic prefix-matching and pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput packet forwarding and multi-core parallel routing lookup execution in real-time software-defined networking routers and concurrent telecommunication switching platforms`
-- `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic null-path-length-updating and heap-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time simulation engines and concurrent task execution frameworks`
 
 <!-- STATS_END -->
 
