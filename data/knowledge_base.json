@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5067,
-    "last_updated": "2026-11-18T12:58:19.020957+00:00",
-    "total_topics_learned": 5067
+    "total_runs": 5068,
+    "last_updated": "2026-11-18T13:02:12.624897+00:00",
+    "total_topics_learned": 5068
   },
   "entries": [
     {
@@ -240983,6 +240983,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-18T12:58:19.020940+00:00",
       "run_number": 5067
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-calculating and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string searching and multi-core parallel spell-checking execution in real-time auto-complete recommendation systems and concurrent natural language processing pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free, thread-safe BK-Tree (Burkhard-Keller tree) optimized for metric spaces like Levenshtein edit distance. It utilizes atomic compare-and-swap (CAS) operations for node linking and hazard pointers for safe memory reclamation, enabling high-throughput parallel fuzzy searches and spell-checking.",
+      "key_points": [
+        "Leverages metric space properties (triangle inequality) to organize string nodes by edit distance.",
+        "Uses atomic CAS primitives to safely insert child nodes into distance-indexed buckets without global locks.",
+        "Employs hazard pointers to prevent use-after-free bugs during concurrent node reads and restructuring.",
+        "Maximizes multi-core parallel execution for real-time spell-checking and auto-complete recommendation engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe child insertion into a lock-free BK-Tree bucket using atomic compare-and-swap.",
+        "correct": "bool BKTree::insert(Node* parent, const std::string& word, int dist) {\n    Node* newNode = new Node(word);\n    while (true) {\n        Node* currentChild = parent->children[dist].load();\n        newNode->next.store(currentChild);\n        if (parent->children[dist].compare_exchange_weak(currentChild, newNode)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool BKTree::insert(Node* parent, const std::string& word, int dist) {\n    // Lacks concurrency control; race conditions will corrupt the child pointer list\n    parent->children[dist] = new Node(word);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers during concurrent traversals, leading to memory corruption.",
+        "Neglecting the triangle inequality bounds when searching, which defeats the performance benefits of the BK-Tree."
+      ],
+      "best_practices": [
+        "Implement thread-local hazard pointer pools to minimize contention during memory reclamation cycles.",
+        "Cache calculated edit distances when possible to reduce redundant computational overhead during deep traversals."
+      ],
+      "when_to_use": "Use when you need high-performance, multi-threaded fuzzy string matching or spell-checking against a dynamic dataset.",
+      "when_not_to_use": "Avoid when exact string matching is required or when the metric space does not satisfy the triangle inequality.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free BK-Tree when multiple threads are traversing child pointers?",
+          "answer": "By using hazard pointers to register nodes currently being accessed by a thread before reading pointers, ensuring memory is only reclaimed after all threads unregister their hazards."
+        },
+        {
+          "question": "Why is a BK-Tree well-suited for fuzzy string searching compared to a standard Hash Table?",
+          "answer": "A BK-Tree organizes elements based on metric distance (e.g., Levenshtein distance), allowing it to prune entire subtrees during similarity searches rather than scanning every element."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Tree",
+        "Hazard Pointers and Memory Management",
+        "Levenshtein Distance Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-18T13:02:12.624876+00:00",
+      "run_number": 5068
     }
   ]
 }
