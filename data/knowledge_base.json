@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5080,
-    "last_updated": "2026-11-18T21:15:25.123596+00:00",
-    "total_topics_learned": 5080
+    "total_runs": 5081,
+    "last_updated": "2026-11-18T21:18:41.714889+00:00",
+    "total_topics_learned": 5081
   },
   "entries": [
     {
@@ -241606,6 +241606,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-18T21:15:25.123575+00:00",
       "run_number": 5080
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-linking and peer-node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput distributed peer-to-peer range queries and multi-core parallel decentralized lookup execution in real-time distributed hash tables and concurrent cloud storage networking platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the implementation of a lock-free concurrent Skip-Graph utilizing atomic primitives and hazard pointers to achieve safe multi-threaded node insertions, deletions, and range lookups. It provides log-scaled decentralized routing performance without global lock contention, making it ideal for scalable distributed hash tables and cloud storage systems.",
+      "key_points": [
+        "Utilizes atomic routing-pointer-linking and peer-node-splicing CAS operations for safe concurrent structural modifications.",
+        "Implements hazard pointer memory reclamation to prevent ABA problems and safely free unlinked node memory.",
+        "Maintains multiple levels of skip-list-like linked structures across distributed identifiers for efficient range query operations.",
+        "Guarantees lock-free progress properties, ensuring system throughput under heavy concurrent write and lookup workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates lock-free node insertion into a concurrent Skip-Graph level using atomic CAS primitives.",
+        "correct": "bool insert_level(Node* head, Node* new_node, int level) {\n    while (true) {\n        Node* pred = find_predecessor(head, new_node->key, level);\n        Node* succ = pred->next[level].load(std::memory_order_acquire);\n        new_node->next[level].store(succ, std::memory_order_relaxed);\n        if (pred->next[level].compare_exchange_strong(succ, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_level_wrong(Node* head, Node* new_node, int level) {\n    Node* pred = find_predecessor(head, new_node->key, level);\n    new_node->next[level] = pred->next[level];\n    pred->next[level] = new_node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to validate that predecessor and successor nodes remain unlinked during concurrent removal operations.",
+        "Failing to protect traversed node pointers with hazard pointers, leading to use-after-free race conditions during memory reclamation.",
+        "Using sequential memory ordering for atomic pointer updates instead of acquire-release semantics, breaking cross-thread visibility."
+      ],
+      "best_practices": [
+        "Always register accessed nodes into local thread hazard pointer arrays prior to reading their next pointers.",
+        "Perform lazy deletion by marking nodes logically removed before physically unlinking them via CAS.",
+        "Reuse unlinked node structures using lock-free memory pools to reduce allocator overhead in high-throughput pipelines."
+      ],
+      "when_to_use": "Use when building high-throughput distributed hash tables, decentralized peer-to-peer routing frameworks, or cloud storage platforms requiring frequent parallel range queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple memory-constrained applications where standard single-lock skip lists or flat arrays provide sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and safe memory reclamation in a lock-free Skip-Graph?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently accessing, preventing other threads from prematurely freeing those memory blocks until no thread holds a hazard pointer to them."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical unlinking in concurrent lock-free skip-based structures?",
+          "answer": "Logical deletion marks a node as deleted via an atomic flag, preventing concurrent inserters from linking new nodes after a node that is in the process of being removed from the routing hierarchy."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Skip-List",
+        "Hazard Pointer Memory Management",
+        "Distributed Hash Tables (DHT)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-18T21:18:41.714870+00:00",
+      "run_number": 5081
     }
   ]
 }
