@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5079,
-    "last_updated": "2026-11-18T13:40:09.229787+00:00",
-    "total_topics_learned": 5079
+    "total_runs": 5080,
+    "last_updated": "2026-11-18T21:15:25.123596+00:00",
+    "total_topics_learned": 5080
   },
   "entries": [
     {
@@ -241559,6 +241559,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-18T13:40:09.229765+00:00",
       "run_number": 5079
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) graph using atomic layer-skipping and neighbor-pruning CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor vector searches and multi-core parallel high-dimensional similarity matching execution in real-time semantic vector databases and concurrent neural recommendation systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "An implementation of a lock-free concurrent HNSW graph utilizes atomic Compare-And-Swap (CAS) primitives for layer-skipping navigation and neighbor-pruning operations. Coupled with hazard pointers, it ensures safe memory reclamation, enabling high-throughput approximate nearest neighbor searches across multi-core systems without traditional mutex overhead.",
+      "key_points": [
+        "Uses atomic layer-skipping and neighbor-pruning CAS primitives to allow lock-free concurrent graph mutation and entry-point transitions.",
+        "Employs hazard pointer memory reclamation to safely manage deleted nodes and neighborhood list reallocations without deadlocks.",
+        "Maintains multi-layered skip-list structures where higher layers act as express lanes for fast global vector navigation.",
+        "Optimizes multi-core parallel high-dimensional similarity matching for real-time vector embeddings and neural recommendation engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent node addition using atomic CAS and hazard pointers.",
+        "correct": "void insert_node_lock_free(HNSWNode* new_node, HazardPointerManager& hp_mgr) {\n    while (true) {\n        HazardPointer hp = hp_mgr.protect(entry_point_.load());\n        if (try_add_neighbor_atomic(new_node, hp.get())) break;\n    }\n}",
+        "wrong": "void insert_node_unsafe(HNSWNode* new_node) {\n    std::lock_guard<std::mutex> lock(global_mutex);\n    entry_point_->neighbors.push_back(new_node);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed node pointers with hazard pointers during concurrent neighbor list updates, leading to use-after-free bugs.",
+        "Using coarse-grained global locks on index mutation paths, which degrades multi-core throughput during parallel vector insertions."
+      ],
+      "best_practices": [
+        "Retire memory nodes exclusively through hazard pointer deferred reclamation lists after all concurrent readers have dropped references.",
+        "Bound the maximum degree of graph nodes explicitly during the pruning phase to prevent runaway memory consumption and latency degradation."
+      ],
+      "when_to_use": "Use this data structure when building low-latency, highly concurrent semantic vector databases or real-time recommendation engines requiring millions of high-dimensional similarity queries per second.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments with strict memory footprints where simple exact k-NN linear scans or static indices suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread deletes a node from a concurrent HNSW graph?",
+          "answer": "Hazard pointers allow threads to register pointers they are currently reading. When a node is targeted for deletion, its memory reclamation is deferred until no active hazard pointers reference it, preventing use-after-free errors."
+        },
+        {
+          "question": "Why are higher layers in an HNSW graph advantageous for concurrent multi-threaded execution?",
+          "answer": "Higher layers contain exponentially fewer nodes, serving as coarse-grained express lanes that reduce contention and allow multiple threads to quickly converge on the target cluster region before descending to denser lower layers."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip Lists",
+        "Lock-Free Memory Reclamation",
+        "Approximate Nearest Neighbor Search Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-18T21:15:25.123575+00:00",
+      "run_number": 5080
     }
   ]
 }
