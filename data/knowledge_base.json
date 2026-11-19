@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5130,
-    "last_updated": "2026-11-19T21:39:13.201998+00:00",
-    "total_topics_learned": 5130
+    "total_runs": 5131,
+    "last_updated": "2026-11-19T21:42:24.651509+00:00",
+    "total_topics_learned": 5131
   },
   "entries": [
     {
@@ -243979,6 +243979,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-19T21:39:13.201978+00:00",
       "run_number": 5130
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and atomic-fetch-or CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic set membership testing and multi-core parallel duplicate filtering execution in real-time web crawler URL deduplication pipelines and concurrent distributed cache routing layers",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free, thread-safe concurrent Bloom Filter designed for high-throughput probabilistic set membership testing. It utilizes atomic bit-setting and atomic fetch-or compare-and-swap (CAS) primitives along with hazard pointer memory management to achieve safe parallel duplicate filtering across multiple cores.",
+      "key_points": [
+        "Employs atomic bitwise operations to allow concurrent threads to set membership bits safely without locking bottlenecks.",
+        "Uses fetch-or CAS loops to manage shared bit arrays under high contention without data races.",
+        "Incorporates hazard pointer memory reclamation to safely manage dynamic resizing and allocation of underlying filter structures.",
+        "Maximizes throughput in multi-core web crawling and distributed caching where false positive rates are acceptable in exchange for extreme performance."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe atomic bit-setting in a concurrent Bloom filter using fetch-or primitives.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentBloomFilter {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    explicit ConcurrentBloomFilter(size_t size) : bits(size) {}\n    \n    void insert(size_t bit_index) {\n        size_t word_idx = bit_index / 64;\n        uint64_t bit_mask = 1ULL << (bit_index % 64);\n        bits[word_idx].fetch_or(bit_mask, std::memory_order_relaxed);\n    }\n    \n    bool query(size_t bit_index) const {\n        size_t word_idx = bit_index / 64;\n        uint64_t bit_mask = 1ULL << (bit_index % 64);\n        return (bits[word_idx].load(std::memory_order_relaxed) & bit_mask) != 0;\n    }\n};",
+        "wrong": "class UnsafeBloomFilter {\n    std::vector<uint64_t> bits;\npublic:\n    void insert(size_t bit_index) {\n        // Data race: multiple threads writing to the same word without synchronization\n        bits[bit_index / 64] |= (1ULL << (bit_index % 64));\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using non-atomic read-modify-write operations on shared words leading to lost updates during concurrent insertions.",
+        "Failing to use appropriate memory ordering models, resulting in unnecessary synchronization overhead or visibility issues."
+      ],
+      "best_practices": [
+        "Leverage relaxed memory ordering for atomic bit operations when strict synchronization between independent hash indices is not required.",
+        "Pre-allocate the bit array to an optimal size based on expected insertion volume and acceptable false positive rates."
+      ],
+      "when_to_use": "Use when building high-throughput systems like web crawlers, real-time analytics, or distributed caches where rapid probabilistic membership testing is required across multiple concurrent threads.",
+      "when_not_to_use": "Avoid when absolute zero false positives are required, when items must be deleted from the filter, or when data sets are small enough to fit comfortably into traditional exact lookup structures.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions when multiple threads try to set bits in the same underlying memory word of a Bloom filter?",
+          "answer": "By using atomic operations with compare-and-swap (CAS) or atomic fetch-or instructions to modify the word lock-free."
+        },
+        {
+          "question": "Why can memory ordering be relaxed when updating individual bit positions in a concurrent Bloom filter?",
+          "answer": "Because individual bit insertions are independent hash mappings and do not require strict ordering relative to other unrelated inserts."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Concurrent Hash Tables",
+        "Hazard Pointer Memory Management",
+        "Probabilistic Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-19T21:42:24.651488+00:00",
+      "run_number": 5131
     }
   ]
 }
