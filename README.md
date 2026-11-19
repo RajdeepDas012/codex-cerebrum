@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5118** |
-| Last Updated | `2026-11-19T13:10:15.966182+00:00` |
-| Dataset Size | `5118 entries` |
+| Total Topics Learned | **5119** |
+| Last Updated | `2026-11-19T13:13:37.386906+00:00` |
+| Dataset Size | `5119 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3712 |
+| data-structures | 3713 |
 | algorithms | 321 |
 | trading-strategies | 228 |
 | crypto-blockchain | 209 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic lazy-propagation and range-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput associative range queries and multi-core parallel interval update execution in real-time financial trading analytics engines and concurrent metric aggregation systems`
 - `Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic character-ranking and bit-vector-manipulating CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel range frequency query execution in real-time full-text search engines and concurrent genomic sequence analysis platforms`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority updates and multi-core parallel decrease-key execution in real-time graph algorithm engines and concurrent Dijkstra shortest-path computation pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-way search tree operations and multi-core parallel sorted range queries execution in real-time in-memory database indexing layers and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and peer-discovery CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized node lookup and multi-core parallel distributed routing execution in real-time peer-to-peer overlay networks and concurrent cloud storage discovery services`
-- `Implementation of a lock-free thread-safe concurrent Left-Leaning Red-Black Tree using atomic color-flipping and rotation-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-balancing ordered map operations and multi-core parallel sorted iteration execution in real-time in-memory database engines and concurrent transactional key-value stores`
 
 <!-- STATS_END -->
 
