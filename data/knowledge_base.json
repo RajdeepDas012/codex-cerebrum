@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5133,
-    "last_updated": "2026-11-19T21:48:50.892450+00:00",
-    "total_topics_learned": 5133
+    "total_runs": 5134,
+    "last_updated": "2026-11-19T21:52:02.024091+00:00",
+    "total_topics_learned": 5134
   },
   "entries": [
     {
@@ -244120,6 +244120,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-19T21:48:50.892404+00:00",
       "run_number": 5133
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BKD-Tree using atomic leaf-block-splitting and multi-dimensional-bounding-box-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial-temporal indexing and multi-core parallel point-in-polygon querying execution in real-time ride-hailing dispatching engines and concurrent location-based geofencing services",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free, thread-safe concurrent BKD-Tree tailored for multi-dimensional spatial-temporal data. By utilizing atomic leaf-block-splitting, bounding-box updates via Compare-And-Swap (CAS), and hazard pointers for safe memory management, it achieves high-throughput concurrent indexing and real-time point-in-polygon evaluations.",
+      "key_points": [
+        "Utilizes atomic leaf-block-splitting and multi-dimensional bounding-box CAS operations to eliminate traditional structural locks during concurrent spatial insertions.",
+        "Employs hazard pointer memory reclamation to securely manage node deletions and splits in dynamic multi-dimensional spaces without read-side blocking.",
+        "Enables parallel spatial-temporal querying for high-frequency workloads such as real-time vehicle dispatch and dynamic geofencing bounds checking.",
+        "Maintains multi-dimensional balance and sub-tree partitioning across concurrent updates without cascading global lock acquisition bottlenecks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of validating a multi-dimensional spatial bounding box update using an atomic CAS loop in a concurrent BKD-Tree.",
+        "correct": "bool updateBoundingBox(std::atomic<BoundingBox*>& current_box, BoundingBox* new_box) {\n    BoundingBox* expected = current_box.load();\n    while (true) {\n        new_box->merge(*expected);\n        if (current_box.compare_exchange_weak(expected, new_box)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool updateBoundingBox(BoundingBox* current_box, BoundingBox* new_box) {\n    // Missing lock or atomic operation, leading to race conditions on bounding box updates\n    current_box->merge(*new_box);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely protect nodes with hazard pointers during concurrent multi-dimensional tree traversals, causing use-after-free race conditions.",
+        "Attempting to lock entire subtrees during leaf splitting rather than employing fine-grained atomic adjustments on bounding boxes."
+      ],
+      "best_practices": [
+        "Protect every pointer read from shared tree nodes with hazard pointers before traversing child boundaries.",
+        "Keep atomic bounding-box recalculation loops compact and bounded to avoid thread starvation under high concurrency."
+      ],
+      "when_to_use": "Use this data structure when building low-latency spatial-temporal systems that require massive parallel point location queries and high-frequency concurrent point insertions.",
+      "when_not_to_use": "Avoid in simpler, single-threaded applications or when the dataset is purely one-dimensional, where simpler concurrent trees or standard structures introduce less complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions when a thread is traversing a BKD-Tree leaf that another thread is splitting?",
+          "answer": "Hazard pointers publish the node address a thread is currently reading, ensuring that garbage collection reclamation logic defers freeing the node until no thread holds a hazard reference to it."
+        },
+        {
+          "question": "Why is fine-grained CAS preferred over global read-write locks for updating multi-dimensional bounding boxes in concurrent spatial indexes?",
+          "answer": "Global locks serialize all structural modifications and traversals, destroying throughput on multi-core hardware, whereas CAS allows non-blocking localized updates to bounding dimensions."
+        }
+      ],
+      "related_topics": [
+        "Concurrent R-Tree",
+        "Hazard Pointer Memory Management",
+        "Lock-Free Spatial Indexing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-19T21:52:02.024072+00:00",
+      "run_number": 5134
     }
   ]
 }
