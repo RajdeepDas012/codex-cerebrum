@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5097,
-    "last_updated": "2026-11-19T03:08:38.375615+00:00",
-    "total_topics_learned": 5097
+    "total_runs": 5098,
+    "last_updated": "2026-11-19T03:11:49.975124+00:00",
+    "total_topics_learned": 5098
   },
   "entries": [
     {
@@ -242417,6 +242417,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-19T03:08:38.375598+00:00",
       "run_number": 5097
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Disjoint-Set (Union-Find) data structure using atomic path-halving and rank-combining CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class merging and multi-core parallel connected components execution in real-time social network graph partitioning and concurrent image segmentation pipelines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free thread-safe Disjoint-Set data structure utilizing atomic Compare-And-Swap (CAS) operations for path-halving and rank-combining. It incorporates hazard pointers to guarantee safe memory reclamation, enabling high-performance concurrent equivalence class merging and parallel graph connected components execution.",
+      "key_points": [
+        "Utilizes atomic pointer updates via CAS to manage parent pointers without locking.",
+        "Implements lock-free path-halving during find operations to optimize tree height atomically.",
+        "Combines ranks carefully using CAS to merge disjoint sets without race conditions.",
+        "Employs hazard pointers to safely defer memory reclamation of nodes in dynamic multi-threaded environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic find operation with path-halving using compare-and-swap primitives.",
+        "correct": "Node* find(Node* node) {\n    while (true) {\n        Node* parent = node->parent.load();\n        if (parent == node) return node;\n        Node* grandparent = parent->parent.load();\n        if (parent == grandparent) return parent;\n        node->parent.compare_exchange_weak(parent, grandparent);\n        node = grandparent;\n    }\n}",
+        "wrong": "Node* find(Node* node) {\n    if (node->parent == node) return node;\n    return node->parent = find(node->parent); // Non-atomic update prone to data races\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for intermediate structural changes during concurrent path-halving, leading to missed updates.",
+        "Improper memory management resulting in ABA problems or use-after-free errors when nodes are merged concurrently."
+      ],
+      "best_practices": [
+        "Protect dynamically traversed nodes with hazard pointers before loading parent references.",
+        "Ensure lock-free retry loops handle contention gracefully using exponential backoff or yield instructions."
+      ],
+      "when_to_use": "Use when multiple threads must simultaneously perform find and union operations on disjoint sets under heavy contention, such as in parallel graph algorithms or image processing.",
+      "when_not_to_use": "Avoid in single-threaded environments or low-concurrency settings where standard lock-based or simple pointer-based Union-Find structures introduce unnecessary complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you handle race conditions during the union operation in a lock-free Disjoint-Set?",
+          "answer": "By reading both roots, comparing ranks, and using an atomic CAS operation to update the parent pointer of the lower-rank root to point to the higher-rank root."
+        },
+        {
+          "question": "Why is hazard pointer memory reclamation preferred over standard reference counting in lock-free Disjoint-Sets?",
+          "answer": "Hazard pointers avoid the heavy atomic write overhead on shared reference counters, reducing cache contention while ensuring lock-free progress guarantees."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Algorithms",
+        "Parallel Graph Processing"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-19T03:11:49.975106+00:00",
+      "run_number": 5098
     }
   ]
 }
