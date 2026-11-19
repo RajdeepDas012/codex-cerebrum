@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5116** |
-| Last Updated | `2026-11-19T13:03:13.772835+00:00` |
-| Dataset Size | `5116 entries` |
+| Total Topics Learned | **5117** |
+| Last Updated | `2026-11-19T13:06:52.099475+00:00` |
+| Dataset Size | `5117 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3710 |
+| data-structures | 3711 |
 | algorithms | 321 |
 | trading-strategies | 228 |
 | crypto-blockchain | 209 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority updates and multi-core parallel decrease-key execution in real-time graph algorithm engines and concurrent Dijkstra shortest-path computation pipelines`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-way search tree operations and multi-core parallel sorted range queries execution in real-time in-memory database indexing layers and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent Skip-Graph using atomic routing-pointer-updating and peer-discovery CAS primitives alongside hazard pointer memory reclamation for high-throughput decentralized node lookup and multi-core parallel distributed routing execution in real-time peer-to-peer overlay networks and concurrent cloud storage discovery services`
 - `Implementation of a lock-free thread-safe concurrent Left-Leaning Red-Black Tree using atomic color-flipping and rotation-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput self-balancing ordered map operations and multi-core parallel sorted iteration execution in real-time in-memory database engines and concurrent transactional key-value stores`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core parallel schedule collision detection execution in real-time calendar event management systems and concurrent financial derivatives risk analysis engines`
-- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and index-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job dispatching execution in real-time operating system task schedulers and concurrent asynchronous event-driven server frameworks`
 
 <!-- STATS_END -->
 

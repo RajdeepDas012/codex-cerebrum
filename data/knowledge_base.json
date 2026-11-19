@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5116,
-    "last_updated": "2026-11-19T13:03:13.772835+00:00",
-    "total_topics_learned": 5116
+    "total_runs": 5117,
+    "last_updated": "2026-11-19T13:06:52.099475+00:00",
+    "total_topics_learned": 5117
   },
   "entries": [
     {
@@ -243320,6 +243320,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-19T13:03:13.772816+00:00",
       "run_number": 5116
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic min-pointer-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority updates and multi-core parallel decrease-key execution in real-time graph algorithm engines and concurrent Dijkstra shortest-path computation pipelines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the construction of a non-blocking concurrent Fibonacci Heap utilizing atomic Compare-And-Swap (CAS) instructions and hazard pointers. It enables multiple threads to perform high-throughput decrease-key operations and priority updates safely without traditional mutual exclusion locks, making it ideal for parallel graph algorithms.",
+      "key_points": [
+        "Utilizes atomic min-pointer-updating and node-merging CAS primitives to guarantee progress and thread safety without locks.",
+        "Employs hazard pointer memory reclamation to safely manage deleted or merged node memories without blocking active threads.",
+        "Supports amortized $O(1)$ decrease-key operations concurrently across multiple processor cores.",
+        "Crucial for high-throughput graph processing frameworks executing concurrent shortest-path computations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic min-pointer update pattern using a lock-free CAS loop during node insertion in a concurrent Fibonacci Heap.",
+        "correct": "void insert(Node* new_node) {\n    Node* old_min;\n    do {\n        old_min = min_ptr.load(std::memory_order_relaxed);\n        new_node->right = old_min;\n    } while (!min_ptr.compare_exchange_weak(old_min, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert(Node* new_node) {\n    mutex.lock();\n    new_node->right = min_ptr;\n    min_ptr = new_node;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes accessed during pointer traversal with hazard pointers, leading to ABA problems and memory corruption.",
+        "Using sequential consistency everywhere, which creates heavy memory bus traffic and degrades multi-core throughput."
+      ],
+      "best_practices": [
+        "Design tree pointer structures to explicitly integrate hazard pointer registration before traversing nodes.",
+        "Leverage relaxed memory ordering for non-dependent loads while enforcing acquire-release semantics strictly on CAS state transitions."
+      ],
+      "when_to_use": "Use when building highly concurrent path-finding or graph analysis systems where multiple worker threads continuously decrease priorities and extract minimums.",
+      "when_not_to_use": "Avoid in single-threaded applications or simpler workloads where standard binary heaps or mutex-backed priority queues provide lower constant overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when multiple threads modify minimum pointers and roots concurrently in a lock-free heap?",
+          "answer": "By using tagged pointers (version counters combined with memory addresses) or hazard pointers that ensure nodes are not reclaimed while another thread holds a reference."
+        },
+        {
+          "question": "Why are Fibonacci heaps particularly challenging to make lock-free compared to binary heaps?",
+          "answer": "Because structural adjustments like cascading cuts and root-list merging involve complex, multi-step pointer modifications that are difficult to atomize into a single CAS operation."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Priority Queue",
+        "Parallel Graph Shortest Path Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-19T13:06:52.099456+00:00",
+      "run_number": 5117
     }
   ]
 }
