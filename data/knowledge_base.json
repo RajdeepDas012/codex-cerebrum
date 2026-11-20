@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5163,
-    "last_updated": "2026-11-20T11:44:27.270717+00:00",
-    "total_topics_learned": 5163
+    "total_runs": 5164,
+    "last_updated": "2026-11-20T11:47:41.509271+00:00",
+    "total_topics_learned": 5164
   },
   "entries": [
     {
@@ -245543,6 +245543,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T11:44:27.270696+00:00",
       "run_number": 5163
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate quantile estimation and multi-core parallel streaming percentile calculation execution in real-time latency monitoring systems and concurrent performance telemetry analytics platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free, thread-safe concurrent T-Digest data structure. By utilizing atomic centroid-merging and quantile-compressing CAS operations combined with hazard pointers, it allows high-throughput streaming percentile calculation and accurate quantile estimation across multiple cores without lock contention.",
+      "key_points": [
+        "Uses atomic centroid-merging and quantile-compressing primitives to combine data sketches lock-free.",
+        "Employs hazard pointer memory reclamation to ensure safe concurrent deletion and safe node reuse without garbage collection pauses.",
+        "Maintains high accuracy at extreme tails (e.g., p99, p99.9) of data distributions compared to traditional fixed-size summaries.",
+        "Enables high-throughput multi-core parallel ingestion and querying for real-time telemetry and latency monitoring."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual structure of an atomic update in a lock-free T-Digest node using hazard pointers for safe memory access.",
+        "correct": "class TDigestNode:\n    def __init__(self, mean, weight):\n        self.mean = mean\n        self.weight = weight\n        self.next = None\n\n# Atomic CAS-based update sketch conceptually represented\ndef atomic_add_centroid(head_ref, new_centroid, hazard_manager):\n    while True:\n        old_head = head_ref.load()\n        hazard_manager.protect(old_head)\n        if head_ref.load() != old_head:\n            continue\n        new_centroid.next = old_head\n        if head_ref.compare_and_swap(old_head, new_centroid):\n            hazard_manager.release(old_head)\n            break",
+        "wrong": "def unsafe_add_centroid(head, new_centroid):\n    new_centroid.next = head.next\n    head.next = new_centroid  # Race condition prone without atomic CAS"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically allocated nodes with hazard pointers, leading to use-after-free bugs during compression.",
+        "Over-compressing the digest too frequently, which degrades tail-quantile accuracy under heavy ingestion loads."
+      ],
+      "best_practices": [
+        "Batch incoming data into local thread buffers before executing atomic aggregation steps on the shared T-Digest structure.",
+        "Tune the compression factor (delta) parameter carefully to balance memory consumption and tail-accuracy requirements."
+      ],
+      "when_to_use": "When building high-throughput real-time telemetry pipelines or latency monitoring systems that require accurate extreme tail-percentile calculations across concurrent streams.",
+      "when_not_to_use": "When exact quantile computation is mandatory over bounded memory, or when data volume is low enough that standard sorting-based approaches suffice.",
+      "interview_questions": [
+        {
+          "question": "Why is standard sorting inefficient for calculating percentiles in high-throughput streaming systems?",
+          "answer": "Sorting requires O(N log N) time and unbounded memory storage to keep all raw observations, which is unfeasible for real-time, high-velocity streams."
+        },
+        {
+          "question": "How do hazard pointers assist in lock-free concurrent data structures like a concurrent T-Digest?",
+          "answer": "Hazard pointers safely manage memory reclamation by letting threads announce which nodes they are reading, preventing other threads from prematurely freeing those nodes."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Priority Queue",
+        "concurrent Bloom Filter",
+        "stream processing and quantile sketches"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-20T11:47:41.509251+00:00",
+      "run_number": 5164
     }
   ]
 }
