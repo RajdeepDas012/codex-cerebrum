@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5172** |
-| Last Updated | `2026-11-20T20:04:04.740746+00:00` |
-| Dataset Size | `5172 entries` |
+| Total Topics Learned | **5173** |
+| Last Updated | `2026-11-20T20:07:16.320553+00:00` |
+| Dataset Size | `5173 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3763 |
+| data-structures | 3764 |
 | algorithms | 323 |
 | trading-strategies | 228 |
 | crypto-blockchain | 210 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-cascading and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel sorted range query execution in real-time in-memory key-value stores and concurrent transactional database indexing engines`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic bucket-relocation and fingerprint-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership testing and multi-core parallel duplicate deletion execution in real-time database query caching layers and concurrent distributed storage deduplication systems`
 - `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-probing and slot-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel duplicate filtering execution in real-time database query optimization pipelines and concurrent distributed storage caching layers`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered index storage and multi-core parallel range scanning execution in real-time relational database storage engines and concurrent in-memory caching platforms`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-box-splitting and dimension-alternating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel spatial point location execution in real-time recommendation spatial indexing engines and concurrent computer vision point cloud processing platforms`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and pointer-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed key caching execution in real-time in-memory caching systems and concurrent transactional key-value databases`
 
 <!-- STATS_END -->
 

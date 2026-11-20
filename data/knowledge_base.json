@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5172,
-    "last_updated": "2026-11-20T20:04:04.740746+00:00",
-    "total_topics_learned": 5172
+    "total_runs": 5173,
+    "last_updated": "2026-11-20T20:07:16.320553+00:00",
+    "total_topics_learned": 5173
   },
   "entries": [
     {
@@ -245969,6 +245969,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T20:04:04.740728+00:00",
       "run_number": 5172
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip-List using atomic forward-pointer-cascading and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel sorted range query execution in real-time in-memory key-value stores and concurrent transactional database indexing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Skip-List utilizes atomic forward-pointer-cascading and node-splicing CAS primitives alongside hazard pointers to achieve scalable multi-core probabilistic ordered set operations without global locks. It enables high-throughput sorted range queries and insertions, making it essential for real-time in-memory key-value stores and transactional database indexing engines.",
+      "key_points": [
+        "Employs probabilistic multi-level indexing to achieve expected O(log n) search, insertion, and deletion times without rebalancing overheads.",
+        "Uses atomic compare-and-swap (CAS) primitives for forward-pointer-cascading and node-splicing to ensure thread safety and lock-free progress.",
+        "Integrates hazard pointer memory reclamation to safely manage dynamic node deletions and prevent memory corruption or premature deallocation.",
+        "Facilitates efficient multi-core parallel sorted range queries and high-throughput key-value store operations under heavy contention."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic node-splicing CAS loop pattern for inserting a node into a lock-free skip-list level.",
+        "correct": "bool insert_level(Node* pred, Node* curr, Node* newNode, int level) {\n    while (true) {\n        newNode->next[level].store(curr, std::memory_order_relaxed);\n        if (pred->next[level].compare_exchange_weak(curr, newNode, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n        if (pred->next[level].load(std::memory_order_acquire) != curr) return false;\n    }\n}",
+        "wrong": "bool insert_level_wrong(Node* pred, Node* curr, Node* newNode, int level) {\n    newNode->next[level] = curr;\n    pred->next[level] = newNode;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to use hazard pointers or epoch-based reclamation, leading to use-after-free bugs when threads traverse nodes concurrently being spliced out.",
+        "Neglecting to validate that predecessor and successor pointers remain unchanged across multiple levels during multi-step structural modifications."
+      ],
+      "best_practices": [
+        "Mark nodes as logically deleted (e.g., setting a atomic deletion bit on the forward pointer) before physically unlinking them via CAS.",
+        "Ensure memory ordering constraints (acquire-release semantics) are strictly maintained around all atomic pointer loads and stores."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory ordered data structures that require concurrent range queries and frequent updates under heavy multi-core contention.",
+      "when_not_to_use": "Avoid in memory-constrained environments where the multiple forward pointers per node create excessive memory overhead, or when simple single-threaded performance is sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent ABA problems when performing CAS operations on skip-list forward pointers?",
+          "answer": "By utilizing tagged pointers that incorporate a version count or state bit (such as a deletion mark) alongside the memory address, or by leveraging hazard pointers/epoch-based reclamation."
+        },
+        {
+          "question": "Why is logical deletion required before physical unlinking in a lock-free skip-list?",
+          "answer": "Logical deletion ensures that concurrent inserters and traversers recognize a node is being removed immediately, preventing them from linking new nodes past a pointer that is about to be spliced out."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free B+ Tree",
+        "Epoch-Based Memory Reclamation"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-20T20:07:16.320534+00:00",
+      "run_number": 5173
     }
   ]
 }
