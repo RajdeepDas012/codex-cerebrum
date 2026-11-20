@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5148** |
-| Last Updated | `2026-11-20T03:28:39.981647+00:00` |
-| Dataset Size | `5148 entries` |
+| Total Topics Learned | **5149** |
+| Last Updated | `2026-11-20T03:31:52.779608+00:00` |
+| Dataset Size | `5149 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3740 |
+| data-structures | 3741 |
 | algorithms | 322 |
 | trading-strategies | 228 |
 | crypto-blockchain | 210 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent resource allocation scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Fibonacci Heap using atomic root-linking and minimum-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput amortized priority queue operations and multi-core parallel decrease-key execution in real-time graph algorithm computation engines and concurrent Dijkstra shortest-path routing systems`
 - `Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index storage and parallel range querying in real-time transactional database systems and concurrent in-memory caching engines`
 - `Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and rotation-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic balanced search tree operations and multi-core parallel sorted range query execution in real-time in-memory caching systems and concurrent transactional key-value databases`
 - `Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic root-linking and null-path-length-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel merge execution in real-time pathfinding game engines and concurrent task scheduling systems`
-- `Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput priority queue operations and multi-core parallel decrease-key execution in real-time event simulation engines and concurrent job scheduling systems`
 
 <!-- STATS_END -->
 

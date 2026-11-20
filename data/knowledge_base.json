@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5148,
-    "last_updated": "2026-11-20T03:28:39.981647+00:00",
-    "total_topics_learned": 5148
+    "total_runs": 5149,
+    "last_updated": "2026-11-20T03:31:52.779608+00:00",
+    "total_topics_learned": 5149
   },
   "entries": [
     {
@@ -244829,6 +244829,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T03:28:39.981620+00:00",
       "run_number": 5148
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic node-overlapping and endpoint-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput temporal range overlapping queries and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent resource allocation scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free Interval Tree that manages dynamic intervals and supports efficient overlapping range queries. By combining atomic Compare-And-Swap (CAS) operations with hazard pointers, multiple threads can safely insert, delete, and query time ranges simultaneously without blocking.",
+      "key_points": [
+        "Utilizes atomic primitives like CAS to manage node insertions and max-endpoint updates across multiple concurrent threads.",
+        "Employs hazard pointers to safely reclaim memory of deleted interval nodes without premature deallocation or memory leaks.",
+        "Maintains structural invariants for overlapping ranges to ensure correct and complete temporal query results.",
+        "Optimizes multi-core execution paths for high-throughput parallel event scheduling and resource allocation tasks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic endpoint updates and hazard pointer protection during concurrent interval insertion.",
+        "correct": "bool insert_interval(ConcurrentIntervalTree* tree, Interval* new_node) {\n    HazardPointerGuard g;\n    while (true) {\n        Node* root = g.protect(tree->root);\n        if (cas_insert(root, new_node)) return true;\n    }\n}",
+        "wrong": "bool insert_interval(ConcurrentIntervalTree* tree, Interval* new_node) {\n    tree->root = new_node; // Unsafe non-atomic write leading to race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to update the subtree's maximum endpoint atomically when new intervals are inserted.",
+        "Failing to protect nodes with hazard pointers, leading to use-after-free bugs during multi-threaded traversal."
+      ],
+      "best_practices": [
+        "Always wrap node traversal references inside hazard pointer scopes before performing validation checks.",
+        "Keep atomic operations localized to endpoint updates and child pointer modifications to reduce CAS retry contention."
+      ],
+      "when_to_use": "Use when multiple threads frequently perform overlapping range queries and dynamic interval modifications, such as in calendar scheduling systems or interval-based resource allocators.",
+      "when_not_to_use": "Avoid when data is strictly accessed by a single thread or when standard single-point key lookups are sufficient, as the overhead of lock-free tree maintenance and hazard pointers is unnecessary.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node reclamation safely in a lock-free interval tree without using garbage collection?",
+          "answer": "By using hazard pointers to register threads' active references to specific nodes, ensuring a node is only freed after no thread holds a hazard pointer to it."
+        },
+        {
+          "question": "What is the primary challenge when updating maximum endpoint fields concurrently in an interval tree?",
+          "answer": "Ensuring that updates to subtree maximums propagate correctly and atomically up the tree via CAS loops without losing concurrent updates from other insertion threads."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-20T03:31:52.779587+00:00",
+      "run_number": 5149
     }
   ]
 }
