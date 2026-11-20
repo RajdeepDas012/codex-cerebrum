@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5176,
-    "last_updated": "2026-11-20T20:16:49.618467+00:00",
-    "total_topics_learned": 5176
+    "total_runs": 5177,
+    "last_updated": "2026-11-20T20:20:00.718748+00:00",
+    "total_topics_learned": 5177
   },
   "entries": [
     {
@@ -246159,6 +246159,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T20:16:49.618449+00:00",
       "run_number": 5176
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Pairing Heap using atomic root-linking and multi-pass-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput flexible priority queue operations and multi-core parallel decrease-key execution in real-time discrete event simulation engines and concurrent pathfinding route planners",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Pairing Heap that supports high-throughput priority queue operations across multiple threads without explicit locks. It uses atomic primitives like Compare-And-Swap (CAS) for root-linking and multi-pass merging, paired with hazard pointers to guarantee safe memory reclamation in multi-core environments.",
+      "key_points": [
+        "Utilizes atomic root-linking and multi-pass-merging CAS primitives to manipulate heap structures safely without global locking.",
+        "Employs hazard pointer memory reclamation to prevent premature deallocation of nodes accessed concurrently by multiple threads.",
+        "Facilitates high-throughput flexible priority queue operations suitable for real-time systems.",
+        "Enables multi-core parallel decrease-key execution critical for graph routing algorithms and discrete event simulations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking via CAS and safe hazard pointer protection in a concurrent heap node access.",
+        "correct": "bool link_roots(std::atomic<Node*>& root, Node* new_root, HazardPointer& hp) {\n    Node* current = root.load();\n    hp.protect(current);\n    if (root.load() != current) return false;\n    new_root->child_ptr = current;\n    return root.compare_exchange_weak(current, new_root);\n}",
+        "wrong": "bool link_roots_unsafe(Node* root, Node* new_root) {\n    new_root->child_ptr = root;\n    root = new_root;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect shared nodes with hazard pointers before reading child pointers, leading to use-after-free bugs.",
+        "Assuming standard non-blocking multi-pass merging works without retry loops under high thread contention."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer dereferences in hazard pointer registration blocks before executing structural modifications.",
+        "Use exponential backoff strategies in CAS retry loops to minimize bus contention on heavily contested root pointers."
+      ],
+      "when_to_use": "Use when building concurrent pathfinding route planners or real-time simulation engines requiring frequent decrease-key and merge operations across multiple cores.",
+      "when_not_to_use": "Avoid in simple, single-threaded applications or environments where standard mutex-based heaps provide sufficient throughput with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent root-linking in a lock-free pairing heap?",
+          "answer": "Hazard pointers explicitly publish the nodes a thread is currently accessing, preventing other threads from reclaiming or freeing those memory addresses until the reader thread unlinks them, thereby mitigating race conditions."
+        },
+        {
+          "question": "Why is multi-pass merging challenging to implement in a lock-free environment compared to standard sequential pairing heaps?",
+          "answer": "Multi-pass merging involves traversing and restructuring multiple sublists concurrently. Without locks, intermediate pointer states can be modified by competing threads, requiring careful CAS-based validation loops to maintain structural integrity."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers",
+        "Lock-Free Binomial Heap",
+        "Compare-And-Swap (CAS) Primitives",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-20T20:20:00.718730+00:00",
+      "run_number": 5177
     }
   ]
 }
