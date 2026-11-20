@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5146,
-    "last_updated": "2026-11-20T03:22:14.969945+00:00",
-    "total_topics_learned": 5146
+    "total_runs": 5147,
+    "last_updated": "2026-11-20T03:25:27.230482+00:00",
+    "total_topics_learned": 5147
   },
   "entries": [
     {
@@ -244735,6 +244735,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T03:22:14.969927+00:00",
       "run_number": 5146
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and structural-rebalancing CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-core index storage and parallel range querying in real-time transactional database systems and concurrent in-memory caching engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free concurrent B-Tree optimized for multi-core systems. By employing atomic compare-and-swap (CAS) primitives for node splitting and structural rebalancing alongside hazard pointers, it ensures safe memory reclamation and high-throughput parallel execution.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to manage multi-core concurrent node splits and structural updates without traditional locks.",
+        "Employs hazard pointers to track active thread references and safely reclaim memory from deleted or split tree nodes without race conditions.",
+        "Guarantees high-throughput parallel range queries by allowing multiple threads to traverse deeply branched nodes simultaneously.",
+        "Balances read and write workloads effectively, minimizing lock contention in large-scale transactional database systems and in-memory caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic node splitting pattern in a lock-free concurrent B-Tree using CAS primitives.",
+        "correct": "bool trySplitNode(BTreeNode* node, int key, void* value) {\n    NodeVersion old_version = node->version.load(std::memory_order_acquire);\n    if (node->isFull() && node->version.compare_exchange_weak(old_version, createSplitVersion(old_version), std::memory_order_release)) {\n        executeStructuralSplit(node);\n        return true;\n    }\n    return false;\n}",
+        "wrong": "bool trySplitNode(BTreeNode* node, int key, void* value) {\n    mutex.lock();\n    if (node->isFull()) {\n        node->split();\n    }\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to safely reclaim node memory, leading to severe ABA problems and memory leaks during high-frequency parallel splits.",
+        "Using coarse-grained locks during structural rebalancing operations, which defeats the performance gains of lock-free traversal."
+      ],
+      "best_practices": [
+        "Integrate hazard pointers or epoch-based memory reclamation to defer deallocation until all accessing threads have finished traversal.",
+        "Design node layouts to fit cache lines where possible to reduce cache misses during multi-core parallel range lookups."
+      ],
+      "when_to_use": "Use when building high-performance storage engines, multi-threaded database indexes, or distributed key-value caches that experience heavy concurrent read and write pressure.",
+      "when_not_to_use": "Avoid in single-threaded environments or simple applications where the implementation complexity of lock-free synchronization and hazard pointers outweighs throughput benefits.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic node-splitting via CAS in a concurrent B-Tree?",
+          "answer": "By pairing a version counter or state tag with the node pointer in the CAS word, ensuring that any structural modification alters the version and invalidates stale assumptions."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free multi-core B-Trees?",
+          "answer": "Hazard pointers provide deterministic, low-latency memory reclamation without the unpredictable pause times of tracing garbage collectors, which is crucial for real-time systems."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Lock-Free Concurrent Skip Lists",
+        "Cache-Conscious Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-20T03:25:27.230464+00:00",
+      "run_number": 5147
     }
   ]
 }
