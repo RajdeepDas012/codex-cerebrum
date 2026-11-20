@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5167** |
-| Last Updated | `2026-11-20T11:57:19.358484+00:00` |
-| Dataset Size | `5167 entries` |
+| Total Topics Learned | **5168** |
+| Last Updated | `2026-11-20T19:51:17.198115+00:00` |
+| Dataset Size | `5168 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3758 |
+| data-structures | 3759 |
 | algorithms | 323 |
 | trading-strategies | 228 |
 | crypto-blockchain | 210 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and pointer-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed key caching execution in real-time in-memory caching systems and concurrent transactional key-value databases`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic matrix-row-incrementing and hash-bucketing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core parallel event stream processing execution in real-time network traffic monitoring systems and concurrent clickstream analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency computation and multi-core parallel dynamic array aggregation execution in real-time streaming analytics platforms and concurrent leaderboard ranking engines`
 - `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing and multi-core parallel IP address lookup execution in real-time cloud networking load balancers and concurrent software-defined networking packet forwarding engines`
 - `Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate quantile estimation and multi-core parallel streaming percentile calculation execution in real-time latency monitoring systems and concurrent performance telemetry analytics platforms`
-- `Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bit-setting and word-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic membership testing and multi-core parallel duplicate filtering execution in real-time web crawler URL deduplication pipelines and concurrent database query caching layers`
 
 <!-- STATS_END -->
 
