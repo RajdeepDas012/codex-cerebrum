@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5169** |
-| Last Updated | `2026-11-20T19:54:28.124603+00:00` |
-| Dataset Size | `5169 entries` |
+| Total Topics Learned | **5170** |
+| Last Updated | `2026-11-20T19:57:39.733579+00:00` |
+| Dataset Size | `5170 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3760 |
+| data-structures | 3761 |
 | algorithms | 323 |
 | trading-strategies | 228 |
 | crypto-blockchain | 210 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput ordered index storage and multi-core parallel range scanning execution in real-time relational database storage engines and concurrent in-memory caching platforms`
 - `Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-box-splitting and dimension-alternating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel spatial point location execution in real-time recommendation spatial indexing engines and concurrent computer vision point cloud processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-splaying and pointer-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search tree operations and multi-core parallel frequently-accessed key caching execution in real-time in-memory caching systems and concurrent transactional key-value databases`
 - `Implementation of a lock-free thread-safe concurrent Count-Min Sketch using atomic matrix-row-incrementing and hash-bucketing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency estimation and multi-core parallel event stream processing execution in real-time network traffic monitoring systems and concurrent clickstream analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent Fenwick Tree using atomic point-updating and prefix-sum-querying CAS primitives alongside hazard pointer memory reclamation for high-throughput cumulative frequency computation and multi-core parallel dynamic array aggregation execution in real-time streaming analytics platforms and concurrent leaderboard ranking engines`
-- `Implementation of a lock-free thread-safe concurrent Radix Tree using atomic child-node-allocating and path-compressing CAS primitives alongside hazard pointer memory reclamation for high-throughput prefix routing and multi-core parallel IP address lookup execution in real-time cloud networking load balancers and concurrent software-defined networking packet forwarding engines`
 
 <!-- STATS_END -->
 
