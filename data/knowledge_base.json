@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5181,
-    "last_updated": "2026-11-20T20:32:47.721253+00:00",
-    "total_topics_learned": 5181
+    "total_runs": 5182,
+    "last_updated": "2026-11-20T20:36:00.181040+00:00",
+    "total_topics_learned": 5182
   },
   "entries": [
     {
@@ -246397,6 +246397,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-20T20:32:47.721236+00:00",
       "run_number": 5181
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-rectangle-expanding and node-overflow-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geographical bounding box querying execution in real-time ride-sharing dispatch platforms and concurrent location-based service database engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent, lock-free spatial indexing R-Tree utilizing atomic Compare-And-Swap (CAS) primitives for bounding box expansions and node overflows. It ensures safe memory management through hazard pointers, enabling high-performance multi-core execution for real-time location-based services.",
+      "key_points": [
+        "Utilizes atomic primitives to safely update spatial bounding rectangles across multiple threads without locks.",
+        "Employs node-overflow-splitting CAS mechanisms to handle concurrent insertions into full spatial index nodes.",
+        "Integrates hazard pointers for robust, lock-free memory reclamation of deleted or split tree nodes.",
+        "Optimizes multi-core parallel geographical bounding box queries for high-throughput spatial search operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic operation for updating a bounding rectangle in a concurrent R-Tree node.",
+        "correct": "bool update_bounds(std::atomic<BoundingBox*>& current_box, BoundingBox* new_expanded_box) {\n    BoundingBox* old_box = current_box.load();\n    do {\n        *new_expanded_box = merge(*old_box, *new_expanded_box);\n    } while (!current_box.compare_exchange_weak(old_box, new_expanded_box));\n    return true;\n}",
+        "wrong": "bool update_bounds(BoundingBox* current_box, BoundingBox* new_box) {\n    // Missing atomicity and thread safety on shared spatial node updates\n    *current_box = merge(*current_box, *new_box);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node memory during concurrent structural modifications, leading to use-after-free bugs.",
+        "Using coarse-grained locking during node-overflow splits which degrades multi-core throughput."
+      ],
+      "best_practices": [
+        "Employ hazard pointers or epoch-based memory reclamation to manage node lifecycles safely in lock-free trees.",
+        "Keep atomic sections small and retry loops tight when expanding bounding boxes or splitting overflowed nodes."
+      ],
+      "when_to_use": "Use when building high-concurrency spatial databases, ride-sharing driver-matching engines, or real-time GIS platforms requiring intensive multi-core bounding box queries.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low concurrency where standard locking R-Trees provide simpler maintenance and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node-overflow splits atomically in a lock-free R-Tree without blocking concurrent queries?",
+          "answer": "By using CAS operations to swap pointer references to the newly split child nodes and utilizing hazard pointers to ensure readers can still safely traverse old references until reclamation is safe."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free spatial tree structures?",
+          "answer": "Hazard pointers avoid the heavy memory contention and cache-line bouncing associated with atomic reference count increments on shared nodes during high-frequency parallel traversals."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B+ Trees",
+        "Concurrent Quadtrees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-20T20:36:00.181022+00:00",
+      "run_number": 5182
     }
   ]
 }
