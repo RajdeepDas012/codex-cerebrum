@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5185,
-    "last_updated": "2026-11-21T01:21:56.684353+00:00",
-    "total_topics_learned": 5185
+    "total_runs": 5186,
+    "last_updated": "2026-11-21T01:25:10.736932+00:00",
+    "total_topics_learned": 5186
   },
   "entries": [
     {
@@ -246585,6 +246585,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T01:21:56.684332+00:00",
       "run_number": 5185
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and key-redistributing CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed index caching and multi-core parallel range querying execution in real-time relational database storage engines and concurrent file system metadata indexing platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent B-Tree enables multiple threads to perform searches, insertions, and deletions simultaneously without acquiring mutual exclusion locks, using compare-and-swap (CAS) primitives and hazard pointers to safely manage node splits and memory reclamation. This architecture prevents thread contention bottlenecks, making it ideal for high-throughput disk-backed database indexes and file system metadata engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to implement lock-free node-splitting and key-redistribution mechanics.",
+        "Employs hazard pointers to track active thread references to nodes, ensuring safe memory reclamation without premature deallocation.",
+        "Maintains structural balance concurrently through cooperative multithreaded insertion assists and logical deletion markers.",
+        "Maximizes parallel throughput for range queries and dynamic workloads in high-performance relational database storage engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer protection around a concurrent node access during traversal",
+        "correct": "HazardPointer hp;\nNode* current = hp.protect(&root);\nwhile (current && !current->isLeaf()) {\n    Node* next = find_child_cas(current, key);\n    current = hp.protect(next);\n}",
+        "wrong": "Node* current = root;\nwhile (current && !current->isLeaf()) {\n    current = find_child_cas(current, key); // Unprotected node access risks use-after-free by concurrent splitter\n}"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before reading node pointers, leading to memory corruption from concurrent node reclamation.",
+        "Implementing non-atomic node splits where a half-split state is visible to other threads, causing lost keys during traversal.",
+        "Forgetting to clear or retire hazard pointers promptly, which results in severe memory leaks during high-frequency index updates."
+      ],
+      "best_practices": [
+        "Always acquire and publish hazard pointers prior to traversing through child pointers in dynamic lock-free structures.",
+        "Design node splitting and key redistribution operations to be idempotent or strictly cooperative so other threads can assist incomplete operations.",
+        "Batch retired node memory deallocations to minimize synchronization overhead in hazard pointer reclamation lists."
+      ],
+      "when_to_use": "Use when building high-throughput, latency-sensitive relational database storage engines or file system metadata indexing platforms requiring intensive multi-core parallel range querying.",
+      "when_not_to_use": "Avoid in low-concurrency environments or memory-constrained embedded systems where standard fine-grained locking or simple mutexes provide sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free issues in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to explicitly register nodes they are currently accessing as protected. Memory reclaimers check these protection lists and defer freeing any node until no thread holds a hazard pointer referencing it."
+        },
+        {
+          "question": "How does a lock-free B-Tree handle simultaneous node splits by multiple threads?",
+          "answer": "It uses cooperative assistance where threads encountering a node marked for splitting help complete the split operation via CAS primitives before proceeding with their own traversal or insertion."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Tree spatial indexing",
+        "Hazard pointer memory management algorithms",
+        "Concurrent skip-list data structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-21T01:25:10.736909+00:00",
+      "run_number": 5186
     }
   ]
 }
