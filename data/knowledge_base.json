@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5186,
-    "last_updated": "2026-11-21T01:25:10.736932+00:00",
-    "total_topics_learned": 5186
+    "total_runs": 5187,
+    "last_updated": "2026-11-21T01:28:24.820232+00:00",
+    "total_topics_learned": 5187
   },
   "entries": [
     {
@@ -246634,6 +246634,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T01:25:10.736909+00:00",
       "run_number": 5186
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic distance-calculating and child-node-appending CAS primitives alongside hazard pointer memory reclamation for high-throughput metric space nearest-neighbor searching and multi-core parallel spell checking execution in real-time interactive autocomplete engines and concurrent fuzzy string matching platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This advanced data structure implements a concurrent Burkhard-Keller (BK) Tree optimized for metric space nearest-neighbor searching without locks. By leveraging atomic compare-and-swap (CAS) primitives and hazard pointers, it allows multi-core systems to perform parallel string insertions and fuzzy searches safely and efficiently.",
+      "key_points": [
+        "Utilizes atomic primitives for lock-free child node appending and structural updates in a metric space tree.",
+        "Employs hazard pointers to safely manage memory reclamation in concurrent readers and writers without blocking.",
+        "Leverages the triangle inequality of metric spaces to prune search spaces efficiently during parallel fuzzy matching.",
+        "Prevents thread contention bottlenecks in high-throughput real-time autocomplete and spell-checking platforms."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe node insertion into a lock-free BK-Tree using hazard pointers and atomic CAS.",
+        "correct": "void BKTree::insert(const std::string& word) {\n    Node* new_node = new Node(word);\n    while (true) {\n        Node* current = head.load();\n        if (!current) {\n            if (head.compare_exchange_weak(current, new_node)) break;\n            else { delete new_node; break; }\n        }\n        HazardPointerGuard guard(current);\n        int dist = levenshtein(current->word, word);\n        Node* child = current->children[dist].load();\n        if (!child) {\n            if (current->children[dist].compare_exchange_weak(child, new_node)) break;\n        } else {\n            current = child;\n        }\n    }\n}",
+        "wrong": "void BKTree::insert(const std::string& word) {\n    std::lock_guard<std::mutex> lock(mtx);\n    // Unsafe or blocking locking approach that defeats lock-free scalability\n    root->add(word);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed nodes with hazard pointers, leading to use-after-free bugs during concurrent node splitting or deletion.",
+        "Miscalculating the metric distance bounds, which causes incorrect pruning during multi-core nearest-neighbor queries."
+      ],
+      "best_practices": [
+        "Always wrap shared pointer traversals in hazard pointer guards before reading node contents in concurrent environments.",
+        "Keep distance metric computations lightweight to maximize the throughput of parallel fuzzy string searches."
+      ],
+      "when_to_use": "Use when building high-throughput real-time systems requiring concurrent fuzzy string matching, spell checking, or metric space nearest-neighbor searches across multiple CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or applications without strict lock-free performance and memory predictability requirements, as the implementation complexity is very high.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent traversals in a lock-free BK-Tree?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are actively reading, signaling memory reclamation mechanisms to defer deletion until the pointer is released."
+        },
+        {
+          "question": "Why is a BK-Tree particularly well-suited for fuzzy string matching compared to a standard Hash Table?",
+          "answer": "A BK-Tree organizes data according to a metric space distance function (such as Levenshtein distance), allowing the algorithm to prune large subtrees during searches rather than scanning every entry."
+        }
+      ],
+      "related_topics": [
+        "Lock-free R-Tree",
+        "Hazard Pointer Memory Management",
+        "Metric Space Searching Algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-21T01:28:24.820208+00:00",
+      "run_number": 5187
     }
   ]
 }
