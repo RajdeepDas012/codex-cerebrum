@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5238,
-    "last_updated": "2026-11-21T23:29:36.381745+00:00",
-    "total_topics_learned": 5238
+    "total_runs": 5239,
+    "last_updated": "2026-11-21T23:32:47.064764+00:00",
+    "total_topics_learned": 5239
   },
   "entries": [
     {
@@ -249100,6 +249100,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T23:29:36.381723+00:00",
       "run_number": 5238
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and hazard pointer memory reclamation for high-throughput multi-producer-multi-consumer job scheduling execution in real-time asynchronous task processing systems and concurrent distributed workflow engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent priority queue utilizing atomic primitives for heap node management and hazard pointers for safe memory reclamation. It enables high-throughput, contention-resilient task scheduling across multiple threads without explicit locking overhead.",
+      "key_points": [
+        "Utilizes atomic operations for heap-node-promoting and structural modifications to prevent race conditions without global locks.",
+        "Employs hazard pointers to safely manage dynamic memory reclamation, preventing use-after-free bugs in concurrent environments.",
+        "Maximizes throughput in multi-producer-multi-consumer (MPMC) execution contexts like job schedulers and distributed workflow engines.",
+        "Mitigates priority inversion and contention bottlenecks common in coarse-grained locking approaches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node access using hazard pointers during concurrent priority queue operations.",
+        "correct": "#include <atomic>\n#include <thread>\n\nstruct Node {\n    int priority;\n    std::atomic<Node*> left;\n    std::atomic<Node*> right;\n};\n\nvoid acquire_hazard_pointer(std::atomic<Node*>& hazard_ptr, Node* node) {\n    hazard_ptr.store(node, std::memory_order_seq_cst);\n}",
+        "wrong": "Node* unsafe_peek(std::atomic<Node*>& root) {\n    return root.load(); // May lead to use-after-free if another thread frees it immediately\n}"
+      },
+      "common_mistakes": [
+        "Failing to publish hazard pointers before reading shared heap nodes, leading to memory corruption or segmentation faults.",
+        "Using weak memory orderings prematurely without verifying synchronization boundaries across multiple heap levels."
+      ],
+      "best_practices": [
+        "Always clear hazard pointers promptly after finishing access to a node to allow deferred reclamation queues to free memory.",
+        "Design tree or heap restructuring steps to be retry-safe when Compare-And-Swap (CAS) operations fail due to concurrent modifications."
+      ],
+      "when_to_use": "Use when building high-frequency real-time job schedulers or event-driven frameworks requiring massive parallel task enqueue and dequeue operations under heavy contention.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or environments where standard blocking priority queues provide sufficient throughput with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers solve the memory reclamation problem in lock-free data structures?",
+          "answer": "Hazard pointers allow threads to explicitly announce which memory nodes they are currently accessing, preventing other threads from prematurely freeing those nodes until no hazards remain."
+        },
+        {
+          "question": "Why is implementing a lock-free priority queue significantly harder than a lock-free stack or queue?",
+          "answer": "Priority queues require maintaining global heap or tree invariants (like relative ordering by priority) across distributed nodes, making localized atomic CAS updates prone to structural conflicts and high retry rates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Atomic Compare-And-Swap (CAS) Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-21T23:32:47.064743+00:00",
+      "run_number": 5239
     }
   ]
 }
