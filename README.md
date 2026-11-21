@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5239** |
-| Last Updated | `2026-11-21T23:32:47.064764+00:00` |
-| Dataset Size | `5239 entries` |
+| Total Topics Learned | **5240** |
+| Last Updated | `2026-11-21T23:35:57.602915+00:00` |
+| Dataset Size | `5240 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3825 |
+| data-structures | 3826 |
 | algorithms | 325 |
 | trading-strategies | 228 |
 | crypto-blockchain | 211 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-lazy-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query and update execution in real-time financial market data feeds and concurrent analytics streaming platforms`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and hazard pointer memory reclamation for high-throughput multi-producer-multi-consumer job scheduling execution in real-time asynchronous task processing systems and concurrent distributed workflow engines`
 - `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index execution in real-time transactional relational databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-access-splaying and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing search operations and multi-core parallel frequently-accessed item caching execution in real-time in-memory database engines and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel range query execution in real-time in-memory database engines and concurrent transactional key-value storage systems`
-- `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search operations and multi-core parallel sorted order traversal execution in real-time in-memory database engines and concurrent key-value caching platforms`
 
 <!-- STATS_END -->
 
