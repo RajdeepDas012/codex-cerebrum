@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5195,
-    "last_updated": "2026-11-21T01:53:55.387964+00:00",
-    "total_topics_learned": 5195
+    "total_runs": 5196,
+    "last_updated": "2026-11-21T01:57:06.498938+00:00",
+    "total_topics_learned": 5196
   },
   "entries": [
     {
@@ -247063,6 +247063,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T01:53:55.387942+00:00",
       "run_number": 5195
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic prefix-matching and child-pointer-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput string-keyed lookups and multi-core parallel routing table management execution in real-time IP packet forwarding engines and concurrent in-memory caching platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree enables high-throughput string-keyed lookups and updates across multiple threads without lock contention. By leveraging atomic prefix-matching, child-pointer-swapping CAS primitives, and hazard pointer memory management, it safely handles concurrent mutations ideal for high-performance networking and caching systems.",
+      "key_points": [
+        "Utilizes atomic prefix-matching to traverse compressed trie nodes safely under concurrent updates.",
+        "Employs child-pointer-swapping Compare-And-Swap (CAS) primitives to modify node edges without global locks.",
+        "Integrates hazard pointers to safely reclaim memory of deleted nodes without triggering use-after-free race conditions.",
+        "Optimizes memory layout and lookup speeds for string-keyed and prefix-based routing operations."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child pointer update using CAS in a lock-free radix node structure.",
+        "correct": "bool update_child(std::atomic<Node*>& child_ptr, Node* expected, Node* desired) {\n    return child_ptr.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "Node* update_child(std::atomic<Node*>& child_ptr, Node* desired) {\n    Node* current = child_ptr.load();\n    child_ptr.store(desired);\n    return current;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed node pointers with hazard pointers, leading to memory reclamation races.",
+        "Using weak memory orderings on CAS operations without considering the necessary visibility guarantees for child updates."
+      ],
+      "best_practices": [
+        "Pin threads to hazard pointer records before reading traversals down the radix tree paths.",
+        "Keep node splitting and merging logic atomic and granular to minimize CAS retry contention under heavy multi-core load."
+      ],
+      "when_to_use": "Use when high-throughput, concurrent string-keyed lookups or IP routing table lookups are required across many CPU cores without lock bottlenecks.",
+      "when_not_to_use": "Avoid when keys are strictly fixed-size integers where simpler lock-free hash maps or concurrent flat arrays provide better cache locality.",
+      "interview_questions": [
+        {
+          "question": "How do you handle memory reclamation safely in a lock-free radix tree when nodes are split or deleted?",
+          "answer": "By implementing hazard pointers where reader threads register pointers they are actively accessing, preventing premature deallocation until no thread holds a reference."
+        },
+        {
+          "question": "What is the primary challenge when performing concurrent insertions that require splitting an existing compressed edge?",
+          "answer": "Ensuring that intermediate state updates are atomic via CAS so that traversing threads either see the old unified node or the fully constructed split subtree without data corruption."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Prefix Tries"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-21T01:57:06.498915+00:00",
+      "run_number": 5196
     }
   ]
 }
