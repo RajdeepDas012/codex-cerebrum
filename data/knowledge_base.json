@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5235,
-    "last_updated": "2026-11-21T23:19:26.450711+00:00",
-    "total_topics_learned": 5235
+    "total_runs": 5236,
+    "last_updated": "2026-11-21T23:22:55.489162+00:00",
+    "total_topics_learned": 5236
   },
   "entries": [
     {
@@ -248959,6 +248959,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T23:19:26.450692+00:00",
       "run_number": 5235
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel range query execution in real-time in-memory database engines and concurrent transactional key-value storage systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) operations to insert, delete, and search across multiple probabilistic layers without blocking threads. By leveraging hazard pointers for memory reclamation, it safely manages dynamic pointer adjustments and memory deallocation under high multi-core contention.",
+      "key_points": [
+        "Uses probabilistic height assignment for nodes to achieve expected O(log n) search, insertion, and deletion time complexities.",
+        "Employs atomic forward-pointer linking and node-splicing CAS primitives to guarantee thread safety without coarse-grained locks.",
+        "Integrates hazard pointers to safely defer the reclamation of deleted nodes until no active threads are referencing them.",
+        "Supports lock-free concurrent range queries by traversing lower-level forward pointers safely amidst concurrent structural updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node insertion using CAS and hazard pointers for safe memory management.",
+        "correct": "bool insert(int val) {\n    Node* newNode = new Node(val, randomLevel());\n    // Atomically link forward pointers using CAS loops\n    return CAS_Insert(newNode);\n}",
+        "wrong": "bool insert(int val) {\n    Node* newNode = new Node(val);\n    // Unsafe non-atomic pointer assignment causing race conditions\n    head->next = newNode;\n}"
+      },
+      "common_mistakes": [
+        "Failing to mark nodes logically deleted (e.g., via a marked pointer bit) before physically splicing them out, leading to broken traversal links.",
+        "Reclaiming memory of deleted nodes immediately without hazard pointers or epoch-based reclamation, causing use-after-free bugs."
+      ],
+      "best_practices": [
+        "Use tagged pointers or bit-marking on next pointers to indicate that a node is pending deletion during multi-step CAS operations.",
+        "Protect node traversals with hazard pointers to ensure thread safety during concurrent reads and writes."
+      ],
+      "when_to_use": "Use when building high-throughput in-memory key-value stores or databases that require frequent ordered range queries and high read/write concurrency.",
+      "when_not_to_use": "Avoid when memory overhead is strictly constrained, as multiple forward pointers per node and hazard pointer tracking consume extra space.",
+      "interview_questions": [
+        {
+          "question": "How do you handle safe memory reclamation in a lock-free skip list when multiple threads might traverse a node being deleted?",
+          "answer": "Hazard pointers are used to register nodes currently being accessed by a thread so that memory deallocation is deferred until no threads hold a hazard reference to the node."
+        },
+        {
+          "question": "Why is logical deletion required prior to physical deletion in a concurrent skip list?",
+          "answer": "Logical deletion marks the node's pointers so other concurrent threads can recognize that the node is being removed and help bypass it, preventing race conditions during updates."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Data Structures",
+        "Hazard Pointers",
+        "Concurrent Hash Map"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-21T23:22:55.489141+00:00",
+      "run_number": 5236
     }
   ]
 }
