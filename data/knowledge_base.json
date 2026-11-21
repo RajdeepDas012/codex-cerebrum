@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5214,
-    "last_updated": "2026-11-21T17:18:23.631413+00:00",
-    "total_topics_learned": 5214
+    "total_runs": 5215,
+    "last_updated": "2026-11-21T17:21:35.300944+00:00",
+    "total_topics_learned": 5215
   },
   "entries": [
     {
@@ -247962,6 +247962,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T17:18:23.631396+00:00",
       "run_number": 5214
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Leftist Heap using atomic rank-updating and node-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput mergeable priority queue operations and multi-core parallel event scheduling execution in real-time simulation engines and concurrent task execution frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Leftist Heap enables high-performance mergeable priority queue operations across multiple threads without lock contention. By leveraging atomic compare-and-swap (CAS) primitives for rank adjustment and node merging, combined with hazard pointers for safe memory reclamation, it ensures linearizable and thread-safe scheduling in real-time environments.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to safely modify pointer links and update leftist rank properties without acquiring explicit mutual exclusion locks.",
+        "Employs hazard pointers to track active threads reading heap nodes, preventing premature memory deallocation and avoiding the ABA problem during concurrent merges.",
+        "Maintains the leftist property (where the null path length of the left child is at least as large as that of the right child) to guarantee logarithmic time bounds for merges and inserts.",
+        "Designed for multi-core parallel event scheduling and real-time simulation engines where high throughput and fast priority queue merging are critical."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of safe node merging using atomic compare-and-swap and hazard pointer protection in a lock-free leftist heap.",
+        "correct": "Node* merge(Node* h1, Node* h2, HazardManager& hm) {\n    while (true) {\n        if (!h1) return h2;\n        if (!h2) return h1;\n        Node* root = (h1->key < h2->key) ? h1 : h2;\n        Node* other = (h1->key < h2->key) ? h2 : h1;\n        HazardGuard guard(hm, root);\n        Node* right = root->right.load();\n        Node* merged = merge(right, other, hm);\n        if (root->right.compare_exchange_weak(right, merged)) {\n            if (root->left.load() == nullptr || root->left.load()->rank < root->right.load()->rank) {\n                std::swap(root->left, root->right);\n            }\n            root->rank.store(1 + (root->right.load() ? root->right.load()->rank.load() : 0));\n            return root;\n        }\n    }\n}",
+        "wrong": "Node* merge(Node* h1, Node* h2) {\n    if (!h1) return h2;\n    if (!h2) return h1;\n    if (h1->key < h2->key) {\n        h1->right = merge(h1->right, h2);\n        if (h1->left->rank < h1->right->rank) std::swap(h1->left, h1->right);\n        h1->rank = h1->right->rank + 1;\n        return h1;\n    }\n    return merge(h2, h1);\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to register nodes with hazard pointers before traversing or modifying pointers, leading to use-after-free bugs in concurrent environments.",
+        "Failing to properly re-evaluate the leftist property and rank updates after a successful CAS, causing the tree to degenerate into an unbalanced linked list."
+      ],
+      "best_practices": [
+        "Always wrap pointer reads intended for subsequent modifications within hazard pointer protection scopes to guarantee safe memory reclamation.",
+        "Use weak CAS in retry loops (backoff loops) to handle contention gracefully when multiple threads attempt to merge overlapping subtrees simultaneously."
+      ],
+      "when_to_use": "Use when building high-throughput real-time simulation engines or concurrent task execution frameworks that require frequent, efficient merging of multiple priority queues across many threads.",
+      "when_not_to_use": "Avoid in single-threaded contexts or low-concurrency systems where traditional locking leftist heaps or standard binary heaps provide simpler implementation and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent node merging in a lock-free leftist heap?",
+          "answer": "Hazard pointers publish the nodes a thread is currently accessing so that concurrent reclamation threads know not to free or reuse those memory addresses, mitigating the ABA problem where a pointer value changes from A to B and back to A."
+        },
+        {
+          "question": "Why is maintaining the leftist property critical for concurrent heap performance?",
+          "answer": "The leftist property guarantees that the right spine of the heap is short (logarithmic with respect to the number of nodes), ensuring that recursive merge operations run in logarithmic time rather than linear time."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free Concurrent Data Structures",
+        "Mergeable Priority Queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-21T17:21:35.300926+00:00",
+      "run_number": 5215
     }
   ]
 }
