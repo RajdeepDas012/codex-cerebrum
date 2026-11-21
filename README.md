@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5237** |
-| Last Updated | `2026-11-21T23:26:25.936312+00:00` |
-| Dataset Size | `5237 entries` |
+| Total Topics Learned | **5238** |
+| Last Updated | `2026-11-21T23:29:36.381745+00:00` |
+| Dataset Size | `5238 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3823 |
+| data-structures | 3824 |
 | algorithms | 325 |
 | trading-strategies | 228 |
 | crypto-blockchain | 211 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index execution in real-time transactional relational databases and concurrent key-value storage engines`
 - `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic root-access-splaying and node-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput self-optimizing search operations and multi-core parallel frequently-accessed item caching execution in real-time in-memory database engines and concurrent key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel range query execution in real-time in-memory database engines and concurrent transactional key-value storage systems`
 - `Implementation of a lock-free thread-safe concurrent Scapegoat Tree using atomic subtree-weight-balancing and node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput self-adjusting search operations and multi-core parallel sorted order traversal execution in real-time in-memory database engines and concurrent key-value caching platforms`
 - `Implementation of a lock-free thread-safe concurrent Cuckoo Filter using atomic fingerprint-swapping and bucket-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel duplicate detection execution in real-time distributed stream processing engines and concurrent database storage compaction pipelines`
-- `Implementation of a lock-free thread-safe concurrent Quotient Filter using atomic metadata-shifting and run-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput space-efficient approximate membership querying and multi-core parallel duplicate detection execution in real-time distributed stream processing engines and concurrent database storage compaction pipelines`
 
 <!-- STATS_END -->
 
