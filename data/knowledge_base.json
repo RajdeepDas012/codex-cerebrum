@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5209,
-    "last_updated": "2026-11-21T10:04:21.281742+00:00",
-    "total_topics_learned": 5209
+    "total_runs": 5210,
+    "last_updated": "2026-11-21T10:07:32.735301+00:00",
+    "total_topics_learned": 5210
   },
   "entries": [
     {
@@ -247727,6 +247727,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-21T10:04:21.281722+00:00",
       "run_number": 5209
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-advancing and ring-buffer-wrapping CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer-multi-consumer messaging and multi-core parallel task dispatch execution in real-time asynchronous event-driven server engines and concurrent log aggregation platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent bounded queue utilizes atomic operations like compare-and-swap (CAS) to manage head and tail pointers across a fixed-size ring buffer without mutual exclusion locks. This architecture prevents thread contention and priority inversion, making it critical for high-throughput messaging fabrics and asynchronous task dispatchers.",
+      "key_points": [
+        "Employs atomic head-tail-advancing CAS primitives to safely coordinate concurrent enqueues and dequeues across threads.",
+        "Utilizes ring-buffer-wrapping logic to map logical sequence indices onto fixed physical array allocations efficiently.",
+        "Integrates hazard pointers or epoch-based reclamation to ensure safe memory recycling without ABA problems.",
+        "Achieves high-throughput execution profiles suited for single-producer-multi-consumer (SPMC) or multi-producer-multi-consumer (MPMC) workloads."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic head advancement and ring buffer wrapping using C++ atomic operations",
+        "correct": "bool enqueue(T item) {\n    size_t tail = tail_.load(std::memory_order_relaxed);\n    while (true) {\n        Cell* cell = &buffer_[tail & mask_];\n        size_t seq = cell->sequence.load(std::memory_order_acquire);\n        int diff = (int)seq - (int)tail;\n        if (diff == 0) {\n            if (tail_.compare_exchange_weak(tail, tail + 1, std::memory_order_relaxed)) {\n                cell->data = item;\n                cell->sequence.store(tail + 1, std::memory_order_release);\n                return true;\n            }\n        } else if (diff < 0) {\n            return false;\n        } else {\n            tail = tail_.load(std::memory_order_relaxed);\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    std::lock_guard<std::mutex> lock(mtx);\n    buffer[tail % capacity] = item;\n    tail++;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle sequence numbers properly in ring buffers, leading to race conditions where old data is overwritten before consumption.",
+        "Using sequential consistency memory orders everywhere, which severely degrades multi-core cache coherency performance."
+      ],
+      "best_practices": [
+        "Leverage acquire-release semantics appropriately to balance safety and multi-core hardware pipeline throughput.",
+        "Pad atomic head and tail pointers to distinct cache lines to completely eliminate false sharing overhead."
+      ],
+      "when_to_use": "Use when building low-latency asynchronous messaging loops, high-performance network packet buffers, or thread pool task dispatchers requiring strict bounded memory footprints.",
+      "when_not_to_use": "Avoid when the queue size must dynamically expand without pre-allocation limits, or in simpler applications where standard lock-protected queues introduce negligible overhead.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating head and tail indices in a lock-free bounded queue?",
+          "answer": "By combining the index with an monotonically increasing sequence number or epoch counter inside an atomic word, or by using hazard pointers."
+        },
+        {
+          "question": "What is the primary performance benefit of using a ring buffer with atomic operations compared to a linked-list-based lock-free queue?",
+          "answer": "A ring buffer pre-allocates memory, avoiding dynamic memory allocation overhead and allocator lock contention during high-frequency push and pop operations."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Ring Buffer",
+        "Memory Reclamation via Hazard Pointers",
+        "False Sharing and Cache Line Optimization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-21T10:07:32.735282+00:00",
+      "run_number": 5210
     }
   ]
 }
