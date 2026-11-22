@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5251,
-    "last_updated": "2026-11-22T03:23:37.281623+00:00",
-    "total_topics_learned": 5251
+    "total_runs": 5252,
+    "last_updated": "2026-11-22T03:26:48.534964+00:00",
+    "total_topics_learned": 5252
   },
   "entries": [
     {
@@ -249712,6 +249712,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-22T03:23:37.281605+00:00",
       "run_number": 5251
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-map-linking and doubly-linked-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-memory eviction and multi-core parallel item retrieval execution in real-time web application caching tiers and concurrent distributed API gateway services",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free Least Recently Used (LRU) cache that combines non-blocking hash map lookups with atomic doubly-linked-list splicing. It matters because it eliminates lock contention in high-throughput caching tiers and API gateways under heavy multi-core concurrency.",
+      "key_points": [
+        "Uses atomic compare-and-swap (CAS) primitives for hash map linking and node insertion without global locks.",
+        "Maintains a concurrent doubly-linked list using atomic pointer updates for recency tracking and eviction order.",
+        "Employs hazard pointers to safely manage memory reclamation of evicted cache nodes without use-after-free bugs.",
+        "Balances memory bounds with high-throughput parallel item retrieval and eviction in latency-sensitive applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking for concurrent cache updates using hazard pointers.",
+        "correct": "#include <atomic>\n#include <memory>\n\nstruct Node {\n    int key;\n    int value;\n    std::atomic<Node*> next;\n    std::atomic<Node*> prev;\n};\n\nclass LockFreeLRU {\n    std::atomic<Node*> head;\npublic:\n    void insertNode(Node* newNode) {\n        Node* oldHead = head.load();\n        do {\n            newNode->next.store(oldHead);\n        } while (!head.compare_exchange_weak(oldHead, newNode));\n    }\n};",
+        "wrong": "class UnsafeLRU {\n    Node* head;\npublic:\n    void insertNode(Node* newNode) {\n        // Race condition: missing mutex or atomic CAS\n        newNode->next = head;\n        head = newNode;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect freed nodes with hazard pointers, leading to race conditions and memory corruption during concurrent eviction.",
+        "Attempting to update both the hash map pointer and the doubly-linked list pointers in a single non-atomic step."
+      ],
+      "best_practices": [
+        "Isolate thread-local hazard pointer records to minimize contention during high-frequency lookups and updates.",
+        "Design fallback strategies or backoff mechanisms for failed CAS operations during heavy write contention on popular cache keys."
+      ],
+      "when_to_use": "Use when building ultra-low-latency web application caches or API gateways that experience massive read/write contention across numerous CPU cores.",
+      "when_not_to_use": "Avoid when simple mutex-locked caches provide sufficient throughput or when memory footprint constraints outweigh the overhead of hazard pointers and atomic nodes.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when updating pointers in a lock-free doubly-linked list for an LRU cache?",
+          "answer": "Use tagged pointers or hazard pointers with version counters to ensure that a CAS operation fails if a node has been unlinked and re-linked differently."
+        },
+        {
+          "question": "Why are standard mutexes problematic for high-throughput LRU caches in multi-core web gateways?",
+          "answer": "Global or shard-level locks cause thread serialization, high context-switch overhead, and latency spikes under heavy concurrent request loads."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Hash Maps",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Bx-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-22T03:26:48.534945+00:00",
+      "run_number": 5252
     }
   ]
 }
