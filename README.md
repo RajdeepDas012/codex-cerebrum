@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5254** |
-| Last Updated | `2026-11-22T03:33:10.212060+00:00` |
-| Dataset Size | `5254 entries` |
+| Total Topics Learned | **5255** |
+| Last Updated | `2026-11-22T03:36:20.445630+00:00` |
+| Dataset Size | `5255 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3838 |
+| data-structures | 3839 |
 | algorithms | 326 |
 | trading-strategies | 228 |
 | crypto-blockchain | 212 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Disjoint Set Union (Union-Find) using atomic parent-pointer-compressing and rank-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class merging and multi-core parallel connected component finding execution in real-time social network graph analysis engines and concurrent image segmentation processing platforms`
 - `Implementation of a lock-free thread-safe concurrent B-Link Tree using atomic right-link-traversing and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent index traversal and multi-core parallel sorted database query execution in real-time relational database management systems and concurrent transactional storage engines`
 - `Implementation of a lock-free thread-safe concurrent LFU Cache using atomic frequency-list-linking and bucket-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency-based eviction and multi-core parallel item retention execution in real-time content delivery network caching tiers and concurrent distributed database storage engines`
 - `Implementation of a lock-free thread-safe concurrent LRU Cache using atomic hash-map-linking and doubly-linked-list-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput bounded-memory eviction and multi-core parallel item retrieval execution in real-time web application caching tiers and concurrent distributed API gateway services`
 - `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-competing CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct element counting execution in real-time big data streaming analytics and concurrent distributed telemetry processing platforms`
-- `Implementation of a lock-free thread-safe concurrent Bx-Tree using atomic leaf-merging and range-locking CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrency control and multi-core parallel data indexing execution in real-time enterprise storage systems and concurrent database buffer pool managers`
 
 <!-- STATS_END -->
 
