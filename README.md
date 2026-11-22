@@ -9,9 +9,9 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5242** |
-| Last Updated | `2026-11-21T23:42:18.343925+00:00` |
-| Dataset Size | `5242 entries` |
+| Total Topics Learned | **5243** |
+| Last Updated | `2026-11-22T02:58:12.303031+00:00` |
+| Dataset Size | `5243 entries` |
 
 ## 📂 Categories Learned
 
@@ -20,7 +20,7 @@
 | data-structures | 3828 |
 | algorithms | 325 |
 | trading-strategies | 228 |
-| crypto-blockchain | 211 |
+| crypto-blockchain | 212 |
 | technical-analysis | 147 |
 | system-design | 121 |
 | market-analysis | 114 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Merkle Tree using atomic hash-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput cryptographic verification and multi-core parallel state synchronization execution in real-time blockchain validation nodes and concurrent distributed ledger storage systems`
 - `Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlap-detecting and node-augmenting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event-scheduling execution in real-time calendar management systems and concurrent resource allocation scheduling engines`
 - `Implementation of a lock-free thread-safe concurrent Hash Array Mapped Trie (HAMT) using atomic node-cascading and bucket-resizing CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable map operations and multi-core parallel persistent collection execution in real-time functional programming runtimes and concurrent distributed state management platforms`
 - `Implementation of a lock-free thread-safe concurrent Segment Tree using atomic range-lazy-propagating and node-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput range query and update execution in real-time financial market data feeds and concurrent analytics streaming platforms`
 - `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and hazard pointer memory reclamation for high-throughput multi-producer-multi-consumer job scheduling execution in real-time asynchronous task processing systems and concurrent distributed workflow engines`
-- `Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index execution in real-time transactional relational databases and concurrent key-value storage engines`
 
 <!-- STATS_END -->
 
