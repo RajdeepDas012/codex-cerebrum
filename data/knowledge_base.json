@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5267,
-    "last_updated": "2026-11-22T11:33:40.606927+00:00",
-    "total_topics_learned": 5267
+    "total_runs": 5268,
+    "last_updated": "2026-11-22T11:36:55.127136+00:00",
+    "total_topics_learned": 5268
   },
   "entries": [
     {
@@ -250476,6 +250476,54 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-22T11:33:40.606908+00:00",
       "run_number": 5267
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bw-Tree using atomic mapping-table-swapping and delta-chain-installing CAS primitives alongside hazard pointer memory reclamation for high-throughput latch-free memory-optimized index updates and multi-core parallel transactional storage execution in real-time modern relational database engines and concurrent in-memory key-value stores",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "The Bw-Tree is a latch-free variant of the B-Tree designed for high-concurrency storage engines, utilizing a mapping table and delta records to avoid in-place node modifications. By employing Compare-And-Swap (CAS) operations to atomically install delta chains and update mappings, it eliminates traditional latch contention on multi-core systems. Hazard pointers are integrated to safely manage memory reclamation without locking overhead.",
+      "key_points": [
+        "Uses a logical-to-physical mapping table to decouple tree node references, allowing atomic redirection of pointers via CAS.",
+        "Replaces in-place mutations with delta updates (insert, update, delete records chained to base nodes) to prevent race conditions.",
+        "Employs consolidation processes to periodically merge long delta chains into fresh base nodes, keeping read overhead bounded.",
+        "Utilizes hazard pointers to track active threads inspecting specific node versions, preventing premature memory deallocation."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of installing a delta record onto a Bw-Tree node using an atomic CAS-like loop on a mapping table entry.",
+        "correct": "class MappingTable:\n    def __init__(self):\n        self.table = {}\n    \n    def cas_install_delta(self, key, expected_physical_addr, new_delta_addr):\n        current = self.table.get(key)\n        if current == expected_physical_addr:\n            self.table[key] = new_delta_addr\n            return True\n        return False",
+        "wrong": "class MappingTable:\n    def __init__(self):\n        self.table = {}\n    \n    def cas_install_delta(self, key, expected_physical_addr, new_delta_addr):\n        # Missing concurrency check; direct assignment causes race conditions\n        self.table[key] = new_delta_addr\n        return True"
+      },
+      "common_mistakes": [
+        "Failing to trigger node consolidation when delta chains grow excessively long, causing degraded read performance.",
+        "Improper hazard pointer registration order, leading to use-after-free bugs during concurrent node swaps."
+      ],
+      "best_practices": [
+        "Establish clear threshold metrics for delta chain length to trigger asynchronous or cooperative consolidation tasks.",
+        "Ensure memory barriers and appropriate memory ordering semantics are used around mapping table pointer swaps."
+      ],
+      "when_to_use": "High-throughput transactional databases and multi-core in-memory key-value stores requiring extreme read-write concurrency without latch contention.",
+      "when_not_to_use": "Simple single-threaded applications or systems with limited memory where standard locked B-Trees or hash tables provide sufficient performance with lower complexity.",
+      "interview_questions": [
+        {
+          "question": "How does the Bw-Tree eliminate the need for traditional reader-writer latches on tree nodes?",
+          "answer": "It uses an indirection mapping table combined with atomic CAS operations to swap physical pointers or install delta records instead of modifying nodes in-place."
+        },
+        {
+          "question": "What is the purpose of the delta chain in a Bw-Tree, and how is performance maintained as chains grow?",
+          "answer": "Delta chains record modifications incrementally to avoid blocking. Performance is maintained through periodic consolidation tasks that merge chains back into a single compact base node."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Data Structures",
+        "Hazard Pointers",
+        "Latch-Free B-Trees",
+        "Multi-Version Concurrency Control (MVCC)"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-22T11:36:55.127113+00:00",
+      "run_number": 5268
     }
   ]
 }
