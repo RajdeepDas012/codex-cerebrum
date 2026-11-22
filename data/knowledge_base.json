@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5252,
-    "last_updated": "2026-11-22T03:26:48.534964+00:00",
-    "total_topics_learned": 5252
+    "total_runs": 5253,
+    "last_updated": "2026-11-22T03:29:59.166743+00:00",
+    "total_topics_learned": 5253
   },
   "entries": [
     {
@@ -249759,6 +249759,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-22T03:26:48.534945+00:00",
       "run_number": 5252
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LFU Cache using atomic frequency-list-linking and bucket-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput frequency-based eviction and multi-core parallel item retention execution in real-time content delivery network caching tiers and concurrent distributed database storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe Least Frequently Used (LFU) cache using atomic Compare-And-Swap (CAS) primitives and hazard pointers. It guarantees safe concurrent memory reclamation and high throughput without traditional lock contention in multi-core systems.",
+      "key_points": [
+        "Utilizes atomic frequency-list-linking and bucket-splicing CAS primitives to manage multi-level frequency buckets without global locks.",
+        "Employs hazard pointer memory reclamation to safely free evicted or updated cache nodes without premature deallocation or use-after-free race conditions.",
+        "Achieves high-throughput frequency-based eviction suitable for high-concurrency environments like content delivery networks and database storage engines.",
+        "Maintains fine-grained thread safety during concurrent insertions, frequency increments, and item retention tasks."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node linking and hazard pointer protection pattern for a concurrent LFU cache bucket.",
+        "correct": "void* hazard_ptr = acquire_hazard_pointer(&node->next);\nwhile (!atomic_compare_exchange_weak(&bucket->head, &node->next, new_node)) {\n    release_hazard_pointer(hazard_ptr);\n    hazard_ptr = acquire_hazard_pointer(&node->next);\n}",
+        "wrong": "void* node_ptr = bucket->head;\n// Missing hazard pointer registration allows another thread to free node_ptr immediately here\nbucket->head = new_node;\nfree(node_ptr);"
+      },
+      "common_mistakes": [
+        "Forgetting to protect shared node reads with hazard pointers, leading to use-after-free bugs during concurrent evictions.",
+        "Failing to handle ABA problems when updating frequency bucket pointers using CAS instructions.",
+        "Introducing heavy global locks during frequency counter updates, which completely defeats the lock-free design."
+      ],
+      "best_practices": [
+        "Always register accessed nodes in thread-local hazard pointer arrays before traversing frequency lists.",
+        "Design frequency buckets using lock-free doubly-linked lists or skiplists to support efficient O(1) minimum frequency tracking.",
+        "Thoroughly stress-test multi-threaded eviction sequences to catch rare memory reclamation race conditions."
+      ],
+      "when_to_use": "Use this when building high-concurrency caching tiers where eviction policies must be based on access frequency and lock contention severely impacts performance.",
+      "when_not_to_use": "Avoid this in single-threaded applications or systems with low concurrency where standard locking or simpler LRU caches provide better code maintainability and lower overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free LFU cache?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that competing threads know not to reclaim or free those memory blocks until all hazards are cleared."
+        },
+        {
+          "question": "Why is implementing an LFU cache lock-free typically more complex than an LRU cache?",
+          "answer": "LFU requires updating both the item itself and tracking its frequency across multiple buckets atomically, often modifying multiple pointers simultaneously during an access or eviction."
+        }
+      ],
+      "related_topics": [
+        "lock-free LRU Cache",
+        "hazard pointer memory management",
+        "lock-free Bx-Tree"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-22T03:29:59.166725+00:00",
+      "run_number": 5253
     }
   ]
 }
