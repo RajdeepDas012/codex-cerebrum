@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5266,
-    "last_updated": "2026-11-22T11:29:54.364807+00:00",
-    "total_topics_learned": 5266
+    "total_runs": 5267,
+    "last_updated": "2026-11-22T11:33:40.606927+00:00",
+    "total_topics_learned": 5267
   },
   "entries": [
     {
@@ -250429,6 +250429,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-22T11:29:54.364782+00:00",
       "run_number": 5266
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and tower-height-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered set operations and multi-core parallel sorted index maintenance execution in real-time in-memory database engines and concurrent key-value storage systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to safely execute multi-level probabilistic ordered set operations without global locking. By decoupling tower-height cascading and forward-pointer linking, it achieves high throughput and low latency for sorted index maintenance in multi-core in-memory systems.",
+      "key_points": [
+        "Employs probabilistic balancing via coin-tossing algorithms to determine node tower heights across multiple levels.",
+        "Uses atomic forward-pointer-linking CAS primitives to safely insert and delete nodes concurrently without blocking.",
+        "Integrates hazard pointer memory reclamation to prevent the ABA problem and safe-free nodes only after all referencing threads release them.",
+        "Delivers O(log n) expected time complexity for search, insertion, and deletion operations in a lock-free environment."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic linking of a new node at a specific level using a compare-and-swap loop.",
+        "correct": "bool link_node(Node* pred, Node* curr, Node* succ, int level) {\n    curr->next[level].store(succ, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(succ, curr, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_node_wrong(Node* pred, Node* curr, int level) {\n    // Missing expected successor validation leads to lost updates and race conditions\n    pred->next[level].store(curr, std::memory_order_relaxed);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect deleted nodes with hazard pointers, leading to premature memory reclamation and segmentation faults.",
+        "Updating skip list levels out of order during insertion, exposing inconsistent states to concurrent reader threads."
+      ],
+      "best_practices": [
+        "Always validate that the predecessor's next pointer has not changed before completing a multi-level CAS insertion.",
+        "Batch hazard pointer releases or utilize thread-local retirement lists to minimize synchronization overhead in high-throughput workloads."
+      ],
+      "when_to_use": "Ideal for high-concurrency in-memory databases and ordered map collections requiring frequent range queries and sorted index maintenance across many CPU cores.",
+      "when_not_to_use": "Avoid in single-threaded environments or constrained memory systems where the overhead of hazard pointers and multi-level node allocations outweighs lock-free concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during node deletion in a lock-free skip list?",
+          "answer": "Hazard pointers allow a thread to atomically publish the node it is currently accessing, ensuring that memory reclaimers cannot free the node until all traversing threads have cleared their hazard pointers."
+        },
+        {
+          "question": "Why is structural modification performed bottom-up or top-down depending on the lock-free algorithm design?",
+          "answer": "Algorithms often insert nodes from bottom to top or use mark bits on forward pointers to logically delete nodes before physical unlinking, preventing concurrent threads from interacting with partially constructed towers."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B-Trees",
+        "Hazard Pointers and Memory Reclamation",
+        "Concurrent Priority Queues"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-22T11:33:40.606908+00:00",
+      "run_number": 5267
     }
   ]
 }
