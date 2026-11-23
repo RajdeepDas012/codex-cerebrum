@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5283,
-    "last_updated": "2026-11-23T01:13:00.021933+00:00",
-    "total_topics_learned": 5283
+    "total_runs": 5284,
+    "last_updated": "2026-11-23T01:16:12.674467+00:00",
+    "total_topics_learned": 5284
   },
   "entries": [
     {
@@ -251231,6 +251231,53 @@
       "confidence_score": 0.96,
       "learned_at": "2026-11-23T01:13:00.021912+00:00",
       "run_number": 5283
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent BK-Tree using atomic edit-distance-partitioning and child-pointer-linking CAS primitives alongside hazard pointer memory reclamation for high-throughput fuzzy string matching and multi-core parallel spell checking execution in real-time document editing platforms and concurrent autocorrect search engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free, thread-safe Burkhard-Keller (BK) tree optimized for concurrent string searching based on Levenshtein distance. It utilizes atomic operations, compare-and-swap (CAS) primitives, and hazard pointers to safely handle concurrent node insertions and traversals without traditional locking bottlenecks.",
+      "key_points": [
+        "Applies atomic compare-and-swap (CAS) primitives to manage child-pointer-linking for concurrent tree expansions.",
+        "Employs hazard pointer memory reclamation to prevent race conditions during node deletion and traversal in multi-threaded environments.",
+        "Uses edit-distance-partitioning to structure the metric space cleanly for rapid approximate string matching.",
+        "Achieves high-throughput execution suitable for real-time document editing and distributed autocorrect engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic linking of a child node into a BK-Tree bucket using compare-and-swap primitives.",
+        "correct": "bool link_child(Node* parent, int distance, Node* new_child) {\n    while (true) {\n        Node* current = parent->children[distance].load(std::memory_order_acquire);\n        new_child->next.store(current, std::memory_order_relaxed);\n        if (parent->children[distance].compare_exchange_weak(current, new_child, std::memory_order_release, std::memory_order_relaxed)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool link_child(Node* parent, int distance, Node* new_child) {\n    parent->children[distance] = new_child;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers, resulting in use-after-free vulnerabilities during concurrent mutations.",
+        "Using weak memory orderings where acquire-release semantics are strictly required to ensure structural visibility across threads."
+      ],
+      "best_practices": [
+        "Stipulate thread-local hazard pointer pools to minimize allocation overhead during frequent string searches.",
+        "Precompute metric boundaries where possible to reduce contention inside deeply nested tree partitions."
+      ],
+      "when_to_use": "Ideal for high-concurrency systems requiring frequent dynamic fuzzy matching and spell checking against a rapidly changing dictionary.",
+      "when_not_to_use": "Avoid when exact string matching is sufficient or when workloads are strictly single-threaded, as overhead from lock-free primitives will degrade performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent ABA problems and memory reclamation races in a lock-free BK-Tree?",
+          "answer": "Hazard pointers announce which nodes a thread is currently accessing so that reclaimer threads know not to free those memory addresses until the reader unlinks its hazard pointer record."
+        },
+        {
+          "question": "Why is CAS-based child pointer linking preferred over mutex locks in distributed autocorrect engines?",
+          "answer": "CAS primitives avoid thread blocking, priority inversion, and convoy effects, ensuring consistent low latency under high multi-core contention."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent KD-Tree",
+        "hazard pointer memory management",
+        "Levenshtein distance algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-23T01:16:12.674447+00:00",
+      "run_number": 5284
     }
   ]
 }
