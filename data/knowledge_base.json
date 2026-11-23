@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5294,
-    "last_updated": "2026-11-23T09:06:47.019827+00:00",
-    "total_topics_learned": 5294
+    "total_runs": 5295,
+    "last_updated": "2026-11-23T09:09:57.721851+00:00",
+    "total_topics_learned": 5295
   },
   "entries": [
     {
@@ -251754,6 +251754,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-23T09:06:47.019807+00:00",
       "run_number": 5294
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Cuckoo Hash Table using atomic bucket-relocating and alternate-slot-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput deterministic lookup time and multi-core parallel dynamic resizing execution in real-time high-frequency trading order matching engines and concurrent in-memory caching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Cuckoo Hash Table using atomic compare-and-swap (CAS) primitives and hazard pointers. It guarantees O(1) worst-case lookup time through multiple hash functions and displacement paths while avoiding locks for maximum multi-core scalability.",
+      "key_points": [
+        "Utilizes atomic bucket-relocating and alternate-slot-swapping CAS operations to handle concurrent insertions and modifications safely.",
+        "Employs hazard pointers to track active threads and safely reclaim memory of evicted or resized buckets without ABA problems.",
+        "Maintains multiple hash functions to map keys to alternate candidate slots, resolving collisions by displacing existing elements.",
+        "Facilitates high-throughput performance in real-time systems like high-frequency trading engines and distributed in-memory caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot relocation via CAS during a cuckoo hash collision resolution",
+        "correct": "bool relocate_slot(std::atomic<Node*>& bucket, Node* expected, Node* desired) {\n    return bucket.compare_exchange_strong(expected, desired, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool relocate_slot(std::atomic<Node*>& bucket, Node* expected, Node* desired) {\n    bucket = desired; // Non-atomic write causing data races\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect displaced nodes with hazard pointers, leading to premature memory deallocation while another thread reads the node.",
+        "Infinite displacement loops during insertion when the table reaches high load factors and fails to trigger resizing concurrently."
+      ],
+      "best_practices": [
+        "Keep load factors below 50% to minimize long displacement chains and reduce the frequency of costly table resizing operations.",
+        "Integrate epoch-based reclamation or robust hazard pointer management to safely clean up old table arrays during dynamic resizing."
+      ],
+      "when_to_use": "Use when you need guaranteed O(1) worst-case lookup latency and high concurrent read/write throughput in low-latency systems.",
+      "when_not_to_use": "Avoid when memory usage overhead must be minimal or when write concurrency is extremely high, causing excessive cuckoo displacement loops.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent infinite loops during concurrent insertions when a cuckoo hash table's displacement chain forms a cycle?",
+          "answer": "By setting a maximum displacement threshold; if exceeded, the thread triggers a concurrent dynamic resize or rehash operation."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free cuckoo hash tables?",
+          "answer": "Hazard pointers avoid atomic write contention on shared reference count variables, scaling better across multiple cores for read-heavy operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Hash Maps with Fine-Grained Locking"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-23T09:09:57.721833+00:00",
+      "run_number": 5295
     }
   ]
 }
