@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5299,
-    "last_updated": "2026-11-23T21:05:02.993279+00:00",
-    "total_topics_learned": 5299
+    "total_runs": 5300,
+    "last_updated": "2026-11-23T21:08:38.691836+00:00",
+    "total_topics_learned": 5300
   },
   "entries": [
     {
@@ -251991,6 +251991,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-23T21:05:02.993257+00:00",
       "run_number": 5299
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Circular Buffer using atomic tail-head-advancing and slot-state-marking CAS primitives alongside hazard pointer memory reclamation for high-throughput single-producer single-consumer streaming and multi-core parallel data pipe execution in real-time audio processing pipelines and concurrent inter-thread messaging frameworks",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a concurrent circular buffer utilizing atomic compare-and-swap (CAS) operations and hazard pointers to ensure safe, lock-free memory reclamation. This architecture eliminates lock contention, making it ideal for high-throughput data streams in low-latency systems.",
+      "key_points": [
+        "Uses atomic tail-head-advancing CAS primitives to coordinate producers and consumers safely without mutex locks.",
+        "Employs slot-state-marking to track read and write availability on a fixed-size contiguous memory block.",
+        "Integrates hazard pointers to safely defer deallocation and prevent the ABA problem during concurrent node reclamation.",
+        "Maximizes throughput in single-producer single-consumer (SPSC) or multi-producer multi-consumer (MPMC) architectures by avoiding thread sleep states."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic tail advancement and slot reservation in a lock-free circular buffer.",
+        "correct": "bool push(const T& item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    size_t current_head = head.load(std::memory_order_acquire);\n    if ((current_tail + 1) % Capacity == current_head) return false; // Full\n    buffer[current_tail] = item;\n    tail.store((current_tail + 1) % Capacity, std::memory_order_release);\n    return true;\n}",
+        "wrong": "bool push(const T& item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to use appropriate memory ordering (e.g., using sequentially consistent stores everywhere unnecessarily, hurting performance).",
+        "Neglecting the ABA problem or improper hazard pointer tracking, leading to use-after-free race conditions."
+      ],
+      "best_practices": [
+        "Use acquire-release semantics for synchronization between producer and consumer threads.",
+        "Pad atomic head and tail pointers to prevent false sharing across CPU cache lines."
+      ],
+      "when_to_use": "Use when implementing low-latency inter-thread communication, real-time audio streaming buffers, or high-frequency event queues where blocking overhead is unacceptable.",
+      "when_not_to_use": "Avoid when memory usage must be dynamically resized or when simplicity and straightforward debugging outweigh extreme micro-performance needs.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent false sharing between the producer and consumer pointers in a concurrent circular buffer?",
+          "answer": "By aligning the head and tail atomic variables to the CPU cache line size (e.g., using alignas(64)) so they reside on separate cache lines."
+        },
+        {
+          "question": "Why are hazard pointers used instead of simple reference counting in lock-free data structures?",
+          "answer": "Hazard pointers avoid atomic read-modify-write overhead on every shared pointer access, reducing contention while safely tracking which threads are reading specific nodes."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Bounded Queues",
+        "Hazard Pointer Memory Management",
+        "Memory Ordering and Atomic Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-23T21:08:38.691814+00:00",
+      "run_number": 5300
     }
   ]
 }
