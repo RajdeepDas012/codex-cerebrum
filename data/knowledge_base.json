@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5298,
-    "last_updated": "2026-11-23T09:20:20.434978+00:00",
-    "total_topics_learned": 5298
+    "total_runs": 5299,
+    "last_updated": "2026-11-23T21:05:02.993279+00:00",
+    "total_topics_learned": 5299
   },
   "entries": [
     {
@@ -251944,6 +251944,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-23T09:20:20.434957+00:00",
       "run_number": 5298
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded Queue using atomic head-tail-wrapping and ring-buffer-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput producer-consumer messaging and multi-core parallel task queuing execution in real-time asynchronous logging systems and concurrent microservice event dispatchers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent bounded queue utilizes atomic compare-and-swap operations on ring buffer indices to manage head and tail pointers without blocking locks. It ensures high-throughput message passing and task scheduling across multiple cores while preventing race conditions and thread contention.",
+      "key_points": [
+        "Employs atomic head-tail-wrapping and ring-buffer-slot-claiming CAS primitives for lock-free multi-producer multi-consumer operations.",
+        "Utilizes hazard pointers or epoch-based memory management to safely reclaim nodes without premature deallocation or ABA problems.",
+        "Operates with a fixed capacity ring buffer that bounds memory consumption and prevents unbounded growth during traffic spikes.",
+        "Delivers high-throughput task queuing and event dispatching suitable for low-latency asynchronous processing pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual atomic slot claiming pattern for a lock-free bounded queue enqueue operation.",
+        "correct": "bool enqueue(T item) {\n    size_t current_tail = tail.load(std::memory_order_relaxed);\n    while (true) {\n        size_t current_head = head.load(std::memory_order_acquire);\n        if (current_tail - current_head >= capacity) return false; // Queue full\n        if (tail.compare_exchange_weak(current_tail, current_tail + 1, std::memory_order_release, std::memory_order_relaxed)) {\n            buffer[current_tail % capacity] = item;\n            return true;\n        }\n    }\n}",
+        "wrong": "bool enqueue(T item) {\n    mutex.lock();\n    buffer[tail++] = item;\n    mutex.unlock();\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle the ABA problem on index wrapping or pointer reuse without version counts.",
+        "Incorrectly ordering memory barriers (acquire-release semantics) leading to stale reads of queue items."
+      ],
+      "best_practices": [
+        "Pad atomic head and tail indices to prevent false sharing across distinct CPU cache lines.",
+        "Use weak CAS loops instead of strong CAS in high-contention scenarios to maximize hardware instruction efficiency."
+      ],
+      "when_to_use": "When building low-latency message passing channels, multi-threaded task schedulers, or asynchronous logging engines where lock contention significantly bottlenecks throughput.",
+      "when_not_to_use": "When the queue capacity cannot be statically bounded or when development simplicity outweighs the performance gains of lock-free synchronization.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent threads from overwriting unconsumed slots in a lock-free bounded ring buffer queue?",
+          "answer": "By maintaining an atomic tail pointer for producers and an atomic head pointer for consumers, ensuring the difference between them never exceeds the buffer capacity."
+        },
+        {
+          "question": "Why are memory ordering constraints crucial when implementing lock-free data structures?",
+          "answer": "They ensure that writes to the ring buffer slots are fully visible to consumer threads before the atomic tail or head index update becomes globally observable."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Skip List",
+        "Hazard Pointers",
+        "Memory Barriers and Atomic Ordering"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-23T21:05:02.993257+00:00",
+      "run_number": 5299
     }
   ]
 }
