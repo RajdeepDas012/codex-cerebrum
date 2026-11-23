@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5288,
-    "last_updated": "2026-11-23T08:47:30.113186+00:00",
-    "total_topics_learned": 5288
+    "total_runs": 5289,
+    "last_updated": "2026-11-23T08:50:42.382771+00:00",
+    "total_topics_learned": 5289
   },
   "entries": [
     {
@@ -251468,6 +251468,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-23T08:47:30.113147+00:00",
       "run_number": 5288
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Radix Tree using atomic bit-testing and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput IP routing table lookups and multi-core parallel prefix matching execution in real-time software-defined networking packet forwarders and concurrent operating system network stack layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Radix Tree utilizes atomic bit-testing and child-pointer-swinging CAS primitives to enable safe, high-throughput prefix searches and updates across multiple cores without traditional locking overhead. Combined with hazard pointers, it ensures safe memory reclamation for dynamically changing network routing tables and packet forwarding engines.",
+      "key_points": [
+        "Employs atomic bit-testing and child-pointer-swinging Compare-And-Swap (CAS) primitives to facilitate lock-free node insertion, deletion, and traversal.",
+        "Utilizes hazard pointers to track threads actively reading nodes, preventing premature memory deallocation and protecting against ABA problems.",
+        "Optimizes memory layout and lookup efficiency for variable-length bit strings, making it ideal for longest-prefix-match algorithms.",
+        "Eliminates thread contention and deadlock risks, providing exceptional scaling for multi-core concurrent network stacks and software-defined networking components."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-pointer swinging via CAS for safe concurrent node insertion in a lock-free radix tree.",
+        "correct": "bool insert_child(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    RadixNode* expected = nullptr;\n    while (!parent->children[bit].compare_exchange_weak(expected, new_node, std::memory_order_release, std::memory_order_relaxed)) {\n        if (expected != nullptr) return false; // Already populated\n    }\n    return true;\n}",
+        "wrong": "bool insert_child_wrong(RadixNode* parent, uint8_t bit, RadixNode* new_node) {\n    if (parent->children[bit] == nullptr) {\n        parent->children[bit] = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect pointer traversals with hazard pointers, leading to use-after-free bugs when another thread deletes a node concurrently.",
+        "Using sequential memory ordering for pointer updates instead of release-acquire semantics, causing visibility issues across different CPU cores."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before dereferencing node child pointers during tree traversal.",
+        "Reuse detached nodes via thread-local memory pools or epoch-based reclamation to minimize dynamic allocation overhead in high-throughput loops.",
+        "Keep bit-testing logic compact and branch-optimized to maximize instruction-level parallelism during prefix lookups."
+      ],
+      "when_to_use": "Use when building high-performance networking components, IP routing tables, or concurrent routing caches requiring massive read concurrency and frequent parallel updates.",
+      "when_not_to_use": "Avoid when keys are dense, fixed-size integers where a flat lock-free array or standard hash map would provide simpler implementation and better cache locality.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem during concurrent child-pointer-swinging operations in a lock-free radix tree?",
+          "answer": "Hazard pointers publish the address of the node a thread is currently inspecting to a globally visible thread-local slot, forcing reclaiming threads to defer physical deletion until no active hazard pointers reference that node."
+        },
+        {
+          "question": "Why is a Radix Tree preferred over a standard Hash Map for IP routing table lookups?",
+          "answer": "A Radix Tree natively supports longest-prefix matching, which is required for routing packets based on subnet masks, whereas a hash map only supports exact-match lookups."
+        }
+      ],
+      "related_topics": [
+        "Lock-free B-link Trees",
+        "Hazard Pointer Memory Management",
+        "Concurrent Trie Structures"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-23T08:50:42.382752+00:00",
+      "run_number": 5289
     }
   ]
 }
