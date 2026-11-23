@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5278,
-    "last_updated": "2026-11-23T00:56:42.327134+00:00",
-    "total_topics_learned": 5278
+    "total_runs": 5279,
+    "last_updated": "2026-11-23T00:59:53.397396+00:00",
+    "total_topics_learned": 5279
   },
   "entries": [
     {
@@ -250994,6 +250994,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-23T00:56:42.327111+00:00",
       "run_number": 5278
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Hash Map using atomic bucket-resizing and node-chain-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput concurrent key-value operations and multi-core parallel data retrieval execution in real-time in-memory caching systems and concurrent distributed key-value storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent hash map that avoids coarse-grained locking by utilizing lock-free Compare-And-Swap (CAS) primitives for operations like bucket resizing and node chain splicing. Combined with hazard pointers for safe memory reclamation, it guarantees thread safety and minimal latency under heavy multi-threaded workloads.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage concurrent insertions, deletions, and updates without blocking threads.",
+        "Implements bucket-resizing strategies that incrementally or atomically shift data structures to new capacity tiers without freezing the map.",
+        "Employs hazard pointer memory reclamation to prevent the ABA problem and safely free nodes only when no active threads reference them.",
+        "Maximizes multi-core throughput and minimizes contention in high-performance in-memory caching systems and distributed key-value stores."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the conceptual thread synchronization pattern using atomic CAS-style loops for concurrent key updates",
+        "correct": "import threading\nimport atomic\n\nclass LockFreeBucket:\n    def __init__(self):\n        self.head = atomic.AtomicReference(None)\n\n    def insert(self, key, value):\n        while True:\n            old_head = self.head.get()\n            new_node = Node(key, value, next=old_head)\n            if self.head.compare_and_set(old_head, new_node):\n                return True",
+        "wrong": "class UnsafeBucket:\n    def __init__(self):\n        self.head = None\n\n    def insert(self, key, value):\n        # Missing synchronization causes race conditions and lost updates\n        self.head = Node(key, value, next=self.head)"
+      },
+      "common_mistakes": [
+        "Forgetting to handle the ABA problem during lock-free node removal and insertion, leading to corrupted pointers.",
+        "Neglecting proper memory reclamation strategies like hazard pointers or epoch-based reclamation, causing memory leaks or premature frees."
+      ],
+      "best_practices": [
+        "Use hazard pointers or epoch-based garbage collection to track thread-local references before freeing deleted nodes.",
+        "Design resizing mechanisms to be incremental or split-ordered to avoid massive latency spikes during rehashing phases."
+      ],
+      "when_to_use": "Use when building high-throughput, low-latency in-memory caches, session stores, or concurrent distributed systems where lock contention becomes a major performance bottleneck.",
+      "when_not_to_use": "Avoid when memory footprint must be tightly constrained or when simpler, coarse-grained locked data structures suffice due to low thread concurrency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions in lock-free hash maps during node deletion?",
+          "answer": "Hazard pointers allow a thread to announce which memory nodes it is currently accessing, ensuring that concurrent deleter threads do not reclaim or free those memory addresses until all referencing threads have unannounced them."
+        },
+        {
+          "question": "What is the primary challenge when resizing a lock-free hash map, and how is it typically solved?",
+          "answer": "The primary challenge is atomically transitioning all threads to a new larger array without pausing updates. This is typically solved using split-ordered lists or progressive/incremental resizing where bucket arrays are migrated lazily via CAS operations."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Reclamation",
+        "Lock-Free B+ Tree",
+        "Compare-And-Swap (CAS) Synchronization Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-23T00:59:53.397376+00:00",
+      "run_number": 5279
     }
   ]
 }
