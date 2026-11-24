@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5307,
-    "last_updated": "2026-11-24T17:21:23.734186+00:00",
-    "total_topics_learned": 5307
+    "total_runs": 5308,
+    "last_updated": "2026-11-24T17:25:15.743329+00:00",
+    "total_topics_learned": 5308
   },
   "entries": [
     {
@@ -252371,6 +252371,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-24T17:21:23.734169+00:00",
       "run_number": 5307
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-swinging CAS primitives alongside hazard pointer memory reclamation for high-throughput disk-backed database indexing and multi-core parallel range query execution in real-time relational database management systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free concurrent B-Tree designed for high-throughput storage engines. It relies on atomic primitives such as Compare-And-Swap (CAS) to manage node splits and child pointers without coarse-grained locking, preventing bottlenecks under heavy multi-core concurrency.",
+      "key_points": [
+        "Utilizes atomic node-splitting and child-pointer-swinging CAS primitives to guarantee thread safety without blocking reader or writer threads.",
+        "Integrates hazard pointers for safe, lock-free memory reclamation, preventing premature deallocation of nodes actively traversed by concurrent threads.",
+        "Optimizes multi-core parallel range query execution for real-time relational database indexing and concurrent storage engines.",
+        "Avoids global locks by employing fine-grained cooperative structural modifications during tree height growth and node overflows."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic child-pointer swinging via CAS for node updates in a concurrent B-Tree structure.",
+        "correct": "bool update_child_pointer(BTreeNode* parent, int index, BTreeNode* old_child, BTreeNode* new_child) {\n    return __atomic_compare_exchange_n(&(parent->children[index]), &old_child, new_child, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST);\n}",
+        "wrong": "bool update_child_pointer(BTreeNode* parent, int index, BTreeNode* new_child) {\n    parent->children[index] = new_child; // Non-atomic write causes race conditions\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to protect node traversals with hazard pointers, leading to use-after-free bugs when concurrent threads split or delete nodes.",
+        "Failing to handle the ABA problem when performing CAS operations on shared pointer references."
+      ],
+      "best_practices": [
+        "Pair every lock-free structural modification with a robust epoch-based or hazard pointer memory management strategy.",
+        "Design split algorithms that allow concurrent reads to proceed even while a node is undergoing structural adjustment."
+      ],
+      "when_to_use": "Use when building high-throughput, multi-threaded database storage engines or memory-mapped indexing layers requiring minimal contention and high read-write concurrency.",
+      "when_not_to_use": "Avoid in single-threaded applications or simple key-value stores where standard locked structures or simpler concurrent maps provide sufficient performance with lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during a node split in a lock-free B-Tree?",
+          "answer": "By using atomic CAS primitives to swing child pointers and update parent nodes incrementally, ensuring that concurrent readers safely observe either the old consistent state or the fully completed split."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent tree structures?",
+          "answer": "Hazard pointers protect threads from accessing memory that has been concurrently freed by another thread during structural modifications like node deletion or merging."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Concurrent Skip Lists",
+        "Optimistic Concurrency Control in Storage Engines"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-24T17:25:15.743314+00:00",
+      "run_number": 5308
     }
   ]
 }
