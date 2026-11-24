@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5301,
-    "last_updated": "2026-11-24T05:48:47.454263+00:00",
-    "total_topics_learned": 5301
+    "total_runs": 5302,
+    "last_updated": "2026-11-24T05:52:00.141240+00:00",
+    "total_topics_learned": 5302
   },
   "entries": [
     {
@@ -252085,6 +252085,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-24T05:48:47.454244+00:00",
       "run_number": 5301
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent LSM-Tree (Log-Structured Merge-Tree) using atomic memtable-swapping and SSTable-compaction CAS primitives alongside hazard pointer memory reclamation for high-throughput write-heavy ingestion and multi-core parallel background compaction execution in real-time key-value storage systems and concurrent distributed database engines",
+      "category": "databases",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced lock-free concurrent LSM-Tree leverages atomic CAS primitives to swap active memtables and coordinate background SSTable compactions without blocking reads or writes. By combining hazard pointers for safe memory reclamation, it delivers exceptional write throughput and eliminates lock contention in multi-core distributed database engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations to atomically rotate and swap active memtables with immutable ones for flushing.",
+        "Employs hazard pointer memory reclamation to safely free retired memtable nodes and SSTable index structures without incurring garbage collection pauses.",
+        "Facilitates multi-core parallel background compaction tasks to merge sorted string tables (SSTables) while maintaining lock-free readers.",
+        "Optimizes write-heavy ingestion workloads by buffering mutations in memory before sequentially writing compressed blocks to disk."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic memtable swapping using CAS loops and hazard pointers for thread-safe concurrent writes.",
+        "correct": "bool ConcurrentLSMTree::insert(const Slice& key, const Slice& value) {\n    Node* new_node = new Node(key, value);\n    while (true) {\n        MemTable* current = active_memtable.load(std::memory_order_acquire);\n        if (current->is_full()) {\n            MemTable* next = new MemTable();\n            if (active_memtable.compare_exchange_weak(current, next, std::memory_order_release, std::memory_order_relaxed)) {\n                schedule_imm_flush(current);\n            }\n            continue;\n        }\n        if (current->insert_lock_free(new_node)) return true;\n    }\n}",
+        "wrong": "bool ConcurrentLSMTree::insert(const Slice& key, const Slice& value) {\n    std::lock_guard<std::mutex> lock(mu);\n    active_memtable->insert(key, value);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed memtable pointers with hazard pointers, leading to use-after-free race conditions during compaction sweeps.",
+        "Using heavy mutual exclusion locks for memtable rotation, which introduces thread contention and reduces write-heavy ingestion throughput."
+      ],
+      "best_practices": [
+        "Pair atomic operations with appropriate memory ordering semantics (acquire-release) to guarantee visibility of newly inserted key-value pairs.",
+        "Bound the size of immutable memtables strictly to prevent memory exhaustion when background compaction threads lag behind write traffic."
+      ],
+      "when_to_use": "Use when building high-throughput, write-intensive storage engines and distributed databases requiring low-latency ingestion and minimal lock contention across multi-core architectures.",
+      "when_not_to_use": "Avoid when workloads are predominantly read-heavy with random point lookups, where B-Trees or specialized hash indexes might yield lower read amplification.",
+      "interview_questions": [
+        {
+          "question": "How do you safely reclaim memory for a memtable that has been swapped out and flushed to disk without using garbage collection?",
+          "answer": "By using hazard pointers, reader threads register their intent to access specific memtable nodes, allowing writers or background threads to safely defer freeing memory until all hazard references are cleared."
+        },
+        {
+          "question": "What is the primary synchronization challenge when implementing lock-free SSTable compaction alongside active concurrent writes?",
+          "answer": "Ensuring that reader and writer threads can traverse older SSTable versions or memtables safely while background threads merge, rewrite, and unlink obsolete files using atomic pointer updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Management",
+        "SSTable Compaction Strategies and Write Amplification",
+        "Concurrent Skip Lists for In-Memory Indexing"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-24T05:52:00.141222+00:00",
+      "run_number": 5302
     }
   ]
 }
