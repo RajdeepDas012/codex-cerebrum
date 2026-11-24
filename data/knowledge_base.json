@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5300,
-    "last_updated": "2026-11-23T21:08:38.691836+00:00",
-    "total_topics_learned": 5300
+    "total_runs": 5301,
+    "last_updated": "2026-11-24T05:48:47.454263+00:00",
+    "total_topics_learned": 5301
   },
   "entries": [
     {
@@ -252038,6 +252038,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-23T21:08:38.691814+00:00",
       "run_number": 5300
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-cascading CAS primitives alongside hazard pointer memory reclamation for high-throughput task prioritization and multi-core parallel job scheduling execution in real-time operating system kernels and concurrent asynchronous execution engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a highly concurrent, lock-free priority queue using atomic operations like compare-and-swap (CAS) combined with hazard pointers for safe memory reclamation. It enables high-throughput task prioritization across multiple threads without lock contention, critical for modern real-time operating systems and parallel task schedulers.",
+      "key_points": [
+        "Utilizes atomic heap-node-swapping and index-cascading CAS primitives to maintain heap invariants without global locks.",
+        "Employs hazard pointer memory reclamation to safely free nodes removed concurrently by multiple worker threads.",
+        "Prevents priority inversion and thread starvation under heavy contention in multi-core job scheduling environments.",
+        "Maximizes cache locality and parallel throughput for real-time asynchronous execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node swapping and hazard pointer registration for lock-free priority queue access.",
+        "correct": "template<typename T>\nclass LockFreePriorityQueue {\n    struct Node {\n        T data;\n        int priority;\n        std::atomic<Node*> next;\n    };\n    std::atomic<Node*> head;\npublic:\n    void push(T val, int prio) {\n        Node* newNode = new Node{val, prio, nullptr};\n        Node* oldHead = head.load();\n        while (!head.compare_exchange_weak(oldHead, newNode));\n    }\n};",
+        "wrong": "template<typename T>\nclass LockFreePriorityQueue {\n    std::mutex mtx;\n    std::priority_queue<T> pq;\npublic:\n    void push(T val) {\n        std::lock_guard<std::mutex> lock(mtx);\n        pq.push(val);\n    }\n};"
+      },
+      "common_mistakes": [
+        "Using standard blocking locks (like std::mutex) inside high-frequency real-time scheduler loops, negating lock-free benefits.",
+        "Forgetting to protect read references with hazard pointers, leading to memory corruption (ABA problems or use-after-free errors)."
+      ],
+      "best_practices": [
+        "Always pair lock-free data structures with thread-local hazard pointer pools to minimize allocation overhead.",
+        "Design fallback mechanisms or backoff strategies (like exponential backoff) under extreme CAS contention to prevent CPU throttling."
+      ],
+      "when_to_use": "Use when building low-latency job schedulers, real-time operating system task dispatchers, or high-throughput async messaging systems requiring multi-core priority ordering.",
+      "when_not_to_use": "Avoid when simple coarse-grained locking provides sufficient throughput or when target platforms lack native double-word CAS support.",
+      "interview_questions": [
+        {
+          "question": "How do you handle the ABA problem when performing atomic heap-node swapping in a lock-free priority queue?",
+          "answer": "You can use tagged pointers (version counts combined with the memory address) or hazard pointers to ensure that a CAS operation fails if the pointer value has been recycled."
+        },
+        {
+          "question": "Why are standard binary heaps difficult to make lock-free compared to linked lists?",
+          "answer": "Binary heaps require structural modifications across distant indices (such as percolating up or down), which leads to high CAS contention and complex cascading index updates."
+        }
+      ],
+      "related_topics": [
+        "lock-free skip lists",
+        "hazard pointer memory management",
+        "lock-free bounded queues"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-24T05:48:47.454244+00:00",
+      "run_number": 5301
     }
   ]
 }
