@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5334** |
-| Last Updated | `2026-11-25T22:26:57.046387+00:00` |
-| Dataset Size | `5334 entries` |
+| Total Topics Learned | **5335** |
+| Last Updated | `2026-11-25T22:30:12.964857+00:00` |
+| Dataset Size | `5335 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3907 |
+| data-structures | 3908 |
 | algorithms | 333 |
 | trading-strategies | 228 |
 | crypto-blockchain | 214 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and task-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput asynchronous job dispatching and multi-core parallel task scheduling execution in real-time distributed execution engines and concurrent background worker processing platforms`
 - `Implementation of a lock-free thread-safe concurrent Link-Cut Tree using atomic path-parent-updating and preferred-child-swapping CAS primitives alongside hazard pointer memory reclamation for high-throughput dynamic tree operations and multi-core parallel network flow computation execution in real-time distributed routing optimizers and concurrent graph analytics platforms`
 - `Implementation of a lock-free thread-safe concurrent R-Tree using atomic bounding-box-adjusting and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput spatial indexing and multi-core parallel geometric range query execution in real-time geographic information systems and concurrent location-based service platforms`
 - `Implementation of a lock-free thread-safe concurrent Spatial Hashing Grid using atomic bucket-allocating and point-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D/3D neighbor searching and multi-core parallel spatial query execution in real-time particle simulation engines and concurrent game physics collision detection platforms`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core parallel time-travel analytics execution in real-time financial auditing platforms and concurrent version-controlled data store engines`
-- `Implementation of a lock-free thread-safe concurrent Splay Tree using atomic self-balancing-rotation and node-access-splaying CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently accessed node optimization and multi-core parallel search-heavy workload execution in real-time in-memory databases and concurrent caching eviction engines`
 
 <!-- STATS_END -->
 

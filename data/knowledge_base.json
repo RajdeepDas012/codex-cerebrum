@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5334,
-    "last_updated": "2026-11-25T22:26:57.046387+00:00",
-    "total_topics_learned": 5334
+    "total_runs": 5335,
+    "last_updated": "2026-11-25T22:30:12.964857+00:00",
+    "total_topics_learned": 5335
   },
   "entries": [
     {
@@ -253650,6 +253650,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-25T22:26:57.046370+00:00",
       "run_number": 5334
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-promoting and task-stealing CAS primitives alongside hazard pointer memory reclamation for high-throughput asynchronous job dispatching and multi-core parallel task scheduling execution in real-time distributed execution engines and concurrent background worker processing platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Priority Queue utilizes atomic heap-node-promoting and task-stealing compare-and-swap (CAS) primitives to manage elements ordered by priority without relying on coarse-grained locks. By integrating hazard pointer memory reclamation, it safely manages concurrent node insertions, extractions, and multi-core work stealing while preventing memory leaks and use-after-free bugs in high-throughput task schedulers.",
+      "key_points": [
+        "Employs atomic CAS primitives to modify heap structure pointers and promote nodes without locking overhead.",
+        "Implements work-stealing strategies across multiple core queues to balance thread workloads dynamically.",
+        "Utilizes hazard pointers to safely defer memory deallocation of nodes concurrently accessed or extracted by competing threads.",
+        "Guarantees high-throughput execution for asynchronous job dispatching in real-time distributed systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic heap-node promotion using CAS and hazard pointer protection for lock-free priority queue operations",
+        "correct": "#include <atomic>\n#include <thread>\n#include <vector>\n\nstruct Node {\n    int priority;\n    std::atomic<Node*> next;\n};\n\nclass LockFreePriorityQueue {\n    std::atomic<Node*> head{nullptr};\npublic:\n    bool push(int priority) {\n        Node* newNode = new Node{priority, nullptr};\n        Node* oldHead = head.load();\n        do {\n            newNode->next.store(oldHead);\n        } while (!head.compare_exchange_weak(oldHead, newNode));\n        return true;\n    }\n};",
+        "wrong": "class UnsafePriorityQueue {\n    Node* head = nullptr;\npublic:\n    void push(int priority) {\n        // Missing synchronization; data races will corrupt the pointer structure under concurrent access\n        Node* newNode = new Node{priority, head};\n        head = newNode;\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointer links, leading to use-after-free race conditions.",
+        "Using weak CAS loops without correctly updating the expected local variable on failure, leading to infinite spin loops.",
+        "Neglecting the ABA problem during pointer modifications, which can cause corrupted heap topologies."
+      ],
+      "best_practices": [
+        "Always register threads and protect accessed nodes using hazard pointers prior to reading pointer links.",
+        "Design decentralized or segmented work queues to reduce cache contention on a single global head pointer.",
+        "Pair atomic operations with appropriate memory ordering semantics (acquire-release) to guarantee visibility of heap node payloads."
+      ],
+      "when_to_use": "Use when building high-throughput task schedulers, asynchronous job dispatchers, or event-driven frameworks where multiple worker threads heavily contend for prioritized tasks.",
+      "when_not_to_use": "Avoid when thread contention is minimal or where simple mutex-locked priority queues offer sufficient performance with significantly lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free errors in a lock-free priority queue?",
+          "answer": "Hazard pointers allow a thread to announce which nodes it is currently accessing. Deallocation mechanisms check these announced pointers and safely defer freeing any node until no thread holds an active reference to it."
+        },
+        {
+          "question": "Why is a single centralized lock-free heap pointer insufficient for massive multi-core task scheduling?",
+          "answer": "A single centralized pointer creates a high-contention bottleneck where all core threads constantly fail CAS attempts on the same atomic variable, drastically reducing scaling efficiency. Distributed work-stealing queues mitigate this."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointer Memory Management",
+        "Lock-Free Work-Stealing Queues",
+        "Atomic Compare-And-Swap (CAS) Synchronization"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-25T22:30:12.964841+00:00",
+      "run_number": 5335
     }
   ]
 }
