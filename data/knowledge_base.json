@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5336,
-    "last_updated": "2026-11-25T22:33:31.665253+00:00",
-    "total_topics_learned": 5336
+    "total_runs": 5337,
+    "last_updated": "2026-11-25T22:36:43.972470+00:00",
+    "total_topics_learned": 5337
   },
   "entries": [
     {
@@ -253746,6 +253746,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-25T22:33:31.665236+00:00",
       "run_number": 5336
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Sieve of Eratosthenes using atomic bit-flipping and prime-marking CAS primitives alongside hazard pointer memory reclamation for high-throughput parallel prime number generation and multi-core parallel factor calculation execution in real-time cryptographic key generation systems and concurrent mathematical computing platforms",
+      "category": "algorithms",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a non-blocking, multi-threaded Sieve of Eratosthenes algorithm utilizing atomic bitwise instructions and hazard pointers. It enables high-throughput parallel prime generation without global locks, critical for secure key generation and intensive mathematical computations.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for lock-free bit-flipping and composite marking across shared memory bitsets.",
+        "Employs hazard pointer memory reclamation safely to manage dynamically allocated buffer segments without blocking concurrent workers.",
+        "Optimizes multi-core parallel factor calculations by distributing sieve ranges and minimizing false sharing on cache lines.",
+        "Ensures linearizability of composite state updates so that parallel threads independently discover and mark multiples without race conditions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic bit-marking using CAS loops for safe concurrent prime state updates.",
+        "correct": "#include <atomic>\n#include <vector>\n\nclass ConcurrentSieve {\n    std::vector<std::atomic<uint64_t>> bits;\npublic:\n    void mark_composite(size_t index) {\n        size_t word_idx = index / 64;\n        uint64_t bit_mask = 1ULL << (index % 64);\n        uint64_t old_val = bits[word_idx].load(std::memory_order_relaxed);\n        while (!(old_val & bit_mask)) {\n            if (bits[word_idx].compare_exchange_weak(old_val, old_val | bit_mask, std::memory_order_release, std::memory_order_relaxed)) {\n                break;\n            }\n        }\n    }\n};",
+        "wrong": "#include <vector>\n\nclass UnsafeSieve {\n    std::vector<uint64_t> bits;\npublic:\n    void mark_composite(size_t index) {\n        size_t word_idx = index / 64;\n        uint64_t bit_mask = 1ULL << (index % 64);\n        bits[word_idx] |= bit_mask; // Race condition on non-atomic read-modify-write\n    }\n};"
+      },
+      "common_mistakes": [
+        "Failing to account for cache line bouncing (false sharing) when multiple threads modify adjacent bits within the same 64-bit word.",
+        "Using sequential memory orders on CAS loops, leading to inconsistent view of composite markings across multiple CPU cores."
+      ],
+      "best_practices": [
+        "Pad bitset partitions to align with CPU cache line boundaries to eliminate false sharing.",
+        "Leverage relaxed memory ordering for load operations and acquire-release semantics solely during successful CAS operations."
+      ],
+      "when_to_use": "When building high-throughput cryptographic systems or parallel mathematical engines that demand continuous prime generation across dozens of CPU cores without lock contention.",
+      "when_not_to_use": "For small-scale prime finding where single-threaded trial division or simple sequential arrays incur lower overhead than atomic synchronization.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent false sharing when multiple threads concurrently write to adjacent bits in a shared bitset array?",
+          "answer": "By padding the data structures or organizing work partitions such that distinct threads operate on separate cache lines or distinct word boundaries."
+        },
+        {
+          "question": "Why are hazard pointers useful when dynamically resizing or reclaiming memory structures in a lock-free sieve implementation?",
+          "answer": "Hazard pointers protect nodes or buffers from being reclaimed by the memory manager while other threads still hold active references to them, avoiding use-after-free bugs without blocking."
+        }
+      ],
+      "related_topics": [
+        "Lock-free memory reclamation",
+        "Atomic bitwise operations",
+        "Parallel prefix sum algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-25T22:36:43.972451+00:00",
+      "run_number": 5337
     }
   ]
 }
