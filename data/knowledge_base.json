@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5331,
-    "last_updated": "2026-11-25T22:16:59.178764+00:00",
-    "total_topics_learned": 5331
+    "total_runs": 5332,
+    "last_updated": "2026-11-25T22:20:24.224071+00:00",
+    "total_topics_learned": 5332
   },
   "entries": [
     {
@@ -253509,6 +253509,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-25T22:16:59.178748+00:00",
       "run_number": 5331
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hashing Grid using atomic bucket-allocating and point-relocating CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D/3D neighbor searching and multi-core parallel spatial query execution in real-time particle simulation engines and concurrent game physics collision detection platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free spatial hashing grid that maps 2D or 3D coordinates to bucket lists using atomic compare-and-swap (CAS) operations. It leverages hazard pointers to safely manage memory reclamation during high-frequency parallel particle insertions and updates, eliminating traditional mutex bottlenecks.",
+      "key_points": [
+        "Utilizes a spatial hashing function to map continuous 2D/3D coordinates into discrete grid bucket indices.",
+        "Employs atomic bucket-allocating and point-relocating CAS primitives to handle concurrent insertions and coordinate updates without locks.",
+        "Integrates hazard pointers to safely defer memory deallocation of dynamic bucket nodes until all participating threads release their references.",
+        "Enables high-throughput neighbor queries and broad-phase collision detection across multi-core architectures."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates a safe atomic bucket insertion pattern using hazard pointers in a concurrent spatial grid.",
+        "correct": "void insertPoint(SpatialGrid* grid, int bucket_id, Point* new_pt) {\n    HazardPointer hp;\n    while (true) {\n        Node* old_head = grid.buckets[bucket_id].load(std::memory_order_acquire);\n        hp.protect(old_head);\n        new_pt->next = old_head;\n        if (grid.buckets[bucket_id].compare_exchange_weak(old_head, new_pt, std::memory_order_release, std::memory_order_relaxed)) {\n            hp.clear();\n            break;\n        }\n    }\n}",
+        "wrong": "void insertPointUnsafe(SpatialGrid* grid, int bucket_id, Point* new_pt) {\n    new_pt->next = grid.buckets[bucket_id];\n    grid.buckets[bucket_id] = new_pt;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before reading their 'next' pointers, leading to severe use-after-free race conditions.",
+        "Using overly narrow spatial cell sizes that result in excessive hashing collisions and thread contention on specific buckets."
+      ],
+      "best_practices": [
+        "Align spatial bucket structures to CPU cache lines to minimize false sharing in multi-core execution environments.",
+        "Tune the hash table capacity and cell dimension parameters dynamically based on the active density profile of the simulated particles."
+      ],
+      "when_to_use": "Use when building real-time particle simulation engines, multi-player game physics, or geographic information systems requiring ultra-low-latency spatial queries under heavy multi-threaded workloads.",
+      "when_not_to_use": "Avoid when memory usage is severely constrained or when objects rarely move and a static, coarsely locked grid structure provides sufficient performance.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs during concurrent node relocation in a spatial grid?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are actively reading, ensuring that memory reclaimers cannot free or reuse that node until all referencing threads clear their hazard pointers."
+        },
+        {
+          "question": "Why is spatial hashing preferred over bounding volume hierarchies in certain high-frequency lock-free particle simulations?",
+          "answer": "Spatial hashing provides O(1) expected time complexity for point localization and updates based strictly on coordinates, bypassing the complex tree-balancing and traversal overhead required by lock-free BVHs."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Concurrent Hash Maps",
+        "Hazard Pointer Memory Management",
+        "Parallel Broad-Phase Collision Detection"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-25T22:20:24.224044+00:00",
+      "run_number": 5332
     }
   ]
 }
