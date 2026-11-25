@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5329,
-    "last_updated": "2026-11-25T12:39:38.095959+00:00",
-    "total_topics_learned": 5329
+    "total_runs": 5330,
+    "last_updated": "2026-11-25T12:42:59.966196+00:00",
+    "total_topics_learned": 5330
   },
   "entries": [
     {
@@ -253415,6 +253415,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-25T12:39:38.095937+00:00",
       "run_number": 5329
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Splay Tree using atomic self-balancing-rotation and node-access-splaying CAS primitives alongside hazard pointer memory reclamation for high-throughput frequently accessed node optimization and multi-core parallel search-heavy workload execution in real-time in-memory databases and concurrent caching eviction engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free concurrent Splay Tree using compare-and-swap (CAS) primitives and hazard pointers. It ensures safe multi-threaded self-balancing operations and fast lookups for hot data items without blocking execution.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to implement lock-free tree rotations and node splaying.",
+        "Employs hazard pointers to safely manage memory reclamation for nodes modified concurrently across multiple threads.",
+        "Optimizes access times for frequently requested elements by moving accessed nodes to the root via atomic restructuring.",
+        "Provides high-throughput parallel execution suitable for multi-core search-heavy caching and in-memory database systems."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of atomic node access tracking and hazard pointer protection during splay operations",
+        "correct": "void* safe_access_splay_node(std::atomic<Node*>& root, uintptr_t key, HazardPointer& hp) {\n    Node* curr;\n    do {\n        curr = root.load(std::memory_order_acquire);\n        hp.protect(curr);\n    } while (curr != root.load(std::memory_order_relaxed));\n    return curr;\n}",
+        "wrong": "void* unsafe_access_splay_node(Node* root, uintptr_t key) {\n    return root->find(key); // Lacks atomicity and hazard pointer protection, risking use-after-free bugs\n}"
+      },
+      "common_mistakes": [
+        "Failing to handle ABA problems when updating child pointers during multi-step splay rotations.",
+        "Neglecting hazard pointer registration, resulting in premature memory deallocation of nodes currently accessed by other threads."
+      ],
+      "best_practices": [
+        "Always protect shared node references using thread-local hazard pointer structures before traversing or modifying tree pointers.",
+        "Keep atomic retry loops compact to minimize contention and livelock occurrences during heavy parallel splay operations."
+      ],
+      "when_to_use": "Use when building high-throughput concurrent in-memory caching systems or databases where access patterns exhibit strong temporal locality.",
+      "when_not_to_use": "Avoid in write-heavy single-threaded contexts or when strict deterministic bounds on memory usage and latency per operation are required without lock-free complexity.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent race conditions during parallel tree rotations in a lock-free splay tree?",
+          "answer": "By leveraging atomic CAS operations on child pointers combined with descriptor-based multi-step coordination and validation checks."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent data structures like a Splay Tree?",
+          "answer": "They prevent other threads from freeing node memory while a thread is actively traversing or modifying references pointing to that node."
+        }
+      ],
+      "related_topics": [
+        "Lock-free AVL Tree",
+        "Hazard Pointers Memory Management",
+        "Concurrent Skip List"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-25T12:42:59.966176+00:00",
+      "run_number": 5330
     }
   ]
 }
