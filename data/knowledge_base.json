@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5360,
-    "last_updated": "2026-11-26T15:16:25.604378+00:00",
-    "total_topics_learned": 5360
+    "total_runs": 5361,
+    "last_updated": "2026-11-26T15:19:45.032451+00:00",
+    "total_topics_learned": 5361
   },
   "entries": [
     {
@@ -254888,6 +254888,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T15:16:25.604357+00:00",
       "run_number": 5360
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Wavelet Tree using atomic alphabet-partitioning and bit-vector-ranking CAS primitives alongside hazard pointer memory reclamation for high-throughput compressed text indexing and multi-core parallel range quantile query execution in real-time genomic data warehouses and concurrent full-text search analytics engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design of a lock-free, thread-safe concurrent Wavelet Tree that leverages atomic compare-and-swap (CAS) primitives for alphabet partitioning and bit-vector ranking. It uses hazard pointers for safe memory reclamation, enabling high-throughput compressed text indexing and multi-core parallel range quantile queries in real-time data systems.",
+      "key_points": [
+        "Utilizes lock-free synchronization mechanisms via atomic CAS operations to allow concurrent node insertions and bit-vector updates without global mutex bottlenecks.",
+        "Employs hazard pointers to safely manage memory reclamation for dynamically modified tree nodes and bit-vector structures in a multi-threaded environment.",
+        "Facilitates efficient compressed text indexing and rank/select operations across distributed and multi-core execution threads.",
+        "Optimizes multi-core parallel execution for complex queries such as range quantiles, top-k retrieval, and substring frequency matching."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the atomic update of a wavelet tree node's bit vector using a hazard pointer protected CAS loop.",
+        "correct": "void updateBitVector(HazardPointer& hp, std::atomic<Word*>& bitmap_ptr, size_t pos) {\n    Word* old_val;\n    Word* new_val;\n    do {\n        old_val = hp.protect(bitmap_ptr);\n        new_val = clone_and_set_bit(old_val, pos);\n    } while (!bitmap_ptr.compare_exchange_weak(old_val, new_val));\n    hp.reclaimLater(old_val);\n}",
+        "wrong": "void updateBitVector(std::atomic<Word*>& bitmap_ptr, size_t pos) {\n    Word* old_val = bitmap_ptr.load();\n    Word* new_val = clone_and_set_bit(old_val, pos);\n    bitmap_ptr.store(new_val); // Lacks CAS and thread safety, risking race conditions and memory leaks\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect dynamically allocated nodes with hazard pointers before loading pointer fields, leading to use-after-free bugs during concurrent mutations.",
+        "Using naive locks instead of atomic CAS primitives for bit-vector ranking updates, which degrades throughput in highly concurrent multi-core environments."
+      ],
+      "best_practices": [
+        "Always acquire and register hazard pointers prior to traversing shared wavelet tree nodes to ensure safe memory reclamation.",
+        "Keep critical sections inside atomic retry loops as brief as possible to reduce contention on heavily accessed root and mid-level alphabet partition nodes."
+      ],
+      "when_to_use": "Use this structure when building high-throughput, multi-threaded text search engines or genomic data warehouses requiring concurrent compressed storage and fast range quantile queries.",
+      "when_not_to_use": "Avoid this approach for single-threaded applications or low-throughput scenarios where standard, simpler pointer-based or static wavelet trees introduce unnecessary synchronization complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and memory reclamation races in a lock-free wavelet tree?",
+          "answer": "Hazard pointers allow threads to announce which nodes they are currently accessing, ensuring that memory blocks are not freed until no active thread references them."
+        },
+        {
+          "question": "Why are atomic bit-vector-ranking primitives critical for concurrent wavelet tree scaling?",
+          "answer": "They allow multiple threads to perform rank and select operations or update bits concurrently without acquiring global locks, maximizing multi-core CPU utilization."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Suffix Trees",
+        "Concurrent Bit-Vector Rank/Select Structures",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T15:19:45.032430+00:00",
+      "run_number": 5361
     }
   ]
 }
