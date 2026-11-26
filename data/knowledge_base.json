@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5361,
-    "last_updated": "2026-11-26T15:19:45.032451+00:00",
-    "total_topics_learned": 5361
+    "total_runs": 5362,
+    "last_updated": "2026-11-26T15:23:04.481445+00:00",
+    "total_topics_learned": 5362
   },
   "entries": [
     {
@@ -254935,6 +254935,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T15:19:45.032430+00:00",
       "run_number": 5361
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B-Tree using atomic node-splitting and child-pointer-updating CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-key indexing and multi-core parallel range searching execution in real-time in-memory database systems and concurrent storage indexing layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent B-Tree using atomic CAS primitives for node-splitting and child-pointer updates combined with hazard pointers for safe memory reclamation. It enables high-throughput multi-key indexing and multi-core parallel range searches, which are critical for modern in-memory databases and storage engines.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) primitives to manage structural modifications such as node splits and child pointer updates without traditional locking overhead.",
+        "Employs hazard pointers to track threads actively accessing nodes, preventing premature memory deallocation and avoiding the ABA problem during concurrent operations.",
+        "Supports high-throughput multi-key indexing by allowing multiple threads to traverse and modify distinct parts of the tree concurrently.",
+        "Enables multi-core parallel range searches by ensuring consistent views of node keys and child pointers during parallel executions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual node structure and atomic child pointer update using CAS in a concurrent B-Tree.",
+        "correct": "struct BTreeNode { std::atomic<bool> is_splitting; std::atomic<BTreeNode*> children[MAX_CHILDREN]; }; void update_child(BTreeNode* parent, int idx, BTreeNode* old_node, BTreeNode* new_node) { parent->children[idx].compare_exchange_strong(old_node, new_node); }",
+        "wrong": "void update_child(BTreeNode* parent, int idx, BTreeNode* new_node) { parent->children[idx] = new_node; }"
+      },
+      "common_mistakes": [
+        "Failing to protect memory access with hazard pointers, leading to use-after-free bugs when another thread splits or deletes a node.",
+        "Neglecting the ABA problem during child pointer updates, which can cause concurrent structural modifications to corrupt the tree state."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with hazard pointers before traversing down child pointers to ensure safe memory reclamation.",
+        "Design node splitting protocols to be cooperative, allowing multiple threads to help finish incomplete splits before performing local updates."
+      ],
+      "when_to_use": "Use when building high-performance in-memory databases, real-time transaction processing systems, or concurrent storage engines that demand high write and range-query throughput across numerous CPU cores.",
+      "when_not_to_use": "Avoid when memory usage is heavily constrained, simple single-threaded performance is sufficient, or when standard lock-based synchronization or coarse-grained locking introduces acceptable latency.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free B-Tree?",
+          "answer": "Hazard pointers allow threads to declare which nodes they are currently accessing before reading pointers. Memory reclamation schemes check these pointers and defer freeing any node until no thread holds a hazard reference to it."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for scaling a high-throughput B-Tree in modern multi-core systems?",
+          "answer": "Mutexes introduce thread contention, context switching overhead, and serialization bottlenecks, whereas lock-free designs using atomic CAS primitives allow concurrent progress and scale better with high core counts."
+        }
+      ],
+      "related_topics": [
+        "lock-free Skip Graph",
+        "lock-free Cuckoo Hash Map",
+        "hazard pointer memory reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T15:23:04.481424+00:00",
+      "run_number": 5362
     }
   ]
 }
