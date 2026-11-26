@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5347,
-    "last_updated": "2026-11-26T05:19:14.922741+00:00",
-    "total_topics_learned": 5347
+    "total_runs": 5348,
+    "last_updated": "2026-11-26T05:22:27.081227+00:00",
+    "total_topics_learned": 5348
   },
   "entries": [
     {
@@ -254269,6 +254269,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T05:19:14.922721+00:00",
       "run_number": 5347
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Left-Leaning Red-Black (LLRB) Tree using atomic color-flipping and rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput balanced search tree operations and multi-core parallel ordered key-value lookup execution in real-time in-memory databases and concurrent distributed caching systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A concurrent Left-Leaning Red-Black Tree provides self-balancing search tree operations in a lock-free manner using atomic primitives such as Compare-And-Swap (CAS) for node colors and pointer rotations. It ensures high-throughput ordered key-value lookups on multi-core architectures while leveraging hazard pointers to safely reclaim memory without race conditions.",
+      "key_points": [
+        "Utilizes atomic operations for node rotations (left and right) and color-flipping to maintain balanced tree properties without locking.",
+        "Employs hazard pointers to track active thread accesses, preventing premature deallocation of nodes during concurrent mutations.",
+        "Maintains Left-Leaning Red-Black invariants to simplify balancing logic compared to standard red-black trees.",
+        "Enables high-throughput parallel range queries and point lookups for real-time in-memory databases and distributed caches."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the conceptual structure of an atomic CAS-based node rotation for a concurrent LLRB tree",
+        "correct": "bool rotateLeft(std::atomic<Node*>& parentRef, Node* oldNode) {\n    Node* rightChild = oldNode->right;\n    if (!rightChild) return false;\n    oldNode->right = rightChild->left;\n    rightChild->left = oldNode;\n    return parentRef.compare_exchange_strong(oldNode, rightChild);\n}",
+        "wrong": "Node* rotateLeft(Node* node) {\n    Node* x = node->right;\n    node->right = x->left;\n    x->left = node;\n    return x;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect intermediate traversal nodes with hazard pointers, leading to use-after-free bugs during concurrent structural modifications.",
+        "Attempting complex multi-node balancing updates in a single CAS step instead of breaking operations down into fine-grained atomic transitions."
+      ],
+      "best_practices": [
+        "Keep atomic transaction scopes as small as possible to minimize CAS failure and retry loops under high thread contention.",
+        "Integrate a robust hazard pointer or epoch-based memory reclamation scheme to safely clean up unlinked nodes."
+      ],
+      "when_to_use": "Use when you require high-throughput ordered key-value access, sorted range scans, and frequent updates across multiple threads without lock contention.",
+      "when_not_to_use": "Avoid in single-threaded contexts or lightweight systems where the overhead of atomic primitives, memory barriers, and hazard management outweighs concurrency gains.",
+      "interview_questions": [
+        {
+          "question": "How do you handle multi-node structural balancing invariants atomically in a lock-free LLRB tree?",
+          "answer": "By breaking down complex balance fixes into individual, idempotent step-by-step CAS operations (such as color flips or single rotations) that can safely retry if another thread modifies the same nodes."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing concurrent search trees like an LLRB tree?",
+          "answer": "Hazard pointers prevent a thread from freeing or reusing memory of a node that another concurrent thread is currently reading or modifying, avoiding severe race conditions and use-after-free vulnerabilities."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free Skip Lists",
+        "Hazard Pointers and Epoch-Based Reclamation",
+        "Concurrent B-Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T05:22:27.081208+00:00",
+      "run_number": 5348
     }
   ]
 }
