@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5365,
-    "last_updated": "2026-11-26T15:36:01.668599+00:00",
-    "total_topics_learned": 5365
+    "total_runs": 5366,
+    "last_updated": "2026-11-26T15:39:14.513513+00:00",
+    "total_topics_learned": 5366
   },
   "entries": [
     {
@@ -255136,6 +255136,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T15:36:01.668582+00:00",
       "run_number": 5365
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Priority Queue using atomic heap-node-swapping and index-tracking CAS primitives alongside hazard pointer memory reclamation for high-throughput task scheduling and multi-core parallel job processing execution in real-time distributed task execution systems and concurrent operating system kernel schedulers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent priority queue uses atomic compare-and-swap (CAS) primitives and hazard pointers to manage dynamic heap-node swapping and index tracking safely across multiple threads without traditional locking bottlenecks. This architecture ensures high-throughput task prioritization and deterministic job execution in multi-core operating systems and distributed engines.",
+      "key_points": [
+        "Utilizes atomic heap-node-swapping and index-tracking CAS primitives to maintain heap structural invariants concurrently.",
+        "Employs hazard pointer memory reclamation to securely manage dynamically allocated nodes without lock contention or ABA problem vulnerabilities.",
+        "Eliminates thread blocking mechanisms, ensuring maximum CPU utilization and low-latency task retrieval in parallel execution environments.",
+        "Addresses complex race conditions during concurrent insertions and extractions where multiple threads modify overlapping parent-child relationships."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the pattern of executing a hazard pointer protected atomic CAS operation for lock-free node swapping.",
+        "correct": "bool try_swap_nodes(AtomicNode* parent, AtomicNode* child, HazardPointerRegistry& hp) {\n    HazardNode* hp_node = hp.protect(parent);\n    if (parent->version != hp_node->version) return false;\n    return atomic_compare_exchange_weak(&parent->priority, &expected_prio, new_prio);\n}",
+        "wrong": "bool bad_swap(Node* parent, Node* child) {\n    // Missing hazard pointer protection and atomic verification leads to use-after-free and race conditions\n    parent->priority = child->priority;\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for the ABA problem during concurrent heap-node swapping operations.",
+        "Neglecting proper hazard pointer registration and epoch cleanup, resulting in memory leaks or premature deallocation.",
+        "Assuming linearizability of overall heap structures by relying solely on atomic operations for isolated node updates."
+      ],
+      "best_practices": [
+        "Combine version counters or stamped references with CAS operations to completely mitigate the ABA problem.",
+        "Isolate hazard pointer acquisition logic into RAII-style wrappers to guarantee safe resource release upon scope exit.",
+        "Thoroughly stress-test concurrent priority queues under high thread contention workloads using sanitizers."
+      ],
+      "when_to_use": "Use when building ultra-low-latency operating system schedulers, high-throughput distributed job orchestrators, or real-time event-driven systems requiring lock-free concurrent task prioritization.",
+      "when_not_to_use": "Avoid in low-concurrency environments or simple applications where the immense implementation complexity of lock-free primitives and hazard pointers outweighs the performance benefits of avoiding standard mutexes.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent the ABA problem when implementing a lock-free priority queue using atomic CAS primitives?",
+          "answer": "By using tagged pointers or version counters combined with the value in the CAS operation so that even if a node's value changes and reverts, the modified version stamp ensures the CAS fails appropriately."
+        },
+        {
+          "question": "Why are hazard pointers necessary in a lock-free concurrent priority queue instead of standard garbage collection or manual deletion?",
+          "answer": "Hazard pointers allow threads to explicitly declare which nodes they are currently accessing, preventing other threads from prematurely reclaiming or freeing memory while avoiding the synchronization overhead and latency spikes of full runtime garbage collection."
+        }
+      ],
+      "related_topics": [
+        "Lock-free concurrent B-Trees",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic CAS Primitives and ABA Problem Mitigation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T15:39:14.513491+00:00",
+      "run_number": 5366
     }
   ]
 }
