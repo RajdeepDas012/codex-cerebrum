@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5368,
-    "last_updated": "2026-11-26T23:37:52.698658+00:00",
-    "total_topics_learned": 5368
+    "total_runs": 5369,
+    "last_updated": "2026-11-26T23:41:07.898935+00:00",
+    "total_topics_learned": 5369
   },
   "entries": [
     {
@@ -255281,6 +255281,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T23:37:52.698638+00:00",
       "run_number": 5368
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Skip List using atomic forward-pointer-linking and node-tower-splicing CAS primitives alongside hazard pointer memory reclamation for high-throughput probabilistic ordered searching and multi-core parallel key-value store execution in real-time in-memory databases and concurrent distributed caching systems",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent skip list utilizes atomic compare-and-swap (CAS) primitives and hazard pointers to support high-throughput, multi-core ordered list operations without coarse-grained locking. By decoupling multi-level forward pointer linking from tower construction, it guarantees probabilistic logarithmic search times while safely preventing race conditions and memory reclamation hazards under high contention.",
+      "key_points": [
+        "Employs atomic forward-pointer-linking and node-tower-splicing CAS primitives to manipulate multi-level linked structures safely across threads.",
+        "Integrates hazard pointer memory reclamation to prevent premature freeing of nodes currently accessed by concurrent reader or writer threads.",
+        "Achieves probabilistic O(log n) time complexity for search, insertion, and deletion operations in a lock-free manner.",
+        "Eliminates lock convoying and deadlock risks, making it ideal for high-performance in-memory databases and concurrent caching engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic linking of forward pointers in a lock-free skip list node insertion.",
+        "correct": "bool link_node(Node* pred, Node* curr, Node* succ, int level) {\n    curr->next[level].store(succ, std::memory_order_relaxed);\n    return pred->next[level].compare_exchange_strong(succ, curr, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool link_node_wrong(Node* pred, Node* curr, Node* succ, int level) {\n    pred->next[level] = curr;\n    curr->next[level] = succ;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect node access with hazard pointers during traversal, leading to use-after-free vulnerabilities when another thread concurrently unlinks and frees the node.",
+        "Incomplete multi-level tower insertion where a node is inserted at higher levels before lower levels are fully established and marked visible."
+      ],
+      "best_practices": [
+        "Use appropriate memory ordering semantics (acquire-release) on atomic pointers to ensure visibility of preceding writes across CPU cores.",
+        "Batch or defer memory reclamation using hazard pointers or epoch-based reclamation to minimize synchronization overhead under heavy write workloads."
+      ],
+      "when_to_use": "Use this structure when building high-performance, concurrent ordered maps or priority structures where multi-core read and write contention is extremely high.",
+      "when_not_to_use": "Avoid this in single-threaded environments or systems with low concurrency where simpler, non-atomic data structures provide lower memory overhead and implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during concurrent deletions in a lock-free skip list?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently accessing so that deleting threads know to defer memory reclamation until no other thread holds a hazard reference to that node."
+        },
+        {
+          "question": "Why is a lock-free skip list often preferred over a lock-free AVL or Red-Black tree?",
+          "answer": "Maintaining strict balance invariants atomically via CAS across multi-node rotations is notoriously complex and prone to high contention, whereas skip lists rely on probabilistic balancing that scales better with localized atomic updates."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Epoch-Based Memory Reclamation",
+        "Lock-Free Concurrent Priority Queues",
+        "Lock-Free Concurrent Hash Maps"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T23:41:07.898914+00:00",
+      "run_number": 5369
     }
   ]
 }
