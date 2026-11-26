@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5343,
-    "last_updated": "2026-11-26T05:06:22.229347+00:00",
-    "total_topics_learned": 5343
+    "total_runs": 5344,
+    "last_updated": "2026-11-26T05:09:35.366485+00:00",
+    "total_topics_learned": 5344
   },
   "entries": [
     {
@@ -254075,6 +254075,57 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T05:06:22.229327+00:00",
       "run_number": 5343
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic overlapping-range-checking and node-interval-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range querying and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent financial trading overlap detection platforms",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a lock-free concurrent Interval Tree leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput overlapping range queries and interval modifications across multiple CPU cores without thread blocking.",
+      "key_points": [
+        "Uses atomic overlapping-range-checking and node-interval-splitting CAS primitives to manage shared interval modifications safely without traditional mutex locks.",
+        "Employs hazard pointer memory reclamation to securely defer the deallocation of interval nodes until all concurrent reader threads have finished accessing them.",
+        "Maximizes multi-core parallel performance for dynamic event scheduling and real-time financial trading overlap detection workloads.",
+        "Maintains structural balance and integrity despite simultaneous asynchronous insertions, deletions, and overlap queries."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based node split operation during concurrent interval updates.",
+        "correct": "bool updateIntervalNode(std::atomic<Node*>& current_ref, Node* expected_node, Node* new_node) {\n    return current_ref.compare_exchange_strong(expected_node, new_node, std::memory_order_release, std::memory_order_relaxed);\n}",
+        "wrong": "bool updateIntervalNode(Node* current_ref, Node* new_node) {\n    // Non-atomic read-modify-write vulnerable to race conditions\n    if (current_ref->overlaps(new_node)) {\n        current_ref->left = new_node;\n        return true;\n    }\n    return false;\n}"
+      },
+      "common_mistakes": [
+        {
+          "mistake": "Failing to account for ABA problems during atomic updates of parent and child pointers in unbalanced dynamic rotations."
+        },
+        {
+          "mistake": "Releasing interval node memory immediately without hazard pointer protection, causing segmentation faults in concurrent reader threads."
+        }
+      ],
+      "best_practices": [
+        "Always register active nodes in the hazard pointer domain before traversing child pointers during an overlap search.",
+        "Keep atomic operation granularity as fine as possible to minimize cache-line bouncing across multi-core processors."
+      ],
+      "when_to_use": "Use when multiple threads must frequently insert, delete, and query overlapping time intervals or ranges concurrently with ultra-low latency requirements.",
+      "when_not_to_use": "Avoid in single-threaded applications or systems with simple static intervals where standard locking or sequential structures provide lower implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free Interval Tree?",
+          "answer": "Hazard pointers allow threads to publish a reference to a node they are currently reading. Memory reclamation routines check all active hazard pointers before freeing any node, ensuring no thread is concurrently accessing the deleted interval structure."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for high-throughput financial trading overlap detection systems?",
+          "answer": "Standard mutexes introduce thread contention, context switching overhead, and potential priority inversions, which drastically reduce throughput compared to lock-free CAS-based synchronization."
+        }
+      ],
+      "related_topics": [
+        "Lock-Free B+ Tree",
+        "Hazard Pointers and Memory Management",
+        "Concurrent Range Query Optimization"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-26T05:09:35.366466+00:00",
+      "run_number": 5344
     }
   ]
 }
