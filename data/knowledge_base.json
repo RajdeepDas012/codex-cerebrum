@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5354,
-    "last_updated": "2026-11-26T14:56:34.459792+00:00",
-    "total_topics_learned": 5354
+    "total_runs": 5355,
+    "last_updated": "2026-11-26T14:59:52.101352+00:00",
+    "total_topics_learned": 5355
   },
   "entries": [
     {
@@ -254604,6 +254604,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T14:56:34.459771+00:00",
       "run_number": 5354
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Treap using atomic randomized-priority-balancing and tree-rotation CAS primitives alongside hazard pointer memory reclamation for high-throughput randomized search tree operations and multi-core parallel sorted key-value lookup execution in real-time in-memory key-value stores and concurrent distributed caching layers",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the design and implementation of a lock-free concurrent Treap—a randomized binary search tree that maintains heap properties via priorities alongside binary search properties via keys. By leveraging compare-and-swap (CAS) primitives and hazard pointers, multiple threads can concurrently insert, delete, and search keys without locking bottlenecks, making it ideal for high-throughput distributed caching layers.",
+      "key_points": [
+        "Combines binary search tree ordering on keys with heap ordering on randomly generated priorities to ensure probabilistic balance.",
+        "Utilizes atomic tree rotations (left/right) via CAS primitives to restore heap invariants without blocking concurrent readers.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted nodes in a lock-free environment without incurring heavy garbage collection overheads.",
+        "Provides high throughput and reduced contention for parallel sorted key-value lookup operations under multi-core environments."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates the concept of concurrent node allocation and hazard pointer protection during a Treap search operation.",
+        "correct": "Node* find(const Key& k) {\n    HazardPointerGuard g;\n    Node* curr = root.load(std::memory_order_acquire);\n    while (curr) {\n        g.protect(root, curr);\n        if (curr->key == k) return curr;\n        curr = (k < curr->key) ? curr->left.load(std::memory_order_relaxed) : curr->right.load(std::memory_order_relaxed);\n    }\n    return nullptr;\n}",
+        "wrong": "Node* find(const Key& k) {\n    Node* curr = root.load();\n    while (curr) {\n        if (curr->key == k) return curr;\n        curr = (k < curr->key) ? curr->left.load() : curr->right.load(); // Unprotected access risks use-after-free if another thread frees curr\n    }\n    return nullptr;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect nodes with hazard pointers before traversing pointers, leading to use-after-free vulnerabilities during concurrent deletions.",
+        "Attempting multi-word CAS updates for tree rotations without breaking them down into step-by-step intermediate atomic states, causing consistency violations."
+      ],
+      "best_practices": [
+        "Always acquire hazard pointer protection before reading child pointers of a potentially deleted node.",
+        "Keep random priority generation fast and thread-safe (e.g., using thread-local random number generators) to avoid contention hot spots."
+      ],
+      "when_to_use": "Use when you need high-performance sorted range queries and key-value lookups in a highly concurrent, multi-threaded in-memory database or caching layer.",
+      "when_not_to_use": "Avoid in simple applications where coarse-grained locking provides adequate performance, or where memory footprint constraints prohibit the overhead of hazard pointers and random priority metadata.",
+      "interview_questions": [
+        {
+          "question": "How do you handle tree rotations atomically using CAS in a concurrent Treap?",
+          "answer": "Rotations require breaking the operation down into validating parent-child links, updating subtrees via CAS, and ensuring that if a concurrent modification occurs, the CAS fails and the operation retries."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard reference counting in lock-free tree structures?",
+          "answer": "Hazard pointers avoid the high memory overhead and atomic cache-line bouncing associated with updating shared reference counts on every traversal, offering better scalability for read-heavy workloads."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Lock-Free Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Balanced Binary Search Trees"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-26T14:59:52.101332+00:00",
+      "run_number": 5355
     }
   ]
 }
