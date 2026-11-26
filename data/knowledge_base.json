@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5349,
-    "last_updated": "2026-11-26T05:25:41.388289+00:00",
-    "total_topics_learned": 5349
+    "total_runs": 5350,
+    "last_updated": "2026-11-26T05:29:04.572405+00:00",
+    "total_topics_learned": 5350
   },
   "entries": [
     {
@@ -254363,6 +254363,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T05:25:41.388270+00:00",
       "run_number": 5349
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounded MPMC Queue using atomic head-tail-advancing and ring-buffer-slot-claiming CAS primitives alongside hazard pointer memory reclamation for high-throughput task message passing and multi-core parallel event notification execution in real-time asynchronous actor frameworks and concurrent thread pool execution engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers building a high-performance, bounded multi-producer multi-consumer (MPMC) queue using atomic ring-buffer slot reservation and compare-and-swap (CAS) operations. It enables lock-free synchronization across multiple threads without explicit mutual exclusion locks, preventing thread contention bottlenecks in message passing systems.",
+      "key_points": [
+        "Utilizes a fixed-size ring buffer array to eliminate dynamic memory allocation overhead during steady-state enqueue and dequeue operations.",
+        "Employs atomic head and tail index advancing combined with sequence numbers per slot to ensure threads claim unique indices safely.",
+        "Leverages hazard pointer memory reclamation and memory barriers to ensure safe lock-free coordination across concurrent threads.",
+        "Provides high throughput and minimal latency jitter, making it ideal for multi-core asynchronous task execution engines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic slot claiming via CAS on a sequence-based ring buffer cell.",
+        "correct": "bool enqueue(T const& data) {\n  Cell* cell;\n  size_t pos = tail_.load(std::memory_order_relaxed);\n  for (;;) {\n    cell = &buffer_[pos & mask_];\n    size_t seq = cell->sequence.load(std::memory_order_acquire);\n    intptr_t dif = (intptr_t)seq - (intptr_t)pos;\n    if (dif == 0) {\n      if (tail_.compare_exchange_weak(pos, pos + 1, std::memory_order_relaxed)) break;\n    } else if (dif < 0) {\n      return false;\n    } else {\n      pos = tail_.load(std::memory_order_relaxed);\n    }\n  }\n  cell->data = data;\n  cell->sequence.store(pos + 1, std::memory_order_release);\n  return true;\n}",
+        "wrong": "bool enqueue(T const& data) {\n  size_t pos = tail_;\n  buffer_[pos % capacity] = data;\n  tail_ = pos + 1;\n  return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to check the sequence number state of ring buffer cells, leading to data overwrites or stale reads.",
+        "Ignoring memory ordering constraints (using relaxed semantics where acquire-release or sequential consistency is strictly required)."
+      ],
+      "best_practices": [
+        "Align atomic head and tail pointers to cache line boundaries to prevent false sharing between concurrent producer and consumer threads.",
+        "Use power-of-two capacities to replace expensive modulo arithmetic with fast bitwise masking operations."
+      ],
+      "when_to_use": "When building low-latency task execution pools, asynchronous actor messaging systems, or high-throughput telemetry logging pipelines across multiple cores.",
+      "when_not_to_use": "When the maximum queue size cannot be bounded in advance, or when dynamic resizing is strictly required by the application domain.",
+      "interview_questions": [
+        {
+          "question": "How do you prevent producers from overwriting unconsumed slots in a lock-free bounded MPMC queue?",
+          "answer": "By maintaining a per-slot sequence number and comparing its relation to the current buffer position index using atomic operations."
+        },
+        {
+          "question": "What is false sharing, and how can it affect the performance of a concurrent MPMC queue's head and tail pointers?",
+          "answer": "False sharing occurs when independent variables reside on the same cache line, causing unnecessary core-to-core cache invalidations. It is mitigated by padding atomic head and tail pointers to occupy separate cache lines."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Single-Producer Single-Consumer (SPSC) Ring Buffers",
+        "Hazard Pointer Memory Reclamation",
+        "Atomic Compare-And-Swap (CAS) Synchronization Patterns"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-26T05:29:04.572388+00:00",
+      "run_number": 5350
     }
   ]
 }
