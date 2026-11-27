@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5374,
-    "last_updated": "2026-11-26T23:57:17.669076+00:00",
-    "total_topics_learned": 5374
+    "total_runs": 5375,
+    "last_updated": "2026-11-27T00:00:29.200113+00:00",
+    "total_topics_learned": 5375
   },
   "entries": [
     {
@@ -255564,6 +255564,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-26T23:57:17.669056+00:00",
       "run_number": 5374
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Interval Tree using atomic endpoint-updating and overlap-detecting CAS primitives alongside hazard pointer memory reclamation for high-throughput time-range overlapping queries and multi-core parallel event scheduling execution in real-time calendar management systems and concurrent resource allocation scheduling engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "An advanced concurrent interval tree designed to manage overlapping intervals without global locks. It uses atomic endpoint updating and overlap detection CAS primitives combined with hazard pointers to ensure memory safety under high multi-threaded contention.",
+      "key_points": [
+        "Utilizes atomic Compare-And-Swap (CAS) operations for node additions and modifications without blocking threads.",
+        "Employs hazard pointers to safely manage memory reclamation of deleted or rotated interval nodes in concurrent environments.",
+        "Maintains max-endpoints in nodes dynamically to optimize overlapping range search paths across multiple cores.",
+        "Eliminates race conditions during simultaneous overlapping queries and dynamic interval insertions or deletions."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic insertion and hazard pointer protection for an interval tree node.",
+        "correct": "void insert_interval(HazardPointer& hp, std::atomic<Node*>& root, int low, int high) {\n    Node* new_node = new Node(low, high);\n    Node* current;\n    do {\n        current = root.load();\n        hp.protect(current);\n        new_node->max_high = std::max(high, current ? current->max_high : high);\n    } while (!root.compare_exchange_weak(current, new_node));\n    hp.clear();\n}",
+        "wrong": "void insert_interval(Node*& root, int low, int high) {\n    Node* new_node = new Node(low, high);\n    new_node->left = root;\n    root = new_node; // Non-atomic update leading to data races\n}"
+      },
+      "common_mistakes": [
+        "Forgetting to update the auxiliary max-high endpoint values atomically alongside tree restructuring, causing missed overlaps.",
+        "Failing to protect nodes with hazard pointers before traversing, leading to use-after-free bugs during concurrent deletions."
+      ],
+      "best_practices": [
+        "Integrate backoff strategies during high CAS contention on root or high-level interval nodes.",
+        "Batch hazard pointer retirements to reduce the overhead of memory reclamation tracking."
+      ],
+      "when_to_use": "When multiple threads frequently query and mutate overlapping time ranges or numerical intervals under ultra-low latency constraints.",
+      "when_not_to_use": "In single-threaded applications or systems where simpler synchronized intervals or database index ranges are sufficient.",
+      "interview_questions": [
+        {
+          "question": "How do you maintain the max-high endpoint invariant atomically during concurrent node insertions?",
+          "answer": "By using CAS loops that recalculate the max-high value relative to current child states and retry if another thread modifies the subtree."
+        },
+        {
+          "question": "Why are hazard pointers preferred over standard garbage collection in lock-free interval trees?",
+          "answer": "They provide deterministic, lock-free memory reclamation without the pause times or memory overhead typically associated with tracing garbage collectors."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Red-Black Trees",
+        "Concurrent Segment Trees",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-27T00:00:29.200095+00:00",
+      "run_number": 5375
     }
   ]
 }
