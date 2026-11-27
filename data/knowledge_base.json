@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5390,
-    "last_updated": "2026-11-27T08:08:06.467814+00:00",
-    "total_topics_learned": 5390
+    "total_runs": 5391,
+    "last_updated": "2026-11-27T08:11:18.409912+00:00",
+    "total_topics_learned": 5391
   },
   "entries": [
     {
@@ -256326,6 +256326,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-27T08:08:06.467794+00:00",
       "run_number": 5390
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent HNSW (Hierarchical Navigable Small World) Graph using atomic layer-routing and neighbor-selection CAS primitives alongside hazard pointer memory reclamation for high-throughput approximate nearest neighbor vector searching and multi-core parallel high-dimensional embedding query execution in real-time vector database platforms and concurrent semantic recommendation engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the low-level engineering of a concurrent Hierarchical Navigable Small World graph, leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables lock-free multi-core vector searches and updates, which are crucial for scaling modern vector databases and recommendation systems.",
+      "key_points": [
+        "Utilizes atomic layer-routing and neighbor-selection CAS primitives to handle multi-threaded graph mutations safely without global locks.",
+        "Employs hazard pointer memory reclamation to prevent memory leaks and use-after-free anomalies during concurrent node insertions and edge updates.",
+        "Maintains multi-layered graph skip-list structures for fast logarithmic entry and exhaustive localized greedy routing.",
+        "Optimizes throughput for high-dimensional vector similarity workloads in distributed and embedded real-time applications."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates thread-safe node insertion into an HNSW graph layer using atomic CAS operations and hazard pointers.",
+        "correct": "bool insert_node_cas(HNode* node, int level) {\n    while (true) {\n        HNode* curr = global_enter_node.load(std::memory_order_acquire);\n        HazardGuard guard(curr);\n        if (global_enter_node.load() != curr) continue;\n        if (atomic_compare_exchange_weak(&node->neighbors[level], &node->neighbors[level], curr)) {\n            return true;\n        }\n    }\n}",
+        "wrong": "bool insert_node_unsafe(HNode* node, int level) {\n    node->neighbors[level] = global_enter_node;\n    global_enter_node = node;\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect traversed graph nodes with hazard pointers, leading to race conditions where nodes are concurrently deleted and freed.",
+        "Relying on standard mutexes during greedy routing steps, creating critical bottlenecks under high-concurrency vector query loads.",
+        "Ignoring the ABA problem on pointer-based CAS operations when updating dynamic neighbor lists."
+      ],
+      "best_practices": [
+        "Pair every read access of a concurrent HNSW node pointer with a local thread-scoped hazard pointer guard.",
+        "Keep graph layer routing operations lock-free while quarantining memory deallocations until all threads drop their active hazard references.",
+        "Tune the maximum number of connections per node ($M$) and construction exploration parameters ($efConstruction$) to balance memory overhead and query recall."
+      ],
+      "when_to_use": "Use when building high-performance vector search engines or real-time recommendation platforms that require millions of high-dimensional queries per second across multiple CPU cores.",
+      "when_not_to_use": "Avoid when memory is severely constrained or when workloads require exact nearest neighbor guarantees with infrequent writes, where simpler sequential index structures or flat indices suffice.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free bugs in a lock-free concurrent HNSW graph?",
+          "answer": "Hazard pointers allow threads to publish references to nodes they are currently inspecting. Before a node can be safely reclaimed and freed, a reclamation pass checks all active hazard pointers to ensure no thread holds a reference to that node."
+        },
+        {
+          "question": "Why is standard locking inefficient for HNSW graph insertions?",
+          "answer": "Global or even fine-grained locking during greedy routing and neighbor list updates serializes concurrent threads, destroying throughput in multi-core environments where vector search queries arrive simultaneously."
+        }
+      ],
+      "related_topics": [
+        "lock-free concurrent Cover Tree",
+        "hazard pointer memory reclamation",
+        "approximate nearest neighbor search algorithms"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-27T08:11:18.409892+00:00",
+      "run_number": 5391
     }
   ]
 }
