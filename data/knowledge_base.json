@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5383,
-    "last_updated": "2026-11-27T07:45:44.142777+00:00",
-    "total_topics_learned": 5383
+    "total_runs": 5384,
+    "last_updated": "2026-11-27T07:48:56.131301+00:00",
+    "total_topics_learned": 5384
   },
   "entries": [
     {
@@ -255990,6 +255990,55 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-27T07:45:44.142757+00:00",
       "run_number": 5383
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent K-D Tree using atomic bounding-hyperplane-splitting and leaf-node-rebuilding CAS primitives alongside hazard pointer memory reclamation for high-throughput multi-dimensional nearest neighbor searching and multi-core parallel spatial point location execution in real-time computer graphics ray tracing systems and concurrent robotics motion planning engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent K-D Tree enables parallel multi-dimensional spatial queries and nearest-neighbor searches without explicit mutual exclusion locks. By combining atomic Compare-And-Swap (CAS) operations for bounding hyperplane adjustments with hazard pointers for safe memory reclamation, high-performance engines can manipulate spatial hierarchies safely across multiple cores.",
+      "key_points": [
+        "Utilizes atomic primitives to manage bounding-hyperplane-splitting and structural modifications without traditional locks.",
+        "Employs hazard pointers to track active references by threads, safely deferring node deallocation and preventing ABA problems.",
+        "Facilitates high-throughput multi-dimensional nearest neighbor searches ideal for real-time ray tracing and collision detection.",
+        "Maximizes multi-core parallel execution efficiency by minimizing contention overhead during spatial point location updates."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates hazard pointer registration and safe atomic node access for concurrent K-D tree traversal.",
+        "correct": "#include <atomic>\n#include <vector>\n\nstruct KDNode {\n    std::atomic<KDNode*> left{nullptr};\n    std::atomic<KDNode*> right{nullptr};\n    double point[3];\n    int axis;\n};\n\nKDNode* acquire_node_safely(std::atomic<KDNode*>& node_ptr, std::atomic<KDNode*>& hazard_slot) {\n    KDNode* ptr;\n    do {\n        ptr = node_ptr.load(std::memory_order_acquire);\n        hazard_slot.store(ptr, std::memory_order_release);\n    } while (ptr != node_ptr.load(std::memory_order_acquire));\n    return ptr;\n}",
+        "wrong": "KDNode* unsafe_access(KDNode* node) { return node->left; }"
+      },
+      "common_mistakes": [
+        "Failing to update hazard pointers before reading child pointers, leading to premature memory reclamation and segmentation faults.",
+        "Neglecting the ABA problem during concurrent node replacements on the bounding hyperplanes."
+      ],
+      "best_practices": [
+        "Always publish hazard pointers prior to traversing pointers that might be concurrently freed by other threads.",
+        "Batch node deletions and defer reclamation until no active hazard pointers reference the targeted memory block.",
+        "Design splitting routines to minimize the granularity of atomic regions, reducing cache contention across cores."
+      ],
+      "when_to_use": "Use when multiple threads require concurrent read and write access to spatial point data for high-performance geometric queries like ray tracing or motion planning.",
+      "when_not_to_use": "Avoid in single-threaded applications or environments where standard lock-based synchronization or simpler spatial partitioning structures provide sufficient performance with less implementation complexity.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent the ABA problem and use-after-free bugs in a lock-free K-D tree?",
+          "answer": "Hazard pointers allow threads to publish which nodes they are currently accessing so that reclaiming threads know not to free those memory blocks until all hazard references are cleared."
+        },
+        {
+          "question": "What are the primary performance bottlenecks when updating bounding-hyperplane-splitting values atomically in a K-D tree?",
+          "answer": "Contention on atomic CAS loops during high-frequency insertions and the overhead of maintaining hazard pointer registries across numerous concurrent threads."
+        }
+      ],
+      "related_topics": [
+        "Priority Search Tree",
+        "Radix Tree",
+        "Hazard Pointers",
+        "Lock-Free Data Structures"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-27T07:48:56.131281+00:00",
+      "run_number": 5384
     }
   ]
 }
