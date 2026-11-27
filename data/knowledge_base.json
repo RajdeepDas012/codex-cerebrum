@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5379,
-    "last_updated": "2026-11-27T00:13:25.035606+00:00",
-    "total_topics_learned": 5379
+    "total_runs": 5380,
+    "last_updated": "2026-11-27T00:16:36.944885+00:00",
+    "total_topics_learned": 5380
   },
   "entries": [
     {
@@ -255802,6 +255802,53 @@
       "confidence_score": 0.99,
       "learned_at": "2026-11-27T00:13:25.035586+00:00",
       "run_number": 5379
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bloom Filter using atomic bitwise-OR-setting and hash-collision-resolving CAS primitives alongside hazard pointer memory reclamation for high-throughput set membership testing and multi-core parallel duplicate filtering execution in real-time web crawler deduplication systems and concurrent database query optimization engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design and implementation of a lock-free, thread-safe concurrent Bloom Filter utilizing atomic bitwise operations and compare-and-swap (CAS) primitives. It ensures safe high-throughput probabilistic set membership queries across multiple cores without traditional locking overhead, supported by hazard pointers for safe memory management.",
+      "key_points": [
+        "Utilizes atomic bitwise-OR operations and CAS primitives to set bits in the underlying bit array safely across multiple threads without locks.",
+        "Employs hazard pointers to manage memory reclamation safely during dynamic resizing or node structure transformations in concurrent environments.",
+        "Provides O(1) time complexity for both set insertion and probabilistic membership testing across concurrent execution pipelines.",
+        "Eliminates mutex contention, making it ideal for high-throughput multi-core workloads like web crawlers and database query optimizers."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates setting a bit atomically in a concurrent lock-free Bloom filter array using compare-and-swap loops.",
+        "correct": "void atomic_set_bit(std::atomic<uint64_t>* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    uint64_t bit_mask = 1ULL << (bit_index % 64);\n    uint64_t old_val = bit_array[word_idx].load(std::memory_order_relaxed);\n    while (!bit_array[word_idx].compare_exchange_weak(old_val, old_val | bit_mask, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void unsafe_set_bit(uint64_t* bit_array, size_t bit_index) {\n    size_t word_idx = bit_index / 64;\n    bit_array[word_idx] |= (1ULL << (bit_index % 64));\n}"
+      },
+      "common_mistakes": [
+        "Using non-atomic bitwise modifications on shared words, leading to lost updates under multi-threaded execution.",
+        "Failing to use appropriate memory ordering constraints (such as acquire-release semantics), causing visibility issues across CPU cores."
+      ],
+      "best_practices": [
+        "Use relaxed memory order for loading old values in CAS retry loops, combined with release-acquire semantics for the successful CAS update.",
+        "Pre-allocate the backing array to avoid dynamic resizing bottlenecks under heavy concurrent ingestion."
+      ],
+      "when_to_use": "Use when you need extreme-throughput set membership testing or duplicate filtering across multiple threads where false positives are acceptable.",
+      "when_not_to_use": "Avoid when exact set membership is required (due to false positive rates) or when deletion support is mandatory without using counting variants.",
+      "interview_questions": [
+        {
+          "question": "How do you implement thread safety in a Bloom filter bit array without using heavy mutex locks?",
+          "answer": "By using atomic integers (like uint64_t words) and atomic compare-and-swap (CAS) loops with bitwise-OR operations to update individual bits."
+        },
+        {
+          "question": "Why are hazard pointers useful in concurrent data structures like a lock-free Bloom filter?",
+          "answer": "They provide a lock-free mechanism for safe memory reclamation, ensuring that memory blocks or resized bit arrays are not freed while other threads are still reading from them."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Cuckoo Filter",
+        "Concurrent Skip List",
+        "Hazard Pointer Memory Management"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-27T00:16:36.944865+00:00",
+      "run_number": 5380
     }
   ]
 }
