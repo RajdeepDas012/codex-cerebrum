@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5404,
-    "last_updated": "2026-11-27T18:18:57.778275+00:00",
-    "total_topics_learned": 5404
+    "total_runs": 5405,
+    "last_updated": "2026-11-27T18:22:10.024985+00:00",
+    "total_topics_learned": 5405
   },
   "entries": [
     {
@@ -256996,6 +256996,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-27T18:18:57.778254+00:00",
       "run_number": 5404
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Persistent AVL Tree using atomic height-balancing and node-cloning CAS primitives alongside hazard pointer memory reclamation for high-throughput immutable state versioning and multi-core parallel functional data structure execution in real-time collaborative document editing platforms and concurrent state-store auditing engines",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architecture of a lock-free thread-safe concurrent Persistent AVL Tree that utilizes atomic height-balancing and node-cloning CAS primitives. It combines hazard pointer memory management to guarantee safe concurrent reads, writes, and history versioning without lock contention.",
+      "key_points": [
+        "Leverages atomic node cloning to achieve structural persistence, allowing multiple threads to access and branch off past tree versions safely.",
+        "Employs lock-free atomic Compare-And-Swap (CAS) primitives for height-balancing updates instead of traditional blocking mutex locks.",
+        "Uses hazard pointers to safely defer memory reclamation of unlinked nodes until all concurrent traversal threads have detached from them.",
+        "Ensures logarithmic lookup bounds while maintaining strict balance constraints under heavy multi-core parallel writes."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of atomic node cloning and hazard pointer registration for thread-safe persistent mutations",
+        "correct": "import threading\n\nclass Node:\n    def __init__(self, key, left=None, right=None, height=1):\n        self.key = key\n        self.left = left\n        self.right = right\n        self.height = height\n\nclass HazardPointerManager:\n    def __init__(self):\n        self.hazard_ptr = threading.local()\n    def protect(self, node):\n        self.hazard_ptr.node = node\n        return node\n    def clear(self):\n        self.hazard_ptr.node = None\n\nhpm = HazardPointerManager()\nroot = Node(10)",
+        "wrong": "root = Node(10)\ndef unsafe_update(new_key):\n    global root\n    root.left = Node(new_key) # Mutating shared structure directly without CAS or node-cloning causes race conditions"
+      },
+      "common_mistakes": [
+        "Mutating shared AVL nodes directly in place instead of performing structural node-cloning for persistence.",
+        "Failing to protect pointer reads with hazard pointers, leading to ABA problems and use-after-free bugs during reclamation.",
+        "Neglecting cascading updates for tree height fields when rotative adjustments fail atomic validation."
+      ],
+      "best_practices": [
+        "Always clone the entire path from the modification point up to the root to preserve immutability for older tree versions.",
+        "Integrate hazard pointers or epoch-based memory reclamation rigorously before freeing old unlinked node subtrees.",
+        "Keep CAS retry loops concise with backoff strategies to prevent thread starvation under massive write contention."
+      ],
+      "when_to_use": "Use when building high-throughput concurrent systems requiring strict immutability, history tracking, and parallel multi-version state access like document collaboration platforms.",
+      "when_not_to_use": "Avoid in simple single-threaded applications or memory-constrained environments where the allocation overhead of node cloning and hazard pointer tracking outweighs concurrency benefits.",
+      "interview_questions": [
+        {
+          "question": "How does node cloning enable thread-safe persistence in a lock-free AVL tree?",
+          "answer": "Node cloning ensures that any modification creates a new copy of the affected path rather than mutating existing nodes, allowing concurrent readers to safely access historical versions without locking."
+        },
+        {
+          "question": "Why are hazard pointers necessary when freeing nodes in a lock-free data structure?",
+          "answer": "Hazard pointers protect threads from accessing memory that has been concurrently reclaimed by another thread, preventing use-after-free errors and race conditions in lock-free memory management."
+        }
+      ],
+      "related_topics": [
+        "Concurrent Skip-List",
+        "Persistent Segment Tree",
+        "Hazard Pointer Memory Reclamation"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-27T18:22:10.024964+00:00",
+      "run_number": 5405
     }
   ]
 }
