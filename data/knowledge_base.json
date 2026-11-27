@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5394,
-    "last_updated": "2026-11-27T08:20:55.444427+00:00",
-    "total_topics_learned": 5394
+    "total_runs": 5395,
+    "last_updated": "2026-11-27T08:24:07.503084+00:00",
+    "total_topics_learned": 5395
   },
   "entries": [
     {
@@ -256518,6 +256518,55 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-27T08:20:55.444406+00:00",
       "run_number": 5394
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent T-Digest using atomic centroid-merging and quantile-estimating CAS primitives alongside hazard pointer memory reclamation for high-throughput accurate percentile approximation and multi-core parallel streaming metric aggregation execution in real-time application performance monitoring systems and concurrent distributed telemetry streaming platforms",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the architectural design of a lock-free concurrent T-Digest data structure optimized for streaming metric aggregation. By leveraging atomic compare-and-swap (CAS) primitives for centroid merging and quantile estimation, alongside hazard pointers for safe memory reclamation, it enables ultra-low-latency percentile approximations across massive multi-core workloads.",
+      "key_points": [
+        "Utilizes atomic CAS loops to manage thread-safe centroid insertions and dynamic cluster merging without lock contention.",
+        "Employs hazard pointers to guarantee safe memory reclamation of retired centroid nodes in a lock-free dynamic memory environment.",
+        "Maintains higher accuracy at distribution tails (p99, p99.9) compared to traditional sketches by grouping data into variable-sized clusters.",
+        "Enables parallel streaming metric aggregation for real-time observability pipelines and high-throughput application monitoring."
+      ],
+      "code_example": {
+        "language": "python",
+        "description": "Demonstrates the concept of concurrent atomic centroid updates via CAS operations on a shared scale function.",
+        "correct": "import atomic\n\nclass AtomicCentroid:\n    def __init__(self, mean, count):\n        self.mean = atomic.AtomicFloat(mean)\n        self.count = atomic.AtomicInt(count)\n\n    def update(self, new_val):\n        while True:\n            current_count = self.count.get()\n            current_mean = self.mean.get()\n            new_count = current_count + 1\n            new_mean = current_mean + (new_val - current_mean) / new_count\n            if self.count.compare_and_set(current_count, new_count):\n                self.mean.set(new_mean)\n                break",
+        "wrong": "class UnsafeCentroid:\n    def __init__(self, mean, count):\n        self.mean = mean\n        self.count = count\n    def update(self, new_val):\n        # Race condition without locks or atomic operations\n        self.count += 1\n        self.mean += (new_val - self.mean) / self.count"
+      },
+      "common_mistakes": [
+        "Failing to protect freed centroid memory with hazard pointers, leading to use-after-free bugs during concurrent merges.",
+        "Using global locks for merge operations which severely bottlenecks throughput in multi-core streaming pipelines.",
+        "Neglecting scale function constraints, resulting in inflated error rates at extreme distribution tails."
+      ],
+      "best_practices": [
+        "Design centroid compression algorithms to operate locally per-thread before submitting batches to the shared structure to minimize CAS contention.",
+        "Integrate robust hazard pointer epochs to safely defer reclamation of split or merged centroid structures.",
+        "Pre-allocate memory pools for centroids to reduce garbage collection or allocator overhead under heavy telemetry ingest."
+      ],
+      "when_to_use": "Use when you need to calculate accurate extreme percentiles (p99, p999) from high-velocity, multi-threaded streaming data without lock contention.",
+      "when_not_to_use": "Avoid when exact percentile calculation over static datasets is required, or when memory overhead constraints strictly prohibit maintaining cluster approximations.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent race conditions during the concurrent merging of centroids in a lock-free T-Digest?",
+          "answer": "Hazard pointers allow threads to declare which centroid nodes they are currently accessing, ensuring that no other thread can reclaim or free those memory addresses until the read operation completes."
+        },
+        {
+          "question": "Why are standard mutexes insufficient for real-time telemetry streaming platforms aggregating metrics via T-Digest?",
+          "answer": "Mutexes introduce thread contention, context switching overhead, and latency spikes that degrade ingestion throughput under high concurrency, whereas lock-free CAS primitives allow continuous forward progress."
+        }
+      ],
+      "related_topics": [
+        "Lock-free data structures",
+        "Hazard pointers memory management",
+        "Streaming quantile algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-27T08:24:07.503063+00:00",
+      "run_number": 5395
     }
   ]
 }
