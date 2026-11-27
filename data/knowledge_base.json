@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5384,
-    "last_updated": "2026-11-27T07:48:56.131301+00:00",
-    "total_topics_learned": 5384
+    "total_runs": 5385,
+    "last_updated": "2026-11-27T07:52:08.482689+00:00",
+    "total_topics_learned": 5385
   },
   "entries": [
     {
@@ -256039,6 +256039,54 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-27T07:48:56.131281+00:00",
       "run_number": 5384
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Spatial Hashing Grid using atomic bucket-chaining and coordinate-mapping CAS primitives alongside hazard pointer memory reclamation for high-throughput broad-phase collision detection and multi-core parallel spatial particle querying execution in real-time physics simulation engines and concurrent multi-agent gaming platforms",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent spatial hashing grid partitions continuous multi-dimensional space into discrete grid cells using hash functions, allowing threads to insert and query moving particles safely without locks. By leveraging atomic bucket-chaining, coordinate-mapping CAS primitives, and hazard pointers, it achieves maximum multi-core scalability and eliminates lock contention during broad-phase collision detection.",
+      "key_points": [
+        "Utilizes mathematical spatial hashing functions to map continuous 2D or 3D coordinates to a linearized grid bucket index.",
+        "Employs atomic compare-and-swap (CAS) primitives for non-blocking bucket-chain node insertions and head pointer updates.",
+        "Integrates hazard pointer memory reclamation to safely manage node deletions and prevent ABA problems without heavy mutex locks.",
+        "Optimizes broad-phase collision detection in physics engines by drastically reducing the pair-wise checking complexity from O(N^2) to near O(N)."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe atomic bucket-chain insertion using CAS loops for the spatial hash grid",
+        "correct": "void insert_particle(std::atomic<Node*>& bucket_head, int particle_id, const Vec3& pos) {\n    Node* new_node = new Node{particle_id, pos, nullptr};\n    Node* old_head = bucket_head.load(std::memory_order_relaxed);\n    do {\n        new_node->next = old_head;\n    } while (!bucket_head.compare_exchange_weak(old_head, new_node, std::memory_order_release, std::memory_order_relaxed));\n}",
+        "wrong": "void insert_particle(std::atomic<Node*>& bucket_head, int particle_id, const Vec3& pos) {\n    Node* new_node = new Node{particle_id, pos, nullptr};\n    new_node->next = bucket_head.load();\n    bucket_head.store(new_node); // Non-atomic read-modify-write race condition!\n}"
+      },
+      "common_mistakes": [
+        "Failing to account for hash collisions properly, leading to infinite traversal loops or corrupted bucket chains.",
+        "Neglecting safe memory reclamation mechanisms like hazard pointers or epoch-based garbage collection, causing severe memory leaks or use-after-free vulnerabilities."
+      ],
+      "best_practices": [
+        "Choose a hash function that uniformly distributes particles across grid buckets to minimize clustering and hot-spotting.",
+        "Tune the grid cell size relative to the maximum interaction radius of particles to balance bucket population density and neighbor query overhead.",
+        "Use relaxed memory ordering for non-dependent reads while maintaining acquire-release semantics around atomic pointer updates."
+      ],
+      "when_to_use": "Use when building high-performance real-time physics simulations, particle systems, or multi-agent games requiring massive parallel spatial queries and collision detection across multiple CPU cores.",
+      "when_not_to_use": "Avoid when the dataset exhibits extreme spatial clustering that overwhelms specific hash buckets, or when memory footprint constraints make large sparse grids impractical compared to dynamic bounding volume hierarchies (BVHs).",
+      "interview_questions": [
+        {
+          "question": "How do you handle hash collisions in a lock-free spatial hashing grid without using global locks?",
+          "answer": "By implementing separate chaining where each bucket contains a lock-free singly linked list managed entirely via atomic CAS operations and safe node insertion loops."
+        },
+        {
+          "question": "Why are hazard pointers essential when implementing concurrent spatial data structures with dynamic particle movement?",
+          "answer": "Hazard pointers protect threads from accessing nodes that other concurrent threads might have unlinked and freed, preventing use-after-free race conditions in a lock-free environment."
+        }
+      ],
+      "related_topics": [
+        "Concurrent K-D Trees",
+        "Lock-Free Memory Reclamation",
+        "Broad-Phase Collision Detection Algorithms"
+      ],
+      "confidence_score": 0.98,
+      "learned_at": "2026-11-27T07:52:08.482668+00:00",
+      "run_number": 5385
     }
   ]
 }
