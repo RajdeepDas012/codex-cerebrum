@@ -9,15 +9,15 @@
 
 | Metric | Value |
 |---|---|
-| Total Topics Learned | **5439** |
-| Last Updated | `2026-11-28T10:37:47.553517+00:00` |
-| Dataset Size | `5439 entries` |
+| Total Topics Learned | **5440** |
+| Last Updated | `2026-11-28T10:40:58.116750+00:00` |
+| Dataset Size | `5440 entries` |
 
 ## 📂 Categories Learned
 
 | Category | Topics |
 |---|---|
-| data-structures | 3990 |
+| data-structures | 3991 |
 | algorithms | 348 |
 | trading-strategies | 228 |
 | crypto-blockchain | 217 |
@@ -39,11 +39,11 @@
 
 ## 🕐 Last 5 Topics Learned
 
+- `Implementation of a lock-free thread-safe concurrent Quadtree using atomic node-subdividing and quadrant-inserting CAS primitives alongside hazard pointer memory reclamation for high-throughput 2D collision detection and multi-core parallel spatial partitioning execution in real-time game physics engines and concurrent simulation platforms`
 - `Implementation of a lock-free thread-safe concurrent Persistent Segment Tree using atomic version-branching and node-sharing CAS primitives alongside hazard pointer memory reclamation for high-throughput historical range querying and multi-core parallel time-travel debugging execution in real-time financial auditing systems and concurrent version-controlled database engines`
 - `Implementation of a lock-free thread-safe concurrent Disjoint Set (Union-Find) using atomic path-compression and union-by-rank CAS primitives alongside hazard pointer memory reclamation for high-throughput equivalence class tracking and multi-core parallel connected component analysis execution in real-time social network graph processing platforms and concurrent compiler type inference engines`
 - `Implementation of a lock-free thread-safe concurrent Suffix Automaton using atomic state-transition-linking and longest-common-substring-calculating CAS primitives alongside hazard pointer memory reclamation for high-throughput substring indexing and multi-core parallel pattern matching execution in real-time text mining platforms and concurrent bioinformatics sequence analysis engines`
 - `Implementation of a lock-free thread-safe concurrent Trapezoidal Map using atomic point-location-traversing and segment-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput planar subdivision searching and multi-core parallel geometric query execution in real-time computer-aided design systems and concurrent computational geometry processing engines`
-- `Implementation of a lock-free thread-safe concurrent HyperLogLog using atomic register-updating and max-val-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput cardinality estimation and multi-core parallel distinct count execution in real-time web analytics platforms and concurrent big data stream processing engines`
 
 <!-- STATS_END -->
 
