@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5421,
-    "last_updated": "2026-11-28T01:48:43.602156+00:00",
-    "total_topics_learned": 5421
+    "total_runs": 5422,
+    "last_updated": "2026-11-28T01:51:55.329377+00:00",
+    "total_topics_learned": 5422
   },
   "entries": [
     {
@@ -257804,6 +257804,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-28T01:48:43.602137+00:00",
       "run_number": 5421
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Unscented Kalman Filter using atomic sigma-point-generating and nonlinear-state-transforming CAS primitives alongside hazard pointer memory reclamation for high-throughput sensor data fusion and multi-core parallel trajectory tracking execution in real-time aerospace guidance systems and concurrent autonomous flight control platforms",
+      "category": "algorithms",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free Unscented Kalman Filter (UKF) that leverages atomic operations and hazard pointers to safely handle non-linear state estimation across multiple threads. It eliminates traditional lock contention, enabling real-time aerospace guidance systems to process high-throughput sensor data streams without blocking.",
+      "key_points": [
+        "Utilizes atomic sigma-point-generating CAS primitives to deterministically capture mean and covariance propagation without analytical Jacobians.",
+        "Employs non-linear-state-transforming operations via lock-free memory transitions for multi-core parallel state updates.",
+        "Integrates hazard pointer memory reclamation to securely manage dynamic node lifecycles without incurring garbage collection pauses.",
+        "Designed for mission-critical aerospace and autonomous flight platforms requiring deterministic latency and high throughput."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates safe concurrent sigma-point generation and update using atomic CAS patterns.",
+        "correct": "bool update_state_atomic(std::atomic<State*>& current_state, const SigmaPoints& sp, HazardPointerRegistry& hp) {\n    State* old_state = hp.protect(current_state);\n    State* new_state = compute_transformed_state(old_state, sp);\n    while (!current_state.compare_exchange_weak(old_state, new_state)) {\n        hp.update_protection(old_state);\n        new_state = compute_transformed_state(old_state, sp);\n    }\n    hp.retire(old_state);\n    return true;\n}",
+        "wrong": "bool update_state_mutex(std::mutex& m, State* current_state, const SigmaPoints& sp) {\n    std::lock_guard<std::mutex> lock(m);\n    current_state = compute_transformed_state(current_state, sp);\n    return true;\n}"
+      },
+      "common_mistakes": [
+        "Failing to properly protect retired state nodes with hazard pointers, leading to ABA problems and use-after-free crashes.",
+        "Recomputing costly sigma-point transformations inside critical atomic retry loops without backing off, causing high CPU contention."
+      ],
+      "best_practices": [
+        "Keep atomic sections lightweight by pre-calculating heavy non-linear transforms before executing the Compare-And-Swap loop.",
+        "Batch hazard pointer retirements to amortize reclamation overhead across high-frequency tracking cycles."
+      ],
+      "when_to_use": "Use when multiple sensor threads must simultaneously ingest and update high-frequency non-linear state trajectories with strict latency requirements.",
+      "when_not_to_use": "Avoid in single-threaded environments or systems with low-frequency updates, where standard sequential Kalman filters or lock-based synchronization are vastly simpler and performant.",
+      "interview_questions": [
+        {
+          "question": "Why use an Unscented Kalman Filter over an Extended Kalman Filter in lock-free concurrent pipelines?",
+          "answer": "UKF avoids calculating complex analytical Jacobians, which reduces per-iteration execution divergence and simplifies atomic transaction boundaries."
+        },
+        {
+          "question": "How do hazard pointers prevent memory corruption during concurrent atomic updates of state covariance matrices?",
+          "answer": "Hazard pointers explicitly declare which state nodes a thread is currently reading, preventing other threads from reclaiming or freeing that memory until the read reference is dropped."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Extended Kalman Filter",
+        "Hazard Pointer Memory Management",
+        "Concurrent Non-Linear State Estimation"
+      ],
+      "confidence_score": 0.99,
+      "learned_at": "2026-11-28T01:51:55.329357+00:00",
+      "run_number": 5422
     }
   ]
 }
