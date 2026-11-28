@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5415,
-    "last_updated": "2026-11-28T01:29:33.265106+00:00",
-    "total_topics_learned": 5415
+    "total_runs": 5416,
+    "last_updated": "2026-11-28T01:32:44.324799+00:00",
+    "total_topics_learned": 5416
   },
   "entries": [
     {
@@ -257520,6 +257520,53 @@
       "confidence_score": 0.95,
       "learned_at": "2026-11-28T01:29:33.265085+00:00",
       "run_number": 5415
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent B+ Tree using atomic leaf-sibling-linking and node-splitting CAS primitives alongside hazard pointer memory reclamation for high-throughput range querying and multi-core parallel sorted index execution in real-time relational database management systems and concurrent storage engines",
+      "category": "data-structures",
+      "language": "C++",
+      "difficulty": "advanced",
+      "summary": "This topic covers the engineering of a lock-free concurrent B+ Tree leveraging atomic Compare-And-Swap (CAS) primitives and hazard pointers. It enables high-throughput multi-core ordered indexing and efficient range scans without traditional mutual exclusion locks.",
+      "key_points": [
+        "Utilizes atomic leaf-sibling-linking and node-splitting primitives to manage tree structural modifications lock-free.",
+        "Employs hazard pointer memory reclamation to safely manage node deallocation under high concurrency.",
+        "Ensures high-throughput range queries by maintaining consistent forward pointers across leaf nodes.",
+        "Prevents thread contention bottlenecks by removing exclusive mutex locks during traversal and mutation."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates atomic node splitting and leaf linking via CAS operations for concurrent B+ Tree insertions.",
+        "correct": "bool insert_key(Node* root, int key, Value val) {\n    while (true) {\n        Node* leaf = find_leaf(root, key);\n        if (try_insert(leaf, key, val)) return true;\n        split_node(leaf);\n    }\n}",
+        "wrong": "bool insert_key(Node* root, int key, Value val) {\n    std::lock_guard<std::mutex> lock(tree_mutex);\n    root->insert(key, val);\n}"
+      },
+      "common_mistakes": [
+        "Failing to protect concurrently accessed nodes with hazard pointers, leading to use-after-free bugs.",
+        "Neglecting proper memory ordering semantics during atomic CAS updates of leaf sibling pointers."
+      ],
+      "best_practices": [
+        "Always register accessed nodes with local hazard pointer threads before traversing child pointers.",
+        "Keep node splitting logic idempotent to handle race conditions where multiple threads split the same node simultaneously."
+      ],
+      "when_to_use": "Ideal for high-concurrency read/write environments like in-memory databases and key-value stores requiring intensive range queries.",
+      "when_not_to_use": "Avoid in low-concurrency systems or single-threaded applications where simpler lock-based B+ Trees offer better performance and code maintainability.",
+      "interview_questions": [
+        {
+          "question": "How do you handle node splits lock-free in a concurrent B+ Tree?",
+          "answer": "By using atomic CAS primitives to update child and sibling pointers, and designing split operations to be retry-safe if another thread modifies the node concurrently."
+        },
+        {
+          "question": "Why are hazard pointers necessary when implementing a lock-free B+ Tree?",
+          "answer": "Hazard pointers protect threads from accessing memory nodes that have been concurrently unlinked and freed by another thread during a structural modification."
+        }
+      ],
+      "related_topics": [
+        "Hazard Pointers and Memory Reclamation",
+        "Lock-Free Skip Lists",
+        "Concurrent Atomic Primitives"
+      ],
+      "confidence_score": 0.95,
+      "learned_at": "2026-11-28T01:32:44.324753+00:00",
+      "run_number": 5416
     }
   ]
 }
