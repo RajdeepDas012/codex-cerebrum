@@ -3,9 +3,9 @@
     "project": "Gemini Coding Brain",
     "description": "Auto-generated coding knowledge base using Gemini API",
     "started": "2026-09-05",
-    "total_runs": 5424,
-    "last_updated": "2026-11-28T01:58:18.675545+00:00",
-    "total_topics_learned": 5424
+    "total_runs": 5425,
+    "last_updated": "2026-11-28T02:01:30.182603+00:00",
+    "total_topics_learned": 5425
   },
   "entries": [
     {
@@ -257946,6 +257946,53 @@
       "confidence_score": 0.98,
       "learned_at": "2026-11-28T01:58:18.675529+00:00",
       "run_number": 5424
+    },
+    {
+      "topic": "Implementation of a lock-free thread-safe concurrent Bounding Volume Hierarchy (BVH) using atomic node-refitting and bounding-box-merging CAS primitives alongside hazard pointer memory reclamation for high-throughput ray-triangle intersection querying and multi-core parallel spatial acceleration execution in real-time ray tracing rendering engines and concurrent computer graphics collision detection systems",
+      "category": "data-structures",
+      "language": "language-agnostic",
+      "difficulty": "advanced",
+      "summary": "A lock-free concurrent Bounding Volume Hierarchy (BVH) enables multiple threads to dynamically refit, merge, and query spatial acceleration structures without traditional blocking locks. By leveraging Compare-And-Swap (CAS) primitives and hazard pointers, it ensures safe memory reclamation and high-throughput ray tracing or collision detection performance across multi-core systems.",
+      "key_points": [
+        "Utilizes atomic node-refitting and bounding-box-merging CAS operations to manage tree modifications lock-free.",
+        "Employs hazard pointer memory reclamation to safely free old BVH nodes during dynamic updates without race conditions.",
+        "Maximizes multi-core parallelism for high-throughput ray-triangle intersection testing and spatial partitioning queries.",
+        "Critically reduces thread contention in real-time ray tracing rendering and concurrent computer graphics collision pipelines."
+      ],
+      "code_example": {
+        "language": "cpp",
+        "description": "Demonstrates an atomic CAS-based bounding box merging step for concurrent BVH node updates.",
+        "correct": "bool updateBox(std::atomic<BoundingBox*>& currentBox, BoundingBox* newBox) {\n    BoundingBox* expected = currentBox.load();\n    BoundingBox* merged = new BoundingBox(*expected);\n    merged->merge(*newBox);\n    while (!currentBox.compare_exchange_weak(expected, merged)) {\n        merged->reset(*expected);\n        merged->merge(*newBox);\n    }\n    return true;\n}",
+        "wrong": "BoundingBox* expected = currentBox.load();\ncurrentBox.store(merge(expected, newBox)); // Not thread-safe, vulnerable to lost updates and data races"
+      },
+      "common_mistakes": [
+        "Failing to protect freed tree nodes with hazard pointers, leading to use-after-free bugs during parallel traversals.",
+        "Using coarse-grained locks during node refitting, which destroys multi-core scaling in real-time renderers."
+      ],
+      "best_practices": [
+        "Always pair lock-free node modifications with an epoch-based or hazard-pointer memory management scheme.",
+        "Keep atomic operation retry loops bounded and lightweight to minimize cache-line bouncing under high contention."
+      ],
+      "when_to_use": "Use when building real-time ray tracers or physics engines requiring frequent dynamic updates to spatial hierarchies across many CPU cores.",
+      "when_not_to_use": "Avoid in static scenes where a traditional read-only BVH built once can be traversed with zero synchronization overhead.",
+      "interview_questions": [
+        {
+          "question": "How do hazard pointers prevent use-after-free errors in a lock-free BVH?",
+          "answer": "Hazard pointers allow threads to register nodes they are currently reading, ensuring that a thread modifying or deleting a node knows when it is safe to reclaim its memory."
+        },
+        {
+          "question": "Why is standard mutex locking inefficient for dynamic BVH updates in real-time rendering?",
+          "answer": "Mutexes cause thread serialization and high contention during frequent traversal and refitting phases, drastically reducing multi-core parallel throughput."
+        }
+      ],
+      "related_topics": [
+        "Lock-free Spatial Index Grid",
+        "Hazard Pointer Memory Management",
+        "Parallel Ray Tracing Acceleration Structures"
+      ],
+      "confidence_score": 0.96,
+      "learned_at": "2026-11-28T02:01:30.182586+00:00",
+      "run_number": 5425
     }
   ]
 }
